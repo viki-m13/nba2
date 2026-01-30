@@ -481,7 +481,7 @@ By betting REDUCED spreads instead of full lead, win rates jump from ~60% to 94-
 
 NEW:
 ```
-Each signal recommends TWO bets: a reduced spread (-7 or -5) AND a moneyline bet. Spread bets offer higher payouts (84-96% WR), while moneyline bets offer higher win rates (90-100% WR). Combined EV is +$18-$32 per signal.
+Each signal recommends TWO bets: a reduced spread (-7 or -5) AND a moneyline bet. Spread bets have higher payouts per win but lower win rates (84-96% WR). Moneyline bets have higher win rates (90-100% WR) but lower payouts per win. Combined EV is +$18-$32 per signal.
 ```
 
 #### 5d. Update Strategy Conditions Table (~lines 240-287)
@@ -545,8 +545,8 @@ const SAMPLE_SIGNAL_DATA = [
   ...Array(22).fill({ impliedProb: 74, outcome: 'win', strategy: 'sweet_spot' }),
   ...Array(4).fill({ impliedProb: 74, outcome: 'loss', strategy: 'sweet_spot' }),
   // Moderate - 84.4% Spread WR
-  ...Array(22).fill({ impliedProb: 76, outcome: 'win', strategy: 'moderate' }),
-  ...Array(4).fill({ impliedProb: 76, outcome: 'loss', strategy: 'moderate' }),
+  ...Array(27).fill({ impliedProb: 76, outcome: 'win', strategy: 'moderate' }),
+  ...Array(5).fill({ impliedProb: 76, outcome: 'loss', strategy: 'moderate' }),
   // Mid-Range - 94.4% Spread WR
   ...Array(17).fill({ impliedProb: 79, outcome: 'win', strategy: 'mid_range' }),
   ...Array(1).fill({ impliedProb: 79, outcome: 'loss', strategy: 'mid_range' }),
@@ -649,9 +649,10 @@ Also update label from "Avg Win Rate" to "Avg Spread WR" or "Spread / ML".
 #### 7c. Update backtest track record defaults (~lines 502-504)
 
 OLD: `'96.5%'` (win rate), `290` (wins), `10` (losses), `300` (total)
-NEW: Calculate from correct numbers. With ~90% average spread WR on ~156 games with ~50 signals:
-- Use: wins `130`, losses `16`, total `146`, win rate `89%` (approximate)
-- Or show per-strategy breakdown
+NEW: Use the real validated numbers (independent, with overlap across strategies):
+- wins: `101`, losses: `13`, pushes: `6`, total: `120`, win rate: `88.6%`
+- Or rounded: wins `101`, losses `13`, total `114` (decided), win rate `89%`
+- Update label from "Avg Win Rate" to "Spread Win Rate" or show both spread/ML
 
 ---
 
