@@ -27,7 +27,7 @@
     historyGames: null,
   };
 
-  const TIER_PRIORITY = { composite: 0, blowout_compress: 1, quant: 2, burst_fade: 3, q3_fade: 4, fade_ml: 5, fade_spread: 6 };
+  const TIER_PRIORITY = { breakout_ml: -1, composite: 0, blowout_compress: 1, quant: 2, burst_fade: 3, q3_fade: 4, fade_ml: 5, fade_spread: 6 };
 
   // =========================================================================
   // INITIALIZATION
@@ -552,12 +552,31 @@
 
     const stratName = signal.strategyName || signal.tier.toUpperCase();
 
+    // ML confidence badge
+    const mlBadge = signal.mlConfidence !== undefined
+      ? `<span class="ml-badge ${signal.mlConfidence >= 80 ? 'ml-elite' : signal.mlConfidence >= 70 ? 'ml-high' : signal.mlConfidence >= 65 ? 'ml-strong' : 'ml-low'}"
+           style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:700;margin-left:8px;
+           background:${signal.mlConfidence >= 80 ? '#dc2626' : signal.mlConfidence >= 70 ? '#f59e0b' : signal.mlConfidence >= 65 ? '#10b981' : '#6b7280'};
+           color:#fff;">ML ${signal.mlConfidence}%</span>`
+      : '';
+
+    // Breakout indicators
+    const breakoutBadges = signal.breakouts ? [
+      signal.breakouts.bbSqueeze ? '<span style="background:#7c3aed;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">BB Squeeze</span>' : '',
+      signal.breakouts.donchian ? `<span style="background:#2563eb;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Donchian ${signal.breakouts.donchian}</span>` : '',
+      signal.breakouts.maCrossover ? `<span style="background:#059669;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">${signal.breakouts.maCrossover === 'golden_cross' ? 'Golden Cross' : 'Death Cross'}</span>` : '',
+      signal.breakouts.momentumBreakout ? '<span style="background:#dc2626;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Mom Breakout</span>' : '',
+      signal.breakouts.volumeConfirmed ? '<span style="background:#d97706;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Vol Confirm</span>' : '',
+    ].filter(Boolean).join('') : '';
+
     return `
       <div class="signal-card ${signal.tier} new-signal">
         <div class="signal-card-header">
           <span class="signal-tier ${signal.tier}">${stratName}</span>
+          ${mlBadge}
           <span class="signal-time">Q${signal.quarter} ${signal.quarterTime}</span>
         </div>
+        ${breakoutBadges ? `<div style="margin: 4px 0;">${breakoutBadges}</div>` : ''}
         <div class="signal-instruction">
           <div class="signal-action">${instruction.headline}</div>
           <div class="signal-details">
@@ -587,6 +606,14 @@
           <div class="detail-row">
             <span class="detail-label">Min Left:</span>
             <span class="detail-value">${signal.minsRemaining}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">ML Confidence:</span>
+            <span class="detail-value" style="color: ${signal.mlConfidence >= 70 ? '#10b981' : '#f59e0b'};">${signal.mlConfidence || '—'}%</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Breakout Signals:</span>
+            <span class="detail-value">${signal.breakoutCount || 0}/6</span>
           </div>
           <div class="detail-row">
             <span class="detail-label">Leader Mkt Prob:</span>

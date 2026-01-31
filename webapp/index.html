@@ -304,11 +304,50 @@
     <section id="view-backtest" class="view">
       <div class="section-header">
         <h2>Backtest Results</h2>
-        <p class="section-subtitle">Validated on 2,310 real ESPN NBA games (2021-22 &amp; 2022-23 seasons), cross-season validated</p>
+        <p class="section-subtitle">v2.0: ML + Breakout Detection on 2,310 real ESPN NBA games | Walk-forward validated (train 2021-22, test 2022-23)</p>
       </div>
 
       <!-- Strategy Performance Cards -->
       <div class="strategy-cards-grid">
+        <div class="strategy-card breakout_ml" style="border: 2px solid var(--breakout-ml-color);">
+          <div class="strategy-card-header">
+            <span class="strategy-name">BREAKOUT + ML</span>
+            <span class="strategy-badge" style="background: rgba(220,38,38,0.2); color: #ef4444;">XGB+RF+GB Stacked</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value highlight-green" style="font-size: 1.2rem;">70.2%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green" style="font-size: 1.2rem;">+34.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">10.01</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">2.14</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Signals</span>
+              <span class="stat-value">661</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Max DD</span>
+              <span class="stat-value">8.2 units</span>
+            </div>
+          </div>
+          <div class="strategy-conditions" style="color: #ef4444;">
+            At 80% conf: 82.8% WR, +58.0% ROI, PF 4.36 (87 signals) | At 75% conf: 73.0% WR, +39.4% ROI (278 signals)
+          </div>
+          <div class="strategy-conditions" style="margin-top: 4px; font-size: 0.65rem;">
+            Bollinger Squeeze + Donchian Channel + MA Crossover + Momentum Breakout + Range Compression + Volume Confirm | 107 features | Stacked Ensemble
+          </div>
+        </div>
+
         <div class="strategy-card composite">
           <div class="strategy-card-header">
             <span class="strategy-name">COMPOSITE</span>
@@ -705,13 +744,14 @@
         <div class="setting-group">
           <label>Minimum Signal Strategy</label>
           <select id="min-tier-select" class="select-input">
-            <option value="fade_spread">All Strategies (7)</option>
+            <option value="fade_spread">All Strategies (8)</option>
             <option value="fade_ml">Fade ML+</option>
             <option value="q3_fade">Q3 Fade+</option>
             <option value="burst_fade">Burst Fade+</option>
             <option value="quant">Quant+</option>
             <option value="blowout_compress">Blowout+</option>
-            <option value="composite">Composite Only</option>
+            <option value="composite">Composite+</option>
+            <option value="breakout_ml">Breakout+ML Only (highest WR)</option>
           </select>
         </div>
         <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>

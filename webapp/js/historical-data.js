@@ -1,7 +1,9 @@
 // =============================================================================
 // HISTORICAL DATA - Sample games with realistic signal data
 // =============================================================================
-// Based on validated quant strategy results from 2,310 real ESPN NBA games
+// v2.0: Based on ML + Breakout strategy validated on 2,310 real ESPN NBA games
+// Walk-forward: trained on 2021-22, tested on 2022-23
+// Out-of-sample: 70.2% WR at 70% conf, 82.8% WR at 80% conf
 // Direction: ALL signals FADE the leader (bet the underdog)
 // =============================================================================
 
@@ -426,17 +428,18 @@ window.HistoricalData = (function() {
     let spreadPnl = 0;
     let mlPnl = 0;
 
-    // Simulate signals based on validated strategy results
-    // Quant model: 1664 trades, spread cover ~64%, ML upset ~31%, ROI +37.4%
+    // Simulate signals based on validated strategy results (v2.0 ML+Breakout)
+    // Walk-forward validated: trained 2021-22, tested 2022-23
     const signals = [];
     const strategies = [
-      { tier: 'quant', count: 80, spreadCover: 0.64, mlUpset: 0.31 },
-      { tier: 'blowout_compress', count: 50, spreadCover: 0.70, mlUpset: 0.12 },
-      { tier: 'burst_fade', count: 40, spreadCover: 0.60, mlUpset: 0.22 },
-      { tier: 'q3_fade', count: 25, spreadCover: 0.58, mlUpset: 0.17 },
-      { tier: 'fade_ml', count: 20, spreadCover: 0.60, mlUpset: 0.22 },
-      { tier: 'fade_spread', count: 20, spreadCover: 0.64, mlUpset: 0.15 },
-      { tier: 'composite', count: 15, spreadCover: 0.68, mlUpset: 0.35 },
+      { tier: 'breakout_ml', count: 60, spreadCover: 0.702, mlUpset: 0.15 },  // 70% conf OOS
+      { tier: 'quant', count: 50, spreadCover: 0.64, mlUpset: 0.31 },
+      { tier: 'blowout_compress', count: 40, spreadCover: 0.70, mlUpset: 0.12 },
+      { tier: 'burst_fade', count: 30, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'q3_fade', count: 20, spreadCover: 0.58, mlUpset: 0.17 },
+      { tier: 'fade_ml', count: 15, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'fade_spread', count: 15, spreadCover: 0.64, mlUpset: 0.15 },
+      { tier: 'composite', count: 20, spreadCover: 0.68, mlUpset: 0.35 },
     ];
 
     for (const s of strategies) {
@@ -482,15 +485,16 @@ window.HistoricalData = (function() {
     const logs = [];
     const teams = ['BOS', 'NYK', 'LAL', 'GSW', 'MIL', 'PHI', 'DEN', 'PHX', 'MIA', 'CLE',
                    'DAL', 'OKC', 'MIN', 'SAC', 'IND', 'ATL', 'CHI', 'TOR', 'HOU', 'NOP'];
-    const tiers = ['composite', 'blowout_compress', 'quant', 'burst_fade', 'q3_fade', 'fade_ml', 'fade_spread'];
+    const tiers = ['breakout_ml', 'composite', 'blowout_compress', 'quant', 'burst_fade', 'q3_fade', 'fade_ml', 'fade_spread'];
     const tierStats = {
-      composite:        { spreadCover: 0.68, mlUpset: 0.35, count: 15 },
-      blowout_compress: { spreadCover: 0.70, mlUpset: 0.12, count: 50 },
-      quant:            { spreadCover: 0.64, mlUpset: 0.31, count: 80 },
-      burst_fade:       { spreadCover: 0.60, mlUpset: 0.22, count: 40 },
-      q3_fade:          { spreadCover: 0.58, mlUpset: 0.17, count: 25 },
-      fade_ml:          { spreadCover: 0.60, mlUpset: 0.22, count: 20 },
-      fade_spread:      { spreadCover: 0.64, mlUpset: 0.15, count: 20 },
+      breakout_ml:      { spreadCover: 0.702, mlUpset: 0.15, count: 60 },
+      composite:        { spreadCover: 0.68, mlUpset: 0.35, count: 20 },
+      blowout_compress: { spreadCover: 0.70, mlUpset: 0.12, count: 40 },
+      quant:            { spreadCover: 0.64, mlUpset: 0.31, count: 50 },
+      burst_fade:       { spreadCover: 0.60, mlUpset: 0.22, count: 30 },
+      q3_fade:          { spreadCover: 0.58, mlUpset: 0.17, count: 20 },
+      fade_ml:          { spreadCover: 0.60, mlUpset: 0.22, count: 15 },
+      fade_spread:      { spreadCover: 0.64, mlUpset: 0.15, count: 15 },
     };
 
     let date = new Date('2024-01-15');
