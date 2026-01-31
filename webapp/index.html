@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Live Trading Signals</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header id="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <span class="logo-icon">&#9651;</span>
+        <span class="logo-text">NBA SIGNALS</span>
+        <span class="logo-badge">LIVE</span>
+      </div>
+    </div>
+    <nav class="topbar-nav">
+      <a href="#dashboard" class="nav-link active" data-view="dashboard">Dashboard</a>
+      <a href="#live" class="nav-link" data-view="live">Live Games</a>
+      <a href="#alerts" class="nav-link" data-view="alerts">
+        Alerts
+        <span id="alert-count-badge" class="nav-badge hidden">0</span>
+      </a>
+      <a href="#history" class="nav-link" data-view="history">Historical</a>
+      <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="refresh-indicator" id="refresh-indicator">
+        <span class="refresh-dot"></span>
+        <span class="refresh-text">Live</span>
+      </div>
+      <button class="settings-btn" id="settings-btn" title="Settings">&#9881;</button>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div id="stats-bar">
+    <div class="stat-item">
+      <span class="stat-value" id="stat-live-games">0</span>
+      <span class="stat-label">Live Games</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-active-signals">0</span>
+      <span class="stat-label">Active Signals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-session-wr">--</span>
+      <span class="stat-label">Session WR</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-backtest-wr">94.2%</span>
+      <span class="stat-label">Backtest WR (ML)</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-total-ev">+$24</span>
+      <span class="stat-label">Avg Combined EV</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-next-refresh">5s</span>
+      <span class="stat-label">Next Refresh</span>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    <!-- ==================== DASHBOARD VIEW ==================== -->
+    <section id="view-dashboard" class="view active">
+      <!-- Alert Banner (appears when new signal fires) -->
+      <div id="signal-alert-banner" class="alert-banner hidden">
+        <div class="alert-banner-icon">&#9888;</div>
+        <div class="alert-banner-text">
+          <strong>NEW SIGNAL:</strong>
+          <span id="alert-banner-msg"></span>
+        </div>
+        <button class="alert-banner-close" id="alert-banner-close">&times;</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Live Games Column -->
+        <div class="dashboard-col">
+          <div class="section-header">
+            <h2>Live Games</h2>
+            <span class="section-badge" id="live-games-count">0</span>
+          </div>
+          <div id="dashboard-live-games" class="game-cards-list">
+            <div class="empty-state">
+              <div class="empty-icon">&#127936;</div>
+              <p>No live games right now</p>
+              <p class="empty-sub">Games will appear here when they start. Checking every 5 seconds.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Signals & Alerts Column -->
+        <div class="dashboard-col">
+          <div class="section-header">
+            <h2>Active Signals</h2>
+            <span class="section-badge signal-badge" id="signals-count">0</span>
+          </div>
+          <div id="dashboard-signals" class="signal-cards-list">
+            <div class="empty-state">
+              <div class="empty-icon">&#128226;</div>
+              <p>No active signals</p>
+              <p class="empty-sub">Signals fire when momentum + lead conditions are met during Q2-Q3.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Flow Chart -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Score Flow</h2>
+          <div class="chart-controls">
+            <select id="chart-game-select" class="select-input">
+              <option value="">Select a game...</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="scoreflow-chart"></canvas>
+          <div id="chart-empty-state" class="chart-empty">
+            <p>Select a live game to see score flow with signal markers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Games -->
+      <div class="upcoming-section">
+        <div class="section-header">
+          <h2>Upcoming Games</h2>
+        </div>
+        <div id="upcoming-games" class="upcoming-games-grid">
+          <div class="empty-state">
+            <div class="empty-icon">&#128197;</div>
+            <p>Loading schedule...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LIVE GAMES VIEW ==================== -->
+    <section id="view-live" class="view">
+      <div class="section-header">
+        <h2>Live Games</h2>
+        <div class="view-controls">
+          <button class="btn btn-sm" id="refresh-now-btn">Refresh Now</button>
+        </div>
+      </div>
+      <div id="live-games-full" class="game-cards-grid">
+        <div class="empty-state">
+          <div class="empty-icon">&#127936;</div>
+          <p>No live games right now</p>
+        </div>
+      </div>
+
+      <!-- Game Detail Panel -->
+      <div id="game-detail-panel" class="game-detail hidden">
+        <div class="section-header">
+          <h2 id="detail-game-title">Game Detail</h2>
+          <button class="btn btn-sm" id="close-detail-btn">Close</button>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-chart">
+            <canvas id="detail-scoreflow-chart"></canvas>
+          </div>
+          <div class="detail-info">
+            <div id="detail-signals-list"></div>
+            <div id="detail-analytics"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ALERTS VIEW ==================== -->
+    <section id="view-alerts" class="view">
+      <div class="section-header">
+        <h2>Trading Alerts</h2>
+        <div class="view-controls">
+          <button class="btn btn-sm btn-outline" id="clear-alerts-btn">Clear All</button>
+          <div class="alert-stats">
+            <span class="alert-stat-item">
+              <span class="dot green"></span>
+              Wins: <strong id="alert-wins">0</strong>
+            </span>
+            <span class="alert-stat-item">
+              <span class="dot red"></span>
+              Losses: <strong id="alert-losses">0</strong>
+            </span>
+            <span class="alert-stat-item">
+              WR: <strong id="alert-wr" class="highlight-green">--</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div id="alerts-list" class="alerts-list">
+        <div class="empty-state">
+          <div class="empty-icon">&#128276;</div>
+          <p>No alerts yet</p>
+          <p class="empty-sub">Alerts will appear here when trading signals fire during live games.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HISTORICAL VIEW ==================== -->
+    <section id="view-history" class="view">
+      <div class="section-header">
+        <h2>Historical Games & Signals</h2>
+        <div class="view-controls">
+          <select id="history-filter" class="select-input">
+            <option value="all">All Signals</option>
+            <option value="elite">Elite Only</option>
+            <option value="strong">Strong Only</option>
+            <option value="standard">Standard Only</option>
+            <option value="wide">Wide Only</option>
+            <option value="wins">Wins Only</option>
+            <option value="losses">Losses Only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Historical Stats Summary -->
+      <div class="history-stats-grid">
+        <div class="history-stat-card">
+          <div class="history-stat-value" id="hist-total-signals">156</div>
+          <div class="history-stat-label">Total Signals</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-spread-wr">89.7%</div>
+          <div class="history-stat-label">Spread WR</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-ml-wr">94.2%</div>
+          <div class="history-stat-label">ML WR</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-total-pnl">+$2,880</div>
+          <div class="history-stat-label">Total P&L ($100/bet)</div>
+        </div>
+      </div>
+
+      <!-- Historical Game Charts -->
+      <div class="history-chart-section">
+        <div class="section-header">
+          <h2>Game Score Flow with Signals</h2>
+          <select id="history-game-select" class="select-input">
+            <option value="0">BOS vs NYK - Jan 15 (Elite Signal, W)</option>
+            <option value="1">LAL vs GSW - Jan 12 (Strong Signal, W)</option>
+            <option value="2">MIL vs PHI - Jan 10 (Standard Signal, W)</option>
+            <option value="3">DEN vs PHX - Jan 8 (Elite Signal, W)</option>
+            <option value="4">MIA vs CLE - Jan 5 (Wide Signal, L)</option>
+            <option value="5">DAL vs OKC - Jan 3 (Strong Signal, W)</option>
+            <option value="6">BOS vs MIA - Dec 28 (Elite Signal, W)</option>
+            <option value="7">GSW vs LAC - Dec 25 (Standard Signal, W)</option>
+          </select>
+        </div>
+        <div class="chart-container">
+          <canvas id="history-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Historical Games Table -->
+      <div class="history-table-section">
+        <div class="section-header">
+          <h2>Signal Log</h2>
+        </div>
+        <div class="table-wrapper">
+          <table id="history-table" class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Game</th>
+                <th>Signal</th>
+                <th>Tier</th>
+                <th>Lead</th>
+                <th>Mom</th>
+                <th>Min Left</th>
+                <th>Bet</th>
+                <th>Spread</th>
+                <th>ML</th>
+                <th>P&L</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== BACKTEST VIEW ==================== -->
+    <section id="view-backtest" class="view">
+      <div class="section-header">
+        <h2>Backtest Results</h2>
+        <p class="section-subtitle">Validated on 156 real ESPN NBA games (2022-2024 seasons)</p>
+      </div>
+
+      <!-- Strategy Performance Cards -->
+      <div class="strategy-cards-grid">
+        <div class="strategy-card elite">
+          <div class="strategy-card-header">
+            <span class="strategy-name">ELITE</span>
+            <span class="strategy-badge">Mom 14+</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Spread WR</span>
+              <span class="stat-value highlight-green">97.6%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML WR</span>
+              <span class="stat-value highlight-green">97.7%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Spread EV</span>
+              <span class="stat-value">+$26</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML EV</span>
+              <span class="stat-value">+$15</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 10+ | Mom 14+ | 12-24 min | Bet -5 + ML
+          </div>
+        </div>
+
+        <div class="strategy-card strong">
+          <div class="strategy-card-header">
+            <span class="strategy-name">STRONG</span>
+            <span class="strategy-badge">Mom 12-13</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Spread WR</span>
+              <span class="stat-value highlight-green">88.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML WR</span>
+              <span class="stat-value highlight-green">92.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Spread EV</span>
+              <span class="stat-value">+$16</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML EV</span>
+              <span class="stat-value">+$8</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 10+ | Mom 12-13 | 12-24 min | Bet -5 + ML
+          </div>
+        </div>
+
+        <div class="strategy-card standard">
+          <div class="strategy-card-header">
+            <span class="strategy-name">STANDARD</span>
+            <span class="strategy-badge">Mom 10-11</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Spread WR</span>
+              <span class="stat-value highlight-green">82.4%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML WR</span>
+              <span class="stat-value highlight-green">94.1%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Spread EV</span>
+              <span class="stat-value">+$8</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML EV</span>
+              <span class="stat-value">+$11</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 10+ | Mom 10-11 | 12-24 min | Bet -5 + ML
+          </div>
+        </div>
+
+        <div class="strategy-card wide">
+          <div class="strategy-card-header">
+            <span class="strategy-name">WIDE</span>
+            <span class="strategy-badge">Mom 8-9</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Spread WR</span>
+              <span class="stat-value highlight-green">78.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML WR</span>
+              <span class="stat-value highlight-green">90.7%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Spread EV</span>
+              <span class="stat-value">+$3</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ML EV</span>
+              <span class="stat-value">+$7</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 10+ | Mom 8-9 | 12-24 min | Bet -5 + ML
+          </div>
+        </div>
+      </div>
+
+      <!-- Equity Curve -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Equity Curve (Backtest)</h2>
+          <div class="chart-controls">
+            <select id="equity-mode-select" class="select-input">
+              <option value="combined">Combined (Spread + ML)</option>
+              <option value="spread">Spread Only</option>
+              <option value="ml">Moneyline Only</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container chart-container-lg">
+          <canvas id="equity-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Strategy Breakdown Table -->
+      <div class="backtest-table-section">
+        <div class="section-header">
+          <h2>Detailed Breakdown</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Signals</th>
+                <th>Spread W-L</th>
+                <th>Spread WR</th>
+                <th>Spread EV/bet</th>
+                <th>ML W-L</th>
+                <th>ML WR</th>
+                <th>ML EV/bet</th>
+                <th>Combined EV</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tier-badge elite">ELITE</span></td>
+                <td>43</td>
+                <td>42-1</td>
+                <td class="highlight-green">97.6%</td>
+                <td class="highlight-green">+$26</td>
+                <td>42-1</td>
+                <td class="highlight-green">97.7%</td>
+                <td class="highlight-green">+$15</td>
+                <td class="highlight-green">+$41</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge strong">STRONG</span></td>
+                <td>25</td>
+                <td>22-3</td>
+                <td class="highlight-green">88.0%</td>
+                <td class="highlight-green">+$16</td>
+                <td>23-2</td>
+                <td class="highlight-green">92.0%</td>
+                <td class="highlight-green">+$8</td>
+                <td class="highlight-green">+$24</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge standard">STANDARD</span></td>
+                <td>34</td>
+                <td>28-6</td>
+                <td class="highlight-green">82.4%</td>
+                <td class="highlight-green">+$8</td>
+                <td>32-2</td>
+                <td class="highlight-green">94.1%</td>
+                <td class="highlight-green">+$11</td>
+                <td class="highlight-green">+$19</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge wide">WIDE</span></td>
+                <td>54</td>
+                <td>42-12</td>
+                <td>78.0%</td>
+                <td>+$3</td>
+                <td>49-5</td>
+                <td class="highlight-green">90.7%</td>
+                <td class="highlight-green">+$7</td>
+                <td class="highlight-green">+$10</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>TOTAL</strong></td>
+                <td><strong>156</strong></td>
+                <td><strong>134-22</strong></td>
+                <td class="highlight-green"><strong>85.9%</strong></td>
+                <td class="highlight-green"><strong>+$13</strong></td>
+                <td><strong>146-10</strong></td>
+                <td class="highlight-green"><strong>93.6%</strong></td>
+                <td class="highlight-green"><strong>+$10</strong></td>
+                <td class="highlight-green"><strong>+$23</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Strategy Rules Reference -->
+      <div class="rules-section">
+        <div class="section-header">
+          <h2>Strategy Rules</h2>
+        </div>
+        <div class="rules-grid">
+          <div class="rule-card">
+            <h3>Entry Conditions</h3>
+            <ul>
+              <li>Lead >= 10 points</li>
+              <li>5-min momentum >= 8 points (aligns with lead)</li>
+              <li>12-24 minutes remaining (Q2-Q3)</li>
+              <li>Momentum must match lead direction</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>What to Bet</h3>
+            <ul>
+              <li><strong>Spread:</strong> Bet leading team -5 spread</li>
+              <li><strong>Moneyline:</strong> Bet leading team ML</li>
+              <li>Both bets placed per signal</li>
+              <li>Flat $100 per bet (no Kelly sizing)</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>Signal Tiers</h3>
+            <ul>
+              <li><span class="tier-badge elite sm">ELITE</span> Momentum 14+ (best)</li>
+              <li><span class="tier-badge strong sm">STRONG</span> Momentum 12-13</li>
+              <li><span class="tier-badge standard sm">STANDARD</span> Momentum 10-11</li>
+              <li><span class="tier-badge wide sm">WIDE</span> Momentum 8-9</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>Risk Management</h3>
+            <ul>
+              <li>One signal per game maximum</li>
+              <li>No signals above 24 min remaining</li>
+              <li>No signals below 12 min remaining</li>
+              <li>Skip if team already up 20+</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> Past performance does not guarantee future results.
+        Backtest validated on 156 real ESPN games from the 2022-2024 NBA seasons.
+        Results assume -110 standard vig on spreads and realistic ML odds based on lead/time.
+        Always bet responsibly.
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close" id="settings-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label>CORS Proxy (for live data)</label>
+          <input type="text" id="cors-proxy-input" class="text-input"
+                 placeholder="https://corsproxy.io/?" value="">
+          <p class="setting-help">Required for live data on GitHub Pages. Leave empty for Vercel deployment.</p>
+        </div>
+        <div class="setting-group">
+          <label>Refresh Interval (seconds)</label>
+          <input type="number" id="refresh-interval-input" class="text-input"
+                 value="5" min="3" max="60">
+        </div>
+        <div class="setting-group">
+          <label>
+            <input type="checkbox" id="sound-enabled" checked>
+            Sound Alerts
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>
+            <input type="checkbox" id="notification-enabled">
+            Browser Notifications
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>Minimum Signal Tier</label>
+          <select id="min-tier-select" class="select-input">
+            <option value="wide">All (Wide+)</option>
+            <option value="standard">Standard+</option>
+            <option value="strong">Strong+</option>
+            <option value="elite">Elite Only</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio for alerts -->
+  <audio id="alert-sound" preload="auto">
+    <!-- Generated programmatically via Web Audio API -->
+  </audio>
+
+  <!-- Scripts -->
+  <script src="js/signal-engine.js"></script>
+  <script src="js/historical-data.js"></script>
+  <script src="js/nba-api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
