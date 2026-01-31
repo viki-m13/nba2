@@ -17,7 +17,7 @@
       <div class="logo">
         <span class="logo-icon">&#9651;</span>
         <span class="logo-text">NBA SIGNALS</span>
-        <span class="logo-badge">LIVE</span>
+        <span class="logo-badge">v2.1 LIVE</span>
       </div>
     </div>
     <nav class="topbar-nav">
@@ -29,6 +29,7 @@
       </a>
       <a href="#history" class="nav-link" data-view="history">Historical</a>
       <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
+      <a href="#analytics" class="nav-link" data-view="analytics">Analytics</a>
     </nav>
     <div class="topbar-right">
       <div class="refresh-indicator" id="refresh-indicator">
@@ -54,8 +55,12 @@
       <span class="stat-label">Session WR</span>
     </div>
     <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-backtest-roi">+37.4%</span>
-      <span class="stat-label">Quant ROI</span>
+      <span class="stat-value highlight-green" id="stat-backtest-roi">+34.0%</span>
+      <span class="stat-label">ML ROI (70%)</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-ml-wr">70.2%</span>
+      <span class="stat-label">ML Win Rate</span>
     </div>
     <div class="stat-item">
       <span class="stat-value highlight-green" id="stat-total-ev">2,310</span>
@@ -215,6 +220,7 @@
         <div class="view-controls">
           <select id="history-filter" class="select-input">
             <option value="all">All Signals</option>
+            <option value="breakout_ml">Breakout+ML Only</option>
             <option value="composite">Composite Only</option>
             <option value="blowout_compress">Blowout Compress Only</option>
             <option value="quant">Quant Only</option>
@@ -304,7 +310,7 @@
     <section id="view-backtest" class="view">
       <div class="section-header">
         <h2>Backtest Results</h2>
-        <p class="section-subtitle">v2.0: ML + Breakout Detection on 2,310 real ESPN NBA games | Walk-forward validated (train 2021-22, test 2022-23)</p>
+        <p class="section-subtitle">v2.1: ML Ensemble + Breakout Detection + Rule Boosters + Kelly Sizing | 2,310 real ESPN NBA games | Walk-forward validated</p>
       </div>
 
       <!-- Strategy Performance Cards -->
@@ -344,7 +350,7 @@
             At 80% conf: 82.8% WR, +58.0% ROI, PF 4.36 (87 signals) | At 75% conf: 73.0% WR, +39.4% ROI (278 signals)
           </div>
           <div class="strategy-conditions" style="margin-top: 4px; font-size: 0.65rem;">
-            Bollinger Squeeze + Donchian Channel + MA Crossover + Momentum Breakout + Range Compression + Volume Confirm | 107 features | Stacked Ensemble
+            107 features | Stacked Ensemble | 5 Rule Boosters | Quarter-Kelly Sizing | BB + Donchian + MA + Mom + RC + Vol
           </div>
         </div>
 
@@ -701,10 +707,158 @@
       <!-- Disclaimer -->
       <div class="disclaimer">
         <strong>Disclaimer:</strong> Past performance does not guarantee future results.
-        7 strategies backtested on 2,310 real ESPN games from the 2021-22 &amp; 2022-23 NBA seasons.
-        Cross-season validated (both seasons independently profitable). Exp 7 confirmed betting favorites always loses.
-        Results assume -110 standard vig on spreads and realistic ML odds.
-        Always bet responsibly.
+        8 strategies backtested on 2,310 real ESPN games (2021-22 &amp; 2022-23 seasons).
+        Walk-forward validated (train on 2021-22, test out-of-sample on 2022-23).
+        ML ensemble: XGBoost + Random Forest + Gradient Boosting stacked with Logistic Regression meta-learner.
+        107 engineered features, 5 rule-based boosters, quarter-Kelly position sizing.
+        Results assume -110 standard vig on spreads and realistic ML odds. Always bet responsibly.
+      </div>
+    </section>
+    <!-- ==================== ANALYTICS VIEW ==================== -->
+    <section id="view-analytics" class="view">
+      <div class="section-header">
+        <h2>ML Analytics & Insights</h2>
+        <p class="section-subtitle">Deep dive into the ML ensemble model: feature importance, confidence analysis, and validated combo signals</p>
+      </div>
+
+      <!-- Walk-Forward Validation Summary -->
+      <div class="analytics-validation-grid">
+        <div class="validation-card">
+          <div class="validation-card-header">
+            <span class="validation-icon">&#9989;</span>
+            <h3>Walk-Forward Validation</h3>
+          </div>
+          <div class="validation-details">
+            <div class="validation-row">
+              <span class="validation-label">Train Period</span>
+              <span class="validation-value">2021-22 (8,590 samples)</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Test Period</span>
+              <span class="validation-value">2022-23 (7,526 samples)</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Spread Cover AUC</span>
+              <span class="validation-value highlight-green">0.593</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">ML Win AUC</span>
+              <span class="validation-value highlight-green">0.740</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Total Games</span>
+              <span class="validation-value">2,310</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Total Samples</span>
+              <span class="validation-value">16,116</span>
+            </div>
+          </div>
+        </div>
+        <div class="validation-card">
+          <div class="validation-card-header">
+            <span class="validation-icon">&#129504;</span>
+            <h3>Model Architecture</h3>
+          </div>
+          <div class="validation-details">
+            <div class="validation-row">
+              <span class="validation-label">Ensemble</span>
+              <span class="validation-value">XGB + RF + GBM Stacked</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Meta-Learner</span>
+              <span class="validation-value">Logistic Regression</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Features</span>
+              <span class="validation-value">107 engineered</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Breakout Signals</span>
+              <span class="validation-value">6 (BB, Donchian, MA, Mom, RC, Vol)</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Rule Boosters</span>
+              <span class="validation-value">5 validated rules</span>
+            </div>
+            <div class="validation-row">
+              <span class="validation-label">Sizing</span>
+              <span class="validation-value">Quarter-Kelly Criterion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confidence Threshold Performance -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Confidence Threshold Performance</h2>
+          <p class="section-subtitle">Win rate and ROI at different ML confidence cutoffs (out-of-sample)</p>
+        </div>
+        <div class="confidence-tiers-grid" id="confidence-tiers-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="chart-container" style="margin-top: 1rem;">
+          <canvas id="confidence-curve-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Feature Importance -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Feature Importance (XGBoost Ensemble)</h2>
+          <p class="section-subtitle">Top 15 features driving ML predictions, ranked by information gain</p>
+        </div>
+        <div class="chart-container chart-container-lg">
+          <canvas id="feature-importance-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Validated Combo Signals -->
+      <div class="combo-section">
+        <div class="section-header">
+          <h2>Validated Combo Signals</h2>
+          <p class="section-subtitle">Multi-factor signal combinations with highest edge from 16,116 in-game samples</p>
+        </div>
+        <div class="combo-cards-grid" id="combo-cards-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Breakout Signal Performance -->
+      <div class="breakout-section">
+        <div class="section-header">
+          <h2>Individual Breakout Signal Performance</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="breakout-performance-table">
+            <thead>
+              <tr>
+                <th>Signal</th>
+                <th>Samples</th>
+                <th>Win Rate</th>
+                <th>Edge vs Base</th>
+                <th>ROI %</th>
+                <th>Combined WR</th>
+              </tr>
+            </thead>
+            <tbody id="breakout-table-body">
+              <tr><td>Bollinger Squeeze</td><td>1,054</td><td class="highlight-green">56.8%</td><td class="highlight-green">+2.5%</td><td class="highlight-green">+8.5%</td><td class="highlight-green">59.1%</td></tr>
+              <tr><td>Donchian Low Breakout</td><td>804</td><td class="highlight-green">57.0%</td><td class="highlight-green">+2.6%</td><td class="highlight-green">+8.8%</td><td class="highlight-green">63.3%</td></tr>
+              <tr><td>Golden Cross (MA)</td><td>655</td><td class="highlight-green">57.9%</td><td class="highlight-green">+3.5%</td><td class="highlight-green">+10.5%</td><td class="highlight-green">64.0%</td></tr>
+              <tr><td>Death Cross (MA)</td><td>620</td><td>55.3%</td><td class="highlight-green">+1.0%</td><td class="highlight-green">+5.7%</td><td class="highlight-green">59.8%</td></tr>
+              <tr><td>Momentum Breakout</td><td>2,868</td><td>54.6%</td><td class="highlight-green">+0.2%</td><td class="highlight-green">+4.2%</td><td class="highlight-green">59.4%</td></tr>
+              <tr><td>Volume Confirmed</td><td>5,599</td><td>54.9%</td><td class="highlight-green">+0.5%</td><td class="highlight-green">+4.8%</td><td class="highlight-green">58.2%</td></tr>
+              <tr><td>Below Support</td><td>11,650</td><td>54.9%</td><td class="highlight-green">+0.6%</td><td class="highlight-green">+4.9%</td><td class="highlight-green">58.1%</td></tr>
+              <tr><td>Trailer on Run</td><td>6,666</td><td>53.8%</td><td>-0.5%</td><td class="highlight-green">+2.8%</td><td class="highlight-green">56.6%</td></tr>
+              <tr><td>Donchian High Breakout</td><td>902</td><td>50.8%</td><td class="highlight-red">-3.6%</td><td class="highlight-red">-3.0%</td><td>55.3%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="disclaimer" style="margin-top: 1rem;">
+          <strong>Base cover rate:</strong> 54.3% across all 16,116 samples.
+          "Edge vs Base" = signal win rate minus base rate. "Combined WR" = when signal fires AND ML confidence > 0.5.
+        </div>
       </div>
     </section>
   </main>

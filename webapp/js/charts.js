@@ -8,6 +8,8 @@ window.Charts = (function() {
   let detailChart = null;
   let historyChart = null;
   let equityChart = null;
+  let featureImportanceChart = null;
+  let confidenceCurveChart = null;
 
   const CHART_COLORS = {
     differential: '#10b981',
@@ -16,6 +18,7 @@ window.Charts = (function() {
     text: '#6b7280',
     zero: 'rgba(255, 255, 255, 0.15)',
     signal: {
+      breakout_ml: '#dc2626',
       composite: '#f59e0b',
       blowout_compress: '#ec4899',
       quant: '#3b82f6',
@@ -316,13 +319,201 @@ window.Charts = (function() {
   }
 
   // =========================================================================
+  // FEATURE IMPORTANCE CHART (horizontal bar)
+  // =========================================================================
+  function renderFeatureImportance(canvasId, features) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    if (featureImportanceChart) featureImportanceChart.destroy();
+
+    const ctx = canvas.getContext('2d');
+
+    // Sort by importance (highest first)
+    const sorted = [...features].sort((a, b) => b.importance - a.importance);
+    const labels = sorted.map(f => f.name);
+    const values = sorted.map(f => f.importance);
+    const maxVal = Math.max(...values);
+
+    // Color gradient from green (high) to blue (low)
+    const colors = values.map((v, i) => {
+      const ratio = v / maxVal;
+      if (ratio > 0.8) return '#10b981';
+      if (ratio > 0.6) return '#34d399';
+      if (ratio > 0.4) return '#3b82f6';
+      if (ratio > 0.2) return '#6366f1';
+      return '#8b5cf6';
+    });
+
+    const options = getBaseOptions('');
+    options.indexAxis = 'y';
+    options.scales.x.title = { display: true, text: 'Information Gain', color: '#6b7280', font: { size: 10 } };
+    options.scales.y.ticks = { color: '#e5e7eb', font: { size: 11, family: 'Inter' } };
+    options.scales.x.ticks = { color: '#6b7280', font: { size: 10, family: 'JetBrains Mono' } };
+    options.plugins.tooltip.callbacks = {
+      label: function(context) {
+        return `Importance: ${(context.raw * 100).toFixed(2)}%`;
+      },
+    };
+
+    featureImportanceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data: values,
+          backgroundColor: colors,
+          borderColor: colors.map(c => c + '80'),
+          borderWidth: 1,
+          borderRadius: 4,
+          barPercentage: 0.7,
+        }],
+      },
+      options,
+    });
+
+    return featureImportanceChart;
+  }
+
+  // =========================================================================
+  // CONFIDENCE THRESHOLD CHART (dual axis: WR + ROI)
+  // =========================================================================
+  function renderConfidenceCurve(canvasId, tiers) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    if (confidenceCurveChart) confidenceCurveChart.destroy();
+
+    const ctx = canvas.getContext('2d');
+    const labels = tiers.map(t => `${Math.round(t.threshold * 100)}%`);
+    const wrData = tiers.map(t => t.wr);
+    const roiData = tiers.map(t => t.roi);
+    const signalData = tiers.map(t => t.signals);
+
+    const options = getBaseOptions('');
+    options.plugins.legend = {
+      display: true,
+      position: 'top',
+      labels: {
+        color: '#9ca3af',
+        font: { size: 11 },
+        padding: 16,
+        usePointStyle: true,
+        pointStyleWidth: 12,
+      },
+    };
+    options.scales = {
+      x: {
+        grid: { color: CHART_COLORS.grid },
+        ticks: { color: CHART_COLORS.text, font: { size: 11 } },
+        title: { display: true, text: 'Confidence Threshold', color: '#6b7280', font: { size: 11 } },
+      },
+      y: {
+        type: 'linear',
+        position: 'left',
+        grid: { color: CHART_COLORS.grid },
+        ticks: { color: '#10b981', font: { family: 'JetBrains Mono', size: 11 }, callback: v => v + '%' },
+        title: { display: true, text: 'Win Rate %', color: '#10b981', font: { size: 11 } },
+      },
+      y2: {
+        type: 'linear',
+        position: 'right',
+        grid: { display: false },
+        ticks: { color: '#3b82f6', font: { family: 'JetBrains Mono', size: 11 }, callback: v => '+' + v + '%' },
+        title: { display: true, text: 'ROI %', color: '#3b82f6', font: { size: 11 } },
+      },
+    };
+
+    options.plugins.tooltip.callbacks = {
+      label: function(context) {
+        const idx = context.dataIndex;
+        const tier = tiers[idx];
+        if (context.dataset.label === 'Win Rate') return `Win Rate: ${tier.wr}%`;
+        if (context.dataset.label === 'ROI') return `ROI: +${tier.roi}%`;
+        return `Signals: ${tier.signals}`;
+      },
+      afterBody: function(context) {
+        const idx = context[0]?.dataIndex;
+        if (idx === undefined) return [];
+        const tier = tiers[idx];
+        return [`Signals: ${tier.signals}`, `Sharpe: ${tier.sharpe.toFixed(2)}`, `Kelly: ${(tier.kelly * 100).toFixed(1)}%`];
+      },
+    };
+
+    // Break-even line annotation
+    options.plugins.annotation = {
+      annotations: {
+        'breakeven': {
+          type: 'line',
+          yMin: 52.4,
+          yMax: 52.4,
+          borderColor: 'rgba(239, 68, 68, 0.4)',
+          borderWidth: 1,
+          borderDash: [4, 4],
+          label: {
+            display: true,
+            content: 'Break-even (52.4%)',
+            position: 'start',
+            backgroundColor: 'rgba(239, 68, 68, 0.2)',
+            color: '#ef4444',
+            font: { size: 9 },
+            padding: { top: 2, bottom: 2, left: 4, right: 4 },
+          },
+        },
+      },
+    };
+
+    confidenceCurveChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Win Rate',
+            data: wrData,
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            fill: true,
+            borderWidth: 2.5,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#10b981',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1.5,
+            tension: 0.3,
+            yAxisID: 'y',
+          },
+          {
+            label: 'ROI',
+            data: roiData,
+            borderColor: '#3b82f6',
+            backgroundColor: 'transparent',
+            fill: false,
+            borderWidth: 2.5,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#3b82f6',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1.5,
+            tension: 0.3,
+            yAxisID: 'y2',
+          },
+        ],
+      },
+      options,
+    });
+
+    return confidenceCurveChart;
+  }
+
+  // =========================================================================
   // DESTROY ALL CHARTS
   // =========================================================================
   function destroyAll() {
-    [scoreflowChart, detailChart, historyChart, equityChart].forEach(c => {
+    [scoreflowChart, detailChart, historyChart, equityChart, featureImportanceChart, confidenceCurveChart].forEach(c => {
       if (c) c.destroy();
     });
-    scoreflowChart = detailChart = historyChart = equityChart = null;
+    scoreflowChart = detailChart = historyChart = equityChart = featureImportanceChart = confidenceCurveChart = null;
   }
 
   // =========================================================================
@@ -331,6 +522,8 @@ window.Charts = (function() {
   return {
     renderScoreflow,
     renderEquityCurve,
+    renderFeatureImportance,
+    renderConfidenceCurve,
     destroyAll,
   };
 
