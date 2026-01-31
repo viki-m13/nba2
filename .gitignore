@@ -16,6 +16,7 @@ venv/
 
 # Data cache
 data/cache/
+cache/
 *.pkl
 
 # OS
@@ -26,3 +27,4 @@ iphoneapp4/
 iphoneapp5/
 iphoneapp6/
 iphoneapp7/
+iphoneapp8/
