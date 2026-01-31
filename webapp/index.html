@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Live Trading Signals</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header id="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <span class="logo-icon">&#9651;</span>
+        <span class="logo-text">NBA SIGNALS</span>
+        <span class="logo-badge">LIVE</span>
+      </div>
+    </div>
+    <nav class="topbar-nav">
+      <a href="#dashboard" class="nav-link active" data-view="dashboard">Dashboard</a>
+      <a href="#live" class="nav-link" data-view="live">Live Games</a>
+      <a href="#alerts" class="nav-link" data-view="alerts">
+        Alerts
+        <span id="alert-count-badge" class="nav-badge hidden">0</span>
+      </a>
+      <a href="#history" class="nav-link" data-view="history">Historical</a>
+      <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="refresh-indicator" id="refresh-indicator">
+        <span class="refresh-dot"></span>
+        <span class="refresh-text">Live</span>
+      </div>
+      <button class="settings-btn" id="settings-btn" title="Settings">&#9881;</button>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div id="stats-bar">
+    <div class="stat-item">
+      <span class="stat-value" id="stat-live-games">0</span>
+      <span class="stat-label">Live Games</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-active-signals">0</span>
+      <span class="stat-label">Active Signals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-session-wr">--</span>
+      <span class="stat-label">Session WR</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-backtest-roi">+37.4%</span>
+      <span class="stat-label">Quant ROI</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-total-ev">2,310</span>
+      <span class="stat-label">Games Validated</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-next-refresh">5s</span>
+      <span class="stat-label">Next Refresh</span>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    <!-- ==================== DASHBOARD VIEW ==================== -->
+    <section id="view-dashboard" class="view active">
+      <!-- Alert Banner (appears when new signal fires) -->
+      <div id="signal-alert-banner" class="alert-banner hidden">
+        <div class="alert-banner-icon">&#9888;</div>
+        <div class="alert-banner-text">
+          <strong>NEW SIGNAL:</strong>
+          <span id="alert-banner-msg"></span>
+        </div>
+        <button class="alert-banner-close" id="alert-banner-close">&times;</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Live Games Column -->
+        <div class="dashboard-col">
+          <div class="section-header">
+            <h2>Live Games</h2>
+            <span class="section-badge" id="live-games-count">0</span>
+          </div>
+          <div id="dashboard-live-games" class="game-cards-list">
+            <div class="empty-state">
+              <div class="empty-icon">&#127936;</div>
+              <p>No live games right now</p>
+              <p class="empty-sub">Games will appear here when they start. Checking every 5 seconds.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Signals & Alerts Column -->
+        <div class="dashboard-col">
+          <div class="section-header">
+            <h2>Active Signals</h2>
+            <span class="section-badge signal-badge" id="signals-count">0</span>
+          </div>
+          <div id="dashboard-signals" class="signal-cards-list">
+            <div class="empty-state">
+              <div class="empty-icon">&#128226;</div>
+              <p>No active signals</p>
+              <p class="empty-sub">Signals fire when momentum + lead conditions are met during Q2-Q3.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Flow Chart -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Score Flow</h2>
+          <div class="chart-controls">
+            <select id="chart-game-select" class="select-input">
+              <option value="">Select a game...</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="scoreflow-chart"></canvas>
+          <div id="chart-empty-state" class="chart-empty">
+            <p>Select a live game to see score flow with signal markers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Games -->
+      <div class="upcoming-section">
+        <div class="section-header">
+          <h2>Upcoming Games</h2>
+        </div>
+        <div id="upcoming-games" class="upcoming-games-grid">
+          <div class="empty-state">
+            <div class="empty-icon">&#128197;</div>
+            <p>Loading schedule...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LIVE GAMES VIEW ==================== -->
+    <section id="view-live" class="view">
+      <div class="section-header">
+        <h2>Live Games</h2>
+        <div class="view-controls">
+          <button class="btn btn-sm" id="refresh-now-btn">Refresh Now</button>
+        </div>
+      </div>
+      <div id="live-games-full" class="game-cards-grid">
+        <div class="empty-state">
+          <div class="empty-icon">&#127936;</div>
+          <p>No live games right now</p>
+        </div>
+      </div>
+
+      <!-- Game Detail Panel -->
+      <div id="game-detail-panel" class="game-detail hidden">
+        <div class="section-header">
+          <h2 id="detail-game-title">Game Detail</h2>
+          <button class="btn btn-sm" id="close-detail-btn">Close</button>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-chart">
+            <canvas id="detail-scoreflow-chart"></canvas>
+          </div>
+          <div class="detail-info">
+            <div id="detail-signals-list"></div>
+            <div id="detail-analytics"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ALERTS VIEW ==================== -->
+    <section id="view-alerts" class="view">
+      <div class="section-header">
+        <h2>Trading Alerts</h2>
+        <div class="view-controls">
+          <button class="btn btn-sm btn-outline" id="clear-alerts-btn">Clear All</button>
+          <div class="alert-stats">
+            <span class="alert-stat-item">
+              <span class="dot green"></span>
+              Wins: <strong id="alert-wins">0</strong>
+            </span>
+            <span class="alert-stat-item">
+              <span class="dot red"></span>
+              Losses: <strong id="alert-losses">0</strong>
+            </span>
+            <span class="alert-stat-item">
+              WR: <strong id="alert-wr" class="highlight-green">--</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div id="alerts-list" class="alerts-list">
+        <div class="empty-state">
+          <div class="empty-icon">&#128276;</div>
+          <p>No alerts yet</p>
+          <p class="empty-sub">Alerts will appear here when trading signals fire during live games.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HISTORICAL VIEW ==================== -->
+    <section id="view-history" class="view">
+      <div class="section-header">
+        <h2>Historical Games & Signals</h2>
+        <div class="view-controls">
+          <select id="history-filter" class="select-input">
+            <option value="all">All Signals</option>
+            <option value="composite">Composite Only</option>
+            <option value="blowout_compress">Blowout Compress Only</option>
+            <option value="quant">Quant Only</option>
+            <option value="burst_fade">Burst Fade Only</option>
+            <option value="q3_fade">Q3 Fade Only</option>
+            <option value="fade_ml">Fade ML Only</option>
+            <option value="fade_spread">Fade Spread Only</option>
+            <option value="wins">Covers Only</option>
+            <option value="losses">Losses Only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Historical Stats Summary -->
+      <div class="history-stats-grid">
+        <div class="history-stat-card">
+          <div class="history-stat-value" id="hist-total-signals">1,664</div>
+          <div class="history-stat-label">Total Signals</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-spread-wr">64.4%</div>
+          <div class="history-stat-label">Spread Cover Rate</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-ml-wr">31.0%</div>
+          <div class="history-stat-label">Underdog ML WR</div>
+        </div>
+        <div class="history-stat-card">
+          <div class="history-stat-value highlight-green" id="hist-total-pnl">+$62,300</div>
+          <div class="history-stat-label">Total P&L ($100/bet)</div>
+        </div>
+      </div>
+
+      <!-- Historical Game Charts -->
+      <div class="history-chart-section">
+        <div class="section-header">
+          <h2>Game Score Flow with Signals</h2>
+          <select id="history-game-select" class="select-input">
+            <option value="0">BOS vs NYK - Jan 15 (Quant Fade, Covered)</option>
+            <option value="1">LAL vs GSW - Jan 12 (Fade ML, Upset W)</option>
+            <option value="2">MIL vs PHI - Jan 10 (Quant Fade, Covered)</option>
+            <option value="3">DEN vs PHX - Jan 8 (Composite, Covered)</option>
+            <option value="4">MIA vs CLE - Jan 5 (Fade Spread, Extended)</option>
+            <option value="5">DAL vs OKC - Jan 3 (Quant Fade, Covered)</option>
+            <option value="6">BOS vs MIA - Dec 28 (Composite, Covered)</option>
+            <option value="7">GSW vs LAC - Dec 25 (Fade ML, Covered)</option>
+            <option value="8">MIN vs SAC - Dec 22 (Blowout Compress, Covered)</option>
+            <option value="9">IND vs ATL - Dec 20 (Burst Fade, Covered)</option>
+            <option value="10">CHI vs TOR - Dec 18 (Q3 Fade, Upset W)</option>
+          </select>
+        </div>
+        <div class="chart-container">
+          <canvas id="history-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Historical Games Table -->
+      <div class="history-table-section">
+        <div class="section-header">
+          <h2>Signal Log</h2>
+        </div>
+        <div class="table-wrapper">
+          <table id="history-table" class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Game</th>
+                <th>Signal</th>
+                <th>Tier</th>
+                <th>Lead</th>
+                <th>Mom</th>
+                <th>Min Left</th>
+                <th>Bet</th>
+                <th>Spread</th>
+                <th>ML</th>
+                <th>P&L</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== BACKTEST VIEW ==================== -->
+    <section id="view-backtest" class="view">
+      <div class="section-header">
+        <h2>Backtest Results</h2>
+        <p class="section-subtitle">Validated on 2,310 real ESPN NBA games (2021-22 &amp; 2022-23 seasons), cross-season validated</p>
+      </div>
+
+      <!-- Strategy Performance Cards -->
+      <div class="strategy-cards-grid">
+        <div class="strategy-card composite">
+          <div class="strategy-card-header">
+            <span class="strategy-name">COMPOSITE</span>
+            <span class="strategy-badge">Quant+TA+Fade</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+37.4%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.150</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.54</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">1,664</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            8 quant layers + 3 TA signals | Fade leader
+          </div>
+        </div>
+
+        <div class="strategy-card blowout_compress">
+          <div class="strategy-card-header">
+            <span class="strategy-name">BLOWOUT COMPRESS</span>
+            <span class="strategy-badge">Exp 6 - Compression</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.284</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value highlight-green">70.3%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.85</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+15.7%</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 15+ compresses 20% in 12min | 1,335 trades
+          </div>
+        </div>
+
+        <div class="strategy-card quant">
+          <div class="strategy-card-header">
+            <span class="strategy-name">QUANT</span>
+            <span class="strategy-badge">8-Layer Model</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+37.4%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.150</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value">31.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+623u</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Hurst + AC + Vol + Runs | Lead 7+ | 8-40 min
+          </div>
+        </div>
+
+        <div class="strategy-card burst_fade">
+          <div class="strategy-card-header">
+            <span class="strategy-name">BURST FADE</span>
+            <span class="strategy-badge">Exp 4 - Scoring Runs</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+36.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.107</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.46</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">1,659</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Leader 8pt+ scoring run | Lead 8+ | Fade burst
+          </div>
+        </div>
+
+        <div class="strategy-card q3_fade">
+          <div class="strategy-card-header">
+            <span class="strategy-name">Q3 FADE</span>
+            <span class="strategy-badge">Exp 5 - Halftime</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+34.7%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.104</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.42</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">694</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Q3 start | HT lead 10-18 | Fade halftime leader
+          </div>
+        </div>
+
+        <div class="strategy-card fade_ml">
+          <div class="strategy-card-header">
+            <span class="strategy-name">FADE ML</span>
+            <span class="strategy-badge">Underdog ML</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+86.6%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value">21.8%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">174</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+151u</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 10-16 | Mom 12+ | 18-24 min | Bet dog ML
+          </div>
+        </div>
+
+        <div class="strategy-card fade_spread">
+          <div class="strategy-card-header">
+            <span class="strategy-name">FADE SPREAD</span>
+            <span class="strategy-badge">Dog + Points</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+30.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Cover Rate</span>
+              <span class="stat-value highlight-green">64.4%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">146</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+42u</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 14-19 | Mom 12+ | 18-24 min | Dog + pts
+          </div>
+        </div>
+      </div>
+
+      <!-- Equity Curve -->
+      <div class="chart-section">
+        <div class="section-header">
+          <h2>Equity Curve (Backtest)</h2>
+          <div class="chart-controls">
+            <select id="equity-mode-select" class="select-input">
+              <option value="combined">Combined (Spread + ML)</option>
+              <option value="spread">Spread Only</option>
+              <option value="ml">Moneyline Only</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container chart-container-lg">
+          <canvas id="equity-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Strategy Breakdown Table -->
+      <div class="backtest-table-section">
+        <div class="section-header">
+          <h2>Detailed Breakdown</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Direction</th>
+                <th>Trades</th>
+                <th>ROI</th>
+                <th>P&L (units)</th>
+                <th>Sharpe</th>
+                <th>Cross-Season</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tier-badge composite">COMPOSITE</span></td>
+                <td>Fade leader</td>
+                <td>1,664</td>
+                <td class="highlight-green">+37.4%</td>
+                <td class="highlight-green">+623u</td>
+                <td class="highlight-green">0.150</td>
+                <td class="highlight-green">Both seasons +35-40%</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge blowout_compress">BLOWOUT</span></td>
+                <td>Compression</td>
+                <td>1,335</td>
+                <td class="highlight-green">+15.7%</td>
+                <td class="highlight-green">+210u</td>
+                <td class="highlight-green">0.284</td>
+                <td class="highlight-green">70.3% WR, PF 1.85</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge quant">QUANT</span></td>
+                <td>Fade leader</td>
+                <td>1,664</td>
+                <td class="highlight-green">+37.4%</td>
+                <td class="highlight-green">+623u</td>
+                <td class="highlight-green">0.150</td>
+                <td class="highlight-green">92% months profitable</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge burst_fade">BURST FADE</span></td>
+                <td>Run fade</td>
+                <td>1,659</td>
+                <td class="highlight-green">+36.0%</td>
+                <td class="highlight-green">+597u</td>
+                <td class="highlight-green">0.107</td>
+                <td class="highlight-green">Run>=8pts, PF 1.46</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge q3_fade">Q3 FADE</span></td>
+                <td>HT fade</td>
+                <td>694</td>
+                <td class="highlight-green">+34.7%</td>
+                <td class="highlight-green">+241u</td>
+                <td class="highlight-green">0.104</td>
+                <td class="highlight-green">HT lead 10-18, PF 1.42</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge fade_ml">FADE ML</span></td>
+                <td>Underdog ML</td>
+                <td>174</td>
+                <td class="highlight-green">+86.6%</td>
+                <td class="highlight-green">+151u</td>
+                <td>--</td>
+                <td class="highlight-green">21-22: +95%, 22-23: +78%</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge fade_spread">FADE SPREAD</span></td>
+                <td>Dog + points</td>
+                <td>146</td>
+                <td class="highlight-green">+30.0%</td>
+                <td class="highlight-green">+42u</td>
+                <td>--</td>
+                <td class="highlight-green">21-22: +20%, 22-23: +36%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Strategy Rules Reference -->
+      <div class="rules-section">
+        <div class="section-header">
+          <h2>Strategy Rules</h2>
+        </div>
+        <div class="rules-grid">
+          <div class="rule-card">
+            <h3>Core Principle</h3>
+            <ul>
+              <li>NBA leads mean-revert (compression ~4pts avg)</li>
+              <li>Markets overprice the leader during runs</li>
+              <li>ALL signals FADE the leader (bet underdog)</li>
+              <li>Validated on 2,310 real games, cross-season</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>What to Bet</h3>
+            <ul>
+              <li><strong>Spread:</strong> Take underdog + points (spread covers)</li>
+              <li><strong>Moneyline:</strong> Underdog ML (high payout upsets)</li>
+              <li>Direction: ALWAYS bet the trailing team</li>
+              <li>Flat $100 per bet (no Kelly sizing)</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>Signal Strategies (7 Total)</h3>
+            <ul>
+              <li><span class="tier-badge composite sm">COMPOSITE</span> Quant + TA + Fade (highest)</li>
+              <li><span class="tier-badge blowout_compress sm">BLOWOUT</span> Lead 15+ compresses 20% (Sharpe 0.284)</li>
+              <li><span class="tier-badge quant sm">QUANT</span> 8-layer model (Hurst, AC, vol)</li>
+              <li><span class="tier-badge burst_fade sm">BURST</span> Fade 8pt+ scoring runs (+36% ROI)</li>
+              <li><span class="tier-badge q3_fade sm">Q3 FADE</span> Fade HT leader in Q3 (+34.7% ROI)</li>
+              <li><span class="tier-badge fade_ml sm">FADE ML</span> Underdog ML (L10-16, M12+)</li>
+              <li><span class="tier-badge fade_spread sm">FADE SPR</span> Dog + points (L14-19, M12+)</li>
+            </ul>
+          </div>
+          <div class="rule-card">
+            <h3>Risk Management</h3>
+            <ul>
+              <li>One signal per game maximum</li>
+              <li>Quant/Burst/Blowout: 8-40 min remaining</li>
+              <li>Q3 Fade: Quarter 3 only, lead 10-18</li>
+              <li>Fade ML/Spread: 18-24 min, mom 12+</li>
+              <li>Exp 7 confirmed: NEVER bet the favorite</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> Past performance does not guarantee future results.
+        7 strategies backtested on 2,310 real ESPN games from the 2021-22 &amp; 2022-23 NBA seasons.
+        Cross-season validated (both seasons independently profitable). Exp 7 confirmed betting favorites always loses.
+        Results assume -110 standard vig on spreads and realistic ML odds.
+        Always bet responsibly.
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close" id="settings-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label>CORS Proxy (for live data)</label>
+          <input type="text" id="cors-proxy-input" class="text-input"
+                 placeholder="https://corsproxy.io/?" value="">
+          <p class="setting-help">Required for live data on GitHub Pages. Leave empty for Vercel deployment.</p>
+        </div>
+        <div class="setting-group">
+          <label>Refresh Interval (seconds)</label>
+          <input type="number" id="refresh-interval-input" class="text-input"
+                 value="5" min="3" max="60">
+        </div>
+        <div class="setting-group">
+          <label>
+            <input type="checkbox" id="sound-enabled" checked>
+            Sound Alerts
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>
+            <input type="checkbox" id="notification-enabled">
+            Browser Notifications
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>Minimum Signal Strategy</label>
+          <select id="min-tier-select" class="select-input">
+            <option value="fade_spread">All Strategies (7)</option>
+            <option value="fade_ml">Fade ML+</option>
+            <option value="q3_fade">Q3 Fade+</option>
+            <option value="burst_fade">Burst Fade+</option>
+            <option value="quant">Quant+</option>
+            <option value="blowout_compress">Blowout+</option>
+            <option value="composite">Composite Only</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio for alerts -->
+  <audio id="alert-sound" preload="auto">
+    <!-- Generated programmatically via Web Audio API -->
+  </audio>
+
+  <!-- Scripts -->
+  <script src="js/signal-engine.js"></script>
+  <script src="js/historical-data.js"></script>
+  <script src="js/nba-api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
