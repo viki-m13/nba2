@@ -1,249 +1,229 @@
 // =============================================================================
 // HISTORICAL DATA - Sample games with realistic signal data
 // =============================================================================
-// Based on validated strategy results from 156 real ESPN NBA games
-// Each game includes possession-level score flow and signal data
+// Based on validated quant strategy results from 2,310 real ESPN NBA games
+// Direction: ALL signals FADE the leader (bet the underdog)
 // =============================================================================
 
 window.HistoricalData = (function() {
 
   // =========================================================================
-  // GENERATE REALISTIC POSSESSION DATA
-  // =========================================================================
-  function generatePossessions(homeTeam, awayTeam, segments, totalPossessions) {
-    const possessions = [];
-    let homeScore = 0;
-    let awayScore = 0;
-    let timestamp = 0;
-
-    // segments: [{poss: count, homeRate: ptsPerPoss, awayRate: ptsPerPoss}, ...]
-    let posIdx = 0;
-    for (const seg of segments) {
-      for (let i = 0; i < seg.poss && posIdx < totalPossessions; i++) {
-        timestamp += 12 + Math.floor(Math.random() * 8); // 12-20 seconds per possession
-        const quarter = Math.floor(timestamp / (12 * 60)) + 1;
-        const timeInQuarter = (12 * 60) - (timestamp % (12 * 60));
-        const mins = Math.floor(timeInQuarter / 60);
-        const secs = timeInQuarter % 60;
-
-        // Random scoring
-        const homeScores = Math.random() < seg.homeRate;
-        const awayScores = !homeScores && Math.random() < seg.awayRate;
-
-        if (homeScores) {
-          const pts = Math.random() < 0.35 ? 3 : 2;
-          homeScore += pts;
-        } else if (awayScores) {
-          const pts = Math.random() < 0.35 ? 3 : 2;
-          awayScore += pts;
-        }
-
-        possessions.push({
-          id: `pos-${posIdx}`,
-          timestamp,
-          quarter: Math.min(quarter, 4),
-          quarterTime: `${mins}:${secs.toString().padStart(2, '0')}`,
-          team: homeScores ? 'home' : 'away',
-          homeScore,
-          awayScore,
-          differential: homeScore - awayScore,
-          fairDifferential: homeScore - awayScore,
-          event: 'score',
-          homeTeam,
-          awayTeam,
-        });
-        posIdx++;
-      }
-    }
-
-    return possessions;
-  }
-
-  // =========================================================================
   // HISTORICAL GAMES DATA
   // =========================================================================
   const GAMES = [
-    // Game 0: BOS vs NYK - Elite Signal, Win
+    // Game 0: BOS vs NYK - Quant signal, lead compressed (spread cover)
     {
       id: 'hist-001',
       date: 'Jan 15',
       homeTeam: 'BOS',
       awayTeam: 'NYK',
-      homeScore: 118,
-      awayScore: 95,
+      homeScore: 108,
+      awayScore: 102,
       signal: {
-        tier: 'elite',
-        team: 'home',
-        betTeam: 'BOS',
+        tier: 'quant',
+        strategy: 'quant',
+        strategyName: 'Quant',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'NYK',      // Bet underdog
+        leaderTeam: 'BOS',
         lead: 14,
-        momentum: 16,
+        momentum: 12,
         quarter: 2,
         quarterTime: '4:30',
         minsRemaining: 16.5,
         scoreAtSignal: { home: 52, away: 38 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 14 to 6 (covered)
+        mlOutcome: 'loss',      // BOS still won (no upset)
         possessionIndex: 62,
       },
     },
-    // Game 1: LAL vs GSW - Strong Signal, Win
+    // Game 1: LAL vs GSW - Fade ML, underdog wins (upset!)
     {
       id: 'hist-002',
       date: 'Jan 12',
       homeTeam: 'LAL',
       awayTeam: 'GSW',
-      homeScore: 121,
-      awayScore: 108,
+      homeScore: 108,
+      awayScore: 112,
       signal: {
-        tier: 'strong',
-        team: 'home',
-        betTeam: 'LAL',
+        tier: 'fade_ml',
+        strategy: 'fade_ml',
+        strategyName: 'Fade ML',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'GSW',      // Bet underdog
+        leaderTeam: 'LAL',
         lead: 12,
-        momentum: 13,
+        momentum: 14,
         quarter: 2,
         quarterTime: '6:15',
         minsRemaining: 18.3,
         scoreAtSignal: { home: 48, away: 36 },
         spreadOutcome: 'win',
-        mlOutcome: 'win',
+        mlOutcome: 'win',     // Upset! GSW came back
         possessionIndex: 55,
       },
     },
-    // Game 2: MIL vs PHI - Standard Signal, Win
+    // Game 2: MIL vs PHI - Quant signal, spread cover
     {
       id: 'hist-003',
       date: 'Jan 10',
       homeTeam: 'MIL',
       awayTeam: 'PHI',
-      homeScore: 112,
+      homeScore: 106,
       awayScore: 101,
       signal: {
-        tier: 'standard',
-        team: 'home',
-        betTeam: 'MIL',
+        tier: 'quant',
+        strategy: 'quant',
+        strategyName: 'Quant',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'PHI',
+        leaderTeam: 'MIL',
         lead: 11,
         momentum: 10,
         quarter: 3,
         quarterTime: '8:20',
         minsRemaining: 20.3,
         scoreAtSignal: { home: 62, away: 51 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 11 to 5
+        mlOutcome: 'loss',
         possessionIndex: 72,
       },
     },
-    // Game 3: DEN vs PHX - Elite Signal, Win
+    // Game 3: DEN vs PHX - Composite signal, covered
     {
       id: 'hist-004',
       date: 'Jan 8',
       homeTeam: 'DEN',
       awayTeam: 'PHX',
-      homeScore: 125,
-      awayScore: 102,
+      homeScore: 115,
+      awayScore: 110,
       signal: {
-        tier: 'elite',
-        team: 'home',
-        betTeam: 'DEN',
+        tier: 'composite',
+        strategy: 'composite',
+        strategyName: 'Composite',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'PHX',
+        leaderTeam: 'DEN',
         lead: 16,
         momentum: 18,
         quarter: 2,
         quarterTime: '3:45',
         minsRemaining: 15.8,
         scoreAtSignal: { home: 56, away: 40 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 16 to 5
+        mlOutcome: 'loss',
         possessionIndex: 65,
       },
     },
-    // Game 4: MIA vs CLE - Wide Signal, Loss (comeback)
+    // Game 4: MIA vs CLE - Fade Spread, lead expanded (loss)
     {
       id: 'hist-005',
       date: 'Jan 5',
       homeTeam: 'MIA',
       awayTeam: 'CLE',
-      homeScore: 105,
-      awayScore: 108,
+      homeScore: 118,
+      awayScore: 101,
       signal: {
-        tier: 'wide',
-        team: 'home',
-        betTeam: 'MIA',
-        lead: 10,
-        momentum: 9,
+        tier: 'fade_spread',
+        strategy: 'fade_spread',
+        strategyName: 'Fade Spread',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'CLE',
+        leaderTeam: 'MIA',
+        lead: 14,
+        momentum: 13,
         quarter: 2,
         quarterTime: '5:00',
         minsRemaining: 17.0,
-        scoreAtSignal: { home: 48, away: 38 },
-        spreadOutcome: 'loss',
+        scoreAtSignal: { home: 52, away: 38 },
+        spreadOutcome: 'loss',  // Lead expanded from 14 to 17
         mlOutcome: 'loss',
         possessionIndex: 58,
       },
     },
-    // Game 5: DAL vs OKC - Strong Signal, Win
+    // Game 5: DAL vs OKC - Quant signal, covered
     {
       id: 'hist-006',
       date: 'Jan 3',
       homeTeam: 'DAL',
       awayTeam: 'OKC',
-      homeScore: 119,
-      awayScore: 107,
+      homeScore: 107,
+      awayScore: 105,
       signal: {
-        tier: 'strong',
-        team: 'home',
-        betTeam: 'DAL',
+        tier: 'quant',
+        strategy: 'quant',
+        strategyName: 'Quant',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'OKC',
+        leaderTeam: 'DAL',
         lead: 13,
         momentum: 12,
         quarter: 2,
         quarterTime: '7:30',
         minsRemaining: 19.5,
         scoreAtSignal: { home: 45, away: 32 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 13 to 2
+        mlOutcome: 'loss',
         possessionIndex: 48,
       },
     },
-    // Game 6: BOS vs MIA - Elite Signal, Win
+    // Game 6: BOS vs MIA - Composite signal, covered
     {
       id: 'hist-007',
       date: 'Dec 28',
       homeTeam: 'BOS',
       awayTeam: 'MIA',
-      homeScore: 130,
-      awayScore: 105,
+      homeScore: 112,
+      awayScore: 108,
       signal: {
-        tier: 'elite',
-        team: 'home',
-        betTeam: 'BOS',
+        tier: 'composite',
+        strategy: 'composite',
+        strategyName: 'Composite',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'MIA',
+        leaderTeam: 'BOS',
         lead: 18,
         momentum: 15,
         quarter: 2,
         quarterTime: '2:00',
         minsRemaining: 14.0,
         scoreAtSignal: { home: 60, away: 42 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 18 to 4
+        mlOutcome: 'loss',
         possessionIndex: 70,
       },
     },
-    // Game 7: GSW vs LAC - Standard Signal, Win
+    // Game 7: GSW vs LAC - Fade ML, covered
     {
       id: 'hist-008',
       date: 'Dec 25',
       homeTeam: 'GSW',
       awayTeam: 'LAC',
-      homeScore: 113,
+      homeScore: 109,
       awayScore: 104,
       signal: {
-        tier: 'standard',
-        team: 'home',
-        betTeam: 'GSW',
+        tier: 'fade_ml',
+        strategy: 'fade_ml',
+        strategyName: 'Fade ML',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'LAC',
+        leaderTeam: 'GSW',
         lead: 11,
-        momentum: 11,
+        momentum: 13,
         quarter: 3,
         quarterTime: '9:00',
         minsRemaining: 21.0,
         scoreAtSignal: { home: 58, away: 47 },
-        spreadOutcome: 'win',
-        mlOutcome: 'win',
+        spreadOutcome: 'win',   // Lead compressed from 11 to 5
+        mlOutcome: 'loss',
         possessionIndex: 68,
       },
     },
@@ -258,23 +238,19 @@ window.HistoricalData = (function() {
     let homeScore = 0;
     let awayScore = 0;
     let timestamp = 0;
-    const totalPoss = 200; // ~200 scoring plays per game
+    const totalPoss = 200;
 
-    // Pre-signal phase: gradual lead building
     const preSigPoss = sig.possessionIndex;
     const homeAtSig = sig.scoreAtSignal.home;
     const awayAtSig = sig.scoreAtSignal.away;
 
-    // Generate pre-signal possessions
     for (let i = 0; i < preSigPoss; i++) {
       timestamp += 12 + Math.floor(Math.random() * 8);
       const progress = i / preSigPoss;
 
-      // Interpolate scores with some noise
       const targetHome = Math.round(homeAtSig * progress);
       const targetAway = Math.round(awayAtSig * progress);
 
-      // Add some randomness
       if (Math.random() < 0.55) {
         const pts = Math.random() < 0.3 ? 3 : 2;
         if (homeScore + pts <= targetHome + 4) homeScore += pts;
@@ -304,11 +280,9 @@ window.HistoricalData = (function() {
       });
     }
 
-    // Adjust to match signal scores
     homeScore = homeAtSig;
     awayScore = awayAtSig;
 
-    // Post-signal phase
     const postSigPoss = totalPoss - preSigPoss;
     const finalHome = game.homeScore;
     const finalAway = game.awayScore;
@@ -349,7 +323,6 @@ window.HistoricalData = (function() {
       });
     }
 
-    // Ensure final scores match
     if (possessions.length > 0) {
       const last = possessions[possessions.length - 1];
       last.homeScore = finalHome;
@@ -361,7 +334,7 @@ window.HistoricalData = (function() {
   }
 
   // =========================================================================
-  // EQUITY CURVE DATA (from 156-game backtest)
+  // EQUITY CURVE DATA (from 2,310-game backtest)
   // =========================================================================
   function generateEquityCurve() {
     const combined = [];
@@ -372,31 +345,32 @@ window.HistoricalData = (function() {
     let spreadPnl = 0;
     let mlPnl = 0;
 
-    // Simulate 156 signals with realistic win/loss distribution
+    // Simulate signals based on validated strategy results
+    // Quant model: 1664 trades, spread cover ~64%, ML upset ~31%, ROI +37.4%
     const signals = [];
-    const tiers = [
-      { tier: 'elite', count: 43, spreadWR: 0.976, mlWR: 0.977 },
-      { tier: 'strong', count: 25, spreadWR: 0.88, mlWR: 0.92 },
-      { tier: 'standard', count: 34, spreadWR: 0.824, mlWR: 0.941 },
-      { tier: 'wide', count: 54, spreadWR: 0.78, mlWR: 0.907 },
+    const strategies = [
+      { tier: 'quant', count: 120, spreadCover: 0.64, mlUpset: 0.31 },
+      { tier: 'fade_ml', count: 30, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'fade_spread', count: 25, spreadCover: 0.64, mlUpset: 0.15 },
+      { tier: 'composite', count: 25, spreadCover: 0.68, mlUpset: 0.35 },
     ];
 
-    for (const t of tiers) {
-      for (let i = 0; i < t.count; i++) {
-        const spreadWin = Math.random() < t.spreadWR;
-        const mlWin = Math.random() < t.mlWR;
+    for (const s of strategies) {
+      for (let i = 0; i < s.count; i++) {
+        const spreadWin = Math.random() < s.spreadCover;
+        const mlWin = Math.random() < s.mlUpset;
+        const underdogOdds = 200 + Math.floor(Math.random() * 500); // +200 to +700
         signals.push({
-          tier: t.tier,
+          tier: s.tier,
           spreadWin,
           mlWin,
-          // Realistic payouts
-          spreadPayout: spreadWin ? 0.909 : -1, // -110 odds
-          mlPayout: mlWin ? (0.15 + Math.random() * 0.15) : -1, // ML favorites ~-500 to -800
+          spreadPayout: spreadWin ? 0.909 : -1,
+          mlPayout: mlWin ? underdogOdds / 100 : -1, // +300 → pays 3.0x
         });
       }
     }
 
-    // Shuffle to randomize order
+    // Shuffle
     for (let i = signals.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [signals[i], signals[j]] = [signals[j], signals[i]];
@@ -404,7 +378,6 @@ window.HistoricalData = (function() {
 
     for (let i = 0; i < signals.length; i++) {
       const sig = signals[i];
-
       spreadPnl += sig.spreadPayout;
       mlPnl += sig.mlPayout;
       combinedPnl = spreadPnl + mlPnl;
@@ -425,12 +398,12 @@ window.HistoricalData = (function() {
     const logs = [];
     const teams = ['BOS', 'NYK', 'LAL', 'GSW', 'MIL', 'PHI', 'DEN', 'PHX', 'MIA', 'CLE',
                    'DAL', 'OKC', 'MIN', 'SAC', 'IND', 'ATL', 'CHI', 'TOR', 'HOU', 'NOP'];
-    const tiers = ['elite', 'strong', 'standard', 'wide'];
+    const tiers = ['composite', 'quant', 'fade_ml', 'fade_spread'];
     const tierStats = {
-      elite:    { spreadWR: 0.976, mlWR: 0.977, count: 43 },
-      strong:   { spreadWR: 0.88,  mlWR: 0.92,  count: 25 },
-      standard: { spreadWR: 0.824, mlWR: 0.941, count: 34 },
-      wide:     { spreadWR: 0.78,  mlWR: 0.907, count: 54 },
+      composite:    { spreadCover: 0.68, mlUpset: 0.35, count: 25 },
+      quant:        { spreadCover: 0.64, mlUpset: 0.31, count: 120 },
+      fade_ml:      { spreadCover: 0.60, mlUpset: 0.22, count: 30 },
+      fade_spread:  { spreadCover: 0.64, mlUpset: 0.15, count: 25 },
     };
 
     let date = new Date('2024-01-15');
@@ -443,25 +416,30 @@ window.HistoricalData = (function() {
         let away = teams[Math.floor(Math.random() * teams.length)];
         while (away === home) away = teams[Math.floor(Math.random() * teams.length)];
 
-        const lead = 10 + Math.floor(Math.random() * 10);
-        const mom = tier === 'elite' ? 14 + Math.floor(Math.random() * 6) :
-                    tier === 'strong' ? 12 + Math.floor(Math.random() * 2) :
-                    tier === 'standard' ? 10 + Math.floor(Math.random() * 2) :
-                    8 + Math.floor(Math.random() * 2);
-        const minsLeft = 12 + Math.round(Math.random() * 12);
-        const quarter = minsLeft > 12 ? 2 : 3;
+        const lead = tier === 'fade_spread' ? 14 + Math.floor(Math.random() * 6) :
+                     tier === 'fade_ml' ? 10 + Math.floor(Math.random() * 7) :
+                     7 + Math.floor(Math.random() * 13);
+        const mom = tier === 'fade_ml' || tier === 'fade_spread' ?
+                    12 + Math.floor(Math.random() * 8) :
+                    0; // Quant/composite don't require momentum
+        const minsLeft = tier === 'fade_ml' || tier === 'fade_spread' ?
+                         18 + Math.round(Math.random() * 6) :
+                         8 + Math.round(Math.random() * 32);
+        const quarter = minsLeft > 24 ? 2 : minsLeft > 12 ? 3 : 4;
 
-        const spreadWin = Math.random() < stats.spreadWR;
-        const mlWin = Math.random() < stats.mlWR;
+        const spreadWin = Math.random() < stats.spreadCover;
+        const mlWin = Math.random() < stats.mlUpset;
 
+        const underdogOdds = 200 + Math.floor(Math.random() * 500);
         const spreadPnl = spreadWin ? 0.91 : -1;
-        const mlPnl = mlWin ? (0.12 + Math.random() * 0.18) : -1;
+        const mlPnl = mlWin ? underdogOdds / 100 : -1;
 
         logs.push({
           date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
           home,
           away,
-          betTeam: home,
+          betTeam: away,         // Underdog (away team trailing)
+          leaderTeam: home,       // Leader (home team leading)
           tier,
           lead,
           momentum: mom,
@@ -476,9 +454,7 @@ window.HistoricalData = (function() {
       }
     }
 
-    // Sort by date (most recent first)
     logs.sort((a, b) => new Date(b.date) - new Date(a.date));
-
     return logs;
   }
 

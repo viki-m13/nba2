@@ -20,14 +20,14 @@
     countdownTimer: null,
     soundEnabled: true,
     notificationsEnabled: false,
-    minTier: 'wide',       // minimum tier to show
+    minTier: 'fade_spread', // minimum tier to show
     seenSignals: new Set(), // track already-alerted signals
     equityData: null,
     signalLog: null,
     historyGames: null,
   };
 
-  const TIER_PRIORITY = { elite: 0, strong: 1, standard: 2, wide: 3 };
+  const TIER_PRIORITY = { composite: 0, quant: 1, fade_ml: 2, fade_spread: 3 };
 
   // =========================================================================
   // INITIALIZATION
@@ -64,6 +64,8 @@
       if (saved.soundEnabled !== undefined) state.soundEnabled = saved.soundEnabled;
       if (saved.notificationsEnabled !== undefined) state.notificationsEnabled = saved.notificationsEnabled;
       if (saved.minTier) state.minTier = saved.minTier;
+      // Migrate old tier names
+      if (['elite', 'strong', 'standard', 'wide'].includes(state.minTier)) state.minTier = 'fade_spread';
 
       // Update UI
       const proxyInput = document.getElementById('cors-proxy-input');
@@ -385,8 +387,8 @@
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      // Different tones per tier
-      const freqs = { elite: [880, 1100, 880], strong: [660, 880], standard: [550, 660], wide: [440] };
+      // Different tones per strategy
+      const freqs = { composite: [880, 1100, 880], quant: [660, 880], fade_ml: [550, 660], fade_spread: [440] };
       const tones = freqs[tier] || [440];
 
       gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
@@ -536,7 +538,7 @@
         <div class="empty-state">
           <div class="empty-icon">&#128226;</div>
           <p>No active signals</p>
-          <p class="empty-sub">Signals fire when momentum + lead conditions are met during Q2-Q3.</p>
+          <p class="empty-sub">Signals fire when quant layers detect mean reversion opportunities (fade the leader).</p>
         </div>`;
       return;
     }
@@ -548,25 +550,27 @@
     const instruction = SignalEngine.getTradeInstruction(signal);
     if (!instruction) return '';
 
+    const stratName = signal.strategyName || signal.tier.toUpperCase();
+
     return `
       <div class="signal-card ${signal.tier} new-signal">
         <div class="signal-card-header">
-          <span class="signal-tier ${signal.tier}">${signal.tier.toUpperCase()}</span>
+          <span class="signal-tier ${signal.tier}">${stratName}</span>
           <span class="signal-time">Q${signal.quarter} ${signal.quarterTime}</span>
         </div>
         <div class="signal-instruction">
           <div class="signal-action">${instruction.headline}</div>
           <div class="signal-details">
             <div class="detail-row">
-              <span class="detail-label">Spread Bet:</span>
+              <span class="detail-label">Spread:</span>
               <span class="detail-value">${instruction.spread}</span>
             </div>
             <div class="detail-row">
-              <span class="detail-label">ML Bet:</span>
+              <span class="detail-label">Moneyline:</span>
               <span class="detail-value">${instruction.moneyline}</span>
             </div>
             <div class="detail-row">
-              <span class="detail-label">Combined EV:</span>
+              <span class="detail-label">Validated:</span>
               <span class="detail-value highlight-green">${instruction.combined}</span>
             </div>
           </div>
@@ -585,12 +589,12 @@
             <span class="detail-value">${signal.minsRemaining}</span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">Market Prob:</span>
+            <span class="detail-label">Leader Mkt Prob:</span>
             <span class="detail-value">${signal.marketProb}%</span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">Model Prob:</span>
-            <span class="detail-value highlight-green">${signal.modelProb}%</span>
+            <span class="detail-label">Underdog Odds:</span>
+            <span class="detail-value highlight-green">${signal.underdogOdds}</span>
           </div>
         </div>
         <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--amber);">
@@ -792,11 +796,13 @@
       const instruction = alert.instruction || SignalEngine.getTradeInstruction(alert);
       const time = new Date(alert.timestamp).toLocaleString();
 
+      const stratName = alert.strategyName || alert.tier.toUpperCase();
+
       return `
         <div class="alert-item">
-          <div class="alert-item-tier ${alert.tier}">${alert.tier.toUpperCase()}</div>
+          <div class="alert-item-tier ${alert.tier}">${stratName}</div>
           <div class="alert-item-body">
-            <h4>${instruction?.headline || `${alert.tier.toUpperCase()} SIGNAL`}</h4>
+            <h4>${instruction?.headline || `FADE SIGNAL (${stratName})`}</h4>
             <p>${alert.gameName || ''} | ${time}</p>
             <p style="margin-top: 0.3rem;">${instruction?.spread || ''}</p>
             <p>${instruction?.moneyline || ''}</p>
@@ -866,12 +872,12 @@
     const filter = document.getElementById('history-filter')?.value || 'all';
 
     let filtered = state.signalLog;
-    if (filter === 'elite') filtered = filtered.filter(s => s.tier === 'elite');
-    else if (filter === 'strong') filtered = filtered.filter(s => s.tier === 'strong');
-    else if (filter === 'standard') filtered = filtered.filter(s => s.tier === 'standard');
-    else if (filter === 'wide') filtered = filtered.filter(s => s.tier === 'wide');
-    else if (filter === 'wins') filtered = filtered.filter(s => s.mlOutcome === 'win');
-    else if (filter === 'losses') filtered = filtered.filter(s => s.mlOutcome === 'loss');
+    if (filter === 'composite') filtered = filtered.filter(s => s.tier === 'composite');
+    else if (filter === 'quant') filtered = filtered.filter(s => s.tier === 'quant');
+    else if (filter === 'fade_ml') filtered = filtered.filter(s => s.tier === 'fade_ml');
+    else if (filter === 'fade_spread') filtered = filtered.filter(s => s.tier === 'fade_spread');
+    else if (filter === 'wins') filtered = filtered.filter(s => s.spreadOutcome === 'win');
+    else if (filter === 'losses') filtered = filtered.filter(s => s.spreadOutcome === 'loss');
 
     // Update summary stats
     const totalSignals = filtered.length;
@@ -884,16 +890,17 @@
     document.getElementById('hist-ml-wr').textContent = totalSignals > 0 ? `${(mlWins / totalSignals * 100).toFixed(1)}%` : '--';
     document.getElementById('hist-total-pnl').textContent = `${totalPnl >= 0 ? '+' : ''}$${Math.round(totalPnl * 100)}`;
 
+    const stratNames = { composite: 'COMPOSITE', quant: 'QUANT', fade_ml: 'FADE ML', fade_spread: 'FADE SPR' };
     tbody.innerHTML = filtered.slice(0, 100).map(sig => `
       <tr>
         <td>${sig.date}</td>
         <td>${sig.away} @ ${sig.home}</td>
-        <td>${sig.betTeam} -5 + ML</td>
-        <td><span class="tier-badge ${sig.tier} sm">${sig.tier.toUpperCase()}</span></td>
+        <td>Fade ${sig.leaderTeam || sig.home}</td>
+        <td><span class="tier-badge ${sig.tier} sm">${stratNames[sig.tier] || sig.tier.toUpperCase()}</span></td>
         <td>${sig.lead}</td>
         <td>${sig.momentum}</td>
         <td>${sig.minsRemaining}</td>
-        <td>${sig.betTeam} -5 + ML</td>
+        <td>${sig.betTeam} +${sig.lead}</td>
         <td class="${sig.spreadOutcome}">${sig.spreadOutcome.toUpperCase()}</td>
         <td class="${sig.mlOutcome}">${sig.mlOutcome.toUpperCase()}</td>
         <td class="${sig.totalPnl >= 0 ? 'highlight-green' : 'highlight-red'}">

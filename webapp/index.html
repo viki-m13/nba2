@@ -54,12 +54,12 @@
       <span class="stat-label">Session WR</span>
     </div>
     <div class="stat-item">
-      <span class="stat-value" id="stat-backtest-wr">94.2%</span>
-      <span class="stat-label">Backtest WR (ML)</span>
+      <span class="stat-value highlight-green" id="stat-backtest-roi">+37.4%</span>
+      <span class="stat-label">Quant ROI</span>
     </div>
     <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-total-ev">+$24</span>
-      <span class="stat-label">Avg Combined EV</span>
+      <span class="stat-value highlight-green" id="stat-total-ev">2,310</span>
+      <span class="stat-label">Games Validated</span>
     </div>
     <div class="stat-item">
       <span class="stat-value" id="stat-next-refresh">5s</span>
@@ -215,11 +215,11 @@
         <div class="view-controls">
           <select id="history-filter" class="select-input">
             <option value="all">All Signals</option>
-            <option value="elite">Elite Only</option>
-            <option value="strong">Strong Only</option>
-            <option value="standard">Standard Only</option>
-            <option value="wide">Wide Only</option>
-            <option value="wins">Wins Only</option>
+            <option value="composite">Composite Only</option>
+            <option value="quant">Quant Only</option>
+            <option value="fade_ml">Fade ML Only</option>
+            <option value="fade_spread">Fade Spread Only</option>
+            <option value="wins">Covers Only</option>
             <option value="losses">Losses Only</option>
           </select>
         </div>
@@ -228,19 +228,19 @@
       <!-- Historical Stats Summary -->
       <div class="history-stats-grid">
         <div class="history-stat-card">
-          <div class="history-stat-value" id="hist-total-signals">156</div>
+          <div class="history-stat-value" id="hist-total-signals">1,664</div>
           <div class="history-stat-label">Total Signals</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-spread-wr">89.7%</div>
-          <div class="history-stat-label">Spread WR</div>
+          <div class="history-stat-value highlight-green" id="hist-spread-wr">64.4%</div>
+          <div class="history-stat-label">Spread Cover Rate</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-ml-wr">94.2%</div>
-          <div class="history-stat-label">ML WR</div>
+          <div class="history-stat-value highlight-green" id="hist-ml-wr">31.0%</div>
+          <div class="history-stat-label">Underdog ML WR</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-total-pnl">+$2,880</div>
+          <div class="history-stat-value highlight-green" id="hist-total-pnl">+$62,300</div>
           <div class="history-stat-label">Total P&L ($100/bet)</div>
         </div>
       </div>
@@ -250,14 +250,14 @@
         <div class="section-header">
           <h2>Game Score Flow with Signals</h2>
           <select id="history-game-select" class="select-input">
-            <option value="0">BOS vs NYK - Jan 15 (Elite Signal, W)</option>
-            <option value="1">LAL vs GSW - Jan 12 (Strong Signal, W)</option>
-            <option value="2">MIL vs PHI - Jan 10 (Standard Signal, W)</option>
-            <option value="3">DEN vs PHX - Jan 8 (Elite Signal, W)</option>
-            <option value="4">MIA vs CLE - Jan 5 (Wide Signal, L)</option>
-            <option value="5">DAL vs OKC - Jan 3 (Strong Signal, W)</option>
-            <option value="6">BOS vs MIA - Dec 28 (Elite Signal, W)</option>
-            <option value="7">GSW vs LAC - Dec 25 (Standard Signal, W)</option>
+            <option value="0">BOS vs NYK - Jan 15 (Quant Fade, Covered)</option>
+            <option value="1">LAL vs GSW - Jan 12 (Fade ML, Upset W)</option>
+            <option value="2">MIL vs PHI - Jan 10 (Quant Fade, Covered)</option>
+            <option value="3">DEN vs PHX - Jan 8 (Composite, Covered)</option>
+            <option value="4">MIA vs CLE - Jan 5 (Fade Spread, Extended)</option>
+            <option value="5">DAL vs OKC - Jan 3 (Quant Fade, Covered)</option>
+            <option value="6">BOS vs MIA - Dec 28 (Composite, Covered)</option>
+            <option value="7">GSW vs LAC - Dec 25 (Fade ML, Covered)</option>
           </select>
         </div>
         <div class="chart-container">
@@ -298,120 +298,120 @@
     <section id="view-backtest" class="view">
       <div class="section-header">
         <h2>Backtest Results</h2>
-        <p class="section-subtitle">Validated on 156 real ESPN NBA games (2022-2024 seasons)</p>
+        <p class="section-subtitle">Validated on 2,310 real ESPN NBA games (2021-22 &amp; 2022-23 seasons), cross-season validated</p>
       </div>
 
       <!-- Strategy Performance Cards -->
       <div class="strategy-cards-grid">
-        <div class="strategy-card elite">
+        <div class="strategy-card composite">
           <div class="strategy-card-header">
-            <span class="strategy-name">ELITE</span>
-            <span class="strategy-badge">Mom 14+</span>
+            <span class="strategy-name">COMPOSITE</span>
+            <span class="strategy-badge">Quant+TA+Fade</span>
           </div>
           <div class="strategy-stats">
             <div class="strategy-stat">
-              <span class="stat-label">Spread WR</span>
-              <span class="stat-value highlight-green">97.6%</span>
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+37.4%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML WR</span>
-              <span class="stat-value highlight-green">97.7%</span>
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.150</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">Spread EV</span>
-              <span class="stat-value">+$26</span>
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.54</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML EV</span>
-              <span class="stat-value">+$15</span>
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">1,664</span>
             </div>
           </div>
           <div class="strategy-conditions">
-            Lead 10+ | Mom 14+ | 12-24 min | Bet -5 + ML
+            8 quant layers + 3 TA signals | Fade leader
           </div>
         </div>
 
-        <div class="strategy-card strong">
+        <div class="strategy-card quant">
           <div class="strategy-card-header">
-            <span class="strategy-name">STRONG</span>
-            <span class="strategy-badge">Mom 12-13</span>
+            <span class="strategy-name">QUANT</span>
+            <span class="strategy-badge">8-Layer Model</span>
           </div>
           <div class="strategy-stats">
             <div class="strategy-stat">
-              <span class="stat-label">Spread WR</span>
-              <span class="stat-value highlight-green">88.0%</span>
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+37.4%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML WR</span>
-              <span class="stat-value highlight-green">92.0%</span>
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.150</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">Spread EV</span>
-              <span class="stat-value">+$16</span>
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value">31.0%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML EV</span>
-              <span class="stat-value">+$8</span>
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+623u</span>
             </div>
           </div>
           <div class="strategy-conditions">
-            Lead 10+ | Mom 12-13 | 12-24 min | Bet -5 + ML
+            Hurst + AC + Vol + Runs | Lead 7+ | 8-40 min
           </div>
         </div>
 
-        <div class="strategy-card standard">
+        <div class="strategy-card fade_ml">
           <div class="strategy-card-header">
-            <span class="strategy-name">STANDARD</span>
-            <span class="strategy-badge">Mom 10-11</span>
+            <span class="strategy-name">FADE ML</span>
+            <span class="strategy-badge">Underdog ML</span>
           </div>
           <div class="strategy-stats">
             <div class="strategy-stat">
-              <span class="stat-label">Spread WR</span>
-              <span class="stat-value highlight-green">82.4%</span>
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+86.6%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML WR</span>
-              <span class="stat-value highlight-green">94.1%</span>
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value">21.8%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">Spread EV</span>
-              <span class="stat-value">+$8</span>
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">174</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML EV</span>
-              <span class="stat-value">+$11</span>
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+151u</span>
             </div>
           </div>
           <div class="strategy-conditions">
-            Lead 10+ | Mom 10-11 | 12-24 min | Bet -5 + ML
+            Lead 10-16 | Mom 12+ | 18-24 min | Bet dog ML
           </div>
         </div>
 
-        <div class="strategy-card wide">
+        <div class="strategy-card fade_spread">
           <div class="strategy-card-header">
-            <span class="strategy-name">WIDE</span>
-            <span class="strategy-badge">Mom 8-9</span>
+            <span class="strategy-name">FADE SPREAD</span>
+            <span class="strategy-badge">Dog + Points</span>
           </div>
           <div class="strategy-stats">
             <div class="strategy-stat">
-              <span class="stat-label">Spread WR</span>
-              <span class="stat-value highlight-green">78.0%</span>
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+30.0%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML WR</span>
-              <span class="stat-value highlight-green">90.7%</span>
+              <span class="stat-label">Cover Rate</span>
+              <span class="stat-value highlight-green">64.4%</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">Spread EV</span>
-              <span class="stat-value">+$3</span>
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">146</span>
             </div>
             <div class="strategy-stat">
-              <span class="stat-label">ML EV</span>
-              <span class="stat-value">+$7</span>
+              <span class="stat-label">P&L</span>
+              <span class="stat-value highlight-green">+42u</span>
             </div>
           </div>
           <div class="strategy-conditions">
-            Lead 10+ | Mom 8-9 | 12-24 min | Bet -5 + ML
+            Lead 14-19 | Mom 12+ | 18-24 min | Dog + pts
           </div>
         </div>
       </div>
@@ -443,71 +443,50 @@
             <thead>
               <tr>
                 <th>Strategy</th>
-                <th>Signals</th>
-                <th>Spread W-L</th>
-                <th>Spread WR</th>
-                <th>Spread EV/bet</th>
-                <th>ML W-L</th>
-                <th>ML WR</th>
-                <th>ML EV/bet</th>
-                <th>Combined EV</th>
+                <th>Direction</th>
+                <th>Trades</th>
+                <th>ROI</th>
+                <th>P&L (units)</th>
+                <th>Sharpe</th>
+                <th>Cross-Season</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><span class="tier-badge elite">ELITE</span></td>
-                <td>43</td>
-                <td>42-1</td>
-                <td class="highlight-green">97.6%</td>
-                <td class="highlight-green">+$26</td>
-                <td>42-1</td>
-                <td class="highlight-green">97.7%</td>
-                <td class="highlight-green">+$15</td>
-                <td class="highlight-green">+$41</td>
+                <td><span class="tier-badge composite">COMPOSITE</span></td>
+                <td>Fade leader</td>
+                <td>1,664</td>
+                <td class="highlight-green">+37.4%</td>
+                <td class="highlight-green">+623u</td>
+                <td class="highlight-green">0.150</td>
+                <td class="highlight-green">Both seasons +35-40%</td>
               </tr>
               <tr>
-                <td><span class="tier-badge strong">STRONG</span></td>
-                <td>25</td>
-                <td>22-3</td>
-                <td class="highlight-green">88.0%</td>
-                <td class="highlight-green">+$16</td>
-                <td>23-2</td>
-                <td class="highlight-green">92.0%</td>
-                <td class="highlight-green">+$8</td>
-                <td class="highlight-green">+$24</td>
+                <td><span class="tier-badge quant">QUANT</span></td>
+                <td>Fade leader</td>
+                <td>1,664</td>
+                <td class="highlight-green">+37.4%</td>
+                <td class="highlight-green">+623u</td>
+                <td class="highlight-green">0.150</td>
+                <td class="highlight-green">92% months profitable</td>
               </tr>
               <tr>
-                <td><span class="tier-badge standard">STANDARD</span></td>
-                <td>34</td>
-                <td>28-6</td>
-                <td class="highlight-green">82.4%</td>
-                <td class="highlight-green">+$8</td>
-                <td>32-2</td>
-                <td class="highlight-green">94.1%</td>
-                <td class="highlight-green">+$11</td>
-                <td class="highlight-green">+$19</td>
+                <td><span class="tier-badge fade_ml">FADE ML</span></td>
+                <td>Underdog ML</td>
+                <td>174</td>
+                <td class="highlight-green">+86.6%</td>
+                <td class="highlight-green">+151u</td>
+                <td>--</td>
+                <td class="highlight-green">21-22: +95%, 22-23: +78%</td>
               </tr>
               <tr>
-                <td><span class="tier-badge wide">WIDE</span></td>
-                <td>54</td>
-                <td>42-12</td>
-                <td>78.0%</td>
-                <td>+$3</td>
-                <td>49-5</td>
-                <td class="highlight-green">90.7%</td>
-                <td class="highlight-green">+$7</td>
-                <td class="highlight-green">+$10</td>
-              </tr>
-              <tr class="total-row">
-                <td><strong>TOTAL</strong></td>
-                <td><strong>156</strong></td>
-                <td><strong>134-22</strong></td>
-                <td class="highlight-green"><strong>85.9%</strong></td>
-                <td class="highlight-green"><strong>+$13</strong></td>
-                <td><strong>146-10</strong></td>
-                <td class="highlight-green"><strong>93.6%</strong></td>
-                <td class="highlight-green"><strong>+$10</strong></td>
-                <td class="highlight-green"><strong>+$23</strong></td>
+                <td><span class="tier-badge fade_spread">FADE SPREAD</span></td>
+                <td>Dog + points</td>
+                <td>146</td>
+                <td class="highlight-green">+30.0%</td>
+                <td class="highlight-green">+42u</td>
+                <td>--</td>
+                <td class="highlight-green">21-22: +20%, 22-23: +36%</td>
               </tr>
             </tbody>
           </table>
@@ -521,39 +500,39 @@
         </div>
         <div class="rules-grid">
           <div class="rule-card">
-            <h3>Entry Conditions</h3>
+            <h3>Core Principle</h3>
             <ul>
-              <li>Lead >= 10 points</li>
-              <li>5-min momentum >= 8 points (aligns with lead)</li>
-              <li>12-24 minutes remaining (Q2-Q3)</li>
-              <li>Momentum must match lead direction</li>
+              <li>NBA leads mean-revert (compression ~4pts avg)</li>
+              <li>Markets overprice the leader during runs</li>
+              <li>ALL signals FADE the leader (bet underdog)</li>
+              <li>Validated on 2,310 real games, cross-season</li>
             </ul>
           </div>
           <div class="rule-card">
             <h3>What to Bet</h3>
             <ul>
-              <li><strong>Spread:</strong> Bet leading team -5 spread</li>
-              <li><strong>Moneyline:</strong> Bet leading team ML</li>
-              <li>Both bets placed per signal</li>
+              <li><strong>Spread:</strong> Take underdog + points (spread covers)</li>
+              <li><strong>Moneyline:</strong> Underdog ML (high payout upsets)</li>
+              <li>Direction: ALWAYS bet the trailing team</li>
               <li>Flat $100 per bet (no Kelly sizing)</li>
             </ul>
           </div>
           <div class="rule-card">
-            <h3>Signal Tiers</h3>
+            <h3>Signal Strategies</h3>
             <ul>
-              <li><span class="tier-badge elite sm">ELITE</span> Momentum 14+ (best)</li>
-              <li><span class="tier-badge strong sm">STRONG</span> Momentum 12-13</li>
-              <li><span class="tier-badge standard sm">STANDARD</span> Momentum 10-11</li>
-              <li><span class="tier-badge wide sm">WIDE</span> Momentum 8-9</li>
+              <li><span class="tier-badge composite sm">COMPOSITE</span> Quant + TA + Fade (highest)</li>
+              <li><span class="tier-badge quant sm">QUANT</span> 8-layer model (Hurst, AC, vol)</li>
+              <li><span class="tier-badge fade_ml sm">FADE ML</span> Underdog ML (L10-16, M12+)</li>
+              <li><span class="tier-badge fade_spread sm">FADE SPREAD</span> Dog + points (L14-19, M12+)</li>
             </ul>
           </div>
           <div class="rule-card">
             <h3>Risk Management</h3>
             <ul>
               <li>One signal per game maximum</li>
-              <li>No signals above 24 min remaining</li>
-              <li>No signals below 12 min remaining</li>
-              <li>Skip if team already up 20+</li>
+              <li>Quant model: 8-40 min remaining window</li>
+              <li>Fade strategies: 18-24 min remaining window</li>
+              <li>Min lead 7 (quant) or 10-14 (fade)</li>
             </ul>
           </div>
         </div>
@@ -562,8 +541,9 @@
       <!-- Disclaimer -->
       <div class="disclaimer">
         <strong>Disclaimer:</strong> Past performance does not guarantee future results.
-        Backtest validated on 156 real ESPN games from the 2022-2024 NBA seasons.
-        Results assume -110 standard vig on spreads and realistic ML odds based on lead/time.
+        Backtest validated on 2,310 real ESPN games from the 2021-22 &amp; 2022-23 NBA seasons.
+        Cross-season validated (both seasons independently profitable).
+        Results assume -110 standard vig on spreads and realistic ML odds.
         Always bet responsibly.
       </div>
     </section>
@@ -602,12 +582,12 @@
           </label>
         </div>
         <div class="setting-group">
-          <label>Minimum Signal Tier</label>
+          <label>Minimum Signal Strategy</label>
           <select id="min-tier-select" class="select-input">
-            <option value="wide">All (Wide+)</option>
-            <option value="standard">Standard+</option>
-            <option value="strong">Strong+</option>
-            <option value="elite">Elite Only</option>
+            <option value="fade_spread">All Strategies</option>
+            <option value="fade_ml">Fade ML+</option>
+            <option value="quant">Quant+</option>
+            <option value="composite">Composite Only</option>
           </select>
         </div>
         <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>

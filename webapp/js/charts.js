@@ -16,10 +16,10 @@ window.Charts = (function() {
     text: '#6b7280',
     zero: 'rgba(255, 255, 255, 0.15)',
     signal: {
-      elite: '#f59e0b',
-      strong: '#3b82f6',
-      standard: '#a855f7',
-      wide: '#6b7280',
+      composite: '#f59e0b',
+      quant: '#3b82f6',
+      fade_ml: '#a855f7',
+      fade_spread: '#10b981',
     },
   };
 
