@@ -1,51 +1,53 @@
 """
-REALISTIC NBA LIVE BETTING STRATEGY (v2 - DEDUPLICATED)
-=========================================================
+NBA LIVE BETTING STRATEGY - HONEST ASSESSMENT (v3)
+=====================================================
 
-CRITICAL FIXES FROM ORIGINAL STRATEGY:
-1. Old strategy recommended "bet -5 spread" when the live spread was -38.
-   That bet doesn't exist at any sportsbook.
-2. Old "5,366 signals" were actually only 156 unique games with multiple
-   threshold combinations per game inflating the count.
+VALIDATED ON: 2,310 real NBA games across 2 full seasons (2021-22, 2022-23)
+DATA SOURCE: ESPN play-by-play API, cached locally
+METHODOLOGY: Scoring-play-only triggers, one bet per game, no inflated counts
 
-This version uses:
-- ONE BET PER GAME (honest sample counts)
-- MONEYLINE bets at realistic live odds (not fake reduced spreads)
-- Calibrated NBA win probability model (sigma=2.6)
-- Lead capped at 19 (above that, vig destroys any edge)
+VERDICT: THIS STRATEGY IS NOT PROFITABLE.
 
-VALIDATED CONDITIONS (deduplicated, 2023-24 season):
+The original 100% win rate on 15-27 games (2023-24 season, 4 months) was a
+small-sample anomaly. When tested on 2,310 games across 2 full seasons,
+EVERY strategy configuration produces NEGATIVE ROI.
 
-  TIER 1 - PRIME (strongest edge):
-    Conditions: Lead 10-14, Momentum 12+, 18-24 min remaining
-    Games: 15 | WR: 100% (15W/0L) | Avg Odds: -1269 | ROI: +8.5%
-    Cross-validated: 100% WR in both halves of dataset
-    Vig-resistant: Still profitable at 10% vig
-    Monthly: 4/4 profitable months
+RESULTS (2,310 games, 2 seasons, scoring-play-only triggers):
 
-  TIER 2 - WIDER (more volume, still strong):
-    Conditions: Lead 10-16, Momentum 12+, 18-24 min remaining
-    Games: 18 | WR: 100% (18W/0L) | Avg Odds: -1703 | ROI: +7.6%
-    Live spread also profitable: 61.1% cover rate, +16.7% spread ROI
-    Cross-validated: 100% WR in both halves
+  PRIME (L10-14, M12+, 18-24min):
+    Games: 135 | WR: 80.0% (108W/27L) | ROI: -11.68% | P&L: -15.77u
+    Market implied: 86.6% --> actual WR is 6.6% BELOW market
+    Cross-season: 2021-22: 80.0% WR, -11.0% ROI
+                  2022-23: 80.0% WR, -12.4% ROI
+    Spread: 30.4% cover rate (needs >52.4% for profit) --> catastrophic
 
-  TIER 3 - BROADEST (highest volume):
-    Conditions: Lead 10-19, Momentum 12+, 18-24 min remaining
-    Games: 27 | WR: 100% (27W/0L) | Avg Odds: ~-2000+ | ROI: +5.5%
-    Cross-validated: 100% WR in both halves, 4/4 months profitable
+  STANDARD (L10-16, M12+, 18-24min):
+    Games: 174 | WR: 78.2% (136W/38L) | ROI: -14.75% | P&L: -25.67u
 
-  NOT PROFITABLE (removed):
-    - Lead 10-14, Mom 10+: 92% WR, -0.6% ROI (vig kills edge at lower momentum)
-    - Lead 10-14, Mom 14+, 12-24 min: 93% WR, -1.3% ROI (extended time window fails)
-    - Lead 20+: ML odds too extreme, vig destroys any edge
-    - Any "reduced spread" (-5) at high leads: DOES NOT EXIST in live markets
+  BROAD (L10-19, M12+, 18-24min):
+    Games: 222 | WR: 81.1% (180W/42L) | ROI: -13.17% | P&L: -29.24u
 
-HONEST CAVEATS:
-  - 15-27 games is a small sample (4 months: Oct 2023 - Jan 2024)
-  - 100% WR will NOT continue forever
-  - The edge is real but modest: you win small amounts frequently
-  - Need 2+ seasons of data to confirm persistence
-  - If live vig exceeds 8-10%, edge disappears
+  GRID SEARCH (hundreds of combinations tested):
+    No combination with 20+ games is profitable.
+    Best: L12-14 M16+ T15-18 at 100% WR -- but only 8 games (small sample).
+
+WHY IT FAILS:
+  1. Teams with big leads + momentum already have high market-implied WP (~87%)
+  2. Actual WR (~80%) is BELOW market implied -- momentum doesn't add edge
+  3. The vig on heavy favorites (-800 to -4000) is punishing
+  4. Leads compress by ~4 points on average (regression to mean)
+  5. Even at 2% vig (unrealistically low), strategies remain unprofitable
+
+WHAT THE ORIGINAL ANALYSIS GOT WRONG:
+  1. 15-27 game sample from one 4-month window was statistically meaningless
+  2. The "100% WR" was expected variance on heavy favorites (~87% implied)
+  3. Cross-validated "in both halves" still only meant 7-8 games per half
+  4. Fake reduced spreads (-5 when live spread is -38) inflated apparent edge
+  5. 5,366 "signals" were 156 games with multiple thresholds per game moment
+
+THE MARKET IS EFFICIENT:
+  NBA live betting markets correctly price momentum-aligned leads.
+  There is no edge to exploit in these conditions.
 """
 
 import math
@@ -73,12 +75,7 @@ def estimate_market_win_prob(lead: int, mins_remaining: float) -> float:
     """
     Estimate what the market prices as the leading team's win probability.
 
-    Calibrated to NBA historical benchmarks:
-    - Up 10, 24 min: ~84%    Up 10, 12 min: ~91%
-    - Up 15, 24 min: ~92%    Up 15, 12 min: ~97%
-    - Up 20, 24 min: ~96.5%  Up 20, 12 min: ~99%
-
-    Uses sigma=2.6 points per sqrt(minute) for remaining score variance.
+    Calibrated to NBA historical benchmarks (sigma=2.6 pts/sqrt(min)).
     """
     if lead <= 0 or mins_remaining <= 0:
         return 0.5
@@ -89,16 +86,7 @@ def estimate_market_win_prob(lead: int, mins_remaining: float) -> float:
 
 
 def estimate_live_ml_odds(lead: int, mins_remaining: float, vig: float = 0.045) -> float:
-    """
-    Estimate live moneyline odds (American format) with standard vig.
-
-    Args:
-        lead: Points ahead
-        mins_remaining: Game minutes remaining
-        vig: Standard vigorish (4.5% for live, could be higher)
-
-    Returns: American odds (negative for favorites)
-    """
+    """Estimate live moneyline odds (American format) with standard vig."""
     prob = estimate_market_win_prob(lead, mins_remaining)
     market_prob = min(0.995, prob + vig * prob)
 
@@ -109,17 +97,12 @@ def estimate_live_ml_odds(lead: int, mins_remaining: float, vig: float = 0.045) 
 
 
 # =============================================================================
-# STRATEGY: MOMENTUM-ALIGNED MONEYLINE
+# STRATEGY (kept for reference - NOT PROFITABLE)
 # =============================================================================
 
-# Lead bounds
 MIN_LEAD = 10
-MAX_LEAD = 19  # Above this, ML odds too extreme for profitable betting
-
-# Momentum minimum
-MIN_MOMENTUM = 12  # Below this, edge disappears (M10+ was -0.6% ROI)
-
-# Time window: around halftime only
+MAX_LEAD = 19
+MIN_MOMENTUM = 12
 TIME_MIN = 18
 TIME_MAX = 24
 
@@ -134,13 +117,11 @@ def get_signal(
     """
     Generate a live betting signal.
 
-    Conditions (all must be met):
-    1. Lead 10-19 points
-    2. Momentum 12+ points aligned with lead direction (5-min scoring differential)
-    3. 18-24 minutes remaining (halftime window)
-    4. Bet: MONEYLINE on leading team at live odds
+    WARNING: This strategy was validated on 2,310 games across 2 seasons
+    and is NOT profitable. Every configuration tested has negative ROI.
+    The ~80% ML win rate is below the ~87% market-implied probability.
 
-    Returns signal dict or None.
+    Kept for reference and further research only.
     """
     score_diff = home_score - away_score
     lead = abs(score_diff)
@@ -174,97 +155,86 @@ def get_signal(
     market_prob = estimate_market_win_prob(lead, mins_remaining)
     market_odds = estimate_live_ml_odds(lead, mins_remaining)
 
-    # Determine tier based on lead range
-    # Tighter conditions = higher confidence, but lower volume
+    # Tier classification (for informational purposes)
     if lead <= 14:
         tier = 'prime'
-        # 15 games, 100% WR, +8.5% ROI, 4/4 profitable months
-        # Cross-validated: 100% in both halves
-        confidence = 'high'
+        confidence = 'low'  # 80% WR vs 87% market = negative edge
     elif lead <= 16:
         tier = 'standard'
-        # 18 games total (includes prime), 100% WR, +7.6% ROI
-        # Live spread also viable: 61.1% cover rate
-        confidence = 'high'
+        confidence = 'low'
     else:
         tier = 'wide'
-        # 27 games total, 100% WR, +5.5% ROI
-        # Higher leads have worse ML odds, lower ROI per bet
-        confidence = 'moderate'
-
-    # Live spread viability (final margin > lead at signal)
-    # Only viable at leads 10-16 where 61% cover rate observed
-    spread_viable = lead <= 16
+        confidence = 'low'
 
     return {
         'side': side,
         'tier': tier,
         'confidence': confidence,
         'bet_type': 'moneyline',
-        'spread_also_viable': spread_viable,
+        'spread_also_viable': False,  # 30% cover rate - not viable
         'lead': lead,
         'momentum': mom,
         'mins_remaining': mins_remaining,
         'market_win_prob': round(market_prob * 100, 1),
         'estimated_odds': round(market_odds),
+        'warning': 'NOT PROFITABLE - 80% WR on 135 games, -11.7% ROI, negative edge vs market',
     }
 
 
 # =============================================================================
-# VALIDATION
+# VALIDATION SUMMARY
 # =============================================================================
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("REALISTIC NBA LIVE BETTING STRATEGY (v2 - Deduplicated)")
+    print("NBA LIVE BETTING STRATEGY - HONEST ASSESSMENT (v3)")
     print("=" * 70)
 
+    print("""
+VALIDATED ON: 2,310 real NBA games, 2 full seasons (2021-22, 2022-23)
+METHODOLOGY:  Scoring-play-only triggers, one bet per game
+
+RESULT: NOT PROFITABLE. Every configuration has negative ROI.
+
+  PRIME (L10-14, M12+, 18-24min):
+    135 games | 80.0% WR | -11.68% ROI | -15.77 units
+    Market implied: 86.6% (actual WR is 6.6% BELOW)
+    Both seasons: 80% WR, ~-12% ROI (consistent)
+
+  STANDARD (L10-16, M12+, 18-24min):
+    174 games | 78.2% WR | -14.75% ROI | -25.67 units
+
+  BROAD (L10-19, M12+, 18-24min):
+    222 games | 81.1% WR | -13.17% ROI | -29.24 units
+
+  Spread: 30% cover rate across the board (needs >52.4%)
+  Lead extension: -4 points average (leads SHRINK)
+
+  Grid search: No profitable combination with 20+ games
+
+CONCLUSION: The NBA live market is efficient. Momentum-aligned leads
+are already correctly priced. There is no edge to exploit.
+""")
+
+    # Run test signals
     tests = [
-        # (description, home, away, home5, away5, mins)
-        ("Lead 12, Mom 14, halftime (PRIME tier)",
+        ("Lead 12, Mom 14, halftime",
          70, 58, 18, 4, 20.0),
-        ("Lead 15, Mom 12, halftime (STANDARD tier)",
+        ("Lead 15, Mom 12, halftime",
          72, 57, 16, 4, 21.0),
-        ("Lead 18, Mom 14, halftime (WIDE tier)",
-         74, 56, 18, 4, 21.0),
         ("Lead 11, Mom 10, halftime (BLOCKED - mom < 12)",
          65, 54, 14, 4, 19.0),
-        ("Lead 38, Mom 9, Q3 (BLOCKED - lead > 19)",
-         112, 74, 12, 3, 15.0),
-        ("Lead 25, Mom 14, halftime (BLOCKED - lead > 19)",
-         80, 55, 18, 4, 20.0),
-        ("Lead 10, Mom 5, halftime (BLOCKED - mom < 12)",
-         62, 52, 10, 5, 20.0),
-        ("Lead 12, Mom 12, Q4 8min (BLOCKED - outside time window)",
-         75, 63, 16, 4, 8.0),
     ]
 
     for desc, hs, aws, h5, a5, mins in tests:
         print(f"\n{desc}")
         signal = get_signal(hs, aws, h5, a5, mins)
         if signal:
-            print(f"  SIGNAL: {signal['tier'].upper()} tier ({signal['confidence']} confidence)")
+            print(f"  SIGNAL: {signal['tier'].upper()} tier")
             print(f"  Bet: {signal['side'].upper()} MONEYLINE at ~{signal['estimated_odds']}")
             print(f"  Market prob: {signal['market_win_prob']}%")
-            if signal['spread_also_viable']:
-                print(f"  Live spread also viable (61% cover rate at leads 10-16)")
+            print(f"  WARNING: {signal['warning']}")
         else:
             print(f"  NO SIGNAL")
 
     print(f"\n{'='*70}")
-    print("STRATEGY SUMMARY:")
-    print("  Entry: Lead 10-19, Momentum 12+, 18-24 min remaining")
-    print("  Bet: MONEYLINE on leading team")
-    print("  Tiers: PRIME (L10-14), STANDARD (L15-16), WIDE (L17-19)")
-    print()
-    print("SAMPLE SIZES (deduplicated - one bet per game):")
-    print("  Prime:    15 games | 100% WR | +8.5% ROI")
-    print("  Standard: 18 games | 100% WR | +7.6% ROI")
-    print("  Wide:     27 games | 100% WR | +5.5% ROI")
-    print()
-    print("WHAT THIS STRATEGY DOES NOT DO:")
-    print("  - Bet fake 'reduced spreads' (-5 when live spread is -38)")
-    print("  - Signal at extreme leads (20+) where vig kills edge")
-    print("  - Signal with weak momentum (<12) where WR drops below breakeven")
-    print("  - Signal outside halftime window where data shows no edge")
-    print(f"{'='*70}")
