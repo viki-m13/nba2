@@ -178,6 +178,7 @@
     if (view === 'backtest') renderBacktest();
     if (view === 'history') renderHistory();
     if (view === 'alerts') renderAlerts();
+    if (view === 'analytics') renderAnalytics();
   }
 
   // =========================================================================
@@ -551,32 +552,59 @@
     if (!instruction) return '';
 
     const stratName = signal.strategyName || signal.tier.toUpperCase();
+    const mlConf = signal.mlConfidence || 0;
 
-    // ML confidence badge
-    const mlBadge = signal.mlConfidence !== undefined
-      ? `<span class="ml-badge ${signal.mlConfidence >= 80 ? 'ml-elite' : signal.mlConfidence >= 70 ? 'ml-high' : signal.mlConfidence >= 65 ? 'ml-strong' : 'ml-low'}"
-           style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:700;margin-left:8px;
-           background:${signal.mlConfidence >= 80 ? '#dc2626' : signal.mlConfidence >= 70 ? '#f59e0b' : signal.mlConfidence >= 65 ? '#10b981' : '#6b7280'};
-           color:#fff;">ML ${signal.mlConfidence}%</span>`
-      : '';
+    // ML confidence gauge
+    const gaugeColor = mlConf >= 80 ? '#dc2626' : mlConf >= 70 ? '#f59e0b' : mlConf >= 65 ? '#10b981' : '#6b7280';
+    const gaugePct = Math.min(100, Math.max(0, (mlConf - 50) * 2)); // 50-100 → 0-100%
+    const confidenceGauge = mlConf > 0 ? `
+      <div class="ml-confidence-gauge">
+        <div class="gauge-header">
+          <span class="gauge-label">ML Confidence</span>
+          <span class="gauge-value" style="color: ${gaugeColor};">${mlConf}%</span>
+        </div>
+        <div class="gauge-bar">
+          <div class="gauge-fill" style="width: ${gaugePct}%; background: ${gaugeColor};"></div>
+          <div class="gauge-markers">
+            <span class="gauge-marker" style="left: 30%;" title="65%">|</span>
+            <span class="gauge-marker" style="left: 40%;" title="70%">|</span>
+            <span class="gauge-marker" style="left: 50%;" title="75%">|</span>
+            <span class="gauge-marker" style="left: 60%;" title="80%">|</span>
+          </div>
+        </div>
+        <div class="gauge-ticks">
+          <span>50%</span><span>65%</span><span>75%</span><span>85%+</span>
+        </div>
+      </div>` : '';
 
     // Breakout indicators
     const breakoutBadges = signal.breakouts ? [
-      signal.breakouts.bbSqueeze ? '<span style="background:#7c3aed;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">BB Squeeze</span>' : '',
-      signal.breakouts.donchian ? `<span style="background:#2563eb;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Donchian ${signal.breakouts.donchian}</span>` : '',
-      signal.breakouts.maCrossover ? `<span style="background:#059669;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">${signal.breakouts.maCrossover === 'golden_cross' ? 'Golden Cross' : 'Death Cross'}</span>` : '',
-      signal.breakouts.momentumBreakout ? '<span style="background:#dc2626;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Mom Breakout</span>' : '',
-      signal.breakouts.volumeConfirmed ? '<span style="background:#d97706;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.65rem;margin-right:3px;">Vol Confirm</span>' : '',
+      signal.breakouts.bbSqueeze ? '<span class="breakout-badge bb">BB Squeeze</span>' : '',
+      signal.breakouts.donchian ? `<span class="breakout-badge donchian">Donchian ${signal.breakouts.donchian}</span>` : '',
+      signal.breakouts.maCrossover ? `<span class="breakout-badge ma">${signal.breakouts.maCrossover === 'golden_cross' ? 'Golden Cross' : 'Death Cross'}</span>` : '',
+      signal.breakouts.momentumBreakout ? '<span class="breakout-badge mom">Mom Breakout</span>' : '',
+      signal.breakouts.volumeConfirmed ? '<span class="breakout-badge vol">Vol Confirm</span>' : '',
     ].filter(Boolean).join('') : '';
+
+    // Combo signals
+    const comboSignals = signal.comboSignals && signal.comboSignals.length > 0
+      ? signal.comboSignals.map(c => `<span class="combo-badge" title="${c.wr*100}% WR, +${c.roi}% ROI (${c.n} samples)">${c.name}</span>`).join('')
+      : '';
+
+    // Kelly sizing
+    const kellyDisplay = signal.kellyPct > 0
+      ? `<div class="detail-row"><span class="detail-label">Kelly Size:</span><span class="detail-value highlight-green">${signal.suggestedBetSize}</span></div>`
+      : '';
 
     return `
       <div class="signal-card ${signal.tier} new-signal">
         <div class="signal-card-header">
           <span class="signal-tier ${signal.tier}">${stratName}</span>
-          ${mlBadge}
           <span class="signal-time">Q${signal.quarter} ${signal.quarterTime}</span>
         </div>
-        ${breakoutBadges ? `<div style="margin: 4px 0;">${breakoutBadges}</div>` : ''}
+        ${confidenceGauge}
+        ${breakoutBadges ? `<div class="breakout-badges-row">${breakoutBadges}</div>` : ''}
+        ${comboSignals ? `<div class="combo-badges-row">${comboSignals}</div>` : ''}
         <div class="signal-instruction">
           <div class="signal-action">${instruction.headline}</div>
           <div class="signal-details">
@@ -588,6 +616,7 @@
               <span class="detail-label">Moneyline:</span>
               <span class="detail-value">${instruction.moneyline}</span>
             </div>
+            ${kellyDisplay}
             <div class="detail-row">
               <span class="detail-label">Validated:</span>
               <span class="detail-value highlight-green">${instruction.combined}</span>
@@ -608,10 +637,6 @@
             <span class="detail-value">${signal.minsRemaining}</span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">ML Confidence:</span>
-            <span class="detail-value" style="color: ${signal.mlConfidence >= 70 ? '#10b981' : '#f59e0b'};">${signal.mlConfidence || '—'}%</span>
-          </div>
-          <div class="detail-row">
             <span class="detail-label">Breakout Signals:</span>
             <span class="detail-value">${signal.breakoutCount || 0}/6</span>
           </div>
@@ -624,7 +649,7 @@
             <span class="detail-value highlight-green">${signal.underdogOdds}</span>
           </div>
         </div>
-        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--amber);">
+        <div class="signal-urgency">
           ${instruction.urgency}
         </div>
       </div>`;
@@ -899,7 +924,8 @@
     const filter = document.getElementById('history-filter')?.value || 'all';
 
     let filtered = state.signalLog;
-    if (filter === 'composite') filtered = filtered.filter(s => s.tier === 'composite');
+    if (filter === 'breakout_ml') filtered = filtered.filter(s => s.tier === 'breakout_ml');
+    else if (filter === 'composite') filtered = filtered.filter(s => s.tier === 'composite');
     else if (filter === 'blowout_compress') filtered = filtered.filter(s => s.tier === 'blowout_compress');
     else if (filter === 'quant') filtered = filtered.filter(s => s.tier === 'quant');
     else if (filter === 'burst_fade') filtered = filtered.filter(s => s.tier === 'burst_fade');
@@ -920,7 +946,7 @@
     document.getElementById('hist-ml-wr').textContent = totalSignals > 0 ? `${(mlWins / totalSignals * 100).toFixed(1)}%` : '--';
     document.getElementById('hist-total-pnl').textContent = `${totalPnl >= 0 ? '+' : ''}$${Math.round(totalPnl * 100)}`;
 
-    const stratNames = { composite: 'COMPOSITE', blowout_compress: 'BLOWOUT', quant: 'QUANT', burst_fade: 'BURST', q3_fade: 'Q3 FADE', fade_ml: 'FADE ML', fade_spread: 'FADE SPR' };
+    const stratNames = { breakout_ml: 'ML+BRKOUT', composite: 'COMPOSITE', blowout_compress: 'BLOWOUT', quant: 'QUANT', burst_fade: 'BURST', q3_fade: 'Q3 FADE', fade_ml: 'FADE ML', fade_spread: 'FADE SPR' };
     tbody.innerHTML = filtered.slice(0, 100).map(sig => `
       <tr>
         <td>${sig.date}</td>
@@ -949,6 +975,85 @@
 
     const mode = document.getElementById('equity-mode-select')?.value || 'combined';
     Charts.renderEquityCurve('equity-chart', state.equityData, mode);
+  }
+
+  // =========================================================================
+  // ANALYTICS VIEW
+  // =========================================================================
+  function renderAnalytics() {
+    // Render confidence tiers cards
+    renderConfidenceTiers();
+
+    // Render feature importance chart
+    Charts.renderFeatureImportance('feature-importance-chart', SignalEngine.TOP_FEATURES);
+
+    // Render confidence curve chart
+    Charts.renderConfidenceCurve('confidence-curve-chart', SignalEngine.CONFIDENCE_TIERS);
+
+    // Render combo signal cards
+    renderComboCards();
+  }
+
+  function renderConfidenceTiers() {
+    const container = document.getElementById('confidence-tiers-grid');
+    if (!container) return;
+
+    const tiers = SignalEngine.CONFIDENCE_TIERS;
+    container.innerHTML = tiers.map(tier => {
+      const isHighlight = tier.threshold === 0.70;
+      return `
+        <div class="confidence-tier-card ${isHighlight ? 'highlighted' : ''}">
+          <div class="tier-threshold">${Math.round(tier.threshold * 100)}%</div>
+          <div class="tier-stats">
+            <div class="tier-stat">
+              <span class="tier-stat-value highlight-green">${tier.wr}%</span>
+              <span class="tier-stat-label">Win Rate</span>
+            </div>
+            <div class="tier-stat">
+              <span class="tier-stat-value highlight-green">+${tier.roi}%</span>
+              <span class="tier-stat-label">ROI</span>
+            </div>
+            <div class="tier-stat">
+              <span class="tier-stat-value">${tier.signals.toLocaleString()}</span>
+              <span class="tier-stat-label">Signals</span>
+            </div>
+            <div class="tier-stat">
+              <span class="tier-stat-value">${(tier.kelly * 100).toFixed(1)}%</span>
+              <span class="tier-stat-label">Kelly</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderComboCards() {
+    const container = document.getElementById('combo-cards-grid');
+    if (!container) return;
+
+    const combos = SignalEngine.COMBO_SIGNALS;
+    container.innerHTML = combos.map((combo, idx) => {
+      const rankColors = ['#dc2626', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'];
+      const color = rankColors[idx] || '#6b7280';
+      return `
+        <div class="combo-card" style="border-top: 3px solid ${color};">
+          <div class="combo-card-rank" style="color: ${color};">#${idx + 1}</div>
+          <div class="combo-card-name">${combo.name}</div>
+          <div class="combo-card-stats">
+            <div class="combo-stat">
+              <span class="combo-stat-value highlight-green">${(combo.wr * 100).toFixed(1)}%</span>
+              <span class="combo-stat-label">Win Rate</span>
+            </div>
+            <div class="combo-stat">
+              <span class="combo-stat-value highlight-green">+${combo.roi.toFixed(1)}%</span>
+              <span class="combo-stat-label">ROI</span>
+            </div>
+            <div class="combo-stat">
+              <span class="combo-stat-value">${combo.n.toLocaleString()}</span>
+              <span class="combo-stat-label">Samples</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
   }
 
   // =========================================================================

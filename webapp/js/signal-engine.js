@@ -668,6 +668,104 @@ window.SignalEngine = (function() {
       2.529,0.192,5.733,1.029,0.343,1.227,1.051,1.171,3.356,0.462,0.218],
   };
 
+  // =========================================================================
+  // RULE-BASED CONFIDENCE BOOSTERS (validated on 16,116 samples)
+  // =========================================================================
+  const RULE_BOOSTERS = [
+    { name: 'lead_15_q2', check: f => f.abs_lead >= 15 && f.period === 2, wr: 0.667, n: 336, boost: 0.04 },
+    { name: 'wp_divergence_gt_10', check: f => Math.abs(f.wp_vs_lead_divergence) > 10, wr: 0.656, n: 908, boost: 0.03 },
+    { name: 'breakout_count_ge_4', check: f => f.breakout_count >= 4, wr: 0.655, n: 29, boost: 0.04 },
+    { name: 'mean_reverting_high_lead', check: f => f.hurst < 0.45 && f.abs_lead >= 10, wr: 0.607, n: 252, boost: 0.02 },
+    { name: 'breakout_count_ge_3', check: f => f.breakout_count >= 3, wr: 0.624, n: 242, boost: 0.02 },
+  ];
+
+  // Best combo signals from research (validated)
+  const COMBO_SIGNALS = [
+    { name: 'Golden Cross + Lead 8+', check: (f, b) => f.abs_lead >= 8 && b.ma.type === 'golden_cross', wr: 0.724, roi: 38.2, n: 152 },
+    { name: 'Hurst Mean-Rev + Mom ROC', check: (f, b) => f.abs_lead >= 8 && f.hurst < 0.45 && b.mom.roc < -3, wr: 0.694, roi: 32.6, n: 108 },
+    { name: 'Lead 12+ Range Compress + Trailer Run', check: (f, b) => f.abs_lead >= 12 && b.compression > 0.5 && f.trailer_on_run, wr: 0.616, roi: 17.6, n: 268 },
+    { name: 'Lead 10+ WP Divergence > 5', check: (f, b) => f.abs_lead >= 10 && Math.abs(f.wp_vs_lead_divergence) > 5, wr: 0.612, roi: 16.9, n: 4761 },
+    { name: 'Donchian + Volume + Lead 7+', check: (f, b) => f.abs_lead >= 7 && (b.donchian.type !== null) && b.volume.confirmed, wr: 0.608, roi: 16.1, n: 278 },
+  ];
+
+  // =========================================================================
+  // CONFIDENCE THRESHOLD PERFORMANCE (validated out-of-sample)
+  // =========================================================================
+  const CONFIDENCE_TIERS = [
+    { threshold: 0.50, signals: 4801, wr: 60.4, roi: 15.3, sharpe: 11.37, kelly: 0.168 },
+    { threshold: 0.55, signals: 2487, wr: 64.9, roi: 24.0, sharpe: 13.15, kelly: 0.264 },
+    { threshold: 0.60, signals: 1123, wr: 67.3, roi: 28.6, sharpe: 10.69, kelly: 0.314 },
+    { threshold: 0.65, signals: 455, wr: 67.7, roi: 29.3, sharpe: 7.00, kelly: 0.322 },
+    { threshold: 0.70, signals: 167, wr: 73.1, roi: 39.5, sharpe: 6.03, kelly: 0.434 },
+    { threshold: 0.75, signals: 72, wr: 70.8, roi: 35.3, sharpe: 3.45, kelly: 0.388 },
+    { threshold: 0.80, signals: 43, wr: 76.7, roi: 46.6, sharpe: 3.79, kelly: 0.512 },
+    { threshold: 0.85, signals: 10, wr: 80.0, roi: 52.8, sharpe: 2.19, kelly: 0.580 },
+  ];
+
+  // Top feature importances from XGBoost ensemble
+  const TOP_FEATURES = [
+    { name: 'WP vs Lead Divergence', importance: 0.0326 },
+    { name: 'Lead Size', importance: 0.0317 },
+    { name: 'MA Death Cross', importance: 0.0209 },
+    { name: 'WP Implied Lead', importance: 0.0184 },
+    { name: 'Seconds Remaining', importance: 0.0173 },
+    { name: 'Quarter Min Remaining', importance: 0.0166 },
+    { name: 'MA Short', importance: 0.0158 },
+    { name: 'Home Win Prob', importance: 0.0157 },
+    { name: 'MA Long', importance: 0.0156 },
+    { name: 'Lead at 30min', importance: 0.0155 },
+    { name: 'Lead Duration %', importance: 0.0152 },
+    { name: 'Lead Range', importance: 0.0149 },
+    { name: 'Resistance Levels', importance: 0.0141 },
+    { name: 'Game Minutes', importance: 0.0141 },
+    { name: 'Lead Max', importance: 0.0140 },
+  ];
+
+  // Walk-forward validation results
+  const WALK_FORWARD = {
+    covers: { train: '2021-22', test: '2022-23', nTrain: 8590, nTest: 7526, accuracy: 0.574, auc: 0.593 },
+    wins: { train: '2021-22', test: '2022-23', nTrain: 8590, nTest: 7526, accuracy: 0.754, auc: 0.740 },
+  };
+
+  // =========================================================================
+  // KELLY CRITERION CALCULATOR
+  // =========================================================================
+  function kellyFraction(winProb, odds, fraction = 0.25) {
+    // odds in American format (+200 = 2.0 payout)
+    const decimalOdds = odds > 0 ? odds / 100 : 100 / Math.abs(odds);
+    const q = 1 - winProb;
+    const kelly = (winProb * decimalOdds - q) / decimalOdds;
+    return Math.max(0, Math.min(0.25, kelly * fraction)); // Quarter Kelly, capped at 25%
+  }
+
+  // Apply rule-based boosters to ML confidence
+  function applyRuleBoosters(mlConfidence, features) {
+    let boosted = mlConfidence;
+    const activeRules = [];
+    for (const rule of RULE_BOOSTERS) {
+      try {
+        if (rule.check(features)) {
+          boosted += rule.boost;
+          activeRules.push(rule.name);
+        }
+      } catch (e) { /* skip */ }
+    }
+    return { confidence: Math.min(0.95, boosted), activeRules };
+  }
+
+  // Check combo signals
+  function checkComboSignals(features, breakouts) {
+    const active = [];
+    for (const combo of COMBO_SIGNALS) {
+      try {
+        if (combo.check(features, breakouts)) {
+          active.push({ name: combo.name, wr: combo.wr, roi: combo.roi, n: combo.n });
+        }
+      } catch (e) { /* skip */ }
+    }
+    return active;
+  }
+
   // Sigmoid function
   function sigmoid(x) {
     return 1 / (1 + Math.exp(-Math.max(-20, Math.min(20, x))));
@@ -897,16 +995,29 @@ window.SignalEngine = (function() {
     const mlFeatures = extractMLFeatures(possessions, currentIndex, leadSeries, breakouts);
     const mlConfidence = computeMLScore(mlFeatures);
 
+    // Apply rule-based boosters to ML confidence
+    const { confidence: boostedConfidence, activeRules } = applyRuleBoosters(mlConfidence, mlFeatures);
+    const comboSignals = checkComboSignals(mlFeatures, breakouts);
+
     // Breakout+ML Strategy: ML confidence >= 0.65 (validated: 68.7% WR, +31.1% ROI OOS)
-    if (mlConfidence >= 0.65) {
-      const confidenceTier = mlConfidence >= 0.80 ? 'ELITE' :
-                             mlConfidence >= 0.75 ? 'VERY HIGH' :
-                             mlConfidence >= 0.70 ? 'HIGH' : 'STRONG';
+    if (boostedConfidence >= 0.65) {
+      const confidenceTier = boostedConfidence >= 0.80 ? 'ELITE' :
+                             boostedConfidence >= 0.75 ? 'VERY HIGH' :
+                             boostedConfidence >= 0.70 ? 'HIGH' : 'STRONG';
+
+      // Get Kelly fraction for this confidence level
+      const estWR = boostedConfidence >= 0.80 ? 0.767 :
+                    boostedConfidence >= 0.75 ? 0.708 :
+                    boostedConfidence >= 0.70 ? 0.731 :
+                    boostedConfidence >= 0.65 ? 0.677 : 0.604;
+      const kellyPct = kellyFraction(estWR, estimateUnderdogOdds(lead, minsRemaining));
+
       detectedStrategies.unshift({
         strategy: 'breakout_ml',
-        confidence: mlConfidence,
+        confidence: boostedConfidence,
         details: {
-          mlConfidence: Math.round(mlConfidence * 1000) / 10,
+          mlConfidence: Math.round(boostedConfidence * 1000) / 10,
+          rawMlConfidence: Math.round(mlConfidence * 1000) / 10,
           confidenceTier,
           breakoutCount: breakouts.breakoutCount,
           bbSqueeze: breakouts.bb.squeeze,
@@ -917,6 +1028,10 @@ window.SignalEngine = (function() {
           hurst: mlFeatures.hurst.toFixed(3),
           volumeConfirmed: breakouts.volume.confirmed,
           features: mlFeatures,
+          activeRules,
+          comboSignals,
+          kellyPct: Math.round(kellyPct * 1000) / 10,
+          suggestedBetSize: kellyPct > 0 ? `${Math.round(kellyPct * 1000) / 10}% of bankroll` : 'Min bet',
         },
       });
     }
@@ -998,7 +1113,8 @@ window.SignalEngine = (function() {
       activeLayers: best.layers || 0,
       taSignals: ta.count,
       // v2.0: ML + Breakout data
-      mlConfidence: Math.round(mlConfidence * 1000) / 10,
+      mlConfidence: Math.round(boostedConfidence * 1000) / 10,
+      rawMlConfidence: Math.round(mlConfidence * 1000) / 10,
       breakoutCount: breakouts.breakoutCount,
       breakouts: {
         bbSqueeze: breakouts.bb.squeeze,
@@ -1008,6 +1124,10 @@ window.SignalEngine = (function() {
         rangeCompression: Math.round(breakouts.compression * 100),
         volumeConfirmed: breakouts.volume.confirmed,
       },
+      comboSignals: comboSignals || [],
+      activeRules: activeRules || [],
+      kellyPct: best.details?.kellyPct || 0,
+      suggestedBetSize: best.details?.suggestedBetSize || 'Flat bet',
       detectedStrategies: detectedStrategies.map(s => s.strategy),
       validated: strat.validated,
       color: strat.color,
@@ -1126,10 +1246,16 @@ window.SignalEngine = (function() {
       fade_spread: 'MODERATE SETUP — Underdog spread value',
     };
 
+    // Kelly sizing info
+    const kellyLine = signal.kellyPct > 0
+      ? `Kelly suggests ${signal.suggestedBetSize} (quarter-Kelly, capped 25%)`
+      : 'Flat $100 per bet (minimum size)';
+
     return {
       headline: `FADE ${leader} — Bet ${team} (${strat.name})`,
       spread: spreadLine,
       moneyline: mlLine,
+      kelly: kellyLine,
       combined: `Strategy ROI: +${strat.validated.roi || '??'}% validated on ${strat.validated.trades || '2310'} games`,
       context: `Lead: ${signal.lead} | Mom: ${signal.momentum} | ${signal.minsRemaining} min left | Q${signal.quarter} ${signal.quarterTime}`,
       urgency: urgencyMap[signal.strategy] || 'MODERATE SETUP — Underdog spread value',
@@ -1163,6 +1289,15 @@ window.SignalEngine = (function() {
     detectMomentumBreakout,
     calcRangeCompression,
     ML_MODEL,
+    // v2.1: Analytics data
+    kellyFraction,
+    applyRuleBoosters,
+    checkComboSignals,
+    CONFIDENCE_TIERS,
+    TOP_FEATURES,
+    COMBO_SIGNALS,
+    RULE_BOOSTERS,
+    WALK_FORWARD,
   };
 
 })();

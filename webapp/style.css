@@ -689,6 +689,7 @@ body {
   border-radius: 4px;
 }
 
+.alert-item-tier.breakout_ml { background: rgba(220, 38, 38, 0.15); color: #ef4444; }
 .alert-item-tier.composite { background: var(--amber-bg); color: var(--amber); }
 .alert-item-tier.blowout_compress { background: var(--pink-bg); color: var(--pink); }
 .alert-item-tier.quant { background: var(--blue-bg); color: var(--blue); }
@@ -1025,6 +1026,7 @@ body {
   padding: 1px 6px;
 }
 
+.tier-badge.breakout_ml { background: rgba(220, 38, 38, 0.15); color: #ef4444; font-weight: 800; }
 .tier-badge.composite { background: var(--amber-bg); color: var(--amber); }
 .tier-badge.blowout_compress { background: var(--pink-bg); color: var(--pink); }
 .tier-badge.quant { background: var(--blue-bg); color: var(--blue); }
@@ -1279,7 +1281,381 @@ body {
   animation: signal-flash 1s ease-out 3;
 }
 
+/* Breakout ML card glow */
+.signal-card.breakout_ml {
+  border-color: var(--breakout-ml-color);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.15);
+}
+
+.signal-card.breakout_ml .gauge-fill {
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+}
+
+/* Strategy-specific signal card borders */
+.signal-card.composite { border-color: var(--composite-color); }
+.signal-card.blowout_compress { border-color: var(--blowout-compress-color); }
+.signal-card.quant { border-color: var(--quant-color); }
+.signal-card.burst_fade { border-color: var(--burst-fade-color); }
+.signal-card.q3_fade { border-color: var(--q3-fade-color); }
+.signal-card.fade_ml { border-color: var(--fade-ml-color); }
+.signal-card.fade_spread { border-color: var(--fade-spread-color); }
+
+/* Fade in animation for view transitions */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view.active {
+  animation: fadeInUp 0.25s ease-out;
+}
+
+/* Pulse for ELITE confidence */
+@keyframes elite-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(220, 38, 38, 0.4); }
+}
+
+.confidence-tier-card.highlighted {
+  animation: elite-pulse 3s ease-in-out infinite;
+}
+
 /* Win/Loss cell colors in tables */
 td.win { color: var(--green); }
 td.loss { color: var(--red); }
 td.push { color: var(--text-muted); }
+
+/* ============================================================
+   ML CONFIDENCE GAUGE
+   ============================================================ */
+.ml-confidence-gauge {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.gauge-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.gauge-value {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.gauge-bar {
+  position: relative;
+  height: 8px;
+  background: var(--bg-input);
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+.gauge-markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+.gauge-marker {
+  position: absolute;
+  top: -2px;
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.2);
+  transform: translateX(-50%);
+  height: 12px;
+  line-height: 12px;
+}
+
+.gauge-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.2rem;
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   BREAKOUT & COMBO BADGES
+   ============================================================ */
+.breakout-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.breakout-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.breakout-badge.bb { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+.breakout-badge.donchian { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
+.breakout-badge.ma { background: rgba(5, 150, 105, 0.2); color: #34d399; }
+.breakout-badge.mom { background: rgba(220, 38, 38, 0.2); color: #f87171; }
+.breakout-badge.vol { background: rgba(217, 119, 6, 0.2); color: #fbbf24; }
+
+.combo-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.combo-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  cursor: help;
+}
+
+/* Signal urgency footer */
+.signal-urgency {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.72rem;
+  color: var(--amber);
+  background: rgba(245, 158, 11, 0.06);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--amber);
+}
+
+/* ============================================================
+   ANALYTICS VIEW
+   ============================================================ */
+.analytics-validation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.validation-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+.validation-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.validation-icon {
+  font-size: 1.3rem;
+}
+
+.validation-card-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.validation-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.validation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.validation-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.validation-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   CONFIDENCE TIERS GRID
+   ============================================================ */
+.confidence-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.confidence-tier-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.confidence-tier-card.highlighted {
+  border-color: var(--amber);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+.confidence-tier-card.highlighted .tier-threshold {
+  color: var(--amber);
+}
+
+.tier-threshold {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.tier-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.tier-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.tier-stat-value {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.tier-stat-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   COMBO SIGNAL CARDS
+   ============================================================ */
+.combo-section {
+  margin-bottom: 1.5rem;
+}
+
+.combo-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.combo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+}
+
+.combo-card-rank {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 0.25rem;
+}
+
+.combo-card-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.combo-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.combo-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.combo-stat-value {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.combo-stat-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   BREAKOUT SECTION
+   ============================================================ */
+.breakout-section {
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   RESPONSIVE: Analytics
+   ============================================================ */
+@media (max-width: 1024px) {
+  .analytics-validation-grid { grid-template-columns: 1fr; }
+  .confidence-tiers-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .confidence-tiers-grid { grid-template-columns: 1fr 1fr; }
+  .combo-cards-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .confidence-tiers-grid { grid-template-columns: 1fr; }
+}

@@ -432,11 +432,11 @@ window.HistoricalData = (function() {
     // Walk-forward validated: trained 2021-22, tested 2022-23
     const signals = [];
     const strategies = [
-      { tier: 'breakout_ml', count: 60, spreadCover: 0.702, mlUpset: 0.15 },  // 70% conf OOS
-      { tier: 'quant', count: 50, spreadCover: 0.64, mlUpset: 0.31 },
-      { tier: 'blowout_compress', count: 40, spreadCover: 0.70, mlUpset: 0.12 },
-      { tier: 'burst_fade', count: 30, spreadCover: 0.60, mlUpset: 0.22 },
-      { tier: 'q3_fade', count: 20, spreadCover: 0.58, mlUpset: 0.17 },
+      { tier: 'breakout_ml', count: 80, spreadCover: 0.702, mlUpset: 0.15 },  // 70% conf OOS
+      { tier: 'quant', count: 45, spreadCover: 0.64, mlUpset: 0.31 },
+      { tier: 'blowout_compress', count: 35, spreadCover: 0.70, mlUpset: 0.12 },
+      { tier: 'burst_fade', count: 25, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'q3_fade', count: 15, spreadCover: 0.58, mlUpset: 0.17 },
       { tier: 'fade_ml', count: 15, spreadCover: 0.60, mlUpset: 0.22 },
       { tier: 'fade_spread', count: 15, spreadCover: 0.64, mlUpset: 0.15 },
       { tier: 'composite', count: 20, spreadCover: 0.68, mlUpset: 0.35 },
@@ -487,12 +487,12 @@ window.HistoricalData = (function() {
                    'DAL', 'OKC', 'MIN', 'SAC', 'IND', 'ATL', 'CHI', 'TOR', 'HOU', 'NOP'];
     const tiers = ['breakout_ml', 'composite', 'blowout_compress', 'quant', 'burst_fade', 'q3_fade', 'fade_ml', 'fade_spread'];
     const tierStats = {
-      breakout_ml:      { spreadCover: 0.702, mlUpset: 0.15, count: 60 },
+      breakout_ml:      { spreadCover: 0.702, mlUpset: 0.15, count: 80 },
       composite:        { spreadCover: 0.68, mlUpset: 0.35, count: 20 },
-      blowout_compress: { spreadCover: 0.70, mlUpset: 0.12, count: 40 },
-      quant:            { spreadCover: 0.64, mlUpset: 0.31, count: 50 },
-      burst_fade:       { spreadCover: 0.60, mlUpset: 0.22, count: 30 },
-      q3_fade:          { spreadCover: 0.58, mlUpset: 0.17, count: 20 },
+      blowout_compress: { spreadCover: 0.70, mlUpset: 0.12, count: 35 },
+      quant:            { spreadCover: 0.64, mlUpset: 0.31, count: 45 },
+      burst_fade:       { spreadCover: 0.60, mlUpset: 0.22, count: 25 },
+      q3_fade:          { spreadCover: 0.58, mlUpset: 0.17, count: 15 },
       fade_ml:          { spreadCover: 0.60, mlUpset: 0.22, count: 15 },
       fade_spread:      { spreadCover: 0.64, mlUpset: 0.15, count: 15 },
     };
@@ -508,7 +508,11 @@ window.HistoricalData = (function() {
         while (away === home) away = teams[Math.floor(Math.random() * teams.length)];
 
         let lead, mom, minsLeft, quarter;
-        if (tier === 'blowout_compress') {
+        if (tier === 'breakout_ml') {
+          lead = 8 + Math.floor(Math.random() * 12);   // 8-19 (ML detects across range)
+          mom = Math.floor(Math.random() * 15);
+          minsLeft = 10 + Math.round(Math.random() * 25);
+        } else if (tier === 'blowout_compress') {
           lead = 15 + Math.floor(Math.random() * 12);  // 15-26
           mom = 0;
           minsLeft = 10 + Math.round(Math.random() * 20);
