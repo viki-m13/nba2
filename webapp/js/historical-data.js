@@ -227,6 +227,87 @@ window.HistoricalData = (function() {
         possessionIndex: 68,
       },
     },
+    // Game 8: MIN vs SAC - Blowout Compression (Exp 6), lead compressed 20%+
+    {
+      id: 'hist-009',
+      date: 'Dec 22',
+      homeTeam: 'MIN',
+      awayTeam: 'SAC',
+      homeScore: 118,
+      awayScore: 108,
+      signal: {
+        tier: 'blowout_compress',
+        strategy: 'blowout_compress',
+        strategyName: 'Blowout Compress',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'SAC',
+        leaderTeam: 'MIN',
+        lead: 22,
+        momentum: 16,
+        quarter: 2,
+        quarterTime: '6:00',
+        minsRemaining: 18.0,
+        scoreAtSignal: { home: 58, away: 36 },
+        spreadOutcome: 'win',   // Lead compressed from 22 to 10 (>20% compression)
+        mlOutcome: 'loss',
+        possessionIndex: 55,
+      },
+    },
+    // Game 9: IND vs ATL - Burst Fade (Exp 4), fading 10pt scoring run
+    {
+      id: 'hist-010',
+      date: 'Dec 20',
+      homeTeam: 'IND',
+      awayTeam: 'ATL',
+      homeScore: 114,
+      awayScore: 110,
+      signal: {
+        tier: 'burst_fade',
+        strategy: 'burst_fade',
+        strategyName: 'Burst Fade',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'ATL',
+        leaderTeam: 'IND',
+        lead: 15,
+        momentum: 10,
+        quarter: 2,
+        quarterTime: '8:00',
+        minsRemaining: 20.0,
+        scoreAtSignal: { home: 48, away: 33 },
+        spreadOutcome: 'win',   // Lead compressed from 15 to 4
+        mlOutcome: 'loss',
+        possessionIndex: 50,
+      },
+    },
+    // Game 10: CHI vs TOR - Q3 Fade (Exp 5), fading halftime leader
+    {
+      id: 'hist-011',
+      date: 'Dec 18',
+      homeTeam: 'CHI',
+      awayTeam: 'TOR',
+      homeScore: 105,
+      awayScore: 108,
+      signal: {
+        tier: 'q3_fade',
+        strategy: 'q3_fade',
+        strategyName: 'Q3 Fade',
+        leadingTeam: 'home',
+        trailingTeam: 'away',
+        betTeam: 'TOR',
+        leaderTeam: 'CHI',
+        lead: 14,
+        momentum: 8,
+        quarter: 3,
+        quarterTime: '10:30',
+        minsRemaining: 22.5,
+        scoreAtSignal: { home: 58, away: 44 },
+        spreadOutcome: 'win',   // Lead compressed from 14 to -3 (upset!)
+        mlOutcome: 'win',       // TOR came back and won
+        possessionIndex: 75,
+      },
+    },
   ];
 
   // =========================================================================
@@ -349,10 +430,13 @@ window.HistoricalData = (function() {
     // Quant model: 1664 trades, spread cover ~64%, ML upset ~31%, ROI +37.4%
     const signals = [];
     const strategies = [
-      { tier: 'quant', count: 120, spreadCover: 0.64, mlUpset: 0.31 },
-      { tier: 'fade_ml', count: 30, spreadCover: 0.60, mlUpset: 0.22 },
-      { tier: 'fade_spread', count: 25, spreadCover: 0.64, mlUpset: 0.15 },
-      { tier: 'composite', count: 25, spreadCover: 0.68, mlUpset: 0.35 },
+      { tier: 'quant', count: 80, spreadCover: 0.64, mlUpset: 0.31 },
+      { tier: 'blowout_compress', count: 50, spreadCover: 0.70, mlUpset: 0.12 },
+      { tier: 'burst_fade', count: 40, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'q3_fade', count: 25, spreadCover: 0.58, mlUpset: 0.17 },
+      { tier: 'fade_ml', count: 20, spreadCover: 0.60, mlUpset: 0.22 },
+      { tier: 'fade_spread', count: 20, spreadCover: 0.64, mlUpset: 0.15 },
+      { tier: 'composite', count: 15, spreadCover: 0.68, mlUpset: 0.35 },
     ];
 
     for (const s of strategies) {
@@ -398,12 +482,15 @@ window.HistoricalData = (function() {
     const logs = [];
     const teams = ['BOS', 'NYK', 'LAL', 'GSW', 'MIL', 'PHI', 'DEN', 'PHX', 'MIA', 'CLE',
                    'DAL', 'OKC', 'MIN', 'SAC', 'IND', 'ATL', 'CHI', 'TOR', 'HOU', 'NOP'];
-    const tiers = ['composite', 'quant', 'fade_ml', 'fade_spread'];
+    const tiers = ['composite', 'blowout_compress', 'quant', 'burst_fade', 'q3_fade', 'fade_ml', 'fade_spread'];
     const tierStats = {
-      composite:    { spreadCover: 0.68, mlUpset: 0.35, count: 25 },
-      quant:        { spreadCover: 0.64, mlUpset: 0.31, count: 120 },
-      fade_ml:      { spreadCover: 0.60, mlUpset: 0.22, count: 30 },
-      fade_spread:  { spreadCover: 0.64, mlUpset: 0.15, count: 25 },
+      composite:        { spreadCover: 0.68, mlUpset: 0.35, count: 15 },
+      blowout_compress: { spreadCover: 0.70, mlUpset: 0.12, count: 50 },
+      quant:            { spreadCover: 0.64, mlUpset: 0.31, count: 80 },
+      burst_fade:       { spreadCover: 0.60, mlUpset: 0.22, count: 40 },
+      q3_fade:          { spreadCover: 0.58, mlUpset: 0.17, count: 25 },
+      fade_ml:          { spreadCover: 0.60, mlUpset: 0.22, count: 20 },
+      fade_spread:      { spreadCover: 0.64, mlUpset: 0.15, count: 20 },
     };
 
     let date = new Date('2024-01-15');
@@ -416,16 +503,33 @@ window.HistoricalData = (function() {
         let away = teams[Math.floor(Math.random() * teams.length)];
         while (away === home) away = teams[Math.floor(Math.random() * teams.length)];
 
-        const lead = tier === 'fade_spread' ? 14 + Math.floor(Math.random() * 6) :
-                     tier === 'fade_ml' ? 10 + Math.floor(Math.random() * 7) :
-                     7 + Math.floor(Math.random() * 13);
-        const mom = tier === 'fade_ml' || tier === 'fade_spread' ?
-                    12 + Math.floor(Math.random() * 8) :
-                    0; // Quant/composite don't require momentum
-        const minsLeft = tier === 'fade_ml' || tier === 'fade_spread' ?
-                         18 + Math.round(Math.random() * 6) :
-                         8 + Math.round(Math.random() * 32);
-        const quarter = minsLeft > 24 ? 2 : minsLeft > 12 ? 3 : 4;
+        let lead, mom, minsLeft, quarter;
+        if (tier === 'blowout_compress') {
+          lead = 15 + Math.floor(Math.random() * 12);  // 15-26
+          mom = 0;
+          minsLeft = 10 + Math.round(Math.random() * 20);
+        } else if (tier === 'burst_fade') {
+          lead = 8 + Math.floor(Math.random() * 10);   // 8-17
+          mom = 0;
+          minsLeft = 8 + Math.round(Math.random() * 32);
+        } else if (tier === 'q3_fade') {
+          lead = 10 + Math.floor(Math.random() * 9);   // 10-18
+          mom = 0;
+          minsLeft = 18 + Math.round(Math.random() * 6); // Early Q3
+        } else if (tier === 'fade_spread') {
+          lead = 14 + Math.floor(Math.random() * 6);
+          mom = 12 + Math.floor(Math.random() * 8);
+          minsLeft = 18 + Math.round(Math.random() * 6);
+        } else if (tier === 'fade_ml') {
+          lead = 10 + Math.floor(Math.random() * 7);
+          mom = 12 + Math.floor(Math.random() * 8);
+          minsLeft = 18 + Math.round(Math.random() * 6);
+        } else {
+          lead = 7 + Math.floor(Math.random() * 13);
+          mom = 0;
+          minsLeft = 8 + Math.round(Math.random() * 32);
+        }
+        quarter = tier === 'q3_fade' ? 3 : (minsLeft > 24 ? 2 : minsLeft > 12 ? 3 : 4);
 
         const spreadWin = Math.random() < stats.spreadCover;
         const mlWin = Math.random() < stats.mlUpset;

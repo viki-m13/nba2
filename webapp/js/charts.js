@@ -17,7 +17,10 @@ window.Charts = (function() {
     zero: 'rgba(255, 255, 255, 0.15)',
     signal: {
       composite: '#f59e0b',
+      blowout_compress: '#ec4899',
       quant: '#3b82f6',
+      burst_fade: '#f97316',
+      q3_fade: '#06b6d4',
       fade_ml: '#a855f7',
       fade_spread: '#10b981',
     },

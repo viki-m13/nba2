@@ -27,7 +27,7 @@
     historyGames: null,
   };
 
-  const TIER_PRIORITY = { composite: 0, quant: 1, fade_ml: 2, fade_spread: 3 };
+  const TIER_PRIORITY = { composite: 0, blowout_compress: 1, quant: 2, burst_fade: 3, q3_fade: 4, fade_ml: 5, fade_spread: 6 };
 
   // =========================================================================
   // INITIALIZATION
@@ -388,7 +388,7 @@
       gain.connect(audioCtx.destination);
 
       // Different tones per strategy
-      const freqs = { composite: [880, 1100, 880], quant: [660, 880], fade_ml: [550, 660], fade_spread: [440] };
+      const freqs = { composite: [880, 1100, 880], blowout_compress: [770, 990, 770], quant: [660, 880], burst_fade: [600, 770], q3_fade: [550, 720], fade_ml: [550, 660], fade_spread: [440] };
       const tones = freqs[tier] || [440];
 
       gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
@@ -873,7 +873,10 @@
 
     let filtered = state.signalLog;
     if (filter === 'composite') filtered = filtered.filter(s => s.tier === 'composite');
+    else if (filter === 'blowout_compress') filtered = filtered.filter(s => s.tier === 'blowout_compress');
     else if (filter === 'quant') filtered = filtered.filter(s => s.tier === 'quant');
+    else if (filter === 'burst_fade') filtered = filtered.filter(s => s.tier === 'burst_fade');
+    else if (filter === 'q3_fade') filtered = filtered.filter(s => s.tier === 'q3_fade');
     else if (filter === 'fade_ml') filtered = filtered.filter(s => s.tier === 'fade_ml');
     else if (filter === 'fade_spread') filtered = filtered.filter(s => s.tier === 'fade_spread');
     else if (filter === 'wins') filtered = filtered.filter(s => s.spreadOutcome === 'win');
@@ -890,7 +893,7 @@
     document.getElementById('hist-ml-wr').textContent = totalSignals > 0 ? `${(mlWins / totalSignals * 100).toFixed(1)}%` : '--';
     document.getElementById('hist-total-pnl').textContent = `${totalPnl >= 0 ? '+' : ''}$${Math.round(totalPnl * 100)}`;
 
-    const stratNames = { composite: 'COMPOSITE', quant: 'QUANT', fade_ml: 'FADE ML', fade_spread: 'FADE SPR' };
+    const stratNames = { composite: 'COMPOSITE', blowout_compress: 'BLOWOUT', quant: 'QUANT', burst_fade: 'BURST', q3_fade: 'Q3 FADE', fade_ml: 'FADE ML', fade_spread: 'FADE SPR' };
     tbody.innerHTML = filtered.slice(0, 100).map(sig => `
       <tr>
         <td>${sig.date}</td>

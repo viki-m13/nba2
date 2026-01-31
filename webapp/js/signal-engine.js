@@ -7,11 +7,14 @@
 // Core insight: NBA leads mean-revert. Markets overprice the leader.
 // ALL strategies FADE the leader (bet the underdog).
 //
-// Strategies (from experiments):
+// Strategies (from experiments on 2,310 games):
 // 1. Quant Composite (8-layer multi-factor model) — ROI +37.4%, Sharpe 0.150
-// 2. TA Confluence (3+ TA signals on lead series) — ROI +67.7%, Sharpe 0.101
-// 3. Fade ML (underdog moneyline in specific window) — ROI +86.6%
-// 4. Fade Spread (underdog + points, mean reversion) — ROI +30.0%
+// 2. Blowout Compression (leads 15+ compress 20%) — ROI +15.7%, Sharpe 0.284
+// 3. TA Confluence (3+ TA signals on lead series) — ROI +67.7%, Sharpe 0.101
+// 4. Scoring Burst Fade (fade 8pt+ runs) — ROI +36.0%, Sharpe 0.107
+// 5. Q3 Halftime Fade (fade HT leaders 10-18) — ROI +34.7%, Sharpe 0.104
+// 6. Fade ML (underdog moneyline in specific window) — ROI +86.6%
+// 7. Fade Spread (underdog + points, mean reversion) — ROI +30.0%
 // =============================================================================
 
 window.SignalEngine = (function() {
@@ -28,6 +31,17 @@ window.SignalEngine = (function() {
       color: '#f59e0b',
       priority: 0,
     },
+    blowout_compress: {
+      name: 'Blowout Compress',
+      description: 'Leads 15+ compress 20%+ within 12 min (Exp 6)',
+      direction: 'fade',
+      minLead: 15,
+      compressionTarget: 0.20,
+      maxHoldMinutes: 12,
+      validated: { trades: 1335, wr: 70.3, roi: 15.7, sharpe: 0.284, pf: 1.85 },
+      color: '#ec4899',
+      priority: 1,
+    },
     quant: {
       name: 'Quant',
       description: '8-layer multi-factor model (OU, Hurst, entropy, microstructure)',
@@ -38,7 +52,26 @@ window.SignalEngine = (function() {
       timeRange: [8, 40],
       validated: { trades: 1664, wr: 31.0, roi: 37.4, sharpe: 0.150, pf: 1.54 },
       color: '#3b82f6',
-      priority: 1,
+      priority: 2,
+    },
+    burst_fade: {
+      name: 'Burst Fade',
+      description: 'Fade 8pt+ scoring bursts by leader (Exp 4)',
+      direction: 'fade',
+      minRunPoints: 8,
+      minLead: 8,
+      validated: { trades: 1659, wr: 21.5, roi: 36.0, sharpe: 0.107, pf: 1.46 },
+      color: '#f97316',
+      priority: 3,
+    },
+    q3_fade: {
+      name: 'Q3 Fade',
+      description: 'Fade halftime leader in early Q3 (Exp 5)',
+      direction: 'fade',
+      htLeadRange: [10, 18],
+      validated: { trades: 694, wr: 17.0, roi: 34.7, sharpe: 0.104, pf: 1.42 },
+      color: '#06b6d4',
+      priority: 4,
     },
     fade_ml: {
       name: 'Fade ML',
@@ -49,7 +82,7 @@ window.SignalEngine = (function() {
       timeRange: [18, 24],
       validated: { trades: 174, wr: 21.8, roi: 86.6 },
       color: '#a855f7',
-      priority: 2,
+      priority: 5,
     },
     fade_spread: {
       name: 'Fade Spread',
@@ -60,11 +93,11 @@ window.SignalEngine = (function() {
       timeRange: [18, 24],
       validated: { trades: 146, cover: 64.4, roi: 30.0 },
       color: '#10b981',
-      priority: 3,
+      priority: 6,
     },
   };
 
-  const STRATEGY_ORDER = ['composite', 'quant', 'fade_ml', 'fade_spread'];
+  const STRATEGY_ORDER = ['composite', 'blowout_compress', 'quant', 'burst_fade', 'q3_fade', 'fade_ml', 'fade_spread'];
 
   // =========================================================================
   // MARKET PROBABILITY MODEL (calibrated to NBA empirical benchmarks)
@@ -513,7 +546,24 @@ window.SignalEngine = (function() {
     // === STRATEGY DETECTION ===
     let detectedStrategies = [];
 
-    // Strategy 1: Quant Composite (8-layer model)
+    // Strategy: Blowout Compression (Exp 6)
+    // Lead >= 15, expect 20%+ compression within 12 min
+    // Best: Sharpe 0.284, 70.3% WR, +15.7% ROI, PF 1.85
+    if (lead >= 15 && minsRemaining >= 10) {
+      const compressionTarget = Math.round(lead * 0.20);
+      detectedStrategies.push({
+        strategy: 'blowout_compress',
+        confidence: Math.min(1, (lead - 14) / 15 + 0.5),
+        details: {
+          lead,
+          compressionTarget,
+          expectedNarrow: lead - compressionTarget,
+          holdWindow: '12 min',
+        },
+      });
+    }
+
+    // Strategy: Quant Composite (8-layer model)
     // T=0.15, 4+ layers, lead≥7, time 8-40min
     if (lead >= 7 && minsRemaining >= 8 && minsRemaining <= 40) {
       const quant = computeQuantLayers(possessions, currentIndex);
@@ -527,7 +577,45 @@ window.SignalEngine = (function() {
       }
     }
 
-    // Strategy 2: Fade ML (underdog moneyline)
+    // Strategy: Scoring Burst Fade (Exp 4)
+    // Leader on 8pt+ scoring run, lead >= 8
+    // Best: Run>=8pts lead>=8 → 1659t, +36.0% ROI, Sharpe 0.107, PF 1.46
+    if (lead >= 8) {
+      const runs = detectScoringRuns(possessions, currentIndex);
+      const leaderRun = scoreDiff > 0 ? runs.homeRun : runs.awayRun;
+      const leaderMaxRun = scoreDiff > 0 ? runs.maxHomeRun : runs.maxAwayRun;
+      if (leaderRun >= 8 || leaderMaxRun >= 8) {
+        const runSize = Math.max(leaderRun, leaderMaxRun);
+        detectedStrategies.push({
+          strategy: 'burst_fade',
+          confidence: Math.min(1, (runSize - 7) / 8 + 0.4),
+          details: {
+            lead,
+            currentRun: leaderRun,
+            maxRun: leaderMaxRun,
+          },
+        });
+      }
+    }
+
+    // Strategy: Q3 Halftime Fade (Exp 5)
+    // Fade the halftime leader when in Q3, HT lead 10-18
+    // Best: HT lead 10-18 → 694t, +34.7% ROI, Sharpe 0.104, PF 1.42
+    if (quarter === 3 && lead >= 10 && lead <= 18) {
+      // In Q3 with a sizeable lead — likely halftime leader still ahead
+      // The experiment shows this is profitable regardless of entry window
+      detectedStrategies.push({
+        strategy: 'q3_fade',
+        confidence: Math.min(1, (lead - 9) / 9 + 0.3),
+        details: {
+          lead,
+          quarter: 3,
+          htLeadEstimate: lead,
+        },
+      });
+    }
+
+    // Strategy: Fade ML (underdog moneyline)
     // Lead 10-16, momentum 12+, time 18-24min
     if (lead >= 10 && lead <= 16 && mom >= 12 && leaderHasMomentum &&
         minsRemaining >= 18 && minsRemaining <= 24) {
@@ -538,7 +626,7 @@ window.SignalEngine = (function() {
       });
     }
 
-    // Strategy 3: Fade Spread (underdog + points)
+    // Strategy: Fade Spread (underdog + points)
     // Lead 14-19, momentum 12+, time 18-24min
     if (lead >= 14 && lead <= 19 && mom >= 12 && leaderHasMomentum &&
         minsRemaining >= 18 && minsRemaining <= 24) {
@@ -553,9 +641,13 @@ window.SignalEngine = (function() {
     const ta = detectTASignals(leadSeries);
     let taActive = ta.count >= 3;
 
-    // If quant + TA + fade conditions → composite
+    // If quant + TA + any other fade strategy → composite
     const hasQuant = detectedStrategies.some(s => s.strategy === 'quant');
-    const hasFade = detectedStrategies.some(s => s.strategy === 'fade_ml' || s.strategy === 'fade_spread');
+    const hasFade = detectedStrategies.some(s =>
+      s.strategy === 'fade_ml' || s.strategy === 'fade_spread' ||
+      s.strategy === 'burst_fade' || s.strategy === 'q3_fade' ||
+      s.strategy === 'blowout_compress'
+    );
     if (hasQuant && taActive && hasFade) {
       detectedStrategies.unshift({
         strategy: 'composite',
@@ -563,7 +655,7 @@ window.SignalEngine = (function() {
         details: {
           quantScore: detectedStrategies.find(s => s.strategy === 'quant')?.confidence || 0,
           taSignals: ta.count,
-          fadeType: detectedStrategies.find(s => s.strategy === 'fade_ml') ? 'ML' : 'Spread',
+          subStrategies: detectedStrategies.map(s => s.strategy),
         },
       });
     } else if (hasQuant && taActive) {
@@ -725,16 +817,31 @@ window.SignalEngine = (function() {
     const leader = signal.leaderAbbr;
     const strat = STRATEGIES[signal.strategy] || STRATEGIES.quant;
 
+    const spreadLine = signal.strategy === 'blowout_compress'
+      ? `Take ${team} +${signal.lead} SPREAD (lead compresses 20%+ in 12min, 70.3% WR)`
+      : `Take ${team} +${signal.lead} SPREAD (mean reversion, leads compress ~4pts avg)`;
+
+    const mlLine = signal.strategy === 'blowout_compress'
+      ? `Compression play — spread preferred (${strat.validated.wr}% hit rate)`
+      : `Take ${team} ML at ${signal.underdogOdds} (underdog value)`;
+
+    const urgencyMap = {
+      composite: 'HIGHEST CONFIDENCE — Quant + TA + Fade all agree',
+      blowout_compress: 'HIGH RELIABILITY — Blowout compression (Sharpe 0.284, 70% WR)',
+      quant: 'HIGH CONFIDENCE — Multi-factor quant model triggered',
+      burst_fade: 'STRONG SETUP — Scoring burst fade (leader run overextended)',
+      q3_fade: 'STRONG SETUP — Q3 halftime fade (leaders fade after half)',
+      fade_ml: 'STRONG SETUP — Underdog ML value detected',
+      fade_spread: 'MODERATE SETUP — Underdog spread value',
+    };
+
     return {
       headline: `FADE ${leader} — Bet ${team} (${strat.name})`,
-      spread: `Take ${team} +${signal.lead} SPREAD (mean reversion, leads compress ~4pts avg)`,
-      moneyline: `Take ${team} ML at ${signal.underdogOdds} (underdog value)`,
+      spread: spreadLine,
+      moneyline: mlLine,
       combined: `Strategy ROI: +${strat.validated.roi || '??'}% validated on ${strat.validated.trades || '2310'} games`,
       context: `Lead: ${signal.lead} | Mom: ${signal.momentum} | ${signal.minsRemaining} min left | Q${signal.quarter} ${signal.quarterTime}`,
-      urgency: signal.strategy === 'composite' ? 'HIGHEST CONFIDENCE — Quant + TA + Fade all agree' :
-               signal.strategy === 'quant' ? 'HIGH CONFIDENCE — Multi-factor quant model triggered' :
-               signal.strategy === 'fade_ml' ? 'STRONG SETUP — Underdog ML value detected' :
-               'MODERATE SETUP — Underdog spread value',
+      urgency: urgencyMap[signal.strategy] || 'MODERATE SETUP — Underdog spread value',
     };
   }
 

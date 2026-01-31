@@ -216,7 +216,10 @@
           <select id="history-filter" class="select-input">
             <option value="all">All Signals</option>
             <option value="composite">Composite Only</option>
+            <option value="blowout_compress">Blowout Compress Only</option>
             <option value="quant">Quant Only</option>
+            <option value="burst_fade">Burst Fade Only</option>
+            <option value="q3_fade">Q3 Fade Only</option>
             <option value="fade_ml">Fade ML Only</option>
             <option value="fade_spread">Fade Spread Only</option>
             <option value="wins">Covers Only</option>
@@ -258,6 +261,9 @@
             <option value="5">DAL vs OKC - Jan 3 (Quant Fade, Covered)</option>
             <option value="6">BOS vs MIA - Dec 28 (Composite, Covered)</option>
             <option value="7">GSW vs LAC - Dec 25 (Fade ML, Covered)</option>
+            <option value="8">MIN vs SAC - Dec 22 (Blowout Compress, Covered)</option>
+            <option value="9">IND vs ATL - Dec 20 (Burst Fade, Covered)</option>
+            <option value="10">CHI vs TOR - Dec 18 (Q3 Fade, Upset W)</option>
           </select>
         </div>
         <div class="chart-container">
@@ -331,6 +337,34 @@
           </div>
         </div>
 
+        <div class="strategy-card blowout_compress">
+          <div class="strategy-card-header">
+            <span class="strategy-name">BLOWOUT COMPRESS</span>
+            <span class="strategy-badge">Exp 6 - Compression</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.284</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Win Rate</span>
+              <span class="stat-value highlight-green">70.3%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.85</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+15.7%</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Lead 15+ compresses 20% in 12min | 1,335 trades
+          </div>
+        </div>
+
         <div class="strategy-card quant">
           <div class="strategy-card-header">
             <span class="strategy-name">QUANT</span>
@@ -356,6 +390,62 @@
           </div>
           <div class="strategy-conditions">
             Hurst + AC + Vol + Runs | Lead 7+ | 8-40 min
+          </div>
+        </div>
+
+        <div class="strategy-card burst_fade">
+          <div class="strategy-card-header">
+            <span class="strategy-name">BURST FADE</span>
+            <span class="strategy-badge">Exp 4 - Scoring Runs</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+36.0%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.107</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.46</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">1,659</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Leader 8pt+ scoring run | Lead 8+ | Fade burst
+          </div>
+        </div>
+
+        <div class="strategy-card q3_fade">
+          <div class="strategy-card-header">
+            <span class="strategy-name">Q3 FADE</span>
+            <span class="strategy-badge">Exp 5 - Halftime</span>
+          </div>
+          <div class="strategy-stats">
+            <div class="strategy-stat">
+              <span class="stat-label">ROI</span>
+              <span class="stat-value highlight-green">+34.7%</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Sharpe</span>
+              <span class="stat-value highlight-green">0.104</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Profit Factor</span>
+              <span class="stat-value">1.42</span>
+            </div>
+            <div class="strategy-stat">
+              <span class="stat-label">Trades</span>
+              <span class="stat-value">694</span>
+            </div>
+          </div>
+          <div class="strategy-conditions">
+            Q3 start | HT lead 10-18 | Fade halftime leader
           </div>
         </div>
 
@@ -462,6 +552,15 @@
                 <td class="highlight-green">Both seasons +35-40%</td>
               </tr>
               <tr>
+                <td><span class="tier-badge blowout_compress">BLOWOUT</span></td>
+                <td>Compression</td>
+                <td>1,335</td>
+                <td class="highlight-green">+15.7%</td>
+                <td class="highlight-green">+210u</td>
+                <td class="highlight-green">0.284</td>
+                <td class="highlight-green">70.3% WR, PF 1.85</td>
+              </tr>
+              <tr>
                 <td><span class="tier-badge quant">QUANT</span></td>
                 <td>Fade leader</td>
                 <td>1,664</td>
@@ -469,6 +568,24 @@
                 <td class="highlight-green">+623u</td>
                 <td class="highlight-green">0.150</td>
                 <td class="highlight-green">92% months profitable</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge burst_fade">BURST FADE</span></td>
+                <td>Run fade</td>
+                <td>1,659</td>
+                <td class="highlight-green">+36.0%</td>
+                <td class="highlight-green">+597u</td>
+                <td class="highlight-green">0.107</td>
+                <td class="highlight-green">Run>=8pts, PF 1.46</td>
+              </tr>
+              <tr>
+                <td><span class="tier-badge q3_fade">Q3 FADE</span></td>
+                <td>HT fade</td>
+                <td>694</td>
+                <td class="highlight-green">+34.7%</td>
+                <td class="highlight-green">+241u</td>
+                <td class="highlight-green">0.104</td>
+                <td class="highlight-green">HT lead 10-18, PF 1.42</td>
               </tr>
               <tr>
                 <td><span class="tier-badge fade_ml">FADE ML</span></td>
@@ -518,21 +635,25 @@
             </ul>
           </div>
           <div class="rule-card">
-            <h3>Signal Strategies</h3>
+            <h3>Signal Strategies (7 Total)</h3>
             <ul>
               <li><span class="tier-badge composite sm">COMPOSITE</span> Quant + TA + Fade (highest)</li>
+              <li><span class="tier-badge blowout_compress sm">BLOWOUT</span> Lead 15+ compresses 20% (Sharpe 0.284)</li>
               <li><span class="tier-badge quant sm">QUANT</span> 8-layer model (Hurst, AC, vol)</li>
+              <li><span class="tier-badge burst_fade sm">BURST</span> Fade 8pt+ scoring runs (+36% ROI)</li>
+              <li><span class="tier-badge q3_fade sm">Q3 FADE</span> Fade HT leader in Q3 (+34.7% ROI)</li>
               <li><span class="tier-badge fade_ml sm">FADE ML</span> Underdog ML (L10-16, M12+)</li>
-              <li><span class="tier-badge fade_spread sm">FADE SPREAD</span> Dog + points (L14-19, M12+)</li>
+              <li><span class="tier-badge fade_spread sm">FADE SPR</span> Dog + points (L14-19, M12+)</li>
             </ul>
           </div>
           <div class="rule-card">
             <h3>Risk Management</h3>
             <ul>
               <li>One signal per game maximum</li>
-              <li>Quant model: 8-40 min remaining window</li>
-              <li>Fade strategies: 18-24 min remaining window</li>
-              <li>Min lead 7 (quant) or 10-14 (fade)</li>
+              <li>Quant/Burst/Blowout: 8-40 min remaining</li>
+              <li>Q3 Fade: Quarter 3 only, lead 10-18</li>
+              <li>Fade ML/Spread: 18-24 min, mom 12+</li>
+              <li>Exp 7 confirmed: NEVER bet the favorite</li>
             </ul>
           </div>
         </div>
@@ -541,8 +662,8 @@
       <!-- Disclaimer -->
       <div class="disclaimer">
         <strong>Disclaimer:</strong> Past performance does not guarantee future results.
-        Backtest validated on 2,310 real ESPN games from the 2021-22 &amp; 2022-23 NBA seasons.
-        Cross-season validated (both seasons independently profitable).
+        7 strategies backtested on 2,310 real ESPN games from the 2021-22 &amp; 2022-23 NBA seasons.
+        Cross-season validated (both seasons independently profitable). Exp 7 confirmed betting favorites always loses.
         Results assume -110 standard vig on spreads and realistic ML odds.
         Always bet responsibly.
       </div>
@@ -584,9 +705,12 @@
         <div class="setting-group">
           <label>Minimum Signal Strategy</label>
           <select id="min-tier-select" class="select-input">
-            <option value="fade_spread">All Strategies</option>
+            <option value="fade_spread">All Strategies (7)</option>
             <option value="fade_ml">Fade ML+</option>
+            <option value="q3_fade">Q3 Fade+</option>
+            <option value="burst_fade">Burst Fade+</option>
             <option value="quant">Quant+</option>
+            <option value="blowout_compress">Blowout+</option>
             <option value="composite">Composite Only</option>
           </select>
         </div>
