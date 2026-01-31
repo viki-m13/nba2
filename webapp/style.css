@@ -29,6 +29,7 @@
   --purple-dim: #581c87;
   --purple-bg: rgba(168, 85, 247, 0.1);
   --cyan: #06b6d4;
+  --breakout-ml-color: #dc2626;
   --composite-color: #f59e0b;
   --blowout-compress-color: #ec4899;
   --quant-color: #3b82f6;
@@ -562,6 +563,7 @@ body {
   height: 100%;
 }
 
+.signal-card.breakout_ml::before { background: var(--breakout-ml-color); }
 .signal-card.composite::before { background: var(--composite-color); }
 .signal-card.blowout_compress::before { background: var(--blowout-compress-color); }
 .signal-card.quant::before { background: var(--quant-color); }
@@ -590,6 +592,7 @@ body {
   letter-spacing: 0.05em;
 }
 
+.signal-tier.breakout_ml { background: rgba(220, 38, 38, 0.15); color: #ef4444; font-weight: 800; }
 .signal-tier.composite { background: var(--amber-bg); color: var(--amber); }
 .signal-tier.blowout_compress { background: var(--pink-bg); color: var(--pink); }
 .signal-tier.quant { background: var(--blue-bg); color: var(--blue); }
@@ -923,6 +926,7 @@ body {
   height: 3px;
 }
 
+.strategy-card.breakout_ml::after { background: var(--breakout-ml-color); }
 .strategy-card.composite::after { background: var(--composite-color); }
 .strategy-card.blowout_compress::after { background: var(--blowout-compress-color); }
 .strategy-card.quant::after { background: var(--quant-color); }
@@ -948,6 +952,7 @@ body {
   letter-spacing: 0.05em;
 }
 
+.strategy-card.breakout_ml .strategy-name { color: var(--breakout-ml-color); }
 .strategy-card.composite .strategy-name { color: var(--composite-color); }
 .strategy-card.blowout_compress .strategy-name { color: var(--blowout-compress-color); }
 .strategy-card.quant .strategy-name { color: var(--quant-color); }

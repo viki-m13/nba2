@@ -1,0 +1,468 @@
+{
+  "n_games": 2310,
+  "n_samples": 16116,
+  "base_cover_rate": 0.5434350955572103,
+  "base_win_rate": 0.2469595433109953,
+  "breakout_results": [
+    {
+      "signal": "Bollinger Squeeze",
+      "n_total": 1054,
+      "win_rate": 0.5683111954459203,
+      "edge_vs_base": 0.02487609988871009,
+      "roi_pct": 8.547438330170786,
+      "combined_wr": 0.5914826498422713,
+      "n_combined": 634
+    },
+    {
+      "signal": "Donchian High Breakout",
+      "n_total": 902,
+      "win_rate": 0.5077605321507761,
+      "edge_vs_base": -0.03567456340643416,
+      "roi_pct": -3.0177383592017657,
+      "combined_wr": 0.5528455284552846,
+      "n_combined": 492
+    },
+    {
+      "signal": "Donchian Low Breakout",
+      "n_total": 804,
+      "win_rate": 0.5696517412935324,
+      "edge_vs_base": 0.026216645736322097,
+      "roi_pct": 8.803482587064682,
+      "combined_wr": 0.6332518337408313,
+      "n_combined": 409
+    },
+    {
+      "signal": "Golden Cross (MA)",
+      "n_total": 655,
+      "win_rate": 0.5786259541984733,
+      "edge_vs_base": 0.035190858641263034,
+      "roi_pct": 10.517557251908405,
+      "combined_wr": 0.6403508771929824,
+      "n_combined": 342
+    },
+    {
+      "signal": "Death Cross (MA)",
+      "n_total": 620,
+      "win_rate": 0.5532258064516129,
+      "edge_vs_base": 0.009790710894402643,
+      "roi_pct": 5.666129032258061,
+      "combined_wr": 0.5975609756097561,
+      "n_combined": 328
+    },
+    {
+      "signal": "Momentum Breakout",
+      "n_total": 2868,
+      "win_rate": 0.545676429567643,
+      "edge_vs_base": 0.002241334010432694,
+      "roi_pct": 4.224198047419803,
+      "combined_wr": 0.5942513368983957,
+      "n_combined": 1496
+    },
+    {
+      "signal": "Volume Confirmed",
+      "n_total": 5599,
+      "win_rate": 0.5488480085729595,
+      "edge_vs_base": 0.005412913015749199,
+      "roi_pct": 4.829969637435255,
+      "combined_wr": 0.5815942524803285,
+      "n_combined": 2923
+    },
+    {
+      "signal": "Above Resistance",
+      "n_total": 12391,
+      "win_rate": 0.5242514728431926,
+      "edge_vs_base": -0.019183622714017634,
+      "roi_pct": 0.13203131304979077,
+      "combined_wr": 0.5531008363578981,
+      "n_combined": 6337
+    },
+    {
+      "signal": "Below Support",
+      "n_total": 11650,
+      "win_rate": 0.5491845493562232,
+      "edge_vs_base": 0.005749453799012927,
+      "roi_pct": 4.89424892703863,
+      "combined_wr": 0.5814562598218963,
+      "n_combined": 5727
+    },
+    {
+      "signal": "Trailer on Run",
+      "n_total": 6666,
+      "win_rate": 0.5382538253825383,
+      "edge_vs_base": -0.005181270174671959,
+      "roi_pct": 2.8064806480648183,
+      "combined_wr": 0.5658959537572255,
+      "n_combined": 3460
+    }
+  ],
+  "combo_results": [
+    {
+      "name": "Lead 10+ & Trailer on Run & Momentum Breakout",
+      "n_signals": 329,
+      "cover_rate": 0.5896656534954408,
+      "ml_win_rate": 0.0668693009118541,
+      "edge": 0.0462305579382305,
+      "roi_pct": 12.62613981762919
+    },
+    {
+      "name": "Lead 10+ & Death Cross (away momentum surge)",
+      "n_signals": 136,
+      "cover_rate": 0.5661764705882353,
+      "ml_win_rate": 0.07352941176470588,
+      "edge": 0.022741375031025024,
+      "roi_pct": 8.139705882352944
+    },
+    {
+      "name": "Lead 10+ & Below Support (lead collapsing)",
+      "n_signals": 1604,
+      "cover_rate": 0.543640897755611,
+      "ml_win_rate": 0.07231920199501247,
+      "edge": 0.00020580219840071745,
+      "roi_pct": 3.835411471321698
+    },
+    {
+      "name": "Lead 8+ & BB Squeeze & Volume Confirmed",
+      "n_signals": 163,
+      "cover_rate": 0.5705521472392638,
+      "ml_win_rate": 0.147239263803681,
+      "edge": 0.027117051682053583,
+      "roi_pct": 8.975460122699397
+    },
+    {
+      "name": "Lead 12+ & Range Compression > 0.5 & Trailer on Run",
+      "n_signals": 268,
+      "cover_rate": 0.6156716417910447,
+      "ml_win_rate": 0.09328358208955224,
+      "edge": 0.07223654623383446,
+      "roi_pct": 17.593283582089548
+    },
+    {
+      "name": "Lead 8+ & Donchian Low Breakout (lead breaking down)",
+      "n_signals": 163,
+      "cover_rate": 0.5337423312883436,
+      "ml_win_rate": 0.10429447852760736,
+      "edge": -0.009692764268866672,
+      "roi_pct": 1.944785276073624
+    },
+    {
+      "name": "Lead 8+ & Hurst < 0.45 (mean reverting) & Momentum ROC < -3",
+      "n_signals": 108,
+      "cover_rate": 0.6944444444444444,
+      "ml_win_rate": 0.17592592592592593,
+      "edge": 0.15100934888723416,
+      "roi_pct": 32.638888888888886
+    },
+    {
+      "name": "Lead 15+ & Q3/Q4 & Trailer on Run",
+      "n_signals": 1062,
+      "cover_rate": 0.596045197740113,
+      "ml_win_rate": 0.022598870056497175,
+      "edge": 0.05261010218290274,
+      "roi_pct": 13.844632768361587
+    },
+    {
+      "name": "Lead 10+ & WP Divergence > 5 (market disagrees with lead)",
+      "n_signals": 4761,
+      "cover_rate": 0.6118462507876496,
+      "ml_win_rate": 0.09871875656374711,
+      "edge": 0.06841115523043939,
+      "roi_pct": 16.862633900441082
+    },
+    {
+      "name": "Donchian Breakout (either) & Volume Confirmed & Lead 7+",
+      "n_signals": 278,
+      "cover_rate": 0.6079136690647482,
+      "ml_win_rate": 0.16906474820143885,
+      "edge": 0.06447857350753794,
+      "roi_pct": 16.11151079136691
+    },
+    {
+      "name": "Lead 10+ & Autocorr < -0.1 (mean reverting) & Lead Velocity < -2",
+      "n_signals": 726,
+      "cover_rate": 0.5853994490358126,
+      "ml_win_rate": 0.11019283746556474,
+      "edge": 0.04196435347860239,
+      "roi_pct": 11.81129476584022
+    },
+    {
+      "name": "Lead 12+ & 5min Momentum Favors Trailer > 5pts",
+      "n_signals": 138,
+      "cover_rate": 0.5072463768115942,
+      "ml_win_rate": 0.028985507246376812,
+      "edge": -0.03618871874561602,
+      "roi_pct": -3.1159420289855024
+    },
+    {
+      "name": "Lead 8+ & Golden Cross + Trailer Perspective",
+      "n_signals": 152,
+      "cover_rate": 0.7236842105263158,
+      "ml_win_rate": 0.2236842105263158,
+      "edge": 0.18024911496910556,
+      "roi_pct": 38.22368421052632
+    }
+  ],
+  "spread_strategy": [
+    {
+      "threshold": 0.5,
+      "n_signals": 4801,
+      "n_wins": 2899,
+      "win_rate": 0.6038325348885649,
+      "roi_pct": 15.3320141637159,
+      "sharpe": 11.37192638093918,
+      "kelly": 0.16848367212874615,
+      "coverage": 0.6379218708477279
+    },
+    {
+      "threshold": 0.55,
+      "n_signals": 2487,
+      "n_wins": 1615,
+      "win_rate": 0.6493767591475673,
+      "roi_pct": 24.030960997185357,
+      "sharpe": 13.14943048268379,
+      "kelly": 0.2640764944745644,
+      "coverage": 0.3304544246611746
+    },
+    {
+      "threshold": 0.6,
+      "n_signals": 1123,
+      "n_wins": 756,
+      "win_rate": 0.6731967943009796,
+      "roi_pct": 28.580587711487095,
+      "sharpe": 10.690880923619202,
+      "kelly": 0.3140723924339241,
+      "coverage": 0.14921605102311986
+    },
+    {
+      "threshold": 0.65,
+      "n_signals": 455,
+      "n_wins": 308,
+      "win_rate": 0.676923076923077,
+      "roi_pct": 29.292307692307705,
+      "sharpe": 6.995250795124706,
+      "kelly": 0.3218934911242605,
+      "coverage": 0.06045708211533351
+    },
+    {
+      "threshold": 0.7,
+      "n_signals": 167,
+      "n_wins": 122,
+      "win_rate": 0.7305389221556886,
+      "roi_pct": 39.53293413173653,
+      "sharpe": 6.028568723771745,
+      "kelly": 0.4344278476015003,
+      "coverage": 0.022189742226946585
+    },
+    {
+      "threshold": 0.75,
+      "n_signals": 72,
+      "n_wins": 51,
+      "win_rate": 0.7083333333333334,
+      "roi_pct": 35.29166666666668,
+      "sharpe": 3.449394055593821,
+      "kelly": 0.38782051282051294,
+      "coverage": 0.009566834972096731
+    },
+    {
+      "threshold": 0.8,
+      "n_signals": 43,
+      "n_wins": 33,
+      "win_rate": 0.7674418604651163,
+      "roi_pct": 46.58139534883722,
+      "sharpe": 3.785513853723102,
+      "kelly": 0.5118834653718375,
+      "coverage": 0.005713526441668881
+    },
+    {
+      "threshold": 0.85,
+      "n_signals": 10,
+      "n_wins": 8,
+      "win_rate": 0.8,
+      "roi_pct": 52.80000000000001,
+      "sharpe": 2.1854484352996133,
+      "kelly": 0.5802197802197804,
+      "coverage": 0.0013287270794578793
+    }
+  ],
+  "ml_strategy": [
+    {
+      "threshold": 0.5,
+      "n_signals": 472,
+      "n_wins": 247,
+      "win_rate": 0.5233050847457628,
+      "roi_pct": -0.048728813559312245,
+      "sharpe": -0.011097514787596425,
+      "kelly": 0,
+      "coverage": 0.0627159181504119
+    },
+    {
+      "threshold": 0.55,
+      "n_signals": 244,
+      "n_wins": 134,
+      "win_rate": 0.5491803278688525,
+      "roi_pct": 4.893442622950833,
+      "sharpe": 0.8042982633194881,
+      "kelly": 0.05377409475770146,
+      "coverage": 0.032420940738772254
+    },
+    {
+      "threshold": 0.6,
+      "n_signals": 102,
+      "n_wins": 62,
+      "win_rate": 0.6078431372549019,
+      "roi_pct": 16.098039215686267,
+      "sharpe": 1.7434682021535453,
+      "kelly": 0.1769015298427062,
+      "coverage": 0.01355301621047037
+    },
+    {
+      "threshold": 0.65,
+      "n_signals": 13,
+      "n_wins": 7,
+      "win_rate": 0.5384615384615384,
+      "roi_pct": 2.8461538461538427,
+      "sharpe": 0.10777434392552332,
+      "kelly": 0.03127641589180047,
+      "coverage": 0.0017273452032952432
+    },
+    {
+      "threshold": 0.7,
+      "n_signals": 10,
+      "n_wins": 6,
+      "win_rate": 0.6,
+      "roi_pct": 14.600000000000001,
+      "sharpe": 0.49341672648017715,
+      "kelly": 0.16043956043956045,
+      "coverage": 0.0013287270794578793
+    }
+  ],
+  "walk_forward_covers": [
+    {
+      "train_seasons": [
+        "2021-2022"
+      ],
+      "test_season": "2022-2023",
+      "n_train": 8590,
+      "n_test": 7526,
+      "accuracy": 0.5740100983258039,
+      "auc": 0.5926025210629755,
+      "brier": 0.24156240872312598
+    }
+  ],
+  "walk_forward_wins": [
+    {
+      "train_seasons": [
+        "2021-2022"
+      ],
+      "test_season": "2022-2023",
+      "n_train": 8590,
+      "n_test": 7526,
+      "accuracy": 0.7535211267605634,
+      "auc": 0.7397904853575434,
+      "brier": 0.1631828384749308
+    }
+  ],
+  "top_features": [
+    [
+      "wp_vs_lead_divergence",
+      0.032639436423778534
+    ],
+    [
+      "lead",
+      0.031690195202827454
+    ],
+    [
+      "ma_death_cross",
+      0.020917341113090515
+    ],
+    [
+      "wp_implied_lead",
+      0.01843291148543358
+    ],
+    [
+      "secs_remaining",
+      0.017267907038331032
+    ],
+    [
+      "quarter_mins_remaining",
+      0.016569597646594048
+    ],
+    [
+      "ma_short",
+      0.015761516988277435
+    ],
+    [
+      "home_wp",
+      0.015744905918836594
+    ],
+    [
+      "ma_long",
+      0.01560662966221571
+    ],
+    [
+      "lead_at_30min",
+      0.015532885678112507
+    ],
+    [
+      "lead_duration_pct",
+      0.015180344693362713
+    ],
+    [
+      "lead_range",
+      0.01488203089684248
+    ],
+    [
+      "lead_at_36min",
+      0.014811660163104534
+    ],
+    [
+      "lead_at_24min",
+      0.014468038454651833
+    ],
+    [
+      "lead_end_q1",
+      0.014420020394027233
+    ],
+    [
+      "lead_at_12min",
+      0.014363337308168411
+    ],
+    [
+      "n_resistance_levels",
+      0.014055775478482246
+    ],
+    [
+      "game_mins",
+      0.014050524681806564
+    ],
+    [
+      "lead_max",
+      0.014036538079380989
+    ],
+    [
+      "ties",
+      0.013993117958307266
+    ],
+    [
+      "lead_at_6min",
+      0.013744843192398548
+    ],
+    [
+      "away_score",
+      0.013740592636168003
+    ],
+    [
+      "lead_std",
+      0.013661633245646954
+    ],
+    [
+      "lead_at_18min",
+      0.01355223823338747
+    ],
+    [
+      "lead_changes",
+      0.013529202900826931
+    ]
+  ],
+  "best_spread_threshold": 0.8,
+  "best_ml_threshold": 0.6
+}
