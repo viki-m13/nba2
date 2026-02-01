@@ -130,7 +130,7 @@ window.Q3OUEngine = (function() {
       q3_cumul_total: q3CumulTotal,
       h1_total: h1Total,
       scoring_variance: scoringVariance,
-      late_q3_pts: lateQ3Pts || 12,
+      late_q3_pts: lateQ3Pts || 0,
       pace_ratio: paceRatio,
     };
   }
@@ -348,36 +348,6 @@ window.Q3OUEngine = (function() {
   }
 
   // =========================================================================
-  // ESTIMATE O/U LINE FROM PACE (fallback when line not available)
-  // =========================================================================
-  function estimateOULine(possessions) {
-    if (!possessions || possessions.length < 5) return 220; // NBA average
-
-    // Look at current scoring pace and extrapolate
-    const last = possessions[possessions.length - 1];
-    const quarter = last.quarter;
-    const total = last.homeScore + last.awayScore;
-
-    // Parse clock
-    const clockParts = last.quarterTime.split(':');
-    const minsLeft = parseInt(clockParts[0]) || 0;
-    const secsLeft = parseInt(clockParts[1]) || 0;
-
-    // Calculate total game minutes elapsed
-    const quarterMinsElapsed = 12 - minsLeft - secsLeft / 60;
-    const totalMinsElapsed = (quarter - 1) * 12 + quarterMinsElapsed;
-
-    if (totalMinsElapsed < 6) return 220;
-
-    // Project to 48 minutes
-    const projectedTotal = (total / totalMinsElapsed) * 48;
-
-    // Regression to mean: blend with league average
-    const weight = Math.min(1, totalMinsElapsed / 36); // More weight as game progresses
-    return Math.round(projectedTotal * weight + 220 * (1 - weight));
-  }
-
-  // =========================================================================
   // GET TRADE INSTRUCTION
   // =========================================================================
   function getTradeInstruction(signal) {
@@ -436,7 +406,6 @@ window.Q3OUEngine = (function() {
     BREAKEVEN_PCT,
     evaluate,
     evaluateFromPossessions,
-    estimateOULine,
     computeFeatures,
     predictQ4,
     getTier,
