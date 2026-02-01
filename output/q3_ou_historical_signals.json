@@ -1,9 +1,4 @@
-// Auto-generated historical Q3 O/U signals from 2177 ESPN games
-// Generated: 2026-02-01T13:48:55.840501
-// Source: ESPN pickcenter O/U lines (no fallbacks, no assumptions)
-// Games: 2021-22 and 2022-23 NBA seasons (regulation only)
-
-window.HistoricalData = {
+{
   "generated": "2026-02-01T13:48:55.795493",
   "totalGames": 2177,
   "totalSignals": 1060,
@@ -45654,4 +45649,4 @@ window.HistoricalData = {
       }
     }
   }
-};
+}

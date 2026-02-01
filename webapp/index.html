@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NBA Live Trading Signals</title>
+  <title>Q3 Over/Under Signal Engine</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
@@ -16,8 +16,8 @@
     <div class="topbar-left">
       <div class="logo">
         <span class="logo-icon">&#9651;</span>
-        <span class="logo-text">NBA SIGNALS</span>
-        <span class="logo-badge">v3.0 LIVE</span>
+        <span class="logo-text">Q3 O/U ENGINE</span>
+        <span class="logo-badge">LIVE</span>
       </div>
     </div>
     <nav class="topbar-nav">
@@ -29,7 +29,6 @@
       </a>
       <a href="#history" class="nav-link" data-view="history">Historical</a>
       <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
-      <a href="#analytics" class="nav-link" data-view="analytics">Analytics</a>
     </nav>
     <div class="topbar-right">
       <div class="refresh-indicator" id="refresh-indicator">
@@ -50,25 +49,21 @@
       <span class="stat-value" id="stat-active-signals">0</span>
       <span class="stat-label">Active Signals</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-session-wr">--</span>
-      <span class="stat-label">Session WR</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-backtest-roi">+34.0%</span>
-      <span class="stat-label">ML ROI (70%)</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-ml-wr">70.2%</span>
-      <span class="stat-label">ML Win Rate</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-total-ev">2,310</span>
-      <span class="stat-label">Games Validated</span>
+    <div class="stat-item ou-stat-item">
+      <span class="stat-value highlight-gold" id="stat-ou-platinum">99.0%</span>
+      <span class="stat-label">PLATINUM Acc</span>
     </div>
     <div class="stat-item ou-stat-item">
-      <span class="stat-value highlight-gold" id="stat-ou-wr">99.4%</span>
-      <span class="stat-label">Q3 O/U Acc</span>
+      <span class="stat-value highlight-gold" id="stat-ou-gold">96.9%</span>
+      <span class="stat-label">GOLD Acc</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-total-signals">1,060</span>
+      <span class="stat-label">Historical Signals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value highlight-green" id="stat-total-games">2,177</span>
+      <span class="stat-label">Games Analyzed</span>
     </div>
     <div class="stat-item">
       <span class="stat-value" id="stat-next-refresh">5s</span>
@@ -80,7 +75,7 @@
   <main id="main-content">
     <!-- ==================== DASHBOARD VIEW ==================== -->
     <section id="view-dashboard" class="view active">
-      <!-- Alert Banner (appears when new signal fires) -->
+      <!-- Alert Banner -->
       <div id="signal-alert-banner" class="alert-banner hidden">
         <div class="alert-banner-icon">&#9888;</div>
         <div class="alert-banner-text">
@@ -88,6 +83,39 @@
           <span id="alert-banner-msg"></span>
         </div>
         <button class="alert-banner-close" id="alert-banner-close">&times;</button>
+      </div>
+
+      <!-- Q3 O/U Signals (primary focus) -->
+      <div class="ou-signals-section">
+        <div class="section-header">
+          <h2>Q3 Over/Under Signals</h2>
+          <span class="section-badge ou-badge" id="ou-signals-count">0</span>
+        </div>
+        <div class="ou-validation-strip">
+          <div class="ou-val-item">
+            <span class="ou-val-label">PLATINUM (&ge;20)</span>
+            <span class="ou-val-value ou-platinum">99.0%</span>
+          </div>
+          <div class="ou-val-item">
+            <span class="ou-val-label">GOLD (&ge;15)</span>
+            <span class="ou-val-value ou-gold">96.9%</span>
+          </div>
+          <div class="ou-val-item">
+            <span class="ou-val-label">SILVER (&ge;12)</span>
+            <span class="ou-val-value ou-silver">93.4%</span>
+          </div>
+          <div class="ou-val-item">
+            <span class="ou-val-label">BRONZE (&ge;10)</span>
+            <span class="ou-val-value ou-bronze">90.9%</span>
+          </div>
+        </div>
+        <div id="ou-signals-list" class="ou-signals-list">
+          <div class="empty-state">
+            <div class="empty-icon">&#9878;</div>
+            <p>No O/U signals yet</p>
+            <p class="empty-sub">Signals fire at Q3 end when model predicts final total with high margin from pregame O/U line (ESPN). Waiting for Q3 games.</p>
+          </div>
+        </div>
       </div>
 
       <div class="dashboard-grid">
@@ -106,77 +134,21 @@
           </div>
         </div>
 
-        <!-- Signals & Alerts Column -->
+        <!-- Score Flow Chart Column -->
         <div class="dashboard-col">
           <div class="section-header">
-            <h2>Active Signals</h2>
-            <span class="section-badge signal-badge" id="signals-count">0</span>
-          </div>
-          <div id="dashboard-signals" class="signal-cards-list">
-            <div class="empty-state">
-              <div class="empty-icon">&#128226;</div>
-              <p>No active signals</p>
-              <p class="empty-sub">Signals fire when momentum + lead conditions are met during Q2-Q3.</p>
+            <h2>Score Flow</h2>
+            <div class="chart-controls">
+              <select id="chart-game-select" class="select-input">
+                <option value="">Select a game...</option>
+              </select>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Q3 O/U Signals Column -->
-      <div class="ou-signals-section">
-        <div class="section-header">
-          <h2>Q3 Over/Under Signals</h2>
-          <span class="section-badge ou-badge" id="ou-signals-count">0</span>
-        </div>
-        <div id="ou-input-panel" class="ou-input-panel">
-          <div class="ou-input-row">
-            <label class="ou-input-label">O/U Line:</label>
-            <input type="number" id="ou-line-input" class="text-input ou-line-input" placeholder="e.g. 224.5" step="0.5">
-            <button class="btn btn-sm btn-ou-scan" id="ou-scan-btn">Scan Games</button>
-          </div>
-          <p class="ou-input-help">Enter the opening O/U line to detect signals at Q3 end. Fires at 95-99%+ accuracy.</p>
-        </div>
-        <div id="ou-signals-list" class="ou-signals-list">
-          <div class="empty-state">
-            <div class="empty-icon">&#9878;</div>
-            <p>No O/U signals yet</p>
-            <p class="empty-sub">Signals fire at Q3 end when model predicts final total with high margin from O/U line. Enter O/U line above or wait for Q3.</p>
-          </div>
-        </div>
-        <div class="ou-validation-strip">
-          <div class="ou-val-item">
-            <span class="ou-val-label">PLATINUM (&ge;20)</span>
-            <span class="ou-val-value ou-platinum">99.4%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">GOLD (&ge;15)</span>
-            <span class="ou-val-value ou-gold">98.3%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">SILVER (&ge;12)</span>
-            <span class="ou-val-value ou-silver">97.7%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">BRONZE (&ge;10)</span>
-            <span class="ou-val-value ou-bronze">95.7%</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Score Flow Chart -->
-      <div class="chart-section">
-        <div class="section-header">
-          <h2>Score Flow</h2>
-          <div class="chart-controls">
-            <select id="chart-game-select" class="select-input">
-              <option value="">Select a game...</option>
-            </select>
-          </div>
-        </div>
-        <div class="chart-container">
-          <canvas id="scoreflow-chart"></canvas>
-          <div id="chart-empty-state" class="chart-empty">
-            <p>Select a live game to see score flow with signal markers</p>
+          <div class="chart-container">
+            <canvas id="scoreflow-chart"></canvas>
+            <div id="chart-empty-state" class="chart-empty">
+              <p>Select a live game to see score flow</p>
+            </div>
           </div>
         </div>
       </div>
@@ -231,7 +203,7 @@
     <!-- ==================== ALERTS VIEW ==================== -->
     <section id="view-alerts" class="view">
       <div class="section-header">
-        <h2>Trading Alerts</h2>
+        <h2>Q3 O/U Alerts</h2>
         <div class="view-controls">
           <button class="btn btn-sm btn-outline" id="clear-alerts-btn">Clear All</button>
           <div class="alert-stats">
@@ -253,7 +225,7 @@
         <div class="empty-state">
           <div class="empty-icon">&#128276;</div>
           <p>No alerts yet</p>
-          <p class="empty-sub">Alerts will appear here when trading signals fire during live games.</p>
+          <p class="empty-sub">Alerts appear when Q3 O/U signals fire during live games.</p>
         </div>
       </div>
     </section>
@@ -261,20 +233,23 @@
     <!-- ==================== HISTORICAL VIEW ==================== -->
     <section id="view-history" class="view">
       <div class="section-header">
-        <h2>Historical Games & Signals</h2>
+        <h2>Historical Q3 O/U Signals</h2>
         <div class="view-controls">
           <select id="history-filter" class="select-input">
             <option value="all">All Signals</option>
-            <option value="breakout_ml">Breakout+ML Only</option>
-            <option value="composite">Composite Only</option>
-            <option value="blowout_compress">Blowout Compress Only</option>
-            <option value="quant">Quant Only</option>
-            <option value="burst_fade">Burst Fade Only</option>
-            <option value="q3_fade">Q3 Fade Only</option>
-            <option value="fade_ml">Fade ML Only</option>
-            <option value="fade_spread">Fade Spread Only</option>
-            <option value="wins">Covers Only</option>
-            <option value="losses">Losses Only</option>
+            <option value="PLATINUM">PLATINUM Only</option>
+            <option value="GOLD">GOLD Only</option>
+            <option value="SILVER">SILVER Only</option>
+            <option value="BRONZE">BRONZE Only</option>
+            <option value="OVER">OVER Only</option>
+            <option value="UNDER">UNDER Only</option>
+            <option value="correct">Correct Only</option>
+            <option value="incorrect">Incorrect Only</option>
+          </select>
+          <select id="history-season-filter" class="select-input">
+            <option value="all">All Seasons</option>
+            <option value="2021-22">2021-22</option>
+            <option value="2022-23">2022-23</option>
           </select>
         </div>
       </div>
@@ -282,50 +257,38 @@
       <!-- Historical Stats Summary -->
       <div class="history-stats-grid">
         <div class="history-stat-card">
-          <div class="history-stat-value" id="hist-total-signals">1,664</div>
+          <div class="history-stat-value" id="hist-total-signals">1,060</div>
           <div class="history-stat-label">Total Signals</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-spread-wr">64.4%</div>
-          <div class="history-stat-label">Spread Cover Rate</div>
+          <div class="history-stat-value highlight-green" id="hist-accuracy">95.9%</div>
+          <div class="history-stat-label">Overall Accuracy</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-ml-wr">31.0%</div>
-          <div class="history-stat-label">Underdog ML WR</div>
+          <div class="history-stat-value highlight-green" id="hist-total-pnl">+886.6u</div>
+          <div class="history-stat-label">Total P&L (flat bet)</div>
         </div>
         <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-total-pnl">+$62,300</div>
-          <div class="history-stat-label">Total P&L ($100/bet)</div>
+          <div class="history-stat-value highlight-green" id="hist-roi">+83.6%</div>
+          <div class="history-stat-label">ROI</div>
         </div>
       </div>
 
-      <!-- Historical Game Charts -->
-      <div class="history-chart-section">
+      <!-- Equity Curve -->
+      <div class="chart-section">
         <div class="section-header">
-          <h2>Game Score Flow with Signals</h2>
-          <select id="history-game-select" class="select-input">
-            <option value="0">BOS vs NYK - Jan 15 (Quant Fade, Covered)</option>
-            <option value="1">LAL vs GSW - Jan 12 (Fade ML, Upset W)</option>
-            <option value="2">MIL vs PHI - Jan 10 (Quant Fade, Covered)</option>
-            <option value="3">DEN vs PHX - Jan 8 (Composite, Covered)</option>
-            <option value="4">MIA vs CLE - Jan 5 (Fade Spread, Extended)</option>
-            <option value="5">DAL vs OKC - Jan 3 (Quant Fade, Covered)</option>
-            <option value="6">BOS vs MIA - Dec 28 (Composite, Covered)</option>
-            <option value="7">GSW vs LAC - Dec 25 (Fade ML, Covered)</option>
-            <option value="8">MIN vs SAC - Dec 22 (Blowout Compress, Covered)</option>
-            <option value="9">IND vs ATL - Dec 20 (Burst Fade, Covered)</option>
-            <option value="10">CHI vs TOR - Dec 18 (Q3 Fade, Upset W)</option>
-          </select>
+          <h2>Equity Curve (Cumulative P&L)</h2>
         </div>
-        <div class="chart-container">
-          <canvas id="history-chart"></canvas>
+        <div class="chart-container chart-container-lg">
+          <canvas id="equity-chart"></canvas>
         </div>
       </div>
 
-      <!-- Historical Games Table -->
+      <!-- Historical Signals Table -->
       <div class="history-table-section">
         <div class="section-header">
           <h2>Signal Log</h2>
+          <span class="section-badge" id="hist-showing-count">0</span>
         </div>
         <div class="table-wrapper">
           <table id="history-table" class="data-table">
@@ -333,14 +296,14 @@
               <tr>
                 <th>Date</th>
                 <th>Game</th>
-                <th>Signal</th>
+                <th>Direction</th>
                 <th>Tier</th>
-                <th>Lead</th>
-                <th>Mom</th>
-                <th>Min Left</th>
-                <th>Bet</th>
-                <th>Spread</th>
-                <th>ML</th>
+                <th>O/U Line</th>
+                <th>Q3 Total</th>
+                <th>Pred Final</th>
+                <th>Actual Final</th>
+                <th>Margin</th>
+                <th>Result</th>
                 <th>P&L</th>
               </tr>
             </thead>
@@ -354,446 +317,111 @@
     <!-- ==================== BACKTEST VIEW ==================== -->
     <section id="view-backtest" class="view">
       <div class="section-header">
-        <h2>Backtest Results</h2>
-        <p class="section-subtitle">v3.0: ML Ensemble + Breakout Detection + Q3 O/U Engine + Kelly Sizing | 2,310 real NBA games | Walk-forward validated</p>
+        <h2>Q3 O/U Backtest Results</h2>
+        <p class="section-subtitle">Linear regression model | 9 features | ESPN pregame O/U lines | 2,177 regulation games | Walk-forward validated</p>
       </div>
 
-      <!-- Strategy Performance Cards -->
-      <div class="strategy-cards-grid">
-        <div class="strategy-card breakout_ml" style="border: 2px solid var(--breakout-ml-color);">
-          <div class="strategy-card-header">
-            <span class="strategy-name">BREAKOUT + ML</span>
-            <span class="strategy-badge" style="background: rgba(220,38,38,0.2); color: #ef4444;">XGB+RF+GB Stacked</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">Win Rate</span>
-              <span class="stat-value highlight-green" style="font-size: 1.2rem;">70.2%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green" style="font-size: 1.2rem;">+34.0%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">10.01</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Profit Factor</span>
-              <span class="stat-value">2.14</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Signals</span>
-              <span class="stat-value">661</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Max DD</span>
-              <span class="stat-value">8.2 units</span>
-            </div>
-          </div>
-          <div class="strategy-conditions" style="color: #ef4444;">
-            At 80% conf: 82.8% WR, +58.0% ROI, PF 4.36 (87 signals) | At 75% conf: 73.0% WR, +39.4% ROI (278 signals)
-          </div>
-          <div class="strategy-conditions" style="margin-top: 4px; font-size: 0.65rem;">
-            107 features | Stacked Ensemble | 5 Rule Boosters | Quarter-Kelly Sizing | BB + Donchian + MA + Mom + RC + Vol
+      <!-- Q3 O/U Tier Performance Cards -->
+      <div class="ou-tier-cards-grid" id="ou-tier-cards-grid">
+        <div class="ou-tier-card ou-tier-platinum">
+          <div class="ou-tier-header">PLATINUM</div>
+          <div class="ou-tier-accuracy" id="bt-platinum-acc">99.0%</div>
+          <div class="ou-tier-label">Accuracy</div>
+          <div class="ou-tier-stats">
+            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;20 pts</strong></div>
+            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-platinum-n">382</strong></div>
+            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-platinum-wl">378-4</strong></div>
+            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold" id="bt-platinum-roi">+88.9%</strong></div>
+            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-gold" id="bt-platinum-pnl">+339.6u</strong></div>
+            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.89</strong></div>
           </div>
         </div>
-
-        <div class="strategy-card composite">
-          <div class="strategy-card-header">
-            <span class="strategy-name">COMPOSITE</span>
-            <span class="strategy-badge">Quant+TA+Fade</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+37.4%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">0.150</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Profit Factor</span>
-              <span class="stat-value">1.54</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Trades</span>
-              <span class="stat-value">1,664</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            8 quant layers + 3 TA signals | Fade leader
+        <div class="ou-tier-card ou-tier-gold">
+          <div class="ou-tier-header">GOLD</div>
+          <div class="ou-tier-accuracy" id="bt-gold-acc">96.9%</div>
+          <div class="ou-tier-label">Accuracy</div>
+          <div class="ou-tier-stats">
+            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;15 pts</strong></div>
+            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-gold-n">290</strong></div>
+            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-gold-wl">281-8</strong></div>
+            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold" id="bt-gold-roi">+85.3%</strong></div>
+            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-gold" id="bt-gold-pnl">+247.5u</strong></div>
+            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.85</strong></div>
           </div>
         </div>
-
-        <div class="strategy-card blowout_compress">
-          <div class="strategy-card-header">
-            <span class="strategy-name">BLOWOUT COMPRESS</span>
-            <span class="strategy-badge">Exp 6 - Compression</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">0.284</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Win Rate</span>
-              <span class="stat-value highlight-green">70.3%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Profit Factor</span>
-              <span class="stat-value">1.85</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+15.7%</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Lead 15+ compresses 20% in 12min | 1,335 trades
+        <div class="ou-tier-card ou-tier-silver">
+          <div class="ou-tier-header">SILVER</div>
+          <div class="ou-tier-accuracy" id="bt-silver-acc">93.4%</div>
+          <div class="ou-tier-label">Accuracy</div>
+          <div class="ou-tier-stats">
+            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;12 pts</strong></div>
+            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-silver-n">212</strong></div>
+            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-silver-wl">198-12</strong></div>
+            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green" id="bt-silver-roi">+79.2%</strong></div>
+            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-green" id="bt-silver-pnl">+168.0u</strong></div>
+            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.79</strong></div>
           </div>
         </div>
-
-        <div class="strategy-card quant">
-          <div class="strategy-card-header">
-            <span class="strategy-name">QUANT</span>
-            <span class="strategy-badge">8-Layer Model</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+37.4%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">0.150</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Win Rate</span>
-              <span class="stat-value">31.0%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">P&L</span>
-              <span class="stat-value highlight-green">+623u</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Hurst + AC + Vol + Runs | Lead 7+ | 8-40 min
-          </div>
-        </div>
-
-        <div class="strategy-card burst_fade">
-          <div class="strategy-card-header">
-            <span class="strategy-name">BURST FADE</span>
-            <span class="strategy-badge">Exp 4 - Scoring Runs</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+36.0%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">0.107</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Profit Factor</span>
-              <span class="stat-value">1.46</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Trades</span>
-              <span class="stat-value">1,659</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Leader 8pt+ scoring run | Lead 8+ | Fade burst
-          </div>
-        </div>
-
-        <div class="strategy-card q3_fade">
-          <div class="strategy-card-header">
-            <span class="strategy-name">Q3 FADE</span>
-            <span class="strategy-badge">Exp 5 - Halftime</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+34.7%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Sharpe</span>
-              <span class="stat-value highlight-green">0.104</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Profit Factor</span>
-              <span class="stat-value">1.42</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Trades</span>
-              <span class="stat-value">694</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Q3 start | HT lead 10-18 | Fade halftime leader
-          </div>
-        </div>
-
-        <div class="strategy-card fade_ml">
-          <div class="strategy-card-header">
-            <span class="strategy-name">FADE ML</span>
-            <span class="strategy-badge">Underdog ML</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+86.6%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Win Rate</span>
-              <span class="stat-value">21.8%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Trades</span>
-              <span class="stat-value">174</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">P&L</span>
-              <span class="stat-value highlight-green">+151u</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Lead 10-16 | Mom 12+ | 18-24 min | Bet dog ML
-          </div>
-        </div>
-
-        <div class="strategy-card fade_spread">
-          <div class="strategy-card-header">
-            <span class="strategy-name">FADE SPREAD</span>
-            <span class="strategy-badge">Dog + Points</span>
-          </div>
-          <div class="strategy-stats">
-            <div class="strategy-stat">
-              <span class="stat-label">ROI</span>
-              <span class="stat-value highlight-green">+30.0%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Cover Rate</span>
-              <span class="stat-value highlight-green">64.4%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">Trades</span>
-              <span class="stat-value">146</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">P&L</span>
-              <span class="stat-value highlight-green">+42u</span>
-            </div>
-          </div>
-          <div class="strategy-conditions">
-            Lead 14-19 | Mom 12+ | 18-24 min | Dog + pts
-          </div>
-        </div>
-
-        <!-- Q3 O/U STRATEGY CARD -->
-        <div class="strategy-card q3_ou" style="border: 2px solid var(--ou-gold-color, #ffd700); grid-column: 1 / -1;">
-          <div class="strategy-card-header">
-            <span class="strategy-name">Q3 OVER/UNDER</span>
-            <span class="strategy-badge" style="background: rgba(255,215,0,0.2); color: #ffd700;">Linear Model | End of Q3</span>
-          </div>
-          <div class="strategy-stats" style="grid-template-columns: repeat(6, 1fr);">
-            <div class="strategy-stat">
-              <span class="stat-label">PLATINUM Acc</span>
-              <span class="stat-value highlight-gold" style="font-size: 1.2rem;">99.4%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">GOLD Acc</span>
-              <span class="stat-value highlight-gold" style="font-size: 1.2rem;">98.3%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">SILVER Acc</span>
-              <span class="stat-value highlight-green" style="font-size: 1.2rem;">97.7%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">BRONZE Acc</span>
-              <span class="stat-value highlight-green" style="font-size: 1.2rem;">95.7%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">ROI (flat)</span>
-              <span class="stat-value highlight-gold" style="font-size: 1.2rem;">+88%</span>
-            </div>
-            <div class="strategy-stat">
-              <span class="stat-label">OOS Games</span>
-              <span class="stat-value">1,015</span>
-            </div>
-          </div>
-          <div class="strategy-conditions" style="color: #ffd700;">
-            At PLATINUM (margin &ge; 20): 171 games, 170W-1L, +89.8% ROI | At GOLD (margin &ge; 15): 297 games, 292W-5L, +87.7% ROI
-          </div>
-          <div class="strategy-conditions" style="margin-top: 4px; font-size: 0.65rem;">
-            9 features | Linear Regression | Q3-end game state | Predicts Q4 total scoring | Compares to opening O/U line | -110 standard juice | Walk-forward validated (train 21-22, test 22-23)
+        <div class="ou-tier-card ou-tier-bronze">
+          <div class="ou-tier-header">BRONZE</div>
+          <div class="ou-tier-accuracy" id="bt-bronze-acc">90.9%</div>
+          <div class="ou-tier-label">Accuracy</div>
+          <div class="ou-tier-stats">
+            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;10 pts</strong></div>
+            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-bronze-n">176</strong></div>
+            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-bronze-wl">160-14</strong></div>
+            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green" id="bt-bronze-roi">+74.7%</strong></div>
+            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-green" id="bt-bronze-pnl">+131.5u</strong></div>
+            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.75</strong></div>
           </div>
         </div>
       </div>
 
-      <!-- Equity Curve -->
-      <div class="chart-section">
-        <div class="section-header">
-          <h2>Equity Curve (Backtest)</h2>
-          <div class="chart-controls">
-            <select id="equity-mode-select" class="select-input">
-              <option value="combined">Combined (Spread + ML)</option>
-              <option value="spread">Spread Only</option>
-              <option value="ml">Moneyline Only</option>
-            </select>
-          </div>
-        </div>
-        <div class="chart-container chart-container-lg">
-          <canvas id="equity-chart"></canvas>
-        </div>
-      </div>
-
-      <!-- Strategy Breakdown Table -->
+      <!-- Season Breakdown -->
       <div class="backtest-table-section">
         <div class="section-header">
-          <h2>Detailed Breakdown</h2>
+          <h2>Season Breakdown</h2>
         </div>
         <div class="table-wrapper">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Strategy</th>
-                <th>Direction</th>
-                <th>Trades</th>
-                <th>ROI</th>
+                <th>Season</th>
+                <th>Tier</th>
+                <th>Signals</th>
+                <th>Correct</th>
+                <th>Accuracy</th>
                 <th>P&L (units)</th>
-                <th>Sharpe</th>
-                <th>Cross-Season</th>
+                <th>ROI</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><span class="tier-badge composite">COMPOSITE</span></td>
-                <td>Fade leader</td>
-                <td>1,664</td>
-                <td class="highlight-green">+37.4%</td>
-                <td class="highlight-green">+623u</td>
-                <td class="highlight-green">0.150</td>
-                <td class="highlight-green">Both seasons +35-40%</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge blowout_compress">BLOWOUT</span></td>
-                <td>Compression</td>
-                <td>1,335</td>
-                <td class="highlight-green">+15.7%</td>
-                <td class="highlight-green">+210u</td>
-                <td class="highlight-green">0.284</td>
-                <td class="highlight-green">70.3% WR, PF 1.85</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge quant">QUANT</span></td>
-                <td>Fade leader</td>
-                <td>1,664</td>
-                <td class="highlight-green">+37.4%</td>
-                <td class="highlight-green">+623u</td>
-                <td class="highlight-green">0.150</td>
-                <td class="highlight-green">92% months profitable</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge burst_fade">BURST FADE</span></td>
-                <td>Run fade</td>
-                <td>1,659</td>
-                <td class="highlight-green">+36.0%</td>
-                <td class="highlight-green">+597u</td>
-                <td class="highlight-green">0.107</td>
-                <td class="highlight-green">Run>=8pts, PF 1.46</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge q3_fade">Q3 FADE</span></td>
-                <td>HT fade</td>
-                <td>694</td>
-                <td class="highlight-green">+34.7%</td>
-                <td class="highlight-green">+241u</td>
-                <td class="highlight-green">0.104</td>
-                <td class="highlight-green">HT lead 10-18, PF 1.42</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge fade_ml">FADE ML</span></td>
-                <td>Underdog ML</td>
-                <td>174</td>
-                <td class="highlight-green">+86.6%</td>
-                <td class="highlight-green">+151u</td>
-                <td>--</td>
-                <td class="highlight-green">21-22: +95%, 22-23: +78%</td>
-              </tr>
-              <tr>
-                <td><span class="tier-badge fade_spread">FADE SPREAD</span></td>
-                <td>Dog + points</td>
-                <td>146</td>
-                <td class="highlight-green">+30.0%</td>
-                <td class="highlight-green">+42u</td>
-                <td>--</td>
-                <td class="highlight-green">21-22: +20%, 22-23: +36%</td>
-              </tr>
-              <tr style="background: rgba(255,215,0,0.08);">
-                <td><span class="tier-badge q3_ou" style="background: rgba(255,215,0,0.2); color: #ffd700; border-color: #ffd700;">Q3 O/U</span></td>
-                <td>Over/Under @ Q3</td>
-                <td>487 (OOS)</td>
-                <td class="highlight-gold">+82.7%</td>
-                <td class="highlight-gold">+403u</td>
-                <td class="highlight-gold">--</td>
-                <td class="highlight-gold">PLATINUM 99.4%, GOLD 98.3%</td>
-              </tr>
+            <tbody id="backtest-breakdown-body">
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Strategy Rules Reference -->
-      <div class="rules-section">
-        <div class="section-header">
-          <h2>Strategy Rules</h2>
-        </div>
-        <div class="rules-grid">
-          <div class="rule-card">
-            <h3>Core Principle</h3>
-            <ul>
-              <li>NBA leads mean-revert (compression ~4pts avg)</li>
-              <li>Markets overprice the leader during runs</li>
-              <li>ALL signals FADE the leader (bet underdog)</li>
-              <li>Validated on 2,310 real games, cross-season</li>
-            </ul>
+      <!-- Methodology -->
+      <div class="ou-methodology-card">
+        <h3>Methodology</h3>
+        <div class="ou-method-grid">
+          <div class="ou-method-item">
+            <strong>Model:</strong> Linear regression predicting Q4 total scoring from 9 features available at Q3 end.
           </div>
-          <div class="rule-card">
-            <h3>What to Bet</h3>
-            <ul>
-              <li><strong>Spread:</strong> Take underdog + points (spread covers)</li>
-              <li><strong>Moneyline:</strong> Underdog ML (high payout upsets)</li>
-              <li>Direction: ALWAYS bet the trailing team</li>
-              <li>Flat $100 per bet (no Kelly sizing)</li>
-            </ul>
+          <div class="ou-method-item">
+            <strong>Core Insight:</strong> Q4 scoring averages ~54pts regardless of game state. When games deviate from the opening O/U pace, the line becomes mispriced.
           </div>
-          <div class="rule-card">
-            <h3>Signal Strategies (7 Total)</h3>
-            <ul>
-              <li><span class="tier-badge composite sm">COMPOSITE</span> Quant + TA + Fade (highest)</li>
-              <li><span class="tier-badge blowout_compress sm">BLOWOUT</span> Lead 15+ compresses 20% (Sharpe 0.284)</li>
-              <li><span class="tier-badge quant sm">QUANT</span> 8-layer model (Hurst, AC, vol)</li>
-              <li><span class="tier-badge burst_fade sm">BURST</span> Fade 8pt+ scoring runs (+36% ROI)</li>
-              <li><span class="tier-badge q3_fade sm">Q3 FADE</span> Fade HT leader in Q3 (+34.7% ROI)</li>
-              <li><span class="tier-badge fade_ml sm">FADE ML</span> Underdog ML (L10-16, M12+)</li>
-              <li><span class="tier-badge fade_spread sm">FADE SPR</span> Dog + points (L14-19, M12+)</li>
-            </ul>
+          <div class="ou-method-item">
+            <strong>Features:</strong> avg_q_pace, q3_lead, q3_total, pace_trend, q3_cumul_total, h1_total, scoring_variance, late_q3_pts, pace_ratio.
           </div>
-          <div class="rule-card">
-            <h3>Risk Management</h3>
-            <ul>
-              <li>One signal per game maximum</li>
-              <li>Quant/Burst/Blowout: 8-40 min remaining</li>
-              <li>Q3 Fade: Quarter 3 only, lead 10-18</li>
-              <li>Fade ML/Spread: 18-24 min, mom 12+</li>
-              <li>Exp 7 confirmed: NEVER bet the favorite</li>
-            </ul>
+          <div class="ou-method-item">
+            <strong>Data Source:</strong> ESPN pregame O/U lines (pickcenter consensus). No fallbacks or estimations.
+          </div>
+          <div class="ou-method-item">
+            <strong>Validation:</strong> Walk-forward: trained on 2021-22 (1,162 games), tested OOS on 2022-23 (1,015 games). Both seasons validate independently.
+          </div>
+          <div class="ou-method-item">
+            <strong>Risk:</strong> Standard -110 juice. Break-even at 52.4%. Quarter-Kelly sizing recommended. Max 15% of bankroll per signal.
           </div>
         </div>
       </div>
@@ -801,237 +429,9 @@
       <!-- Disclaimer -->
       <div class="disclaimer">
         <strong>Disclaimer:</strong> Past performance does not guarantee future results.
-        8 strategies backtested on 2,310 real ESPN games (2021-22 &amp; 2022-23 seasons).
-        Walk-forward validated (train on 2021-22, test out-of-sample on 2022-23).
-        ML ensemble: XGBoost + Random Forest + Gradient Boosting stacked with Logistic Regression meta-learner.
-        107 engineered features, 5 rule-based boosters, quarter-Kelly position sizing.
-        Results assume -110 standard vig on spreads and realistic ML odds. Always bet responsibly.
-      </div>
-    </section>
-    <!-- ==================== ANALYTICS VIEW ==================== -->
-    <section id="view-analytics" class="view">
-      <div class="section-header">
-        <h2>ML Analytics & Insights</h2>
-        <p class="section-subtitle">Deep dive into the ML ensemble model: feature importance, confidence analysis, and validated combo signals</p>
-      </div>
-
-      <!-- Walk-Forward Validation Summary -->
-      <div class="analytics-validation-grid">
-        <div class="validation-card">
-          <div class="validation-card-header">
-            <span class="validation-icon">&#9989;</span>
-            <h3>Walk-Forward Validation</h3>
-          </div>
-          <div class="validation-details">
-            <div class="validation-row">
-              <span class="validation-label">Train Period</span>
-              <span class="validation-value">2021-22 (8,590 samples)</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Test Period</span>
-              <span class="validation-value">2022-23 (7,526 samples)</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Spread Cover AUC</span>
-              <span class="validation-value highlight-green">0.593</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">ML Win AUC</span>
-              <span class="validation-value highlight-green">0.740</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Total Games</span>
-              <span class="validation-value">2,310</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Total Samples</span>
-              <span class="validation-value">16,116</span>
-            </div>
-          </div>
-        </div>
-        <div class="validation-card">
-          <div class="validation-card-header">
-            <span class="validation-icon">&#129504;</span>
-            <h3>Model Architecture</h3>
-          </div>
-          <div class="validation-details">
-            <div class="validation-row">
-              <span class="validation-label">Ensemble</span>
-              <span class="validation-value">XGB + RF + GBM Stacked</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Meta-Learner</span>
-              <span class="validation-value">Logistic Regression</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Features</span>
-              <span class="validation-value">107 engineered</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Breakout Signals</span>
-              <span class="validation-value">6 (BB, Donchian, MA, Mom, RC, Vol)</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Rule Boosters</span>
-              <span class="validation-value">5 validated rules</span>
-            </div>
-            <div class="validation-row">
-              <span class="validation-label">Sizing</span>
-              <span class="validation-value">Quarter-Kelly Criterion</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Confidence Threshold Performance -->
-      <div class="chart-section">
-        <div class="section-header">
-          <h2>Confidence Threshold Performance</h2>
-          <p class="section-subtitle">Win rate and ROI at different ML confidence cutoffs (out-of-sample)</p>
-        </div>
-        <div class="confidence-tiers-grid" id="confidence-tiers-grid">
-          <!-- Populated by JS -->
-        </div>
-        <div class="chart-container" style="margin-top: 1rem;">
-          <canvas id="confidence-curve-chart"></canvas>
-        </div>
-      </div>
-
-      <!-- Feature Importance -->
-      <div class="chart-section">
-        <div class="section-header">
-          <h2>Feature Importance (XGBoost Ensemble)</h2>
-          <p class="section-subtitle">Top 15 features driving ML predictions, ranked by information gain</p>
-        </div>
-        <div class="chart-container chart-container-lg">
-          <canvas id="feature-importance-chart"></canvas>
-        </div>
-      </div>
-
-      <!-- Validated Combo Signals -->
-      <div class="combo-section">
-        <div class="section-header">
-          <h2>Validated Combo Signals</h2>
-          <p class="section-subtitle">Multi-factor signal combinations with highest edge from 16,116 in-game samples</p>
-        </div>
-        <div class="combo-cards-grid" id="combo-cards-grid">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-      <!-- Q3 O/U Tier Performance -->
-      <div class="ou-analytics-section">
-        <div class="section-header">
-          <h2>Q3 Over/Under Signal Performance</h2>
-          <p class="section-subtitle">Out-of-sample validated on 1,015 games (2022-23 season). Trained on 1,162 games (2021-22 season).</p>
-        </div>
-        <div class="ou-tier-cards-grid" id="ou-tier-cards-grid">
-          <div class="ou-tier-card ou-tier-platinum">
-            <div class="ou-tier-header">PLATINUM</div>
-            <div class="ou-tier-accuracy">99.4%</div>
-            <div class="ou-tier-label">Accuracy</div>
-            <div class="ou-tier-stats">
-              <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;20 pts</strong></div>
-              <div class="ou-tier-stat"><span>Games:</span> <strong>171</strong></div>
-              <div class="ou-tier-stat"><span>W-L:</span> <strong>170-1</strong></div>
-              <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold">+89.8%</strong></div>
-              <div class="ou-tier-stat"><span>Coverage:</span> <strong>16.8%</strong></div>
-              <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.90</strong></div>
-            </div>
-          </div>
-          <div class="ou-tier-card ou-tier-gold">
-            <div class="ou-tier-header">GOLD</div>
-            <div class="ou-tier-accuracy">98.3%</div>
-            <div class="ou-tier-label">Accuracy</div>
-            <div class="ou-tier-stats">
-              <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;15 pts</strong></div>
-              <div class="ou-tier-stat"><span>Games:</span> <strong>297</strong></div>
-              <div class="ou-tier-stat"><span>W-L:</span> <strong>292-5</strong></div>
-              <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold">+87.7%</strong></div>
-              <div class="ou-tier-stat"><span>Coverage:</span> <strong>29.3%</strong></div>
-              <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.89</strong></div>
-            </div>
-          </div>
-          <div class="ou-tier-card ou-tier-silver">
-            <div class="ou-tier-header">SILVER</div>
-            <div class="ou-tier-accuracy">97.7%</div>
-            <div class="ou-tier-label">Accuracy</div>
-            <div class="ou-tier-stats">
-              <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;12 pts</strong></div>
-              <div class="ou-tier-stat"><span>Games:</span> <strong>396</strong></div>
-              <div class="ou-tier-stat"><span>W-L:</span> <strong>387-9</strong></div>
-              <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green">+86.6%</strong></div>
-              <div class="ou-tier-stat"><span>Coverage:</span> <strong>39.0%</strong></div>
-              <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.88</strong></div>
-            </div>
-          </div>
-          <div class="ou-tier-card ou-tier-bronze">
-            <div class="ou-tier-header">BRONZE</div>
-            <div class="ou-tier-accuracy">95.7%</div>
-            <div class="ou-tier-label">Accuracy</div>
-            <div class="ou-tier-stats">
-              <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;10 pts</strong></div>
-              <div class="ou-tier-stat"><span>Games:</span> <strong>487</strong></div>
-              <div class="ou-tier-stat"><span>W-L:</span> <strong>466-21</strong></div>
-              <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green">+82.7%</strong></div>
-              <div class="ou-tier-stat"><span>Coverage:</span> <strong>48.0%</strong></div>
-              <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.84</strong></div>
-            </div>
-          </div>
-        </div>
-        <div class="ou-methodology-card">
-          <h3>Methodology</h3>
-          <div class="ou-method-grid">
-            <div class="ou-method-item">
-              <strong>Model:</strong> Linear regression predicting Q4 total scoring from 9 features available at Q3 end.
-            </div>
-            <div class="ou-method-item">
-              <strong>Core Insight:</strong> Q4 scoring averages ~54pts regardless of game state. When games deviate from opening O/U pace, the line becomes mispriced.
-            </div>
-            <div class="ou-method-item">
-              <strong>Features:</strong> avg_q_pace, q3_lead, q3_total, pace_trend, q3_cumul_total, h1_total, scoring_variance, late_q3_pts, pace_ratio.
-            </div>
-            <div class="ou-method-item">
-              <strong>Risk:</strong> Standard -110 juice. Break-even at 52.4%. Quarter-Kelly sizing recommended. Max 15% of bankroll per signal.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Breakout Signal Performance -->
-      <div class="breakout-section">
-        <div class="section-header">
-          <h2>Individual Breakout Signal Performance</h2>
-        </div>
-        <div class="table-wrapper">
-          <table class="data-table" id="breakout-performance-table">
-            <thead>
-              <tr>
-                <th>Signal</th>
-                <th>Samples</th>
-                <th>Win Rate</th>
-                <th>Edge vs Base</th>
-                <th>ROI %</th>
-                <th>Combined WR</th>
-              </tr>
-            </thead>
-            <tbody id="breakout-table-body">
-              <tr><td>Bollinger Squeeze</td><td>1,054</td><td class="highlight-green">56.8%</td><td class="highlight-green">+2.5%</td><td class="highlight-green">+8.5%</td><td class="highlight-green">59.1%</td></tr>
-              <tr><td>Donchian Low Breakout</td><td>804</td><td class="highlight-green">57.0%</td><td class="highlight-green">+2.6%</td><td class="highlight-green">+8.8%</td><td class="highlight-green">63.3%</td></tr>
-              <tr><td>Golden Cross (MA)</td><td>655</td><td class="highlight-green">57.9%</td><td class="highlight-green">+3.5%</td><td class="highlight-green">+10.5%</td><td class="highlight-green">64.0%</td></tr>
-              <tr><td>Death Cross (MA)</td><td>620</td><td>55.3%</td><td class="highlight-green">+1.0%</td><td class="highlight-green">+5.7%</td><td class="highlight-green">59.8%</td></tr>
-              <tr><td>Momentum Breakout</td><td>2,868</td><td>54.6%</td><td class="highlight-green">+0.2%</td><td class="highlight-green">+4.2%</td><td class="highlight-green">59.4%</td></tr>
-              <tr><td>Volume Confirmed</td><td>5,599</td><td>54.9%</td><td class="highlight-green">+0.5%</td><td class="highlight-green">+4.8%</td><td class="highlight-green">58.2%</td></tr>
-              <tr><td>Below Support</td><td>11,650</td><td>54.9%</td><td class="highlight-green">+0.6%</td><td class="highlight-green">+4.9%</td><td class="highlight-green">58.1%</td></tr>
-              <tr><td>Trailer on Run</td><td>6,666</td><td>53.8%</td><td>-0.5%</td><td class="highlight-green">+2.8%</td><td class="highlight-green">56.6%</td></tr>
-              <tr><td>Donchian High Breakout</td><td>902</td><td>50.8%</td><td class="highlight-red">-3.6%</td><td class="highlight-red">-3.0%</td><td>55.3%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="disclaimer" style="margin-top: 1rem;">
-          <strong>Base cover rate:</strong> 54.3% across all 16,116 samples.
-          "Edge vs Base" = signal win rate minus base rate. "Combined WR" = when signal fires AND ML confidence > 0.5.
-        </div>
+        Validated on 2,177 real ESPN games (2021-22 &amp; 2022-23 NBA seasons, regulation only).
+        O/U lines sourced from ESPN pickcenter (consensus). No fallbacks, no estimated lines, no assumptions.
+        Results assume -110 standard vig. Always bet responsibly.
       </div>
     </section>
   </main>
@@ -1069,16 +469,12 @@
           </label>
         </div>
         <div class="setting-group">
-          <label>Minimum Signal Strategy</label>
+          <label>Minimum Signal Tier</label>
           <select id="min-tier-select" class="select-input">
-            <option value="fade_spread">All Strategies (8)</option>
-            <option value="fade_ml">Fade ML+</option>
-            <option value="q3_fade">Q3 Fade+</option>
-            <option value="burst_fade">Burst Fade+</option>
-            <option value="quant">Quant+</option>
-            <option value="blowout_compress">Blowout+</option>
-            <option value="composite">Composite+</option>
-            <option value="breakout_ml">Breakout+ML Only (highest WR)</option>
+            <option value="BRONZE">All Tiers (BRONZE+)</option>
+            <option value="SILVER">SILVER+</option>
+            <option value="GOLD">GOLD+</option>
+            <option value="PLATINUM">PLATINUM Only</option>
           </select>
         </div>
         <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
@@ -1087,12 +483,9 @@
   </div>
 
   <!-- Audio for alerts -->
-  <audio id="alert-sound" preload="auto">
-    <!-- Generated programmatically via Web Audio API -->
-  </audio>
+  <audio id="alert-sound" preload="auto"></audio>
 
   <!-- Scripts -->
-  <script src="js/signal-engine.js"></script>
   <script src="js/q3-ou-engine.js"></script>
   <script src="js/historical-data.js"></script>
   <script src="js/nba-api.js"></script>
