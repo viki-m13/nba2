@@ -275,6 +275,53 @@
         </div>
       </div>
 
+      <!-- Pred Final vs Actual Final Directional Accuracy -->
+      <div class="history-table-section">
+        <div class="section-header">
+          <h2>Pred Final vs Actual Final &mdash; Directional Accuracy</h2>
+          <p class="section-subtitle">How often the model's predicted final total correctly called OVER/UNDER vs the actual final total</p>
+        </div>
+
+        <!-- Directional accuracy stats cards -->
+        <div class="history-stats-grid" id="pred-accuracy-cards">
+          <div class="history-stat-card">
+            <div class="history-stat-value highlight-green" id="pred-acc-directional">--</div>
+            <div class="history-stat-label">Directional Accuracy</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="pred-acc-record">--</div>
+            <div class="history-stat-label">Correct / Total</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="pred-mae">--</div>
+            <div class="history-stat-label">Mean Abs Error (pts)</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="pred-avg-diff">--</div>
+            <div class="history-stat-label">Avg Pred &minus; Actual</div>
+          </div>
+        </div>
+
+        <!-- Breakdown by tier -->
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Signals</th>
+                <th>Direction Correct</th>
+                <th>Directional Acc</th>
+                <th>Avg Pred Final</th>
+                <th>Avg Actual Final</th>
+                <th>MAE (pts)</th>
+              </tr>
+            </thead>
+            <tbody id="pred-accuracy-breakdown-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Equity Curve -->
       <div class="chart-section">
         <div class="section-header">
@@ -375,62 +422,6 @@
             <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-green" id="bt-bronze-pnl">+131.5u</strong></div>
             <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.75</strong></div>
           </div>
-        </div>
-      </div>
-
-      <!-- Pred Final vs Actual Final Directional Accuracy -->
-      <div class="backtest-table-section">
-        <div class="section-header">
-          <h2>Pred Final vs Actual Final &mdash; Directional Accuracy</h2>
-          <p class="section-subtitle">How often the model's predicted final total correctly called OVER/UNDER vs the actual final total</p>
-        </div>
-
-        <!-- Overall stats cards -->
-        <div class="ou-tier-cards-grid" id="pred-accuracy-cards" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 1.5rem;">
-          <div class="history-stat-card">
-            <div class="history-stat-value highlight-green" id="pred-acc-overall">--</div>
-            <div class="history-stat-label">Overall Accuracy</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value highlight-green" id="pred-acc-oos">--</div>
-            <div class="history-stat-label">OOS Accuracy (2022-23)</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-acc-is">--</div>
-            <div class="history-stat-label">In-Sample (2021-22)</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-mae">--</div>
-            <div class="history-stat-label">Mean Abs Error (pts)</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-avg-predicted">--</div>
-            <div class="history-stat-label">Avg Pred Final</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-avg-actual">--</div>
-            <div class="history-stat-label">Avg Actual Final</div>
-          </div>
-        </div>
-
-        <!-- Breakdown by tier -->
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Season</th>
-                <th>Tier</th>
-                <th>Signals</th>
-                <th>Direction Correct</th>
-                <th>Directional Acc</th>
-                <th>Avg Pred Final</th>
-                <th>Avg Actual Final</th>
-                <th>MAE (pts)</th>
-              </tr>
-            </thead>
-            <tbody id="pred-accuracy-breakdown-body">
-            </tbody>
-          </table>
         </div>
       </div>
 
