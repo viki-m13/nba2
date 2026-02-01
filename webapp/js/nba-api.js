@@ -6,10 +6,12 @@ window.NbaApi = (function() {
 
   const NBA_SCOREBOARD_URL = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
   const NBA_PLAYBYPLAY_URL = (gameId) => `https://cdn.nba.com/static/json/liveData/playbyplay/playbyplay_${gameId}.json`;
+  const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 
   // Vercel proxy endpoint (auto-detected if deployed on Vercel)
   const VERCEL_PROXY_SCOREBOARD = '/api/nba?endpoint=scoreboard';
   const VERCEL_PROXY_PBP = (gameId) => `/api/nba?endpoint=playbyplay&gameId=${gameId}`;
+  const VERCEL_PROXY_ESPN = '/api/nba?endpoint=espn_scoreboard';
 
   // CORS proxy (configurable)
   let corsProxy = '';
@@ -101,6 +103,76 @@ window.NbaApi = (function() {
     'UTA': { name: 'Jazz', city: 'Utah', color: '#002B5C' },
     'WAS': { name: 'Wizards', city: 'Washington', color: '#002B5C' },
   };
+
+  // =========================================================================
+  // ESPN TRICODE NORMALIZATION
+  // =========================================================================
+  // ESPN uses different abbreviations than NBA.com for some teams
+  const ESPN_TO_NBA_TRICODE = {
+    'GS': 'GSW',
+    'NY': 'NYK',
+    'NO': 'NOP',
+    'SA': 'SAS',
+    'WSH': 'WAS',
+    'UTAH': 'UTA',
+  };
+
+  function normalizeTricode(tricode) {
+    return ESPN_TO_NBA_TRICODE[tricode] || tricode;
+  }
+
+  // =========================================================================
+  // FETCH ESPN ODDS (O/U lines)
+  // =========================================================================
+  async function fetchESPNOdds() {
+    try {
+      let url;
+      if (useVercelProxy) {
+        url = VERCEL_PROXY_ESPN;
+      } else if (corsProxy) {
+        url = proxyUrl(ESPN_SCOREBOARD_URL);
+      } else {
+        url = ESPN_SCOREBOARD_URL;
+      }
+
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (!response.ok) {
+        console.warn('[NBA API] ESPN odds fetch failed:', response.status);
+        return {};
+      }
+
+      const data = await response.json();
+      const odds = {};
+
+      for (const event of (data.events || [])) {
+        const comp = event.competitions?.[0];
+        if (!comp) continue;
+
+        let homeTeam = '', awayTeam = '';
+        for (const c of (comp.competitors || [])) {
+          const tricode = normalizeTricode(c.team?.abbreviation || '');
+          if (c.homeAway === 'home') homeTeam = tricode;
+          else awayTeam = tricode;
+        }
+
+        // Extract O/U line from odds array
+        const ouLine = comp.odds?.[0]?.overUnder;
+        if (homeTeam && awayTeam && ouLine && ouLine > 0) {
+          odds[`${homeTeam}-${awayTeam}`] = ouLine;
+          console.log(`[ESPN Odds] ${awayTeam} @ ${homeTeam}: O/U ${ouLine}`);
+        }
+      }
+
+      console.log(`[ESPN Odds] Fetched O/U lines for ${Object.keys(odds).length} games`);
+      return odds;
+    } catch (error) {
+      console.warn('[NBA API] ESPN odds fetch error:', error.message);
+      return {};
+    }
+  }
 
   // =========================================================================
   // FETCH SCOREBOARD
@@ -268,12 +340,27 @@ window.NbaApi = (function() {
         p.homeTeam = game.homeTeam;
         p.awayTeam = game.awayTeam;
       });
-
-      // Q3 O/U signal detection is handled by main.js processOUSignals()
-      // It requires a real ESPN pregame O/U line (no fallback estimation)
     });
 
-    await Promise.all(pbpPromises);
+    // Fetch ESPN odds (O/U lines) in parallel with play-by-play
+    const [, espnOdds] = await Promise.all([
+      Promise.all(pbpPromises),
+      fetchESPNOdds(),
+    ]);
+
+    // Merge O/U lines from ESPN into game objects
+    for (const game of games) {
+      const key = `${game.homeTeam}-${game.awayTeam}`;
+      if (espnOdds[key]) {
+        game.ouLine = espnOdds[key];
+      }
+    }
+
+    const gamesWithOU = games.filter(g => g.ouLine > 0).length;
+    const liveCount = liveGames.length;
+    if (liveCount > 0) {
+      console.log(`[NBA API] ${gamesWithOU}/${games.length} games have O/U lines, ${liveCount} live`);
+    }
 
     return { games, error: null };
   }
@@ -289,6 +376,7 @@ window.NbaApi = (function() {
     detectVercelProxy,
     fetchScoreboard,
     fetchPlayByPlay,
+    fetchESPNOdds,
     fetchAllGames,
   };
 
