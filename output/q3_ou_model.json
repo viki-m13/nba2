@@ -1,6 +1,6 @@
 {
   "name": "Q3 Over/Under Signal Engine",
-  "version": "1.0",
+  "version": "2.0",
   "type": "linear_regression",
   "training_data": {
     "season": "2021-22",
@@ -10,66 +10,66 @@
   "validation": {
     "season": "2022-23",
     "games": 1015,
-    "overall_accuracy": 0.846,
+    "note": "Accuracy figures below are vs OPENING line, not live market",
     "tiers": {
       "PLATINUM": {
         "margin_min": 20,
-        "accuracy": 0.994,
-        "games_fired": 171,
-        "pct_games": 0.168
+        "cv_accuracy": 0.986
       },
       "GOLD": {
         "margin_min": 15,
-        "accuracy": 0.983,
-        "games_fired": 297,
-        "pct_games": 0.293
+        "cv_accuracy": 0.982
       },
       "SILVER": {
         "margin_min": 12,
-        "accuracy": 0.977,
-        "games_fired": 396,
-        "pct_games": 0.39
+        "cv_accuracy": 0.97
       },
       "BRONZE": {
         "margin_min": 10,
-        "accuracy": 0.957,
-        "games_fired": 487,
-        "pct_games": 0.48
+        "cv_accuracy": 0.962
       }
-    }
+    },
+    "live_market_accuracy": 0.524,
+    "live_market_note": "Accuracy vs estimated live line is ~52.4% (breakeven at -110)"
   },
   "coefficients": {
-    "avg_q_pace": 0.052,
-    "q3_lead": 0.0572,
-    "q3_total": 0.1064,
-    "pace_trend": 0.0242,
-    "q3_cumul_total": 0.1561,
-    "h1_total": 0.0497,
-    "scoring_variance": 0.0583,
-    "late_q3_pts": -0.0483,
-    "pace_ratio": -39.5227,
-    "intercept": 52.1462
+    "avg_q_pace": 0.0577540572,
+    "q3_lead": 0.0450073879,
+    "q3_total": 0.1291405317,
+    "pace_trend": -0.014567063,
+    "q3_cumul_total": 0.1732621717,
+    "h1_total": 0.04412164,
+    "scoring_variance": 0.0267483526,
+    "late_q3_pts": -0.1166156333,
+    "pace_ratio": -43.0823638232,
+    "intercept": 52.9033412611
+  },
+  "market_proxy_coefficients": {
+    "avg_q_pace": -0.0166437427,
+    "q3_lead": 0.0439679156,
+    "ou_q": 0.8167063332,
+    "intercept": 8.5718642911
   },
   "tiers": {
     "PLATINUM": {
       "margin": 20,
-      "accuracy": 0.994,
-      "description": "Near-certain outcome"
+      "cv_accuracy": 0.986,
+      "description": "Strong opening-line signal"
     },
     "GOLD": {
       "margin": 15,
-      "accuracy": 0.983,
-      "description": "Extremely high confidence"
+      "cv_accuracy": 0.982,
+      "description": "High opening-line signal"
     },
     "SILVER": {
       "margin": 12,
-      "accuracy": 0.977,
-      "description": "Very high confidence"
+      "cv_accuracy": 0.97,
+      "description": "Moderate opening-line signal"
     },
     "BRONZE": {
       "margin": 10,
-      "accuracy": 0.957,
-      "description": "High confidence"
+      "cv_accuracy": 0.962,
+      "description": "Opening-line signal"
     }
   },
   "payoff": {
