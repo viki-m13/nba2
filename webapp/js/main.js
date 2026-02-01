@@ -881,6 +881,10 @@
       if (pnlEl) pnlEl.textContent = `+${tierData.pnl.toFixed(1)}u`;
     }
 
+    // ---- Pred Final vs Actual Final Directional Accuracy ----
+    const signals = window.HistoricalData.signals || [];
+    renderPredAccuracy(signals);
+
     // Render season breakdown table
     const tbody = document.getElementById('backtest-breakdown-body');
     if (tbody) {
@@ -913,6 +917,88 @@
 
       tbody.innerHTML = rows.join('');
     }
+  }
+
+  // =========================================================================
+  // PRED FINAL vs ACTUAL FINAL DIRECTIONAL ACCURACY
+  // =========================================================================
+  function renderPredAccuracy(signals) {
+    if (!signals || signals.length === 0) return;
+
+    // Helper: compute directional accuracy stats for a set of signals
+    function computeStats(sigs) {
+      const total = sigs.length;
+      if (total === 0) return null;
+
+      let correct = 0;
+      let totalAbsError = 0;
+      let totalPred = 0;
+      let totalActual = 0;
+
+      for (const s of sigs) {
+        // Directional accuracy: did predictedFinal correctly call the
+        // direction (OVER/UNDER) relative to the O/U line, matching
+        // the actual final total's direction?
+        if (s.openingCorrect) correct++;
+        totalAbsError += Math.abs(s.predictedFinal - s.finalTotal);
+        totalPred += s.predictedFinal;
+        totalActual += s.finalTotal;
+      }
+
+      return {
+        total,
+        correct,
+        accuracy: correct / total,
+        mae: totalAbsError / total,
+        avgPred: totalPred / total,
+        avgActual: totalActual / total,
+      };
+    }
+
+    // Overall
+    const overall = computeStats(signals);
+    const oos = computeStats(signals.filter(s => s.season === '2022-23'));
+    const is = computeStats(signals.filter(s => s.season === '2021-22'));
+
+    // Populate summary cards
+    if (overall) {
+      const el = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+      el('pred-acc-overall', `${(overall.accuracy * 100).toFixed(1)}%`);
+      el('pred-acc-oos', oos ? `${(oos.accuracy * 100).toFixed(1)}%` : '--');
+      el('pred-acc-is', is ? `${(is.accuracy * 100).toFixed(1)}%` : '--');
+      el('pred-mae', `${overall.mae.toFixed(1)}`);
+      el('pred-avg-predicted', `${overall.avgPred.toFixed(1)}`);
+      el('pred-avg-actual', `${overall.avgActual.toFixed(1)}`);
+    }
+
+    // Breakdown table by season + tier
+    const tbody = document.getElementById('pred-accuracy-breakdown-body');
+    if (!tbody) return;
+
+    const rows = [];
+    for (const season of ['2021-22', '2022-23']) {
+      for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
+        const tierSigs = signals.filter(s => s.season === season && s.tier === tier);
+        const stats = computeStats(tierSigs);
+        if (!stats) continue;
+
+        const accClass = stats.accuracy >= 0.95 ? 'highlight-gold' : (stats.accuracy >= 0.85 ? 'highlight-green' : '');
+
+        rows.push(`
+          <tr>
+            <td>${season}</td>
+            <td><span class="ou-tier-badge ${tier}">${tier}</span></td>
+            <td>${stats.total}</td>
+            <td>${stats.correct}</td>
+            <td class="${accClass}">${(stats.accuracy * 100).toFixed(1)}%</td>
+            <td>${stats.avgPred.toFixed(1)}</td>
+            <td>${stats.avgActual.toFixed(1)}</td>
+            <td>${stats.mae.toFixed(1)}</td>
+          </tr>`);
+      }
+    }
+
+    tbody.innerHTML = rows.join('');
   }
 
   // =========================================================================
