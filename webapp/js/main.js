@@ -779,9 +779,9 @@
     } else if (tierFilter === 'OVER' || tierFilter === 'UNDER') {
       filtered = filtered.filter(s => s.direction === tierFilter);
     } else if (tierFilter === 'correct') {
-      filtered = filtered.filter(s => s.correct);
+      filtered = filtered.filter(s => s.openingCorrect);
     } else if (tierFilter === 'incorrect') {
-      filtered = filtered.filter(s => !s.correct && !s.isPush);
+      filtered = filtered.filter(s => !s.openingCorrect && !s.isPushOpening);
     }
 
     if (seasonFilter !== 'all') {
@@ -790,8 +790,8 @@
 
     // Update summary stats
     const total = filtered.length;
-    const correct = filtered.filter(s => s.correct).length;
-    const incorrect = filtered.filter(s => !s.correct && !s.isPush).length;
+    const correct = filtered.filter(s => s.openingCorrect).length;
+    const incorrect = filtered.filter(s => !s.openingCorrect && !s.isPushOpening).length;
     const pnl = correct * WIN_PAYOUT - incorrect;
     const roi = total > 0 ? (pnl / total * 100) : 0;
 
@@ -804,9 +804,9 @@
     if (showingBadge) showingBadge.textContent = Math.min(filtered.length, 200);
 
     tbody.innerHTML = filtered.slice(0, 200).map(sig => {
-      const pnlVal = sig.correct ? WIN_PAYOUT : (sig.isPush ? 0 : -1);
-      const resultClass = sig.correct ? 'highlight-green' : (sig.isPush ? '' : 'highlight-red');
-      const resultText = sig.correct ? 'HIT' : (sig.isPush ? 'PUSH' : 'MISS');
+      const pnlVal = sig.openingCorrect ? WIN_PAYOUT : (sig.isPushOpening ? 0 : -1);
+      const resultClass = sig.openingCorrect ? 'highlight-green' : (sig.isPushOpening ? '' : 'highlight-red');
+      const resultText = sig.openingCorrect ? 'HIT' : (sig.isPushOpening ? 'PUSH' : 'MISS');
 
       return `
         <tr>
@@ -818,7 +818,7 @@
           <td>${sig.q3CumulTotal}</td>
           <td>${sig.predictedFinal}</td>
           <td>${sig.finalTotal}</td>
-          <td>${sig.margin}</td>
+          <td>${sig.openingMargin}</td>
           <td class="${resultClass}">${resultText}</td>
           <td class="${pnlVal >= 0 ? 'highlight-green' : 'highlight-red'}">${pnlVal >= 0 ? '+' : ''}${pnlVal.toFixed(2)}</td>
         </tr>`;
@@ -872,8 +872,8 @@
           const tierSignals = signals.filter(s => s.season === season && s.tier === tier);
           if (tierSignals.length === 0) continue;
 
-          const wins = tierSignals.filter(s => s.correct).length;
-          const losses = tierSignals.filter(s => !s.correct && !s.isPush).length;
+          const wins = tierSignals.filter(s => s.openingCorrect).length;
+          const losses = tierSignals.filter(s => !s.openingCorrect && !s.isPushOpening).length;
           const acc = wins / tierSignals.length;
           const pnl = wins * WIN_PAYOUT - losses;
           const roi = pnl / tierSignals.length * 100;
