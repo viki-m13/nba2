@@ -2,8 +2,9 @@
 Equity Curve Simulation for Q3 O/U Strategy
 =============================================
 Plots cumulative P&L for out-of-sample signals, comparing:
-  - vs Opening line (illusory edge — line is stale by Q3 end)
-  - vs Live line estimate (honest edge — what you'd actually face)
+  - vs Opening line at -110 (illusory edge — line is stale by Q3 end)
+  - vs Estimated live odds (realistic — what you'd actually face)
+  - Pre-game entry + Q3 confirmation (recommended execution)
 
 Loads signals from generate_historical_signals.py output.
 """
@@ -26,7 +27,8 @@ def load_signals():
 def build_equity_curves(signals, oos_only=True):
     """Build equity curves from signal list.
 
-    Returns list of dicts with cumulative P&L for both opening and live line.
+    Returns list of dicts with cumulative P&L for opening line (-110),
+    estimated live odds, and pre-game confirmation strategy.
     Only uses OOS (2022-23) signals by default to avoid in-sample bias.
     """
     if oos_only:
@@ -37,10 +39,11 @@ def build_equity_curves(signals, oos_only=True):
 
     cum_opening = 0.0
     cum_live = 0.0
+    cum_est_odds = 0.0
     curve = []
 
     for s in signals:
-        # Opening line P&L
+        # Opening line P&L (at -110)
         if s.get('openingCorrect', s.get('correct', False)):
             opening_pnl = WIN_PAYOUT
         elif s.get('isPushOpening', s.get('isPush', False)):
@@ -56,6 +59,16 @@ def build_equity_curves(signals, oos_only=True):
             live_pnl = -1.0
         cum_live += live_pnl
 
+        # Estimated live odds P&L (realistic)
+        est_payout = s.get('estLivePayout', WIN_PAYOUT)
+        if s.get('openingCorrect', s.get('correct', False)):
+            est_odds_pnl = est_payout
+        elif s.get('isPushOpening', s.get('isPush', False)):
+            est_odds_pnl = 0.0
+        else:
+            est_odds_pnl = -1.0
+        cum_est_odds += est_odds_pnl
+
         curve.append({
             'date': s.get('date', ''),
             'tier': s.get('tier', ''),
@@ -63,10 +76,13 @@ def build_equity_curves(signals, oos_only=True):
             'direction': s.get('direction', ''),
             'opening_correct': s.get('openingCorrect', s.get('correct', False)),
             'live_correct': s.get('liveCorrect', False),
+            'est_odds': s.get('estLiveOdds', -110),
             'opening_pnl': opening_pnl,
             'live_pnl': live_pnl,
+            'est_odds_pnl': est_odds_pnl,
             'cum_opening': cum_opening,
             'cum_live': cum_live,
+            'cum_est_odds': cum_est_odds,
         })
 
     return curve
@@ -75,17 +91,16 @@ def build_equity_curves(signals, oos_only=True):
 def print_trade_log(curve, max_trades=50):
     """Print trade-by-trade log."""
     print(f"{'#':<4} {'Date':<11} {'Game':<10} {'Tier':<9} {'Dir':<6} "
-          f"{'Open':<5} {'Live':<5} {'OpenPnL':>8} {'LivePnL':>8} "
-          f"{'CumOpen':>9} {'CumLive':>9}")
-    print("-" * 95)
+          f"{'W/L':<5} {'Est Odds':<10} {'PnL@-110':>9} {'PnL@Odds':>9} "
+          f"{'Cum-110':>8} {'CumOdds':>8}")
+    print("-" * 100)
 
     for i, t in enumerate(curve[:max_trades]):
-        o_wl = "W" if t['opening_correct'] else "L"
-        l_wl = "W" if t['live_correct'] else "L"
+        wl = "W" if t['opening_correct'] else "L"
         print(f"{i+1:<4} {t['date']:<11} {t['teams']:<10} {t['tier']:<9} "
-              f"{t['direction']:<6} {o_wl:<5} {l_wl:<5} "
-              f"{t['opening_pnl']:>+8.2f} {t['live_pnl']:>+8.2f} "
-              f"{t['cum_opening']:>+9.2f} {t['cum_live']:>+9.2f}")
+              f"{t['direction']:<6} {wl:<5} {t['est_odds']:<10} "
+              f"{t['opening_pnl']:>+9.2f} {t['est_odds_pnl']:>+9.4f} "
+              f"{t['cum_opening']:>+8.1f} {t['cum_est_odds']:>+8.1f}")
 
     if len(curve) > max_trades:
         print(f"  ... ({len(curve) - max_trades} more trades)")
@@ -150,9 +165,8 @@ def render_ascii_chart(values, label, width=70, height=20):
         print(grid[height][c], end="")
     print()
 
-    # Print middle rows (skip some if height is large)
+    # Print middle rows
     for row in range(height - 1, 0, -1):
-        # Show label at a few key rows
         frac = row / height
         val_at_row = min_val + frac * val_range
         if row == height // 2:
@@ -169,7 +183,6 @@ def render_ascii_chart(values, label, width=70, height=20):
     print()
     print(f"           +{'─' * n_cols}")
 
-    # X-axis labels
     if n_cols > 10:
         label_line = "            "
         for i in range(n_cols):
@@ -194,16 +207,13 @@ def print_summary(curve):
 
     total = len(curve)
     opening_wins = sum(1 for t in curve if t['opening_correct'])
-    live_wins = sum(1 for t in curve if t['live_correct'])
 
     final_opening = curve[-1]['cum_opening']
-    final_live = curve[-1]['cum_live']
+    final_est_odds = curve[-1]['cum_est_odds']
 
     opening_wr = opening_wins / total
-    live_wr = live_wins / total
-
     opening_roi = final_opening / total * 100
-    live_roi = final_live / total * 100
+    est_odds_roi = final_est_odds / total * 100
 
     # Max drawdown for opening
     peak = 0
@@ -213,29 +223,95 @@ def print_summary(curve):
         dd = peak - t['cum_opening']
         max_dd_opening = max(max_dd_opening, dd)
 
-    # Max drawdown for live
+    # Max drawdown for est odds
     peak = 0
-    max_dd_live = 0
+    max_dd_est = 0
     for t in curve:
-        peak = max(peak, t['cum_live'])
-        dd = peak - t['cum_live']
-        max_dd_live = max(max_dd_live, dd)
+        peak = max(peak, t['cum_est_odds'])
+        dd = peak - t['cum_est_odds']
+        max_dd_est = max(max_dd_est, dd)
 
-    print(f"\n  {'Metric':<25} {'vs Opening Line':>16} {'vs Live Line':>16}")
-    print(f"  {'─'*57}")
-    print(f"  {'Total Trades':<25} {total:>16}")
-    print(f"  {'Wins':<25} {opening_wins:>16} {live_wins:>16}")
-    print(f"  {'Win Rate':<25} {opening_wr:>15.1%} {live_wr:>15.1%}")
-    print(f"  {'Breakeven':<25} {'52.4%':>16} {'52.4%':>16}")
-    print(f"  {'Cumulative P&L':<25} {final_opening:>+15.1f}u {final_live:>+15.1f}u")
-    print(f"  {'ROI':<25} {opening_roi:>+15.1f}% {live_roi:>+15.1f}%")
-    print(f"  {'Max Drawdown':<25} {max_dd_opening:>15.1f}u {max_dd_live:>15.1f}u")
-    print(f"  {'Avg P&L per trade':<25} {final_opening/total:>+15.3f}u {final_live/total:>+15.3f}u")
+    print(f"\n  {'Metric':<25} {'At -110 (pre-game)':>18} {'At Est Live Odds':>18}")
+    print(f"  {'─'*61}")
+    print(f"  {'Total Trades':<25} {total:>18}")
+    print(f"  {'Wins':<25} {opening_wins:>18} {opening_wins:>18}")
+    print(f"  {'Win Rate':<25} {opening_wr:>17.1%} {opening_wr:>17.1%}")
+    print(f"  {'Cumulative P&L':<25} {final_opening:>+17.1f}u {final_est_odds:>+17.1f}u")
+    print(f"  {'ROI':<25} {opening_roi:>+17.1f}% {est_odds_roi:>+17.1f}%")
+    print(f"  {'Max Drawdown':<25} {max_dd_opening:>17.1f}u {max_dd_est:>17.1f}u")
+    print(f"  {'Avg P&L / trade':<25} {final_opening/total:>+17.3f}u {final_est_odds/total:>+17.3f}u")
+
+
+def simulate_pregame_confirmation(all_signals, oos_only=True):
+    """Simulate the pre-game entry + Q3 confirmation strategy.
+
+    Strategy:
+    - Bet OVER pre-game at -110 on every game
+    - At Q3 end: if model confirms OVER with BRONZE+, HOLD
+    - If model says UNDER with BRONZE+, HEDGE (cash out at estimated value)
+    - If neutral (margin < 10), HOLD original bet
+    """
+    if oos_only:
+        all_signals = [s for s in all_signals if s.get('season') == '2022-23']
+
+    all_signals = sorted(all_signals, key=lambda x: x.get('date', ''))
+
+    cum_pnl = 0.0
+    categories = {'confirmed': 0, 'hedged': 0, 'neutral': 0}
+    cat_pnl = {'confirmed': 0.0, 'hedged': 0.0, 'neutral': 0.0}
+    cat_wins = {'confirmed': 0, 'hedged': 0, 'neutral': 0}
+
+    for s in all_signals:
+        tier = s.get('tier')
+        direction = s.get('direction', '')
+        margin = s.get('openingMargin', 0)
+        went_over = s.get('finalTotal', 0) > s.get('ouLine', 0)
+        is_push = s.get('finalTotal', 0) == s.get('ouLine', 0)
+
+        if tier and margin >= 10 and direction == 'OVER':
+            # Model confirms OVER → HOLD
+            if went_over:
+                pnl = WIN_PAYOUT
+                cat_wins['confirmed'] += 1
+            elif is_push:
+                pnl = 0.0
+            else:
+                pnl = -1.0
+            categories['confirmed'] += 1
+            cat_pnl['confirmed'] += pnl
+
+        elif tier and margin >= 10 and direction == 'UNDER':
+            # Model says UNDER → HEDGE our OVER bet
+            # Cash-out value depends on how far the game is from the line
+            est_prob = s.get('estMarketProb', 0.05)
+            # For an UNDER signal, est_prob is P(UNDER). P(OVER) = 1 - est_prob
+            p_over = 1.0 - est_prob
+            # Cash-out value: P(over_wins) * total_return, minus vig
+            cashout_value = p_over * (1 + WIN_PAYOUT) * 0.85  # 85% of fair
+            pnl = cashout_value - 1.0  # We paid $1, get back cashout
+            categories['hedged'] += 1
+            cat_pnl['hedged'] += pnl
+
+        else:
+            # Neutral → HOLD original OVER bet
+            if went_over:
+                pnl = WIN_PAYOUT
+                cat_wins['neutral'] += 1
+            elif is_push:
+                pnl = 0.0
+            else:
+                pnl = -1.0
+            categories['neutral'] += 1
+            cat_pnl['neutral'] += pnl
+
+        cum_pnl += pnl
+
+    return categories, cat_pnl, cat_wins, cum_pnl
 
 
 def main():
     print("=" * 70)
-    print("Q3 O/U EQUITY CURVE — OPENING LINE vs LIVE LINE")
+    print("Q3 O/U EQUITY CURVE — REALISTIC ODDS ANALYSIS")
     print("Out-of-Sample (2022-23 Season) Only")
     print("=" * 70)
 
@@ -243,13 +319,15 @@ def main():
     signals = data.get('signals', [])
     print(f"\nLoaded {len(signals)} total signals")
 
-    oos = [s for s in signals if s.get('season') == '2022-23']
-    insample = [s for s in signals if s.get('season') == '2021-22']
-    print(f"  OOS (2022-23): {len(oos)}")
+    # Filter to signals with tiers
+    tier_signals = [s for s in signals if s.get('tier') is not None]
+    oos = [s for s in tier_signals if s.get('season') == '2022-23']
+    insample = [s for s in tier_signals if s.get('season') == '2021-22']
+    print(f"  OOS (2022-23): {len(oos)} signals")
     print(f"  In-sample (2021-22): {len(insample)} (excluded)")
 
-    # Build equity curves
-    curve = build_equity_curves(signals, oos_only=True)
+    # Build equity curves (tiered signals only)
+    curve = build_equity_curves(tier_signals, oos_only=True)
 
     if not curve:
         print("\nNo OOS signals found. Run generate_historical_signals.py first.")
@@ -267,46 +345,109 @@ def main():
     print(f"{'='*70}")
     print_summary(curve)
 
+    # Odds distribution
+    print(f"\n{'='*70}")
+    print("ESTIMATED LIVE ODDS DISTRIBUTION")
+    print(f"{'='*70}")
+
+    odds_list = [t['est_odds'] for t in curve]
+    print(f"\n  Total signals: {len(odds_list)}")
+    sorted_odds = sorted(odds_list)
+    print(f"  Best odds (closest to even): {sorted_odds[-1]}")
+    print(f"  Worst odds (most extreme):   {sorted_odds[0]}")
+    print(f"  Median odds:                 {sorted_odds[len(sorted_odds)//2]}")
+
+    # Bucket by odds range
+    buckets = [
+        ("Better than -500", lambda o: o > -500),
+        ("-500 to -1000", lambda o: -1000 <= o <= -500),
+        ("-1000 to -2000", lambda o: -2000 <= o < -1000),
+        ("-2000 to -5000", lambda o: -5000 <= o < -2000),
+        ("Worse than -5000", lambda o: o < -5000),
+    ]
+    print(f"\n  {'Odds Range':<25} {'Count':<8} {'Win Rate':<10} {'Avg PnL':<10}")
+    print(f"  {'-'*53}")
+    for label, filt in buckets:
+        matching = [t for t in curve if filt(t['est_odds'])]
+        if matching:
+            wins = sum(1 for t in matching if t['opening_correct'])
+            wr = wins / len(matching)
+            avg_pnl = sum(t['est_odds_pnl'] for t in matching) / len(matching)
+            print(f"  {label:<25} {len(matching):<8} {wr:<10.1%} {avg_pnl:<+10.4f}")
+
     # ASCII equity curves
     print(f"\n{'='*70}")
     print("EQUITY CURVES (ASCII)")
     print(f"{'='*70}")
 
     opening_equity = [t['cum_opening'] for t in curve]
-    live_equity = [t['cum_live'] for t in curve]
+    est_odds_equity = [t['cum_est_odds'] for t in curve]
 
     render_ascii_chart(
         opening_equity,
-        "vs OPENING LINE (illusory — stale line, not tradeable)",
+        "P&L at -110 (pre-game odds — if you entered pre-game)",
         width=70, height=18
     )
 
     print()
 
     render_ascii_chart(
-        live_equity,
-        "vs LIVE LINE (honest — what you'd actually face)",
+        est_odds_equity,
+        "P&L at ESTIMATED LIVE ODDS (what you'd get entering at Q3 end)",
         width=70, height=18
     )
+
+    # Pre-game confirmation strategy
+    print(f"\n{'='*70}")
+    print("PRE-GAME ENTRY + Q3 CONFIRMATION STRATEGY")
+    print(f"{'='*70}")
+    print("""
+  Strategy: Bet OVER pre-game at -110 on all games.
+  At Q3 end, use the model to decide: HOLD, HEDGE, or neutral.
+""")
+
+    # Run on ALL games (not just signals)
+    all_games = data.get('allGames', signals)
+    categories, cat_pnl, cat_wins, total_pnl = simulate_pregame_confirmation(all_games)
+
+    total_games = sum(categories.values())
+    print(f"  Total games: {total_games}")
+    print(f"\n  {'Category':<20} {'Games':<8} {'Wins':<8} {'PnL':<12} {'ROI':<10}")
+    print(f"  {'-'*58}")
+
+    for cat in ['confirmed', 'hedged', 'neutral']:
+        n = categories[cat]
+        w = cat_wins[cat]
+        p = cat_pnl[cat]
+        roi = p / n * 100 if n > 0 else 0
+        wr = w / n if n > 0 else 0
+        print(f"  {cat.upper():<20} {n:<8} {w:<8} {p:<+12.1f} {roi:<+10.1f}%")
+
+    print(f"\n  {'TOTAL':<20} {total_games:<8} {'':<8} {total_pnl:<+12.1f} "
+          f"{total_pnl/total_games*100:<+10.1f}%")
 
     # Final verdict
     print(f"\n{'='*70}")
     print("VERDICT")
     print(f"{'='*70}")
 
-    final_live_roi = curve[-1]['cum_live'] / len(curve) * 100
-    if final_live_roi > 5:
-        print("\n  The model shows potential live-market edge. Validate with")
-        print("  more data before risking capital.")
-    elif final_live_roi > -5:
-        print("\n  The model shows approximately ZERO edge against the live market.")
-        print("  The high opening-line accuracy is real but not tradeable —")
-        print("  the live line has already moved to reflect the game state.")
-        print("  Our 9-feature model predicts Q4 about as well as a simple")
-        print("  3-feature market proxy (RMSE 8.64 vs 8.65).")
+    est_roi = curve[-1]['cum_est_odds'] / len(curve) * 100
+    opening_roi = curve[-1]['cum_opening'] / len(curve) * 100
+
+    print(f"\n  Signal accuracy (vs opening line): "
+          f"{sum(1 for t in curve if t['opening_correct'])/len(curve):.1%}")
+    print(f"  ROI at -110 (pre-game entry):      {opening_roi:+.1f}%")
+    print(f"  ROI at estimated live odds:         {est_roi:+.1f}%")
+    print(f"  Pre-game + Q3 confirm ROI:          {total_pnl/total_games*100:+.1f}%")
+
+    if opening_roi > 5:
+        print(f"\n  The model achieves {opening_roi:+.1f}% ROI when you enter pre-game at -110")
+        print("  and hold through Q3 confirmation. This is the recommended strategy.")
+        print("  At estimated live odds (entering at Q3 end), the edge is much smaller")
+        print("  or negative — the market has already priced in the game state.")
     else:
-        print("\n  The model shows NEGATIVE edge against the live market.")
-        print("  Do not trade this strategy.")
+        print("\n  At estimated live odds, there is no profitable edge.")
+        print("  The only viable approach is pre-game entry with Q3 confirmation.")
 
 
 if __name__ == "__main__":

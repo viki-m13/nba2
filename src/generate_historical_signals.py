@@ -22,6 +22,7 @@ import numpy as np
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
+from scipy.stats import norm
 
 PBP_DIR = Path("/home/user/nba2/cache/games_pbp")
 OUTPUT_DIR = Path("/home/user/nba2/output")
@@ -59,6 +60,8 @@ TIER_THRESHOLDS = {
 
 WIN_PAYOUT = 100 / 110  # 0.9091
 BREAKEVEN_PCT = 110 / 210  # 0.5238
+Q4_RESIDUAL_SIGMA = 8.84  # Training-set residual std
+LIVE_VIG = 0.05  # Typical live bet vig
 
 
 def predict_q4(features):
@@ -80,6 +83,34 @@ def estimate_market_q4(avg_q_pace, q3_lead, ou_line):
             + mc['avg_q_pace'] * avg_q_pace
             + mc['q3_lead'] * q3_lead
             + mc['ou_q'] * ou_q)
+
+
+def estimate_live_odds(q3_cumul_total, market_q4, ou_line, direction, vig=LIVE_VIG):
+    """Estimate realistic live odds at Q3 end for the opening O/U line.
+
+    Uses the market proxy Q4 estimate + residual sigma (normal CDF) to compute
+    the implied probability, then adds typical live-bet vig.
+
+    Returns: (market_prob, american_odds, payout_per_unit)
+    """
+    pts_needed = ou_line - q3_cumul_total
+    p_over = 1.0 - norm.cdf((pts_needed - market_q4) / Q4_RESIDUAL_SIGMA)
+    p_over = np.clip(p_over, 0.001, 0.999)
+
+    true_prob = p_over if direction == 'OVER' else (1.0 - p_over)
+
+    # Add vig
+    implied_prob = min(true_prob + vig / 2.0, 0.995)
+
+    if implied_prob >= 0.5:
+        american = int(round(-implied_prob / (1 - implied_prob) * 100))
+    else:
+        american = int(round((1 - implied_prob) / implied_prob * 100))
+
+    american = max(american, -19900)
+
+    payout = 100.0 / abs(american) if american < 0 else american / 100.0
+    return true_prob, american, payout
 
 
 def compute_features(home_score, away_score, q1_total, q2_total, q3_total, ou_line, late_q3_pts):
@@ -343,6 +374,25 @@ def extract_and_evaluate(filepath):
         result['openingKelly'] = round(kelly_adjusted, 4)
         result['openingRoi'] = round(opening_ev * 100, 1)
 
+        # Realistic live odds estimation
+        est_mkt_prob, est_odds, est_payout = estimate_live_odds(
+            q3_cumul_total, market_q4, ou_line, direction
+        )
+        est_live_roi = (cv_accuracy * est_payout - (1 - cv_accuracy)) * 100
+
+        result['estMarketProb'] = round(est_mkt_prob, 4)
+        result['estLiveOdds'] = est_odds
+        result['estLivePayout'] = round(est_payout, 4)
+        result['estLiveRoi'] = round(est_live_roi, 1)
+
+        # Execution recommendation
+        if est_live_roi > 2.0:
+            result['executionStrategy'] = 'LIVE_BET'
+        elif cv_accuracy >= 0.96:
+            result['executionStrategy'] = 'PRE_GAME_HOLD'
+        else:
+            result['executionStrategy'] = 'MONITOR'
+
         # Live edge is ~0 (breakeven)
         live_acc = 0.524
         live_ev = live_acc * WIN_PAYOUT - (1 - live_acc) * 1.0
@@ -545,6 +595,7 @@ def main():
 
     # Combine all signals sorted by date
     all_signals_sorted = sorted(signals, key=lambda x: x.get('date', ''))
+    all_games_sorted = sorted(all_games, key=lambda x: x.get('date', ''))
 
     # Summary stats (OOS only for honest reporting)
     oos_correct_opening = sum(1 for s in oos_signals if s['openingCorrect'])
@@ -560,6 +611,7 @@ def main():
         'oosSignals': len(oos_signals),
         'insampleSignals': len(insample_signals),
         'signals': all_signals_sorted,
+        'allGames': all_games_sorted,
         'equityCurve': equity_curve,
         'methodology': {
             'model': '9-feature linear regression predicting Q4 total',
