@@ -25,6 +25,9 @@ export default async function handler(req, res) {
       }
       url = `https://cdn.nba.com/static/json/liveData/playbyplay/playbyplay_${gameId}.json`;
       break;
+    case 'espn_scoreboard':
+      url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+      break;
     default:
       return res.status(400).json({ error: 'Invalid endpoint. Use: scoreboard or playbyplay' });
   }

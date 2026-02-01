@@ -257,17 +257,36 @@
 
     for (const game of games) {
       if (game.status !== 'live' && game.status !== 'halftime') continue;
-      if (!game.possessions || game.possessions.length < 20) continue;
 
-      // O/U line must come from game data (ESPN) - NO fallback estimation
+      if (!game.possessions || game.possessions.length < 20) {
+        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: skipped - only ${game.possessions?.length || 0} possessions`);
+        continue;
+      }
+
+      // O/U line must come from ESPN data - NO fallback estimation
       const ouLine = game.ouLine || 0;
-      if (!ouLine || ouLine <= 0) continue;
+      if (!ouLine || ouLine <= 0) {
+        console.warn(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: skipped - no O/U line (ESPN odds unavailable)`);
+        continue;
+      }
+
+      console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: evaluating with O/U ${ouLine}, ${game.possessions.length} possessions`);
 
       const signal = Q3OUEngine.evaluateFromPossessions(
         game.possessions, game.homeTeam, game.awayTeam, ouLine
       );
 
+      if (!signal) {
+        const lastPos = game.possessions[game.possessions.length - 1];
+        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: no signal (Q${lastPos?.quarter} ${lastPos?.quarterTime} - need Q3 <=3:00 or Q4+, or margin < 10)`);
+      }
+
+      if (signal && !meetsMinTier(signal.tier)) {
+        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: ${signal.tier} ${signal.direction} filtered (min tier: ${state.minTier})`);
+      }
+
       if (signal && meetsMinTier(signal.tier)) {
+        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: ${signal.tier} ${signal.direction} O/U ${ouLine} | margin ${signal.margin} | pred ${signal.predictedFinal}`);
         const signalKey = `ou-${game.id}-${signal.tier}-${signal.direction}`;
 
         state.ouSignals.push({
@@ -467,6 +486,7 @@
         </div>
         <div class="game-meta">
           <span class="game-quarter">Diff: ${diff > 0 ? '+' : ''}${diff}</span>
+          ${game.ouLine ? `<span>O/U: ${game.ouLine}</span>` : '<span style="color:#ef4444;">No O/U line</span>'}
           <span>${game.possessions?.length || 0} plays</span>
         </div>
       </div>`;
