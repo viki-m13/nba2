@@ -7,11 +7,13 @@ window.NbaApi = (function() {
   const NBA_SCOREBOARD_URL = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
   const NBA_PLAYBYPLAY_URL = (gameId) => `https://cdn.nba.com/static/json/liveData/playbyplay/playbyplay_${gameId}.json`;
   const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+  const ESPN_SUMMARY_URL = (eventId) => `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${eventId}`;
 
   // Vercel proxy endpoint (auto-detected if deployed on Vercel)
   const VERCEL_PROXY_SCOREBOARD = '/api/nba?endpoint=scoreboard';
   const VERCEL_PROXY_PBP = (gameId) => `/api/nba?endpoint=playbyplay&gameId=${gameId}`;
   const VERCEL_PROXY_ESPN = '/api/nba?endpoint=espn_scoreboard';
+  const VERCEL_PROXY_ESPN_SUMMARY = (eventId) => `/api/nba?endpoint=espn_summary&eventId=${eventId}`;
 
   // CORS proxy (configurable)
   let corsProxy = '';
@@ -122,7 +124,46 @@ window.NbaApi = (function() {
   }
 
   // =========================================================================
-  // FETCH ESPN ODDS (O/U lines)
+  // O/U LINE CACHE (localStorage)
+  // =========================================================================
+  const OU_CACHE_KEY = 'q3ou-ouline-cache';
+
+  function loadOUCache() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(OU_CACHE_KEY) || '{}');
+      // Expire entries older than 24 hours
+      const now = Date.now();
+      const valid = {};
+      for (const [key, entry] of Object.entries(cached)) {
+        if (now - entry.ts < 24 * 60 * 60 * 1000) {
+          valid[key] = entry;
+        }
+      }
+      return valid;
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveOUCache(cache) {
+    try {
+      localStorage.setItem(OU_CACHE_KEY, JSON.stringify(cache));
+    } catch (e) {}
+  }
+
+  function cacheOULine(teamKey, ouLine) {
+    const cache = loadOUCache();
+    cache[teamKey] = { ou: ouLine, ts: Date.now() };
+    saveOUCache(cache);
+  }
+
+  function getCachedOULine(teamKey) {
+    const cache = loadOUCache();
+    return cache[teamKey]?.ou || null;
+  }
+
+  // =========================================================================
+  // FETCH ESPN ODDS (O/U lines + event IDs from scoreboard)
   // =========================================================================
   async function fetchESPNOdds() {
     try {
@@ -141,11 +182,12 @@ window.NbaApi = (function() {
 
       if (!response.ok) {
         console.warn('[NBA API] ESPN odds fetch failed:', response.status);
-        return {};
+        return { odds: {}, eventIds: {} };
       }
 
       const data = await response.json();
       const odds = {};
+      const eventIds = {};
 
       for (const event of (data.events || [])) {
         const comp = event.competitions?.[0];
@@ -158,19 +200,66 @@ window.NbaApi = (function() {
           else awayTeam = tricode;
         }
 
-        // Extract O/U line from odds array
+        if (!homeTeam || !awayTeam) continue;
+        const teamKey = `${homeTeam}-${awayTeam}`;
+
+        // Always store ESPN event ID for summary fallback
+        eventIds[teamKey] = event.id;
+
+        // Extract O/U line from odds array (only available for scheduled games)
         const ouLine = comp.odds?.[0]?.overUnder;
-        if (homeTeam && awayTeam && ouLine && ouLine > 0) {
-          odds[`${homeTeam}-${awayTeam}`] = ouLine;
+        if (ouLine && ouLine > 0) {
+          odds[teamKey] = ouLine;
+          cacheOULine(teamKey, ouLine);
           console.log(`[ESPN Odds] ${awayTeam} @ ${homeTeam}: O/U ${ouLine}`);
         }
       }
 
-      console.log(`[ESPN Odds] Fetched O/U lines for ${Object.keys(odds).length} games`);
-      return odds;
+      console.log(`[ESPN Odds] Scoreboard: ${Object.keys(odds).length} O/U lines, ${Object.keys(eventIds).length} event IDs`);
+      return { odds, eventIds };
     } catch (error) {
       console.warn('[NBA API] ESPN odds fetch error:', error.message);
-      return {};
+      return { odds: {}, eventIds: {} };
+    }
+  }
+
+  // =========================================================================
+  // FETCH ESPN GAME SUMMARY (for live games where scoreboard O/U is missing)
+  // =========================================================================
+  async function fetchESPNGameOdds(eventId) {
+    try {
+      let url;
+      if (useVercelProxy) {
+        url = VERCEL_PROXY_ESPN_SUMMARY(eventId);
+      } else if (corsProxy) {
+        url = proxyUrl(ESPN_SUMMARY_URL(eventId));
+      } else {
+        url = ESPN_SUMMARY_URL(eventId);
+      }
+
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (!response.ok) {
+        console.warn(`[ESPN Summary] Fetch failed for event ${eventId}:`, response.status);
+        return null;
+      }
+
+      const data = await response.json();
+      const pickcenter = data.pickcenter || [];
+
+      for (const pc of pickcenter) {
+        const ou = pc.overUnder ?? pc.total?.alternateDisplayValue;
+        if (ou && parseFloat(ou) > 0) {
+          return parseFloat(ou);
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.warn(`[ESPN Summary] Error for event ${eventId}:`, error.message);
+      return null;
     }
   }
 
@@ -342,19 +431,55 @@ window.NbaApi = (function() {
       });
     });
 
-    // Fetch ESPN odds (O/U lines) in parallel with play-by-play
-    const [, espnOdds] = await Promise.all([
+    // Fetch ESPN odds (O/U lines + event IDs) in parallel with play-by-play
+    const [, espnData] = await Promise.all([
       Promise.all(pbpPromises),
       fetchESPNOdds(),
     ]);
 
-    // Merge O/U lines from ESPN into game objects
+    const { odds: espnOdds, eventIds: espnEventIds } = espnData;
+
+    // Phase 1: Merge O/U lines from ESPN scoreboard
     for (const game of games) {
       const key = `${game.homeTeam}-${game.awayTeam}`;
       if (espnOdds[key]) {
         game.ouLine = espnOdds[key];
       }
     }
+
+    // Phase 2: For live games still missing O/U, try localStorage cache
+    for (const game of liveGames) {
+      if (game.ouLine) continue;
+      const key = `${game.homeTeam}-${game.awayTeam}`;
+      const cached = getCachedOULine(key);
+      if (cached) {
+        game.ouLine = cached;
+        console.log(`[O/U] ${game.awayTeam} @ ${game.homeTeam}: using cached O/U ${cached}`);
+      }
+    }
+
+    // Phase 3: For live games STILL missing O/U, fetch ESPN game summary
+    const summaryPromises = liveGames
+      .filter(g => !g.ouLine)
+      .map(async (game) => {
+        const key = `${game.homeTeam}-${game.awayTeam}`;
+        const eventId = espnEventIds[key];
+        if (!eventId) {
+          console.warn(`[O/U] ${game.awayTeam} @ ${game.homeTeam}: no ESPN event ID, cannot fetch summary`);
+          return;
+        }
+        console.log(`[O/U] ${game.awayTeam} @ ${game.homeTeam}: fetching ESPN summary (event ${eventId})...`);
+        const ou = await fetchESPNGameOdds(eventId);
+        if (ou) {
+          game.ouLine = ou;
+          cacheOULine(key, ou);
+          console.log(`[O/U] ${game.awayTeam} @ ${game.homeTeam}: got O/U ${ou} from ESPN summary`);
+        } else {
+          console.warn(`[O/U] ${game.awayTeam} @ ${game.homeTeam}: ESPN summary had no O/U line`);
+        }
+      });
+
+    await Promise.all(summaryPromises);
 
     const gamesWithOU = games.filter(g => g.ouLine > 0).length;
     const liveCount = liveGames.length;
@@ -377,6 +502,7 @@ window.NbaApi = (function() {
     fetchScoreboard,
     fetchPlayByPlay,
     fetchESPNOdds,
+    fetchESPNGameOdds,
     fetchAllGames,
   };
 

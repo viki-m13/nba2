@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { endpoint, gameId } = req.query;
+  const { endpoint, gameId, eventId } = req.query;
 
   let url;
 
@@ -27,6 +27,12 @@ export default async function handler(req, res) {
       break;
     case 'espn_scoreboard':
       url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+      break;
+    case 'espn_summary':
+      if (!eventId) {
+        return res.status(400).json({ error: 'eventId required for espn_summary' });
+      }
+      url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${eventId}`;
       break;
     default:
       return res.status(400).json({ error: 'Invalid endpoint. Use: scoreboard or playbyplay' });
