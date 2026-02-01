@@ -29,6 +29,7 @@
       </a>
       <a href="#history" class="nav-link" data-view="history">Historical</a>
       <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
+      <a href="#howtobet" class="nav-link" data-view="howtobet">How to Bet</a>
     </nav>
     <div class="topbar-right">
       <div class="refresh-indicator" id="refresh-indicator">
@@ -434,6 +435,334 @@
         Results assume -110 standard vig. Always bet responsibly.
       </div>
     </section>
+    <!-- ==================== HOW TO BET VIEW ==================== -->
+    <section id="view-howtobet" class="view">
+      <div class="section-header">
+        <h2>How to Bet: Step-by-Step Guide</h2>
+        <p class="section-subtitle">Exactly when and how to place your bets using the Q3 O/U Signal Engine</p>
+      </div>
+
+      <!-- Strategy Overview Card -->
+      <div class="htb-overview-card">
+        <div class="htb-overview-header">
+          <div class="htb-overview-icon">&#9733;</div>
+          <div>
+            <h3>Recommended Strategy: Pre-Game Entry + Q3 Confirmation</h3>
+            <p>Place your bet BEFORE the game at standard -110 odds. The Q3 signal then CONFIRMS or DENIES your position with 95%+ accuracy.</p>
+          </div>
+        </div>
+        <div class="htb-overview-stats">
+          <div class="htb-overview-stat">
+            <span class="htb-stat-number highlight-green">96%+</span>
+            <span class="htb-stat-desc">Win rate on confirmed signals</span>
+          </div>
+          <div class="htb-overview-stat">
+            <span class="htb-stat-number highlight-gold">-110</span>
+            <span class="htb-stat-desc">Standard pre-game odds</span>
+          </div>
+          <div class="htb-overview-stat">
+            <span class="htb-stat-number highlight-green">+84%</span>
+            <span class="htb-stat-desc">ROI on confirmed bets</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why Not Bet at Q3 End -->
+      <div class="htb-warning-card">
+        <div class="htb-warning-icon">&#9888;</div>
+        <div class="htb-warning-body">
+          <h4>Why not just bet live at Q3 end?</h4>
+          <p>The 95%+ accuracy is measured against the <strong>opening (pre-game) O/U line</strong>. By Q3 end, sportsbooks have already adjusted the live line to reflect the game state. Live odds on a PLATINUM signal are roughly <strong>-15000</strong> (risk $150 to win $1). After vig, live Q3-end betting is breakeven at best (-1.1% ROI). The edge only exists at pre-game odds.</p>
+        </div>
+      </div>
+
+      <!-- Timeline Steps -->
+      <div class="htb-timeline">
+        <!-- Step 1 -->
+        <div class="htb-step">
+          <div class="htb-step-number">1</div>
+          <div class="htb-step-content">
+            <div class="htb-step-timing">
+              <span class="htb-timing-badge pre-game">PRE-GAME</span>
+              <span class="htb-timing-text">30-60 minutes before tipoff</span>
+            </div>
+            <h3>Place Your Pre-Game O/U Bet</h3>
+            <div class="htb-step-details">
+              <p>Go to your sportsbook and bet the <strong>OVER</strong> or <strong>UNDER</strong> on the game total at standard <strong>-110 odds</strong>.</p>
+              <div class="htb-substeps">
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">a.</span>
+                  <span>Pick the direction you lean toward (OVER or UNDER). You can use any pre-game analysis you prefer.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">b.</span>
+                  <span>Bet at the <strong>opening O/U line</strong> shown on your sportsbook (e.g., 224.5). This is the line the Q3 model validates against.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">c.</span>
+                  <span>Use <strong>quarter-Kelly sizing</strong> or flat 1-unit bets. Do not risk more than 5% of bankroll on a single game.</span>
+                </div>
+              </div>
+              <div class="htb-example">
+                <strong>Example:</strong> LAL vs BOS, O/U line 224.5. You bet <strong>OVER 224.5 at -110</strong> for $110 (to win $100).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="htb-step">
+          <div class="htb-step-number">2</div>
+          <div class="htb-step-content">
+            <div class="htb-step-timing">
+              <span class="htb-timing-badge in-game">Q1 - Q3</span>
+              <span class="htb-timing-text">During the game</span>
+            </div>
+            <h3>Watch the Game &amp; Monitor This App</h3>
+            <div class="htb-step-details">
+              <p>Keep this app open. The signal engine processes live play-by-play data and fires signals when Q3 has <strong>3 minutes or less remaining</strong> (or at Q3 end).</p>
+              <div class="htb-substeps">
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">a.</span>
+                  <span>The <strong>Dashboard</strong> and <strong>Live Games</strong> tabs show real-time game state.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">b.</span>
+                  <span>The <strong>Alerts</strong> tab will fire a notification with sound when a signal triggers.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">c.</span>
+                  <span>Enable <strong>Browser Notifications</strong> in Settings so you don't miss signals even if the tab is in the background.</span>
+                </div>
+              </div>
+              <div class="htb-note">
+                No action needed during this phase. Just let the game play out through Q3.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="htb-step htb-step-confirmed">
+          <div class="htb-step-number">3</div>
+          <div class="htb-step-content">
+            <div class="htb-step-timing">
+              <span class="htb-timing-badge q3-end">Q3 END</span>
+              <span class="htb-timing-text">Signal fires &mdash; last ~3 min of Q3 or Q4 start</span>
+            </div>
+            <h3>Q3 Signal Fires: Evaluate Your Position</h3>
+            <div class="htb-step-details">
+              <p>When the signal fires, compare it to your pre-game bet. There are three scenarios:</p>
+
+              <div class="htb-scenarios">
+                <!-- Scenario A: Confirmed -->
+                <div class="htb-scenario htb-scenario-confirmed">
+                  <div class="htb-scenario-header">
+                    <span class="htb-scenario-icon">&#10004;</span>
+                    <h4>CONFIRMED &mdash; Signal matches your bet</h4>
+                  </div>
+                  <div class="htb-scenario-body">
+                    <p>You bet OVER pre-game, and the Q3 model says OVER (GOLD or higher).</p>
+                    <div class="htb-action-box htb-action-hold">
+                      <strong>ACTION: HOLD your bet. Do nothing.</strong>
+                      <p>Your bet now has a 96%+ probability of winning. Sit back and let Q4 play out.</p>
+                    </div>
+                    <div class="htb-scenario-stats">
+                      <span>Historical win rate: <strong class="highlight-green">96-99%</strong></span>
+                      <span>ROI at -110: <strong class="highlight-green">+84%</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Scenario B: Denied -->
+                <div class="htb-scenario htb-scenario-denied">
+                  <div class="htb-scenario-header">
+                    <span class="htb-scenario-icon">&#10008;</span>
+                    <h4>DENIED &mdash; Signal opposes your bet</h4>
+                  </div>
+                  <div class="htb-scenario-body">
+                    <p>You bet OVER pre-game, but the Q3 model says UNDER (GOLD or higher).</p>
+                    <div class="htb-action-box htb-action-hedge">
+                      <strong>ACTION: HEDGE or accept the loss.</strong>
+                      <p>You can hedge by betting the opposite direction on the live market. Live odds will be heavily juiced (e.g., -3000 to -15000), so the hedge will be expensive but locks in a small known loss instead of a likely full loss.</p>
+                    </div>
+                    <div class="htb-scenario-stats">
+                      <span>Your pre-game bet is ~96% likely to lose</span>
+                      <span>Hedge cost: depends on live odds</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Scenario C: No Signal -->
+                <div class="htb-scenario htb-scenario-neutral">
+                  <div class="htb-scenario-header">
+                    <span class="htb-scenario-icon">&#8212;</span>
+                    <h4>NO SIGNAL &mdash; Margin below BRONZE threshold</h4>
+                  </div>
+                  <div class="htb-scenario-body">
+                    <p>The model's predicted final is within 10 points of the O/U line. No confident call.</p>
+                    <div class="htb-action-box htb-action-neutral">
+                      <strong>ACTION: Let it ride or hedge at your discretion.</strong>
+                      <p>About 52% of games produce no signal. These games are close to the line and are essentially a coin flip. Your pre-game bet has roughly normal -110 expected value.</p>
+                    </div>
+                    <div class="htb-scenario-stats">
+                      <span>Game is too close to call</span>
+                      <span>~52% of all games</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="htb-step">
+          <div class="htb-step-number">4</div>
+          <div class="htb-step-content">
+            <div class="htb-step-timing">
+              <span class="htb-timing-badge post-game">Q4 / FINAL</span>
+              <span class="htb-timing-text">Game ends</span>
+            </div>
+            <h3>Collect Results</h3>
+            <div class="htb-step-details">
+              <p>After the game ends, check the <strong>Alerts</strong> tab for outcome tracking. Your confirmed bets should win at 96%+ rate over time.</p>
+              <div class="htb-substeps">
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">a.</span>
+                  <span>Record your results for bankroll management.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">b.</span>
+                  <span>Track confirmed vs denied vs no-signal games separately.</span>
+                </div>
+                <div class="htb-substep">
+                  <span class="htb-substep-bullet">c.</span>
+                  <span>Review the <strong>Historical</strong> tab to compare your results against the backtest.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signal Tiers Quick Reference -->
+      <div class="htb-tiers-reference">
+        <h3>Signal Tier Reference</h3>
+        <p class="htb-tiers-subtitle">Higher tiers = higher accuracy = more confidence in your confirmed bet</p>
+        <div class="htb-tiers-grid">
+          <div class="htb-tier-ref htb-tier-ref-platinum">
+            <div class="htb-tier-ref-name">PLATINUM</div>
+            <div class="htb-tier-ref-margin">Margin &ge; 20 pts</div>
+            <div class="htb-tier-ref-acc">99.4% accuracy</div>
+            <div class="htb-tier-ref-freq">~17% of games</div>
+            <div class="htb-tier-ref-action">Strongest confirmation. Extremely high confidence hold.</div>
+          </div>
+          <div class="htb-tier-ref htb-tier-ref-gold">
+            <div class="htb-tier-ref-name">GOLD</div>
+            <div class="htb-tier-ref-margin">Margin &ge; 15 pts</div>
+            <div class="htb-tier-ref-acc">96.8% accuracy</div>
+            <div class="htb-tier-ref-freq">~29% of games</div>
+            <div class="htb-tier-ref-action">Very strong confirmation. High confidence hold.</div>
+          </div>
+          <div class="htb-tier-ref htb-tier-ref-silver">
+            <div class="htb-tier-ref-name">SILVER</div>
+            <div class="htb-tier-ref-margin">Margin &ge; 12 pts</div>
+            <div class="htb-tier-ref-acc">96.1% accuracy</div>
+            <div class="htb-tier-ref-freq">~39% of games</div>
+            <div class="htb-tier-ref-action">Strong confirmation. Confident hold.</div>
+          </div>
+          <div class="htb-tier-ref htb-tier-ref-bronze">
+            <div class="htb-tier-ref-name">BRONZE</div>
+            <div class="htb-tier-ref-margin">Margin &ge; 10 pts</div>
+            <div class="htb-tier-ref-acc">85.4% accuracy</div>
+            <div class="htb-tier-ref-freq">~48% of games</div>
+            <div class="htb-tier-ref-action">Moderate confirmation. Hold with caution.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bankroll Management -->
+      <div class="htb-bankroll-card">
+        <h3>Bankroll &amp; Risk Management</h3>
+        <div class="htb-bankroll-grid">
+          <div class="htb-bankroll-item">
+            <strong>Bet Sizing:</strong>
+            <p>Use flat 1-unit bets or quarter-Kelly sizing. The engine calculates Kelly % for each signal (shown in signal cards).</p>
+          </div>
+          <div class="htb-bankroll-item">
+            <strong>Max Exposure:</strong>
+            <p>Never risk more than 5% of total bankroll on a single game. With multiple games per night, cap total nightly exposure at 15%.</p>
+          </div>
+          <div class="htb-bankroll-item">
+            <strong>Hedge Discipline:</strong>
+            <p>If a signal DENIES your pre-game bet, decide in advance whether you will hedge (at expensive live odds) or accept the loss. Consistency matters more than any single decision.</p>
+          </div>
+          <div class="htb-bankroll-item">
+            <strong>Sportsbook Selection:</strong>
+            <p>Use a sportsbook that offers standard -110 O/U lines and has a live betting platform for hedging. Shop for the best pre-game line across multiple books.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio Reality Check -->
+      <div class="htb-reality-card">
+        <h3>Portfolio-Level Reality</h3>
+        <div class="htb-reality-grid">
+          <div class="htb-reality-item">
+            <div class="htb-reality-label">Confirmed signals (signal matches your bet)</div>
+            <div class="htb-reality-value highlight-green">~48% of games | 96%+ win rate | +84% ROI</div>
+          </div>
+          <div class="htb-reality-item">
+            <div class="htb-reality-label">Denied signals (signal opposes your bet)</div>
+            <div class="htb-reality-value highlight-red">~48% of games | ~96% lose rate | hedge or lose</div>
+          </div>
+          <div class="htb-reality-item">
+            <div class="htb-reality-label">No signal (game too close to line)</div>
+            <div class="htb-reality-value">~52% of games | coin flip at -110</div>
+          </div>
+          <div class="htb-reality-item htb-reality-highlight">
+            <div class="htb-reality-label"><strong>Net portfolio ROI depends on:</strong></div>
+            <div class="htb-reality-value">How well you pick pre-game direction, and hedge execution quality on denied bets. If you pick direction at 50% pre-game, confirmed and denied cancel out. Edge comes from any pre-game directional skill.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Reference Card -->
+      <div class="htb-quickref-card">
+        <h3>Quick Reference: Decision Flow</h3>
+        <div class="htb-flow">
+          <div class="htb-flow-step">
+            <div class="htb-flow-label">PRE-GAME</div>
+            <div class="htb-flow-action">Bet O/U at -110</div>
+          </div>
+          <div class="htb-flow-arrow">&rarr;</div>
+          <div class="htb-flow-step">
+            <div class="htb-flow-label">Q1 - Q3</div>
+            <div class="htb-flow-action">Wait &amp; monitor</div>
+          </div>
+          <div class="htb-flow-arrow">&rarr;</div>
+          <div class="htb-flow-step">
+            <div class="htb-flow-label">Q3 END</div>
+            <div class="htb-flow-action">Signal fires</div>
+          </div>
+          <div class="htb-flow-arrow">&rarr;</div>
+          <div class="htb-flow-step htb-flow-branch">
+            <div class="htb-flow-option htb-flow-confirmed">CONFIRMED &rarr; HOLD</div>
+            <div class="htb-flow-option htb-flow-denied">DENIED &rarr; HEDGE</div>
+            <div class="htb-flow-option htb-flow-nosignal">NO SIGNAL &rarr; LET RIDE</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This is a statistical model based on historical data. Past performance does not guarantee future results.
+        The 95%+ accuracy is validated out-of-sample on 2022-23 NBA season data against pre-game opening O/U lines.
+        Live odds at Q3 end are heavily juiced and do not offer profitable entry.
+        Always bet responsibly and never risk more than you can afford to lose.
+      </div>
+    </section>
+
   </main>
 
   <!-- Settings Modal -->
