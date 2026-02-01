@@ -1,0 +1,80 @@
+{
+  "name": "Q3 Over/Under Signal Engine",
+  "version": "1.0",
+  "type": "linear_regression",
+  "training_data": {
+    "season": "2021-22",
+    "games": 1162,
+    "features": 9
+  },
+  "validation": {
+    "season": "2022-23",
+    "games": 1015,
+    "overall_accuracy": 0.846,
+    "tiers": {
+      "PLATINUM": {
+        "margin_min": 20,
+        "accuracy": 0.994,
+        "games_fired": 171,
+        "pct_games": 0.168
+      },
+      "GOLD": {
+        "margin_min": 15,
+        "accuracy": 0.983,
+        "games_fired": 297,
+        "pct_games": 0.293
+      },
+      "SILVER": {
+        "margin_min": 12,
+        "accuracy": 0.977,
+        "games_fired": 396,
+        "pct_games": 0.39
+      },
+      "BRONZE": {
+        "margin_min": 10,
+        "accuracy": 0.957,
+        "games_fired": 487,
+        "pct_games": 0.48
+      }
+    }
+  },
+  "coefficients": {
+    "avg_q_pace": 0.052,
+    "q3_lead": 0.0572,
+    "q3_total": 0.1064,
+    "pace_trend": 0.0242,
+    "q3_cumul_total": 0.1561,
+    "h1_total": 0.0497,
+    "scoring_variance": 0.0583,
+    "late_q3_pts": -0.0483,
+    "pace_ratio": -39.5227,
+    "intercept": 52.1462
+  },
+  "tiers": {
+    "PLATINUM": {
+      "margin": 20,
+      "accuracy": 0.994,
+      "description": "Near-certain outcome"
+    },
+    "GOLD": {
+      "margin": 15,
+      "accuracy": 0.983,
+      "description": "Extremely high confidence"
+    },
+    "SILVER": {
+      "margin": 12,
+      "accuracy": 0.977,
+      "description": "Very high confidence"
+    },
+    "BRONZE": {
+      "margin": 10,
+      "accuracy": 0.957,
+      "description": "High confidence"
+    }
+  },
+  "payoff": {
+    "vig_odds": -110,
+    "win_payout": 0.9090909090909091,
+    "breakeven_pct": 0.5238095238095238
+  }
+}

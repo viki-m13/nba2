@@ -275,6 +275,14 @@ window.NbaApi = (function() {
           possessions, game.homeTeam, game.awayTeam
         );
       }
+
+      // Run Q3 O/U detection (auto-estimate O/U line if not provided)
+      if (possessions.length >= 20 && game.quarter >= 3) {
+        const estLine = window.Q3OUEngine ? window.Q3OUEngine.estimateOULine(possessions) : 0;
+        game.ouSignal = window.Q3OUEngine ? window.Q3OUEngine.evaluateFromPossessions(
+          possessions, game.homeTeam, game.awayTeam, estLine
+        ) : null;
+      }
     });
 
     await Promise.all(pbpPromises);
