@@ -823,6 +823,9 @@
     // Pred Final vs Actual Final directional accuracy (responds to filters)
     renderPredAccuracy(filtered);
 
+    // Direction vs Predicted Final consistency (responds to filters)
+    renderDirConsistency(filtered);
+
     const showingBadge = document.getElementById('hist-showing-count');
     if (showingBadge) showingBadge.textContent = Math.min(filtered.length, 200);
 
@@ -994,6 +997,92 @@
           <td>${stats.avgPred.toFixed(1)}</td>
           <td>${stats.avgActual.toFixed(1)}</td>
           <td>${stats.mae.toFixed(1)}</td>
+        </tr>`);
+    }
+
+    tbody.innerHTML = rows.join('');
+  }
+
+  // =========================================================================
+  // DIRECTION vs PREDICTED FINAL CONSISTENCY
+  // =========================================================================
+  function renderDirConsistency(filtered) {
+    const el = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+
+    if (!filtered || filtered.length === 0) {
+      el('dir-con-accuracy', '--');
+      el('dir-con-record', '--');
+      el('dir-con-over', '--');
+      el('dir-con-under', '--');
+      const tbody = document.getElementById('dir-consistency-breakdown-body');
+      if (tbody) tbody.innerHTML = '';
+      return;
+    }
+
+    function isConsistent(s) {
+      if (s.direction === 'OVER') return s.finalTotal > s.predictedFinal;
+      if (s.direction === 'UNDER') return s.finalTotal < s.predictedFinal;
+      return false;
+    }
+
+    function computeStats(sigs) {
+      const total = sigs.length;
+      if (total === 0) return null;
+
+      let consistent = 0;
+      const overSigs = sigs.filter(s => s.direction === 'OVER');
+      const underSigs = sigs.filter(s => s.direction === 'UNDER');
+      let overConsistent = 0;
+      let underConsistent = 0;
+
+      for (const s of sigs) {
+        if (isConsistent(s)) consistent++;
+      }
+      for (const s of overSigs) {
+        if (isConsistent(s)) overConsistent++;
+      }
+      for (const s of underSigs) {
+        if (isConsistent(s)) underConsistent++;
+      }
+
+      return {
+        total, consistent,
+        rate: consistent / total,
+        overTotal: overSigs.length,
+        overConsistent,
+        overRate: overSigs.length > 0 ? overConsistent / overSigs.length : 0,
+        underTotal: underSigs.length,
+        underConsistent,
+        underRate: underSigs.length > 0 ? underConsistent / underSigs.length : 0,
+      };
+    }
+
+    const overall = computeStats(filtered);
+
+    el('dir-con-accuracy', `${(overall.rate * 100).toFixed(1)}%`);
+    el('dir-con-record', `${overall.consistent} / ${overall.total}`);
+    el('dir-con-over', overall.overTotal > 0 ? `${(overall.overRate * 100).toFixed(1)}% (${overall.overConsistent}/${overall.overTotal})` : '--');
+    el('dir-con-under', overall.underTotal > 0 ? `${(overall.underRate * 100).toFixed(1)}% (${overall.underConsistent}/${overall.underTotal})` : '--');
+
+    const tbody = document.getElementById('dir-consistency-breakdown-body');
+    if (!tbody) return;
+
+    const rows = [];
+    for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
+      const tierSigs = filtered.filter(s => s.tier === tier);
+      const stats = computeStats(tierSigs);
+      if (!stats) continue;
+
+      const accClass = stats.rate >= 0.6 ? 'highlight-green' : '';
+
+      rows.push(`
+        <tr>
+          <td><span class="ou-tier-badge ${tier}">${tier}</span></td>
+          <td>${stats.total}</td>
+          <td>${stats.consistent}</td>
+          <td class="${accClass}">${(stats.rate * 100).toFixed(1)}%</td>
+          <td>${stats.overTotal > 0 ? `${(stats.overRate * 100).toFixed(1)}% (${stats.overConsistent}/${stats.overTotal})` : '--'}</td>
+          <td>${stats.underTotal > 0 ? `${(stats.underRate * 100).toFixed(1)}% (${stats.underConsistent}/${stats.underTotal})` : '--'}</td>
         </tr>`);
     }
 

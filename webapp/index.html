@@ -322,6 +322,50 @@
         </div>
       </div>
 
+      <!-- Direction vs Predicted Final Consistency -->
+      <div class="history-table-section">
+        <div class="section-header">
+          <h2>Direction vs Predicted Final</h2>
+          <p class="section-subtitle">When the model calls OVER, how often does the actual final exceed the predicted final? (And vice versa for UNDER)</p>
+        </div>
+
+        <div class="history-stats-grid" id="dir-consistency-cards">
+          <div class="history-stat-card">
+            <div class="history-stat-value highlight-green" id="dir-con-accuracy">--</div>
+            <div class="history-stat-label">Consistency Rate</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="dir-con-record">--</div>
+            <div class="history-stat-label">Consistent / Total</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="dir-con-over">--</div>
+            <div class="history-stat-label">OVER Signals</div>
+          </div>
+          <div class="history-stat-card">
+            <div class="history-stat-value" id="dir-con-under">--</div>
+            <div class="history-stat-label">UNDER Signals</div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Signals</th>
+                <th>Consistent</th>
+                <th>Consistency Rate</th>
+                <th>OVER Rate</th>
+                <th>UNDER Rate</th>
+              </tr>
+            </thead>
+            <tbody id="dir-consistency-breakdown-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Equity Curve -->
       <div class="chart-section">
         <div class="section-header">
