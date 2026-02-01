@@ -12,6 +12,7 @@
     currentView: 'dashboard',
     games: [],
     liveSignals: [],       // Active signals from current live games
+    ouSignals: [],         // Q3 Over/Under signals
     alertHistory: [],      // All alerts (persisted in localStorage)
     selectedGameId: null,
     refreshInterval: 5,    // seconds
@@ -22,6 +23,7 @@
     notificationsEnabled: false,
     minTier: 'fade_spread', // minimum tier to show
     seenSignals: new Set(), // track already-alerted signals
+    ouLineOverrides: {},   // Manual O/U line overrides per game
     equityData: null,
     signalLog: null,
     historyGames: null,
@@ -235,6 +237,16 @@
     document.getElementById('close-detail-btn')?.addEventListener('click', () => {
       document.getElementById('game-detail-panel').classList.add('hidden');
     });
+
+    // O/U scan button
+    document.getElementById('ou-scan-btn')?.addEventListener('click', () => {
+      scanOUSignals();
+    });
+
+    // O/U line input - allow Enter key
+    document.getElementById('ou-line-input')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') scanOUSignals();
+    });
   }
 
   // =========================================================================
@@ -284,6 +296,7 @@
 
       // Process signals
       processSignals(games);
+      processOUSignals(games);
 
       // Update all UI
       renderDashboard();
@@ -342,6 +355,226 @@
 
   function meetsMinTier(tier) {
     return TIER_PRIORITY[tier] <= TIER_PRIORITY[state.minTier];
+  }
+
+  // =========================================================================
+  // Q3 OVER/UNDER SIGNAL PROCESSING
+  // =========================================================================
+  function processOUSignals(games) {
+    state.ouSignals = [];
+
+    const ouLineInput = document.getElementById('ou-line-input');
+    const globalOULine = ouLineInput ? parseFloat(ouLineInput.value) : 0;
+
+    for (const game of games) {
+      if (game.status !== 'live' && game.status !== 'halftime') continue;
+      if (!game.possessions || game.possessions.length < 20) continue;
+
+      // Get O/U line: per-game override > global input > auto-estimate
+      const ouLine = state.ouLineOverrides[game.id] || globalOULine || Q3OUEngine.estimateOULine(game.possessions);
+
+      if (!ouLine || ouLine <= 0) continue;
+
+      const signal = Q3OUEngine.evaluateFromPossessions(
+        game.possessions, game.homeTeam, game.awayTeam, ouLine
+      );
+
+      if (signal) {
+        const signalKey = `ou-${game.id}-${signal.tier}-${signal.direction}`;
+
+        state.ouSignals.push({
+          ...signal,
+          gameId: game.id,
+          gameName: `${game.homeTeam} vs ${game.awayTeam}`,
+          signalKey,
+          gameStatus: `Q${game.quarter} ${game.gameClock}`,
+        });
+
+        // Fire alert for new O/U signals
+        if (!state.seenSignals.has(signalKey)) {
+          state.seenSignals.add(signalKey);
+
+          const instruction = Q3OUEngine.getTradeInstruction(signal);
+          const alert = {
+            ...signal,
+            gameId: game.id,
+            gameName: `${game.homeTeam} vs ${game.awayTeam}`,
+            signalKey,
+            instruction: {
+              headline: instruction.headline,
+              spread: instruction.bet,
+              moneyline: instruction.detail,
+              context: instruction.context,
+              combined: instruction.urgency,
+            },
+            timestamp: Date.now(),
+            outcome: 'pending',
+          };
+
+          state.alertHistory.unshift(alert);
+          saveAlerts();
+          fireOUAlert(alert);
+        }
+      }
+    }
+
+    renderOUSignals();
+  }
+
+  function scanOUSignals() {
+    processOUSignals(state.games);
+  }
+
+  function fireOUAlert(alert) {
+    // Sound
+    if (state.soundEnabled) {
+      playOUAlertSound(alert.tier);
+    }
+
+    // Browser notification
+    if (state.notificationsEnabled && 'Notification' in window && Notification.permission === 'granted') {
+      new Notification(`Q3 O/U: ${alert.direction} ${alert.ouLine} (${alert.tier})`, {
+        body: `${alert.gameName}\n${alert.description}`,
+        tag: alert.signalKey,
+      });
+    }
+
+    // Banner
+    const banner = document.getElementById('signal-alert-banner');
+    const bannerMsg = document.getElementById('alert-banner-msg');
+    if (banner && bannerMsg) {
+      bannerMsg.textContent = `Q3 O/U: ${alert.direction} ${alert.ouLine} (${alert.tier}) | ${alert.gameName} | ${alert.accuracyPct}% accuracy`;
+      banner.classList.remove('hidden');
+      setTimeout(() => banner.classList.add('hidden'), 20000);
+    }
+
+    updateAlertBadge();
+  }
+
+  function playOUAlertSound(tier) {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      // Ascending tones for O/U signals (distinct from fade signals)
+      const tones = {
+        PLATINUM: [523, 659, 784, 1047], // C5-E5-G5-C6
+        GOLD: [523, 659, 784],           // C5-E5-G5
+        SILVER: [523, 659],              // C5-E5
+        BRONZE: [523],                   // C5
+      };
+      const freqs = tones[tier] || [523];
+
+      gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+      let t = audioCtx.currentTime;
+      for (const freq of freqs) {
+        osc.frequency.setValueAtTime(freq, t);
+        t += 0.12;
+      }
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      osc.start(audioCtx.currentTime);
+      osc.stop(t + 0.4);
+    } catch (e) {}
+  }
+
+  function renderOUSignals() {
+    const container = document.getElementById('ou-signals-list');
+    const countBadge = document.getElementById('ou-signals-count');
+
+    if (!container) return;
+
+    countBadge.textContent = state.ouSignals.length;
+
+    if (state.ouSignals.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">&#9878;</div>
+          <p>No O/U signals yet</p>
+          <p class="empty-sub">Signals fire at Q3 end when model predicts final total with high margin from O/U line. Enter O/U line above or wait for Q3.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = state.ouSignals.map(signal => renderOUSignalCard(signal)).join('');
+  }
+
+  function renderOUSignalCard(signal) {
+    const dirClass = signal.direction.toLowerCase();
+    const tierClass = 'ou-' + signal.tier.toLowerCase();
+    const tierBadgeClass = signal.tier;
+
+    // Accuracy gauge (map 95-100% to 0-100% width)
+    const gaugePct = Math.min(100, Math.max(0, (signal.confidence - 0.90) * 1000));
+
+    return `
+      <div class="ou-signal-card ${tierClass}">
+        <div class="ou-signal-header">
+          <div>
+            <span class="ou-direction-badge ${dirClass}">${signal.direction}</span>
+            <span style="font-family: var(--font-mono); font-size: 1rem; font-weight: 700; margin-left: 0.5rem;">${signal.ouLine}</span>
+          </div>
+          <div>
+            <span class="ou-tier-badge ${tierBadgeClass}">${signal.tier}</span>
+          </div>
+        </div>
+
+        <div class="ou-accuracy-gauge">
+          <div class="ou-gauge-header">
+            <span class="ou-gauge-label">Accuracy (OOS)</span>
+            <span class="ou-gauge-value" style="color: ${signal.tierColor};">${signal.accuracyPct}%</span>
+          </div>
+          <div class="ou-gauge-bar">
+            <div class="ou-gauge-fill ${signal.tier.toLowerCase()}" style="width: ${gaugePct}%;"></div>
+          </div>
+        </div>
+
+        <div class="ou-details-grid">
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Q3 Total:</span>
+            <span class="ou-detail-value">${signal.q3CumulTotal}</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Need in Q4:</span>
+            <span class="ou-detail-value">${signal.ptsNeeded}</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Model Q4:</span>
+            <span class="ou-detail-value">${signal.predictedQ4}</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Pred Final:</span>
+            <span class="ou-detail-value">${signal.predictedFinal}</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Margin:</span>
+            <span class="ou-detail-value" style="color: ${signal.tierColor};">${signal.margin} pts</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Pace:</span>
+            <span class="ou-detail-value">${signal.paceRatio}x</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Q3 Lead:</span>
+            <span class="ou-detail-value">${signal.q3Lead}</span>
+          </div>
+          <div class="ou-detail-row">
+            <span class="ou-detail-label">Edge/bet:</span>
+            <span class="ou-detail-value highlight-gold">+$${signal.edge.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div class="ou-action-bar">
+          <span class="ou-bet-instruction ${dirClass}">BET ${signal.direction} ${signal.ouLine} @ -110</span>
+          <span class="ou-kelly-size">Kelly: ${(signal.kelly * 100).toFixed(1)}%</span>
+        </div>
+
+        <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center;">
+          ${signal.gameName} | ${signal.gameStatus || ''}
+        </div>
+      </div>`;
   }
 
   // =========================================================================
@@ -424,7 +657,7 @@
     const liveGames = state.games.filter(g => g.status === 'live' || g.status === 'halftime');
 
     document.getElementById('stat-live-games').textContent = liveGames.length;
-    document.getElementById('stat-active-signals').textContent = state.liveSignals.length;
+    document.getElementById('stat-active-signals').textContent = state.liveSignals.length + state.ouSignals.length;
 
     // Session WR
     const decided = state.alertHistory.filter(a => a.outcome === 'win' || a.outcome === 'loss');
