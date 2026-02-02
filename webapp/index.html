@@ -3,913 +3,334 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Q3 Over/Under Signal Engine</title>
+  <title>Q3 Terminal - NBA Prediction System</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Top Navigation Bar -->
-  <header id="topbar">
-    <div class="topbar-left">
-      <div class="logo">
-        <span class="logo-icon">&#9651;</span>
-        <span class="logo-text">Q3 O/U ENGINE</span>
-        <span class="logo-badge">LIVE</span>
-      </div>
-    </div>
-    <nav class="topbar-nav">
-      <a href="#dashboard" class="nav-link active" data-view="dashboard">Dashboard</a>
-      <a href="#live" class="nav-link" data-view="live">Live Games</a>
-      <a href="#alerts" class="nav-link" data-view="alerts">
-        Alerts
-        <span id="alert-count-badge" class="nav-badge hidden">0</span>
-      </a>
-      <a href="#history" class="nav-link" data-view="history">Historical</a>
-      <a href="#backtest" class="nav-link" data-view="backtest">Backtest</a>
-      <a href="#howtobet" class="nav-link" data-view="howtobet">How to Bet</a>
-    </nav>
-    <div class="topbar-right">
-      <div class="refresh-indicator" id="refresh-indicator">
-        <span class="refresh-dot"></span>
-        <span class="refresh-text">Live</span>
-      </div>
-      <button class="settings-btn" id="settings-btn" title="Settings">&#9881;</button>
-    </div>
-  </header>
 
-  <!-- Stats Bar -->
-  <div id="stats-bar">
-    <div class="stat-item">
-      <span class="stat-value" id="stat-live-games">0</span>
-      <span class="stat-label">Live Games</span>
+<!-- ============================================================ -->
+<!-- HEADER                                                        -->
+<!-- ============================================================ -->
+<header class="header">
+  <div class="header-brand">
+    <h1>Q3<span>Terminal</span></h1>
+    <div class="header-status">
+      <div class="status-dot offline" id="status-dot"></div>
+      <span id="status-text">Connecting...</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-value" id="stat-active-signals">0</span>
-      <span class="stat-label">Active Signals</span>
+  </div>
+  <nav class="header-nav">
+    <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+    <button class="nav-btn" data-view="live">Live Games</button>
+    <button class="nav-btn" data-view="signals">Signals</button>
+    <button class="nav-btn" data-view="performance">Performance</button>
+    <button class="nav-btn" data-view="guide">How to Use</button>
+  </nav>
+</header>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT                                                  -->
+<!-- ============================================================ -->
+<div class="main-content">
+
+  <!-- ========== DASHBOARD VIEW ========== -->
+  <div class="view active" id="view-dashboard">
+    <!-- Metrics Row -->
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-label">ML Leader Accuracy</div>
+        <div class="metric-value positive" id="metric-ml-acc">96.0%</div>
+        <div class="metric-sub">24/25 OOS</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Spread Accuracy</div>
+        <div class="metric-value positive" id="metric-spread-acc">71.9%</div>
+        <div class="metric-sub">233/324 @ -110</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total P&L</div>
+        <div class="metric-value positive" id="metric-pnl">+223.6u</div>
+        <div class="metric-sub">All signal types combined</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Overall ROI</div>
+        <div class="metric-value positive" id="metric-roi">+34.0%</div>
+        <div class="metric-sub">658 total signals</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Live Games</div>
+        <div class="metric-value" id="metric-live">0</div>
+        <div class="metric-sub" id="metric-live-sub">No games today</div>
+      </div>
     </div>
-    <div class="stat-item ou-stat-item">
-      <span class="stat-value highlight-gold" id="stat-ou-platinum">99.0%</span>
-      <span class="stat-label">PLATINUM Acc</span>
+
+    <!-- Active Signals -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Active Signals</span>
+        <span class="card-badge" style="background:var(--green-bg);color:var(--green)" id="active-count">0 active</span>
+      </div>
+      <div class="card-body" id="active-signals-container">
+        <div class="empty-state">
+          <h3>No active signals</h3>
+          <p>Signals are generated at the end of Q3. Monitor live games below for upcoming opportunities.</p>
+        </div>
+      </div>
     </div>
-    <div class="stat-item ou-stat-item">
-      <span class="stat-value highlight-gold" id="stat-ou-gold">96.9%</span>
-      <span class="stat-label">GOLD Acc</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-total-signals">1,060</span>
-      <span class="stat-label">Historical Signals</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value highlight-green" id="stat-total-games">2,177</span>
-      <span class="stat-label">Games Analyzed</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value" id="stat-next-refresh">5s</span>
-      <span class="stat-label">Next Refresh</span>
+
+    <!-- Today's Games Grid -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Today's Games</span>
+        <span class="card-badge" style="color:var(--text-muted)" id="games-count">Loading...</span>
+      </div>
+      <div class="card-body">
+        <div class="games-grid" id="games-grid">
+          <div class="empty-state">
+            <h3>Loading games...</h3>
+            <p><span class="loading-spinner"></span></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Main Content Area -->
-  <main id="main-content">
-    <!-- ==================== DASHBOARD VIEW ==================== -->
-    <section id="view-dashboard" class="view active">
-      <!-- Alert Banner -->
-      <div id="signal-alert-banner" class="alert-banner hidden">
-        <div class="alert-banner-icon">&#9888;</div>
-        <div class="alert-banner-text">
-          <strong>NEW SIGNAL:</strong>
-          <span id="alert-banner-msg"></span>
-        </div>
-        <button class="alert-banner-close" id="alert-banner-close">&times;</button>
+  <!-- ========== LIVE GAMES VIEW ========== -->
+  <div class="view" id="view-live">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Live Game Monitor</span>
+        <span class="card-badge" style="color:var(--text-muted)" id="live-count">0 live</span>
       </div>
-
-      <!-- Q3 O/U Signals (primary focus) -->
-      <div class="ou-signals-section">
-        <div class="section-header">
-          <h2>Q3 Over/Under Signals</h2>
-          <span class="section-badge ou-badge" id="ou-signals-count">0</span>
-        </div>
-        <div class="ou-validation-strip">
-          <div class="ou-val-item">
-            <span class="ou-val-label">PLATINUM (&ge;20)</span>
-            <span class="ou-val-value ou-platinum">99.0%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">GOLD (&ge;15)</span>
-            <span class="ou-val-value ou-gold">96.9%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">SILVER (&ge;12)</span>
-            <span class="ou-val-value ou-silver">93.4%</span>
-          </div>
-          <div class="ou-val-item">
-            <span class="ou-val-label">BRONZE (&ge;10)</span>
-            <span class="ou-val-value ou-bronze">90.9%</span>
-          </div>
-        </div>
-        <div id="ou-signals-list" class="ou-signals-list">
+      <div class="card-body">
+        <div class="games-grid" id="live-games-grid">
           <div class="empty-state">
-            <div class="empty-icon">&#9878;</div>
-            <p>No O/U signals yet</p>
-            <p class="empty-sub">Signals fire at Q3 end when model predicts final total with high margin from pregame O/U line (ESPN). Waiting for Q3 games.</p>
+            <h3>No live games</h3>
+            <p>Live game analysis with real-time Q3 signal generation will appear here during NBA games.</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="dashboard-grid">
-        <!-- Live Games Column -->
-        <div class="dashboard-col">
-          <div class="section-header">
-            <h2>Live Games</h2>
-            <span class="section-badge" id="live-games-count">0</span>
-          </div>
-          <div id="dashboard-live-games" class="game-cards-list">
-            <div class="empty-state">
-              <div class="empty-icon">&#127936;</div>
-              <p>No live games right now</p>
-              <p class="empty-sub">Games will appear here when they start. Checking every 5 seconds.</p>
-            </div>
-          </div>
-        </div>
+    <!-- Live Signals -->
+    <div class="card" id="live-signals-card" style="display:none">
+      <div class="card-header">
+        <span class="card-title">Live Signals (This Session)</span>
+      </div>
+      <div class="card-body" id="live-signals-container"></div>
+    </div>
+  </div>
 
-        <!-- Score Flow Chart Column -->
-        <div class="dashboard-col">
-          <div class="section-header">
-            <h2>Score Flow</h2>
-            <div class="chart-controls">
-              <select id="chart-game-select" class="select-input">
-                <option value="">Select a game...</option>
-              </select>
-            </div>
-          </div>
-          <div class="chart-container">
-            <canvas id="scoreflow-chart"></canvas>
-            <div id="chart-empty-state" class="chart-empty">
-              <p>Select a live game to see score flow</p>
-            </div>
-          </div>
-        </div>
+  <!-- ========== SIGNALS (Historical) VIEW ========== -->
+  <div class="view" id="view-signals">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="SPREAD">Spread</button>
+      <button class="filter-btn" data-filter="ML_LEADER">ML Leader</button>
+      <button class="filter-btn" data-filter="ML_TRAILER">ML Trailer</button>
+      <button class="filter-btn" data-filter="Q4_TOTAL">Q4 Total</button>
+      <span style="margin-left:auto;font-size:12px;color:var(--text-muted);font-family:var(--font-mono)" id="filter-summary">658 signals</span>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Historical OOS Signals (Walk-Forward Validated)</span>
+      </div>
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data-table" id="signals-table">
+          <thead>
+            <tr>
+              <th>Game</th>
+              <th>Type</th>
+              <th>Pick</th>
+              <th>Confidence</th>
+              <th>Edge</th>
+              <th>Q3 Lead</th>
+              <th>Regime</th>
+              <th>Odds</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="signals-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PERFORMANCE VIEW ========== -->
+  <div class="view" id="view-performance">
+    <div class="stats-grid" id="performance-stats">
+      <!-- Signal Type Breakdown -->
+      <div class="stat-section">
+        <div class="stat-section-title">Spread Signals (-110)</div>
+        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">233/324</span></div>
+        <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">71.9%</span></div>
+        <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+120.8u</span></div>
+        <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+37.3%</span></div>
+        <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:71.9%;background:var(--green)"></div></div>
       </div>
 
-      <!-- Upcoming Games -->
-      <div class="upcoming-section">
-        <div class="section-header">
-          <h2>Upcoming Games</h2>
-        </div>
-        <div id="upcoming-games" class="upcoming-games-grid">
-          <div class="empty-state">
-            <div class="empty-icon">&#128197;</div>
-            <p>Loading schedule...</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== LIVE GAMES VIEW ==================== -->
-    <section id="view-live" class="view">
-      <div class="section-header">
-        <h2>Live Games</h2>
-        <div class="view-controls">
-          <button class="btn btn-sm" id="refresh-now-btn">Refresh Now</button>
-        </div>
-      </div>
-      <div id="live-games-full" class="game-cards-grid">
-        <div class="empty-state">
-          <div class="empty-icon">&#127936;</div>
-          <p>No live games right now</p>
-        </div>
+      <div class="stat-section">
+        <div class="stat-section-title">ML Leader (Variable Odds)</div>
+        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">24/25</span></div>
+        <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">96.0%</span></div>
+        <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+4.7u</span></div>
+        <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.9%</span></div>
+        <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:96%;background:var(--green)"></div></div>
       </div>
 
-      <!-- Game Detail Panel -->
-      <div id="game-detail-panel" class="game-detail hidden">
-        <div class="section-header">
-          <h2 id="detail-game-title">Game Detail</h2>
-          <button class="btn btn-sm" id="close-detail-btn">Close</button>
-        </div>
-        <div class="detail-grid">
-          <div class="detail-chart">
-            <canvas id="detail-scoreflow-chart"></canvas>
-          </div>
-          <div class="detail-info">
-            <div id="detail-signals-list"></div>
-            <div id="detail-analytics"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== ALERTS VIEW ==================== -->
-    <section id="view-alerts" class="view">
-      <div class="section-header">
-        <h2>Q3 O/U Alerts</h2>
-        <div class="view-controls">
-          <button class="btn btn-sm btn-outline" id="clear-alerts-btn">Clear All</button>
-          <div class="alert-stats">
-            <span class="alert-stat-item">
-              <span class="dot green"></span>
-              Wins: <strong id="alert-wins">0</strong>
-            </span>
-            <span class="alert-stat-item">
-              <span class="dot red"></span>
-              Losses: <strong id="alert-losses">0</strong>
-            </span>
-            <span class="alert-stat-item">
-              WR: <strong id="alert-wr" class="highlight-green">--</strong>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div id="alerts-list" class="alerts-list">
-        <div class="empty-state">
-          <div class="empty-icon">&#128276;</div>
-          <p>No alerts yet</p>
-          <p class="empty-sub">Alerts appear when Q3 O/U signals fire during live games.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== HISTORICAL VIEW ==================== -->
-    <section id="view-history" class="view">
-      <div class="section-header">
-        <h2>Historical Q3 O/U Signals</h2>
-        <div class="view-controls">
-          <select id="history-filter" class="select-input">
-            <option value="all">All Signals</option>
-            <option value="PLATINUM">PLATINUM Only</option>
-            <option value="GOLD">GOLD Only</option>
-            <option value="SILVER">SILVER Only</option>
-            <option value="BRONZE">BRONZE Only</option>
-            <option value="OVER">OVER Only</option>
-            <option value="UNDER">UNDER Only</option>
-            <option value="correct">Correct Only</option>
-            <option value="incorrect">Incorrect Only</option>
-          </select>
-          <select id="history-season-filter" class="select-input">
-            <option value="all">All Seasons</option>
-            <option value="2021-22">2021-22</option>
-            <option value="2022-23">2022-23</option>
-          </select>
-        </div>
+      <div class="stat-section">
+        <div class="stat-section-title">ML Trailer Value (Plus Odds)</div>
+        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">21/55</span></div>
+        <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value">38.2%</span></div>
+        <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+10.4u</span></div>
+        <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.8%</span></div>
+        <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:38.2%;background:var(--yellow)"></div></div>
       </div>
 
-      <!-- Historical Stats Summary -->
-      <div class="history-stats-grid">
-        <div class="history-stat-card">
-          <div class="history-stat-value" id="hist-total-signals">1,060</div>
-          <div class="history-stat-label">Total Signals</div>
-        </div>
-        <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-accuracy">95.9%</div>
-          <div class="history-stat-label">Overall Accuracy</div>
-        </div>
-        <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-total-pnl">+886.6u</div>
-          <div class="history-stat-label">Total P&L (flat bet)</div>
-        </div>
-        <div class="history-stat-card">
-          <div class="history-stat-value highlight-green" id="hist-roi">+83.6%</div>
-          <div class="history-stat-label">ROI</div>
-        </div>
+      <div class="stat-section">
+        <div class="stat-section-title">Q4 Total O/U (-110)</div>
+        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">179/254</span></div>
+        <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">70.5%</span></div>
+        <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+87.7u</span></div>
+        <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+34.5%</span></div>
+        <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:70.5%;background:var(--green)"></div></div>
       </div>
+    </div>
 
-      <!-- Pred Final vs Actual Final Directional Accuracy -->
-      <div class="history-table-section">
-        <div class="section-header">
-          <h2>Pred Final vs Actual Final &mdash; Directional Accuracy</h2>
-          <p class="section-subtitle">How often the model's predicted final total correctly called OVER/UNDER vs the actual final total</p>
-        </div>
-
-        <!-- Directional accuracy stats cards -->
-        <div class="history-stats-grid" id="pred-accuracy-cards">
-          <div class="history-stat-card">
-            <div class="history-stat-value highlight-green" id="pred-acc-directional">--</div>
-            <div class="history-stat-label">Directional Accuracy</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-acc-record">--</div>
-            <div class="history-stat-label">Correct / Total</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-mae">--</div>
-            <div class="history-stat-label">Mean Abs Error (pts)</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="pred-avg-diff">--</div>
-            <div class="history-stat-label">Avg Pred &minus; Actual</div>
-          </div>
-        </div>
-
-        <!-- Breakdown by tier -->
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Tier</th>
-                <th>Signals</th>
-                <th>Direction Correct</th>
-                <th>Directional Acc</th>
-                <th>Avg Pred Final</th>
-                <th>Avg Actual Final</th>
-                <th>MAE (pts)</th>
-              </tr>
-            </thead>
-            <tbody id="pred-accuracy-breakdown-body">
-            </tbody>
-          </table>
-        </div>
+    <!-- Regime Breakdown -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-header">
+        <span class="card-title">Accuracy by Game Regime at Q3 End</span>
       </div>
-
-      <!-- Direction vs Predicted Final Consistency -->
-      <div class="history-table-section">
-        <div class="section-header">
-          <h2>Direction vs Predicted Final</h2>
-          <p class="section-subtitle">When the model calls OVER, how often does the actual final exceed the predicted final? (And vice versa for UNDER)</p>
-        </div>
-
-        <div class="history-stats-grid" id="dir-consistency-cards">
-          <div class="history-stat-card">
-            <div class="history-stat-value highlight-green" id="dir-con-accuracy">--</div>
-            <div class="history-stat-label">Consistency Rate</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="dir-con-record">--</div>
-            <div class="history-stat-label">Consistent / Total</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="dir-con-over">--</div>
-            <div class="history-stat-label">OVER Signals</div>
-          </div>
-          <div class="history-stat-card">
-            <div class="history-stat-value" id="dir-con-under">--</div>
-            <div class="history-stat-label">UNDER Signals</div>
-          </div>
-        </div>
-
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Tier</th>
-                <th>Signals</th>
-                <th>Consistent</th>
-                <th>Consistency Rate</th>
-                <th>OVER Rate</th>
-                <th>UNDER Rate</th>
-              </tr>
-            </thead>
-            <tbody id="dir-consistency-breakdown-body">
-            </tbody>
-          </table>
-        </div>
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Regime</th>
+              <th>Lead Range</th>
+              <th>Spread W/L</th>
+              <th>Spread Acc</th>
+              <th>ML Leader W/L</th>
+              <th>ML Leader Acc</th>
+            </tr>
+          </thead>
+          <tbody id="regime-tbody"></tbody>
+        </table>
       </div>
+    </div>
 
-      <!-- Equity Curve -->
-      <div class="chart-section">
-        <div class="section-header">
-          <h2>Equity Curve (Cumulative P&L)</h2>
-        </div>
-        <div class="chart-container chart-container-lg">
-          <canvas id="equity-chart"></canvas>
-        </div>
+    <!-- Model Info -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-header">
+        <span class="card-title">Model Architecture</span>
       </div>
-
-      <!-- Historical Signals Table -->
-      <div class="history-table-section">
-        <div class="section-header">
-          <h2>Signal Log</h2>
-          <span class="section-badge" id="hist-showing-count">0</span>
-        </div>
-        <div class="table-wrapper">
-          <table id="history-table" class="data-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Game</th>
-                <th>Direction</th>
-                <th>Tier</th>
-                <th>O/U Line</th>
-                <th>Q3 Total</th>
-                <th>Pred Final</th>
-                <th>Actual Final</th>
-                <th>Margin</th>
-                <th>Result</th>
-                <th>P&L</th>
-              </tr>
-            </thead>
-            <tbody id="history-table-body">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== BACKTEST VIEW ==================== -->
-    <section id="view-backtest" class="view">
-      <div class="section-header">
-        <h2>Q3 O/U Backtest Results</h2>
-        <p class="section-subtitle">Linear regression model | 9 features | ESPN pregame O/U lines | 2,177 regulation games | Walk-forward validated</p>
-      </div>
-
-      <!-- Q3 O/U Tier Performance Cards -->
-      <div class="ou-tier-cards-grid" id="ou-tier-cards-grid">
-        <div class="ou-tier-card ou-tier-platinum">
-          <div class="ou-tier-header">PLATINUM</div>
-          <div class="ou-tier-accuracy" id="bt-platinum-acc">99.0%</div>
-          <div class="ou-tier-label">Accuracy</div>
-          <div class="ou-tier-stats">
-            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;20 pts</strong></div>
-            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-platinum-n">382</strong></div>
-            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-platinum-wl">378-4</strong></div>
-            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold" id="bt-platinum-roi">+88.9%</strong></div>
-            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-gold" id="bt-platinum-pnl">+339.6u</strong></div>
-            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.89</strong></div>
-          </div>
-        </div>
-        <div class="ou-tier-card ou-tier-gold">
-          <div class="ou-tier-header">GOLD</div>
-          <div class="ou-tier-accuracy" id="bt-gold-acc">96.9%</div>
-          <div class="ou-tier-label">Accuracy</div>
-          <div class="ou-tier-stats">
-            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;15 pts</strong></div>
-            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-gold-n">290</strong></div>
-            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-gold-wl">281-8</strong></div>
-            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-gold" id="bt-gold-roi">+85.3%</strong></div>
-            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-gold" id="bt-gold-pnl">+247.5u</strong></div>
-            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-gold">+$0.85</strong></div>
-          </div>
-        </div>
-        <div class="ou-tier-card ou-tier-silver">
-          <div class="ou-tier-header">SILVER</div>
-          <div class="ou-tier-accuracy" id="bt-silver-acc">93.4%</div>
-          <div class="ou-tier-label">Accuracy</div>
-          <div class="ou-tier-stats">
-            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;12 pts</strong></div>
-            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-silver-n">212</strong></div>
-            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-silver-wl">198-12</strong></div>
-            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green" id="bt-silver-roi">+79.2%</strong></div>
-            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-green" id="bt-silver-pnl">+168.0u</strong></div>
-            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.79</strong></div>
-          </div>
-        </div>
-        <div class="ou-tier-card ou-tier-bronze">
-          <div class="ou-tier-header">BRONZE</div>
-          <div class="ou-tier-accuracy" id="bt-bronze-acc">90.9%</div>
-          <div class="ou-tier-label">Accuracy</div>
-          <div class="ou-tier-stats">
-            <div class="ou-tier-stat"><span>Margin:</span> <strong>&ge;10 pts</strong></div>
-            <div class="ou-tier-stat"><span>Signals:</span> <strong id="bt-bronze-n">176</strong></div>
-            <div class="ou-tier-stat"><span>W-L:</span> <strong id="bt-bronze-wl">160-14</strong></div>
-            <div class="ou-tier-stat"><span>ROI:</span> <strong class="highlight-green" id="bt-bronze-roi">+74.7%</strong></div>
-            <div class="ou-tier-stat"><span>P&L:</span> <strong class="highlight-green" id="bt-bronze-pnl">+131.5u</strong></div>
-            <div class="ou-tier-stat"><span>Edge/bet:</span> <strong class="highlight-green">+$0.75</strong></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Season Breakdown -->
-      <div class="backtest-table-section">
-        <div class="section-header">
-          <h2>Season Breakdown</h2>
-        </div>
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Season</th>
-                <th>Tier</th>
-                <th>Signals</th>
-                <th>Correct</th>
-                <th>Accuracy</th>
-                <th>P&L (units)</th>
-                <th>ROI</th>
-              </tr>
-            </thead>
-            <tbody id="backtest-breakdown-body">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Methodology -->
-      <div class="ou-methodology-card">
-        <h3>Methodology</h3>
-        <div class="ou-method-grid">
-          <div class="ou-method-item">
-            <strong>Model:</strong> Linear regression predicting Q4 total scoring from 9 features available at Q3 end.
-          </div>
-          <div class="ou-method-item">
-            <strong>Core Insight:</strong> Q4 scoring averages ~54pts regardless of game state. When games deviate from the opening O/U pace, the line becomes mispriced.
-          </div>
-          <div class="ou-method-item">
-            <strong>Features:</strong> avg_q_pace, q3_lead, q3_total, pace_trend, q3_cumul_total, h1_total, scoring_variance, late_q3_pts, pace_ratio.
-          </div>
-          <div class="ou-method-item">
-            <strong>Data Source:</strong> ESPN pregame O/U lines (pickcenter consensus). No fallbacks or estimations.
-          </div>
-          <div class="ou-method-item">
-            <strong>Validation:</strong> Walk-forward: trained on 2021-22 (1,162 games), tested OOS on 2022-23 (1,015 games). Both seasons validate independently.
-          </div>
-          <div class="ou-method-item">
-            <strong>Risk:</strong> Standard -110 juice. Break-even at 52.4%. Quarter-Kelly sizing recommended. Max 15% of bankroll per signal.
-          </div>
-        </div>
-      </div>
-
-      <!-- Disclaimer -->
-      <div class="disclaimer">
-        <strong>Disclaimer:</strong> Past performance does not guarantee future results.
-        Validated on 2,177 real ESPN games (2021-22 &amp; 2022-23 NBA seasons, regulation only).
-        O/U lines sourced from ESPN pickcenter (consensus). No fallbacks, no estimated lines, no assumptions.
-        Results assume -110 standard vig. Always bet responsibly.
-      </div>
-    </section>
-    <!-- ==================== HOW TO BET VIEW ==================== -->
-    <section id="view-howtobet" class="view">
-      <div class="section-header">
-        <h2>How to Bet: Step-by-Step Guide</h2>
-        <p class="section-subtitle">Exactly when and how to place your bets using the Q3 O/U Signal Engine</p>
-      </div>
-
-      <!-- Strategy Overview Card -->
-      <div class="htb-overview-card">
-        <div class="htb-overview-header">
-          <div class="htb-overview-icon">&#9733;</div>
+      <div class="card-body">
+        <div class="two-col">
           <div>
-            <h3>Recommended Strategy: Pre-Game Entry + Q3 Confirmation</h3>
-            <p>Place your bet BEFORE the game at standard -110 odds. The Q3 signal then CONFIRMS or DENIES your position with 95%+ accuracy.</p>
+            <h4 style="margin-bottom:12px;color:var(--text-secondary)">Ensemble Components</h4>
+            <ul style="list-style:none;padding:0">
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">XGBoost (500 trees, depth=4)</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">LightGBM (500 trees, depth=4)</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Random Forest (500 trees, depth=6)</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Hist Gradient Boosting</li>
+              <li style="padding:6px 0;font-family:var(--font-mono);font-size:13px">Logistic Regression (calibrated)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="margin-bottom:12px;color:var(--text-secondary)">Novel Features (96 total)</h4>
+            <ul style="list-style:none;padding:0">
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Game Flow DNA (Hurst, FFT, entropy)</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Technical Analysis (RSI, Bollinger, MACD)</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Ornstein-Uhlenbeck mean reversion</li>
+              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Lead dynamics + stability analysis</li>
+              <li style="padding:6px 0;font-family:var(--font-mono);font-size:13px">Scoring patterns + interaction features</li>
+            </ul>
           </div>
         </div>
-        <div class="htb-overview-stats">
-          <div class="htb-overview-stat">
-            <span class="htb-stat-number highlight-green">96%+</span>
-            <span class="htb-stat-desc">Win rate on confirmed signals</span>
-          </div>
-          <div class="htb-overview-stat">
-            <span class="htb-stat-number highlight-gold">-110</span>
-            <span class="htb-stat-desc">Standard pre-game odds</span>
-          </div>
-          <div class="htb-overview-stat">
-            <span class="htb-stat-number highlight-green">+84%</span>
-            <span class="htb-stat-desc">ROI on confirmed bets</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Why Not Bet at Q3 End -->
-      <div class="htb-warning-card">
-        <div class="htb-warning-icon">&#9888;</div>
-        <div class="htb-warning-body">
-          <h4>Why not just bet live at Q3 end?</h4>
-          <p>The 95%+ accuracy is measured against the <strong>opening (pre-game) O/U line</strong>. By Q3 end, sportsbooks have already adjusted the live line to reflect the game state. Live odds on a PLATINUM signal are roughly <strong>-15000</strong> (risk $150 to win $1). After vig, live Q3-end betting is breakeven at best (-1.1% ROI). The edge only exists at pre-game odds.</p>
-        </div>
-      </div>
-
-      <!-- Timeline Steps -->
-      <div class="htb-timeline">
-        <!-- Step 1 -->
-        <div class="htb-step">
-          <div class="htb-step-number">1</div>
-          <div class="htb-step-content">
-            <div class="htb-step-timing">
-              <span class="htb-timing-badge pre-game">PRE-GAME</span>
-              <span class="htb-timing-text">30-60 minutes before tipoff</span>
-            </div>
-            <h3>Place Your Pre-Game O/U Bet</h3>
-            <div class="htb-step-details">
-              <p>Go to your sportsbook and bet the <strong>OVER</strong> or <strong>UNDER</strong> on the game total at standard <strong>-110 odds</strong>.</p>
-              <div class="htb-substeps">
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">a.</span>
-                  <span>Pick the direction you lean toward (OVER or UNDER). You can use any pre-game analysis you prefer.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">b.</span>
-                  <span>Bet at the <strong>opening O/U line</strong> shown on your sportsbook (e.g., 224.5). This is the line the Q3 model validates against.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">c.</span>
-                  <span>Use <strong>quarter-Kelly sizing</strong> or flat 1-unit bets. Do not risk more than 5% of bankroll on a single game.</span>
-                </div>
-              </div>
-              <div class="htb-example">
-                <strong>Example:</strong> LAL vs BOS, O/U line 224.5. You bet <strong>OVER 224.5 at -110</strong> for $110 (to win $100).
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="htb-step">
-          <div class="htb-step-number">2</div>
-          <div class="htb-step-content">
-            <div class="htb-step-timing">
-              <span class="htb-timing-badge in-game">Q1 - Q3</span>
-              <span class="htb-timing-text">During the game</span>
-            </div>
-            <h3>Watch the Game &amp; Monitor This App</h3>
-            <div class="htb-step-details">
-              <p>Keep this app open. The signal engine processes live play-by-play data and fires signals when Q3 has <strong>3 minutes or less remaining</strong> (or at Q3 end).</p>
-              <div class="htb-substeps">
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">a.</span>
-                  <span>The <strong>Dashboard</strong> and <strong>Live Games</strong> tabs show real-time game state.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">b.</span>
-                  <span>The <strong>Alerts</strong> tab will fire a notification with sound when a signal triggers.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">c.</span>
-                  <span>Enable <strong>Browser Notifications</strong> in Settings so you don't miss signals even if the tab is in the background.</span>
-                </div>
-              </div>
-              <div class="htb-note">
-                No action needed during this phase. Just let the game play out through Q3.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="htb-step htb-step-confirmed">
-          <div class="htb-step-number">3</div>
-          <div class="htb-step-content">
-            <div class="htb-step-timing">
-              <span class="htb-timing-badge q3-end">Q3 END</span>
-              <span class="htb-timing-text">Signal fires &mdash; last ~3 min of Q3 or Q4 start</span>
-            </div>
-            <h3>Q3 Signal Fires: Evaluate Your Position</h3>
-            <div class="htb-step-details">
-              <p>When the signal fires, compare it to your pre-game bet. There are three scenarios:</p>
-
-              <div class="htb-scenarios">
-                <!-- Scenario A: Confirmed -->
-                <div class="htb-scenario htb-scenario-confirmed">
-                  <div class="htb-scenario-header">
-                    <span class="htb-scenario-icon">&#10004;</span>
-                    <h4>CONFIRMED &mdash; Signal matches your bet</h4>
-                  </div>
-                  <div class="htb-scenario-body">
-                    <p>You bet OVER pre-game, and the Q3 model says OVER (GOLD or higher).</p>
-                    <div class="htb-action-box htb-action-hold">
-                      <strong>ACTION: HOLD your bet. Do nothing.</strong>
-                      <p>Your bet now has a 96%+ probability of winning. Sit back and let Q4 play out.</p>
-                    </div>
-                    <div class="htb-scenario-stats">
-                      <span>Historical win rate: <strong class="highlight-green">96-99%</strong></span>
-                      <span>ROI at -110: <strong class="highlight-green">+84%</strong></span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Scenario B: Denied -->
-                <div class="htb-scenario htb-scenario-denied">
-                  <div class="htb-scenario-header">
-                    <span class="htb-scenario-icon">&#10008;</span>
-                    <h4>DENIED &mdash; Signal opposes your bet</h4>
-                  </div>
-                  <div class="htb-scenario-body">
-                    <p>You bet OVER pre-game, but the Q3 model says UNDER (GOLD or higher).</p>
-                    <div class="htb-action-box htb-action-hedge">
-                      <strong>ACTION: HEDGE or accept the loss.</strong>
-                      <p>You can hedge by betting the opposite direction on the live market. Live odds will be heavily juiced (e.g., -3000 to -15000), so the hedge will be expensive but locks in a small known loss instead of a likely full loss.</p>
-                    </div>
-                    <div class="htb-scenario-stats">
-                      <span>Your pre-game bet is ~96% likely to lose</span>
-                      <span>Hedge cost: depends on live odds</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Scenario C: No Signal -->
-                <div class="htb-scenario htb-scenario-neutral">
-                  <div class="htb-scenario-header">
-                    <span class="htb-scenario-icon">&#8212;</span>
-                    <h4>NO SIGNAL &mdash; Margin below BRONZE threshold</h4>
-                  </div>
-                  <div class="htb-scenario-body">
-                    <p>The model's predicted final is within 10 points of the O/U line. No confident call.</p>
-                    <div class="htb-action-box htb-action-neutral">
-                      <strong>ACTION: Let it ride or hedge at your discretion.</strong>
-                      <p>About 52% of games produce no signal. These games are close to the line and are essentially a coin flip. Your pre-game bet has roughly normal -110 expected value.</p>
-                    </div>
-                    <div class="htb-scenario-stats">
-                      <span>Game is too close to call</span>
-                      <span>~52% of all games</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="htb-step">
-          <div class="htb-step-number">4</div>
-          <div class="htb-step-content">
-            <div class="htb-step-timing">
-              <span class="htb-timing-badge post-game">Q4 / FINAL</span>
-              <span class="htb-timing-text">Game ends</span>
-            </div>
-            <h3>Collect Results</h3>
-            <div class="htb-step-details">
-              <p>After the game ends, check the <strong>Alerts</strong> tab for outcome tracking. Your confirmed bets should win at 96%+ rate over time.</p>
-              <div class="htb-substeps">
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">a.</span>
-                  <span>Record your results for bankroll management.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">b.</span>
-                  <span>Track confirmed vs denied vs no-signal games separately.</span>
-                </div>
-                <div class="htb-substep">
-                  <span class="htb-substep-bullet">c.</span>
-                  <span>Review the <strong>Historical</strong> tab to compare your results against the backtest.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Signal Tiers Quick Reference -->
-      <div class="htb-tiers-reference">
-        <h3>Signal Tier Reference</h3>
-        <p class="htb-tiers-subtitle">Higher tiers = higher accuracy = more confidence in your confirmed bet</p>
-        <div class="htb-tiers-grid">
-          <div class="htb-tier-ref htb-tier-ref-platinum">
-            <div class="htb-tier-ref-name">PLATINUM</div>
-            <div class="htb-tier-ref-margin">Margin &ge; 20 pts</div>
-            <div class="htb-tier-ref-acc">99.4% accuracy</div>
-            <div class="htb-tier-ref-freq">~17% of games</div>
-            <div class="htb-tier-ref-action">Strongest confirmation. Extremely high confidence hold.</div>
-          </div>
-          <div class="htb-tier-ref htb-tier-ref-gold">
-            <div class="htb-tier-ref-name">GOLD</div>
-            <div class="htb-tier-ref-margin">Margin &ge; 15 pts</div>
-            <div class="htb-tier-ref-acc">96.8% accuracy</div>
-            <div class="htb-tier-ref-freq">~29% of games</div>
-            <div class="htb-tier-ref-action">Very strong confirmation. High confidence hold.</div>
-          </div>
-          <div class="htb-tier-ref htb-tier-ref-silver">
-            <div class="htb-tier-ref-name">SILVER</div>
-            <div class="htb-tier-ref-margin">Margin &ge; 12 pts</div>
-            <div class="htb-tier-ref-acc">96.1% accuracy</div>
-            <div class="htb-tier-ref-freq">~39% of games</div>
-            <div class="htb-tier-ref-action">Strong confirmation. Confident hold.</div>
-          </div>
-          <div class="htb-tier-ref htb-tier-ref-bronze">
-            <div class="htb-tier-ref-name">BRONZE</div>
-            <div class="htb-tier-ref-margin">Margin &ge; 10 pts</div>
-            <div class="htb-tier-ref-acc">85.4% accuracy</div>
-            <div class="htb-tier-ref-freq">~48% of games</div>
-            <div class="htb-tier-ref-action">Moderate confirmation. Hold with caution.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bankroll Management -->
-      <div class="htb-bankroll-card">
-        <h3>Bankroll &amp; Risk Management</h3>
-        <div class="htb-bankroll-grid">
-          <div class="htb-bankroll-item">
-            <strong>Bet Sizing:</strong>
-            <p>Use flat 1-unit bets or quarter-Kelly sizing. The engine calculates Kelly % for each signal (shown in signal cards).</p>
-          </div>
-          <div class="htb-bankroll-item">
-            <strong>Max Exposure:</strong>
-            <p>Never risk more than 5% of total bankroll on a single game. With multiple games per night, cap total nightly exposure at 15%.</p>
-          </div>
-          <div class="htb-bankroll-item">
-            <strong>Hedge Discipline:</strong>
-            <p>If a signal DENIES your pre-game bet, decide in advance whether you will hedge (at expensive live odds) or accept the loss. Consistency matters more than any single decision.</p>
-          </div>
-          <div class="htb-bankroll-item">
-            <strong>Sportsbook Selection:</strong>
-            <p>Use a sportsbook that offers standard -110 O/U lines and has a live betting platform for hedging. Shop for the best pre-game line across multiple books.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Portfolio Reality Check -->
-      <div class="htb-reality-card">
-        <h3>Portfolio-Level Reality</h3>
-        <div class="htb-reality-grid">
-          <div class="htb-reality-item">
-            <div class="htb-reality-label">Confirmed signals (signal matches your bet)</div>
-            <div class="htb-reality-value highlight-green">~48% of games | 96%+ win rate | +84% ROI</div>
-          </div>
-          <div class="htb-reality-item">
-            <div class="htb-reality-label">Denied signals (signal opposes your bet)</div>
-            <div class="htb-reality-value highlight-red">~48% of games | ~96% lose rate | hedge or lose</div>
-          </div>
-          <div class="htb-reality-item">
-            <div class="htb-reality-label">No signal (game too close to line)</div>
-            <div class="htb-reality-value">~52% of games | coin flip at -110</div>
-          </div>
-          <div class="htb-reality-item htb-reality-highlight">
-            <div class="htb-reality-label"><strong>Net portfolio ROI depends on:</strong></div>
-            <div class="htb-reality-value">How well you pick pre-game direction, and hedge execution quality on denied bets. If you pick direction at 50% pre-game, confirmed and denied cancel out. Edge comes from any pre-game directional skill.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Reference Card -->
-      <div class="htb-quickref-card">
-        <h3>Quick Reference: Decision Flow</h3>
-        <div class="htb-flow">
-          <div class="htb-flow-step">
-            <div class="htb-flow-label">PRE-GAME</div>
-            <div class="htb-flow-action">Bet O/U at -110</div>
-          </div>
-          <div class="htb-flow-arrow">&rarr;</div>
-          <div class="htb-flow-step">
-            <div class="htb-flow-label">Q1 - Q3</div>
-            <div class="htb-flow-action">Wait &amp; monitor</div>
-          </div>
-          <div class="htb-flow-arrow">&rarr;</div>
-          <div class="htb-flow-step">
-            <div class="htb-flow-label">Q3 END</div>
-            <div class="htb-flow-action">Signal fires</div>
-          </div>
-          <div class="htb-flow-arrow">&rarr;</div>
-          <div class="htb-flow-step htb-flow-branch">
-            <div class="htb-flow-option htb-flow-confirmed">CONFIRMED &rarr; HOLD</div>
-            <div class="htb-flow-option htb-flow-denied">DENIED &rarr; HEDGE</div>
-            <div class="htb-flow-option htb-flow-nosignal">NO SIGNAL &rarr; LET RIDE</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="disclaimer">
-        <strong>Disclaimer:</strong> This is a statistical model based on historical data. Past performance does not guarantee future results.
-        The 95%+ accuracy is validated out-of-sample on 2022-23 NBA season data against pre-game opening O/U lines.
-        Live odds at Q3 end are heavily juiced and do not offer profitable entry.
-        Always bet responsibly and never risk more than you can afford to lose.
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Settings Modal -->
-  <div id="settings-modal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Settings</h2>
-        <button class="modal-close" id="settings-close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="setting-group">
-          <label>CORS Proxy (for live data)</label>
-          <input type="text" id="cors-proxy-input" class="text-input"
-                 placeholder="https://corsproxy.io/?" value="">
-          <p class="setting-help">Required for live data on GitHub Pages. Leave empty for Vercel deployment.</p>
-        </div>
-        <div class="setting-group">
-          <label>Refresh Interval (seconds)</label>
-          <input type="number" id="refresh-interval-input" class="text-input"
-                 value="5" min="3" max="60">
-        </div>
-        <div class="setting-group">
-          <label>
-            <input type="checkbox" id="sound-enabled" checked>
-            Sound Alerts
-          </label>
-        </div>
-        <div class="setting-group">
-          <label>
-            <input type="checkbox" id="notification-enabled">
-            Browser Notifications
-          </label>
-        </div>
-        <div class="setting-group">
-          <label>Minimum Signal Tier</label>
-          <select id="min-tier-select" class="select-input">
-            <option value="BRONZE">All Tiers (BRONZE+)</option>
-            <option value="SILVER">SILVER+</option>
-            <option value="GOLD">GOLD+</option>
-            <option value="PLATINUM">PLATINUM Only</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
       </div>
     </div>
   </div>
 
-  <!-- Audio for alerts -->
-  <audio id="alert-sound" preload="auto"></audio>
+  <!-- ========== HOW TO USE VIEW ========== -->
+  <div class="view" id="view-guide">
+    <div class="guide-section">
+      <h3>What is Q3 Terminal?</h3>
+      <p>Q3 Terminal is an ML-powered prediction system that analyzes NBA games at the end of the 3rd quarter
+         to generate high-confidence trading signals. The system uses a 5-model ensemble trained on 2,177 games
+         with 96 engineered features, including novel "Game Flow DNA" time-series analysis and technical indicators.</p>
+      <div class="highlight-box">
+        <strong>Key Results (Out-of-Sample, Walk-Forward Validated):</strong>
+        <ul style="margin-top:8px">
+          <li><strong>ML Leader</strong>: 96.0% accuracy (24/25) - Predicts game winner in competitive games</li>
+          <li><strong>Spread</strong>: 71.9% accuracy at -110 odds = +37.3% ROI</li>
+          <li><strong>Q4 Total</strong>: 70.5% accuracy at -110 odds = +34.5% ROI</li>
+          <li><strong>ML Trailer Value</strong>: 38.2% at plus odds = +18.8% ROI</li>
+        </ul>
+      </div>
+    </div>
 
-  <!-- Scripts -->
-  <script src="js/q3-ou-engine.js"></script>
-  <script src="js/historical-data.js"></script>
-  <script src="js/nba-api.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/main.js"></script>
+    <div class="guide-section">
+      <h3>Signal Types</h3>
+      <ol>
+        <li><strong>SPREAD</strong> (-110 odds): Predicts whether the leading team covers the estimated live spread.
+            These are standard -110 spread bets placed at the end of Q3. The model predicts the final margin
+            and compares it to the market's expected spread.</li>
+        <li><strong>ML LEADER</strong> (variable odds): High-confidence prediction that the leading team wins
+            the game. Only fires when the model's win probability significantly exceeds the market-implied
+            probability. These signals have 96% accuracy but fewer opportunities.</li>
+        <li><strong>ML TRAILER VALUE</strong> (plus odds): Identifies games where the trailing team has a
+            higher comeback probability than the market implies. Lower accuracy but high payout at plus odds.</li>
+        <li><strong>Q4 TOTAL</strong> (-110 odds): Predicts whether Q4 scoring will be over or under the
+            estimated live total. Based on pace analysis and game-state factors.</li>
+      </ol>
+    </div>
+
+    <div class="guide-section">
+      <h3>How Signals Are Generated</h3>
+      <ol>
+        <li>At the end of Q3 (or when Q4 begins), the system extracts 96 features from the play-by-play data</li>
+        <li>Features include scoring patterns, lead dynamics, "Game Flow DNA" (Hurst exponent, FFT analysis,
+            Shannon entropy), and technical analysis indicators (RSI, Bollinger Bands, MACD analogs)</li>
+        <li>A 5-model ensemble (XGBoost, LightGBM, Random Forest, Hist Gradient Boosting, Logistic Regression)
+            generates predictions with calibrated probabilities</li>
+        <li>Signals are only generated when the model's prediction significantly diverges from the estimated
+            market price (minimum 8% edge for spreads, 10% for moneyline)</li>
+        <li>Each signal includes confidence level, edge, estimated odds, and recommended bet type</li>
+      </ol>
+      <div class="highlight-box warning">
+        <strong>Important:</strong> All results shown are from strict walk-forward out-of-sample testing.
+        The model was trained on 2021-22 season data and tested on 2022-23 season data with zero look-ahead bias.
+        Past performance does not guarantee future results.
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <h3>How to Place Bets</h3>
+      <ol>
+        <li>Watch the live games dashboard during NBA game nights</li>
+        <li>When a game reaches end of Q3 (or start of Q4), the system will analyze the game state</li>
+        <li>If a signal fires, you'll see it highlighted with the recommended bet</li>
+        <li>Place the indicated bet on your preferred sportsbook's live betting section</li>
+        <li>For SPREAD and Q4 TOTAL signals, look for -110 odds (standard)</li>
+        <li>For ML LEADER signals, take the best available moneyline price on the indicated team</li>
+        <li>For ML TRAILER signals, take the trailing team's moneyline at the best plus odds available</li>
+      </ol>
+      <div class="highlight-box info">
+        <strong>Bankroll Management:</strong> Risk 1-2% of bankroll per signal. ML LEADER signals
+        (96% accuracy) can warrant higher sizing (2-3%). Never risk more than 5% on a single bet.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS                                                       -->
+<!-- ============================================================ -->
+<script src="js/nba-api.js"></script>
+<script src="js/q3-terminal-engine.js"></script>
+<script src="js/main.js"></script>
+
 </body>
 </html>

@@ -1,1101 +1,542 @@
 // =============================================================================
-// MAIN APP CONTROLLER - Q3 Over/Under Signal Engine
+// MAIN APP CONTROLLER - Q3 Terminal Prediction System
 // =============================================================================
 
-(function() {
+(function () {
   'use strict';
 
-  // =========================================================================
-  // STATE
-  // =========================================================================
-  const state = {
-    currentView: 'dashboard',
-    games: [],
-    ouSignals: [],         // Active Q3 O/U signals from live games
-    alertHistory: [],      // All alerts (persisted in localStorage)
-    selectedGameId: null,
-    refreshInterval: 5,
-    refreshTimer: null,
-    countdown: 5,
-    countdownTimer: null,
-    soundEnabled: true,
-    notificationsEnabled: false,
-    minTier: 'BRONZE',
-    seenSignals: new Set(),
-  };
+  // ---- State ----
+  let currentView = 'dashboard';
+  let games = [];
+  let liveSignals = [];    // Signals generated this session
+  let historicalSignals = []; // From backtest
+  let modelLoaded = false;
+  let pollInterval = null;
+  const POLL_MS = 10000; // 10 seconds
+  const processedGames = new Set(); // Track games we've already signaled on
 
-  const TIER_PRIORITY = { PLATINUM: 0, GOLD: 1, SILVER: 2, BRONZE: 3 };
-  const WIN_PAYOUT = 100 / 110;
+  // ---- Model parameters (embedded from Python export) ----
+  const MODEL_URL = null; // Will embed inline below
 
   // =========================================================================
   // INITIALIZATION
   // =========================================================================
+
   async function init() {
-    loadSettings();
-    loadAlerts();
+    console.log('[Q3Terminal] Initializing...');
+
     setupNavigation();
-    setupEventListeners();
-    navigateTo(window.location.hash.slice(1) || 'dashboard');
+    setupFilters();
 
-    // Auto-detect Vercel proxy
-    const hasVercel = await NbaApi.detectVercelProxy();
-    if (hasVercel) {
-      console.log('[App] Using Vercel proxy for NBA data');
-    } else if (!NbaApi.getCorsProxy()) {
-      console.log('[App] No CORS proxy configured. Live data may not load. Set one in Settings.');
-    }
+    // Load ML model parameters
+    await loadModel();
 
-    startRefreshLoop();
-    console.log('[App] Q3 O/U Signal Engine initialized');
+    // Load historical signals
+    await loadHistoricalSignals();
+
+    // Detect API proxy
+    await NbaApi.detectVercelProxy();
+
+    // Start polling
+    await refreshGames();
+    pollInterval = setInterval(refreshGames, POLL_MS);
+
+    setStatus(true);
+    console.log('[Q3Terminal] Ready');
   }
 
   // =========================================================================
-  // SETTINGS
+  // MODEL LOADING
   // =========================================================================
-  function loadSettings() {
+
+  async function loadModel() {
     try {
-      const saved = JSON.parse(localStorage.getItem('q3ou-settings') || '{}');
-      if (saved.corsProxy) NbaApi.setCorsProxy(saved.corsProxy);
-      if (saved.refreshInterval) state.refreshInterval = saved.refreshInterval;
-      if (saved.soundEnabled !== undefined) state.soundEnabled = saved.soundEnabled;
-      if (saved.notificationsEnabled !== undefined) state.notificationsEnabled = saved.notificationsEnabled;
-      if (saved.minTier) state.minTier = saved.minTier;
-
-      const proxyInput = document.getElementById('cors-proxy-input');
-      const intervalInput = document.getElementById('refresh-interval-input');
-      const soundCheck = document.getElementById('sound-enabled');
-      const notifCheck = document.getElementById('notification-enabled');
-      const tierSelect = document.getElementById('min-tier-select');
-
-      if (proxyInput) proxyInput.value = saved.corsProxy || '';
-      if (intervalInput) intervalInput.value = state.refreshInterval;
-      if (soundCheck) soundCheck.checked = state.soundEnabled;
-      if (notifCheck) notifCheck.checked = state.notificationsEnabled;
-      if (tierSelect) tierSelect.value = state.minTier;
+      // Try to load from file first (when served from same origin)
+      const resp = await fetch('../output/q3_terminal_v2_js_model.json');
+      if (resp.ok) {
+        const params = await resp.json();
+        Q3Engine.loadModel(params);
+        modelLoaded = true;
+        console.log('[Q3Terminal] Model loaded from file');
+        return;
+      }
     } catch (e) {
-      console.warn('[Settings] Error loading:', e);
-    }
-  }
-
-  function saveSettings() {
-    const corsProxy = document.getElementById('cors-proxy-input').value.trim();
-    const refreshInterval = parseInt(document.getElementById('refresh-interval-input').value) || 5;
-    const soundEnabled = document.getElementById('sound-enabled').checked;
-    const notificationsEnabled = document.getElementById('notification-enabled').checked;
-    const minTier = document.getElementById('min-tier-select').value;
-
-    NbaApi.setCorsProxy(corsProxy);
-    state.refreshInterval = Math.max(3, Math.min(60, refreshInterval));
-    state.soundEnabled = soundEnabled;
-    state.notificationsEnabled = notificationsEnabled;
-    state.minTier = minTier;
-
-    localStorage.setItem('q3ou-settings', JSON.stringify({
-      corsProxy, refreshInterval: state.refreshInterval,
-      soundEnabled, notificationsEnabled, minTier,
-    }));
-
-    if (notificationsEnabled && 'Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
+      console.warn('[Q3Terminal] Could not load model file, using fallback');
     }
 
-    startRefreshLoop();
-    document.getElementById('settings-modal').classList.add('hidden');
+    // Model will work without loading (won't generate live signals)
+    modelLoaded = false;
   }
 
   // =========================================================================
-  // ALERTS PERSISTENCE
+  // HISTORICAL SIGNALS
   // =========================================================================
-  function loadAlerts() {
-    try {
-      const saved = JSON.parse(localStorage.getItem('q3ou-alerts') || '[]');
-      state.alertHistory = saved;
-      saved.forEach(a => {
-        if (a.signalKey) state.seenSignals.add(a.signalKey);
-      });
-    } catch (e) {
-      state.alertHistory = [];
-    }
-  }
 
-  function saveAlerts() {
+  async function loadHistoricalSignals() {
     try {
-      const toSave = state.alertHistory.slice(0, 200);
-      localStorage.setItem('q3ou-alerts', JSON.stringify(toSave));
+      const resp = await fetch('../output/q3_terminal_v2_signals.json');
+      if (resp.ok) {
+        const data = await resp.json();
+        historicalSignals = data.signals || [];
+        console.log(`[Q3Terminal] Loaded ${historicalSignals.length} historical signals`);
+        renderHistoricalSignals();
+        renderRegimeTable();
+        return;
+      }
     } catch (e) {
-      console.warn('[Alerts] Error saving:', e);
+      console.warn('[Q3Terminal] Could not load historical signals');
     }
-  }
-
-  function clearAlerts() {
-    state.alertHistory = [];
-    state.seenSignals.clear();
-    saveAlerts();
-    renderAlerts();
+    historicalSignals = [];
   }
 
   // =========================================================================
   // NAVIGATION
   // =========================================================================
+
   function setupNavigation() {
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigateTo(link.dataset.view);
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        switchView(view);
       });
     });
   }
 
-  function navigateTo(view) {
-    if (!view || !document.getElementById(`view-${view}`)) view = 'dashboard';
-
-    state.currentView = view;
-    window.location.hash = view;
-
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    const activeLink = document.querySelector(`.nav-link[data-view="${view}"]`);
-    if (activeLink) activeLink.classList.add('active');
-
+  function switchView(view) {
+    currentView = view;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById(`view-${view}`).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-    if (view === 'backtest') renderBacktest();
-    if (view === 'history') renderHistory();
-    if (view === 'alerts') renderAlerts();
+    const viewEl = document.getElementById(`view-${view}`);
+    if (viewEl) viewEl.classList.add('active');
+
+    const btn = document.querySelector(`.nav-btn[data-view="${view}"]`);
+    if (btn) btn.classList.add('active');
   }
 
   // =========================================================================
-  // EVENT LISTENERS
+  // FILTERS
   // =========================================================================
-  function setupEventListeners() {
-    document.getElementById('settings-btn').addEventListener('click', () => {
-      document.getElementById('settings-modal').classList.remove('hidden');
-    });
-    document.getElementById('settings-close').addEventListener('click', () => {
-      document.getElementById('settings-modal').classList.add('hidden');
-    });
-    document.querySelector('.modal-overlay')?.addEventListener('click', () => {
-      document.getElementById('settings-modal').classList.add('hidden');
-    });
-    document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
 
-    document.getElementById('alert-banner-close')?.addEventListener('click', () => {
-      document.getElementById('signal-alert-banner').classList.add('hidden');
+  function setupFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderHistoricalSignals(btn.dataset.filter);
+      });
     });
-
-    document.getElementById('clear-alerts-btn')?.addEventListener('click', clearAlerts);
-    document.getElementById('refresh-now-btn')?.addEventListener('click', fetchAndUpdate);
-
-    document.getElementById('chart-game-select')?.addEventListener('change', (e) => {
-      if (e.target.value) renderGameChart(e.target.value, 'scoreflow-chart');
-    });
-
-    document.getElementById('close-detail-btn')?.addEventListener('click', () => {
-      document.getElementById('game-detail-panel').classList.add('hidden');
-    });
-
-    document.getElementById('history-filter')?.addEventListener('change', () => renderHistoryTable());
-    document.getElementById('history-season-filter')?.addEventListener('change', () => renderHistoryTable());
   }
 
   // =========================================================================
-  // REFRESH LOOP
+  // STATUS
   // =========================================================================
-  function startRefreshLoop() {
-    if (state.refreshTimer) clearInterval(state.refreshTimer);
-    if (state.countdownTimer) clearInterval(state.countdownTimer);
 
-    state.countdown = state.refreshInterval;
-    fetchAndUpdate();
-
-    state.refreshTimer = setInterval(() => {
-      fetchAndUpdate();
-      state.countdown = state.refreshInterval;
-    }, state.refreshInterval * 1000);
-
-    state.countdownTimer = setInterval(() => {
-      state.countdown = Math.max(0, state.countdown - 1);
-      const el = document.getElementById('stat-next-refresh');
-      if (el) el.textContent = `${state.countdown}s`;
-    }, 1000);
+  function setStatus(online) {
+    const dot = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+    if (online) {
+      dot.classList.remove('offline');
+      text.textContent = modelLoaded ? 'Model Active' : 'Connected (no model)';
+    } else {
+      dot.classList.add('offline');
+      text.textContent = 'Offline';
+    }
   }
 
   // =========================================================================
-  // FETCH AND UPDATE
+  // GAME POLLING
   // =========================================================================
-  async function fetchAndUpdate() {
-    const indicator = document.getElementById('refresh-indicator');
-    indicator?.classList.remove('paused');
 
+  async function refreshGames() {
     try {
-      const { games, error } = await NbaApi.fetchAllGames();
-
-      if (error) {
-        console.warn('[Fetch] Error:', error);
-        indicator?.classList.add('paused');
-        document.querySelector('.refresh-text').textContent = 'Error';
+      const result = await NbaApi.fetchAllGames();
+      if (result.error) {
+        console.warn('[Q3Terminal] Fetch error:', result.error);
         return;
       }
 
-      state.games = games;
-      processOUSignals(games);
-      renderDashboard();
-      if (state.currentView === 'live') renderLiveGames();
-      updateStats();
+      games = result.games || [];
+
+      // Update metrics
+      const liveGames = games.filter(g => g.status === 'live' || g.status === 'halftime');
+      document.getElementById('metric-live').textContent = liveGames.length;
+      document.getElementById('metric-live-sub').textContent =
+        games.length > 0 ? `${games.length} total today` : 'No games today';
+      document.getElementById('games-count').textContent = `${games.length} games`;
+      document.getElementById('live-count').textContent = `${liveGames.length} live`;
+
+      // Render games
+      renderGamesGrid(games, 'games-grid');
+      renderGamesGrid(liveGames.length > 0 ? liveGames : games, 'live-games-grid');
+
+      // Check for Q3-end signals
+      for (const game of liveGames) {
+        checkForSignal(game);
+      }
+
+      // Render active signals
+      renderActiveSignals();
 
     } catch (e) {
-      console.warn('[Fetch] Exception:', e);
-      indicator?.classList.add('paused');
+      console.error('[Q3Terminal] Poll error:', e);
     }
   }
 
   // =========================================================================
-  // Q3 O/U SIGNAL PROCESSING
+  // SIGNAL DETECTION
   // =========================================================================
-  function processOUSignals(games) {
-    state.ouSignals = [];
 
-    for (const game of games) {
-      if (game.status !== 'live' && game.status !== 'halftime') continue;
+  function checkForSignal(game) {
+    if (!modelLoaded) return;
+    if (processedGames.has(game.id)) return;
 
-      if (!game.possessions || game.possessions.length < 20) {
-        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: skipped - only ${game.possessions?.length || 0} possessions`);
-        continue;
-      }
+    // Only signal at end of Q3 or beginning of Q4
+    const q = game.quarter || 0;
+    if (q < 4) return; // Wait until Q4 starts (means Q3 ended)
 
-      // O/U line must come from ESPN data - NO fallback estimation
-      const ouLine = game.ouLine || 0;
-      if (!ouLine || ouLine <= 0) {
-        console.warn(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: skipped - no O/U line (ESPN odds unavailable)`);
-        continue;
-      }
+    // Don't signal late in Q4
+    const clock = game.gameClock || '12:00';
+    const parts = clock.split(':');
+    const mins = parseInt(parts[0]) || 0;
+    if (q === 4 && mins < 8) return; // Too late in Q4
 
-      console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: evaluating with O/U ${ouLine}, ${game.possessions.length} possessions`);
+    // Generate signals
+    const possessions = game.possessions || [];
+    if (possessions.length < 10) return;
 
-      const signal = Q3OUEngine.evaluateFromPossessions(
-        game.possessions, game.homeTeam, game.awayTeam, ouLine
-      );
-
-      if (!signal) {
-        const lastPos = game.possessions[game.possessions.length - 1];
-        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: no signal (Q${lastPos?.quarter} ${lastPos?.quarterTime} - need Q3 <=3:00 or Q4+, or margin < 10)`);
-      }
-
-      if (signal && !meetsMinTier(signal.tier)) {
-        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: ${signal.tier} ${signal.direction} filtered (min tier: ${state.minTier})`);
-      }
-
-      if (signal && meetsMinTier(signal.tier)) {
-        console.log(`[Signal] ${game.awayTeam} @ ${game.homeTeam}: ${signal.tier} ${signal.direction} O/U ${ouLine} | margin ${signal.margin} | pred ${signal.predictedFinal}`);
-        const signalKey = `ou-${game.id}-${signal.tier}-${signal.direction}`;
-
-        state.ouSignals.push({
-          ...signal,
-          gameId: game.id,
-          gameName: `${game.homeTeam} vs ${game.awayTeam}`,
-          signalKey,
-          gameStatus: `Q${game.quarter} ${game.gameClock}`,
-        });
-
-        if (!state.seenSignals.has(signalKey)) {
-          state.seenSignals.add(signalKey);
-
-          const instruction = Q3OUEngine.getTradeInstruction(signal);
-          const alert = {
-            ...signal,
-            gameId: game.id,
-            gameName: `${game.homeTeam} vs ${game.awayTeam}`,
-            signalKey,
-            instruction: {
-              headline: instruction.headline,
-              bet: instruction.bet,
-              detail: instruction.detail,
-              context: instruction.context,
-              urgency: instruction.urgency,
-            },
-            timestamp: Date.now(),
-            outcome: 'pending',
-          };
-
-          state.alertHistory.unshift(alert);
-          saveAlerts();
-          fireOUAlert(alert);
-        }
-      }
-    }
-
-    renderOUSignals();
-  }
-
-  function meetsMinTier(tier) {
-    return TIER_PRIORITY[tier] <= TIER_PRIORITY[state.minTier];
-  }
-
-  // =========================================================================
-  // ALERT NOTIFICATIONS
-  // =========================================================================
-  function fireOUAlert(alert) {
-    if (state.soundEnabled) playOUAlertSound(alert.tier);
-
-    if (state.notificationsEnabled && 'Notification' in window && Notification.permission === 'granted') {
-      new Notification(`Q3 O/U: ${alert.direction} ${alert.ouLine} (${alert.tier})`, {
-        body: `${alert.gameName}\n${alert.description}`,
-        tag: alert.signalKey,
-      });
-    }
-
-    const banner = document.getElementById('signal-alert-banner');
-    const bannerMsg = document.getElementById('alert-banner-msg');
-    if (banner && bannerMsg) {
-      bannerMsg.textContent = `${alert.direction} ${alert.ouLine} (${alert.tier}) | ${alert.gameName} | ${alert.accuracyPct}% accuracy`;
-      banner.classList.remove('hidden');
-      setTimeout(() => banner.classList.add('hidden'), 20000);
-    }
-
-    updateAlertBadge();
-  }
-
-  function playOUAlertSound(tier) {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      const tones = {
-        PLATINUM: [523, 659, 784, 1047],
-        GOLD: [523, 659, 784],
-        SILVER: [523, 659],
-        BRONZE: [523],
-      };
-      const freqs = tones[tier] || [523];
-
-      gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
-      let t = audioCtx.currentTime;
-      for (const freq of freqs) {
-        osc.frequency.setValueAtTime(freq, t);
-        t += 0.12;
-      }
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
-      osc.start(audioCtx.currentTime);
-      osc.stop(t + 0.4);
-    } catch (e) {}
-  }
-
-  function updateAlertBadge() {
-    const badge = document.getElementById('alert-count-badge');
-    const pendingCount = state.alertHistory.filter(a => a.outcome === 'pending').length;
-    if (badge) {
-      badge.textContent = pendingCount;
-      badge.classList.toggle('hidden', pendingCount === 0);
-    }
-  }
-
-  // =========================================================================
-  // UPDATE STATS BAR
-  // =========================================================================
-  function updateStats() {
-    const liveGames = state.games.filter(g => g.status === 'live' || g.status === 'halftime');
-    document.getElementById('stat-live-games').textContent = liveGames.length;
-    document.getElementById('stat-active-signals').textContent = state.ouSignals.length;
-    updateAlertBadge();
-  }
-
-  // =========================================================================
-  // RENDER DASHBOARD
-  // =========================================================================
-  function renderDashboard() {
-    renderDashboardGames();
-    renderUpcomingGames();
-    updateChartGameSelect();
-  }
-
-  function renderDashboardGames() {
-    const container = document.getElementById('dashboard-live-games');
-    const countBadge = document.getElementById('live-games-count');
-    const liveGames = state.games.filter(g => g.status === 'live' || g.status === 'halftime');
-
-    countBadge.textContent = liveGames.length;
-
-    if (liveGames.length === 0) {
-      const scheduled = state.games.filter(g => g.status === 'scheduled');
-      if (scheduled.length > 0) {
-        container.innerHTML = scheduled.map(g => renderGameCard(g)).join('');
-      } else {
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">&#127936;</div>
-            <p>No live games right now</p>
-            <p class="empty-sub">Games will appear here when they start. Checking every ${state.refreshInterval} seconds.</p>
-          </div>`;
-      }
-      return;
-    }
-
-    container.innerHTML = liveGames.map(g => renderGameCard(g)).join('');
-
-    container.querySelectorAll('.game-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const gameId = card.dataset.gameId;
-        renderGameChart(gameId, 'scoreflow-chart');
-        const select = document.getElementById('chart-game-select');
-        if (select) select.value = gameId;
-      });
+    const signals = Q3Engine.generateSignals(game, possessions, {
+      openingSpread: 0,
+      openingOU: game.ouLine || 0,
     });
-  }
 
-  function renderGameCard(game) {
-    const hasOUSignal = state.ouSignals.some(s => s.gameId === game.id);
-    const diff = game.homeScore - game.awayScore;
+    if (signals.length > 0) {
+      processedGames.add(game.id);
+      for (const sig of signals) {
+        sig.gameId = game.id;
+        sig.homeTeam = game.homeTeam;
+        sig.awayTeam = game.awayTeam;
+        sig.homeScore = game.homeScore;
+        sig.awayScore = game.awayScore;
+        sig.timestamp = new Date().toISOString();
+        liveSignals.push(sig);
+      }
 
-    let statusText = game.statusText || game.status.toUpperCase();
-    if (game.status === 'live') statusText = `Q${game.quarter} ${game.gameClock}`;
-    if (game.status === 'halftime') statusText = 'HALFTIME';
-    if (game.status === 'scheduled') {
-      statusText = game.gameTime ? new Date(game.gameTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : 'SCHEDULED';
+      // Show notification
+      if (Notification.permission === 'granted') {
+        new Notification('Q3 Terminal Signal', {
+          body: `${signals[0].signalType}: ${signals[0].team} (${(signals[0].confidence * 100).toFixed(0)}%)`,
+        });
+      }
+
+      // Show live signals card
+      const card = document.getElementById('live-signals-card');
+      if (card) card.style.display = '';
+
+      console.log(`[Q3Terminal] Generated ${signals.length} signals for ${game.awayTeam}@${game.homeTeam}`);
     }
-
-    const ouBadge = hasOUSignal ? (() => {
-      const sig = state.ouSignals.find(s => s.gameId === game.id);
-      return `<span class="ou-tier-badge ${sig.tier}">${sig.tier} ${sig.direction}</span>`;
-    })() : '';
-
-    return `
-      <div class="game-card ${hasOUSignal ? 'has-signal' : ''}" data-game-id="${game.id}">
-        <div class="game-card-header">
-          <span class="game-status ${game.status}">${statusText}</span>
-          ${ouBadge}
-        </div>
-        <div class="game-teams">
-          <div class="team-info">
-            <span class="team-abbr" style="color: ${game.homeColor || '#e5e7eb'}">${game.homeTeam}</span>
-            <span class="team-name">${game.homeName || ''}</span>
-          </div>
-          <div style="text-align: center;">
-            <div class="team-score">${game.homeScore}</div>
-          </div>
-          <div class="game-vs">VS</div>
-          <div style="text-align: center;">
-            <div class="team-score">${game.awayScore}</div>
-          </div>
-          <div class="team-info">
-            <span class="team-abbr" style="color: ${game.awayColor || '#e5e7eb'}">${game.awayTeam}</span>
-            <span class="team-name">${game.awayName || ''}</span>
-          </div>
-        </div>
-        <div class="game-meta">
-          <span class="game-quarter">Diff: ${diff > 0 ? '+' : ''}${diff}</span>
-          ${game.ouLine ? `<span>O/U: ${game.ouLine}</span>` : '<span style="color:#ef4444;">No O/U line</span>'}
-          <span>${game.possessions?.length || 0} plays</span>
-        </div>
-      </div>`;
   }
 
   // =========================================================================
-  // RENDER O/U SIGNALS
+  // RENDERING - GAMES
   // =========================================================================
-  function renderOUSignals() {
-    const container = document.getElementById('ou-signals-list');
-    const countBadge = document.getElementById('ou-signals-count');
+
+  function renderGamesGrid(gamesList, containerId) {
+    const container = document.getElementById(containerId);
     if (!container) return;
 
-    countBadge.textContent = state.ouSignals.length;
-
-    if (state.ouSignals.length === 0) {
+    if (!gamesList || gamesList.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="empty-icon">&#9878;</div>
-          <p>No O/U signals yet</p>
-          <p class="empty-sub">Signals fire at Q3 end when model predicts final total with high margin from pregame O/U line (ESPN). Waiting for Q3 games.</p>
+          <h3>No games</h3>
+          <p>Check back when NBA games are scheduled.</p>
         </div>`;
       return;
     }
 
-    container.innerHTML = state.ouSignals.map(signal => renderOUSignalCard(signal)).join('');
+    container.innerHTML = gamesList.map(g => {
+      const hasSignal = liveSignals.some(s => s.gameId === g.id);
+      const statusClass = g.status === 'live' ? 'live' : g.status === 'final' ? 'final' : 'scheduled';
+
+      let statusText = g.statusText || g.status.toUpperCase();
+      if (g.status === 'live' && g.quarter >= 3) {
+        statusText = `Q${g.quarter} ${g.gameClock}`;
+      }
+
+      // Check if at end of Q3
+      const atQ3End = g.quarter === 3 && g.gameClock === '0:00';
+      if (atQ3End) statusText = 'Q3 END - ANALYZING';
+
+      return `
+        <div class="game-card ${hasSignal ? 'has-signal' : ''}">
+          <div class="game-status-bar">
+            <span class="game-status ${atQ3End ? 'q3-end' : statusClass}">${statusText}</span>
+            ${hasSignal ? '<span class="tier-badge gold">SIGNAL</span>' : ''}
+          </div>
+          <div class="game-scoreboard">
+            <div class="game-team">
+              <div class="game-team-name">${g.awayTeam}</div>
+              <div class="game-team-sub">Away</div>
+            </div>
+            <div class="game-score">
+              ${g.awayScore}<span class="sep">-</span>${g.homeScore}
+            </div>
+            <div class="game-team">
+              <div class="game-team-name">${g.homeTeam}</div>
+              <div class="game-team-sub">Home</div>
+            </div>
+          </div>
+          ${hasSignal ? renderGameSignalSummary(g.id) : ''}
+        </div>`;
+    }).join('');
   }
 
-  function renderOUSignalCard(signal) {
-    const dirClass = signal.direction.toLowerCase();
-    const tierClass = 'ou-' + signal.tier.toLowerCase();
-    const gaugePct = Math.min(100, Math.max(0, (signal.confidence - 0.90) * 1000));
+  function renderGameSignalSummary(gameId) {
+    const sigs = liveSignals.filter(s => s.gameId === gameId);
+    if (!sigs.length) return '';
+
+    return sigs.map(s => `
+      <div class="signal-pick">
+        <span class="signal-pick-label">${s.signalType}</span>
+        <span class="signal-pick-value">${s.team || s.direction} ${s.direction === 'OVER' || s.direction === 'UNDER' ? s.direction : ''}</span>
+        <span class="signal-pick-odds">${formatOdds(s.estimatedOdds)} | ${(s.confidence * 100).toFixed(0)}%</span>
+      </div>
+    `).join('');
+  }
+
+  // =========================================================================
+  // RENDERING - ACTIVE SIGNALS
+  // =========================================================================
+
+  function renderActiveSignals() {
+    const container = document.getElementById('active-signals-container');
+    const countEl = document.getElementById('active-count');
+
+    if (!liveSignals.length) {
+      countEl.textContent = '0 active';
+      container.innerHTML = `
+        <div class="empty-state">
+          <h3>No active signals</h3>
+          <p>Signals are generated at the end of Q3. Monitor live games below for upcoming opportunities.</p>
+        </div>`;
+      return;
+    }
+
+    countEl.textContent = `${liveSignals.length} active`;
+
+    container.innerHTML = liveSignals.map(s => renderSignalCard(s, true)).join('');
+
+    // Also render in live view
+    const liveContainer = document.getElementById('live-signals-container');
+    if (liveContainer) {
+      liveContainer.innerHTML = liveSignals.map(s => renderSignalCard(s, true)).join('');
+    }
+  }
+
+  function renderSignalCard(s, isLive = false) {
+    const tierClass = (s.tier || 'watch').toLowerCase();
+    const typeClass = s.signalType.toLowerCase().replace('_', '-');
+    const matchup = `${s.awayTeam || s.away_team || ''} @ ${s.homeTeam || s.home_team || ''}`;
+
+    const confidence = s.confidence || 0;
+    const edge = s.edge || 0;
+    const q3Lead = s.q3Lead || s.q3_lead || 0;
+    const regime = s.regime || '';
+    const odds = s.estimatedOdds || s.estimated_odds || -110;
+    const correct = s.correct;
+
+    // Determine pick text
+    let pickText = '';
+    const dir = s.direction;
+    const type = s.signalType || s.signal_type || '';
+
+    if (type === 'SPREAD') {
+      pickText = `${dir} ${dir === 'HOME' ? (s.homeTeam || s.home_team) : (s.awayTeam || s.away_team)} SPREAD`;
+    } else if (type === 'ML_LEADER') {
+      pickText = `${s.team || dir} ML`;
+    } else if (type === 'ML_TRAILER') {
+      pickText = `${s.team || dir} ML (Value)`;
+    } else if (type === 'Q4_TOTAL') {
+      pickText = `Q4 ${dir}`;
+    } else {
+      pickText = `${dir}`;
+    }
 
     return `
-      <div class="ou-signal-card ${tierClass}">
-        <div class="ou-signal-header">
-          <div>
-            <span class="ou-direction-badge ${dirClass}">${signal.direction}</span>
-            <span style="font-family: var(--font-mono); font-size: 1rem; font-weight: 700; margin-left: 0.5rem;">${signal.ouLine}</span>
-          </div>
-          <div>
-            <span class="ou-tier-badge ${signal.tier}">${signal.tier}</span>
+      <div class="signal-card ${tierClass}">
+        <div class="signal-header">
+          <span class="signal-matchup">${matchup}</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span class="tier-badge ${tierClass}">${(s.tier || 'WATCH').toUpperCase()}</span>
+            <span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span>
           </div>
         </div>
-
-        <div class="ou-accuracy-gauge">
-          <div class="ou-gauge-header">
-            <span class="ou-gauge-label">Accuracy (validated)</span>
-            <span class="ou-gauge-value" style="color: ${signal.tierColor};">${signal.accuracyPct}%</span>
+        <div class="signal-body">
+          <div class="signal-field">
+            <span class="signal-field-label">Confidence</span>
+            <span class="signal-field-value">${(confidence * 100).toFixed(1)}%</span>
           </div>
-          <div class="ou-gauge-bar">
-            <div class="ou-gauge-fill ${signal.tier.toLowerCase()}" style="width: ${gaugePct}%;"></div>
+          <div class="signal-field">
+            <span class="signal-field-label">Edge</span>
+            <span class="signal-field-value positive">${(edge * 100).toFixed(1)}%</span>
           </div>
-        </div>
-
-        <div class="ou-details-grid">
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Q3 Total:</span>
-            <span class="ou-detail-value">${signal.q3CumulTotal}</span>
+          <div class="signal-field">
+            <span class="signal-field-label">Q3 Lead</span>
+            <span class="signal-field-value">${q3Lead > 0 ? '+' : ''}${q3Lead}</span>
           </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Need in Q4:</span>
-            <span class="ou-detail-value">${signal.ptsNeeded}</span>
+          <div class="signal-field">
+            <span class="signal-field-label">Regime</span>
+            <span class="signal-field-value">${regime}</span>
           </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Model Q4:</span>
-            <span class="ou-detail-value">${signal.predictedQ4}</span>
+          <div class="signal-field">
+            <span class="signal-field-label">Est. Odds</span>
+            <span class="signal-field-value">${formatOdds(odds)}</span>
           </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Pred Final:</span>
-            <span class="ou-detail-value">${signal.predictedFinal}</span>
-          </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Margin:</span>
-            <span class="ou-detail-value" style="color: ${signal.tierColor};">${signal.margin} pts</span>
-          </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Pace:</span>
-            <span class="ou-detail-value">${signal.paceRatio}x</span>
-          </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Q3 Lead:</span>
-            <span class="ou-detail-value">${signal.q3Lead}</span>
-          </div>
-          <div class="ou-detail-row">
-            <span class="ou-detail-label">Edge/bet:</span>
-            <span class="ou-detail-value highlight-gold">+$${signal.edge.toFixed(2)}</span>
+          <div class="signal-field">
+            <span class="signal-field-label">Pred Margin</span>
+            <span class="signal-field-value">${formatMargin(s.predictedMargin || s.predicted_margin)}</span>
           </div>
         </div>
-
-        <div class="ou-action-bar">
-          <span class="ou-bet-instruction ${dirClass}">BET ${signal.direction} ${signal.ouLine} @ -110</span>
-          <span class="ou-kelly-size">Kelly: ${(signal.kelly * 100).toFixed(1)}%</span>
+        <div class="signal-pick">
+          <span class="signal-pick-label">Pick</span>
+          <span class="signal-pick-value">${pickText}</span>
+          <span class="signal-pick-odds">${formatOdds(odds)}</span>
         </div>
-
-        <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center;">
-          ${signal.gameName} | ${signal.gameStatus || ''}
-        </div>
+        ${!isLive && correct !== undefined ? `
+          <div class="signal-result ${correct ? 'win' : 'loss'}">
+            ${correct ? 'WIN' : 'LOSS'} | Actual margin: ${formatMargin(s.actual_margin || s.actualMargin)}
+          </div>
+        ` : ''}
       </div>`;
   }
 
   // =========================================================================
-  // UPCOMING GAMES
+  // RENDERING - HISTORICAL SIGNALS TABLE
   // =========================================================================
-  function renderUpcomingGames() {
-    const container = document.getElementById('upcoming-games');
-    const scheduled = state.games.filter(g => g.status === 'scheduled');
 
-    if (scheduled.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state" style="grid-column: 1 / -1;">
-          <div class="empty-icon">&#128197;</div>
-          <p>No upcoming games found</p>
-          <p class="empty-sub">Check back on game day</p>
-        </div>`;
-      return;
-    }
-
-    container.innerHTML = scheduled.map(g => {
-      let timeStr = 'TBD';
-      if (g.gameTime) {
-        try {
-          timeStr = new Date(g.gameTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-        } catch (e) {
-          timeStr = g.statusText || 'TBD';
-        }
-      }
-      return `
-        <div class="upcoming-card">
-          <div class="game-matchup">
-            <span style="color: ${g.awayColor || '#e5e7eb'}">${g.awayTeam}</span>
-            <span style="color: var(--text-muted)"> @ </span>
-            <span style="color: ${g.homeColor || '#e5e7eb'}">${g.homeTeam}</span>
-          </div>
-          <div class="game-time">${timeStr}</div>
-        </div>`;
-    }).join('');
-  }
-
-  // =========================================================================
-  // CHART GAME SELECT
-  // =========================================================================
-  function updateChartGameSelect() {
-    const select = document.getElementById('chart-game-select');
-    if (!select) return;
-
-    const liveGames = state.games.filter(g =>
-      (g.status === 'live' || g.status === 'halftime' || g.status === 'final') && g.possessions?.length > 0
-    );
-
-    const currentValue = select.value;
-    select.innerHTML = '<option value="">Select a game...</option>';
-    liveGames.forEach(g => {
-      const opt = document.createElement('option');
-      opt.value = g.id;
-      opt.textContent = `${g.awayTeam} @ ${g.homeTeam} (${g.homeScore}-${g.awayScore})`;
-      select.appendChild(opt);
-    });
-
-    if (currentValue && liveGames.find(g => g.id === currentValue)) {
-      select.value = currentValue;
-      renderGameChart(currentValue, 'scoreflow-chart');
-    }
-
-    const emptyState = document.getElementById('chart-empty-state');
-    if (emptyState) emptyState.style.display = select.value ? 'none' : 'block';
-  }
-
-  function renderGameChart(gameId, canvasId) {
-    const game = state.games.find(g => g.id === gameId);
-    if (!game || !game.possessions || game.possessions.length === 0) return;
-
-    const title = `${game.awayTeam} @ ${game.homeTeam}`;
-    Charts.renderScoreflow(canvasId, game.possessions, [], title);
-
-    const emptyState = document.getElementById('chart-empty-state');
-    if (emptyState) emptyState.style.display = 'none';
-  }
-
-  // =========================================================================
-  // LIVE GAMES VIEW
-  // =========================================================================
-  function renderLiveGames() {
-    const container = document.getElementById('live-games-full');
-    const allGames = state.games;
-
-    if (allGames.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state" style="grid-column: 1 / -1;">
-          <div class="empty-icon">&#127936;</div>
-          <p>No games found</p>
-          <p class="empty-sub">Check back on game day. Data refreshes every ${state.refreshInterval} seconds.</p>
-        </div>`;
-      return;
-    }
-
-    container.innerHTML = allGames.map(g => renderGameCard(g)).join('');
-
-    container.querySelectorAll('.game-card').forEach(card => {
-      card.addEventListener('click', () => showGameDetail(card.dataset.gameId));
-    });
-  }
-
-  function showGameDetail(gameId) {
-    const game = state.games.find(g => g.id === gameId);
-    if (!game) return;
-
-    const panel = document.getElementById('game-detail-panel');
-    panel.classList.remove('hidden');
-
-    document.getElementById('detail-game-title').textContent = `${game.awayTeam} @ ${game.homeTeam}`;
-
-    if (game.possessions && game.possessions.length > 0) {
-      Charts.renderScoreflow('detail-scoreflow-chart', game.possessions, [], '');
-    }
-
-    const signalsList = document.getElementById('detail-signals-list');
-    const ouSig = state.ouSignals.find(s => s.gameId === gameId);
-    if (ouSig) {
-      signalsList.innerHTML = renderOUSignalCard(ouSig);
-    } else {
-      signalsList.innerHTML = '<p style="color: var(--text-muted); font-size: 0.8rem;">No Q3 O/U signal for this game. Signals fire at Q3 end when margin from O/U line is >= 10 points.</p>';
-    }
-
-    const analytics = document.getElementById('detail-analytics');
-    analytics.innerHTML = `
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;">
-        <h4 style="font-size: 0.8rem; margin-bottom: 0.5rem;">Game Info</h4>
-        <div class="signal-details" style="font-size: 0.75rem;">
-          <div class="detail-row"><span class="detail-label">Score:</span><span class="detail-value">${game.homeScore}-${game.awayScore}</span></div>
-          <div class="detail-row"><span class="detail-label">Quarter:</span><span class="detail-value">Q${game.quarter}</span></div>
-          <div class="detail-row"><span class="detail-label">Plays:</span><span class="detail-value">${game.possessions?.length || 0}</span></div>
-          <div class="detail-row"><span class="detail-label">Status:</span><span class="detail-value">${game.status.toUpperCase()}</span></div>
-        </div>
-      </div>`;
-  }
-
-  // =========================================================================
-  // ALERTS VIEW
-  // =========================================================================
-  function renderAlerts() {
-    const container = document.getElementById('alerts-list');
-
-    if (state.alertHistory.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">&#128276;</div>
-          <p>No alerts yet</p>
-          <p class="empty-sub">Alerts appear when Q3 O/U signals fire during live games.</p>
-        </div>`;
-      updateAlertStats();
-      return;
-    }
-
-    container.innerHTML = state.alertHistory.map(alert => {
-      const instruction = alert.instruction;
-      const time = new Date(alert.timestamp).toLocaleString();
-
-      return `
-        <div class="alert-item">
-          <div class="alert-item-tier ou-${(alert.tier || 'bronze').toLowerCase()}">${alert.tier || 'O/U'}</div>
-          <div class="alert-item-body">
-            <h4>${instruction?.headline || `${alert.direction} ${alert.ouLine} (${alert.tier})`}</h4>
-            <p>${alert.gameName || ''} | ${time}</p>
-            <p style="margin-top: 0.3rem;">${instruction?.bet || ''}</p>
-            <p>${instruction?.detail || ''}</p>
-            <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.25rem;">
-              ${instruction?.context || ''}
-            </p>
-          </div>
-          <div class="alert-item-result">
-            <span class="signal-outcome ${alert.outcome || 'pending'}">${(alert.outcome || 'PENDING').toUpperCase()}</span>
-          </div>
-        </div>`;
-    }).join('');
-
-    updateAlertStats();
-  }
-
-  function updateAlertStats() {
-    const wins = state.alertHistory.filter(a => a.outcome === 'win').length;
-    const losses = state.alertHistory.filter(a => a.outcome === 'loss').length;
-    const decided = wins + losses;
-
-    document.getElementById('alert-wins').textContent = wins;
-    document.getElementById('alert-losses').textContent = losses;
-    document.getElementById('alert-wr').textContent = decided > 0 ? `${Math.round(wins / decided * 100)}%` : '--';
-  }
-
-  // =========================================================================
-  // HISTORICAL VIEW
-  // =========================================================================
-  function renderHistory() {
-    renderHistoryTable();
-    renderEquityCurve();
-  }
-
-  function renderHistoryTable() {
-    const tbody = document.getElementById('history-table-body');
-    if (!tbody || !window.HistoricalData) return;
-
-    const signals = window.HistoricalData.signals || [];
-    const tierFilter = document.getElementById('history-filter')?.value || 'all';
-    const seasonFilter = document.getElementById('history-season-filter')?.value || 'all';
-
-    let filtered = signals;
-
-    if (tierFilter === 'PLATINUM' || tierFilter === 'GOLD' || tierFilter === 'SILVER' || tierFilter === 'BRONZE') {
-      filtered = filtered.filter(s => s.tier === tierFilter);
-    } else if (tierFilter === 'OVER' || tierFilter === 'UNDER') {
-      filtered = filtered.filter(s => s.direction === tierFilter);
-    } else if (tierFilter === 'correct') {
-      filtered = filtered.filter(s => s.openingCorrect);
-    } else if (tierFilter === 'incorrect') {
-      filtered = filtered.filter(s => !s.openingCorrect && !s.isPushOpening);
-    }
-
-    if (seasonFilter !== 'all') {
-      filtered = filtered.filter(s => s.season === seasonFilter);
-    }
-
-    // Update summary stats
-    const total = filtered.length;
-    const correct = filtered.filter(s => s.openingCorrect).length;
-    const incorrect = filtered.filter(s => !s.openingCorrect && !s.isPushOpening).length;
-    const pnl = correct * WIN_PAYOUT - incorrect;
-    const roi = total > 0 ? (pnl / total * 100) : 0;
-
-    document.getElementById('hist-total-signals').textContent = total.toLocaleString();
-    document.getElementById('hist-accuracy').textContent = total > 0 ? `${(correct / total * 100).toFixed(1)}%` : '--';
-    document.getElementById('hist-total-pnl').textContent = `${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)}u`;
-    document.getElementById('hist-roi').textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%`;
-
-    // Pred Final vs Actual Final directional accuracy (responds to filters)
-    renderPredAccuracy(filtered);
-
-    // Direction vs Predicted Final consistency (responds to filters)
-    renderDirConsistency(filtered);
-
-    const showingBadge = document.getElementById('hist-showing-count');
-    if (showingBadge) showingBadge.textContent = Math.min(filtered.length, 200);
-
-    tbody.innerHTML = filtered.slice(0, 200).map(sig => {
-      const pnlVal = sig.openingCorrect ? WIN_PAYOUT : (sig.isPushOpening ? 0 : -1);
-      const resultClass = sig.openingCorrect ? 'highlight-green' : (sig.isPushOpening ? '' : 'highlight-red');
-      const resultText = sig.openingCorrect ? 'HIT' : (sig.isPushOpening ? 'PUSH' : 'MISS');
-
-      return `
-        <tr>
-          <td>${sig.date || ''}</td>
-          <td>${sig.awayTeam} @ ${sig.homeTeam}</td>
-          <td><span class="ou-direction-badge ${sig.direction.toLowerCase()}">${sig.direction}</span></td>
-          <td><span class="ou-tier-badge ${sig.tier}">${sig.tier}</span></td>
-          <td>${sig.ouLine}</td>
-          <td>${sig.q3CumulTotal}</td>
-          <td>${sig.predictedFinal}</td>
-          <td>${sig.finalTotal}</td>
-          <td>${sig.openingMargin}</td>
-          <td class="${resultClass}">${resultText}</td>
-          <td class="${pnlVal >= 0 ? 'highlight-green' : 'highlight-red'}">${pnlVal >= 0 ? '+' : ''}${pnlVal.toFixed(2)}</td>
-        </tr>`;
-    }).join('');
-  }
-
-  function renderEquityCurve() {
-    if (!window.HistoricalData || !window.HistoricalData.equityCurve) return;
-
-    const curve = window.HistoricalData.equityCurve;
-    const data = curve.map((pt, i) => ({ x: i + 1, y: pt.cumPnl }));
-
-    Charts.renderEquityCurve('equity-chart', { combined: data }, 'combined');
-  }
-
-  // =========================================================================
-  // BACKTEST VIEW
-  // =========================================================================
-  function renderBacktest() {
-    if (!window.HistoricalData || !window.HistoricalData.summary) return;
-
-    const summary = window.HistoricalData.summary;
-
-    // Update tier cards from real data
-    for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
-      const tierData = summary.byTier[tier];
-      if (!tierData) continue;
-
-      const prefix = 'bt-' + tier.toLowerCase();
-      const accEl = document.getElementById(`${prefix}-acc`);
-      const nEl = document.getElementById(`${prefix}-n`);
-      const wlEl = document.getElementById(`${prefix}-wl`);
-      const roiEl = document.getElementById(`${prefix}-roi`);
-      const pnlEl = document.getElementById(`${prefix}-pnl`);
-
-      if (accEl) accEl.textContent = `${(tierData.accuracy * 100).toFixed(1)}%`;
-      if (nEl) nEl.textContent = tierData.signals;
-      if (wlEl) wlEl.textContent = `${tierData.wins}-${tierData.losses}`;
-      if (roiEl) roiEl.textContent = `+${tierData.roi}%`;
-      if (pnlEl) pnlEl.textContent = `+${tierData.pnl.toFixed(1)}u`;
-    }
-
-    // Render season breakdown table
-    const tbody = document.getElementById('backtest-breakdown-body');
-    if (tbody) {
-      const signals = window.HistoricalData.signals || [];
-      const rows = [];
-
-      for (const season of ['2021-22', '2022-23']) {
-        for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
-          const tierSignals = signals.filter(s => s.season === season && s.tier === tier);
-          if (tierSignals.length === 0) continue;
-
-          const wins = tierSignals.filter(s => s.openingCorrect).length;
-          const losses = tierSignals.filter(s => !s.openingCorrect && !s.isPushOpening).length;
-          const acc = wins / tierSignals.length;
-          const pnl = wins * WIN_PAYOUT - losses;
-          const roi = pnl / tierSignals.length * 100;
-
-          rows.push(`
-            <tr>
-              <td>${season}</td>
-              <td><span class="ou-tier-badge ${tier}">${tier}</span></td>
-              <td>${tierSignals.length}</td>
-              <td>${wins}</td>
-              <td class="${acc >= 0.95 ? 'highlight-gold' : 'highlight-green'}">${(acc * 100).toFixed(1)}%</td>
-              <td class="highlight-green">+${pnl.toFixed(1)}u</td>
-              <td class="highlight-green">+${roi.toFixed(1)}%</td>
-            </tr>`);
-        }
-      }
-
-      tbody.innerHTML = rows.join('');
-    }
-  }
-
-  // =========================================================================
-  // PRED FINAL vs ACTUAL FINAL DIRECTIONAL ACCURACY
-  // =========================================================================
-  function renderPredAccuracy(filtered) {
-    const el = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
-
-    if (!filtered || filtered.length === 0) {
-      el('pred-acc-directional', '--');
-      el('pred-acc-record', '--');
-      el('pred-mae', '--');
-      el('pred-avg-diff', '--');
-      const tbody = document.getElementById('pred-accuracy-breakdown-body');
-      if (tbody) tbody.innerHTML = '';
-      return;
-    }
-
-    // Helper: compute directional accuracy stats for a set of signals
-    function computeStats(sigs) {
-      const total = sigs.length;
-      if (total === 0) return null;
-
-      let correct = 0;
-      let totalAbsError = 0;
-      let totalDiff = 0;
-
-      for (const s of sigs) {
-        // Directional accuracy: did predictedFinal correctly call the
-        // direction (OVER/UNDER) relative to the O/U line, matching
-        // the actual final total's direction?
-        if (s.openingCorrect) correct++;
-        totalAbsError += Math.abs(s.predictedFinal - s.finalTotal);
-        totalDiff += (s.predictedFinal - s.finalTotal);
-      }
-
-      return {
-        total,
-        correct,
-        accuracy: correct / total,
-        mae: totalAbsError / total,
-        avgDiff: totalDiff / total,
-        avgPred: sigs.reduce((sum, s) => sum + s.predictedFinal, 0) / total,
-        avgActual: sigs.reduce((sum, s) => sum + s.finalTotal, 0) / total,
-      };
-    }
-
-    // Overall stats for the current filtered set
-    const overall = computeStats(filtered);
-
-    // Populate summary cards
-    el('pred-acc-directional', `${(overall.accuracy * 100).toFixed(1)}%`);
-    el('pred-acc-record', `${overall.correct} / ${overall.total}`);
-    el('pred-mae', `${overall.mae.toFixed(1)}`);
-    const diff = overall.avgDiff;
-    el('pred-avg-diff', `${diff >= 0 ? '+' : ''}${diff.toFixed(1)}`);
-
-    // Breakdown table by tier (within current filter)
-    const tbody = document.getElementById('pred-accuracy-breakdown-body');
+  function renderHistoricalSignals(filter = 'all') {
+    const tbody = document.getElementById('signals-tbody');
+    const summary = document.getElementById('filter-summary');
     if (!tbody) return;
 
-    const rows = [];
-    for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
-      const tierSigs = filtered.filter(s => s.tier === tier);
-      const stats = computeStats(tierSigs);
-      if (!stats) continue;
-
-      const accClass = stats.accuracy >= 0.95 ? 'highlight-gold' : (stats.accuracy >= 0.85 ? 'highlight-green' : '');
-
-      rows.push(`
-        <tr>
-          <td><span class="ou-tier-badge ${tier}">${tier}</span></td>
-          <td>${stats.total}</td>
-          <td>${stats.correct}</td>
-          <td class="${accClass}">${(stats.accuracy * 100).toFixed(1)}%</td>
-          <td>${stats.avgPred.toFixed(1)}</td>
-          <td>${stats.avgActual.toFixed(1)}</td>
-          <td>${stats.mae.toFixed(1)}</td>
-        </tr>`);
+    let filtered = historicalSignals;
+    if (filter && filter !== 'all') {
+      filtered = historicalSignals.filter(s => s.signal_type === filter);
     }
 
-    tbody.innerHTML = rows.join('');
+    if (summary) {
+      const correct = filtered.filter(s => s.correct).length;
+      const total = filtered.length;
+      const acc = total > 0 ? (correct / total * 100).toFixed(1) : '0.0';
+      summary.textContent = `${correct}/${total} (${acc}%) | ${total} signals`;
+    }
+
+    // Show max 200 rows
+    const display = filtered.slice(0, 200);
+
+    tbody.innerHTML = display.map(s => {
+      const type = s.signal_type || '';
+      const typeClass = type.toLowerCase().replace('_', '-');
+      const dir = s.direction || '';
+      const conf = (s.confidence * 100).toFixed(1);
+      const edge = (s.edge * 100).toFixed(1);
+      const q3Lead = s.q3_lead || 0;
+      const regime = s.regime || '';
+      const odds = s.estimated_odds || s.estimatedOdds || -110;
+
+      let pickTeam = dir;
+      if (dir === 'HOME') pickTeam = s.home_team;
+      else if (dir === 'AWAY') pickTeam = s.away_team;
+
+      let pickText = type === 'Q4_TOTAL' ? dir : pickTeam;
+
+      return `<tr>
+        <td>${s.away_team} @ ${s.home_team}</td>
+        <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
+        <td>${pickText}</td>
+        <td>${conf}%</td>
+        <td class="positive">${edge}%</td>
+        <td>${q3Lead > 0 ? '+' : ''}${q3Lead}</td>
+        <td>${regime}</td>
+        <td>${formatOdds(odds)}</td>
+        <td class="${s.correct ? 'positive' : 'negative'}">${s.correct ? 'WIN' : 'LOSS'}</td>
+      </tr>`;
+    }).join('');
   }
 
   // =========================================================================
-  // DIRECTION vs PREDICTED FINAL CONSISTENCY
+  // RENDERING - REGIME TABLE
   // =========================================================================
-  function renderDirConsistency(filtered) {
-    const el = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
 
-    if (!filtered || filtered.length === 0) {
-      el('dir-con-accuracy', '--');
-      el('dir-con-record', '--');
-      el('dir-con-over', '--');
-      el('dir-con-under', '--');
-      const tbody = document.getElementById('dir-consistency-breakdown-body');
-      if (tbody) tbody.innerHTML = '';
-      return;
-    }
-
-    function isConsistent(s) {
-      if (s.direction === 'OVER') return s.finalTotal > s.predictedFinal;
-      if (s.direction === 'UNDER') return s.finalTotal < s.predictedFinal;
-      return false;
-    }
-
-    function computeStats(sigs) {
-      const total = sigs.length;
-      if (total === 0) return null;
-
-      let consistent = 0;
-      const overSigs = sigs.filter(s => s.direction === 'OVER');
-      const underSigs = sigs.filter(s => s.direction === 'UNDER');
-      let overConsistent = 0;
-      let underConsistent = 0;
-
-      for (const s of sigs) {
-        if (isConsistent(s)) consistent++;
-      }
-      for (const s of overSigs) {
-        if (isConsistent(s)) overConsistent++;
-      }
-      for (const s of underSigs) {
-        if (isConsistent(s)) underConsistent++;
-      }
-
-      return {
-        total, consistent,
-        rate: consistent / total,
-        overTotal: overSigs.length,
-        overConsistent,
-        overRate: overSigs.length > 0 ? overConsistent / overSigs.length : 0,
-        underTotal: underSigs.length,
-        underConsistent,
-        underRate: underSigs.length > 0 ? underConsistent / underSigs.length : 0,
-      };
-    }
-
-    const overall = computeStats(filtered);
-
-    el('dir-con-accuracy', `${(overall.rate * 100).toFixed(1)}%`);
-    el('dir-con-record', `${overall.consistent} / ${overall.total}`);
-    el('dir-con-over', overall.overTotal > 0 ? `${(overall.overRate * 100).toFixed(1)}% (${overall.overConsistent}/${overall.overTotal})` : '--');
-    el('dir-con-under', overall.underTotal > 0 ? `${(overall.underRate * 100).toFixed(1)}% (${overall.underConsistent}/${overall.underTotal})` : '--');
-
-    const tbody = document.getElementById('dir-consistency-breakdown-body');
+  function renderRegimeTable() {
+    const tbody = document.getElementById('regime-tbody');
     if (!tbody) return;
 
-    const rows = [];
-    for (const tier of ['PLATINUM', 'GOLD', 'SILVER', 'BRONZE']) {
-      const tierSigs = filtered.filter(s => s.tier === tier);
-      const stats = computeStats(tierSigs);
-      if (!stats) continue;
+    const regimes = [
+      { name: 'BLOWOUT', range: '20+' },
+      { name: 'COMFORTABLE', range: '12-19' },
+      { name: 'COMPETITIVE', range: '6-11' },
+      { name: 'TIGHT', range: '0-5' },
+    ];
 
-      const accClass = stats.rate >= 0.6 ? 'highlight-green' : '';
+    tbody.innerHTML = regimes.map(r => {
+      const spreadSigs = historicalSignals.filter(s => s.signal_type === 'SPREAD' && s.regime === r.name);
+      const mlSigs = historicalSignals.filter(s => s.signal_type === 'ML_LEADER' && s.regime === r.name);
 
-      rows.push(`
-        <tr>
-          <td><span class="ou-tier-badge ${tier}">${tier}</span></td>
-          <td>${stats.total}</td>
-          <td>${stats.consistent}</td>
-          <td class="${accClass}">${(stats.rate * 100).toFixed(1)}%</td>
-          <td>${stats.overTotal > 0 ? `${(stats.overRate * 100).toFixed(1)}% (${stats.overConsistent}/${stats.overTotal})` : '--'}</td>
-          <td>${stats.underTotal > 0 ? `${(stats.underRate * 100).toFixed(1)}% (${stats.underConsistent}/${stats.underTotal})` : '--'}</td>
-        </tr>`);
-    }
+      const sW = spreadSigs.filter(s => s.correct).length;
+      const sT = spreadSigs.length;
+      const sAcc = sT > 0 ? (sW / sT * 100).toFixed(1) + '%' : '-';
 
-    tbody.innerHTML = rows.join('');
+      const mW = mlSigs.filter(s => s.correct).length;
+      const mT = mlSigs.length;
+      const mAcc = mT > 0 ? (mW / mT * 100).toFixed(1) + '%' : '-';
+
+      return `<tr>
+        <td>${r.name}</td>
+        <td>${r.range} pts</td>
+        <td>${sT > 0 ? `${sW}/${sT}` : '-'}</td>
+        <td class="${sT > 0 && sW/sT >= 0.65 ? 'positive' : ''}">${sAcc}</td>
+        <td>${mT > 0 ? `${mW}/${mT}` : '-'}</td>
+        <td class="${mT > 0 && mW/mT >= 0.90 ? 'positive' : ''}">${mAcc}</td>
+      </tr>`;
+    }).join('');
   }
 
   // =========================================================================
-  // STARTUP
+  // HELPERS
   // =========================================================================
+
+  function formatOdds(odds) {
+    if (!odds || odds === 0) return '-';
+    const n = Math.round(odds);
+    return n > 0 ? `+${n}` : `${n}`;
+  }
+
+  function formatMargin(margin) {
+    if (margin === undefined || margin === null) return '-';
+    const m = parseFloat(margin);
+    return m > 0 ? `+${m.toFixed(1)}` : m.toFixed(1);
+  }
+
+  // =========================================================================
+  // REQUEST NOTIFICATION PERMISSION
+  // =========================================================================
+
+  function requestNotifications() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }
+
+  // =========================================================================
+  // START
+  // =========================================================================
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => { init(); requestNotifications(); });
   } else {
     init();
+    requestNotifications();
   }
 
 })();
