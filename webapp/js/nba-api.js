@@ -491,6 +491,179 @@ window.NbaApi = (function() {
   }
 
   // =========================================================================
+  // FETCH ESPN SCOREBOARD FOR A SPECIFIC DATE
+  // =========================================================================
+  async function fetchESPNScoreboardForDate(dateStr) {
+    // dateStr format: YYYYMMDD
+    try {
+      let url;
+      if (useVercelProxy) {
+        url = `/api/nba?endpoint=espn_scoreboard&dates=${dateStr}`;
+      } else if (corsProxy) {
+        url = proxyUrl(`${ESPN_SCOREBOARD_URL}?dates=${dateStr}`);
+      } else {
+        url = `${ESPN_SCOREBOARD_URL}?dates=${dateStr}`;
+      }
+
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (!response.ok) {
+        return { games: [], eventIds: {} };
+      }
+
+      const data = await response.json();
+      const games = [];
+      const eventIds = {};
+
+      for (const event of (data.events || [])) {
+        const comp = event.competitions?.[0];
+        if (!comp) continue;
+
+        let homeTeam = '', awayTeam = '', homeScore = 0, awayScore = 0;
+        for (const c of (comp.competitors || [])) {
+          const tricode = normalizeTricode(c.team?.abbreviation || '');
+          const score = parseInt(c.score) || 0;
+          if (c.homeAway === 'home') {
+            homeTeam = tricode;
+            homeScore = score;
+          } else {
+            awayTeam = tricode;
+            awayScore = score;
+          }
+        }
+
+        if (!homeTeam || !awayTeam) continue;
+
+        const teamKey = `${homeTeam}-${awayTeam}`;
+        eventIds[teamKey] = event.id;
+
+        // Determine status
+        const statusType = comp.status?.type?.name || '';
+        let status = 'scheduled';
+        if (statusType === 'STATUS_FINAL') status = 'final';
+        else if (statusType === 'STATUS_IN_PROGRESS' || statusType === 'STATUS_HALFTIME') status = 'live';
+
+        // O/U line
+        const ouLine = comp.odds?.[0]?.overUnder || 0;
+
+        games.push({
+          id: event.id,
+          espnId: event.id,
+          homeTeam,
+          awayTeam,
+          homeScore,
+          awayScore,
+          status,
+          statusText: comp.status?.type?.shortDetail || '',
+          ouLine: ouLine > 0 ? ouLine : 0,
+          date: dateStr,
+          quarter: 4, // Finished games are past Q3
+        });
+      }
+
+      return { games, eventIds };
+    } catch (error) {
+      console.warn(`[NBA API] ESPN scoreboard fetch error for ${dateStr}:`, error.message);
+      return { games: [], eventIds: {} };
+    }
+  }
+
+  // =========================================================================
+  // FETCH ESPN PLAY-BY-PLAY (from summary endpoint)
+  // =========================================================================
+  async function fetchESPNPlayByPlay(eventId) {
+    try {
+      let url;
+      if (useVercelProxy) {
+        url = VERCEL_PROXY_ESPN_SUMMARY(eventId);
+      } else if (corsProxy) {
+        url = proxyUrl(ESPN_SUMMARY_URL(eventId));
+      } else {
+        url = ESPN_SUMMARY_URL(eventId);
+      }
+
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (!response.ok) {
+        return [];
+      }
+
+      const data = await response.json();
+      const plays = data.plays || [];
+      if (plays.length === 0) return [];
+
+      // Parse ESPN plays into possessions format
+      const possessions = [];
+      let lastHomeScore = 0;
+      let lastAwayScore = 0;
+
+      for (const play of plays) {
+        const homeScore = play.homeScore ?? 0;
+        const awayScore = play.awayScore ?? 0;
+        const period = play.period?.number ?? 0;
+        const clockText = play.clock?.displayValue || '12:00';
+
+        if (period === 0) continue;
+
+        const scoreChanged = homeScore !== lastHomeScore || awayScore !== lastAwayScore;
+        const isNewPeriod = possessions.length === 0 ||
+          (possessions.length > 0 && period !== possessions[possessions.length - 1].quarter);
+
+        if (scoreChanged || isNewPeriod) {
+          const clockParts = clockText.split(':');
+          const minutesRemaining = parseInt(clockParts[0]) || 0;
+          const secondsRemaining = parseInt(clockParts[1]) || 0;
+          const periodSeconds = 12 * 60;
+          const timeElapsedInPeriod = periodSeconds - (minutesRemaining * 60 + secondsRemaining);
+          const timestamp = (period - 1) * periodSeconds + timeElapsedInPeriod;
+
+          possessions.push({
+            id: `espn-pos-${possessions.length}`,
+            timestamp,
+            quarter: period,
+            quarterTime: clockText,
+            team: homeScore > lastHomeScore ? 'home' : 'away',
+            homeScore,
+            awayScore,
+            differential: homeScore - awayScore,
+            fairDifferential: homeScore - awayScore,
+            event: 'score',
+          });
+
+          lastHomeScore = homeScore;
+          lastAwayScore = awayScore;
+        }
+      }
+
+      return possessions;
+    } catch (error) {
+      console.warn(`[NBA API] ESPN PBP fetch error for event ${eventId}:`, error.message);
+      return [];
+    }
+  }
+
+  // =========================================================================
+  // FETCH RECENT GAME DATES
+  // =========================================================================
+  function getRecentDateStrings(numDays) {
+    const dates = [];
+    const now = new Date();
+    for (let i = 0; i < numDays; i++) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      dates.push(`${yyyy}${mm}${dd}`);
+    }
+    return dates;
+  }
+
+  // =========================================================================
   // PUBLIC API
   // =========================================================================
   return {
@@ -504,6 +677,10 @@ window.NbaApi = (function() {
     fetchESPNOdds,
     fetchESPNGameOdds,
     fetchAllGames,
+    fetchESPNScoreboardForDate,
+    fetchESPNPlayByPlay,
+    getRecentDateStrings,
+    normalizeTricode,
   };
 
 })();

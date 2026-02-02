@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { endpoint, gameId, eventId } = req.query;
+  const { endpoint, gameId, eventId, dates } = req.query;
 
   let url;
 
@@ -27,6 +27,9 @@ export default async function handler(req, res) {
       break;
     case 'espn_scoreboard':
       url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+      if (dates) {
+        url += `?dates=${dates}`;
+      }
       break;
     case 'espn_summary':
       if (!eventId) {
@@ -54,8 +57,11 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // Cache for 3 seconds (live data)
-    res.setHeader('Cache-Control', 's-maxage=3, stale-while-revalidate=1');
+    // Cache: live data for 3 seconds, historical ESPN data for 5 minutes
+    const isHistorical = endpoint === 'espn_scoreboard' && dates;
+    res.setHeader('Cache-Control', isHistorical
+      ? 's-maxage=300, stale-while-revalidate=60'
+      : 's-maxage=3, stale-while-revalidate=1');
 
     return res.status(200).json(data);
   } catch (error) {

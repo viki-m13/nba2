@@ -121,21 +121,41 @@
     </div>
   </div>
 
-  <!-- ========== SIGNALS (Historical) VIEW ========== -->
+  <!-- ========== SIGNALS VIEW ========== -->
   <div class="view" id="view-signals">
+    <!-- Time Period Filters -->
+    <div class="filter-bar time-period-bar">
+      <span class="filter-bar-label">Period:</span>
+      <button class="time-period-btn active" data-period="recent">Recent (3 Weeks)</button>
+      <button class="time-period-btn" data-period="today">Today</button>
+      <button class="time-period-btn" data-period="3days">Last 3 Days</button>
+      <button class="time-period-btn" data-period="7days">Last 7 Days</button>
+      <button class="time-period-btn" data-period="14days">Last 2 Weeks</button>
+      <button class="time-period-btn" data-period="historical">Historical (OOS)</button>
+      <span class="filter-summary-text" id="recent-signals-count" style="display:none"></span>
+    </div>
+
+    <!-- Signal Type Filters -->
     <div class="filter-bar">
+      <span class="filter-bar-label">Type:</span>
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="SPREAD">Spread</button>
       <button class="filter-btn" data-filter="ML_LEADER">ML Leader</button>
       <button class="filter-btn" data-filter="ML_TRAILER">ML Trailer</button>
       <button class="filter-btn" data-filter="Q4_TOTAL">Q4 Total</button>
-      <span class="filter-summary-text" id="filter-summary">658 signals</span>
+      <span class="filter-summary-text" id="filter-summary">Loading...</span>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="recent-loading-bar" id="recent-loading">
+      <span class="loading-spinner"></span>
+      <span>Loading recent games from ESPN...</span>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Trade Log — Historical OOS Signals</span>
-        <span class="card-badge" style="color:var(--text-muted)">Walk-Forward Validated</span>
+        <span class="card-title" id="signals-table-title">Recent Signals — Last 3 Weeks</span>
+        <span class="card-badge" style="color:var(--text-muted)" id="signals-table-badge">Loading...</span>
       </div>
       <div class="card-body" style="overflow-x:auto">
         <table class="data-table trade-log-table" id="signals-table">

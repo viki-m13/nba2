@@ -9,11 +9,15 @@
   let currentView = 'dashboard';
   let games = [];
   let liveSignals = [];    // Signals generated this session
+  let recentSignals = [];  // Signals from recent days (ESPN)
   let historicalSignals = []; // From backtest
   let modelLoaded = false;
   let pollInterval = null;
+  let recentGamesLoaded = false;
+  let currentTimePeriod = 'recent'; // 'recent', 'today', '3days', '7days', '14days', 'historical'
   const POLL_MS = 10000; // 10 seconds
   const processedGames = new Set(); // Track games we've already signaled on
+  const recentProcessedGames = new Set(); // Track recent games we've processed
 
   // ---- Model parameters (embedded from Python export) ----
   const MODEL_URL = null; // Will embed inline below
@@ -27,6 +31,7 @@
 
     setupNavigation();
     setupFilters();
+    setupTimePeriodFilters();
 
     // Load ML model parameters
     await loadModel();
@@ -43,6 +48,9 @@
 
     setStatus(true);
     console.log('[Q3Terminal] Ready');
+
+    // Load recent games in the background (non-blocking)
+    loadRecentGames();
   }
 
   // =========================================================================
@@ -82,7 +90,7 @@
           const data = await resp.json();
           historicalSignals = data.signals || [];
           console.log(`[Q3Terminal] Loaded ${historicalSignals.length} historical signals from ${path}`);
-          renderHistoricalSignals();
+          renderSignalsTab();
           renderRegimeTable();
           return;
         }
@@ -128,7 +136,21 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderHistoricalSignals(btn.dataset.filter);
+        renderSignalsTab(btn.dataset.filter);
+      });
+    });
+  }
+
+  function setupTimePeriodFilters() {
+    document.querySelectorAll('.time-period-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-period-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTimePeriod = btn.dataset.period;
+        // Get current signal type filter
+        const activeFilter = document.querySelector('.filter-btn.active');
+        const filter = activeFilter ? activeFilter.dataset.filter : 'all';
+        renderSignalsTab(filter);
       });
     });
   }
@@ -275,6 +297,134 @@
         console.warn(`[Q3Terminal] Error processing finished game ${game.id}:`, e.message);
       }
     }));
+  }
+
+  // =========================================================================
+  // RECENT GAMES LOADING (Past days from ESPN)
+  // =========================================================================
+
+  async function loadRecentGames() {
+    if (!modelLoaded) {
+      console.warn('[Q3Terminal] Model not loaded, skipping recent games');
+      const loadingEl = document.getElementById('recent-loading');
+      if (loadingEl) loadingEl.style.display = 'none';
+      recentGamesLoaded = true;
+      renderSignalsTab();
+      return;
+    }
+
+    console.log('[Q3Terminal] Loading recent games...');
+    const loadingEl = document.getElementById('recent-loading');
+    if (loadingEl) loadingEl.style.display = '';
+
+    const dateStrings = NbaApi.getRecentDateStrings(21); // Last 3 weeks
+
+    // Process dates in batches of 3 to avoid overwhelming the API
+    for (let i = 0; i < dateStrings.length; i += 3) {
+      const batch = dateStrings.slice(i, i + 3);
+      const results = await Promise.all(batch.map(dateStr => processDateForSignals(dateStr)));
+
+      // Update count display after each batch
+      const countEl = document.getElementById('recent-signals-count');
+      if (countEl) {
+        countEl.textContent = `${recentSignals.length} signals from ${i + batch.length} days`;
+      }
+    }
+
+    recentGamesLoaded = true;
+    console.log(`[Q3Terminal] Loaded ${recentSignals.length} recent signals`);
+
+    if (loadingEl) loadingEl.style.display = 'none';
+
+    // Re-render the signals tab
+    const activeFilter = document.querySelector('.filter-btn.active');
+    const filter = activeFilter ? activeFilter.dataset.filter : 'all';
+    renderSignalsTab(filter);
+  }
+
+  async function processDateForSignals(dateStr) {
+    try {
+      const { games: dateGames, eventIds } = await NbaApi.fetchESPNScoreboardForDate(dateStr);
+      const finishedGames = dateGames.filter(g => g.status === 'final');
+
+      if (finishedGames.length === 0) return;
+
+      // Process up to 8 games per date (avoid too many requests)
+      const batch = finishedGames.slice(0, 8);
+
+      // Fetch PBP for each finished game (2 at a time to be gentle on API)
+      for (let j = 0; j < batch.length; j += 2) {
+        const subBatch = batch.slice(j, j + 2);
+        await Promise.all(subBatch.map(async (game) => {
+          const gameKey = `${game.date}-${game.homeTeam}-${game.awayTeam}`;
+          if (recentProcessedGames.has(gameKey)) return;
+          recentProcessedGames.add(gameKey);
+
+          try {
+            const possessions = await NbaApi.fetchESPNPlayByPlay(game.espnId);
+            if (possessions.length < 10) return;
+
+            const signals = Q3Engine.generateSignals(game, possessions, {
+              openingSpread: 0,
+              openingOU: game.ouLine || 0,
+            });
+
+            if (signals.length === 0) return;
+
+            // Determine Q3 end state
+            const q3Poss = possessions.filter(p => p.quarter <= 3);
+            const q3End = q3Poss.length > 0 ? q3Poss[q3Poss.length - 1] : null;
+            const q3Total = q3End ? q3End.homeScore + q3End.awayScore : 0;
+            const finalTotal = game.homeScore + game.awayScore;
+            const actualMargin = game.homeScore - game.awayScore;
+
+            for (const sig of signals) {
+              sig.gameId = game.espnId;
+              sig.homeTeam = game.homeTeam;
+              sig.awayTeam = game.awayTeam;
+              sig.homeScore = game.homeScore;
+              sig.awayScore = game.awayScore;
+              sig.date = game.date;
+              sig.isFinished = true;
+              sig.isRecent = true;
+              sig.actualMargin = actualMargin;
+              sig.quarter = 'FINAL';
+
+              if (q3End) {
+                sig.q3HomeScore = q3End.homeScore;
+                sig.q3AwayScore = q3End.awayScore;
+              }
+
+              // Determine if signal was correct
+              if (sig.signalType === 'SPREAD') {
+                const pickedHome = sig.direction === 'HOME';
+                sig.correct = pickedHome
+                  ? actualMargin > sig.liveSpread
+                  : actualMargin < sig.liveSpread;
+                sig.cover_margin = pickedHome
+                  ? actualMargin - sig.liveSpread
+                  : sig.liveSpread - actualMargin;
+              } else if (sig.signalType === 'ML_LEADER' || sig.signalType === 'ML_TRAILER') {
+                const pickedHome = sig.direction === 'HOME';
+                sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
+              } else if (sig.signalType === 'Q4_TOTAL' && q3End) {
+                const actualQ4 = finalTotal - q3Total;
+                sig.actualQ4 = actualQ4;
+                sig.correct = sig.direction === 'OVER'
+                  ? actualQ4 > sig.liveQ4OU
+                  : actualQ4 < sig.liveQ4OU;
+              }
+
+              recentSignals.push(sig);
+            }
+          } catch (e) {
+            // Skip games that fail
+          }
+        }));
+      }
+    } catch (e) {
+      console.warn(`[Q3Terminal] Error processing date ${dateStr}:`, e.message);
+    }
   }
 
   // =========================================================================
@@ -678,34 +828,35 @@
   }
 
   // =========================================================================
-  // RENDERING - HISTORICAL SIGNALS TABLE
+  // RENDERING - SIGNALS TAB (Recent + Historical)
   // =========================================================================
 
-  function renderHistoricalSignals(filter = 'all') {
+  function renderSignalsTab(filter = 'all') {
     const tbody = document.getElementById('signals-tbody');
     const summary = document.getElementById('filter-summary');
+    const tableTitle = document.getElementById('signals-table-title');
+    const tableBadge = document.getElementById('signals-table-badge');
     if (!tbody) return;
 
-    let filtered = historicalSignals;
-    if (filter && filter !== 'all') {
-      filtered = historicalSignals.filter(s => s.signal_type === filter);
-    }
+    // Build combined signal list based on time period
+    let signals = getSignalsForTimePeriod(currentTimePeriod, filter);
 
     // Sort by date descending (most recent first)
-    filtered = filtered.slice().sort((a, b) => {
+    signals = signals.slice().sort((a, b) => {
       const da = a.date || '0';
       const db = b.date || '0';
       return db.localeCompare(da);
     });
 
+    // Update summary stats
     if (summary) {
-      const correct = filtered.filter(s => s.correct).length;
-      const total = filtered.length;
+      const correct = signals.filter(s => s.correct !== undefined && s.correct).length;
+      const total = signals.filter(s => s.correct !== undefined).length;
       const acc = total > 0 ? (correct / total * 100).toFixed(1) : '0.0';
-      // Compute P&L
       let pnl = 0;
-      filtered.forEach(s => {
-        const o = s.estimated_odds || -110;
+      signals.forEach(s => {
+        if (s.correct === undefined) return;
+        const o = s.estimated_odds || s.estimatedOdds || -110;
         if (s.correct) {
           pnl += o < 0 ? 100 / Math.abs(o) : o / 100;
         } else {
@@ -715,81 +866,210 @@
       summary.textContent = `${correct}/${total} (${acc}%) | P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)}u`;
     }
 
-    // Show max 300 rows
-    const display = filtered.slice(0, 300);
+    // Update table title based on period
+    if (tableTitle) {
+      const titles = {
+        'recent': 'Recent Signals — Last 3 Weeks',
+        'today': 'Today\'s Signals',
+        '3days': 'Signals — Last 3 Days',
+        '7days': 'Signals — Last 7 Days',
+        '14days': 'Signals — Last 2 Weeks',
+        'historical': 'Trade Log — Historical OOS Signals (2022-23)',
+      };
+      tableTitle.textContent = titles[currentTimePeriod] || 'Signals';
+    }
 
-    tbody.innerHTML = display.map(s => {
-      const type = s.signal_type || '';
-      const typeClass = type.toLowerCase().replace('_', '-');
-      const dir = s.direction || '';
-      const conf = (s.confidence * 100).toFixed(0);
-      const edge = (s.edge * 100).toFixed(1);
-      const q3Lead = s.q3_lead || 0;
-      const odds = s.estimated_odds || s.estimatedOdds || -110;
-      const homeTeam = s.home_team || '';
-      const awayTeam = s.away_team || '';
-
-      // Date
-      const dateStr = s.date ? formatGameDate(s.date) : '';
-
-      // Score info
-      const finalHome = s.final_home || 0;
-      const finalAway = s.final_away || 0;
-      const finalMargin = s.final_margin || (finalHome - finalAway);
-      const winner = finalMargin > 0 ? homeTeam : awayTeam;
-      const winMargin = Math.abs(finalMargin);
-
-      // Q3 lead display
-      const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
-      const q3Diff = Math.abs(q3Lead);
-
-      // Build bet description
-      const betDesc = buildHistoricalBetDescription(s);
-
-      // Result detail
-      let resultNote = '';
-      if (type === 'Q4_TOTAL') {
-        const actualQ4 = s.actual_q4 || 0;
-        const line = s.live_q4_ou || 0;
-        resultNote = `Q4: ${actualQ4.toFixed(0)} (line ${line.toFixed(1)})`;
-      } else if (type === 'SPREAD') {
-        const cover = s.cover_margin;
-        resultNote = cover !== undefined ? `Cover: ${cover > 0 ? '+' : ''}${cover.toFixed(1)}` : '';
+    if (tableBadge) {
+      if (currentTimePeriod === 'historical') {
+        tableBadge.textContent = 'Walk-Forward Validated';
       } else {
-        resultNote = `${winner} by ${winMargin}`;
+        tableBadge.textContent = `${signals.length} signals`;
+      }
+    }
+
+    // Show max 500 rows
+    const display = signals.slice(0, 500);
+
+    if (display.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">
+        ${currentTimePeriod !== 'historical' && !recentGamesLoaded
+          ? '<span class="loading-spinner"></span> Loading recent games...'
+          : 'No signals found for this time period'}
+      </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = display.map(s => renderSignalRow(s)).join('');
+  }
+
+  function getSignalsForTimePeriod(period, filter) {
+    const now = new Date();
+    const todayStr = formatDateStr(now);
+
+    let signals = [];
+
+    if (period === 'historical') {
+      // Only backtest historical signals
+      signals = historicalSignals.map(normalizeSignal);
+    } else {
+      // Combine live (today) + recent signals
+      const allRecent = [
+        ...liveSignals.map(s => ({ ...s, isRecent: true, date: s.date || todayStr })),
+        ...recentSignals,
+      ];
+
+      // Deduplicate by game + signal type
+      const seen = new Set();
+      const deduped = [];
+      for (const s of allRecent) {
+        const key = `${s.date || ''}-${s.homeTeam || s.home_team || ''}-${s.awayTeam || s.away_team || ''}-${s.signalType || s.signal_type || ''}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          deduped.push(s);
+        }
       }
 
-      // P&L for this signal
-      let unitPnl;
+      if (period === 'today') {
+        signals = deduped.filter(s => (s.date || '') === todayStr);
+      } else if (period === '3days') {
+        const cutoff = daysAgoStr(3);
+        signals = deduped.filter(s => (s.date || '') >= cutoff);
+      } else if (period === '7days') {
+        const cutoff = daysAgoStr(7);
+        signals = deduped.filter(s => (s.date || '') >= cutoff);
+      } else if (period === '14days') {
+        const cutoff = daysAgoStr(14);
+        signals = deduped.filter(s => (s.date || '') >= cutoff);
+      } else {
+        // 'recent' = all recent + today
+        signals = deduped;
+      }
+
+      signals = signals.map(normalizeSignal);
+    }
+
+    // Apply signal type filter
+    if (filter && filter !== 'all') {
+      signals = signals.filter(s => (s.signal_type || s.signalType) === filter);
+    }
+
+    return signals;
+  }
+
+  /** Normalize signal objects to a consistent format for table rendering */
+  function normalizeSignal(s) {
+    return {
+      date: s.date || '',
+      signal_type: s.signal_type || s.signalType || '',
+      direction: s.direction || '',
+      confidence: s.confidence || 0,
+      edge: s.edge || 0,
+      q3_lead: s.q3_lead ?? s.q3Lead ?? 0,
+      estimated_odds: s.estimated_odds || s.estimatedOdds || -110,
+      home_team: s.home_team || s.homeTeam || '',
+      away_team: s.away_team || s.awayTeam || '',
+      final_home: s.final_home || s.homeScore || 0,
+      final_away: s.final_away || s.awayScore || 0,
+      final_margin: s.final_margin || s.actualMargin || ((s.final_home || s.homeScore || 0) - (s.final_away || s.awayScore || 0)),
+      correct: s.correct,
+      cover_margin: s.cover_margin,
+      actual_q4: s.actual_q4 || s.actualQ4 || 0,
+      live_q4_ou: s.live_q4_ou || s.liveQ4OU || 0,
+      live_spread: s.live_spread || s.liveSpread || 0,
+      regime: s.regime || '',
+      predicted_margin: s.predicted_margin || s.predictedMargin || 0,
+      isRecent: s.isRecent || false,
+    };
+  }
+
+  function renderSignalRow(s) {
+    const type = s.signal_type || '';
+    const typeClass = type.toLowerCase().replace('_', '-');
+    const conf = (s.confidence * 100).toFixed(0);
+    const edge = (s.edge * 100).toFixed(1);
+    const q3Lead = s.q3_lead || 0;
+    const odds = s.estimated_odds || -110;
+    const homeTeam = s.home_team || '';
+    const awayTeam = s.away_team || '';
+
+    const dateStr = s.date ? formatGameDate(s.date) : '';
+    const finalHome = s.final_home || 0;
+    const finalAway = s.final_away || 0;
+    const finalMargin = s.final_margin || (finalHome - finalAway);
+    const winner = finalMargin > 0 ? homeTeam : awayTeam;
+    const winMargin = Math.abs(finalMargin);
+
+    const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
+    const q3Diff = Math.abs(q3Lead);
+
+    const betDesc = buildHistoricalBetDescription(s);
+
+    let resultNote = '';
+    if (type === 'Q4_TOTAL') {
+      const actualQ4 = s.actual_q4 || 0;
+      const line = s.live_q4_ou || 0;
+      resultNote = actualQ4 ? `Q4: ${actualQ4.toFixed ? actualQ4.toFixed(0) : actualQ4} (line ${line.toFixed ? line.toFixed(1) : line})` : '';
+    } else if (type === 'SPREAD') {
+      const cover = s.cover_margin;
+      resultNote = cover !== undefined ? `Cover: ${cover > 0 ? '+' : ''}${cover.toFixed ? cover.toFixed(1) : cover}` : '';
+    } else {
+      resultNote = finalHome || finalAway ? `${winner} by ${winMargin}` : '';
+    }
+
+    let unitPnl;
+    if (s.correct !== undefined) {
       if (s.correct) {
         unitPnl = odds < 0 ? 100 / Math.abs(odds) : odds / 100;
       } else {
         unitPnl = -1;
       }
+    }
 
-      return `<tr class="${s.correct ? '' : 'loss-row'}">
-        <td class="date-cell">${dateStr}</td>
-        <td class="matchup-cell">
-          <div>${awayTeam} @ ${homeTeam}</div>
-          <div class="score-sub">${finalAway}-${finalHome}</div>
-        </td>
-        <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
-        <td class="bet-desc-cell">${betDesc}</td>
-        <td class="q3-cell">
-          <div>${q3Leader} +${q3Diff}</div>
-          <div class="regime-sub">${s.regime || ''}</div>
-        </td>
-        <td>${conf}%</td>
-        <td class="positive">${edge}%</td>
-        <td class="${s.correct ? 'positive' : 'negative'}">
+    const resultCell = s.correct !== undefined
+      ? `<td class="${s.correct ? 'positive' : 'negative'}">
           <div class="result-cell">
             <span class="result-tag ${s.correct ? 'win' : 'loss'}">${s.correct ? 'W' : 'L'}</span>
             <span class="result-note">${resultNote}</span>
           </div>
-        </td>
-        <td class="${unitPnl >= 0 ? 'positive' : 'negative'}">${unitPnl >= 0 ? '+' : ''}${unitPnl.toFixed(2)}u</td>
-      </tr>`;
-    }).join('');
+        </td>`
+      : `<td class="date-cell">-</td>`;
+
+    const pnlCell = unitPnl !== undefined
+      ? `<td class="${unitPnl >= 0 ? 'positive' : 'negative'}">${unitPnl >= 0 ? '+' : ''}${unitPnl.toFixed(2)}u</td>`
+      : `<td class="date-cell">-</td>`;
+
+    const recentBadge = s.isRecent ? ' <span class="recent-badge">NEW</span>' : '';
+
+    return `<tr class="${s.correct === false ? 'loss-row' : ''}">
+      <td class="date-cell">${dateStr}${recentBadge}</td>
+      <td class="matchup-cell">
+        <div>${awayTeam} @ ${homeTeam}</div>
+        <div class="score-sub">${finalAway}-${finalHome}</div>
+      </td>
+      <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
+      <td class="bet-desc-cell">${betDesc}</td>
+      <td class="q3-cell">
+        <div>${q3Leader} +${q3Diff}</div>
+        <div class="regime-sub">${s.regime || ''}</div>
+      </td>
+      <td>${conf}%</td>
+      <td class="positive">${edge}%</td>
+      ${resultCell}
+      ${pnlCell}
+    </tr>`;
+  }
+
+  function formatDateStr(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}`;
+  }
+
+  function daysAgoStr(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return formatDateStr(d);
   }
 
   /** Build a short explicit bet description for historical table rows */
@@ -893,7 +1173,19 @@
     const d = dateStr.substring(6, 8);
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const monthIdx = parseInt(m, 10) - 1;
-    return `${months[monthIdx]} ${parseInt(d, 10)}, ${y}`;
+    const formatted = `${months[monthIdx]} ${parseInt(d, 10)}`;
+
+    // Add relative label for recent dates
+    const now = new Date();
+    const todayStr = formatDateStr(now);
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = formatDateStr(yesterday);
+
+    if (dateStr === todayStr) return `${formatted} (Today)`;
+    if (dateStr === yesterdayStr) return `${formatted} (Yest.)`;
+
+    return `${formatted}, ${y}`;
   }
 
   // =========================================================================
