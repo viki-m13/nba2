@@ -303,10 +303,11 @@
         liveSignals.push(sig);
       }
 
-      // Show notification
+      // Show notification with explicit bet instruction
       if (Notification.permission === 'granted') {
-        new Notification('Q3 Terminal Signal', {
-          body: `${signals[0].signalType}: ${signals[0].team} (${(signals[0].confidence * 100).toFixed(0)}%)`,
+        const firstBet = buildBetInstruction(signals[0]);
+        new Notification('Q3 Terminal - BET NOW', {
+          body: `${firstBet.market}: ${firstBet.pick} @ ${firstBet.oddsDisplay}`,
         });
       }
 
@@ -376,13 +377,16 @@
     const sigs = liveSignals.filter(s => s.gameId === gameId);
     if (!sigs.length) return '';
 
-    return sigs.map(s => `
-      <div class="signal-pick">
-        <span class="signal-pick-label">${s.signalType}</span>
-        <span class="signal-pick-value">${s.team || s.direction} ${s.direction === 'OVER' || s.direction === 'UNDER' ? s.direction : ''}</span>
-        <span class="signal-pick-odds">${formatOdds(s.estimatedOdds)} | ${(s.confidence * 100).toFixed(0)}%</span>
-      </div>
-    `).join('');
+    return sigs.map(s => {
+      const betInfo = buildBetInstruction(s);
+      return `
+        <div class="signal-pick game-card-bet">
+          <span class="signal-pick-label">${betInfo.market}</span>
+          <span class="signal-pick-value">${betInfo.pick}</span>
+          <span class="signal-pick-odds">${betInfo.oddsDisplay} | ${(s.confidence * 100).toFixed(0)}% conf</span>
+        </div>
+      `;
+    }).join('');
   }
 
   // =========================================================================
@@ -430,7 +434,7 @@
 
   function renderSignalCard(s, isLive = false) {
     const tierClass = (s.tier || 'watch').toLowerCase();
-    const typeClass = s.signalType.toLowerCase().replace('_', '-');
+    const typeClass = (s.signalType || s.signal_type || '').toLowerCase().replace('_', '-');
     const matchup = `${s.awayTeam || s.away_team || ''} @ ${s.homeTeam || s.home_team || ''}`;
 
     const confidence = s.confidence || 0;
@@ -439,23 +443,11 @@
     const regime = s.regime || '';
     const odds = s.estimatedOdds || s.estimated_odds || -110;
     const correct = s.correct;
-
-    // Determine pick text
-    let pickText = '';
-    const dir = s.direction;
     const type = s.signalType || s.signal_type || '';
+    const dir = s.direction;
 
-    if (type === 'SPREAD') {
-      pickText = `${dir} ${dir === 'HOME' ? (s.homeTeam || s.home_team) : (s.awayTeam || s.away_team)} SPREAD`;
-    } else if (type === 'ML_LEADER') {
-      pickText = `${s.team || dir} ML`;
-    } else if (type === 'ML_TRAILER') {
-      pickText = `${s.team || dir} ML (Value)`;
-    } else if (type === 'Q4_TOTAL') {
-      pickText = `Q4 ${dir}`;
-    } else {
-      pickText = `${dir}`;
-    }
+    // Build explicit bet instruction
+    const betInfo = buildBetInstruction(s);
 
     return `
       <div class="signal-card ${tierClass}">
@@ -466,6 +458,20 @@
             <span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span>
           </div>
         </div>
+
+        <div class="bet-slip">
+          <div class="bet-slip-header">
+            <span class="bet-slip-label">PLACE THIS BET</span>
+            <span class="bet-slip-market">${betInfo.market}</span>
+          </div>
+          <div class="bet-slip-main">
+            <div class="bet-slip-pick">${betInfo.pick}</div>
+            <div class="bet-slip-odds">${betInfo.oddsDisplay}</div>
+          </div>
+          ${betInfo.lineDetail ? `<div class="bet-slip-detail">${betInfo.lineDetail}</div>` : ''}
+          <div class="bet-slip-note">${betInfo.oddsNote}</div>
+        </div>
+
         <div class="signal-body">
           <div class="signal-field">
             <span class="signal-field-label">Confidence</span>
@@ -476,33 +482,107 @@
             <span class="signal-field-value positive">${(edge * 100).toFixed(1)}%</span>
           </div>
           <div class="signal-field">
-            <span class="signal-field-label">Q3 Lead</span>
-            <span class="signal-field-value">${q3Lead > 0 ? '+' : ''}${q3Lead}</span>
+            <span class="signal-field-label">Q3 Score</span>
+            <span class="signal-field-value">${q3Lead > 0 ? 'Home +' + q3Lead : q3Lead < 0 ? 'Away +' + Math.abs(q3Lead) : 'Tied'}</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-field-label">Model Margin</span>
+            <span class="signal-field-value">${formatMargin(s.predictedMargin || s.predicted_margin)}</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-field-label">Live Spread Est.</span>
+            <span class="signal-field-value">${formatMargin(s.liveSpread || s.live_spread)}</span>
           </div>
           <div class="signal-field">
             <span class="signal-field-label">Regime</span>
             <span class="signal-field-value">${regime}</span>
           </div>
-          <div class="signal-field">
-            <span class="signal-field-label">Est. Odds</span>
-            <span class="signal-field-value">${formatOdds(odds)}</span>
-          </div>
-          <div class="signal-field">
-            <span class="signal-field-label">Pred Margin</span>
-            <span class="signal-field-value">${formatMargin(s.predictedMargin || s.predicted_margin)}</span>
-          </div>
-        </div>
-        <div class="signal-pick">
-          <span class="signal-pick-label">Pick</span>
-          <span class="signal-pick-value">${pickText}</span>
-          <span class="signal-pick-odds">${formatOdds(odds)}</span>
         </div>
         ${!isLive && correct !== undefined ? `
           <div class="signal-result ${correct ? 'win' : 'loss'}">
-            ${correct ? 'WIN' : 'LOSS'} | Actual margin: ${formatMargin(s.actual_margin || s.actualMargin)}
+            ${correct ? 'WIN' : 'LOSS'} | Final margin: ${formatMargin(s.actual_margin || s.actualMargin)}
           </div>
         ` : ''}
       </div>`;
+  }
+
+  /**
+   * Build explicit bet instruction from signal data.
+   * Returns { market, pick, oddsDisplay, lineDetail, oddsNote }
+   */
+  function buildBetInstruction(s) {
+    const type = s.signalType || s.signal_type || '';
+    const dir = s.direction || '';
+    const homeTeam = s.homeTeam || s.home_team || 'HOME';
+    const awayTeam = s.awayTeam || s.away_team || 'AWAY';
+    const odds = s.estimatedOdds || s.estimated_odds || -110;
+
+    if (type === 'SPREAD') {
+      const team = dir === 'HOME' ? homeTeam : awayTeam;
+      const liveSpread = s.liveSpread || s.live_spread || 0;
+      // The bet line: if betting HOME and home leads, they get a negative spread
+      // liveSpread is home-relative (positive = home leading)
+      let betLineVal;
+      if (dir === 'HOME') {
+        betLineVal = -(Math.round(Math.abs(liveSpread) * 2) / 2);
+      } else {
+        betLineVal = Math.round(Math.abs(liveSpread) * 2) / 2;
+      }
+      const betLineStr = betLineVal > 0 ? `+${betLineVal.toFixed(1)}` : betLineVal.toFixed(1);
+
+      return {
+        market: 'Live Point Spread',
+        pick: `${team} ${betLineStr}`,
+        oddsDisplay: '-110',
+        lineDetail: `Go to live betting > find this game > bet ${team} spread at ${betLineStr}`,
+        oddsNote: '-110 is standard juice for spread bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
+      };
+    }
+
+    if (type === 'ML_LEADER') {
+      const team = s.team || (dir === 'HOME' ? homeTeam : awayTeam);
+      const oddsNum = Math.round(odds);
+      return {
+        market: 'Live Moneyline',
+        pick: `${team} to WIN`,
+        oddsDisplay: formatOdds(oddsNum),
+        lineDetail: `Go to live betting > find this game > bet ${team} moneyline`,
+        oddsNote: `Estimated market odds: ${formatOdds(oddsNum)}. Actual odds vary by sportsbook. Take the best ML price available on ${team}. The model edge is calculated against estimated market odds.`,
+      };
+    }
+
+    if (type === 'ML_TRAILER') {
+      const team = s.team || (dir === 'HOME' ? homeTeam : awayTeam);
+      const oddsNum = Math.round(odds);
+      return {
+        market: 'Live Moneyline (Underdog Value)',
+        pick: `${team} to WIN (underdog)`,
+        oddsDisplay: `+${Math.abs(oddsNum)}`,
+        lineDetail: `Go to live betting > find this game > bet ${team} moneyline (they are trailing)`,
+        oddsNote: `Estimated odds: +${Math.abs(oddsNum)}. Shop for the best plus-odds price. Only bet if you can get plus odds (+). The value is in the payout, not win rate.`,
+      };
+    }
+
+    if (type === 'Q4_TOTAL') {
+      const q4OU = s.liveQ4OU || s.live_q4_ou || 0;
+      const q4Line = Math.round(q4OU * 2) / 2;
+      const predQ4 = s.predictedQ4 || s.predicted_q4 || 0;
+      return {
+        market: 'Live Q4 Total Points',
+        pick: `Q4 ${dir} ${q4Line.toFixed(1)}`,
+        oddsDisplay: '-110',
+        lineDetail: `Go to live betting > game props/quarters > bet Q4 total ${dir.toLowerCase()} ${q4Line.toFixed(1)}. Model predicts ${predQ4.toFixed(1)} pts in Q4.`,
+        oddsNote: '-110 is standard juice for totals bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
+      };
+    }
+
+    return {
+      market: type,
+      pick: dir,
+      oddsDisplay: formatOdds(odds),
+      lineDetail: '',
+      oddsNote: 'Check your sportsbook for current odds.',
+    };
   }
 
   // =========================================================================
@@ -536,27 +616,61 @@
       const conf = (s.confidence * 100).toFixed(1);
       const edge = (s.edge * 100).toFixed(1);
       const q3Lead = s.q3_lead || 0;
-      const regime = s.regime || '';
       const odds = s.estimated_odds || s.estimatedOdds || -110;
 
-      let pickTeam = dir;
-      if (dir === 'HOME') pickTeam = s.home_team;
-      else if (dir === 'AWAY') pickTeam = s.away_team;
-
-      let pickText = type === 'Q4_TOTAL' ? dir : pickTeam;
+      // Build explicit bet description for historical table
+      const betDesc = buildHistoricalBetDescription(s);
 
       return `<tr>
         <td>${s.away_team} @ ${s.home_team}</td>
         <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
-        <td>${pickText}</td>
+        <td class="bet-desc-cell">${betDesc}</td>
         <td>${conf}%</td>
         <td class="positive">${edge}%</td>
-        <td>${q3Lead > 0 ? '+' : ''}${q3Lead}</td>
-        <td>${regime}</td>
         <td>${formatOdds(odds)}</td>
         <td class="${s.correct ? 'positive' : 'negative'}">${s.correct ? 'WIN' : 'LOSS'}</td>
       </tr>`;
     }).join('');
+  }
+
+  /** Build a short explicit bet description for historical table rows */
+  function buildHistoricalBetDescription(s) {
+    const type = s.signal_type || '';
+    const dir = s.direction || '';
+    const homeTeam = s.home_team || '';
+    const awayTeam = s.away_team || '';
+    const liveSpread = s.live_spread || 0;
+    const odds = s.estimated_odds || -110;
+
+    if (type === 'SPREAD') {
+      const team = dir === 'HOME' ? homeTeam : awayTeam;
+      let betLine;
+      if (dir === 'HOME') {
+        betLine = -(Math.round(Math.abs(liveSpread) * 2) / 2);
+      } else {
+        betLine = Math.round(Math.abs(liveSpread) * 2) / 2;
+      }
+      const lineStr = betLine > 0 ? `+${betLine.toFixed(1)}` : betLine.toFixed(1);
+      return `<strong>${team} ${lineStr}</strong> <span class="bet-desc-sub">spread @ -110</span>`;
+    }
+
+    if (type === 'ML_LEADER') {
+      const team = dir === 'HOME' ? homeTeam : awayTeam;
+      return `<strong>${team} ML</strong> <span class="bet-desc-sub">moneyline @ ${formatOdds(Math.round(odds))}</span>`;
+    }
+
+    if (type === 'ML_TRAILER') {
+      const team = dir === 'HOME' ? homeTeam : awayTeam;
+      return `<strong>${team} ML</strong> <span class="bet-desc-sub">underdog @ +${Math.abs(Math.round(odds))}</span>`;
+    }
+
+    if (type === 'Q4_TOTAL') {
+      const q4OU = s.live_q4_ou || 0;
+      const q4Line = Math.round(q4OU * 2) / 2;
+      return `<strong>Q4 ${dir} ${q4Line.toFixed(1)}</strong> <span class="bet-desc-sub">total @ -110</span>`;
+    }
+
+    return dir;
   }
 
   // =========================================================================

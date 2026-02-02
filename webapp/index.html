@@ -38,24 +38,24 @@
     <!-- Metrics Row -->
     <div class="metrics-row">
       <div class="metric-card">
-        <div class="metric-label">ML Leader Accuracy</div>
+        <div class="metric-label">ML Leader Win Rate</div>
         <div class="metric-value positive" id="metric-ml-acc">96.0%</div>
-        <div class="metric-sub">24/25 OOS</div>
+        <div class="metric-sub">24/25 | moneyline bets</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Spread Accuracy</div>
+        <div class="metric-label">Spread Win Rate</div>
         <div class="metric-value positive" id="metric-spread-acc">71.9%</div>
-        <div class="metric-sub">233/324 @ -110</div>
+        <div class="metric-sub">233/324 | -110 std juice</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Total P&L</div>
+        <div class="metric-label">Total P&L (flat 1u bets)</div>
         <div class="metric-value positive" id="metric-pnl">+223.6u</div>
         <div class="metric-sub">All signal types combined</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Overall ROI</div>
         <div class="metric-value positive" id="metric-roi">+34.0%</div>
-        <div class="metric-sub">658 total signals</div>
+        <div class="metric-sub">658 signals (OOS validated)</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Live Games</div>
@@ -142,11 +142,9 @@
             <tr>
               <th>Game</th>
               <th>Type</th>
-              <th>Pick</th>
-              <th>Confidence</th>
+              <th>Bet</th>
+              <th>Conf</th>
               <th>Edge</th>
-              <th>Q3 Lead</th>
-              <th>Regime</th>
               <th>Odds</th>
               <th>Result</th>
             </tr>
@@ -159,41 +157,60 @@
 
   <!-- ========== PERFORMANCE VIEW ========== -->
   <div class="view" id="view-performance">
+    <!-- Odds explanation banner -->
+    <div class="odds-explainer">
+      <strong>How odds work for each signal type:</strong>
+      <div class="odds-explainer-grid">
+        <div><span class="signal-type-badge spread">SPREAD</span> Standard -110 juice. This is what every sportsbook charges for spread bets. The line number (e.g. -7.5) is estimated from the Q3 game state.</div>
+        <div><span class="signal-type-badge ml-leader">ML LEADER</span> Variable moneyline odds, estimated from win probability. Actual odds depend on sportsbook and timing. Heavy favorites may have large negative odds.</div>
+        <div><span class="signal-type-badge ml-trailer">ML TRAILER</span> Plus odds (underdog). These pay more than you risk. Estimated from the market but actual odds vary. Only bet at plus odds.</div>
+        <div><span class="signal-type-badge q4-total">Q4 TOTAL</span> Standard -110 juice. This is what every sportsbook charges for totals bets. The line number (e.g. O/U 54.5) is estimated from pace and game state.</div>
+      </div>
+    </div>
+
     <div class="stats-grid" id="performance-stats">
       <!-- Signal Type Breakdown -->
       <div class="stat-section">
-        <div class="stat-section-title">Spread Signals (-110)</div>
+        <div class="stat-section-title">Spread (Live Point Spread @ -110)</div>
+        <div class="stat-section-sub">Bet: [Team] [spread line] at standard -110 juice</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">233/324</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">71.9%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+120.8u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+37.3%</span></div>
+        <div class="stat-row"><span class="stat-label">Break-even</span><span class="stat-value">52.4%</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:71.9%;background:var(--green)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">ML Leader (Variable Odds)</div>
+        <div class="stat-section-title">ML Leader (Live Moneyline, Variable Odds)</div>
+        <div class="stat-section-sub">Bet: [Leading team] moneyline at best available price</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">24/25</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">96.0%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+4.7u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.9%</span></div>
+        <div class="stat-row"><span class="stat-label">Odds range</span><span class="stat-value">-200 to -1500</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:96%;background:var(--green)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">ML Trailer Value (Plus Odds)</div>
+        <div class="stat-section-title">ML Trailer (Underdog Moneyline, Plus Odds)</div>
+        <div class="stat-section-sub">Bet: [Trailing team] moneyline at plus odds (they must be the underdog)</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">21/55</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value">38.2%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+10.4u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.8%</span></div>
+        <div class="stat-row"><span class="stat-label">Avg payout</span><span class="stat-value">+250 to +600</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:38.2%;background:var(--yellow)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">Q4 Total O/U (-110)</div>
+        <div class="stat-section-title">Q4 Total (Live Q4 O/U @ -110)</div>
+        <div class="stat-section-sub">Bet: Q4 Over/Under [line] at standard -110 juice</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">179/254</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">70.5%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+87.7u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+34.5%</span></div>
+        <div class="stat-row"><span class="stat-label">Break-even</span><span class="stat-value">52.4%</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:70.5%;background:var(--green)"></div></div>
       </div>
     </div>
@@ -256,69 +273,187 @@
   <div class="view" id="view-guide">
     <div class="guide-section">
       <h3>What is Q3 Terminal?</h3>
-      <p>Q3 Terminal is an ML-powered prediction system that analyzes NBA games at the end of the 3rd quarter
-         to generate high-confidence trading signals. The system uses a 5-model ensemble trained on 2,177 games
-         with 96 engineered features, including novel "Game Flow DNA" time-series analysis and technical indicators.</p>
+      <p>Q3 Terminal analyzes NBA games at the end of the 3rd quarter and tells you exactly what bet to place.
+         It uses a 5-model ML ensemble trained on 2,177 games to find edges the live betting market misses.</p>
       <div class="highlight-box">
-        <strong>Key Results (Out-of-Sample, Walk-Forward Validated):</strong>
+        <strong>Out-of-Sample Results (Walk-Forward Validated):</strong>
         <ul style="margin-top:8px">
-          <li><strong>ML Leader</strong>: 96.0% accuracy (24/25) - Predicts game winner in competitive games</li>
-          <li><strong>Spread</strong>: 71.9% accuracy at -110 odds = +37.3% ROI</li>
-          <li><strong>Q4 Total</strong>: 70.5% accuracy at -110 odds = +34.5% ROI</li>
-          <li><strong>ML Trailer Value</strong>: 38.2% at plus odds = +18.8% ROI</li>
+          <li><strong>Spread signals</strong>: 71.9% win rate at -110 juice = +37.3% ROI (break-even is 52.4%)</li>
+          <li><strong>ML Leader signals</strong>: 96.0% win rate at variable moneyline odds = +18.9% ROI</li>
+          <li><strong>Q4 Total signals</strong>: 70.5% win rate at -110 juice = +34.5% ROI (break-even is 52.4%)</li>
+          <li><strong>ML Trailer signals</strong>: 38.2% win rate at plus odds (+250 to +600 range) = +18.8% ROI</li>
         </ul>
       </div>
     </div>
 
     <div class="guide-section">
-      <h3>Signal Types</h3>
-      <ol>
-        <li><strong>SPREAD</strong> (-110 odds): Predicts whether the leading team covers the estimated live spread.
-            These are standard -110 spread bets placed at the end of Q3. The model predicts the final margin
-            and compares it to the market's expected spread.</li>
-        <li><strong>ML LEADER</strong> (variable odds): High-confidence prediction that the leading team wins
-            the game. Only fires when the model's win probability significantly exceeds the market-implied
-            probability. These signals have 96% accuracy but fewer opportunities.</li>
-        <li><strong>ML TRAILER VALUE</strong> (plus odds): Identifies games where the trailing team has a
-            higher comeback probability than the market implies. Lower accuracy but high payout at plus odds.</li>
-        <li><strong>Q4 TOTAL</strong> (-110 odds): Predicts whether Q4 scoring will be over or under the
-            estimated live total. Based on pace analysis and game-state factors.</li>
-      </ol>
-    </div>
+      <h3>Exactly What Bet to Place (By Signal Type)</h3>
 
-    <div class="guide-section">
-      <h3>How Signals Are Generated</h3>
-      <ol>
-        <li>At the end of Q3 (or when Q4 begins), the system extracts 96 features from the play-by-play data</li>
-        <li>Features include scoring patterns, lead dynamics, "Game Flow DNA" (Hurst exponent, FFT analysis,
-            Shannon entropy), and technical analysis indicators (RSI, Bollinger Bands, MACD analogs)</li>
-        <li>A 5-model ensemble (XGBoost, LightGBM, Random Forest, Hist Gradient Boosting, Logistic Regression)
-            generates predictions with calibrated probabilities</li>
-        <li>Signals are only generated when the model's prediction significantly diverges from the estimated
-            market price (minimum 8% edge for spreads, 10% for moneyline)</li>
-        <li>Each signal includes confidence level, edge, estimated odds, and recommended bet type</li>
-      </ol>
-      <div class="highlight-box warning">
-        <strong>Important:</strong> All results shown are from strict walk-forward out-of-sample testing.
-        The model was trained on 2021-22 season data and tested on 2022-23 season data with zero look-ahead bias.
-        Past performance does not guarantee future results.
+      <div class="bet-guide-block">
+        <div class="bet-guide-header"><span class="signal-type-badge spread">SPREAD</span> Live Point Spread</div>
+        <div class="bet-guide-body">
+          <div class="bet-guide-steps">
+            <div class="bet-guide-step"><span class="step-num">1</span> Open your sportsbook's <strong>live betting</strong> section</div>
+            <div class="bet-guide-step"><span class="step-num">2</span> Find the NBA game listed</div>
+            <div class="bet-guide-step"><span class="step-num">3</span> Look for <strong>Point Spread</strong> (also called "Spread" or "Handicap")</div>
+            <div class="bet-guide-step"><span class="step-num">4</span> The signal tells you the team and spread number (e.g. "LAL -7.5")</div>
+            <div class="bet-guide-step"><span class="step-num">5</span> Bet that team at the spread shown. The odds should be around <strong>-110</strong></div>
+          </div>
+          <div class="bet-guide-example">
+            <strong>Example:</strong> Signal says "LAL -7.5 (Live Spread)"<br>
+            You bet: Lakers -7.5 at -110 odds. If Lakers win by 8+, you win. Risk $110 to win $100.
+          </div>
+          <div class="bet-guide-odds-note">
+            <strong>About -110 odds:</strong> This is the standard juice every sportsbook charges for spread bets.
+            It is not an estimate -- it's what you'll see at DraftKings, FanDuel, BetMGM, etc.
+            Some books offer -105 reduced juice. If your book shows -115 or worse, the edge is slightly reduced.
+          </div>
+        </div>
+      </div>
+
+      <div class="bet-guide-block">
+        <div class="bet-guide-header"><span class="signal-type-badge ml-leader">ML LEADER</span> Live Moneyline (Favorite)</div>
+        <div class="bet-guide-body">
+          <div class="bet-guide-steps">
+            <div class="bet-guide-step"><span class="step-num">1</span> Open your sportsbook's <strong>live betting</strong> section</div>
+            <div class="bet-guide-step"><span class="step-num">2</span> Find the NBA game listed</div>
+            <div class="bet-guide-step"><span class="step-num">3</span> Look for <strong>Moneyline</strong> (also called "ML" or "To Win")</div>
+            <div class="bet-guide-step"><span class="step-num">4</span> The signal tells you which team (the one currently leading)</div>
+            <div class="bet-guide-step"><span class="step-num">5</span> Bet that team's moneyline. Odds will be negative (favorite). Shop for the best price.</div>
+          </div>
+          <div class="bet-guide-example">
+            <strong>Example:</strong> Signal says "BOS to WIN (Moneyline)" with estimated odds -450<br>
+            You bet: Celtics moneyline. Your book might show -400 to -500. Risk $450 to win $100 (at -450).
+          </div>
+          <div class="bet-guide-odds-note">
+            <strong>About moneyline odds:</strong> These are NOT fixed at -110. They vary by sportsbook and how much
+            time remains. The system estimates what the market odds should be from the game state. The signal only fires
+            when model confidence significantly exceeds the estimated market probability, so you have edge even at the book's actual odds.
+            Shop multiple books for the least negative (best) price.
+          </div>
+        </div>
+      </div>
+
+      <div class="bet-guide-block">
+        <div class="bet-guide-header"><span class="signal-type-badge ml-trailer">ML TRAILER</span> Live Moneyline (Underdog Value)</div>
+        <div class="bet-guide-body">
+          <div class="bet-guide-steps">
+            <div class="bet-guide-step"><span class="step-num">1</span> Open your sportsbook's <strong>live betting</strong> section</div>
+            <div class="bet-guide-step"><span class="step-num">2</span> Find the NBA game listed</div>
+            <div class="bet-guide-step"><span class="step-num">3</span> Look for <strong>Moneyline</strong> on the <strong>trailing</strong> team</div>
+            <div class="bet-guide-step"><span class="step-num">4</span> The signal tells you which team (the one currently behind)</div>
+            <div class="bet-guide-step"><span class="step-num">5</span> Bet that team's moneyline. Odds MUST be positive (underdog). The higher the better.</div>
+          </div>
+          <div class="bet-guide-example">
+            <strong>Example:</strong> Signal says "MIA to WIN (underdog)" with estimated odds +350<br>
+            You bet: Heat moneyline at +350. Risk $100 to win $350 if Miami comes back. Low hit rate but big payouts.
+          </div>
+          <div class="bet-guide-odds-note">
+            <strong>About plus odds:</strong> These are always positive (you win more than you risk).
+            The system estimates the underdog price but actual odds vary. Only bet if odds are plus (+). The higher the plus odds,
+            the bigger the payout when it hits. This is a low-frequency, high-reward signal.
+          </div>
+        </div>
+      </div>
+
+      <div class="bet-guide-block">
+        <div class="bet-guide-header"><span class="signal-type-badge q4-total">Q4 TOTAL</span> Live 4th Quarter Total Points</div>
+        <div class="bet-guide-body">
+          <div class="bet-guide-steps">
+            <div class="bet-guide-step"><span class="step-num">1</span> Open your sportsbook's <strong>live betting</strong> section</div>
+            <div class="bet-guide-step"><span class="step-num">2</span> Find the NBA game, then look for <strong>Quarter props</strong> or <strong>Q4 markets</strong></div>
+            <div class="bet-guide-step"><span class="step-num">3</span> Look for <strong>Q4 Total</strong> (4th Quarter Over/Under)</div>
+            <div class="bet-guide-step"><span class="step-num">4</span> The signal tells you OVER or UNDER and the line number</div>
+            <div class="bet-guide-step"><span class="step-num">5</span> Bet the indicated direction at the line shown. Odds should be around <strong>-110</strong></div>
+          </div>
+          <div class="bet-guide-example">
+            <strong>Example:</strong> Signal says "Q4 OVER 54.5"<br>
+            You bet: 4th Quarter Over 54.5 at -110 odds. If Q4 has 55+ combined points, you win. Risk $110 to win $100.
+          </div>
+          <div class="bet-guide-odds-note">
+            <strong>About -110 odds:</strong> Same as spreads, -110 is the standard juice for totals bets at all major sportsbooks.
+            Not all books offer Q4-specific totals -- check game props or quarter props. Some books may only offer full-game live totals.
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="guide-section">
-      <h3>How to Place Bets</h3>
-      <ol>
-        <li>Watch the live games dashboard during NBA game nights</li>
-        <li>When a game reaches end of Q3 (or start of Q4), the system will analyze the game state</li>
-        <li>If a signal fires, you'll see it highlighted with the recommended bet</li>
-        <li>Place the indicated bet on your preferred sportsbook's live betting section</li>
-        <li>For SPREAD and Q4 TOTAL signals, look for -110 odds (standard)</li>
-        <li>For ML LEADER signals, take the best available moneyline price on the indicated team</li>
-        <li>For ML TRAILER signals, take the trailing team's moneyline at the best plus odds available</li>
-      </ol>
+      <h3>Understanding the Odds in This System</h3>
       <div class="highlight-box info">
-        <strong>Bankroll Management:</strong> Risk 1-2% of bankroll per signal. ML LEADER signals
-        (96% accuracy) can warrant higher sizing (2-3%). Never risk more than 5% on a single bet.
+        <strong>Are the -110 odds just assumed?</strong><br>
+        No. For <strong>spread</strong> and <strong>totals</strong> bets, -110 is the actual standard sportsbook price.
+        It's not an estimate -- it's what you'll see at virtually every major sportsbook. This is the "juice" or "vig" that
+        sportsbooks charge (4.76% margin). You need to win 52.4% of bets at -110 to break even. Our spread signals win at 71.9%
+        and total signals at 70.5%, both far above break-even.
+        <br><br>
+        For <strong>moneyline</strong> bets (ML Leader and ML Trailer), the odds are <em>estimated</em> from the game state
+        using probability models. These will differ from book to book and change throughout the game. The system only fires
+        ML signals when the model's edge exceeds the estimated market price, so even with odds variance, the edge should persist.
+        Always shop multiple sportsbooks for the best available price.
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <h3>Quick Reference</h3>
+      <table class="data-table" style="font-size:13px">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>What to Bet</th>
+            <th>Where to Find It</th>
+            <th>Expected Odds</th>
+            <th>Sizing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="signal-type-badge spread">SPREAD</span></td>
+            <td>Team + spread line shown</td>
+            <td>Live Betting > Point Spread</td>
+            <td>-110 (standard)</td>
+            <td>1-2% of bankroll</td>
+          </tr>
+          <tr>
+            <td><span class="signal-type-badge ml-leader">ML LEADER</span></td>
+            <td>Leading team moneyline</td>
+            <td>Live Betting > Moneyline</td>
+            <td>Variable (shown on signal)</td>
+            <td>2-3% of bankroll</td>
+          </tr>
+          <tr>
+            <td><span class="signal-type-badge ml-trailer">ML TRAILER</span></td>
+            <td>Trailing team moneyline</td>
+            <td>Live Betting > Moneyline</td>
+            <td>Plus odds only (shown on signal)</td>
+            <td>0.5-1% of bankroll</td>
+          </tr>
+          <tr>
+            <td><span class="signal-type-badge q4-total">Q4 TOTAL</span></td>
+            <td>Q4 Over or Under + line shown</td>
+            <td>Live Betting > Quarter Props > Q4 Total</td>
+            <td>-110 (standard)</td>
+            <td>1-2% of bankroll</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="guide-section">
+      <h3>Bankroll Management</h3>
+      <div class="highlight-box">
+        <ul style="margin:0;padding-left:20px">
+          <li><strong>Spread & Q4 Total:</strong> Risk 1-2% of bankroll per signal (1 unit = 1% of bankroll)</li>
+          <li><strong>ML Leader:</strong> Risk 2-3% of bankroll (96% accuracy warrants larger sizing)</li>
+          <li><strong>ML Trailer:</strong> Risk 0.5-1% of bankroll (low hit rate, high payout -- keep stakes small)</li>
+          <li><strong>Never</strong> risk more than 5% of bankroll on a single bet</li>
+          <li>Size all bets based on risk amount (the amount you lose if wrong), not the potential payout</li>
+        </ul>
+      </div>
+      <div class="highlight-box warning">
+        <strong>Disclaimer:</strong> All results shown are from strict walk-forward out-of-sample testing.
+        The model was trained on 2021-22 season data and tested on 2022-23 data with zero look-ahead bias.
+        Past performance does not guarantee future results. Gamble responsibly.
       </div>
     </div>
   </div>

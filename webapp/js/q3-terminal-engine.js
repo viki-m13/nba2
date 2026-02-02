@@ -280,10 +280,15 @@ window.Q3Engine = (function () {
       const edge = spreadConf - 0.5;
 
       if (edge >= 0.08) {
+        const spreadTeam = spreadDir === 'HOME' ? gameState.homeTeam : gameState.awayTeam;
+        const spreadLine = spreadDir === 'HOME'
+          ? -(Math.round(Math.abs(mktSpread) * 2) / 2)
+          : (Math.round(Math.abs(mktSpread) * 2) / 2);
+
         signals.push({
           signalType: 'SPREAD',
           direction: spreadDir,
-          team: spreadDir === 'HOME' ? gameState.homeTeam : gameState.awayTeam,
+          team: spreadTeam,
           confidence: spreadConf,
           edge: edge,
           predictedMargin: predictedMargin,
@@ -293,6 +298,13 @@ window.Q3Engine = (function () {
           regime,
           q3Lead,
           tier: getTier(spreadConf),
+          // Explicit bet instruction fields
+          betMarket: 'Live Point Spread',
+          betTeam: spreadTeam,
+          betLine: spreadLine,
+          betOddsType: 'standard',
+          betInstruction: `${spreadTeam} ${spreadLine > 0 ? '+' : ''}${spreadLine.toFixed(1)} (Live Spread)`,
+          betOddsNote: 'Standard -110 juice (typical for all spread bets)',
         });
       }
     }
@@ -300,6 +312,8 @@ window.Q3Engine = (function () {
     // ---- ML LEADER SIGNAL ----
     const mlEdge = actualLeaderProb - mktMLProb;
     if (mlEdge >= 0.10 && actualLeaderProb >= 0.85) {
+      const leaderOddsDisplay = Math.round(mktML);
+
       signals.push({
         signalType: 'ML_LEADER',
         direction: q3Lead > 0 ? 'HOME' : 'AWAY',
@@ -312,6 +326,14 @@ window.Q3Engine = (function () {
         regime,
         q3Lead,
         tier: getTier(actualLeaderProb),
+        // Explicit bet instruction fields
+        betMarket: 'Live Moneyline',
+        betTeam: leader,
+        betLine: null,
+        betOddsType: 'variable',
+        betInstruction: `${leader} Moneyline (to win)`,
+        betOddsNote: `Estimated odds ~${leaderOddsDisplay}. Odds vary by book -- take best available ML on ${leader}.`,
+        betMinOdds: leaderOddsDisplay,
       });
     }
 
@@ -321,6 +343,9 @@ window.Q3Engine = (function () {
     const trailerEdge = trailerProb - trailerMktProb;
     if (trailerEdge >= 0.05 && trailerProb >= 0.15 && q3LeadAbs <= 15) {
       const trailerOdds = probToAmerican(1 - mktMLProb);
+      const estOdds = trailerOdds > 0 ? trailerOdds : 100;
+      const estOddsDisplay = Math.round(estOdds);
+
       signals.push({
         signalType: 'ML_TRAILER',
         direction: q3Lead > 0 ? 'AWAY' : 'HOME',
@@ -328,10 +353,18 @@ window.Q3Engine = (function () {
         confidence: trailerProb,
         edge: trailerEdge,
         predictedMargin,
-        estimatedOdds: trailerOdds > 0 ? trailerOdds : 100,
+        estimatedOdds: estOdds,
         regime,
         q3Lead,
         tier: 'VALUE',
+        // Explicit bet instruction fields
+        betMarket: 'Live Moneyline',
+        betTeam: trailer,
+        betLine: null,
+        betOddsType: 'plus',
+        betInstruction: `${trailer} Moneyline (underdog)`,
+        betOddsNote: `Estimated odds ~+${estOddsDisplay}. Take best available ML on ${trailer}. Must be plus odds (+) for value.`,
+        betMinOdds: estOddsDisplay,
       });
     }
 
@@ -347,6 +380,9 @@ window.Q3Engine = (function () {
       const q4Edge = q4Conf - 0.5;
 
       if (q4Edge >= 0.10) {
+        const q4Line = Math.round(mktQ4OU * 2) / 2;  // Round to nearest 0.5
+        const q3Total = gameState.q3Home + gameState.q3Away;
+
         signals.push({
           signalType: 'Q4_TOTAL',
           direction: q4Dir,
@@ -359,6 +395,15 @@ window.Q3Engine = (function () {
           regime,
           q3Lead,
           tier: getTier(q4Conf),
+          // Explicit bet instruction fields
+          betMarket: 'Live Q4 Total',
+          betTeam: null,
+          betLine: q4Line,
+          betOddsType: 'standard',
+          betInstruction: `Q4 ${q4Dir} ${q4Line.toFixed(1)} points`,
+          betOddsNote: 'Standard -110 juice (typical for all totals bets)',
+          q3Total: q3Total,
+          fullGameTotalEstimate: q3Total + predQ4,
         });
       }
     }
