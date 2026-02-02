@@ -129,24 +129,27 @@
       <button class="filter-btn" data-filter="ML_LEADER">ML Leader</button>
       <button class="filter-btn" data-filter="ML_TRAILER">ML Trailer</button>
       <button class="filter-btn" data-filter="Q4_TOTAL">Q4 Total</button>
-      <span style="margin-left:auto;font-size:12px;color:var(--text-muted);font-family:var(--font-mono)" id="filter-summary">658 signals</span>
+      <span class="filter-summary-text" id="filter-summary">658 signals</span>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Historical OOS Signals (Walk-Forward Validated)</span>
+        <span class="card-title">Trade Log — Historical OOS Signals</span>
+        <span class="card-badge" style="color:var(--text-muted)">Walk-Forward Validated</span>
       </div>
       <div class="card-body" style="overflow-x:auto">
-        <table class="data-table" id="signals-table">
+        <table class="data-table trade-log-table" id="signals-table">
           <thead>
             <tr>
-              <th>Game</th>
-              <th>Type</th>
+              <th>Date</th>
+              <th>Matchup</th>
+              <th>Signal</th>
               <th>Bet</th>
+              <th>Q3 State</th>
               <th>Conf</th>
               <th>Edge</th>
-              <th>Odds</th>
               <th>Result</th>
+              <th>P&L</th>
             </tr>
           </thead>
           <tbody id="signals-tbody"></tbody>
@@ -157,60 +160,40 @@
 
   <!-- ========== PERFORMANCE VIEW ========== -->
   <div class="view" id="view-performance">
-    <!-- Odds explanation banner -->
-    <div class="odds-explainer">
-      <strong>How odds work for each signal type:</strong>
-      <div class="odds-explainer-grid">
-        <div><span class="signal-type-badge spread">SPREAD</span> Standard -110 juice. This is what every sportsbook charges for spread bets. The line number (e.g. -7.5) is estimated from the Q3 game state.</div>
-        <div><span class="signal-type-badge ml-leader">ML LEADER</span> Variable moneyline odds, estimated from win probability. Actual odds depend on sportsbook and timing. Heavy favorites may have large negative odds.</div>
-        <div><span class="signal-type-badge ml-trailer">ML TRAILER</span> Plus odds (underdog). These pay more than you risk. Estimated from the market but actual odds vary. Only bet at plus odds.</div>
-        <div><span class="signal-type-badge q4-total">Q4 TOTAL</span> Standard -110 juice. This is what every sportsbook charges for totals bets. The line number (e.g. O/U 54.5) is estimated from pace and game state.</div>
-      </div>
-    </div>
-
     <div class="stats-grid" id="performance-stats">
-      <!-- Signal Type Breakdown -->
       <div class="stat-section">
-        <div class="stat-section-title">Spread (Live Point Spread @ -110)</div>
-        <div class="stat-section-sub">Bet: [Team] [spread line] at standard -110 juice</div>
+        <div class="stat-section-title"><span class="signal-type-badge spread">SPREAD</span> Live Point Spread</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">233/324</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">71.9%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+120.8u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+37.3%</span></div>
-        <div class="stat-row"><span class="stat-label">Break-even</span><span class="stat-value">52.4%</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:71.9%;background:var(--green)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">ML Leader (Live Moneyline, Variable Odds)</div>
-        <div class="stat-section-sub">Bet: [Leading team] moneyline at best available price</div>
+        <div class="stat-section-title"><span class="signal-type-badge ml-leader">ML LEADER</span> Moneyline Favorite</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">24/25</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">96.0%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+4.7u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.9%</span></div>
-        <div class="stat-row"><span class="stat-label">Odds range</span><span class="stat-value">-200 to -1500</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:96%;background:var(--green)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">ML Trailer (Underdog Moneyline, Plus Odds)</div>
-        <div class="stat-section-sub">Bet: [Trailing team] moneyline at plus odds (they must be the underdog)</div>
+        <div class="stat-section-title"><span class="signal-type-badge ml-trailer">ML TRAILER</span> Underdog Value</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">21/55</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value">38.2%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+10.4u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+18.8%</span></div>
-        <div class="stat-row"><span class="stat-label">Avg payout</span><span class="stat-value">+250 to +600</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:38.2%;background:var(--yellow)"></div></div>
       </div>
 
       <div class="stat-section">
-        <div class="stat-section-title">Q4 Total (Live Q4 O/U @ -110)</div>
-        <div class="stat-section-sub">Bet: Q4 Over/Under [line] at standard -110 juice</div>
+        <div class="stat-section-title"><span class="signal-type-badge q4-total">Q4 TOTAL</span> Quarter Total O/U</div>
         <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value">179/254</span></div>
         <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value positive">70.5%</span></div>
         <div class="stat-row"><span class="stat-label">P&L</span><span class="stat-value positive">+87.7u</span></div>
         <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive">+34.5%</span></div>
-        <div class="stat-row"><span class="stat-label">Break-even</span><span class="stat-value">52.4%</span></div>
         <div class="accuracy-bar"><div class="accuracy-bar-fill" style="width:70.5%;background:var(--green)"></div></div>
       </div>
     </div>
@@ -304,9 +287,7 @@
             You bet: Lakers -7.5 at -110 odds. If Lakers win by 8+, you win. Risk $110 to win $100.
           </div>
           <div class="bet-guide-odds-note">
-            <strong>About -110 odds:</strong> This is the standard juice every sportsbook charges for spread bets.
-            It is not an estimate -- it's what you'll see at DraftKings, FanDuel, BetMGM, etc.
-            Some books offer -105 reduced juice. If your book shows -115 or worse, the edge is slightly reduced.
+            Odds: -110 standard
           </div>
         </div>
       </div>
@@ -326,10 +307,7 @@
             You bet: Celtics moneyline. Your book might show -400 to -500. Risk $450 to win $100 (at -450).
           </div>
           <div class="bet-guide-odds-note">
-            <strong>About moneyline odds:</strong> These are NOT fixed at -110. They vary by sportsbook and how much
-            time remains. The system estimates what the market odds should be from the game state. The signal only fires
-            when model confidence significantly exceeds the estimated market probability, so you have edge even at the book's actual odds.
-            Shop multiple books for the least negative (best) price.
+            Odds: Variable (shown on signal). Shop for best price.
           </div>
         </div>
       </div>
@@ -349,9 +327,7 @@
             You bet: Heat moneyline at +350. Risk $100 to win $350 if Miami comes back. Low hit rate but big payouts.
           </div>
           <div class="bet-guide-odds-note">
-            <strong>About plus odds:</strong> These are always positive (you win more than you risk).
-            The system estimates the underdog price but actual odds vary. Only bet if odds are plus (+). The higher the plus odds,
-            the bigger the payout when it hits. This is a low-frequency, high-reward signal.
+            Odds: Plus odds only. Higher = bigger payout.
           </div>
         </div>
       </div>
@@ -371,28 +347,12 @@
             You bet: 4th Quarter Over 54.5 at -110 odds. If Q4 has 55+ combined points, you win. Risk $110 to win $100.
           </div>
           <div class="bet-guide-odds-note">
-            <strong>About -110 odds:</strong> Same as spreads, -110 is the standard juice for totals bets at all major sportsbooks.
-            Not all books offer Q4-specific totals -- check game props or quarter props. Some books may only offer full-game live totals.
+            Odds: -110 standard. Check game props / quarter props.
           </div>
         </div>
       </div>
     </div>
 
-    <div class="guide-section">
-      <h3>Understanding the Odds in This System</h3>
-      <div class="highlight-box info">
-        <strong>Are the -110 odds just assumed?</strong><br>
-        No. For <strong>spread</strong> and <strong>totals</strong> bets, -110 is the actual standard sportsbook price.
-        It's not an estimate -- it's what you'll see at virtually every major sportsbook. This is the "juice" or "vig" that
-        sportsbooks charge (4.76% margin). You need to win 52.4% of bets at -110 to break even. Our spread signals win at 71.9%
-        and total signals at 70.5%, both far above break-even.
-        <br><br>
-        For <strong>moneyline</strong> bets (ML Leader and ML Trailer), the odds are <em>estimated</em> from the game state
-        using probability models. These will differ from book to book and change throughout the game. The system only fires
-        ML signals when the model's edge exceeds the estimated market price, so even with odds variance, the edge should persist.
-        Always shop multiple sportsbooks for the best available price.
-      </div>
-    </div>
 
     <div class="guide-section">
       <h3>Quick Reference</h3>

@@ -236,6 +236,13 @@
           sig.timestamp = new Date().toISOString();
           sig.isFinished = true;
           sig.actualMargin = actualMargin;
+          sig.quarter = 'FINAL';
+
+          // Q3 end scores
+          if (q3End) {
+            sig.q3HomeScore = q3End.homeScore;
+            sig.q3AwayScore = q3End.awayScore;
+          }
 
           // Determine if signal was correct
           if (sig.signalType === 'SPREAD') {
@@ -243,6 +250,12 @@
             sig.correct = pickedHome
               ? actualMargin > sig.liveSpread
               : actualMargin < sig.liveSpread;
+            // Cover margin
+            if (pickedHome) {
+              sig.cover_margin = actualMargin - sig.liveSpread;
+            } else {
+              sig.cover_margin = sig.liveSpread - actualMargin;
+            }
           } else if (sig.signalType === 'ML_LEADER' || sig.signalType === 'ML_TRAILER') {
             const pickedHome = sig.direction === 'HOME';
             sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
@@ -341,19 +354,26 @@
       const statusClass = g.status === 'live' ? 'live' : g.status === 'final' ? 'final' : 'scheduled';
 
       let statusText = g.statusText || g.status.toUpperCase();
-      if (g.status === 'live' && g.quarter >= 3) {
-        statusText = `Q${g.quarter} ${g.gameClock}`;
+      if (g.status === 'live') {
+        statusText = `Q${g.quarter || '?'} ${g.gameClock || ''}`;
       }
 
       // Check if at end of Q3
       const atQ3End = g.quarter === 3 && g.gameClock === '0:00';
       if (atQ3End) statusText = 'Q3 END - ANALYZING';
 
+      // Point differential
+      const diff = (g.homeScore || 0) - (g.awayScore || 0);
+      const diffStr = diff > 0 ? `${g.homeTeam} +${diff}` : diff < 0 ? `${g.awayTeam} +${Math.abs(diff)}` : 'Tied';
+
       return `
         <div class="game-card ${hasSignal ? 'has-signal' : ''}">
           <div class="game-status-bar">
             <span class="game-status ${atQ3End ? 'q3-end' : statusClass}">${statusText}</span>
-            ${hasSignal ? '<span class="tier-badge gold">SIGNAL</span>' : ''}
+            <div class="game-status-right">
+              ${g.status === 'live' || g.status === 'final' ? `<span class="game-diff">${diffStr}</span>` : ''}
+              ${hasSignal ? '<span class="tier-badge gold">SIGNAL</span>' : ''}
+            </div>
           </div>
           <div class="game-scoreboard">
             <div class="game-team">
@@ -361,7 +381,7 @@
               <div class="game-team-sub">Away</div>
             </div>
             <div class="game-score">
-              ${g.awayScore}<span class="sep">-</span>${g.homeScore}
+              ${g.awayScore || 0}<span class="sep">-</span>${g.homeScore || 0}
             </div>
             <div class="game-team">
               <div class="game-team-name">${g.homeTeam}</div>
@@ -379,11 +399,17 @@
 
     return sigs.map(s => {
       const betInfo = buildBetInstruction(s);
+      const type = s.signalType || '';
+      const typeClass = type.toLowerCase().replace('_', '-');
+      const resultTag = s.correct !== undefined
+        ? `<span class="result-tag ${s.correct ? 'win' : 'loss'}">${s.correct ? 'W' : 'L'}</span>`
+        : '';
       return `
         <div class="signal-pick game-card-bet">
-          <span class="signal-pick-label">${betInfo.market}</span>
+          <span class="signal-type-badge ${typeClass}" style="font-size:8px;padding:2px 5px">${type.replace('_', ' ')}</span>
           <span class="signal-pick-value">${betInfo.pick}</span>
-          <span class="signal-pick-odds">${betInfo.oddsDisplay} | ${(s.confidence * 100).toFixed(0)}% conf</span>
+          <span class="signal-pick-odds">${betInfo.oddsDisplay} | ${(s.confidence * 100).toFixed(0)}%</span>
+          ${resultTag}
         </div>
       `;
     }).join('');
@@ -435,7 +461,9 @@
   function renderSignalCard(s, isLive = false) {
     const tierClass = (s.tier || 'watch').toLowerCase();
     const typeClass = (s.signalType || s.signal_type || '').toLowerCase().replace('_', '-');
-    const matchup = `${s.awayTeam || s.away_team || ''} @ ${s.homeTeam || s.home_team || ''}`;
+    const homeTeam = s.homeTeam || s.home_team || '';
+    const awayTeam = s.awayTeam || s.away_team || '';
+    const matchup = `${awayTeam} @ ${homeTeam}`;
 
     const confidence = s.confidence || 0;
     const edge = s.edge || 0;
@@ -446,22 +474,93 @@
     const type = s.signalType || s.signal_type || '';
     const dir = s.direction;
 
+    // Game scores
+    const homeScore = s.homeScore || s.final_home || 0;
+    const awayScore = s.awayScore || s.final_away || 0;
+    const finalMargin = s.actualMargin || s.actual_margin || s.final_margin || (homeScore - awayScore);
+    const gameDate = s.date ? formatGameDate(s.date) : '';
+    const isFinished = s.isFinished || s.final_home;
+    const quarter = s.quarter || (isFinished ? 'FINAL' : 'Q4');
+
+    // Q3 score estimation
+    const q3Home = q3Lead > 0 ? Math.round((homeScore + awayScore) * 0.75 / 2 + q3Lead / 2) : Math.round((homeScore + awayScore) * 0.75 / 2 + q3Lead / 2);
+    const q3Away = q3Home - q3Lead;
+    const pointDiff = Math.abs(q3Lead);
+
     // Build explicit bet instruction
     const betInfo = buildBetInstruction(s);
+
+    // Determine leader/trailer at Q3
+    const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
+    const q3Trailer = q3Lead > 0 ? awayTeam : (q3Lead < 0 ? homeTeam : 'TIE');
+
+    // Build result detail for finished games
+    let resultDetail = '';
+    if (!isLive && correct !== undefined) {
+      if (type === 'Q4_TOTAL') {
+        const actualQ4 = s.actual_q4 || s.actualQ4 || 0;
+        const line = s.live_q4_ou || s.liveQ4OU || 0;
+        const q4Diff = (actualQ4 - line).toFixed(1);
+        resultDetail = `
+          <div class="signal-result-detail ${correct ? 'win' : 'loss'}">
+            <div class="result-badge">${correct ? 'WIN' : 'LOSS'}</div>
+            <div class="result-stats">
+              <span>Q4 Actual: <strong>${actualQ4.toFixed(0)} pts</strong></span>
+              <span>Line: ${line.toFixed(1)}</span>
+              <span>Margin: <strong>${q4Diff > 0 ? '+' : ''}${q4Diff}</strong></span>
+              <span>Final: ${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}</span>
+            </div>
+          </div>`;
+      } else {
+        const spreadLine = s.liveSpread || s.live_spread || 0;
+        const coverMargin = s.cover_margin !== undefined ? s.cover_margin : 0;
+        const winner = finalMargin > 0 ? homeTeam : awayTeam;
+        const winMargin = Math.abs(finalMargin);
+        resultDetail = `
+          <div class="signal-result-detail ${correct ? 'win' : 'loss'}">
+            <div class="result-badge">${correct ? 'WIN' : 'LOSS'}</div>
+            <div class="result-stats">
+              <span>Final: <strong>${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}</strong></span>
+              <span>${winner} wins by ${winMargin}</span>
+              ${type === 'SPREAD' ? `<span>Cover: ${coverMargin > 0 ? '+' : ''}${coverMargin.toFixed(1)} pts</span>` : ''}
+              ${type === 'ML_LEADER' || type === 'ML_TRAILER' ? `<span>Picked: ${dir === 'HOME' ? homeTeam : awayTeam} ${correct ? '(correct)' : '(wrong)'}</span>` : ''}
+            </div>
+          </div>`;
+      }
+    }
 
     return `
       <div class="signal-card ${tierClass}">
         <div class="signal-header">
-          <span class="signal-matchup">${matchup}</span>
-          <div style="display:flex;gap:6px;align-items:center">
+          <div class="signal-header-left">
+            ${gameDate ? `<span class="signal-date">${gameDate}</span>` : ''}
+            <span class="signal-matchup">${matchup}</span>
+          </div>
+          <div class="signal-header-right">
+            <span class="signal-quarter-badge ${isFinished ? 'final' : ''}">${quarter}</span>
             <span class="tier-badge ${tierClass}">${(s.tier || 'WATCH').toUpperCase()}</span>
             <span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span>
           </div>
         </div>
 
+        <div class="signal-scoreboard">
+          <div class="signal-team-col">
+            <span class="signal-team-abbr ${q3Lead < 0 ? 'leading' : ''}">${awayTeam}</span>
+            <span class="signal-team-role">Away</span>
+          </div>
+          <div class="signal-score-col">
+            <div class="signal-score-main">${isFinished ? `${awayScore} - ${homeScore}` : `Q3: ${q3Away} - ${q3Home}`}</div>
+            <div class="signal-score-sub">${isFinished ? `Q3 End: ${q3Away} - ${q3Home}` : `Diff: ${pointDiff} pts`}</div>
+          </div>
+          <div class="signal-team-col">
+            <span class="signal-team-abbr ${q3Lead > 0 ? 'leading' : ''}">${homeTeam}</span>
+            <span class="signal-team-role">Home</span>
+          </div>
+        </div>
+
         <div class="bet-slip">
           <div class="bet-slip-header">
-            <span class="bet-slip-label">PLACE THIS BET</span>
+            <span class="bet-slip-label">BET</span>
             <span class="bet-slip-market">${betInfo.market}</span>
           </div>
           <div class="bet-slip-main">
@@ -469,7 +568,6 @@
             <div class="bet-slip-odds">${betInfo.oddsDisplay}</div>
           </div>
           ${betInfo.lineDetail ? `<div class="bet-slip-detail">${betInfo.lineDetail}</div>` : ''}
-          <div class="bet-slip-note">${betInfo.oddsNote}</div>
         </div>
 
         <div class="signal-body">
@@ -482,29 +580,23 @@
             <span class="signal-field-value positive">${(edge * 100).toFixed(1)}%</span>
           </div>
           <div class="signal-field">
-            <span class="signal-field-label">Q3 Score</span>
-            <span class="signal-field-value">${q3Lead > 0 ? 'Home +' + q3Lead : q3Lead < 0 ? 'Away +' + Math.abs(q3Lead) : 'Tied'}</span>
+            <span class="signal-field-label">Q3 Lead</span>
+            <span class="signal-field-value">${q3Leader} +${pointDiff}</span>
           </div>
           <div class="signal-field">
             <span class="signal-field-label">Model Margin</span>
             <span class="signal-field-value">${formatMargin(s.predictedMargin || s.predicted_margin)}</span>
           </div>
           <div class="signal-field">
-            <span class="signal-field-label">Live Spread Est.</span>
+            <span class="signal-field-label">Mkt Spread</span>
             <span class="signal-field-value">${formatMargin(s.liveSpread || s.live_spread)}</span>
           </div>
           <div class="signal-field">
             <span class="signal-field-label">Regime</span>
-            <span class="signal-field-value">${regime}</span>
+            <span class="signal-field-value regime-${regime.toLowerCase()}">${regime}</span>
           </div>
         </div>
-        ${!isLive && correct !== undefined ? `
-          <div class="signal-result ${correct ? 'win' : 'loss'}">
-            ${correct ? 'WIN' : 'LOSS'} | ${type === 'Q4_TOTAL'
-              ? `Q4 total: ${(s.actual_q4 || s.actualQ4 || 0).toFixed(0)} pts (line: ${((s.live_q4_ou || s.liveQ4OU || 0) * 2 / 2).toFixed(1)})`
-              : `Final margin: ${formatMargin(s.actual_margin || s.actualMargin)}`}
-          </div>
-        ` : ''}
+        ${resultDetail}
       </div>`;
   }
 
@@ -522,8 +614,6 @@
     if (type === 'SPREAD') {
       const team = dir === 'HOME' ? homeTeam : awayTeam;
       const liveSpread = s.liveSpread || s.live_spread || 0;
-      // The bet line: if betting HOME and home leads, they get a negative spread
-      // liveSpread is home-relative (positive = home leading)
       let betLineVal;
       if (dir === 'HOME') {
         betLineVal = -(Math.round(Math.abs(liveSpread) * 2) / 2);
@@ -537,7 +627,7 @@
         pick: `${team} ${betLineStr}`,
         oddsDisplay: '-110',
         lineDetail: '',
-        oddsNote: '-110 is standard juice for spread bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
+        oddsNote: '',
       };
     }
 
@@ -549,7 +639,7 @@
         pick: `${team} to WIN`,
         oddsDisplay: formatOdds(oddsNum),
         lineDetail: '',
-        oddsNote: `Estimated market odds: ${formatOdds(oddsNum)}. Actual odds vary by sportsbook. Take the best ML price available on ${team}.`,
+        oddsNote: '',
       };
     }
 
@@ -557,11 +647,11 @@
       const team = s.team || (dir === 'HOME' ? homeTeam : awayTeam);
       const oddsNum = Math.round(odds);
       return {
-        market: 'Live Moneyline (Underdog Value)',
-        pick: `${team} to WIN (underdog)`,
+        market: 'Live Moneyline (Underdog)',
+        pick: `${team} to WIN`,
         oddsDisplay: `+${Math.abs(oddsNum)}`,
         lineDetail: '',
-        oddsNote: `Estimated odds: +${Math.abs(oddsNum)}. Shop for the best plus-odds price. Only bet if you can get plus odds (+). The value is in the payout, not win rate.`,
+        oddsNote: '',
       };
     }
 
@@ -570,11 +660,11 @@
       const q4Line = Math.round(q4OU * 2) / 2;
       const predQ4 = s.predictedQ4 || s.predicted_q4 || 0;
       return {
-        market: 'Live Q4 Total Points',
+        market: 'Live Q4 Total',
         pick: `Q4 ${dir} ${q4Line.toFixed(1)}`,
         oddsDisplay: '-110',
-        lineDetail: `Model predicts ${predQ4.toFixed(1)} combined pts in Q4.`,
-        oddsNote: '-110 is standard juice for totals bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
+        lineDetail: `Model: ${predQ4.toFixed(1)} pts`,
+        oddsNote: '',
       };
     }
 
@@ -583,7 +673,7 @@
       pick: dir,
       oddsDisplay: formatOdds(odds),
       lineDetail: '',
-      oddsNote: 'Check your sportsbook for current odds.',
+      oddsNote: '',
     };
   }
 
@@ -601,36 +691,103 @@
       filtered = historicalSignals.filter(s => s.signal_type === filter);
     }
 
+    // Sort by date descending (most recent first)
+    filtered = filtered.slice().sort((a, b) => {
+      const da = a.date || '0';
+      const db = b.date || '0';
+      return db.localeCompare(da);
+    });
+
     if (summary) {
       const correct = filtered.filter(s => s.correct).length;
       const total = filtered.length;
       const acc = total > 0 ? (correct / total * 100).toFixed(1) : '0.0';
-      summary.textContent = `${correct}/${total} (${acc}%) | ${total} signals`;
+      // Compute P&L
+      let pnl = 0;
+      filtered.forEach(s => {
+        const o = s.estimated_odds || -110;
+        if (s.correct) {
+          pnl += o < 0 ? 100 / Math.abs(o) : o / 100;
+        } else {
+          pnl -= 1;
+        }
+      });
+      summary.textContent = `${correct}/${total} (${acc}%) | P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)}u`;
     }
 
-    // Show max 200 rows
-    const display = filtered.slice(0, 200);
+    // Show max 300 rows
+    const display = filtered.slice(0, 300);
 
     tbody.innerHTML = display.map(s => {
       const type = s.signal_type || '';
       const typeClass = type.toLowerCase().replace('_', '-');
       const dir = s.direction || '';
-      const conf = (s.confidence * 100).toFixed(1);
+      const conf = (s.confidence * 100).toFixed(0);
       const edge = (s.edge * 100).toFixed(1);
       const q3Lead = s.q3_lead || 0;
       const odds = s.estimated_odds || s.estimatedOdds || -110;
+      const homeTeam = s.home_team || '';
+      const awayTeam = s.away_team || '';
 
-      // Build explicit bet description for historical table
+      // Date
+      const dateStr = s.date ? formatGameDate(s.date) : '';
+
+      // Score info
+      const finalHome = s.final_home || 0;
+      const finalAway = s.final_away || 0;
+      const finalMargin = s.final_margin || (finalHome - finalAway);
+      const winner = finalMargin > 0 ? homeTeam : awayTeam;
+      const winMargin = Math.abs(finalMargin);
+
+      // Q3 lead display
+      const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
+      const q3Diff = Math.abs(q3Lead);
+
+      // Build bet description
       const betDesc = buildHistoricalBetDescription(s);
 
-      return `<tr>
-        <td>${s.away_team} @ ${s.home_team}</td>
+      // Result detail
+      let resultNote = '';
+      if (type === 'Q4_TOTAL') {
+        const actualQ4 = s.actual_q4 || 0;
+        const line = s.live_q4_ou || 0;
+        resultNote = `Q4: ${actualQ4.toFixed(0)} (line ${line.toFixed(1)})`;
+      } else if (type === 'SPREAD') {
+        const cover = s.cover_margin;
+        resultNote = cover !== undefined ? `Cover: ${cover > 0 ? '+' : ''}${cover.toFixed(1)}` : '';
+      } else {
+        resultNote = `${winner} by ${winMargin}`;
+      }
+
+      // P&L for this signal
+      let unitPnl;
+      if (s.correct) {
+        unitPnl = odds < 0 ? 100 / Math.abs(odds) : odds / 100;
+      } else {
+        unitPnl = -1;
+      }
+
+      return `<tr class="${s.correct ? '' : 'loss-row'}">
+        <td class="date-cell">${dateStr}</td>
+        <td class="matchup-cell">
+          <div>${awayTeam} @ ${homeTeam}</div>
+          <div class="score-sub">${finalAway}-${finalHome}</div>
+        </td>
         <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
         <td class="bet-desc-cell">${betDesc}</td>
+        <td class="q3-cell">
+          <div>${q3Leader} +${q3Diff}</div>
+          <div class="regime-sub">${s.regime || ''}</div>
+        </td>
         <td>${conf}%</td>
         <td class="positive">${edge}%</td>
-        <td>${formatOdds(odds)}</td>
-        <td class="${s.correct ? 'positive' : 'negative'}">${s.correct ? 'WIN' : 'LOSS'}</td>
+        <td class="${s.correct ? 'positive' : 'negative'}">
+          <div class="result-cell">
+            <span class="result-tag ${s.correct ? 'win' : 'loss'}">${s.correct ? 'W' : 'L'}</span>
+            <span class="result-note">${resultNote}</span>
+          </div>
+        </td>
+        <td class="${unitPnl >= 0 ? 'positive' : 'negative'}">${unitPnl >= 0 ? '+' : ''}${unitPnl.toFixed(2)}u</td>
       </tr>`;
     }).join('');
   }
@@ -658,18 +815,18 @@
 
     if (type === 'ML_LEADER') {
       const team = dir === 'HOME' ? homeTeam : awayTeam;
-      return `<strong>${team} ML</strong> <span class="bet-desc-sub">moneyline @ ${formatOdds(Math.round(odds))}</span>`;
+      return `<strong>${team} ML</strong> <span class="bet-desc-sub">@ ${formatOdds(Math.round(odds))}</span>`;
     }
 
     if (type === 'ML_TRAILER') {
       const team = dir === 'HOME' ? homeTeam : awayTeam;
-      return `<strong>${team} ML</strong> <span class="bet-desc-sub">underdog @ +${Math.abs(Math.round(odds))}</span>`;
+      return `<strong>${team} ML</strong> <span class="bet-desc-sub">dog @ +${Math.abs(Math.round(odds))}</span>`;
     }
 
     if (type === 'Q4_TOTAL') {
       const q4OU = s.live_q4_ou || 0;
       const q4Line = Math.round(q4OU * 2) / 2;
-      return `<strong>Q4 ${dir} ${q4Line.toFixed(1)}</strong> <span class="bet-desc-sub">total @ -110</span>`;
+      return `<strong>Q4 ${dir} ${q4Line.toFixed(1)}</strong> <span class="bet-desc-sub">@ -110</span>`;
     }
 
     return dir;
@@ -727,6 +884,16 @@
     if (margin === undefined || margin === null) return '-';
     const m = parseFloat(margin);
     return m > 0 ? `+${m.toFixed(1)}` : m.toFixed(1);
+  }
+
+  function formatGameDate(dateStr) {
+    if (!dateStr || dateStr.length < 8) return dateStr || '';
+    const y = dateStr.substring(0, 4);
+    const m = dateStr.substring(4, 6);
+    const d = dateStr.substring(6, 8);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monthIdx = parseInt(m, 10) - 1;
+    return `${months[monthIdx]} ${parseInt(d, 10)}, ${y}`;
   }
 
   // =========================================================================
