@@ -263,7 +263,9 @@ window.Q3Engine = (function () {
 
     const leader = q3Lead > 0 ? gameState.homeTeam : gameState.awayTeam;
     const trailer = q3Lead > 0 ? gameState.awayTeam : gameState.homeTeam;
-    const actualLeaderProb = q3Lead > 0 ? leaderWinProb : 1 - leaderWinProb;
+    // leaderWinProb is P(Q3 leader wins) from LR trained on y_leader target.
+    // No direction flip needed -- the model already accounts for who leads via features.
+    const actualLeaderProb = leaderWinProb;
 
     // Regime
     let regime;

@@ -500,7 +500,9 @@
         </div>
         ${!isLive && correct !== undefined ? `
           <div class="signal-result ${correct ? 'win' : 'loss'}">
-            ${correct ? 'WIN' : 'LOSS'} | Final margin: ${formatMargin(s.actual_margin || s.actualMargin)}
+            ${correct ? 'WIN' : 'LOSS'} | ${type === 'Q4_TOTAL'
+              ? `Q4 total: ${(s.actual_q4 || s.actualQ4 || 0).toFixed(0)} pts (line: ${((s.live_q4_ou || s.liveQ4OU || 0) * 2 / 2).toFixed(1)})`
+              : `Final margin: ${formatMargin(s.actual_margin || s.actualMargin)}`}
           </div>
         ` : ''}
       </div>`;
@@ -534,7 +536,7 @@
         market: 'Live Point Spread',
         pick: `${team} ${betLineStr}`,
         oddsDisplay: '-110',
-        lineDetail: `Go to live betting > find this game > bet ${team} spread at ${betLineStr}`,
+        lineDetail: '',
         oddsNote: '-110 is standard juice for spread bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
       };
     }
@@ -546,8 +548,8 @@
         market: 'Live Moneyline',
         pick: `${team} to WIN`,
         oddsDisplay: formatOdds(oddsNum),
-        lineDetail: `Go to live betting > find this game > bet ${team} moneyline`,
-        oddsNote: `Estimated market odds: ${formatOdds(oddsNum)}. Actual odds vary by sportsbook. Take the best ML price available on ${team}. The model edge is calculated against estimated market odds.`,
+        lineDetail: '',
+        oddsNote: `Estimated market odds: ${formatOdds(oddsNum)}. Actual odds vary by sportsbook. Take the best ML price available on ${team}.`,
       };
     }
 
@@ -558,7 +560,7 @@
         market: 'Live Moneyline (Underdog Value)',
         pick: `${team} to WIN (underdog)`,
         oddsDisplay: `+${Math.abs(oddsNum)}`,
-        lineDetail: `Go to live betting > find this game > bet ${team} moneyline (they are trailing)`,
+        lineDetail: '',
         oddsNote: `Estimated odds: +${Math.abs(oddsNum)}. Shop for the best plus-odds price. Only bet if you can get plus odds (+). The value is in the payout, not win rate.`,
       };
     }
@@ -571,7 +573,7 @@
         market: 'Live Q4 Total Points',
         pick: `Q4 ${dir} ${q4Line.toFixed(1)}`,
         oddsDisplay: '-110',
-        lineDetail: `Go to live betting > game props/quarters > bet Q4 total ${dir.toLowerCase()} ${q4Line.toFixed(1)}. Model predicts ${predQ4.toFixed(1)} pts in Q4.`,
+        lineDetail: `Model predicts ${predQ4.toFixed(1)} combined pts in Q4.`,
         oddsNote: '-110 is standard juice for totals bets at all major sportsbooks. If your book shows different juice (e.g. -115), the edge is slightly reduced.',
       };
     }

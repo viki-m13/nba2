@@ -1036,14 +1036,15 @@ def generate_signals_v2(preds: dict, features_df: pd.DataFrame,
         if q3_lead > 0:
             leader = game['home_team']
             trailer = game['away_team']
-            leader_prob = cal_prob
         elif q3_lead < 0:
             leader = game['away_team']
             trailer = game['home_team']
-            leader_prob = 1 - cal_prob
         else:
             continue  # Skip tied games
 
+        # cal_prob is P(Q3 leader wins) from ensemble trained on y_leader target.
+        # It is NOT P(home wins) -- no direction flip needed regardless of who leads.
+        leader_prob = cal_prob
         trailer_prob = 1 - leader_prob
 
         # Market estimates
