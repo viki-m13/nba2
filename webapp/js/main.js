@@ -50,21 +50,22 @@
   // =========================================================================
 
   async function loadModel() {
-    try {
-      // Try to load from file first (when served from same origin)
-      const resp = await fetch('../output/q3_terminal_v2_js_model.json');
-      if (resp.ok) {
-        const params = await resp.json();
-        Q3Engine.loadModel(params);
-        modelLoaded = true;
-        console.log('[Q3Terminal] Model loaded from file');
-        return;
+    const paths = ['data/model.json', '../output/q3_terminal_v2_js_model.json'];
+    for (const path of paths) {
+      try {
+        const resp = await fetch(path);
+        if (resp.ok) {
+          const params = await resp.json();
+          Q3Engine.loadModel(params);
+          modelLoaded = true;
+          console.log(`[Q3Terminal] Model loaded from ${path}`);
+          return;
+        }
+      } catch (e) {
+        // Try next path
       }
-    } catch (e) {
-      console.warn('[Q3Terminal] Could not load model file, using fallback');
     }
-
-    // Model will work without loading (won't generate live signals)
+    console.warn('[Q3Terminal] Could not load model from any path');
     modelLoaded = false;
   }
 
@@ -73,19 +74,23 @@
   // =========================================================================
 
   async function loadHistoricalSignals() {
-    try {
-      const resp = await fetch('../output/q3_terminal_v2_signals.json');
-      if (resp.ok) {
-        const data = await resp.json();
-        historicalSignals = data.signals || [];
-        console.log(`[Q3Terminal] Loaded ${historicalSignals.length} historical signals`);
-        renderHistoricalSignals();
-        renderRegimeTable();
-        return;
+    const paths = ['data/signals.json', '../output/q3_terminal_v2_signals.json'];
+    for (const path of paths) {
+      try {
+        const resp = await fetch(path);
+        if (resp.ok) {
+          const data = await resp.json();
+          historicalSignals = data.signals || [];
+          console.log(`[Q3Terminal] Loaded ${historicalSignals.length} historical signals from ${path}`);
+          renderHistoricalSignals();
+          renderRegimeTable();
+          return;
+        }
+      } catch (e) {
+        // Try next path
       }
-    } catch (e) {
-      console.warn('[Q3Terminal] Could not load historical signals');
     }
+    console.warn('[Q3Terminal] Could not load historical signals from any path');
     historicalSignals = [];
   }
 
@@ -170,12 +175,15 @@
       renderGamesGrid(games, 'games-grid');
       renderGamesGrid(liveGames.length > 0 ? liveGames : games, 'live-games-grid');
 
-      // Check for Q3-end signals
+      // Check for Q3-end signals on live games
       for (const game of liveGames) {
         checkForSignal(game);
       }
 
-      // Render active signals
+      // Retroactively analyze finished games for signals
+      await processFinishedGames(games);
+
+      // Render active signals (includes both live and finished)
       renderActiveSignals();
 
     } catch (e) {
@@ -184,7 +192,80 @@
   }
 
   // =========================================================================
-  // SIGNAL DETECTION
+  // FINISHED GAME SIGNAL PROCESSING
+  // =========================================================================
+
+  async function processFinishedGames(allGames) {
+    if (!modelLoaded) return;
+
+    const finishedGames = allGames.filter(g => g.status === 'final' && !processedGames.has(g.id));
+    if (finishedGames.length === 0) return;
+
+    // Process up to 5 finished games per poll cycle
+    const batch = finishedGames.slice(0, 5);
+
+    // Mark as processed immediately to prevent duplicate processing from concurrent polls
+    batch.forEach(g => processedGames.add(g.id));
+
+    await Promise.all(batch.map(async (game) => {
+      try {
+        const possessions = await NbaApi.fetchPlayByPlay(game.id);
+
+        if (possessions.length < 10) return;
+
+        const signals = Q3Engine.generateSignals(game, possessions, {
+          openingSpread: 0,
+          openingOU: game.ouLine || 0,
+        });
+
+        if (signals.length === 0) return;
+
+        // Determine Q3 end state for result calculation
+        const q3Poss = possessions.filter(p => p.quarter <= 3);
+        const q3End = q3Poss.length > 0 ? q3Poss[q3Poss.length - 1] : null;
+        const q3Total = q3End ? q3End.homeScore + q3End.awayScore : 0;
+        const finalTotal = game.homeScore + game.awayScore;
+        const actualMargin = game.homeScore - game.awayScore;
+
+        for (const sig of signals) {
+          sig.gameId = game.id;
+          sig.homeTeam = game.homeTeam;
+          sig.awayTeam = game.awayTeam;
+          sig.homeScore = game.homeScore;
+          sig.awayScore = game.awayScore;
+          sig.timestamp = new Date().toISOString();
+          sig.isFinished = true;
+          sig.actualMargin = actualMargin;
+
+          // Determine if signal was correct
+          if (sig.signalType === 'SPREAD') {
+            const pickedHome = sig.direction === 'HOME';
+            sig.correct = pickedHome
+              ? actualMargin > sig.liveSpread
+              : actualMargin < sig.liveSpread;
+          } else if (sig.signalType === 'ML_LEADER' || sig.signalType === 'ML_TRAILER') {
+            const pickedHome = sig.direction === 'HOME';
+            sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
+          } else if (sig.signalType === 'Q4_TOTAL' && q3End) {
+            const actualQ4 = finalTotal - q3Total;
+            sig.actualQ4 = actualQ4;
+            sig.correct = sig.direction === 'OVER'
+              ? actualQ4 > sig.liveQ4OU
+              : actualQ4 < sig.liveQ4OU;
+          }
+
+          liveSignals.push(sig);
+        }
+
+        console.log(`[Q3Terminal] Generated ${signals.length} signals for finished game ${game.awayTeam}@${game.homeTeam}`);
+      } catch (e) {
+        console.warn(`[Q3Terminal] Error processing finished game ${game.id}:`, e.message);
+      }
+    }));
+  }
+
+  // =========================================================================
+  // SIGNAL DETECTION (Live Games)
   // =========================================================================
 
   function checkForSignal(game) {
@@ -313,24 +394,38 @@
     const countEl = document.getElementById('active-count');
 
     if (!liveSignals.length) {
-      countEl.textContent = '0 active';
+      countEl.textContent = '0 signals';
       container.innerHTML = `
         <div class="empty-state">
-          <h3>No active signals</h3>
-          <p>Signals are generated at the end of Q3. Monitor live games below for upcoming opportunities.</p>
+          <h3>No signals yet</h3>
+          <p>Signals are generated at the end of Q3 for live games and retroactively analyzed for today's finished games.</p>
         </div>`;
       return;
     }
 
-    countEl.textContent = `${liveSignals.length} active`;
+    const liveCount = liveSignals.filter(s => !s.isFinished).length;
+    const finishedCount = liveSignals.filter(s => s.isFinished).length;
 
-    container.innerHTML = liveSignals.map(s => renderSignalCard(s, true)).join('');
+    if (liveCount > 0 && finishedCount > 0) {
+      countEl.textContent = `${liveCount} live, ${finishedCount} completed`;
+    } else if (liveCount > 0) {
+      countEl.textContent = `${liveCount} active`;
+    } else {
+      countEl.textContent = `${finishedCount} from today`;
+    }
+
+    // For finished games, pass isLive=false so WIN/LOSS results are shown
+    container.innerHTML = liveSignals.map(s => renderSignalCard(s, !s.isFinished)).join('');
 
     // Also render in live view
     const liveContainer = document.getElementById('live-signals-container');
     if (liveContainer) {
-      liveContainer.innerHTML = liveSignals.map(s => renderSignalCard(s, true)).join('');
+      liveContainer.innerHTML = liveSignals.map(s => renderSignalCard(s, !s.isFinished)).join('');
     }
+
+    // Show live signals card if we have any signals
+    const card = document.getElementById('live-signals-card');
+    if (card && liveSignals.length > 0) card.style.display = '';
   }
 
   function renderSignalCard(s, isLive = false) {
