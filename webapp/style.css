@@ -203,12 +203,6 @@ body {
 .signal-card.bronze { border-left: 3px solid var(--bronze); }
 .signal-card.value { border-left: 3px solid var(--purple); }
 
-.signal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
 .signal-matchup {
   font-family: var(--font-mono);
   font-size: 15px;
@@ -323,6 +317,20 @@ body {
   justify-content: space-between;
   margin-bottom: 12px;
 }
+.game-status-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.game-diff {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 2px 6px;
+  background: var(--bg-accent);
+  border-radius: 3px;
+}
 .game-status {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -422,14 +430,6 @@ body {
   border-radius: var(--radius);
   padding: 20px;
 }
-.stat-section-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 .stat-row {
   display: flex;
   justify-content: space-between;
@@ -528,16 +528,16 @@ body {
 /* ---- BET SLIP (Signal Card) ---- */
 .bet-slip {
   background: var(--bg-primary);
-  border: 2px solid var(--green);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
+  border: 1px solid var(--green);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 12px;
 }
 .bet-slip-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .bet-slip-label {
   font-family: var(--font-mono);
@@ -560,31 +560,167 @@ body {
 }
 .bet-slip-pick {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
 }
 .bet-slip-odds {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--yellow);
   white-space: nowrap;
 }
 .bet-slip-detail {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  margin-top: 10px;
-  padding-top: 10px;
+  margin-top: 8px;
+  padding-top: 8px;
   border-top: 1px solid var(--border);
-  line-height: 1.5;
+  font-family: var(--font-mono);
 }
-.bet-slip-note {
+
+/* ---- SIGNAL CARD ENHANCEMENTS ---- */
+.signal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.signal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.signal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.signal-date {
+  font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-muted);
-  margin-top: 8px;
-  line-height: 1.5;
-  font-style: italic;
+  padding: 2px 6px;
+  background: var(--bg-accent);
+  border-radius: 3px;
+}
+.signal-quarter-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--red);
+  background: var(--red-bg);
+  letter-spacing: 0.5px;
+}
+.signal-quarter-badge.final {
+  color: var(--text-muted);
+  background: rgba(100, 116, 139, 0.1);
+}
+
+/* Signal Scoreboard */
+.signal-scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+.signal-team-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.signal-team-abbr {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.signal-team-abbr.leading {
+  color: var(--green);
+}
+.signal-team-role {
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.signal-score-col {
+  text-align: center;
+}
+.signal-score-main {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.signal-score-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Regime colors */
+.regime-blowout { color: var(--red); }
+.regime-comfortable { color: var(--orange); }
+.regime-competitive { color: var(--yellow); }
+.regime-tight { color: var(--cyan); }
+
+/* Signal Result Detail (replaces old signal-result) */
+.signal-result-detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.signal-result-detail.win {
+  background: var(--green-bg);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+.signal-result-detail.loss {
+  background: var(--red-bg);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.result-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.signal-result-detail.win .result-badge {
+  background: var(--green);
+  color: var(--bg-primary);
+}
+.signal-result-detail.loss .result-badge {
+  background: var(--red);
+  color: white;
+}
+.result-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.result-stats strong {
+  color: var(--text-primary);
 }
 
 /* ---- BET DESCRIPTION (Historical Table) ---- */
@@ -592,54 +728,92 @@ body {
   color: var(--text-primary);
 }
 .bet-desc-sub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
   display: block;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
-/* ---- ODDS EXPLAINER (Performance View) ---- */
-.odds-explainer {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 20px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--text-secondary);
+/* ---- TRADE LOG TABLE ---- */
+.trade-log-table td {
+  padding: 8px 10px;
+  vertical-align: middle;
 }
-.odds-explainer strong {
-  color: var(--text-primary);
-  display: block;
-  margin-bottom: 12px;
-  font-size: 14px;
+.trade-log-table th {
+  padding: 8px 10px;
 }
-.odds-explainer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.date-cell {
+  font-size: 11px !important;
+  color: var(--text-muted) !important;
+  white-space: nowrap;
 }
-.odds-explainer-grid > div {
-  background: var(--bg-accent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-  font-size: 12px;
-  line-height: 1.5;
+.matchup-cell {
+  white-space: nowrap;
 }
-.odds-explainer-grid .signal-type-badge {
-  margin-bottom: 6px;
+.matchup-cell .score-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.q3-cell .regime-sub {
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.result-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.result-tag {
   display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+  width: fit-content;
 }
-
-/* ---- STAT SECTION SUB ---- */
-.stat-section-sub {
-  font-size: 11px;
+.result-tag.win {
+  background: var(--green);
+  color: var(--bg-primary);
+}
+.result-tag.loss {
+  background: var(--red);
+  color: white;
+}
+.result-note {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.loss-row td {
+  opacity: 0.7;
+}
+.loss-row:hover td {
+  opacity: 1;
+}
+.filter-summary-text {
+  margin-left: auto;
+  font-size: 12px;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  margin-bottom: 12px;
-  margin-top: -8px;
+}
+
+/* ---- STAT SECTION TITLE WITH BADGE ---- */
+.stat-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-section-title .signal-type-badge {
+  font-size: 9px;
 }
 
 /* ---- BET GUIDE (How to Use) ---- */
@@ -725,10 +899,15 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ---- RESPONSIVE: bet slip & guide ---- */
+/* ---- RESPONSIVE: bet slip, signal card, trade log ---- */
 @media (max-width: 768px) {
   .bet-slip-main { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .bet-slip-pick { font-size: 16px; }
-  .bet-slip-odds { font-size: 16px; }
-  .odds-explainer-grid { grid-template-columns: 1fr; }
+  .bet-slip-pick { font-size: 14px; }
+  .bet-slip-odds { font-size: 14px; }
+  .signal-scoreboard { gap: 8px; padding: 8px 12px; }
+  .signal-score-main { font-size: 16px; }
+  .signal-team-abbr { font-size: 14px; }
+  .signal-header { flex-direction: column; align-items: flex-start; }
+  .result-stats { font-size: 11px; }
+  .trade-log-table { font-size: 11px; }
 }
