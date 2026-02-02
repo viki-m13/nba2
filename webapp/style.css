@@ -525,6 +525,192 @@ body {
   .two-col { grid-template-columns: 1fr; }
 }
 
+/* ---- BET SLIP (Signal Card) ---- */
+.bet-slip {
+  background: var(--bg-primary);
+  border: 2px solid var(--green);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.bet-slip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.bet-slip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--green);
+  text-transform: uppercase;
+}
+.bet-slip-market {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.bet-slip-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.bet-slip-pick {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.bet-slip-odds {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yellow);
+  white-space: nowrap;
+}
+.bet-slip-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+.bet-slip-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ---- BET DESCRIPTION (Historical Table) ---- */
+.bet-desc-cell strong {
+  color: var(--text-primary);
+}
+.bet-desc-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ---- ODDS EXPLAINER (Performance View) ---- */
+.odds-explainer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.odds-explainer strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.odds-explainer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.odds-explainer-grid > div {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.odds-explainer-grid .signal-type-badge {
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* ---- STAT SECTION SUB ---- */
+.stat-section-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 12px;
+  margin-top: -8px;
+}
+
+/* ---- BET GUIDE (How to Use) ---- */
+.bet-guide-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.bet-guide-header {
+  background: var(--bg-accent);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bet-guide-body {
+  padding: 16px;
+}
+.bet-guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.bet-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  background: var(--green-bg);
+  border: 1px solid var(--green);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.bet-guide-example {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+.bet-guide-odds-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  background: var(--blue-bg);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-sm);
+}
+
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -538,3 +724,11 @@ body {
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- RESPONSIVE: bet slip & guide ---- */
+@media (max-width: 768px) {
+  .bet-slip-main { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .bet-slip-pick { font-size: 16px; }
+  .bet-slip-odds { font-size: 16px; }
+  .odds-explainer-grid { grid-template-columns: 1fr; }
+}
