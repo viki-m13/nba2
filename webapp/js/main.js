@@ -1,5 +1,5 @@
 // =============================================================================
-// MAIN APP CONTROLLER - Q3 Terminal Prediction System
+// MAIN APP CONTROLLER - Q3 Sniper Prediction System
 // =============================================================================
 
 (function () {
@@ -8,48 +8,39 @@
   // ---- State ----
   let currentView = 'dashboard';
   let games = [];
-  let liveSignals = [];    // Signals generated this session
-  let recentSignals = [];  // Signals from recent days (ESPN)
-  let historicalSignals = []; // From backtest
-  let modelLoaded = false;
+  let liveSignals = [];
+  let recentSignals = [];
+  let historicalSignals = [];
+  let sniperModelLoaded = false;
+  let legacyModelLoaded = false;
   let pollInterval = null;
   let recentGamesLoaded = false;
-  let currentTimePeriod = 'recent'; // 'recent', 'today', '3days', '7days', '14days', 'historical'
-  const POLL_MS = 10000; // 10 seconds
-  const processedGames = new Set(); // Track games we've already signaled on
-  const recentProcessedGames = new Set(); // Track recent games we've processed
-
-  // ---- Model parameters (embedded from Python export) ----
-  const MODEL_URL = null; // Will embed inline below
+  let currentTimePeriod = 'recent';
+  const POLL_MS = 10000;
+  const processedGames = new Set();
+  const recentProcessedGames = new Set();
 
   // =========================================================================
   // INITIALIZATION
   // =========================================================================
 
   async function init() {
-    console.log('[Q3Terminal] Initializing...');
+    console.log('[Sniper] Initializing...');
 
     setupNavigation();
-    setupFilters();
     setupTimePeriodFilters();
 
-    // Load ML model parameters
-    await loadModel();
-
-    // Load historical signals
+    await loadModels();
     await loadHistoricalSignals();
 
-    // Detect API proxy
     await NbaApi.detectVercelProxy();
 
-    // Start polling
     await refreshGames();
     pollInterval = setInterval(refreshGames, POLL_MS);
 
     setStatus(true);
-    console.log('[Q3Terminal] Ready');
+    console.log('[Sniper] Ready');
 
-    // Load recent games in the background (non-blocking)
     loadRecentGames();
   }
 
@@ -57,24 +48,40 @@
   // MODEL LOADING
   // =========================================================================
 
-  async function loadModel() {
-    const paths = ['data/model.json', '../output/q3_terminal_v2_js_model.json'];
-    for (const path of paths) {
+  async function loadModels() {
+    // Load sniper model (primary)
+    const sniperPaths = ['data/sniper_model.json', '../output/sniper_model.json'];
+    for (const path of sniperPaths) {
+      try {
+        const resp = await fetch(path);
+        if (resp.ok) {
+          const params = await resp.json();
+          SniperEngine.loadModel(params);
+          sniperModelLoaded = true;
+          console.log(`[Sniper] Sniper model loaded from ${path}`);
+          break;
+        }
+      } catch (e) { /* try next */ }
+    }
+
+    // Also load legacy model as fallback
+    const legacyPaths = ['data/model.json', '../output/q3_terminal_v2_js_model.json'];
+    for (const path of legacyPaths) {
       try {
         const resp = await fetch(path);
         if (resp.ok) {
           const params = await resp.json();
           Q3Engine.loadModel(params);
-          modelLoaded = true;
-          console.log(`[Q3Terminal] Model loaded from ${path}`);
-          return;
+          legacyModelLoaded = true;
+          console.log(`[Sniper] Legacy model loaded from ${path}`);
+          break;
         }
-      } catch (e) {
-        // Try next path
-      }
+      } catch (e) { /* try next */ }
     }
-    console.warn('[Q3Terminal] Could not load model from any path');
-    modelLoaded = false;
+
+    if (!sniperModelLoaded && !legacyModelLoaded) {
+      console.warn('[Sniper] No models loaded');
+    }
   }
 
   // =========================================================================
@@ -82,23 +89,27 @@
   // =========================================================================
 
   async function loadHistoricalSignals() {
-    const paths = ['data/signals.json', '../output/q3_terminal_v2_signals.json'];
+    // Try sniper signals first
+    const paths = [
+      'data/sniper_signals.json', '../output/sniper_signals.json',
+      'data/signals.json', '../output/q3_terminal_v2_signals.json'
+    ];
     for (const path of paths) {
       try {
         const resp = await fetch(path);
         if (resp.ok) {
           const data = await resp.json();
           historicalSignals = data.signals || [];
-          console.log(`[Q3Terminal] Loaded ${historicalSignals.length} historical signals from ${path}`);
+          console.log(`[Sniper] Loaded ${historicalSignals.length} historical signals from ${path}`);
           renderSignalsTab();
           renderRegimeTable();
+          renderConfidenceTable();
+          updatePerformanceStats();
           return;
         }
-      } catch (e) {
-        // Try next path
-      }
+      } catch (e) { /* try next */ }
     }
-    console.warn('[Q3Terminal] Could not load historical signals from any path');
+    console.warn('[Sniper] No historical signals found');
     historicalSignals = [];
   }
 
@@ -108,10 +119,7 @@
 
   function setupNavigation() {
     document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const view = btn.dataset.view;
-        switchView(view);
-      });
+      btn.addEventListener('click', () => switchView(btn.dataset.view));
     });
   }
 
@@ -119,26 +127,10 @@
     currentView = view;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
     const viewEl = document.getElementById(`view-${view}`);
     if (viewEl) viewEl.classList.add('active');
-
     const btn = document.querySelector(`.nav-btn[data-view="${view}"]`);
     if (btn) btn.classList.add('active');
-  }
-
-  // =========================================================================
-  // FILTERS
-  // =========================================================================
-
-  function setupFilters() {
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderSignalsTab(btn.dataset.filter);
-      });
-    });
   }
 
   function setupTimePeriodFilters() {
@@ -147,10 +139,7 @@
         document.querySelectorAll('.time-period-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentTimePeriod = btn.dataset.period;
-        // Get current signal type filter
-        const activeFilter = document.querySelector('.filter-btn.active');
-        const filter = activeFilter ? activeFilter.dataset.filter : 'all';
-        renderSignalsTab(filter);
+        renderSignalsTab();
       });
     });
   }
@@ -164,7 +153,7 @@
     const text = document.getElementById('status-text');
     if (online) {
       dot.classList.remove('offline');
-      text.textContent = modelLoaded ? 'Model Active' : 'Connected (no model)';
+      text.textContent = sniperModelLoaded ? 'Sniper Active' : (legacyModelLoaded ? 'Legacy Model' : 'Connected');
     } else {
       dot.classList.add('offline');
       text.textContent = 'Offline';
@@ -178,14 +167,10 @@
   async function refreshGames() {
     try {
       const result = await NbaApi.fetchAllGames();
-      if (result.error) {
-        console.warn('[Q3Terminal] Fetch error:', result.error);
-        return;
-      }
+      if (result.error) return;
 
       games = result.games || [];
 
-      // Update metrics
       const liveGames = games.filter(g => g.status === 'live' || g.status === 'halftime');
       document.getElementById('metric-live').textContent = liveGames.length;
       document.getElementById('metric-live-sub').textContent =
@@ -193,60 +178,53 @@
       document.getElementById('games-count').textContent = `${games.length} games`;
       document.getElementById('live-count').textContent = `${liveGames.length} live`;
 
-      // Render games
       renderGamesGrid(games, 'games-grid');
       renderGamesGrid(liveGames.length > 0 ? liveGames : games, 'live-games-grid');
 
-      // Check for Q3-end signals on live games
       for (const game of liveGames) {
         checkForSignal(game);
       }
 
-      // Retroactively analyze finished games for signals
       await processFinishedGames(games);
-
-      // Render active signals (includes both live and finished)
       renderActiveSignals();
 
     } catch (e) {
-      console.error('[Q3Terminal] Poll error:', e);
+      console.error('[Sniper] Poll error:', e);
     }
   }
 
   // =========================================================================
-  // FINISHED GAME SIGNAL PROCESSING
+  // FINISHED GAME PROCESSING
   // =========================================================================
 
   async function processFinishedGames(allGames) {
-    if (!modelLoaded) return;
+    if (!sniperModelLoaded && !legacyModelLoaded) return;
 
     const finishedGames = allGames.filter(g => g.status === 'final' && !processedGames.has(g.id));
     if (finishedGames.length === 0) return;
 
-    // Process up to 5 finished games per poll cycle
     const batch = finishedGames.slice(0, 5);
-
-    // Mark as processed immediately to prevent duplicate processing from concurrent polls
     batch.forEach(g => processedGames.add(g.id));
 
     await Promise.all(batch.map(async (game) => {
       try {
         const possessions = await NbaApi.fetchPlayByPlay(game.id);
-
         if (possessions.length < 10) return;
 
-        const signals = Q3Engine.generateSignals(game, possessions, {
-          openingSpread: 0,
-          openingOU: game.ouLine || 0,
-        });
+        const opts = { openingSpread: 0, openingOU: game.ouLine || 0 };
+
+        // Use sniper engine
+        let signals = [];
+        if (sniperModelLoaded) {
+          signals = SniperEngine.generateSignals(game, possessions, opts);
+        } else if (legacyModelLoaded) {
+          // Fallback to legacy - only ML_LEADER signals
+          const legacy = Q3Engine.generateSignals(game, possessions, opts);
+          signals = legacy.filter(s => s.signalType === 'ML_LEADER');
+        }
 
         if (signals.length === 0) return;
 
-        // Determine Q3 end state for result calculation
-        const q3Poss = possessions.filter(p => p.quarter <= 3);
-        const q3End = q3Poss.length > 0 ? q3Poss[q3Poss.length - 1] : null;
-        const q3Total = q3End ? q3End.homeScore + q3End.awayScore : 0;
-        const finalTotal = game.homeScore + game.awayScore;
         const actualMargin = game.homeScore - game.awayScore;
 
         for (const sig of signals) {
@@ -260,52 +238,33 @@
           sig.actualMargin = actualMargin;
           sig.quarter = 'FINAL';
 
-          // Q3 end scores
-          if (q3End) {
-            sig.q3HomeScore = q3End.homeScore;
-            sig.q3AwayScore = q3End.awayScore;
-          }
+          // Determine result: did the leader win?
+          const q3Lead = sig.q3Lead || 0;
+          const pickedHome = sig.direction === 'HOME';
+          sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
 
-          // Determine if signal was correct
-          if (sig.signalType === 'SPREAD') {
-            const pickedHome = sig.direction === 'HOME';
-            sig.correct = pickedHome
-              ? actualMargin > sig.liveSpread
-              : actualMargin < sig.liveSpread;
-            // Cover margin
-            if (pickedHome) {
-              sig.cover_margin = actualMargin - sig.liveSpread;
-            } else {
-              sig.cover_margin = sig.liveSpread - actualMargin;
-            }
-          } else if (sig.signalType === 'ML_LEADER' || sig.signalType === 'ML_TRAILER') {
-            const pickedHome = sig.direction === 'HOME';
-            sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
-          } else if (sig.signalType === 'Q4_TOTAL' && q3End) {
-            const actualQ4 = finalTotal - q3Total;
-            sig.actualQ4 = actualQ4;
-            sig.correct = sig.direction === 'OVER'
-              ? actualQ4 > sig.liveQ4OU
-              : actualQ4 < sig.liveQ4OU;
-          }
+          // Spread cover
+          const liveSpread = sig.liveSpread || q3Lead * 0.78;
+          sig.leader_covered_spread = pickedHome
+            ? actualMargin > liveSpread
+            : actualMargin < liveSpread;
 
           liveSignals.push(sig);
         }
 
-        console.log(`[Q3Terminal] Generated ${signals.length} signals for finished game ${game.awayTeam}@${game.homeTeam}`);
+        console.log(`[Sniper] ${signals.length} signals for ${game.awayTeam}@${game.homeTeam}`);
       } catch (e) {
-        console.warn(`[Q3Terminal] Error processing finished game ${game.id}:`, e.message);
+        // skip
       }
     }));
   }
 
   // =========================================================================
-  // RECENT GAMES LOADING (Past days from ESPN)
+  // RECENT GAMES LOADING
   // =========================================================================
 
   async function loadRecentGames() {
-    if (!modelLoaded) {
-      console.warn('[Q3Terminal] Model not loaded, skipping recent games');
+    if (!sniperModelLoaded && !legacyModelLoaded) {
       const loadingEl = document.getElementById('recent-loading');
       if (loadingEl) loadingEl.style.display = 'none';
       recentGamesLoaded = true;
@@ -313,18 +272,16 @@
       return;
     }
 
-    console.log('[Q3Terminal] Loading recent games...');
+    console.log('[Sniper] Loading recent games...');
     const loadingEl = document.getElementById('recent-loading');
     if (loadingEl) loadingEl.style.display = '';
 
-    const dateStrings = NbaApi.getRecentDateStrings(21); // Last 3 weeks
+    const dateStrings = NbaApi.getRecentDateStrings(21);
 
-    // Process dates in batches of 3 to avoid overwhelming the API
     for (let i = 0; i < dateStrings.length; i += 3) {
       const batch = dateStrings.slice(i, i + 3);
-      const results = await Promise.all(batch.map(dateStr => processDateForSignals(dateStr)));
+      await Promise.all(batch.map(dateStr => processDateForSignals(dateStr)));
 
-      // Update count display after each batch
       const countEl = document.getElementById('recent-signals-count');
       if (countEl) {
         countEl.textContent = `${recentSignals.length} signals from ${i + batch.length} days`;
@@ -332,27 +289,20 @@
     }
 
     recentGamesLoaded = true;
-    console.log(`[Q3Terminal] Loaded ${recentSignals.length} recent signals`);
+    console.log(`[Sniper] Loaded ${recentSignals.length} recent signals`);
 
     if (loadingEl) loadingEl.style.display = 'none';
-
-    // Re-render the signals tab
-    const activeFilter = document.querySelector('.filter-btn.active');
-    const filter = activeFilter ? activeFilter.dataset.filter : 'all';
-    renderSignalsTab(filter);
+    renderSignalsTab();
   }
 
   async function processDateForSignals(dateStr) {
     try {
-      const { games: dateGames, eventIds } = await NbaApi.fetchESPNScoreboardForDate(dateStr);
+      const { games: dateGames } = await NbaApi.fetchESPNScoreboardForDate(dateStr);
       const finishedGames = dateGames.filter(g => g.status === 'final');
-
       if (finishedGames.length === 0) return;
 
-      // Process up to 8 games per date (avoid too many requests)
       const batch = finishedGames.slice(0, 8);
 
-      // Fetch PBP for each finished game (2 at a time to be gentle on API)
       for (let j = 0; j < batch.length; j += 2) {
         const subBatch = batch.slice(j, j + 2);
         await Promise.all(subBatch.map(async (game) => {
@@ -364,18 +314,18 @@
             const possessions = await NbaApi.fetchESPNPlayByPlay(game.espnId);
             if (possessions.length < 10) return;
 
-            const signals = Q3Engine.generateSignals(game, possessions, {
-              openingSpread: 0,
-              openingOU: game.ouLine || 0,
-            });
+            const opts = { openingSpread: 0, openingOU: game.ouLine || 0 };
+            let signals = [];
+
+            if (sniperModelLoaded) {
+              signals = SniperEngine.generateSignals(game, possessions, opts);
+            } else if (legacyModelLoaded) {
+              const legacy = Q3Engine.generateSignals(game, possessions, opts);
+              signals = legacy.filter(s => s.signalType === 'ML_LEADER');
+            }
 
             if (signals.length === 0) return;
 
-            // Determine Q3 end state
-            const q3Poss = possessions.filter(p => p.quarter <= 3);
-            const q3End = q3Poss.length > 0 ? q3Poss[q3Poss.length - 1] : null;
-            const q3Total = q3End ? q3End.homeScore + q3End.awayScore : 0;
-            const finalTotal = game.homeScore + game.awayScore;
             const actualMargin = game.homeScore - game.awayScore;
 
             for (const sig of signals) {
@@ -390,69 +340,52 @@
               sig.actualMargin = actualMargin;
               sig.quarter = 'FINAL';
 
-              if (q3End) {
-                sig.q3HomeScore = q3End.homeScore;
-                sig.q3AwayScore = q3End.awayScore;
-              }
+              const q3Lead = sig.q3Lead || 0;
+              const pickedHome = sig.direction === 'HOME';
+              sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
 
-              // Determine if signal was correct
-              if (sig.signalType === 'SPREAD') {
-                const pickedHome = sig.direction === 'HOME';
-                sig.correct = pickedHome
-                  ? actualMargin > sig.liveSpread
-                  : actualMargin < sig.liveSpread;
-                sig.cover_margin = pickedHome
-                  ? actualMargin - sig.liveSpread
-                  : sig.liveSpread - actualMargin;
-              } else if (sig.signalType === 'ML_LEADER' || sig.signalType === 'ML_TRAILER') {
-                const pickedHome = sig.direction === 'HOME';
-                sig.correct = pickedHome ? actualMargin > 0 : actualMargin < 0;
-              } else if (sig.signalType === 'Q4_TOTAL' && q3End) {
-                const actualQ4 = finalTotal - q3Total;
-                sig.actualQ4 = actualQ4;
-                sig.correct = sig.direction === 'OVER'
-                  ? actualQ4 > sig.liveQ4OU
-                  : actualQ4 < sig.liveQ4OU;
-              }
+              const liveSpread = sig.liveSpread || q3Lead * 0.78;
+              sig.leader_covered_spread = pickedHome
+                ? actualMargin > liveSpread
+                : actualMargin < liveSpread;
 
               recentSignals.push(sig);
             }
-          } catch (e) {
-            // Skip games that fail
-          }
+          } catch (e) { /* skip */ }
         }));
       }
     } catch (e) {
-      console.warn(`[Q3Terminal] Error processing date ${dateStr}:`, e.message);
+      console.warn(`[Sniper] Error on ${dateStr}:`, e.message);
     }
   }
 
   // =========================================================================
-  // SIGNAL DETECTION (Live Games)
+  // SIGNAL DETECTION (Live)
   // =========================================================================
 
   function checkForSignal(game) {
-    if (!modelLoaded) return;
+    if (!sniperModelLoaded && !legacyModelLoaded) return;
     if (processedGames.has(game.id)) return;
 
-    // Only signal at end of Q3 or beginning of Q4
     const q = game.quarter || 0;
-    if (q < 4) return; // Wait until Q4 starts (means Q3 ended)
+    if (q < 4) return;
 
-    // Don't signal late in Q4
     const clock = game.gameClock || '12:00';
-    const parts = clock.split(':');
-    const mins = parseInt(parts[0]) || 0;
-    if (q === 4 && mins < 8) return; // Too late in Q4
+    const mins = parseInt(clock.split(':')[0]) || 0;
+    if (q === 4 && mins < 8) return;
 
-    // Generate signals
     const possessions = game.possessions || [];
     if (possessions.length < 10) return;
 
-    const signals = Q3Engine.generateSignals(game, possessions, {
-      openingSpread: 0,
-      openingOU: game.ouLine || 0,
-    });
+    const opts = { openingSpread: 0, openingOU: game.ouLine || 0 };
+    let signals = [];
+
+    if (sniperModelLoaded) {
+      signals = SniperEngine.generateSignals(game, possessions, opts);
+    } else if (legacyModelLoaded) {
+      const legacy = Q3Engine.generateSignals(game, possessions, opts);
+      signals = legacy.filter(s => s.signalType === 'ML_LEADER');
+    }
 
     if (signals.length > 0) {
       processedGames.add(game.id);
@@ -466,24 +399,20 @@
         liveSignals.push(sig);
       }
 
-      // Show notification with explicit bet instruction
       if (Notification.permission === 'granted') {
-        const firstBet = buildBetInstruction(signals[0]);
-        new Notification('Q3 Terminal - BET NOW', {
-          body: `${firstBet.market}: ${firstBet.pick} @ ${firstBet.oddsDisplay}`,
+        const s = signals[0];
+        new Notification('SNIPER SIGNAL', {
+          body: `${s.team || s.betTeam} to WIN | ${(s.confidence * 100).toFixed(1)}% confidence`,
         });
       }
 
-      // Show live signals card
       const card = document.getElementById('live-signals-card');
       if (card) card.style.display = '';
-
-      console.log(`[Q3Terminal] Generated ${signals.length} signals for ${game.awayTeam}@${game.homeTeam}`);
     }
   }
 
   // =========================================================================
-  // RENDERING - GAMES
+  // RENDERING - GAMES GRID
   // =========================================================================
 
   function renderGamesGrid(gamesList, containerId) {
@@ -491,28 +420,18 @@
     if (!container) return;
 
     if (!gamesList || gamesList.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <h3>No games</h3>
-          <p>Check back when NBA games are scheduled.</p>
-        </div>`;
+      container.innerHTML = `<div class="empty-state"><h3>No games</h3><p>Check back when NBA games are scheduled.</p></div>`;
       return;
     }
 
     container.innerHTML = gamesList.map(g => {
       const hasSignal = liveSignals.some(s => s.gameId === g.id);
       const statusClass = g.status === 'live' ? 'live' : g.status === 'final' ? 'final' : 'scheduled';
-
       let statusText = g.statusText || g.status.toUpperCase();
-      if (g.status === 'live') {
-        statusText = `Q${g.quarter || '?'} ${g.gameClock || ''}`;
-      }
-
-      // Check if at end of Q3
+      if (g.status === 'live') statusText = `Q${g.quarter || '?'} ${g.gameClock || ''}`;
       const atQ3End = g.quarter === 3 && g.gameClock === '0:00';
       if (atQ3End) statusText = 'Q3 END - ANALYZING';
 
-      // Point differential
       const diff = (g.homeScore || 0) - (g.awayScore || 0);
       const diffStr = diff > 0 ? `${g.homeTeam} +${diff}` : diff < 0 ? `${g.awayTeam} +${Math.abs(diff)}` : 'Tied';
 
@@ -522,7 +441,7 @@
             <span class="game-status ${atQ3End ? 'q3-end' : statusClass}">${statusText}</span>
             <div class="game-status-right">
               ${g.status === 'live' || g.status === 'final' ? `<span class="game-diff">${diffStr}</span>` : ''}
-              ${hasSignal ? '<span class="tier-badge gold">SIGNAL</span>' : ''}
+              ${hasSignal ? '<span class="tier-badge gold">SNIPER</span>' : ''}
             </div>
           </div>
           <div class="game-scoreboard">
@@ -546,19 +465,17 @@
   function renderGameSignalSummary(gameId) {
     const sigs = liveSignals.filter(s => s.gameId === gameId);
     if (!sigs.length) return '';
-
     return sigs.map(s => {
-      const betInfo = buildBetInstruction(s);
-      const type = s.signalType || '';
-      const typeClass = type.toLowerCase().replace('_', '-');
+      const team = s.team || s.betTeam || (s.direction === 'HOME' ? s.homeTeam : s.awayTeam);
+      const conf = ((s.confidence || 0) * 100).toFixed(0);
       const resultTag = s.correct !== undefined
         ? `<span class="result-tag ${s.correct ? 'win' : 'loss'}">${s.correct ? 'W' : 'L'}</span>`
         : '';
       return `
         <div class="signal-pick game-card-bet">
-          <span class="signal-type-badge ${typeClass}" style="font-size:8px;padding:2px 5px">${type.replace('_', ' ')}</span>
-          <span class="signal-pick-value">${betInfo.pick}</span>
-          <span class="signal-pick-odds">${betInfo.oddsDisplay} | ${(s.confidence * 100).toFixed(0)}%</span>
+          <span class="signal-type-badge sniper" style="font-size:8px;padding:2px 5px">SNIPER</span>
+          <span class="signal-pick-value">${team} to WIN</span>
+          <span class="signal-pick-odds">${conf}% conf</span>
           ${resultTag}
         </div>
       `;
@@ -577,8 +494,8 @@
       countEl.textContent = '0 signals';
       container.innerHTML = `
         <div class="empty-state">
-          <h3>No signals yet</h3>
-          <p>Signals are generated at the end of Q3 for live games and retroactively analyzed for today's finished games.</p>
+          <h3>No active signals</h3>
+          <p>Sniper signals fire at end of Q3 when the AI identifies a 95%+ confidence winner.</p>
         </div>`;
       return;
     }
@@ -594,89 +511,62 @@
       countEl.textContent = `${finishedCount} from today`;
     }
 
-    // For finished games, pass isLive=false so WIN/LOSS results are shown
-    container.innerHTML = liveSignals.map(s => renderSignalCard(s, !s.isFinished)).join('');
+    container.innerHTML = liveSignals.map(s => renderSniperCard(s, !s.isFinished)).join('');
 
-    // Also render in live view
     const liveContainer = document.getElementById('live-signals-container');
     if (liveContainer) {
-      liveContainer.innerHTML = liveSignals.map(s => renderSignalCard(s, !s.isFinished)).join('');
+      liveContainer.innerHTML = liveSignals.map(s => renderSniperCard(s, !s.isFinished)).join('');
     }
 
-    // Show live signals card if we have any signals
     const card = document.getElementById('live-signals-card');
     if (card && liveSignals.length > 0) card.style.display = '';
   }
 
-  function renderSignalCard(s, isLive = false) {
-    const tierClass = (s.tier || 'watch').toLowerCase();
-    const typeClass = (s.signalType || s.signal_type || '').toLowerCase().replace('_', '-');
+  function renderSniperCard(s, isLive = false) {
     const homeTeam = s.homeTeam || s.home_team || '';
     const awayTeam = s.awayTeam || s.away_team || '';
     const matchup = `${awayTeam} @ ${homeTeam}`;
-
     const confidence = s.confidence || 0;
-    const edge = s.edge || 0;
     const q3Lead = s.q3Lead || s.q3_lead || 0;
     const regime = s.regime || '';
-    const odds = s.estimatedOdds || s.estimated_odds || -110;
     const correct = s.correct;
-    const type = s.signalType || s.signal_type || '';
-    const dir = s.direction;
-
-    // Game scores
-    const homeScore = s.homeScore || s.final_home || 0;
-    const awayScore = s.awayScore || s.final_away || 0;
-    const finalMargin = s.actualMargin || s.actual_margin || s.final_margin || (homeScore - awayScore);
-    const gameDate = s.date ? formatGameDate(s.date) : '';
+    const team = s.team || s.leader || (s.direction === 'HOME' ? homeTeam : awayTeam);
+    const trailer = s.trailer || (s.direction === 'HOME' ? awayTeam : homeTeam);
+    const q3LeadAbs = Math.abs(q3Lead);
     const isFinished = s.isFinished || s.final_home;
     const quarter = s.quarter || (isFinished ? 'FINAL' : 'Q4');
+    const gameDate = s.date ? formatGameDate(s.date) : '';
 
-    // Q3 score estimation
-    const q3Home = q3Lead > 0 ? Math.round((homeScore + awayScore) * 0.75 / 2 + q3Lead / 2) : Math.round((homeScore + awayScore) * 0.75 / 2 + q3Lead / 2);
-    const q3Away = q3Home - q3Lead;
-    const pointDiff = Math.abs(q3Lead);
+    const homeScore = s.homeScore || s.final_home || 0;
+    const awayScore = s.awayScore || s.final_away || 0;
+    const actualMargin = s.actualMargin || s.actual_margin || (homeScore - awayScore);
+    const liveSpread = s.liveSpread || s.live_spread || (q3Lead * 0.78);
+    const spreadLine = s.altSpreadLine || (s.direction === 'HOME'
+      ? -(Math.round(Math.abs(liveSpread) * 2) / 2)
+      : (Math.round(Math.abs(liveSpread) * 2) / 2));
 
-    // Build explicit bet instruction
-    const betInfo = buildBetInstruction(s);
+    const tier = s.tier || getSniperTier(confidence);
+    const tierClass = tier.toLowerCase();
 
-    // Determine leader/trailer at Q3
-    const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
-    const q3Trailer = q3Lead > 0 ? awayTeam : (q3Lead < 0 ? homeTeam : 'TIE');
+    const leadQuality = s.leadQuality || s.lead_quality || 0;
+    const qualityLabel = leadQuality >= 0.7 ? 'HIGH' : (leadQuality >= 0.5 ? 'GOOD' : 'OK');
+    const qualityClass = leadQuality >= 0.7 ? 'positive' : '';
 
-    // Build result detail for finished games
     let resultDetail = '';
     if (!isLive && correct !== undefined) {
-      if (type === 'Q4_TOTAL') {
-        const actualQ4 = s.actual_q4 || s.actualQ4 || 0;
-        const line = s.live_q4_ou || s.liveQ4OU || 0;
-        const q4Diff = (actualQ4 - line).toFixed(1);
-        resultDetail = `
-          <div class="signal-result-detail ${correct ? 'win' : 'loss'}">
-            <div class="result-badge">${correct ? 'WIN' : 'LOSS'}</div>
-            <div class="result-stats">
-              <span>Q4 Actual: <strong>${actualQ4.toFixed(0)} pts</strong></span>
-              <span>Line: ${line.toFixed(1)}</span>
-              <span>Margin: <strong>${q4Diff > 0 ? '+' : ''}${q4Diff}</strong></span>
-              <span>Final: ${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}</span>
-            </div>
-          </div>`;
-      } else {
-        const spreadLine = s.liveSpread || s.live_spread || 0;
-        const coverMargin = s.cover_margin !== undefined ? s.cover_margin : 0;
-        const winner = finalMargin > 0 ? homeTeam : awayTeam;
-        const winMargin = Math.abs(finalMargin);
-        resultDetail = `
-          <div class="signal-result-detail ${correct ? 'win' : 'loss'}">
-            <div class="result-badge">${correct ? 'WIN' : 'LOSS'}</div>
-            <div class="result-stats">
-              <span>Final: <strong>${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}</strong></span>
-              <span>${winner} wins by ${winMargin}</span>
-              ${type === 'SPREAD' ? `<span>Cover: ${coverMargin > 0 ? '+' : ''}${coverMargin.toFixed(1)} pts</span>` : ''}
-              ${type === 'ML_LEADER' || type === 'ML_TRAILER' ? `<span>Picked: ${dir === 'HOME' ? homeTeam : awayTeam} ${correct ? '(correct)' : '(wrong)'}</span>` : ''}
-            </div>
-          </div>`;
-      }
+      const winner = actualMargin > 0 ? homeTeam : awayTeam;
+      const winMargin = Math.abs(actualMargin);
+      const spreadCovered = s.leader_covered_spread;
+
+      resultDetail = `
+        <div class="signal-result-detail ${correct ? 'win' : 'loss'}">
+          <div class="result-badge">${correct ? 'WIN' : 'LOSS'}</div>
+          <div class="result-stats">
+            <span>Final: <strong>${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}</strong></span>
+            <span>${winner} by ${winMargin}</span>
+            <span>Spread: ${spreadCovered ? 'Covered' : 'Did not cover'}</span>
+          </div>
+        </div>`;
     }
 
     return `
@@ -688,8 +578,8 @@
           </div>
           <div class="signal-header-right">
             <span class="signal-quarter-badge ${isFinished ? 'final' : ''}">${quarter}</span>
-            <span class="tier-badge ${tierClass}">${(s.tier || 'WATCH').toUpperCase()}</span>
-            <span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span>
+            <span class="tier-badge ${tierClass}">${tier}</span>
+            <span class="signal-type-badge sniper">SNIPER</span>
           </div>
         </div>
 
@@ -699,8 +589,8 @@
             <span class="signal-team-role">Away</span>
           </div>
           <div class="signal-score-col">
-            <div class="signal-score-main">${isFinished ? `${awayScore} - ${homeScore}` : `Q3: ${q3Away} - ${q3Home}`}</div>
-            <div class="signal-score-sub">${isFinished ? `Q3 End: ${q3Away} - ${q3Home}` : `Diff: ${pointDiff} pts`}</div>
+            <div class="signal-score-main">${isFinished ? `${awayScore} - ${homeScore}` : `Q3: ${q3Lead < 0 ? q3LeadAbs : 0} - ${q3Lead > 0 ? q3LeadAbs : 0}`}</div>
+            <div class="signal-score-sub">${team} leads by ${q3LeadAbs}</div>
           </div>
           <div class="signal-team-col">
             <span class="signal-team-abbr ${q3Lead > 0 ? 'leading' : ''}">${homeTeam}</span>
@@ -710,145 +600,73 @@
 
         <div class="bet-slip">
           <div class="bet-slip-header">
-            <span class="bet-slip-label">BET</span>
-            <span class="bet-slip-market">${betInfo.market}</span>
+            <span class="bet-slip-label">SNIPER BET</span>
+            <span class="bet-slip-market">Live Moneyline</span>
           </div>
           <div class="bet-slip-main">
-            <div class="bet-slip-pick">${betInfo.pick}</div>
-            <div class="bet-slip-odds">${betInfo.oddsDisplay}</div>
+            <div class="bet-slip-pick">${team} to WIN</div>
+            <div class="bet-slip-odds">${(confidence * 100).toFixed(1)}%</div>
           </div>
-          ${betInfo.lineDetail ? `<div class="bet-slip-detail">${betInfo.lineDetail}</div>` : ''}
+          <div class="bet-slip-detail">Alt: ${team} ${spreadLine > 0 ? '+' : ''}${spreadLine.toFixed(1)} spread @ -110</div>
         </div>
 
         <div class="signal-body">
           <div class="signal-field">
             <span class="signal-field-label">Confidence</span>
-            <span class="signal-field-value">${(confidence * 100).toFixed(1)}%</span>
+            <span class="signal-field-value positive">${(confidence * 100).toFixed(1)}%</span>
           </div>
           <div class="signal-field">
-            <span class="signal-field-label">Edge</span>
-            <span class="signal-field-value positive">${(edge * 100).toFixed(1)}%</span>
+            <span class="signal-field-label">Lead Quality</span>
+            <span class="signal-field-value ${qualityClass}">${qualityLabel} (${(leadQuality * 100).toFixed(0)})</span>
           </div>
           <div class="signal-field">
             <span class="signal-field-label">Q3 Lead</span>
-            <span class="signal-field-value">${q3Leader} +${pointDiff}</span>
+            <span class="signal-field-value">${team} +${q3LeadAbs}</span>
           </div>
           <div class="signal-field">
-            <span class="signal-field-label">Model Margin</span>
+            <span class="signal-field-label">Pred Margin</span>
             <span class="signal-field-value">${formatMargin(s.predictedMargin || s.predicted_margin)}</span>
-          </div>
-          <div class="signal-field">
-            <span class="signal-field-label">Mkt Spread</span>
-            <span class="signal-field-value">${formatMargin(s.liveSpread || s.live_spread)}</span>
           </div>
           <div class="signal-field">
             <span class="signal-field-label">Regime</span>
             <span class="signal-field-value regime-${regime.toLowerCase()}">${regime}</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-field-label">Tier</span>
+            <span class="signal-field-value">${tier}</span>
           </div>
         </div>
         ${resultDetail}
       </div>`;
   }
 
-  /**
-   * Build explicit bet instruction from signal data.
-   * Returns { market, pick, oddsDisplay, lineDetail, oddsNote }
-   */
-  function buildBetInstruction(s) {
-    const type = s.signalType || s.signal_type || '';
-    const dir = s.direction || '';
-    const homeTeam = s.homeTeam || s.home_team || 'HOME';
-    const awayTeam = s.awayTeam || s.away_team || 'AWAY';
-    const odds = s.estimatedOdds || s.estimated_odds || -110;
-
-    if (type === 'SPREAD') {
-      const team = dir === 'HOME' ? homeTeam : awayTeam;
-      const liveSpread = s.liveSpread || s.live_spread || 0;
-      let betLineVal;
-      if (dir === 'HOME') {
-        betLineVal = -(Math.round(Math.abs(liveSpread) * 2) / 2);
-      } else {
-        betLineVal = Math.round(Math.abs(liveSpread) * 2) / 2;
-      }
-      const betLineStr = betLineVal > 0 ? `+${betLineVal.toFixed(1)}` : betLineVal.toFixed(1);
-
-      return {
-        market: 'Live Point Spread',
-        pick: `${team} ${betLineStr}`,
-        oddsDisplay: '-110',
-        lineDetail: '',
-        oddsNote: '',
-      };
-    }
-
-    if (type === 'ML_LEADER') {
-      const team = s.team || (dir === 'HOME' ? homeTeam : awayTeam);
-      const oddsNum = Math.round(odds);
-      return {
-        market: 'Live Moneyline',
-        pick: `${team} to WIN`,
-        oddsDisplay: formatOdds(oddsNum),
-        lineDetail: '',
-        oddsNote: '',
-      };
-    }
-
-    if (type === 'ML_TRAILER') {
-      const team = s.team || (dir === 'HOME' ? homeTeam : awayTeam);
-      const oddsNum = Math.round(odds);
-      return {
-        market: 'Live Moneyline (Underdog)',
-        pick: `${team} to WIN`,
-        oddsDisplay: `+${Math.abs(oddsNum)}`,
-        lineDetail: '',
-        oddsNote: '',
-      };
-    }
-
-    if (type === 'Q4_TOTAL') {
-      const q4OU = s.liveQ4OU || s.live_q4_ou || 0;
-      const q4Line = Math.round(q4OU * 2) / 2;
-      const predQ4 = s.predictedQ4 || s.predicted_q4 || 0;
-      return {
-        market: 'Live Q4 Total',
-        pick: `Q4 ${dir} ${q4Line.toFixed(1)}`,
-        oddsDisplay: '-110',
-        lineDetail: `Model: ${predQ4.toFixed(1)} pts`,
-        oddsNote: '',
-      };
-    }
-
-    return {
-      market: type,
-      pick: dir,
-      oddsDisplay: formatOdds(odds),
-      lineDetail: '',
-      oddsNote: '',
-    };
+  function getSniperTier(confidence) {
+    if (confidence >= 0.99) return 'DIAMOND';
+    if (confidence >= 0.97) return 'PLATINUM';
+    if (confidence >= 0.95) return 'GOLD';
+    if (confidence >= 0.93) return 'SILVER';
+    return 'BRONZE';
   }
 
   // =========================================================================
-  // RENDERING - SIGNALS TAB (Recent + Historical)
+  // RENDERING - SIGNALS TAB
   // =========================================================================
 
-  function renderSignalsTab(filter = 'all') {
+  function renderSignalsTab() {
     const tbody = document.getElementById('signals-tbody');
     const summary = document.getElementById('filter-summary');
     const tableTitle = document.getElementById('signals-table-title');
     const tableBadge = document.getElementById('signals-table-badge');
     if (!tbody) return;
 
-    // Build combined signal list based on time period
-    let signals = getSignalsForTimePeriod(currentTimePeriod, filter);
+    let signals = getSignalsForTimePeriod(currentTimePeriod);
 
-    // Sort by date descending (most recent first)
     signals = signals.slice().sort((a, b) => {
       const da = a.date || '0';
       const db = b.date || '0';
       return db.localeCompare(da);
     });
 
-    // Update summary stats
     if (summary) {
       const correct = signals.filter(s => s.correct !== undefined && s.correct).length;
       const total = signals.filter(s => s.correct !== undefined).length;
@@ -866,35 +684,29 @@
       summary.textContent = `${correct}/${total} (${acc}%) | P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)}u`;
     }
 
-    // Update table title based on period
     if (tableTitle) {
       const titles = {
-        'recent': 'Recent Signals — Last 3 Weeks',
-        'today': 'Today\'s Signals',
-        '3days': 'Signals — Last 3 Days',
-        '7days': 'Signals — Last 7 Days',
-        '14days': 'Signals — Last 2 Weeks',
-        'historical': 'Trade Log — Historical OOS Signals (2022-23)',
+        'recent': 'Sniper Signals — Last 3 Weeks',
+        'today': 'Today\'s Sniper Signals',
+        '3days': 'Sniper Signals — Last 3 Days',
+        '7days': 'Sniper Signals — Last 7 Days',
+        '14days': 'Sniper Signals — Last 2 Weeks',
+        'historical': 'Historical OOS Sniper Signals (2022-23)',
       };
-      tableTitle.textContent = titles[currentTimePeriod] || 'Signals';
+      tableTitle.textContent = titles[currentTimePeriod] || 'Sniper Signals';
     }
 
     if (tableBadge) {
-      if (currentTimePeriod === 'historical') {
-        tableBadge.textContent = 'Walk-Forward Validated';
-      } else {
-        tableBadge.textContent = `${signals.length} signals`;
-      }
+      tableBadge.textContent = `${signals.length} signals`;
     }
 
-    // Show max 500 rows
     const display = signals.slice(0, 500);
 
     if (display.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted)">
         ${currentTimePeriod !== 'historical' && !recentGamesLoaded
           ? '<span class="loading-spinner"></span> Loading recent games...'
-          : 'No signals found for this time period'}
+          : 'No sniper signals for this period'}
       </td></tr>`;
       return;
     }
@@ -902,124 +714,100 @@
     tbody.innerHTML = display.map(s => renderSignalRow(s)).join('');
   }
 
-  function getSignalsForTimePeriod(period, filter) {
+  function getSignalsForTimePeriod(period) {
     const now = new Date();
     const todayStr = formatDateStr(now);
 
-    let signals = [];
-
     if (period === 'historical') {
-      // Only backtest historical signals
-      signals = historicalSignals.map(normalizeSignal);
+      return historicalSignals.map(normalizeSignal);
+    }
+
+    const allRecent = [
+      ...liveSignals.map(s => ({ ...s, isRecent: true, date: s.date || todayStr })),
+      ...recentSignals,
+    ];
+
+    const seen = new Set();
+    const deduped = [];
+    for (const s of allRecent) {
+      const key = `${s.date || ''}-${s.homeTeam || s.home_team || ''}-${s.awayTeam || s.away_team || ''}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        deduped.push(s);
+      }
+    }
+
+    let signals;
+    if (period === 'today') {
+      signals = deduped.filter(s => (s.date || '') === todayStr);
+    } else if (period === '3days') {
+      signals = deduped.filter(s => (s.date || '') >= daysAgoStr(3));
+    } else if (period === '7days') {
+      signals = deduped.filter(s => (s.date || '') >= daysAgoStr(7));
+    } else if (period === '14days') {
+      signals = deduped.filter(s => (s.date || '') >= daysAgoStr(14));
     } else {
-      // Combine live (today) + recent signals
-      const allRecent = [
-        ...liveSignals.map(s => ({ ...s, isRecent: true, date: s.date || todayStr })),
-        ...recentSignals,
-      ];
-
-      // Deduplicate by game + signal type
-      const seen = new Set();
-      const deduped = [];
-      for (const s of allRecent) {
-        const key = `${s.date || ''}-${s.homeTeam || s.home_team || ''}-${s.awayTeam || s.away_team || ''}-${s.signalType || s.signal_type || ''}`;
-        if (!seen.has(key)) {
-          seen.add(key);
-          deduped.push(s);
-        }
-      }
-
-      if (period === 'today') {
-        signals = deduped.filter(s => (s.date || '') === todayStr);
-      } else if (period === '3days') {
-        const cutoff = daysAgoStr(3);
-        signals = deduped.filter(s => (s.date || '') >= cutoff);
-      } else if (period === '7days') {
-        const cutoff = daysAgoStr(7);
-        signals = deduped.filter(s => (s.date || '') >= cutoff);
-      } else if (period === '14days') {
-        const cutoff = daysAgoStr(14);
-        signals = deduped.filter(s => (s.date || '') >= cutoff);
-      } else {
-        // 'recent' = all recent + today
-        signals = deduped;
-      }
-
-      signals = signals.map(normalizeSignal);
+      signals = deduped;
     }
 
-    // Apply signal type filter
-    if (filter && filter !== 'all') {
-      signals = signals.filter(s => (s.signal_type || s.signalType) === filter);
-    }
-
-    return signals;
+    return signals.map(normalizeSignal);
   }
 
-  /** Normalize signal objects to a consistent format for table rendering */
   function normalizeSignal(s) {
     return {
       date: s.date || '',
-      signal_type: s.signal_type || s.signalType || '',
+      signal_type: s.signal_type || s.signalType || 'SNIPER',
       direction: s.direction || '',
       confidence: s.confidence || 0,
       edge: s.edge || 0,
       q3_lead: s.q3_lead ?? s.q3Lead ?? 0,
       estimated_odds: s.estimated_odds || s.estimatedOdds || -110,
+      estimated_ml_odds: s.estimated_ml_odds || s.estimatedOdds || -300,
       home_team: s.home_team || s.homeTeam || '',
       away_team: s.away_team || s.awayTeam || '',
+      leader: s.leader || s.team || '',
       final_home: s.final_home || s.homeScore || 0,
       final_away: s.final_away || s.awayScore || 0,
-      final_margin: s.final_margin || s.actualMargin || ((s.final_home || s.homeScore || 0) - (s.final_away || s.awayScore || 0)),
+      final_margin: s.final_margin || s.actualMargin || s.actual_margin || 0,
       correct: s.correct,
-      cover_margin: s.cover_margin,
-      actual_q4: s.actual_q4 || s.actualQ4 || 0,
-      live_q4_ou: s.live_q4_ou || s.liveQ4OU || 0,
+      leader_won: s.leader_won,
+      leader_covered_spread: s.leader_covered_spread,
       live_spread: s.live_spread || s.liveSpread || 0,
       regime: s.regime || '',
       predicted_margin: s.predicted_margin || s.predictedMargin || 0,
+      lead_quality: s.lead_quality || s.leadQuality || 0,
+      lead_sustainability: s.lead_sustainability || s.leadSustainability || 0,
+      model_agree: s.model_agree || s.modelAgree || 0,
       isRecent: s.isRecent || false,
     };
   }
 
   function renderSignalRow(s) {
-    const type = s.signal_type || '';
-    const typeClass = type.toLowerCase().replace('_', '-');
     const conf = (s.confidence * 100).toFixed(0);
-    const edge = (s.edge * 100).toFixed(1);
     const q3Lead = s.q3_lead || 0;
-    const odds = s.estimated_odds || -110;
     const homeTeam = s.home_team || '';
     const awayTeam = s.away_team || '';
-
     const dateStr = s.date ? formatGameDate(s.date) : '';
     const finalHome = s.final_home || 0;
     const finalAway = s.final_away || 0;
+
+    const q3Leader = s.leader || (q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE'));
+    const q3Diff = Math.abs(q3Lead);
+
+    const leadQuality = s.lead_quality || 0;
+    const qualityLabel = leadQuality >= 0.7 ? 'HIGH' : (leadQuality >= 0.5 ? 'GOOD' : 'OK');
+    const qualityClass = leadQuality >= 0.7 ? 'positive' : '';
+
     const finalMargin = s.final_margin || (finalHome - finalAway);
     const winner = finalMargin > 0 ? homeTeam : awayTeam;
     const winMargin = Math.abs(finalMargin);
-
-    const q3Leader = q3Lead > 0 ? homeTeam : (q3Lead < 0 ? awayTeam : 'TIE');
-    const q3Diff = Math.abs(q3Lead);
-
-    const betDesc = buildHistoricalBetDescription(s);
-
-    let resultNote = '';
-    if (type === 'Q4_TOTAL') {
-      const actualQ4 = s.actual_q4 || 0;
-      const line = s.live_q4_ou || 0;
-      resultNote = actualQ4 ? `Q4: ${actualQ4.toFixed ? actualQ4.toFixed(0) : actualQ4} (line ${line.toFixed ? line.toFixed(1) : line})` : '';
-    } else if (type === 'SPREAD') {
-      const cover = s.cover_margin;
-      resultNote = cover !== undefined ? `Cover: ${cover > 0 ? '+' : ''}${cover.toFixed ? cover.toFixed(1) : cover}` : '';
-    } else {
-      resultNote = finalHome || finalAway ? `${winner} by ${winMargin}` : '';
-    }
+    const resultNote = (finalHome || finalAway) ? `${winner} by ${winMargin}` : '';
 
     let unitPnl;
     if (s.correct !== undefined) {
+      const o = s.estimated_ml_odds || s.estimated_odds || -300;
       if (s.correct) {
-        unitPnl = odds < 0 ? 100 / Math.abs(odds) : odds / 100;
+        unitPnl = o < 0 ? 100 / Math.abs(o) : o / 100;
       } else {
         unitPnl = -1;
       }
@@ -1039,6 +827,7 @@
       : `<td class="date-cell">-</td>`;
 
     const recentBadge = s.isRecent ? ' <span class="recent-badge">NEW</span>' : '';
+    const tier = getSniperTier(s.confidence);
 
     return `<tr class="${s.correct === false ? 'loss-row' : ''}">
       <td class="date-cell">${dateStr}${recentBadge}</td>
@@ -1046,17 +835,153 @@
         <div>${awayTeam} @ ${homeTeam}</div>
         <div class="score-sub">${finalAway}-${finalHome}</div>
       </td>
-      <td><span class="signal-type-badge ${typeClass}">${type.replace('_', ' ')}</span></td>
-      <td class="bet-desc-cell">${betDesc}</td>
+      <td class="bet-desc-cell"><strong>${q3Leader} ML</strong> <span class="bet-desc-sub">${tier}</span></td>
       <td class="q3-cell">
         <div>${q3Leader} +${q3Diff}</div>
         <div class="regime-sub">${s.regime || ''}</div>
       </td>
       <td>${conf}%</td>
-      <td class="positive">${edge}%</td>
+      <td class="${qualityClass}">${qualityLabel}</td>
       ${resultCell}
       ${pnlCell}
     </tr>`;
+  }
+
+  // =========================================================================
+  // PERFORMANCE TABLES
+  // =========================================================================
+
+  function updatePerformanceStats() {
+    if (!historicalSignals.length) return;
+
+    const sigs = historicalSignals;
+    const mlCorrect = sigs.filter(s => s.correct || s.leader_won).length;
+    const total = sigs.length;
+    const mlAcc = total > 0 ? (mlCorrect / total * 100).toFixed(1) : '0';
+
+    const spreadCorrect = sigs.filter(s => s.leader_covered_spread).length;
+    const spreadAcc = total > 0 ? (spreadCorrect / total * 100).toFixed(1) : '0';
+
+    let mlPnl = 0;
+    sigs.forEach(s => {
+      const won = s.correct || s.leader_won;
+      const odds = s.estimated_ml_odds || s.estimatedOdds || -300;
+      if (won) {
+        mlPnl += odds < 0 ? 100 / Math.abs(odds) : odds / 100;
+      } else {
+        mlPnl -= 1;
+      }
+    });
+
+    const spreadPnl = spreadCorrect * (100 / 110) - (total - spreadCorrect) * 1.0;
+    const spreadRoi = total > 0 ? (spreadPnl / total * 100).toFixed(1) : '0';
+
+    setText('perf-ml-record', `${mlCorrect}/${total}`);
+    setText('perf-ml-acc', `${mlAcc}%`);
+    setText('perf-ml-pnl', `+${mlPnl.toFixed(1)}u`);
+    setText('perf-spread-record', `${spreadCorrect}/${total}`);
+    setText('perf-spread-acc', `${spreadAcc}%`);
+    setText('perf-spread-pnl', `+${spreadPnl.toFixed(1)}u`);
+    setText('perf-spread-roi', `+${spreadRoi}%`);
+
+    const mlBar = document.getElementById('perf-ml-bar');
+    if (mlBar) mlBar.style.width = `${mlAcc}%`;
+    const spreadBar = document.getElementById('perf-spread-bar');
+    if (spreadBar) spreadBar.style.width = `${spreadAcc}%`;
+  }
+
+  function renderRegimeTable() {
+    const tbody = document.getElementById('regime-tbody');
+    if (!tbody) return;
+
+    const regimes = [
+      { name: 'BLOWOUT', range: '20+' },
+      { name: 'COMFORTABLE', range: '12-19' },
+      { name: 'COMPETITIVE', range: '6-11' },
+      { name: 'TIGHT', range: '0-5' },
+    ];
+
+    tbody.innerHTML = regimes.map(r => {
+      const sigs = historicalSignals.filter(s => s.regime === r.name);
+      const total = sigs.length;
+      if (total === 0) {
+        return `<tr><td>${r.name}</td><td>${r.range} pts</td><td>0</td><td>-</td><td>-</td><td>-</td></tr>`;
+      }
+
+      const mlWins = sigs.filter(s => s.correct || s.leader_won).length;
+      const mlAcc = (mlWins / total * 100).toFixed(1);
+
+      const spreadWins = sigs.filter(s => s.leader_covered_spread).length;
+      const spreadAcc = (spreadWins / total * 100).toFixed(1);
+
+      const avgConf = (sigs.reduce((a, s) => a + (s.confidence || 0), 0) / total * 100).toFixed(1);
+
+      return `<tr>
+        <td>${r.name}</td>
+        <td>${r.range} pts</td>
+        <td>${total}</td>
+        <td class="${mlWins / total >= 0.95 ? 'positive' : ''}">${mlWins}/${total} (${mlAcc}%)</td>
+        <td>${spreadWins}/${total} (${spreadAcc}%)</td>
+        <td>${avgConf}%</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderConfidenceTable() {
+    const tbody = document.getElementById('confidence-tbody');
+    if (!tbody) return;
+
+    const tiers = [
+      { name: 'DIAMOND', lo: 0.99, hi: 1.0 },
+      { name: 'PLATINUM', lo: 0.97, hi: 0.99 },
+      { name: 'GOLD', lo: 0.95, hi: 0.97 },
+      { name: 'SILVER', lo: 0.93, hi: 0.95 },
+    ];
+
+    tbody.innerHTML = tiers.map(t => {
+      const sigs = historicalSignals.filter(s => s.confidence >= t.lo && s.confidence < t.hi);
+      const total = sigs.length;
+      if (total === 0) {
+        return `<tr><td>${t.name}</td><td>${(t.lo * 100).toFixed(0)}-${(t.hi * 100).toFixed(0)}%</td><td>0</td><td>-</td><td>-</td><td>-</td></tr>`;
+      }
+
+      const mlWins = sigs.filter(s => s.correct || s.leader_won).length;
+      const mlAcc = (mlWins / total * 100).toFixed(1);
+
+      const spreadWins = sigs.filter(s => s.leader_covered_spread).length;
+      const spreadPnl = spreadWins * (100 / 110) - (total - spreadWins) * 1.0;
+      const spreadRoi = (spreadPnl / total * 100).toFixed(1);
+
+      return `<tr>
+        <td><span class="tier-badge ${t.name.toLowerCase()}">${t.name}</span></td>
+        <td>${(t.lo * 100).toFixed(0)}-${(t.hi * 100).toFixed(0)}%</td>
+        <td>${total}</td>
+        <td class="${mlWins / total >= 0.95 ? 'positive' : ''}">${mlWins}/${total} (${mlAcc}%)</td>
+        <td class="${spreadPnl > 0 ? 'positive' : 'negative'}">${spreadPnl >= 0 ? '+' : ''}${spreadPnl.toFixed(1)}u</td>
+        <td class="${parseFloat(spreadRoi) > 0 ? 'positive' : 'negative'}">${spreadRoi}%</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // =========================================================================
+  // HELPERS
+  // =========================================================================
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function formatOdds(odds) {
+    if (!odds || odds === 0) return '-';
+    const n = Math.round(odds);
+    return n > 0 ? `+${n}` : `${n}`;
+  }
+
+  function formatMargin(margin) {
+    if (margin === undefined || margin === null) return '-';
+    const m = parseFloat(margin);
+    return m > 0 ? `+${m.toFixed(1)}` : m.toFixed(1);
   }
 
   function formatDateStr(date) {
@@ -1072,124 +997,26 @@
     return formatDateStr(d);
   }
 
-  /** Build a short explicit bet description for historical table rows */
-  function buildHistoricalBetDescription(s) {
-    const type = s.signal_type || '';
-    const dir = s.direction || '';
-    const homeTeam = s.home_team || '';
-    const awayTeam = s.away_team || '';
-    const liveSpread = s.live_spread || 0;
-    const odds = s.estimated_odds || -110;
-
-    if (type === 'SPREAD') {
-      const team = dir === 'HOME' ? homeTeam : awayTeam;
-      let betLine;
-      if (dir === 'HOME') {
-        betLine = -(Math.round(Math.abs(liveSpread) * 2) / 2);
-      } else {
-        betLine = Math.round(Math.abs(liveSpread) * 2) / 2;
-      }
-      const lineStr = betLine > 0 ? `+${betLine.toFixed(1)}` : betLine.toFixed(1);
-      return `<strong>${team} ${lineStr}</strong> <span class="bet-desc-sub">spread @ -110</span>`;
-    }
-
-    if (type === 'ML_LEADER') {
-      const team = dir === 'HOME' ? homeTeam : awayTeam;
-      return `<strong>${team} ML</strong> <span class="bet-desc-sub">@ ${formatOdds(Math.round(odds))}</span>`;
-    }
-
-    if (type === 'ML_TRAILER') {
-      const team = dir === 'HOME' ? homeTeam : awayTeam;
-      return `<strong>${team} ML</strong> <span class="bet-desc-sub">dog @ +${Math.abs(Math.round(odds))}</span>`;
-    }
-
-    if (type === 'Q4_TOTAL') {
-      const q4OU = s.live_q4_ou || 0;
-      const q4Line = Math.round(q4OU * 2) / 2;
-      return `<strong>Q4 ${dir} ${q4Line.toFixed(1)}</strong> <span class="bet-desc-sub">@ -110</span>`;
-    }
-
-    return dir;
-  }
-
-  // =========================================================================
-  // RENDERING - REGIME TABLE
-  // =========================================================================
-
-  function renderRegimeTable() {
-    const tbody = document.getElementById('regime-tbody');
-    if (!tbody) return;
-
-    const regimes = [
-      { name: 'BLOWOUT', range: '20+' },
-      { name: 'COMFORTABLE', range: '12-19' },
-      { name: 'COMPETITIVE', range: '6-11' },
-      { name: 'TIGHT', range: '0-5' },
-    ];
-
-    tbody.innerHTML = regimes.map(r => {
-      const spreadSigs = historicalSignals.filter(s => s.signal_type === 'SPREAD' && s.regime === r.name);
-      const mlSigs = historicalSignals.filter(s => s.signal_type === 'ML_LEADER' && s.regime === r.name);
-
-      const sW = spreadSigs.filter(s => s.correct).length;
-      const sT = spreadSigs.length;
-      const sAcc = sT > 0 ? (sW / sT * 100).toFixed(1) + '%' : '-';
-
-      const mW = mlSigs.filter(s => s.correct).length;
-      const mT = mlSigs.length;
-      const mAcc = mT > 0 ? (mW / mT * 100).toFixed(1) + '%' : '-';
-
-      return `<tr>
-        <td>${r.name}</td>
-        <td>${r.range} pts</td>
-        <td>${sT > 0 ? `${sW}/${sT}` : '-'}</td>
-        <td class="${sT > 0 && sW/sT >= 0.65 ? 'positive' : ''}">${sAcc}</td>
-        <td>${mT > 0 ? `${mW}/${mT}` : '-'}</td>
-        <td class="${mT > 0 && mW/mT >= 0.90 ? 'positive' : ''}">${mAcc}</td>
-      </tr>`;
-    }).join('');
-  }
-
-  // =========================================================================
-  // HELPERS
-  // =========================================================================
-
-  function formatOdds(odds) {
-    if (!odds || odds === 0) return '-';
-    const n = Math.round(odds);
-    return n > 0 ? `+${n}` : `${n}`;
-  }
-
-  function formatMargin(margin) {
-    if (margin === undefined || margin === null) return '-';
-    const m = parseFloat(margin);
-    return m > 0 ? `+${m.toFixed(1)}` : m.toFixed(1);
-  }
-
   function formatGameDate(dateStr) {
     if (!dateStr || dateStr.length < 8) return dateStr || '';
-    const y = dateStr.substring(0, 4);
     const m = dateStr.substring(4, 6);
     const d = dateStr.substring(6, 8);
+    const y = dateStr.substring(0, 4);
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const monthIdx = parseInt(m, 10) - 1;
     const formatted = `${months[monthIdx]} ${parseInt(d, 10)}`;
-
-    // Add relative label for recent dates
     const now = new Date();
     const todayStr = formatDateStr(now);
     const yesterday = new Date(now);
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = formatDateStr(yesterday);
-
     if (dateStr === todayStr) return `${formatted} (Today)`;
     if (dateStr === yesterdayStr) return `${formatted} (Yest.)`;
-
     return `${formatted}, ${y}`;
   }
 
   // =========================================================================
-  // REQUEST NOTIFICATION PERMISSION
+  // START
   // =========================================================================
 
   function requestNotifications() {
@@ -1197,10 +1024,6 @@
       Notification.requestPermission();
     }
   }
-
-  // =========================================================================
-  // START
-  // =========================================================================
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => { init(); requestNotifications(); });
