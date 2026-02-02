@@ -197,6 +197,7 @@ body {
   animation: fadeIn 0.3s ease;
 }
 .signal-card:hover { border-color: var(--border-light); }
+.signal-card.diamond { border-left: 3px solid var(--cyan); }
 .signal-card.platinum { border-left: 3px solid var(--platinum); }
 .signal-card.gold { border-left: 3px solid var(--gold); }
 .signal-card.silver { border-left: 3px solid var(--silver); }
@@ -221,6 +222,7 @@ body {
 .signal-type-badge.ml-leader { background: var(--green-bg); color: var(--green); }
 .signal-type-badge.ml-trailer { background: var(--purple-bg); color: var(--purple); }
 .signal-type-badge.q4-total { background: var(--yellow-bg); color: var(--yellow); }
+.signal-type-badge.sniper { background: rgba(6,182,212,0.15); color: var(--cyan); }
 
 .signal-body {
   display: grid;
@@ -290,6 +292,7 @@ body {
   border-radius: 3px;
   letter-spacing: 0.5px;
 }
+.tier-badge.diamond { background: rgba(6,182,212,0.15); color: var(--cyan); }
 .tier-badge.platinum { background: rgba(229,231,235,0.15); color: var(--platinum); }
 .tier-badge.gold { background: rgba(251,191,36,0.15); color: var(--gold); }
 .tier-badge.silver { background: rgba(156,163,175,0.15); color: var(--silver); }
