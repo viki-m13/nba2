@@ -13,6 +13,7 @@
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 7;
+  let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
 
@@ -53,6 +54,13 @@
     setupHistoryFilters();
     setStatus('loading', 'Loading model data...');
 
+    // Detect Vercel proxy for CORS
+    try {
+      const probe = await fetch('/api/nba?endpoint=espn_scoreboard', { method: 'HEAD' });
+      useProxy = probe.ok || probe.status === 405 || probe.status === 200;
+    } catch (e) { useProxy = false; }
+    console.log('[ADI] Proxy available:', useProxy);
+
     try {
       // Step 1: Load season data to train the ADI model
       await loadSeasonData();
@@ -91,7 +99,7 @@
 
     // Try to load the pre-built season file
     try {
-      const resp = await fetch('../data/espn_full_season_2025.json');
+      const resp = await fetch('data/espn_full_season_2025.json');
       if (resp.ok) {
         seasonData = await resp.json();
         console.log(`[ADI] Loaded ${seasonData.length} games from season file`);
@@ -134,7 +142,9 @@
   }
 
   async function fetchESPNGamesForDate(dateStr) {
-    const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${dateStr}`;
+    const url = useProxy
+      ? `/api/nba?endpoint=espn_scoreboard&dates=${dateStr}`
+      : `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${dateStr}`;
     const resp = await fetch(url);
     if (!resp.ok) return [];
     const data = await resp.json();
@@ -163,7 +173,9 @@
 
   async function fetchTodayGames() {
     console.log('[ADI] Fetching today\'s games...');
-    const url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+    const url = useProxy
+      ? '/api/nba?endpoint=espn_scoreboard'
+      : 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 
     try {
       const resp = await fetch(url);
