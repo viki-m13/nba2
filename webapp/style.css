@@ -1,5 +1,5 @@
 /* ============================================================
-   Q3 Terminal - NBA Prediction System
+   NBA Dominance System — Pre-Game Picks
    Dark Trading Terminal Theme
    ============================================================ */
 
@@ -15,366 +15,470 @@
   --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --text-dim: #475569;
 
   --green: #22c55e;
   --green-dim: #166534;
-  --green-bg: rgba(34, 197, 94, 0.1);
   --red: #ef4444;
-  --red-dim: #991b1b;
-  --red-bg: rgba(239, 68, 68, 0.1);
+  --red-dim: #7f1d1d;
   --blue: #3b82f6;
-  --blue-bg: rgba(59, 130, 246, 0.1);
-  --yellow: #eab308;
-  --yellow-bg: rgba(234, 179, 8, 0.1);
-  --purple: #a855f7;
-  --purple-bg: rgba(168, 85, 247, 0.1);
+  --amber: #f59e0b;
   --cyan: #06b6d4;
-  --orange: #f97316;
+  --purple: #a78bfa;
 
-  --platinum: #e5e7eb;
-  --gold: #fbbf24;
-  --silver: #9ca3af;
-  --bronze: #d97706;
-
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --radius: 8px;
   --radius-sm: 4px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: var(--font-sans);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
+  line-height: 1.5;
 }
 
-/* ---- HEADER ---- */
+/* ── HEADER ─────────────────────────────────────────────── */
+
 .header {
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 24px;
   height: 56px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.header-brand {
+.header-left {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.header-brand h1 {
-  font-family: var(--font-mono);
+.brand {
   font-size: 18px;
   font-weight: 700;
+  color: var(--green);
   letter-spacing: -0.5px;
 }
 
-.header-brand h1 span { color: var(--green); }
+.brand-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
 
-.header-status {
+.header-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.nav-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.nav-btn.active {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  font-weight: 600;
+}
+
+.header-right {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
 }
 
 .status-dot {
-  width: 8px; height: 8px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s infinite;
+  background: var(--text-muted);
 }
-.status-dot.offline { background: var(--red); animation: none; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-.header-nav { display: flex; gap: 4px; }
+.status-dot.online { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.status-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
+.status-dot.error { background: var(--red); }
+.status-dot.offline { background: var(--text-muted); }
 
-.nav-btn {
-  background: transparent;
-  border: none;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.status-text {
+  font-size: 12px;
   color: var(--text-secondary);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s;
-  font-weight: 500;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
-.nav-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-.nav-btn.active { background: var(--bg-card); color: var(--green); }
 
-/* ---- MAIN LAYOUT ---- */
-.main-content {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 20px 24px;
+/* ── METRICS BAR ────────────────────────────────────────── */
+
+.metrics-bar {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
 }
+
+.metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: var(--bg-secondary);
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
+}
+
+.metric-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ── MAIN ───────────────────────────────────────────────── */
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
 .view { display: none; }
 .view.active { display: block; }
 
-/* ---- METRIC CARDS ---- */
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+.section-title {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
-.metric-card {
+
+/* ── LOADING STATE ──────────────────────────────────────── */
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state h2 {
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  max-width: 460px;
+  margin: 0 auto 8px;
+}
+
+.empty-state .subtle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── PICK CARDS ─────────────────────────────────────────── */
+
+.picks-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pick-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 20px;
+  overflow: hidden;
+  transition: border-color 0.2s;
 }
-.metric-label {
+
+.pick-card:hover {
+  border-color: var(--border-light);
+}
+
+.pick-card.conf-high {
+  border-left: 4px solid var(--green);
+}
+
+.pick-card.conf-strong {
+  border-left: 4px solid var(--cyan);
+}
+
+.pick-card.conf-moderate {
+  border-left: 4px solid var(--amber);
+}
+
+.pick-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 0;
+}
+
+.pick-verdict {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--green);
+  color: #000;
+}
+
+.pick-conf {
   font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.conf-high .pick-conf { color: var(--green); }
+.conf-strong .pick-conf { color: var(--cyan); }
+.conf-moderate .pick-conf { color: var(--amber); }
+
+.pick-bet-line {
+  padding: 8px 20px 0;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
+}
+
+.pick-matchup {
+  padding: 4px 20px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.pick-details {
+  display: flex;
+  gap: 24px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-muted);
-  margin-bottom: 6px;
-  font-weight: 600;
-}
-.metric-value {
-  font-family: var(--font-mono);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1;
-}
-.metric-value.positive { color: var(--green); }
-.metric-value.negative { color: var(--red); }
-.metric-sub {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  font-family: var(--font-mono);
 }
 
-/* ---- CARDS ---- */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 16px;
+.detail-value {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
 }
-.card-header {
+
+/* ── PICK LIVE STATUS ───────────────────────────────────── */
+
+.pick-live {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  font-size: 13px;
+  border-top: 1px solid var(--border);
 }
-.card-title { font-size: 14px; font-weight: 600; }
-.card-badge {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-.card-body { padding: 20px; }
 
-/* ---- SIGNAL CARDS ---- */
-.signal-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 12px;
-  transition: border-color 0.2s;
-  animation: fadeIn 0.3s ease;
-}
-.signal-card:hover { border-color: var(--border-light); }
-.signal-card.diamond { border-left: 3px solid var(--cyan); }
-.signal-card.platinum { border-left: 3px solid var(--platinum); }
-.signal-card.gold { border-left: 3px solid var(--gold); }
-.signal-card.silver { border-left: 3px solid var(--silver); }
-.signal-card.bronze { border-left: 3px solid var(--bronze); }
-.signal-card.value { border-left: 3px solid var(--purple); }
-
-.signal-matchup {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 600;
-}
-.signal-type-badge {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.signal-type-badge.spread { background: var(--blue-bg); color: var(--blue); }
-.signal-type-badge.ml-leader { background: var(--green-bg); color: var(--green); }
-.signal-type-badge.ml-trailer { background: var(--purple-bg); color: var(--purple); }
-.signal-type-badge.q4-total { background: var(--yellow-bg); color: var(--yellow); }
-.signal-type-badge.sniper { background: rgba(6,182,212,0.15); color: var(--cyan); }
-
-.signal-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-}
-.signal-field { display: flex; flex-direction: column; }
-.signal-field-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-.signal-field-value {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
-}
-.signal-pick {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px 16px;
+.pick-live.live-scheduled {
   background: var(--bg-accent);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-.signal-pick-label {
-  font-size: 11px;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
-.signal-pick-value {
-  font-family: var(--font-mono);
-  font-size: 16px;
-  font-weight: 700;
+
+.pick-live.live-active {
+  background: rgba(34, 197, 94, 0.08);
   color: var(--green);
 }
-.signal-pick-odds {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-left: auto;
+
+.pick-live.live-win {
+  background: rgba(34, 197, 94, 0.1);
 }
 
-.signal-result {
-  margin-top: 8px;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
+.pick-live.live-loss {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.live-label {
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 12px;
+}
+
+.live-score {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-weight: 600;
 }
-.signal-result.win { background: var(--green-bg); color: var(--green); }
-.signal-result.loss { background: var(--red-bg); color: var(--red); }
 
-/* ---- TIER BADGES ---- */
-.tier-badge {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 10px;
+.live-result {
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.5px;
+  font-size: 14px;
 }
-.tier-badge.diamond { background: rgba(6,182,212,0.15); color: var(--cyan); }
-.tier-badge.platinum { background: rgba(229,231,235,0.15); color: var(--platinum); }
-.tier-badge.gold { background: rgba(251,191,36,0.15); color: var(--gold); }
-.tier-badge.silver { background: rgba(156,163,175,0.15); color: var(--silver); }
-.tier-badge.bronze { background: rgba(217,119,6,0.15); color: var(--bronze); }
-.tier-badge.value { background: rgba(168,85,247,0.15); color: var(--purple); }
 
-/* ---- GAME CARDS (Live) ---- */
+.live-win .live-result { color: var(--green); }
+.live-loss .live-result { color: var(--red); }
+
+.live-track {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.live-status {
+  font-size: 12px;
+}
+
+/* ── ALL GAMES GRID ─────────────────────────────────────── */
+
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
 }
+
 .game-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  transition: border-color 0.2s;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  position: relative;
 }
-.game-card:hover { border-color: var(--border-light); }
-.game-card.has-signal { border-color: var(--green); box-shadow: 0 0 15px rgba(34,197,94,0.1); }
-.game-status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
+
+.game-card.game-picked {
+  border-color: var(--green);
+  background: rgba(34, 197, 94, 0.05);
 }
-.game-status-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.game-diff {
-  font-family: var(--font-mono);
-  font-size: 11px;
+
+.game-teams {
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text-muted);
-  padding: 2px 6px;
-  background: var(--bg-accent);
-  border-radius: 3px;
+  margin-bottom: 4px;
 }
+
 .game-status {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
-.game-status.live { color: var(--red); }
+
+.game-status.live { color: var(--green); }
 .game-status.final { color: var(--text-muted); }
-.game-status.scheduled { color: var(--blue); }
-.game-status.q3-end { color: var(--green); }
+.game-status.scheduled { color: var(--text-secondary); }
 
-.game-scoreboard {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-.game-team { text-align: center; }
-.game-team-name {
-  font-family: var(--font-mono);
-  font-size: 20px;
+.game-badge {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 9px;
   font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--green);
+  color: #000;
 }
-.game-team-sub { font-size: 11px; color: var(--text-muted); }
-.game-score {
-  font-family: var(--font-mono);
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 4px;
-}
-.game-score .sep { color: var(--text-dim); margin: 0 4px; }
 
-/* ---- TABLES ---- */
+/* ── HISTORY TABLE ──────────────────────────────────────── */
+
+.filter-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.filter-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  background: var(--bg-accent);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
+
 .data-table th {
   text-align: left;
   padding: 10px 12px;
@@ -382,595 +486,184 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-muted);
+  background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
-  font-weight: 600;
   white-space: nowrap;
 }
+
 .data-table td {
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  white-space: nowrap;
-}
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { background: var(--bg-card-hover); }
-.data-table .positive { color: var(--green); }
-.data-table .negative { color: var(--red); }
-
-/* ---- FILTER BAR ---- */
-.filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-.filter-btn {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  background: transparent;
   color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.2s;
 }
-.filter-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
-.filter-btn.active { border-color: var(--green); color: var(--green); background: var(--green-bg); }
 
-/* ---- STATS GRID ---- */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.stat-section {
+.data-table tr:hover td {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-}
-.stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-.stat-row:last-child { border-bottom: none; }
-.stat-label { font-size: 13px; color: var(--text-secondary); }
-.stat-value { font-family: var(--font-mono); font-size: 14px; font-weight: 600; }
-
-/* ---- ACCURACY BAR ---- */
-.accuracy-bar {
-  height: 6px;
-  background: var(--bg-accent);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 4px;
-  width: 100%;
-}
-.accuracy-bar-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.3s;
 }
 
-/* ---- EMPTY STATE ---- */
-.empty-state {
-  text-align: center;
-  padding: 48px 24px;
+.data-table .muted {
   color: var(--text-muted);
-}
-.empty-state h3 {
-  font-size: 16px;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
-.empty-state p {
-  font-size: 13px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-/* ---- GUIDE ---- */
-.guide-section {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  text-align: center;
   padding: 24px;
-  margin-bottom: 16px;
 }
-.guide-section h3 {
-  font-size: 16px;
+
+/* ── BADGES ─────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
   font-weight: 600;
-  margin-bottom: 12px;
-}
-.guide-section p, .guide-section li {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--text-secondary);
-}
-.guide-section ul, .guide-section ol { padding-left: 24px; margin: 8px 0; }
-.guide-section code {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  background: var(--bg-accent);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--cyan);
-}
-.highlight-box {
-  border: 1px solid var(--green);
-  background: var(--green-bg);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin: 12px 0;
-}
-.highlight-box.warning { border-color: var(--yellow); background: var(--yellow-bg); }
-.highlight-box.info { border-color: var(--blue); background: var(--blue-bg); }
-
-/* ---- TWO-COL ---- */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
-  .header { padding: 0 12px; flex-wrap: wrap; height: auto; min-height: 56px; }
-  .header-nav { overflow-x: auto; padding: 8px 0; }
-  .main-content { padding: 12px; }
-  .metrics-row { grid-template-columns: repeat(2, 1fr); }
-  .games-grid { grid-template-columns: 1fr; }
-  .signal-body { grid-template-columns: 1fr 1fr; }
-  .stats-grid { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; }
-}
-
-/* ---- BET SLIP (Signal Card) ---- */
-.bet-slip {
-  background: var(--bg-primary);
-  border: 1px solid var(--green);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  margin-bottom: 12px;
-}
-.bet-slip-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-.bet-slip-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--green);
-  text-transform: uppercase;
-}
-.bet-slip-market {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-}
-.bet-slip-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-.bet-slip-pick {
-  font-family: var(--font-mono);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.bet-slip-odds {
-  font-family: var(--font-mono);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--yellow);
-  white-space: nowrap;
-}
-.bet-slip-detail {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
-  font-family: var(--font-mono);
-}
-
-/* ---- SIGNAL CARD ENHANCEMENTS ---- */
-.signal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.signal-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.signal-header-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.signal-date {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  padding: 2px 6px;
-  background: var(--bg-accent);
-  border-radius: 3px;
-}
-.signal-quarter-badge {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--red);
-  background: var(--red-bg);
-  letter-spacing: 0.5px;
-}
-.signal-quarter-badge.final {
-  color: var(--text-muted);
-  background: rgba(100, 116, 139, 0.1);
-}
-
-/* Signal Scoreboard */
-.signal-scoreboard {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--bg-accent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  margin-bottom: 12px;
-}
-.signal-team-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.signal-team-abbr {
-  font-family: var(--font-mono);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-secondary);
-}
-.signal-team-abbr.leading {
-  color: var(--green);
-}
-.signal-team-role {
-  font-size: 9px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.signal-score-col {
-  text-align: center;
-}
-.signal-score-main {
-  font-family: var(--font-mono);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-.signal-score-sub {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Regime colors */
-.regime-blowout { color: var(--red); }
-.regime-comfortable { color: var(--orange); }
-.regime-competitive { color: var(--yellow); }
-.regime-tight { color: var(--cyan); }
-
-/* Signal Result Detail (replaces old signal-result) */
-.signal-result-detail {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 10px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-.signal-result-detail.win {
-  background: var(--green-bg);
-  border: 1px solid rgba(34, 197, 94, 0.2);
-}
-.signal-result-detail.loss {
-  background: var(--red-bg);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-.result-badge {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  padding: 4px 10px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.signal-result-detail.win .result-badge {
-  background: var(--green);
-  color: var(--bg-primary);
-}
-.signal-result-detail.loss .result-badge {
-  background: var(--red);
-  color: white;
-}
-.result-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  color: var(--text-secondary);
-  font-size: 12px;
-}
-.result-stats strong {
-  color: var(--text-primary);
-}
-
-/* ---- BET DESCRIPTION (Historical Table) ---- */
-.bet-desc-cell strong {
-  color: var(--text-primary);
-}
-.bet-desc-sub {
-  font-size: 10px;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 1px;
-}
-
-/* ---- TRADE LOG TABLE ---- */
-.trade-log-table td {
-  padding: 8px 10px;
-  vertical-align: middle;
-}
-.trade-log-table th {
-  padding: 8px 10px;
-}
-.date-cell {
-  font-size: 11px !important;
-  color: var(--text-muted) !important;
-  white-space: nowrap;
-}
-.matchup-cell {
-  white-space: nowrap;
-}
-.matchup-cell .score-sub {
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 1px;
-}
-.q3-cell .regime-sub {
-  font-size: 9px;
-  color: var(--text-dim);
-  text-transform: uppercase;
   letter-spacing: 0.3px;
 }
-.result-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.result-tag {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 2px;
-  letter-spacing: 0.5px;
-  width: fit-content;
-}
-.result-tag.win {
-  background: var(--green);
-  color: var(--bg-primary);
-}
-.result-tag.loss {
-  background: var(--red);
-  color: white;
-}
-.result-note {
-  font-size: 10px;
-  color: var(--text-muted);
-}
-.loss-row td {
-  opacity: 0.7;
-}
-.loss-row:hover td {
-  opacity: 1;
-}
-.filter-summary-text {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+
+.badge.conf-high {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--green);
 }
 
-/* ---- STAT SECTION TITLE WITH BADGE ---- */
-.stat-section-title {
-  font-size: 13px;
-  font-weight: 600;
+.badge.conf-strong {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--cyan);
+}
+
+.badge.result-win {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--green);
+}
+
+.badge.result-loss {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red);
+}
+
+td.result-win { color: var(--green); }
+td.result-loss { color: var(--red); }
+
+/* ── HOW IT WORKS ───────────────────────────────────────── */
+
+.how-content {
+  max-width: 720px;
+}
+
+.how-content h2 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.how-section {
+  margin-bottom: 32px;
+}
+
+.how-section h3 {
+  font-size: 16px;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.how-section p {
   color: var(--text-secondary);
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.stat-section-title .signal-type-badge {
-  font-size: 9px;
+  margin-bottom: 8px;
+  line-height: 1.7;
 }
 
-/* ---- BET GUIDE (How to Use) ---- */
-.bet-guide-block {
+.how-section ol,
+.how-section ul {
+  color: var(--text-secondary);
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+.how-section li {
+  margin-bottom: 4px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.result-card {
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  margin-bottom: 16px;
-  overflow: hidden;
-}
-.bet-guide-header {
-  background: var(--bg-accent);
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  font-size: 15px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.bet-guide-body {
   padding: 16px;
+  text-align: center;
 }
-.bet-guide-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.bet-guide-step {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-.step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  background: var(--green-bg);
-  border: 1px solid var(--green);
-  border-radius: 50%;
-  font-family: var(--font-mono);
-  font-size: 11px;
+
+.result-value {
+  font-size: 28px;
   font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   color: var(--green);
-  flex-shrink: 0;
-}
-.bet-guide-example {
-  background: var(--bg-accent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-.bet-guide-odds-note {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--text-muted);
-  padding: 10px 14px;
-  background: var(--blue-bg);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: var(--radius-sm);
 }
 
-/* ---- TIME PERIOD FILTER BAR ---- */
-.time-period-bar {
-  margin-bottom: 8px;
+.result-label {
+  font-size: 12px;
+  color: var(--text-primary);
+  margin-top: 4px;
+  font-weight: 600;
 }
-.time-period-btn {
-  font-family: var(--font-mono);
+
+.result-detail {
   font-size: 11px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  background: transparent;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.factor-list li {
   color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.time-period-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
-.time-period-btn.active { border-color: var(--cyan); color: var(--cyan); background: rgba(6, 182, 212, 0.1); }
-
-.filter-bar-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-dim);
-  margin-right: 4px;
 }
 
-/* ---- RECENT LOADING BAR ---- */
-.recent-loading-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  margin-bottom: 12px;
-  background: var(--blue-bg);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--blue);
-  animation: fadeIn 0.3s ease;
+.notes-list li {
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
-/* ---- RECENT BADGE ---- */
-.recent-badge {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 2px;
-  background: var(--cyan);
-  color: var(--bg-primary);
-  letter-spacing: 0.5px;
-  vertical-align: middle;
-  margin-left: 4px;
-}
+/* ── RESPONSIVE ─────────────────────────────────────────── */
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
-.loading-spinner {
-  display: inline-block;
-  width: 16px; height: 16px;
-  border: 2px solid var(--border);
-  border-top-color: var(--green);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ---- RESPONSIVE: bet slip, signal card, trade log ---- */
 @media (max-width: 768px) {
-  .bet-slip-main { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .bet-slip-pick { font-size: 14px; }
-  .bet-slip-odds { font-size: 14px; }
-  .signal-scoreboard { gap: 8px; padding: 8px 12px; }
-  .signal-score-main { font-size: 16px; }
-  .signal-team-abbr { font-size: 14px; }
-  .signal-header { flex-direction: column; align-items: flex-start; }
-  .result-stats { font-size: 11px; }
-  .trade-log-table { font-size: 11px; }
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .header-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .metrics-bar {
+    flex-wrap: wrap;
+  }
+
+  .metric {
+    min-width: 100px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .pick-details {
+    gap: 16px;
+  }
+
+  .pick-bet-line {
+    font-size: 20px;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
