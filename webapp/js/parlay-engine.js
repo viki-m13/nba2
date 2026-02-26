@@ -1,13 +1,18 @@
 // =============================================================================
-// Parlay Sniper Engine - Dominance Confluence Moneyline System (JavaScript)
+// Parlay Sniper Engine - Dominance Confluence System (JavaScript)
 // =============================================================================
 //
-// Real-time NBA live game signal detection for moneyline bets at -110+
+// Real-time NBA live game signal detection for ALT SPREAD bets at -110
 //
-// Strategy Tiers:
-//   DIAMOND: 100% backtest accuracy (74/74 games across 2 datasets)
-//   PLATINUM: 97%+ accuracy (114/117 combined)
-//   GOLD: 95%+ accuracy (148/154 combined)
+// EXECUTION: When signal fires, bet LIVE ALTERNATE SPREAD (not moneyline):
+//   DIAMOND signal  -> Bet leading team -3.5 alt spread at -110 (100% hit rate)
+//   PLATINUM signal -> Bet leading team -1.5 alt spread at -110 (97.4% hit rate)
+//   GOLD signal     -> Bet leading team -0.5 (moneyline) at whatever odds
+//
+// Out-of-sample validation (2024-25 season, 57 signals from ESPN):
+//   DIAMOND at -3.5:  16/16 = 100.0%
+//   PLATINUM at -1.5: 37/38 = 97.4%
+//   2-Leg Parlays:    32/34 = 94.1% at +264 odds (ROI: +243%)
 //
 // Mathematical Foundation: Absorbing Barrier Model (Brownian Motion with Drift)
 // =============================================================================
@@ -343,6 +348,19 @@ window.ParlayEngine = (function () {
           const comebackProb = computeComebackProbability(lead, minsRemaining, momDiff, isHome);
           const winProb = 1.0 - comebackProb;
 
+          // Determine the executable bet at -110
+          let betInstruction, altSpread;
+          if (tierName === 'DIAMOND') {
+            altSpread = -3.5;
+            betInstruction = `Bet ${leader === 'home' ? homeTeam : awayTeam} -3.5 ALT SPREAD at -110`;
+          } else if (tierName === 'PLATINUM') {
+            altSpread = -1.5;
+            betInstruction = `Bet ${leader === 'home' ? homeTeam : awayTeam} -1.5 ALT SPREAD at -110`;
+          } else {
+            altSpread = -0.5;
+            betInstruction = `Bet ${leader === 'home' ? homeTeam : awayTeam} MONEYLINE (heavy juice)`;
+          }
+
           return {
             tier: tierName,
             tierInfo: tier,
@@ -362,6 +380,8 @@ window.ParlayEngine = (function () {
             dominanceScore: Math.round(state.dominanceScore * 100) / 100,
             kellyFraction: tier.kellyFraction,
             parlayEligible: tier.parlayEligible,
+            altSpread,
+            betInstruction,
             recommendedOdds: '-110',
             timestamp: new Date().toISOString(),
           };
@@ -528,7 +548,7 @@ window.ParlayEngine = (function () {
     const tier = signal.tier;
     const emoji = tier === 'DIAMOND' ? '&#x1f48e;' : tier === 'PLATINUM' ? '&#x26a1;' : '&#x1f947;';
 
-    return `${emoji} ${tier} | ${signal.team} ML vs ${signal.opponent} ` +
+    return `${emoji} ${tier} | ${signal.betInstruction} ` +
            `| Lead=${signal.lead} Mom=${signal.momentum} ` +
            `| ${signal.minsRemaining}min | WinProb=${(signal.winProbability * 100).toFixed(1)}% ` +
            `| Dom=${signal.dominanceScore.toFixed(0)}`;

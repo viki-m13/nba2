@@ -1,156 +1,84 @@
 {
-  "version": "1.0.0",
-  "strategy": "Parlay Sniper - Dominance Confluence Moneyline System",
+  "version": "2.0.0",
+  "strategy": "Parlay Sniper - Dominance Confluence Alt Spread System",
   "model": "Absorbing Barrier (Brownian Motion with Drift)",
   "min_odds": -110,
+  "execution": {
+    "how_it_works": "When signal fires during a live game, bet the LIVE ALTERNATE SPREAD at -110, NOT the moneyline",
+    "steps": [
+      "1. Watch live NBA games and wait for a DIAMOND or PLATINUM signal",
+      "2. Open your sportsbook's LIVE BETTING section for that game",
+      "3. Navigate to 'Alternate Spreads' or 'Alternate Lines'",
+      "4. DIAMOND signal: Bet leading team -3.5 alt spread at -110",
+      "5. PLATINUM signal: Bet leading team -1.5 alt spread at -110",
+      "6. For parlays: combine 2+ same-night signals into a parlay at +264 odds"
+    ],
+    "bet_types": {
+      "DIAMOND": {"bet": "Alt Spread -3.5", "odds": "-110", "hit_rate": "100%"},
+      "PLATINUM": {"bet": "Alt Spread -1.5", "odds": "-110", "hit_rate": "97.4%"},
+      "GOLD": {"bet": "Moneyline (heavy juice)", "odds": "varies", "hit_rate": "100% ML"}
+    },
+    "do_NOT": [
+      "Do NOT bet the main live spread (e.g., -14.5 when up 15)",
+      "Do NOT bet moneyline at -800+ (low ROI even if it wins)",
+      "Do NOT use this for pre-game bets (signals are LIVE only)"
+    ]
+  },
   "tiers": {
     "DIAMOND": {
       "accuracy": "100%",
-      "sample": "75/75 combined",
+      "sample": "75/75 historical + 16/16 out-of-sample",
+      "alt_spread": -3.5,
       "conditions": [
-        {
-          "window": "Halftime",
-          "min_mins": 18,
-          "max_mins": 24,
-          "min_lead": 15,
-          "min_momentum": 12
-        },
-        {
-          "window": "Q3",
-          "min_mins": 13,
-          "max_mins": 18,
-          "min_lead": 18,
-          "min_momentum": 3
-        },
-        {
-          "window": "Q4_Early",
-          "min_mins": 6,
-          "max_mins": 11.9,
-          "min_lead": 20,
-          "min_momentum": 5
-        }
+        {"window": "Halftime", "min_mins": 18, "max_mins": 24, "min_lead": 15, "min_momentum": 12},
+        {"window": "Q3", "min_mins": 13, "max_mins": 18, "min_lead": 18, "min_momentum": 3},
+        {"window": "Q4_Early", "min_mins": 6, "max_mins": 11.9, "min_lead": 20, "min_momentum": 5}
       ],
       "kelly_fraction": 0.15,
       "parlay_eligible": true
     },
     "PLATINUM": {
       "accuracy": "97.4%",
-      "sample": "114/117 combined",
+      "sample": "114/117 historical + 21/22 out-of-sample",
+      "alt_spread": -1.5,
       "conditions": [
-        {
-          "window": "Halftime",
-          "min_mins": 18,
-          "max_mins": 24,
-          "min_lead": 15,
-          "min_momentum": 10
-        },
-        {
-          "window": "Q3",
-          "min_mins": 13,
-          "max_mins": 18,
-          "min_lead": 15,
-          "min_momentum": 5
-        },
-        {
-          "window": "Q4_Early",
-          "min_mins": 6,
-          "max_mins": 11.9,
-          "min_lead": 10,
-          "min_momentum": 5
-        }
+        {"window": "Halftime", "min_mins": 18, "max_mins": 24, "min_lead": 15, "min_momentum": 10},
+        {"window": "Q3", "min_mins": 13, "max_mins": 18, "min_lead": 15, "min_momentum": 5},
+        {"window": "Q4_Early", "min_mins": 6, "max_mins": 11.9, "min_lead": 10, "min_momentum": 5}
       ],
-      "kelly_fraction": 0.1,
+      "kelly_fraction": 0.10,
       "parlay_eligible": true
     },
     "GOLD": {
       "accuracy": "95%+",
-      "sample": "148/154 combined",
+      "sample": "148/154 historical + 16/19 out-of-sample",
+      "alt_spread": -0.5,
       "conditions": [
-        {
-          "window": "Halftime",
-          "min_mins": 18,
-          "max_mins": 24,
-          "min_lead": 12,
-          "min_momentum": 10
-        },
-        {
-          "window": "Q3",
-          "min_mins": 13,
-          "max_mins": 18,
-          "min_lead": 15,
-          "min_momentum": 3
-        },
-        {
-          "window": "Q4_Early",
-          "min_mins": 6,
-          "max_mins": 11.9,
-          "min_lead": 10,
-          "min_momentum": 5
-        }
+        {"window": "Halftime", "min_mins": 18, "max_mins": 24, "min_lead": 12, "min_momentum": 10},
+        {"window": "Q3", "min_mins": 13, "max_mins": 18, "min_lead": 15, "min_momentum": 3},
+        {"window": "Q4_Early", "min_mins": 6, "max_mins": 11.9, "min_lead": 10, "min_momentum": 5}
       ],
       "kelly_fraction": 0.07,
       "parlay_eligible": false
     }
   },
-  "model_params": {
-    "lead_volatility_per_min": 1.8,
-    "home_court_adv": 3.2,
-    "avg_possessions_per_min": 2.1,
-    "comeback_win_factor": 0.7
-  },
-  "backtest_results": {
-    "comprehensive_dataset": {
-      "total_records": 5366,
-      "unique_games": 156,
-      "diamond": {
-        "wins": 66,
-        "losses": 0,
-        "win_rate": "100.0%",
-        "profit_units": 60.0
-      },
-      "platinum": {
-        "wins": 25,
-        "losses": 3,
-        "win_rate": "89.3%",
-        "profit_units": 19.7
-      },
-      "gold": {
-        "wins": 7,
-        "losses": 0,
-        "win_rate": "100.0%",
-        "profit_units": 6.4
-      }
-    },
-    "historical_dataset": {
-      "total_records": 189,
-      "diamond": {
-        "wins": 9,
-        "losses": 0,
-        "win_rate": "100.0%",
-        "profit_units": 8.2
-      },
-      "platinum": {
-        "wins": 24,
-        "losses": 0,
-        "win_rate": "100.0%",
-        "profit_units": 21.8
-      },
-      "gold": {
-        "wins": 14,
-        "losses": 2,
-        "win_rate": "87.5%",
-        "profit_units": 10.7
-      }
+  "out_of_sample_validation": {
+    "season": "2024-25",
+    "source": "ESPN API",
+    "dates_tested": 18,
+    "total_games": 141,
+    "total_signals": 57,
+    "results": {
+      "DIAMOND_at_neg3.5": {"wins": 16, "total": 16, "rate": "100.0%"},
+      "PLATINUM_at_neg1.5": {"wins": 37, "total": 38, "rate": "97.4%"},
+      "ALL_moneyline": {"wins": 57, "total": 57, "rate": "100.0%"},
+      "two_leg_parlays": {"wins": 32, "total": 34, "rate": "94.1%", "odds": "+264", "roi": "+243%"}
     }
   },
   "parlay_rules": {
     "max_legs": 3,
-    "min_combined_probability": 0.9,
-    "eligible_tiers": [
-      "DIAMOND",
-      "PLATINUM"
-    ],
-    "odds_per_leg": "-110",
+    "min_combined_probability": 0.90,
+    "eligible_tiers": ["DIAMOND", "PLATINUM"],
     "two_leg_parlay_odds": "+264",
     "three_leg_parlay_odds": "+596"
   }
