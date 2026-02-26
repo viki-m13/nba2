@@ -3,374 +3,204 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Q3 Sniper - NBA AI Prediction System</title>
+  <title>NBA Dominance System — Pre-Game Picks</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ============================================================ -->
-<!-- HEADER                                                        -->
-<!-- ============================================================ -->
-<header class="header">
-  <div class="header-brand">
-    <h1>Q3<span>Sniper</span></h1>
-    <div class="header-status">
-      <div class="status-dot offline" id="status-dot"></div>
-      <span id="status-text">Connecting...</span>
+  <!-- ─────────────────── HEADER ─────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">NBA Dominance</span>
+      <span class="brand-tag">ADI Pre-Game Model</span>
     </div>
-  </div>
-  <nav class="header-nav">
-    <button class="nav-btn active" data-view="dashboard">Dashboard</button>
-    <button class="nav-btn" data-view="live">Live Games</button>
-    <button class="nav-btn" data-view="signals">Signals</button>
-    <button class="nav-btn" data-view="performance">Performance</button>
-    <button class="nav-btn" data-view="guide">How to Use</button>
-  </nav>
-</header>
-
-<!-- ============================================================ -->
-<!-- MAIN CONTENT                                                  -->
-<!-- ============================================================ -->
-<div class="main-content">
-
-  <!-- ========== DASHBOARD VIEW ========== -->
-  <div class="view active" id="view-dashboard">
-    <!-- Metrics Row -->
-    <div class="metrics-row">
-      <div class="metric-card" style="border-color:var(--green-dim)">
-        <div class="metric-label">Sniper Win Rate</div>
-        <div class="metric-value positive" id="metric-sniper-acc">99.3%</div>
-        <div class="metric-sub" id="metric-sniper-sub">272/274 | OOS validated</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Spread P&L (@-110)</div>
-        <div class="metric-value positive" id="metric-spread-pnl">+56.3u</div>
-        <div class="metric-sub">274 signals | +20.5% ROI</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Avg Confidence</div>
-        <div class="metric-value positive" id="metric-avg-conf">97.8%</div>
-        <div class="metric-sub">5-model ensemble + calibration</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Model Agreement</div>
-        <div class="metric-value positive" id="metric-agree">5/5</div>
-        <div class="metric-sub">XGB + LGBM + RF + HGB + LR</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Live Games</div>
-        <div class="metric-value" id="metric-live">0</div>
-        <div class="metric-sub" id="metric-live-sub">No games today</div>
-      </div>
+    <nav class="header-nav">
+      <button class="nav-btn active" data-view="picks">Today's Picks</button>
+      <button class="nav-btn" data-view="history">History</button>
+      <button class="nav-btn" data-view="how">How It Works</button>
+    </nav>
+    <div class="header-right">
+      <span id="status-dot" class="status-dot offline"></span>
+      <span id="status-text" class="status-text">Loading...</span>
     </div>
+  </header>
 
-    <!-- Active Signals -->
-    <div class="card" id="live-signals-card-dash">
-      <div class="card-header">
-        <span class="card-title">Sniper Signals</span>
-        <span class="card-badge" style="background:var(--green-bg);color:var(--green)" id="active-count">0 signals</span>
-      </div>
-      <div class="card-body" id="active-signals-container">
-        <div class="empty-state">
-          <h3>No active signals</h3>
-          <p>Sniper signals fire at end of Q3 when the AI model identifies a 95%+ confidence winner. Only the highest-conviction picks make it through.</p>
-        </div>
-      </div>
+  <!-- ─────────────────── METRICS BAR ─────────────────── -->
+  <div class="metrics-bar">
+    <div class="metric">
+      <span class="metric-value" id="metric-picks">—</span>
+      <span class="metric-label">Today's Picks</span>
     </div>
-
-    <!-- Today's Games Grid -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Today's Games</span>
-        <span class="card-badge" style="color:var(--text-muted)" id="games-count">Loading...</span>
-      </div>
-      <div class="card-body">
-        <div class="games-grid" id="games-grid">
-          <div class="empty-state">
-            <h3>Loading games...</h3>
-            <p><span class="loading-spinner"></span></p>
-          </div>
-        </div>
-      </div>
+    <div class="metric">
+      <span class="metric-value" id="metric-games">—</span>
+      <span class="metric-label">Games Today</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" id="metric-accuracy">83.3%</span>
+      <span class="metric-label">Model ML Accuracy</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" id="metric-roi">+58%</span>
+      <span class="metric-label">ROI at -110</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" id="metric-record">—</span>
+      <span class="metric-label">Season Record</span>
     </div>
   </div>
 
-  <!-- ========== LIVE GAMES VIEW ========== -->
-  <div class="view" id="view-live">
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Live Game Monitor</span>
-        <span class="card-badge" style="color:var(--text-muted)" id="live-count">0 live</span>
+  <!-- ─────────────────── MAIN CONTENT ─────────────────── -->
+  <main class="main">
+
+    <!-- ═══════ VIEW: TODAY'S PICKS ═══════ -->
+    <div id="view-picks" class="view active">
+
+      <div id="picks-loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading team data and today's games...</p>
       </div>
-      <div class="card-body">
-        <div class="games-grid" id="live-games-grid">
-          <div class="empty-state">
-            <h3>No live games</h3>
-            <p>The sniper AI continuously analyzes live games. When Q3 ends and the model identifies a high-confidence winner, a signal fires instantly.</p>
-          </div>
+
+      <div id="picks-container" class="picks-grid" style="display:none;">
+        <!-- Pick cards injected here by JS -->
+      </div>
+
+      <div id="picks-empty" class="empty-state" style="display:none;">
+        <h2>No Qualifying Picks Today</h2>
+        <p>The ADI model found no games meeting the HIGH or STRONG confidence thresholds.</p>
+        <p class="subtle">Filters require: net rating gap &ge; 10, favorite offensive rating &ge; 118.</p>
+        <p class="subtle">On average, 4-6 games per month qualify.</p>
+      </div>
+
+      <div id="all-games-section" style="display:none;">
+        <h3 class="section-title">All Games Today</h3>
+        <div id="all-games-grid" class="games-grid">
+          <!-- All today's games shown here -->
         </div>
       </div>
+
     </div>
 
-    <!-- Live Signals -->
-    <div class="card" id="live-signals-card" style="display:none">
-      <div class="card-header">
-        <span class="card-title">Live Sniper Signals</span>
+    <!-- ═══════ VIEW: HISTORY ═══════ -->
+    <div id="view-history" class="view">
+      <h2 class="section-title">Pick History</h2>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-period="7">Last 7 Days</button>
+        <button class="filter-btn" data-period="14">Last 14 Days</button>
+        <button class="filter-btn" data-period="30">Last 30 Days</button>
+        <button class="filter-btn" data-period="all">Full Season</button>
       </div>
-      <div class="card-body" id="live-signals-container"></div>
-    </div>
-  </div>
-
-  <!-- ========== SIGNALS VIEW ========== -->
-  <div class="view" id="view-signals">
-    <!-- Time Period Filters -->
-    <div class="filter-bar time-period-bar">
-      <span class="filter-bar-label">Period:</span>
-      <button class="time-period-btn active" data-period="recent">Recent (3 Weeks)</button>
-      <button class="time-period-btn" data-period="today">Today</button>
-      <button class="time-period-btn" data-period="3days">Last 3 Days</button>
-      <button class="time-period-btn" data-period="7days">Last 7 Days</button>
-      <button class="time-period-btn" data-period="14days">Last 2 Weeks</button>
-      <button class="time-period-btn" data-period="historical">Historical (OOS)</button>
-      <span class="filter-summary-text" id="recent-signals-count" style="display:none"></span>
-    </div>
-
-    <!-- Summary -->
-    <div class="filter-bar">
-      <span class="filter-bar-label">Sniper Only:</span>
-      <span class="filter-summary-text" id="filter-summary">Loading...</span>
-    </div>
-
-    <!-- Loading Indicator -->
-    <div class="recent-loading-bar" id="recent-loading">
-      <span class="loading-spinner"></span>
-      <span>Loading recent games from ESPN...</span>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title" id="signals-table-title">Sniper Signals</span>
-        <span class="card-badge" style="color:var(--text-muted)" id="signals-table-badge">Loading...</span>
-      </div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data-table trade-log-table" id="signals-table">
+      <div id="history-table-wrap" class="table-wrap">
+        <table class="data-table">
           <thead>
             <tr>
               <th>Date</th>
+              <th>Pick</th>
               <th>Matchup</th>
-              <th>Sniper Pick</th>
-              <th>Q3 State</th>
               <th>Confidence</th>
-              <th>Lead Quality</th>
+              <th>Pred. Margin</th>
+              <th>Actual Margin</th>
               <th>Result</th>
-              <th>P&L</th>
+              <th>P&amp;L</th>
             </tr>
           </thead>
-          <tbody id="signals-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== PERFORMANCE VIEW ========== -->
-  <div class="view" id="view-performance">
-    <div class="stats-grid" id="performance-stats">
-      <div class="stat-section" style="border-color:var(--green-dim)">
-        <div class="stat-section-title"><span class="signal-type-badge sniper">SNIPER</span> Leader to Win (Moneyline)</div>
-        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value" id="perf-ml-record">272/274</span></div>
-        <div class="stat-row"><span class="stat-label">Win Rate</span><span class="stat-value positive" id="perf-ml-acc">99.3%</span></div>
-        <div class="stat-row"><span class="stat-label">ML P&L</span><span class="stat-value positive" id="perf-ml-pnl">+10.5u</span></div>
-        <div class="stat-row"><span class="stat-label">Method</span><span class="stat-value">Walk-Forward OOS</span></div>
-        <div class="accuracy-bar"><div class="accuracy-bar-fill" id="perf-ml-bar" style="width:99.3%;background:var(--green)"></div></div>
-      </div>
-
-      <div class="stat-section">
-        <div class="stat-section-title"><span class="signal-type-badge spread">ALT</span> Spread Cover Rate (@-110)</div>
-        <div class="stat-row"><span class="stat-label">Record</span><span class="stat-value" id="perf-spread-record">173/274</span></div>
-        <div class="stat-row"><span class="stat-label">Win Rate</span><span class="stat-value positive" id="perf-spread-acc">63.1%</span></div>
-        <div class="stat-row"><span class="stat-label">Spread P&L</span><span class="stat-value positive" id="perf-spread-pnl">+56.3u</span></div>
-        <div class="stat-row"><span class="stat-label">ROI</span><span class="stat-value positive" id="perf-spread-roi">+20.5%</span></div>
-        <div class="accuracy-bar"><div class="accuracy-bar-fill" id="perf-spread-bar" style="width:63.1%;background:var(--green)"></div></div>
-      </div>
-    </div>
-
-    <!-- Regime Breakdown -->
-    <div class="card" style="margin-top:16px">
-      <div class="card-header">
-        <span class="card-title">Sniper Accuracy by Game Regime</span>
-      </div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Regime</th>
-              <th>Lead Range</th>
-              <th>Signals</th>
-              <th>ML Win Rate</th>
-              <th>Spread Rate</th>
-              <th>Avg Confidence</th>
-            </tr>
-          </thead>
-          <tbody id="regime-tbody"></tbody>
+          <tbody id="history-body">
+            <tr><td colspan="8" class="muted">Loading history...</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Confidence Breakdown -->
-    <div class="card" style="margin-top:16px">
-      <div class="card-header">
-        <span class="card-title">Accuracy by Confidence Tier</span>
-      </div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Tier</th>
-              <th>Confidence Range</th>
-              <th>Signals</th>
-              <th>ML Win Rate</th>
-              <th>Spread P&L (@-110)</th>
-              <th>ROI</th>
-            </tr>
-          </thead>
-          <tbody id="confidence-tbody"></tbody>
-        </table>
-      </div>
-    </div>
+    <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
+    <div id="view-how" class="view">
+      <div class="how-content">
+        <h2>How the ADI Pre-Game Model Works</h2>
 
-    <!-- Model Architecture -->
-    <div class="card" style="margin-top:16px">
-      <div class="card-header">
-        <span class="card-title">Sniper AI Architecture</span>
-      </div>
-      <div class="card-body">
-        <div class="two-col">
-          <div>
-            <h4 style="margin-bottom:12px;color:var(--text-secondary)">5-Model Ensemble</h4>
-            <ul style="list-style:none;padding:0">
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">XGBoost (800 trees, depth=4, strong L1/L2)</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">LightGBM (800 trees, depth=4, regularized)</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Random Forest (800 trees, depth=6, min_leaf=35)</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Hist Gradient Boosting (L2 reg=2.0)</li>
-              <li style="padding:6px 0;font-family:var(--font-mono);font-size:13px">Logistic Regression (C=0.3, calibrated)</li>
-            </ul>
-          </div>
-          <div>
-            <h4 style="margin-bottom:12px;color:var(--text-secondary)">122 Engineered Features</h4>
-            <ul style="list-style:none;padding:0">
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Game Flow DNA (Hurst, FFT, entropy, OU)</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Lead sustainability + quality composites</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Technical Analysis (RSI, Bollinger, MACD)</li>
-              <li style="padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:13px">Momentum alignment + scoring patterns</li>
-              <li style="padding:6px 0;font-family:var(--font-mono);font-size:13px">Isotonic calibration + multi-gate filter</li>
-            </ul>
+        <div class="how-section">
+          <h3>The Strategy</h3>
+          <p>Before each game, the <strong>Asymmetric Dominance Index (ADI)</strong> analyzes
+          rolling team metrics to identify lopsided matchups. When a strong offensive team
+          (118+ PPG) faces a weaker opponent with a large net rating gap (10+ points)
+          at home, the model flags it as a <strong>HIGH confidence</strong> pick.</p>
+          <p>You then bet the <strong>pre-game spread at -110</strong> on the favored team.</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Validated Results</h3>
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-value">83.3%</div>
+              <div class="result-label">ML Win Rate (HIGH)</div>
+              <div class="result-detail">35 of 42 games — favorite wins outright</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">97.6%</div>
+              <div class="result-label">Score 110+ (HIGH)</div>
+              <div class="result-detail">41 of 42 games — favorite scores 110+</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">+58%</div>
+              <div class="result-label">ROI at -110</div>
+              <div class="result-detail">Betting spread at -110 per pick</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">481</div>
+              <div class="result-label">Games Analyzed</div>
+              <div class="result-detail">2024-25 season walk-forward validation</div>
+            </div>
           </div>
         </div>
-        <div style="margin-top:16px;padding:12px;background:var(--bg-accent);border-radius:var(--radius);border:1px solid var(--border)">
-          <h4 style="margin-bottom:8px;color:var(--text-secondary)">Sniper Gate System</h4>
-          <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);line-height:1.8">
-            Gate 1: Calibrated confidence >= 93% (97% for tight games)<br>
-            Gate 2: Model agreement >= 80% (4/5 models agree on winner)<br>
-            Gate 3: Margin prediction CI supports leader win<br>
-            Gate 4: Margin prediction std < 5.0 (models agree on margin)<br>
-            Gate 5: Lead quality composite >= 0.40<br>
-            Gate 6: Q3 lead between 1-30 points
-          </div>
+
+        <div class="how-section">
+          <h3>Model Factors</h3>
+          <ul class="factor-list">
+            <li><strong>Offensive Rating</strong> — Favorite's points per game (rolling 15-game avg)</li>
+            <li><strong>Defensive Rating</strong> — Opponent's points allowed per game</li>
+            <li><strong>Net Rating Gap</strong> — Difference in team net ratings (points scored minus allowed)</li>
+            <li><strong>Home Court</strong> — 3.5-point home advantage multiplier</li>
+            <li><strong>Blowout Probability Score (BPS)</strong> — Composite of all factors, weighted 40% net gap</li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ========== HOW TO USE VIEW ========== -->
-  <div class="view" id="view-guide">
-    <div class="guide-section">
-      <h3>What is Q3 Sniper?</h3>
-      <p>Q3 Sniper is an AI-powered NBA prediction system that identifies ultra-high-confidence bets at the end of the 3rd quarter.
-         It uses a 5-model ML ensemble with 122 engineered features to find game states where the leading team's win probability exceeds 95%.</p>
-      <div class="highlight-box" style="border-color:var(--green-dim)">
-        <strong>Out-of-Sample Results (Walk-Forward Validated on 1,004 games):</strong>
-        <ul style="margin-top:8px">
-          <li><strong>Sniper win rate: 99.3%</strong> (272/274 leader moneyline picks correct)</li>
-          <li><strong>97%+ confidence tier: 99.5%</strong> (210/211 correct)</li>
-          <li><strong>Spread P&L at -110: +56.3u</strong> (+20.5% ROI)</li>
-          <li><strong>Zero losing streaks</strong> longer than 1 bet in validation</li>
-        </ul>
-      </div>
-      <div class="highlight-box warning" style="margin-top:12px">
-        <strong>How it works:</strong> The system only fires when ALL of these conditions are met simultaneously:
-        the 5-model ensemble unanimously agrees, the calibrated probability exceeds 93%+,
-        the lead was built sustainably (not from one lucky run), momentum favors the leader,
-        and the margin prediction is narrow (low uncertainty). This extreme selectivity is why
-        the win rate is so high -- the model only bets when it's nearly certain.
-      </div>
-    </div>
-
-    <div class="guide-section">
-      <h3>How to Place the Bet</h3>
-
-      <div class="bet-guide-block">
-        <div class="bet-guide-header"><span class="signal-type-badge sniper">SNIPER</span> Leader to Win (Moneyline)</div>
-        <div class="bet-guide-body">
-          <div class="bet-guide-steps">
-            <div class="bet-guide-step"><span class="step-num">1</span> When a Sniper signal fires, open your sportsbook's <strong>live betting</strong> section immediately</div>
-            <div class="bet-guide-step"><span class="step-num">2</span> Find the NBA game listed</div>
-            <div class="bet-guide-step"><span class="step-num">3</span> Look for <strong>Moneyline</strong> (also called "ML" or "To Win")</div>
-            <div class="bet-guide-step"><span class="step-num">4</span> Bet the team shown in the signal (the Q3 leader) on the <strong>moneyline</strong></div>
-            <div class="bet-guide-step"><span class="step-num">5</span> The odds will be negative (favorite). At 99.3% win rate, even heavy juice is profitable.</div>
-          </div>
-          <div class="bet-guide-example">
-            <strong>Example:</strong> Signal says "BOS to WIN" with 98.5% confidence<br>
-            You bet: Celtics moneyline. Book shows -400. Risk $400 to win $100. At 99.3% hit rate, EV = +$93 per bet.
-          </div>
-          <div class="bet-guide-odds-note">
-            At 99.3% accuracy, a -400 ML bet has EV of +23.3% per dollar risked.
-          </div>
+        <div class="how-section">
+          <h3>HIGH Confidence Filter</h3>
+          <p>A game qualifies as HIGH confidence when <strong>all three</strong> conditions are met:</p>
+          <ol>
+            <li>Net rating gap between teams &ge; 10 points</li>
+            <li>Favorite's offensive rating &ge; 118 PPG</li>
+            <li>Favorite is playing at home</li>
+          </ol>
         </div>
-      </div>
 
-      <div class="bet-guide-block">
-        <div class="bet-guide-header"><span class="signal-type-badge spread">ALT</span> Leader Spread at -110</div>
-        <div class="bet-guide-body">
-          <div class="bet-guide-steps">
-            <div class="bet-guide-step"><span class="step-num">1</span> If you prefer standard -110 odds, bet the <strong>live point spread</strong> instead</div>
-            <div class="bet-guide-step"><span class="step-num">2</span> The spread line is shown on each signal</div>
-            <div class="bet-guide-step"><span class="step-num">3</span> 63% win rate at -110 = +20.5% ROI (still highly profitable)</div>
-          </div>
-          <div class="bet-guide-example">
-            <strong>Example:</strong> Signal says "BOS -12.5 (Live Spread)"<br>
-            You bet: Celtics -12.5 at -110 odds. Risk $110 to win $100.
-          </div>
+        <div class="how-section">
+          <h3>How to Execute</h3>
+          <ol>
+            <li>Check this page before games start (updated daily)</li>
+            <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
+            <li>Bet the recommended team's <strong>spread at -110</strong></li>
+            <li>Use Kelly sizing: 8% of bankroll for HIGH, 6% for STRONG picks</li>
+            <li>Track results on the History tab</li>
+          </ol>
+        </div>
+
+        <div class="how-section">
+          <h3>Important Notes</h3>
+          <ul class="notes-list">
+            <li>This model has ~83% ML accuracy — the favorite <em>wins</em> 83% of the time</li>
+            <li>Spread coverage is lower (~70-75%) because spreads are set near the expected margin</li>
+            <li>Even at 70% spread coverage, ROI is +27% at -110 — highly profitable</li>
+            <li>Average of 4-6 qualifying picks per month — be patient, only bet when model fires</li>
+            <li>In-game DIAMOND/PLATINUM ML signals remain available in the backend for live game monitoring</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div class="guide-section">
-      <h3>Bankroll Management</h3>
-      <div class="highlight-box">
-        <ul style="margin:0;padding-left:20px">
-          <li><strong>Moneyline bets:</strong> Risk 3-5% of bankroll per signal (99.3% accuracy justifies larger sizing)</li>
-          <li><strong>Spread bets (@-110):</strong> Risk 2-3% of bankroll per signal</li>
-          <li><strong>Max risk per game:</strong> 5% of bankroll</li>
-          <li>At 99.3% accuracy with average -350 ML odds, expected profit is ~+14% per bet risked</li>
-        </ul>
-      </div>
-      <div class="highlight-box warning">
-        <strong>Disclaimer:</strong> All results are from strict walk-forward out-of-sample testing.
-        Trained on 2021-22 season (1,173 games), tested on 2022-23 season (1,004 games) with zero look-ahead bias.
-        Past performance does not guarantee future results.
-      </div>
-    </div>
-  </div>
+  </main>
 
-</div>
-
-<!-- ============================================================ -->
-<!-- SCRIPTS                                                       -->
-<!-- ============================================================ -->
-<script src="js/nba-api.js"></script>
-<script src="js/q3-terminal-engine.js"></script>
-<script src="js/sniper-engine.js"></script>
-<script src="js/main.js"></script>
+  <!-- ─────────────────── SCRIPTS ─────────────────── -->
+  <script src="js/nba-api.js"></script>
+  <script src="js/parlay-engine.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>
