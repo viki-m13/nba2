@@ -1,0 +1,14 @@
+{
+  "framework": null,
+  "installCommand": "echo skip",
+  "buildCommand": "echo skip",
+  "outputDirectory": "webapp",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
