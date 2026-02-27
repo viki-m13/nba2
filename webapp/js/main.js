@@ -516,6 +516,57 @@
           <td>${ttHtml}</td>
         </tr>`;
     }).join('');
+
+    // History summary below the table
+    renderHistorySummary(filtered);
+  }
+
+  function renderHistorySummary(filtered) {
+    const summary = document.getElementById('history-summary');
+    if (!summary) return;
+
+    const spreadWins = filtered.filter(p => p.favWon).length;
+    const spreadTotal = filtered.length;
+    const spreadPnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const spreadAcc = ((spreadWins / spreadTotal) * 100).toFixed(1);
+
+    const ttPicks = filtered.filter(p => p.teamTotalLine !== null);
+    const ttHits = ttPicks.filter(p => p.teamTotalHit).length;
+    const ttTotal = ttPicks.length;
+    const ttPnl = ttPicks.reduce((s, p) => s + p.teamTotalPnl, 0);
+    const ttAcc = ttTotal > 0 ? ((ttHits / ttTotal) * 100).toFixed(1) : '—';
+
+    const combinedPnl = spreadPnl + ttPnl;
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-title">Spread Bets</div>
+          <div class="summary-stat">
+            <span class="summary-record">${spreadWins}-${spreadTotal - spreadWins}</span>
+            <span class="summary-pct">${spreadAcc}%</span>
+          </div>
+          <div class="summary-pnl ${spreadPnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${spreadPnl >= 0 ? '+' : ''}$${spreadPnl}
+          </div>
+        </div>
+        <div class="summary-card summary-cyan">
+          <div class="summary-title">Team Total Over</div>
+          <div class="summary-stat">
+            <span class="summary-record">${ttTotal > 0 ? ttHits + '-' + (ttTotal - ttHits) : '—'}</span>
+            <span class="summary-pct">${ttAcc}${ttTotal > 0 ? '%' : ''}</span>
+          </div>
+          <div class="summary-pnl ${ttPnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${ttTotal > 0 ? (ttPnl >= 0 ? '+' : '') + '$' + ttPnl : '—'}
+          </div>
+        </div>
+        <div class="summary-card summary-combined">
+          <div class="summary-title">Combined P&amp;L</div>
+          <div class="summary-pnl-big ${combinedPnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${combinedPnl >= 0 ? '+' : ''}$${combinedPnl}
+          </div>
+        </div>
+      </div>`;
   }
 
   // ── Metrics ────────────────────────────────────────────────────────────────
@@ -527,13 +578,26 @@
     el('metric-games').textContent = todayGames.length;
 
     if (historyPicks.length > 0) {
+      // Spread ML accuracy (all picks)
       const wins = historyPicks.filter(p => p.favWon).length;
       const total = historyPicks.length;
       const accuracy = ((wins / total) * 100).toFixed(1);
       const totalPnl = historyPicks.reduce((s, p) => s + p.pnl, 0);
-      const roi = ((totalPnl / (total * 100)) * 100).toFixed(0);
+
+      // Team total over accuracy (HIGH picks only — those with a team total bet)
+      const ttPicks = historyPicks.filter(p => p.teamTotalLine !== null);
+      const ttHits = ttPicks.filter(p => p.teamTotalHit).length;
+      const ttTotal = ttPicks.length;
+      const ttAccuracy = ttTotal > 0 ? ((ttHits / ttTotal) * 100).toFixed(1) : '—';
+      const ttPnl = ttPicks.reduce((s, p) => s + p.teamTotalPnl, 0);
+
+      // Combined ROI (spread + team total)
+      const combinedBets = total + ttTotal;
+      const combinedPnl = totalPnl + ttPnl;
+      const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
 
       el('metric-accuracy').textContent = accuracy + '%';
+      el('metric-tt-accuracy').textContent = ttTotal > 0 ? ttAccuracy + '%' : '—';
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
       el('metric-record').textContent = `${wins}-${total - wins}`;
     }
