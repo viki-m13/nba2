@@ -101,10 +101,11 @@
               <th>Actual Margin</th>
               <th>Result</th>
               <th>P&amp;L</th>
+              <th>Team Total</th>
             </tr>
           </thead>
           <tbody id="history-body">
-            <tr><td colspan="8" class="muted">Loading history...</td></tr>
+            <tr><td colspan="9" class="muted">Loading history...</td></tr>
           </tbody>
         </table>
       </div>
@@ -121,7 +122,11 @@
           rolling team metrics to identify lopsided matchups. When a strong offensive team
           (118+ PPG) faces a weaker opponent with a large net rating gap (10+ points)
           at home, the model flags it as a <strong>HIGH confidence</strong> pick.</p>
-          <p>You then bet the <strong>pre-game spread at -110</strong> on the favored team.</p>
+          <p>You then place <strong>two bets</strong>:</p>
+          <ol>
+            <li><strong>Pre-game spread at -110</strong> on the favored team (primary bet)</li>
+            <li><strong>Team Total OVER</strong> on the favored team (secondary bet — 97.6% hit rate)</li>
+          </ol>
         </div>
 
         <div class="how-section">
@@ -132,15 +137,15 @@
               <div class="result-label">ML Win Rate (HIGH)</div>
               <div class="result-detail">35 of 42 games — favorite wins outright</div>
             </div>
-            <div class="result-card">
+            <div class="result-card highlight-cyan">
               <div class="result-value">97.6%</div>
               <div class="result-label">Score 110+ (HIGH)</div>
               <div class="result-detail">41 of 42 games — favorite scores 110+</div>
             </div>
             <div class="result-card">
-              <div class="result-value">+58%</div>
-              <div class="result-label">ROI at -110</div>
-              <div class="result-detail">Betting spread at -110 per pick</div>
+              <div class="result-value">88.1%</div>
+              <div class="result-label">Score 115+ (HIGH)</div>
+              <div class="result-detail">37 of 42 games — fav scores 115+ (avg: 125)</div>
             </div>
             <div class="result-card">
               <div class="result-value">481</div>
@@ -148,6 +153,20 @@
               <div class="result-detail">2024-25 season walk-forward validation</div>
             </div>
           </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Team Total Over — Why It Works</h3>
+          <p>In HIGH confidence games, the favorite is a <strong>118+ PPG offensive team at home</strong>
+          against a weak opponent. They almost always deliver big scoring nights:</p>
+          <ul class="factor-list">
+            <li><strong>97.6%</strong> scored 110+ points (41 of 42 games)</li>
+            <li><strong>88.1%</strong> scored 115+ points (37 of 42 games)</li>
+            <li><strong>Average score: 125 points</strong> — well above any typical team total line</li>
+            <li>Only <strong>1 miss</strong> in 42 games (NYK scored 100 vs ATL on 12/11)</li>
+          </ul>
+          <p>Look for the <strong>"Team Totals"</strong> market on your sportsbook and bet the
+          favorite's <strong>OVER</strong> at -110. This is a separate bet from the game total.</p>
         </div>
 
         <div class="how-section">
@@ -176,8 +195,8 @@
           <ol>
             <li>Check this page before games start (updated daily)</li>
             <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
-            <li>Bet the recommended team's <strong>spread at -110</strong></li>
-            <li>Use Kelly sizing: 8% of bankroll for HIGH, 6% for STRONG picks</li>
+            <li><strong>Bet 1 — Spread:</strong> Bet the recommended team's spread at -110 (Kelly: 8% for HIGH, 6% for STRONG)</li>
+            <li><strong>Bet 2 — Team Total Over:</strong> Find the team's individual total and bet OVER at -110 (Kelly: 4%)</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
