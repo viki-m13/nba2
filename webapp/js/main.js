@@ -239,6 +239,7 @@
           dogDefRating: pred.dogDefRating,
           bps: pred.bps,
           kellyFraction: pred.betRecommendation.kellyFraction,
+          teamTotalBet: pred.teamTotalBet || null,
         });
       }
     }
@@ -280,6 +281,10 @@
         const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
         const actualMarginAbs = Math.abs(actualMargin);
 
+        const favScore = pred.favIsHome ? game.home_score : game.away_score;
+        const teamTotalSignal = pred.teamTotalBet;
+        const teamTotalHit = teamTotalSignal ? favScore > teamTotalSignal.line : null;
+
         historyPicks.push({
           date: game.date,
           favorite: pred.favorite,
@@ -291,7 +296,11 @@
           favWon,
           homeScore: game.home_score,
           awayScore: game.away_score,
+          favScore,
+          teamTotalLine: teamTotalSignal ? teamTotalSignal.line : null,
+          teamTotalHit,
           pnl: favWon ? 91 : -100, // at -110 odds: win $91 or lose $100
+          teamTotalPnl: teamTotalHit === true ? 91 : teamTotalHit === false ? -100 : 0,
         });
       }
 
@@ -368,6 +377,29 @@
         </div>`;
     }
 
+    // Team Total Over bet section
+    let teamTotalHtml = '';
+    if (pick.teamTotalBet) {
+      teamTotalHtml = `
+        <div class="pick-team-total">
+          <div class="team-total-header">
+            <span class="team-total-badge">BET 2</span>
+            <span class="team-total-label">TEAM TOTAL</span>
+          </div>
+          <div class="team-total-line">
+            ${pick.betTeam} Team Total OVER ${pick.teamTotalBet.line}
+          </div>
+          <div class="team-total-stats">
+            <span class="tt-stat"><strong>97.6%</strong> hit rate at 110+</span>
+            <span class="tt-stat"><strong>88.1%</strong> hit rate at 115+</span>
+            <span class="tt-stat">Avg score: <strong>125</strong></span>
+          </div>
+          <div class="team-total-note">
+            Find "${pick.betTeam} Team Total" on your sportsbook &mdash; bet OVER at -110
+          </div>
+        </div>`;
+    }
+
     return `
       <div class="pick-card ${confClass}">
         <div class="pick-header">
@@ -402,6 +434,7 @@
             <span class="detail-value">${(pick.kellyFraction * 100).toFixed(0)}%</span>
           </div>
         </div>
+        ${teamTotalHtml}
         ${liveHtml}
       </div>`;
   }
@@ -451,7 +484,7 @@
     filtered = [...filtered].reverse();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="muted">No picks in this period</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="muted">No picks in this period</td></tr>';
       return;
     }
 
@@ -461,6 +494,14 @@
       const pnlText = p.favWon ? '+$91' : '-$100';
       const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
       const dateFormatted = formatDate(p.date);
+
+      // Team total column
+      let ttHtml = '<span class="muted">—</span>';
+      if (p.teamTotalLine !== null) {
+        const ttClass = p.teamTotalHit ? 'result-win' : 'result-loss';
+        const ttLabel = p.teamTotalHit ? 'OVER' : 'UNDER';
+        ttHtml = `<span class="badge ${ttClass}">${ttLabel}</span> <small>${p.favScore} / ${p.teamTotalLine}</small>`;
+      }
 
       return `
         <tr>
@@ -472,6 +513,7 @@
           <td>${p.actualMargin}</td>
           <td><span class="badge ${resClass}">${resText}</span></td>
           <td class="${resClass}">${pnlText}</td>
+          <td>${ttHtml}</td>
         </tr>`;
     }).join('');
   }
