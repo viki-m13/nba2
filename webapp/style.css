@@ -157,6 +157,10 @@ body {
   color: var(--text-primary);
 }
 
+.metric-value.cyan {
+  color: var(--cyan);
+}
+
 .metric-label {
   font-size: 10px;
   color: var(--text-muted);
@@ -602,6 +606,97 @@ body {
 
 td.result-win { color: var(--green); }
 td.result-loss { color: var(--red); }
+
+.history-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  font-style: italic;
+}
+
+/* ── HISTORY SUMMARY ───────────────────────────────────── */
+
+.history-summary {
+  margin-top: 16px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.summary-card.summary-cyan {
+  border-color: rgba(6, 182, 212, 0.3);
+  background: rgba(6, 182, 212, 0.04);
+}
+
+.summary-card.summary-combined {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.summary-cyan .summary-title {
+  color: var(--cyan);
+}
+
+.summary-stat {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.summary-record {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
+}
+
+.summary-pct {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.summary-pnl {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.summary-pnl-big {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@media (max-width: 600px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ── HOW IT WORKS ───────────────────────────────────────── */
 

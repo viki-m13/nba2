@@ -36,11 +36,15 @@
       <span class="metric-label">Games Today</span>
     </div>
     <div class="metric">
-      <span class="metric-value" id="metric-accuracy">83.3%</span>
-      <span class="metric-label">Model ML Accuracy</span>
+      <span class="metric-value" id="metric-accuracy">—</span>
+      <span class="metric-label">Spread ML Win</span>
     </div>
     <div class="metric">
-      <span class="metric-value" id="metric-roi">+58%</span>
+      <span class="metric-value cyan" id="metric-tt-accuracy">—</span>
+      <span class="metric-label">Team Total Over</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" id="metric-roi">—</span>
       <span class="metric-label">ROI at -110</span>
     </div>
     <div class="metric">
@@ -83,6 +87,7 @@
     <!-- ═══════ VIEW: HISTORY ═══════ -->
     <div id="view-history" class="view">
       <h2 class="section-title">Pick History</h2>
+      <p class="history-note">Includes all picks (HIGH + STRONG). Validated stats on the How It Works page are filtered to HIGH confidence only.</p>
       <div class="filter-bar">
         <button class="filter-btn active" data-period="7">Last 7 Days</button>
         <button class="filter-btn" data-period="14">Last 14 Days</button>
@@ -109,6 +114,7 @@
           </tbody>
         </table>
       </div>
+      <div id="history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
