@@ -267,6 +267,41 @@ body {
   border-left: 4px solid var(--amber);
 }
 
+.pick-card.conf-diamond {
+  border-left: 4px solid #b9f2ff;
+  background: linear-gradient(135deg, #0a2e3f 0%, var(--bg-card) 100%);
+  border-color: rgba(185, 242, 255, 0.3);
+}
+
+.diamond-verdict {
+  background: #b9f2ff !important;
+  color: #0a0e17 !important;
+}
+
+.diamond-conf {
+  color: #b9f2ff !important;
+}
+
+.diamond-bet {
+  color: #b9f2ff !important;
+}
+
+.diamond-value {
+  color: #b9f2ff !important;
+}
+
+.diamond-text {
+  color: #b9f2ff !important;
+}
+
+.diamond-accuracy {
+  padding: 8px 20px;
+  font-size: 12px;
+  color: rgba(185, 242, 255, 0.7);
+  border-top: 1px solid rgba(185, 242, 255, 0.15);
+  font-style: italic;
+}
+
 .pick-header {
   display: flex;
   align-items: center;
@@ -594,6 +629,11 @@ body {
   color: var(--cyan);
 }
 
+.badge.conf-diamond {
+  background: rgba(185, 242, 255, 0.15);
+  color: #b9f2ff;
+}
+
 .badge.result-win {
   background: rgba(34, 197, 94, 0.15);
   color: var(--green);
@@ -657,6 +697,15 @@ td.result-loss { color: var(--red); }
 
 .summary-cyan .summary-title {
   color: var(--cyan);
+}
+
+.summary-card.summary-diamond {
+  border-color: rgba(185, 242, 255, 0.3);
+  background: rgba(185, 242, 255, 0.04);
+}
+
+.summary-diamond .summary-title {
+  color: #b9f2ff;
 }
 
 .summary-stat {
@@ -758,6 +807,24 @@ td.result-loss { color: var(--red); }
 
 .result-card.highlight-cyan .result-value {
   color: var(--cyan);
+}
+
+.result-card.highlight-diamond {
+  border-color: rgba(185, 242, 255, 0.4);
+  background: rgba(185, 242, 255, 0.06);
+}
+
+.diamond-section {
+  border-left: 3px solid #b9f2ff;
+  padding-left: 16px;
+}
+
+.diamond-section h3 {
+  color: #b9f2ff;
+}
+
+.diamond-table thead {
+  background: rgba(185, 242, 255, 0.05);
 }
 
 .result-value {
