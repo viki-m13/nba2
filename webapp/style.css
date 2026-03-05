@@ -861,6 +861,92 @@ td.result-loss { color: var(--red); }
   color: #c4b5fd;
 }
 
+/* ── PRISM (Play 7) — Emerald/Teal ── */
+.pick-card.conf-prism {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.04);
+}
+.pick-card.conf-prism-high {
+  border-color: rgba(16, 185, 129, 0.6);
+  background: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+}
+.pick-card.conf-prism-elite {
+  border-color: rgba(16, 185, 129, 0.8);
+  background: rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+}
+
+.conf-prism .pick-verdict,
+.conf-prism-high .pick-verdict,
+.conf-prism-elite .pick-verdict {
+  color: #10b981;
+}
+
+.conf-prism .pick-conf,
+.conf-prism-high .pick-conf,
+.conf-prism-elite .pick-conf {
+  color: #6ee7b7;
+}
+
+.prism-over {
+  color: #34d399;
+  font-weight: 700;
+}
+.prism-under {
+  color: #60a5fa;
+  font-weight: 700;
+}
+.prism-spread {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.prism-badge {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.prism-factors {
+  font-size: 12px;
+  color: rgba(16, 185, 129, 0.8);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.badge.conf-prism {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.badge.conf-prism-high {
+  background: rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.5);
+}
+.badge.conf-prism-elite {
+  background: rgba(16, 185, 129, 0.35);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.7);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.summary-card.summary-prism {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.summary-prism .summary-title {
+  color: #10b981;
+}
+
 .summary-stat {
   display: flex;
   justify-content: center;

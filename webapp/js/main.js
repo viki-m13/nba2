@@ -15,16 +15,20 @@
   let parlayHistory = [];        // Historical daily parlays with results
   let todayPactPicks = [];       // Games flagged by PACT model (Play 6: totals)
   let pactHistoryPicks = [];     // Historical Play 6 PACT picks with results
+  let todayPrismPicks = [];      // Games flagged by PRISM model (Play 7: convergent -110)
+  let prismHistoryPicks = [];    // Historical Play 7 PRISM picks with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 'all';
   let currentCdsHistoryPeriod = 'all';
   let currentParlayHistoryPeriod = 'all';
   let currentPactHistoryPeriod = 'all';
+  let currentPrismHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
   const PACTModel = window.ParlayEngine.PACTModel;
+  const PRISMModel = window.ParlayEngine.PRISMModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -279,10 +283,12 @@
       runPredictions();
       runCDSPredictions();
       runPACTPredictions();
+      runPRISMPredictions();
       buildHistory();
       buildCDSHistory();
       buildParlayHistory();
       buildPACTHistory();
+      buildPRISMHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -340,6 +346,7 @@
     Model.reset();
     CDSModel.reset();
     PACTModel.teamHistory = {};
+    PRISMModel.teamHistory = {};
     for (const g of seasonData) {
       Model.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       Model.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
@@ -347,6 +354,8 @@
       CDSModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
       PACTModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       PACTModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
+      PRISMModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
+      PRISMModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
     }
 
     console.log(`[APP] Models trained on ${seasonData.length} games, ${Object.keys(Model.teamHistory).length} teams`);
@@ -545,6 +554,30 @@
     console.log(`[PACT] ${todayPactPicks.length} picks from ${todayGames.length} games`);
   }
 
+  // ── PRISM Predictions (Play 7) ──────────────────────────────────────────
+
+  function runPRISMPredictions() {
+    todayPrismPicks = [];
+
+    for (const game of todayGames) {
+      const picks = PRISMModel.predictGame(game.home_team, game.away_team);
+      if (picks) {
+        for (const pick of picks) {
+          todayPrismPicks.push({ game, ...pick });
+        }
+      }
+    }
+
+    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
+    todayPrismPicks.sort((a, b) => {
+      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
+      if (to !== 0) return to;
+      return b.strength - a.strength;
+    });
+
+    console.log(`[PRISM] ${todayPrismPicks.length} picks from ${todayGames.length} games`);
+  }
+
   // ── History Builders ─────────────────────────────────────────────────────
 
   function buildHistory() {
@@ -714,6 +747,59 @@
     console.log(`[PACT] Built history: ${pactHistoryPicks.length} total picks`);
   }
 
+  function buildPRISMHistory() {
+    prismHistoryPicks = [];
+
+    const prism = Object.create(PRISMModel);
+    prism.teamHistory = {};
+
+    const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    for (const game of sorted) {
+      const picks = prism.predictGame(game.home_team, game.away_team);
+
+      if (picks) {
+        const actualTotal = game.home_score + game.away_score;
+        const actualHomeMargin = game.home_score - game.away_score;
+
+        for (const pick of picks) {
+          let hit = false;
+          if (pick.type === 'total') {
+            hit = pick.direction === 'OVER'
+              ? actualTotal > pick.predTotal
+              : actualTotal < pick.predTotal;
+          } else if (pick.type === 'spread') {
+            // "AWAY covers" means actual home margin < predicted home margin
+            hit = actualHomeMargin < pick.predMargin;
+          }
+
+          prismHistoryPicks.push({
+            date: game.date,
+            home: game.home_team,
+            away: game.away_team,
+            type: pick.type,
+            direction: pick.direction,
+            predTotal: pick.predTotal || null,
+            predMargin: pick.predMargin || null,
+            betTeam: pick.betTeam || null,
+            strength: pick.strength,
+            tier: pick.tier,
+            factors: pick.factors,
+            actualTotal,
+            actualHomeMargin,
+            hit,
+            pnl: hit ? 91 : -100,
+          });
+        }
+      }
+
+      prism.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      prism.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+    }
+
+    console.log(`[PRISM] Built history: ${prismHistoryPicks.length} total picks`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -771,6 +857,16 @@
           '<div class="picks-grid">' + todayPactPicks.map(renderPACTCard).join('') + '</div>';
       } else if (pactContainer) {
         pactContainer.style.display = 'none';
+      }
+
+      // Play 7 — PRISM Convergent Signal
+      const prismContainer = document.getElementById('prism-container');
+      if (prismContainer && todayPrismPicks.length > 0) {
+        prismContainer.style.display = '';
+        prismContainer.innerHTML = '<h3 class="section-title">Play 7 — PRISM Convergent Signal <span class="prism-badge">-110</span></h3>' +
+          '<div class="picks-grid">' + todayPrismPicks.map(renderPRISMCard).join('') + '</div>';
+      } else if (prismContainer) {
+        prismContainer.style.display = 'none';
       }
     }
 
@@ -1108,6 +1204,90 @@
       </div>`;
   }
 
+  function renderPRISMCard(pick) {
+    const g = pick.game;
+    const tierClass = pick.tier === 'ELITE' ? 'conf-prism-elite' : pick.tier === 'HIGH' ? 'conf-prism-high' : 'conf-prism';
+
+    const FACTOR_LABELS = {
+      elite_def: 'Elite Defense', good_def: 'Good Defense',
+      both_poor_def: 'Both Poor Defense', mediocre_def: 'Mediocre Defense',
+      pace_drop_strong: 'Pace Dropping Fast', pace_drop: 'Pace Dropping',
+      pace_up_strong: 'Pace Rising Fast', pace_up: 'Pace Rising',
+      both_cooling: 'Both Teams Cooling', cooling: 'Cooling Trend',
+      both_heating: 'Both Teams Heating', heating: 'Heating Trend',
+      low_pace_teams: 'Low-Pace Teams', high_pace_teams: 'High-Pace Teams',
+      extreme_luck_gap: 'Extreme Luck Gap', large_luck_gap: 'Large Luck Gap',
+      luck_gap: 'Luck Regression', home_declining: 'Home Declining',
+      away_improving: 'Away Improving',
+    };
+    const factorList = pick.factors.map(f => FACTOR_LABELS[f] || f).join(', ');
+
+    let betLine, matchupHtml;
+    if (pick.type === 'total') {
+      const dirClass = pick.direction === 'OVER' ? 'prism-over' : 'prism-under';
+      betLine = `<div class="pick-bet-line ${dirClass}">${pick.direction} ${pick.predTotal} at -110</div>`;
+      matchupHtml = `${teamName(g.away_team)} @ ${teamName(g.home_team)}`;
+    } else {
+      betLine = `<div class="pick-bet-line prism-spread">${pick.betTeam} +${Math.abs(pick.predMargin).toFixed(1)} at -110</div>`;
+      matchupHtml = `${teamName(g.away_team)} @ ${teamName(g.home_team)}`;
+    }
+
+    let liveHtml = '';
+    if (g.status === 'STATUS_FINAL') {
+      let won;
+      if (pick.type === 'total') {
+        const actualTotal = g.home_score + g.away_score;
+        won = pick.direction === 'OVER' ? actualTotal > pick.predTotal : actualTotal < pick.predTotal;
+        liveHtml = `<div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+          <span class="live-label">FINAL</span>
+          <span class="live-score">Total: ${g.home_score + g.away_score} (pred: ${pick.predTotal})</span>
+          <span class="live-result">${won ? 'W (+$91)' : 'L (-$100)'}</span></div>`;
+      } else {
+        const actualHM = g.home_score - g.away_score;
+        won = actualHM < pick.predMargin;
+        liveHtml = `<div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+          <span class="live-label">FINAL</span>
+          <span class="live-score">${g.away_team} ${g.away_score} @ ${g.home_team} ${g.home_score}</span>
+          <span class="live-result">${won ? 'W (+$91)' : 'L (-$100)'}</span></div>`;
+      }
+    } else if (g.status !== 'STATUS_SCHEDULED') {
+      liveHtml = `<div class="pick-live live-active"><span class="live-label">LIVE Q${g.period} ${g.clock}</span></div>`;
+    } else {
+      liveHtml = `<div class="pick-live live-scheduled"><span class="live-label">${g.time}</span>
+        <span class="live-status">Pre-Game — Bet at -110</span></div>`;
+    }
+
+    return `
+      <div class="pick-card ${tierClass}">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 7</span>
+          <span class="pick-conf">${pick.tier} — ${pick.type === 'total' ? 'TOTAL' : 'SPREAD'}</span>
+        </div>
+        ${betLine}
+        <div class="pick-matchup">${matchupHtml}</div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Signal</span>
+            <span class="detail-value">${pick.type === 'total' ? pick.direction : 'AWAY COVERS'}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Strength</span>
+            <span class="detail-value">${pick.strength}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Factors</span>
+            <span class="detail-value">${pick.factors.length}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Odds</span>
+            <span class="detail-value">-110</span>
+          </div>
+        </div>
+        <div class="prism-factors">${factorList}</div>
+        ${liveHtml}
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -1149,6 +1329,7 @@
     renderCDSHistory();
     renderParlayHistory();
     renderPACTHistory();
+    renderPRISMHistory();
   }
 
   function renderSpreadHistory() {
@@ -1495,6 +1676,128 @@
       </div>`;
   }
 
+  function renderPRISMHistory() {
+    const tbody = document.getElementById('prism-history-body');
+    if (!tbody) return;
+
+    let filtered = prismHistoryPicks;
+    if (currentPrismHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentPrismHistoryPeriod));
+      filtered = prismHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="muted">No PRISM picks in this period</td></tr>';
+    } else {
+      const FACTOR_SHORT = {
+        elite_def: 'Elite Def', good_def: 'Good Def',
+        both_poor_def: 'Both Poor Def', mediocre_def: 'Med Def',
+        pace_drop_strong: 'Pace Drop+', pace_drop: 'Pace Drop',
+        pace_up_strong: 'Pace Up+', pace_up: 'Pace Up',
+        both_cooling: 'Cooling', cooling: 'Cool',
+        both_heating: 'Heating', heating: 'Heat',
+        low_pace_teams: 'Low Pace', high_pace_teams: 'High Pace',
+        extreme_luck_gap: 'Luck Gap+', large_luck_gap: 'Luck Gap',
+        luck_gap: 'Luck Reg', home_declining: 'Home Down',
+        away_improving: 'Away Up',
+      };
+
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.hit ? 'result-win' : 'result-loss';
+        const resText = p.hit ? 'W' : 'L';
+        const pnlText = p.hit ? '+$91' : '-$100';
+        const tierClass = p.tier === 'ELITE' ? 'conf-prism-elite' : p.tier === 'HIGH' ? 'conf-prism-high' : 'conf-prism';
+        const dateFormatted = formatDate(p.date);
+        const factorStr = p.factors.map(f => FACTOR_SHORT[f] || f).join(', ');
+
+        let betCol;
+        if (p.type === 'total') {
+          const dirClass = p.direction === 'OVER' ? 'prism-over' : 'prism-under';
+          betCol = `<span class="${dirClass}">${p.direction}</span> ${p.predTotal}`;
+        } else {
+          betCol = `${p.betTeam} +${Math.abs(p.predMargin).toFixed(1)}`;
+        }
+
+        let actualCol;
+        if (p.type === 'total') {
+          actualCol = `${p.actualTotal}`;
+        } else {
+          actualCol = `${p.actualHomeMargin > 0 ? p.home : p.away} by ${Math.abs(p.actualHomeMargin)}`;
+        }
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td>${p.type === 'total' ? 'Total' : 'Spread'}</td>
+            <td>${betCol}</td>
+            <td>${p.away} @ ${p.home}</td>
+            <td><span class="badge ${tierClass}">${p.tier}</span></td>
+            <td>${p.strength}</td>
+            <td>${actualCol}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderPRISMSummary(filtered);
+  }
+
+  function renderPRISMSummary(filtered) {
+    const summary = document.getElementById('prism-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.hit).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    const totals = filtered.filter(p => p.type === 'total');
+    const spreads = filtered.filter(p => p.type === 'spread');
+    const totalHits = totals.filter(p => p.hit).length;
+    const spreadHits = spreads.filter(p => p.hit).length;
+    const totalPnl = totals.reduce((s, p) => s + p.pnl, 0);
+    const spreadPnl = spreads.reduce((s, p) => s + p.pnl, 0);
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-prism">
+          <div class="summary-title">Play 7 — PRISM Combined (at -110)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Totals / Spread Breakdown</div>
+          <div class="summary-stat">
+            <span class="summary-record">Totals: ${totalHits}-${totals.length - totalHits}</span>
+            <span class="summary-pct">${totals.length > 0 ? (totalHits / totals.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Spreads: ${spreadHits}-${spreads.length - spreadHits}</span>
+            <span class="summary-pct">${spreads.length > 0 ? (spreadHits / spreads.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">P&amp;L by Type</div>
+          <div class="summary-pnl ${totalPnl >= 0 ? 'result-win' : 'result-loss'}">
+            Totals: ${totalPnl >= 0 ? '+' : ''}$${totalPnl}
+          </div>
+          <div class="summary-pnl ${spreadPnl >= 0 ? 'result-win' : 'result-loss'}">
+            Spreads: ${spreadPnl >= 0 ? '+' : ''}$${spreadPnl}
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
@@ -1604,6 +1907,15 @@
         document.querySelectorAll('.pact-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentPactHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.prism-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.prism-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPrismHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
