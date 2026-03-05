@@ -14,7 +14,7 @@
   let diamondHistory = [];      // Historical Play 1 DIAMOND signals
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
-  let currentHistoryPeriod = 7;
+  let currentHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
@@ -148,33 +148,11 @@
 
   async function loadDiamondHistory() {
     try {
-      const resp = await fetch('data/comprehensive_validation.json');
+      const resp = await fetch('data/diamond_history.json');
       if (!resp.ok) return;
-      const allStates = await resp.json();
+      const games = await resp.json();
 
-      // Filter for DIAMOND-qualifying states (Halftime window)
-      // DIAMOND conditions: Halftime 18-24 min, lead>=15, mom>=12
-      const diamondStates = allStates.filter(d => {
-        const mr = d.mins_remaining;
-        const l = d.actual_lead;
-        const m = d.actual_mom;
-        return (
-          (d.window === 'Halftime' && mr >= 18 && mr <= 24 && l >= 15 && m >= 12) ||
-          (d.window === 'Q3' && mr >= 13 && mr <= 18 && l >= 18 && m >= 3) ||
-          (d.window === 'Q4_Early' && mr >= 6 && mr <= 11.9 && l >= 20 && m >= 5)
-        );
-      });
-
-      // Deduplicate by game (keep first/earliest signal per game)
-      const byGame = {};
-      for (const d of diamondStates) {
-        const key = d.date + '_' + d.home_team + '_' + d.away_team;
-        if (!byGame[key] || d.mins_remaining > byGame[key].mins_remaining) {
-          byGame[key] = d;
-        }
-      }
-
-      diamondHistory = Object.values(byGame).map(d => {
+      diamondHistory = games.map(d => {
         const leader = d.side === 'home' ? d.home_team : d.away_team;
         const trailer = d.side === 'home' ? d.away_team : d.home_team;
         // Estimate ML odds from lead: -lead * 70 (minimum -300)
@@ -188,7 +166,7 @@
           isHome: d.side === 'home',
           lead: d.actual_lead,
           momentum: d.actual_mom,
-          minsRemaining: Math.round(d.mins_remaining * 10) / 10,
+          minsRemaining: d.mins_remaining,
           window: d.window,
           mlWon: d.ml_won,
           homeScore: d.final_home,
@@ -483,7 +461,7 @@
           </div>
         </div>
         <div class="diamond-accuracy">
-          100% ML accuracy — 467/467 validated signals. Bet ML at heavy juice, add to parlay.
+          100% ML accuracy — 37/37 games validated. Bet ML at heavy juice, add to parlay.
         </div>
         ${statusHtml}
       </div>`;
@@ -681,13 +659,8 @@
     const tbody = document.getElementById('diamond-history-body');
     if (!tbody) return;
 
-    let filtered = diamondHistory;
-    if (currentHistoryPeriod !== 'all') {
-      const cutoff = getCutoffDate(parseInt(currentHistoryPeriod));
-      filtered = diamondHistory.filter(p => p.date >= cutoff);
-    }
-
-    filtered = [...filtered].reverse();
+    // Always show all DIAMOND history (validation data from 2023-24 season)
+    const filtered = [...diamondHistory].reverse();
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" class="muted">No DIAMOND signals in this period</td></tr>';
