@@ -8,8 +8,8 @@
   // ── State ──────────────────────────────────────────────────────────────────
   let currentView = 'picks';
   let todayGames = [];          // All games today
-  let todayPicks = [];          // Games flagged by ADI model (Play 3: spread)
-  let todayCdsPicks = [];       // Games flagged by CDS model (Play 4: spread)
+  let todayPicks = [];          // Games flagged by ADI model (Play 3: moneyline)
+  let todayCdsPicks = [];       // Games flagged by CDS model (Play 4: moneyline)
   let historyPicks = [];        // Historical Play 3 picks with results
   let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
   let seasonData = [];          // Full season game data for model training
@@ -41,6 +41,32 @@
 
   function teamName(abbr) {
     return TEAM_NAMES[abbr] || abbr;
+  }
+
+  // Convert predicted margin (spread) to approximate moneyline odds
+  // Based on standard NBA spread-to-ML conversion tables
+  function spreadToMoneyline(margin) {
+    const m = Math.abs(margin);
+    // Approximate mapping: spread → ML favorite odds (negative American)
+    if (m <= 1.5) return -120;
+    if (m <= 2.5) return -135;
+    if (m <= 3.5) return -155;
+    if (m <= 4.5) return -185;
+    if (m <= 5.5) return -210;
+    if (m <= 6.5) return -250;
+    if (m <= 7.5) return -300;
+    if (m <= 8.5) return -350;
+    if (m <= 9.5) return -420;
+    if (m <= 10.5) return -500;
+    if (m <= 12.5) return -650;
+    if (m <= 14.5) return -850;
+    return -1000;
+  }
+
+  // Calculate profit on a $100 moneyline bet at given American odds
+  // e.g. -200 → $50 profit, -300 → $33.33 profit
+  function moneylineProfit(odds) {
+    return Math.round((100 / Math.abs(odds)) * 100);
   }
 
   // Normalize ESPN abbreviations to our format
@@ -391,6 +417,7 @@
           betTeam: pred.favorite,
           isHome: pred.favIsHome,
           predictedMargin: pred.predictedMargin,
+          mlOdds: spreadToMoneyline(pred.predictedMargin),
           netGap: pred.netGap,
           favOffRating: pred.favOffRating,
           dogDefRating: pred.dogDefRating,
@@ -424,6 +451,7 @@
           betTeam: pred.favorite,
           isHome: pred.favIsHome,
           predictedMargin: pred.predictedMargin,
+          mlOdds: spreadToMoneyline(pred.predictedMargin),
           cdsScore: pred.cdsScore,
           tier: pred.tier,
           pathway: pred.pathway,
@@ -470,8 +498,9 @@
       if (pred && pred.signals && pred.signals.length > 0) {
         const actualMargin = game.home_score - game.away_score;
         const actualMarginAbs = Math.abs(actualMargin);
-        const favActualMargin = pred.favIsHome ? actualMargin : -actualMargin;
-        const coveredSpread = favActualMargin > pred.predictedMargin;
+        const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
+        const mlOdds = spreadToMoneyline(pred.predictedMargin);
+        const profit = moneylineProfit(mlOdds);
 
         historyPicks.push({
           date: game.date,
@@ -481,10 +510,11 @@
           confidence: pred.signals[0].confidence,
           predictedMargin: pred.predictedMargin,
           actualMargin: actualMarginAbs,
-          coveredSpread,
+          favWon,
+          mlOdds,
           homeScore: game.home_score,
           awayScore: game.away_score,
-          pnl: coveredSpread ? 91 : -100,
+          pnl: favWon ? profit : -100,
         });
       }
 
@@ -510,8 +540,9 @@
       if (pred && pred.isIncremental) {
         // Only show incremental picks (ones Play 3 misses)
         const actualMargin = game.home_score - game.away_score;
-        const favActualMargin = pred.favIsHome ? actualMargin : -actualMargin;
-        const coveredSpread = favActualMargin > pred.predictedMargin;
+        const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
+        const mlOdds = spreadToMoneyline(pred.predictedMargin);
+        const profit = moneylineProfit(mlOdds);
 
         cdsHistoryPicks.push({
           date: game.date,
@@ -524,8 +555,9 @@
           dimensions: pred.dimensions,
           predictedMargin: pred.predictedMargin,
           actualMargin: Math.abs(actualMargin),
-          coveredSpread,
-          pnl: coveredSpread ? 91 : -100,
+          favWon,
+          mlOdds,
+          pnl: favWon ? profit : -100,
         });
       }
 
@@ -559,7 +591,7 @@
       // Play 3 picks
       if (todayPicks.length > 0) {
         container.style.display = '';
-        container.innerHTML = '<h3 class="section-title">Play 3 — ADI Spread Picks</h3>' +
+        container.innerHTML = '<h3 class="section-title">Play 3 — ADI Moneyline Picks</h3>' +
           '<div class="picks-grid">' + todayPicks.map(renderPickCard).join('') + '</div>';
       } else {
         container.style.display = 'none';
@@ -569,7 +601,7 @@
       if (cdsContainer && todayCdsPicks.length > 0) {
         // Filter to show all CDS picks, but mark incremental ones
         cdsContainer.style.display = '';
-        cdsContainer.innerHTML = '<h3 class="section-title">Play 4 — CDS Spread Picks</h3>' +
+        cdsContainer.innerHTML = '<h3 class="section-title">Play 4 — CDS Moneyline Picks</h3>' +
           '<div class="picks-grid">' + todayCdsPicks.map(renderCDSCard).join('') + '</div>';
       } else if (cdsContainer) {
         cdsContainer.style.display = 'none';
@@ -596,7 +628,7 @@
     if (g.status === 'STATUS_FINAL') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
       const oppScore = pick.isHome ? g.away_score : g.home_score;
-      const won = (favScore - oppScore) > pick.predictedMargin;
+      const won = favScore > oppScore;
       liveHtml = `
         <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
           <span class="live-label">FINAL</span>
@@ -626,7 +658,7 @@
           <span class="pick-conf">${confLabel}</span>
         </div>
         <div class="pick-bet-line">
-          ${pick.betTeam} -${pick.predictedMargin.toFixed(1)} at -110
+          ${pick.betTeam} ML ${pick.mlOdds}
         </div>
         <div class="pick-matchup">
           ${favFull} vs ${oppFull}
@@ -637,8 +669,8 @@
             <span class="detail-value">${homeAway}</span>
           </div>
           <div class="detail">
-            <span class="detail-label">Spread</span>
-            <span class="detail-value">-${pick.predictedMargin.toFixed(1)}</span>
+            <span class="detail-label">ML Odds</span>
+            <span class="detail-value">${pick.mlOdds}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Net Gap</span>
@@ -686,7 +718,7 @@
     if (g.status === 'STATUS_FINAL') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
       const oppScore = pick.isHome ? g.away_score : g.home_score;
-      const won = (favScore - oppScore) > pick.predictedMargin;
+      const won = favScore > oppScore;
       liveHtml = `
         <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
           <span class="live-label">FINAL</span>
@@ -716,7 +748,7 @@
           <span class="pick-conf">${tierLabel} — CDS ${pick.cdsScore}</span>
         </div>
         <div class="pick-bet-line">
-          ${pick.betTeam} -${pick.predictedMargin.toFixed(1)} at -110
+          ${pick.betTeam} ML ${pick.mlOdds}
         </div>
         <div class="pick-matchup">
           ${favFull} vs ${oppFull}
@@ -727,8 +759,8 @@
             <span class="detail-value">${homeAway}</span>
           </div>
           <div class="detail">
-            <span class="detail-label">Spread</span>
-            <span class="detail-value">-${pick.predictedMargin.toFixed(1)}</span>
+            <span class="detail-label">ML Odds</span>
+            <span class="detail-value">${pick.mlOdds}</span>
           </div>
           <div class="detail">
             <span class="detail-label">CDS Score</span>
@@ -813,16 +845,16 @@
       tbody.innerHTML = '<tr><td colspan="8" class="muted">No picks in this period</td></tr>';
     } else {
       tbody.innerHTML = filtered.map(p => {
-        const resClass = p.coveredSpread ? 'result-win' : 'result-loss';
-        const resText = p.coveredSpread ? 'W' : 'L';
-        const pnlText = p.coveredSpread ? '+$91' : '-$100';
+        const resClass = p.favWon ? 'result-win' : 'result-loss';
+        const resText = p.favWon ? 'W' : 'L';
+        const pnlText = p.favWon ? '+$' + moneylineProfit(p.mlOdds) : '-$100';
         const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
         const dateFormatted = formatDate(p.date);
 
         return `
           <tr>
             <td>${dateFormatted}</td>
-            <td><strong>${p.favorite}</strong> spread</td>
+            <td><strong>${p.favorite}</strong> ML ${p.mlOdds}</td>
             <td>${p.favorite} ${p.favIsHome ? 'vs' : '@'} ${p.underdog}</td>
             <td><span class="badge ${confClass}">${p.confidence}</span></td>
             <td>${p.predictedMargin.toFixed(1)}</td>
@@ -862,9 +894,9 @@
       };
 
       tbody.innerHTML = filtered.map(p => {
-        const resClass = p.coveredSpread ? 'result-win' : 'result-loss';
-        const resText = p.coveredSpread ? 'W' : 'L';
-        const pnlText = p.coveredSpread ? '+$91' : '-$100';
+        const resClass = p.favWon ? 'result-win' : 'result-loss';
+        const resText = p.favWon ? 'W' : 'L';
+        const pnlText = p.favWon ? '+$' + moneylineProfit(p.mlOdds) : '-$100';
         const tierClass = p.tier === 'ELITE' ? 'conf-diamond' : p.tier === 'HIGH' ? 'conf-high' : 'conf-strong';
         const dateFormatted = formatDate(p.date);
         const pathwayLabel = PATHWAY_LABELS[p.pathway] || p.pathway;
@@ -872,7 +904,7 @@
         return `
           <tr>
             <td>${dateFormatted}</td>
-            <td><strong>${p.favorite}</strong> spread</td>
+            <td><strong>${p.favorite}</strong> ML ${p.mlOdds}</td>
             <td>${p.favorite} ${p.favIsHome ? 'vs' : '@'} ${p.underdog}</td>
             <td><strong>${p.cdsScore}</strong></td>
             <td><span class="badge ${tierClass}">${p.tier}</span></td>
@@ -892,7 +924,7 @@
     const summary = document.getElementById('history-summary');
     if (!summary) return;
 
-    const wins = filtered.filter(p => p.coveredSpread).length;
+    const wins = filtered.filter(p => p.favWon).length;
     const total = filtered.length;
     const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
     const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '0';
@@ -900,7 +932,7 @@
     summary.innerHTML = `
       <div class="summary-grid">
         <div class="summary-card">
-          <div class="summary-title">Play 3 — Spread Bets</div>
+          <div class="summary-title">Play 3 — Moneyline Bets</div>
           <div class="summary-stat">
             <span class="summary-record">${wins}-${total - wins}</span>
             <span class="summary-pct">${acc}%</span>
@@ -916,13 +948,13 @@
     const summary = document.getElementById('cds-history-summary');
     if (!summary) return;
 
-    const wins = filtered.filter(p => p.coveredSpread).length;
+    const wins = filtered.filter(p => p.favWon).length;
     const total = filtered.length;
     const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
     const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '—';
 
     const eliteGames = filtered.filter(p => p.tier === 'ELITE');
-    const eliteWins = eliteGames.filter(p => p.coveredSpread).length;
+    const eliteWins = eliteGames.filter(p => p.favWon).length;
     const eliteAcc = eliteGames.length > 0 ? ((eliteWins / eliteGames.length) * 100).toFixed(1) : '—';
 
     summary.innerHTML = `
@@ -965,7 +997,7 @@
     el('metric-games').textContent = todayGames.length;
 
     if (historyPicks.length > 0) {
-      const wins = historyPicks.filter(p => p.coveredSpread).length;
+      const wins = historyPicks.filter(p => p.favWon).length;
       const total = historyPicks.length;
       const accuracy = ((wins / total) * 100).toFixed(1);
       const totalPnl = historyPicks.reduce((s, p) => s + p.pnl, 0);
@@ -975,7 +1007,7 @@
 
       // CDS accuracy
       if (cdsHistoryPicks.length > 0) {
-        const cdsWins = cdsHistoryPicks.filter(p => p.coveredSpread).length;
+        const cdsWins = cdsHistoryPicks.filter(p => p.favWon).length;
         const cdsTotal = cdsHistoryPicks.length;
         const cdsAcc = ((cdsWins / cdsTotal) * 100).toFixed(1);
         const cdsPnl = cdsHistoryPicks.reduce((s, p) => s + p.pnl, 0);
