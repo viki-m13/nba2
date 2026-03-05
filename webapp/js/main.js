@@ -15,6 +15,7 @@
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 'all';
+  let currentCdsHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
@@ -842,7 +843,13 @@
     const tbody = document.getElementById('cds-history-body');
     if (!tbody) return;
 
-    const filtered = [...cdsHistoryPicks].reverse();
+    let picks = cdsHistoryPicks;
+    if (currentCdsHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentCdsHistoryPeriod));
+      picks = cdsHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    const filtered = [...picks].reverse();
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" class="muted">No CDS picks found</td></tr>';
@@ -1032,6 +1039,15 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.cds-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cds-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCdsHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
