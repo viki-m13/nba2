@@ -64,7 +64,7 @@
         <p>Loading team data and today's games...</p>
       </div>
 
-      <!-- Pre-game Spread Picks (Play 3: ADI) -->
+      <!-- Pre-game Moneyline Picks (Play 3: ADI) -->
       <div id="picks-container" class="picks-grid" style="display:none;">
         <!-- Pick cards injected here by JS -->
       </div>
@@ -76,8 +76,8 @@
 
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
-        <p><strong>Play 3 (ADI Spread):</strong> No games meeting HIGH or STRONG thresholds today.</p>
-        <p><strong>Play 4 (CDS Spread):</strong> No games reaching the Convergent Dominance threshold today.</p>
+        <p><strong>Play 3 (ADI Moneyline):</strong> No games meeting HIGH or STRONG thresholds today.</p>
+        <p><strong>Play 4 (CDS Moneyline):</strong> No games reaching the Convergent Dominance threshold today.</p>
         <p class="subtle">Play 3 averages 4-6 qualifying picks per month. Play 4 adds 3-5 incremental picks per month that Play 3 misses.</p>
       </div>
 
@@ -93,9 +93,9 @@
     <!-- ═══════ VIEW: HISTORY ═══════ -->
     <div id="view-history" class="view">
 
-      <!-- ── PLAY 3: Spread History ── -->
-      <h2 class="section-title">Play 3 — ADI Spread History</h2>
-      <p class="history-note">Pre-game spread bets (HIGH + STRONG) from 2024-25 walk-forward validation.</p>
+      <!-- ── PLAY 3: Moneyline History ── -->
+      <h2 class="section-title">Play 3 — ADI Moneyline History</h2>
+      <p class="history-note">Pre-game moneyline bets (HIGH + STRONG) from 2024-25 walk-forward validation.</p>
       <div class="filter-bar">
         <button class="filter-btn" data-period="7">Last 7 Days</button>
         <button class="filter-btn" data-period="14">Last 14 Days</button>
@@ -125,7 +125,7 @@
 
       <!-- ── PLAY 4: CDS History ── -->
       <h2 class="section-title" style="margin-top: 32px;">Play 4 — Convergent Dominance History</h2>
-      <p class="history-note">Pre-game CDS spread bets — incremental picks that Play 3 misses. Multi-dimensional dominance scoring.</p>
+      <p class="history-note">Pre-game CDS moneyline bets — incremental picks that Play 3 misses. Multi-dimensional dominance scoring.</p>
       <div class="filter-bar">
         <button class="cds-filter-btn" data-period="7">Last 7 Days</button>
         <button class="cds-filter-btn" data-period="14">Last 14 Days</button>
@@ -165,19 +165,19 @@
           <h3>Two Pre-Game Models, Complementary Edges</h3>
           <p>This system runs <strong>two independent pre-game betting models</strong> that target different edges:</p>
           <ol>
-            <li><strong>Play 3 — ADI Spread:</strong> Rigid-filter model using net gap, offensive rating, and home court (~83% ML accuracy at -110)</li>
-            <li><strong>Play 4 — CDS Spread:</strong> Multi-dimensional scoring model using 7 dominance dimensions — captures games Play 3 misses (~81-91% ML accuracy at -110)</li>
+            <li><strong>Play 3 — ADI Moneyline:</strong> Rigid-filter model using net gap, offensive rating, and home court (~83% ML win rate)</li>
+            <li><strong>Play 4 — CDS Moneyline:</strong> Multi-dimensional scoring model using 7 dominance dimensions — captures games Play 3 misses (~81-91% ML win rate)</li>
           </ol>
         </div>
 
         <!-- ── PLAY 3: ADI PRE-GAME ── -->
         <div class="how-section">
-          <h3>Play 3 — ADI Pre-Game Spread</h3>
+          <h3>Play 3 — ADI Pre-Game Moneyline</h3>
           <p>The <strong>Asymmetric Dominance Index (ADI)</strong> analyzes
           rolling team metrics to identify lopsided matchups. When a strong offensive team
           (118+ PPG) faces a weaker opponent with a large net rating gap (10+ points)
           at home, the model flags it as a <strong>HIGH confidence</strong> pick.</p>
-          <p>Bet: <strong>Pre-game spread at -110</strong> on the favored team.</p>
+          <p>Bet: <strong>Pre-game moneyline</strong> on the favored team. Odds vary by matchup (heavier favorites pay less).</p>
         </div>
 
         <div class="how-section">
@@ -195,8 +195,8 @@
             </div>
             <div class="result-card">
               <div class="result-value">+55%</div>
-              <div class="result-label">ROI at -110</div>
-              <div class="result-detail">Highly profitable at standard juice</div>
+              <div class="result-label">ROI</div>
+              <div class="result-detail">Profitable with realistic ML odds</div>
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@
           trade-offs between them. A team can qualify through different "pathways to dominance" —
           elite defense compensates for moderate offense, high consistency compensates for away-game
           disadvantage, etc.</p>
-          <p>Bet: <strong>Pre-game spread at -110</strong> on the favored team (same bet type, different model).</p>
+          <p>Bet: <strong>Pre-game moneyline</strong> on the favored team. Odds vary by matchup (heavier favorites pay less).</p>
         </div>
 
         <div class="how-section">
@@ -285,7 +285,7 @@
             </div>
             <div class="result-card">
               <div class="result-value">+73.6%</div>
-              <div class="result-label">ELITE ROI at -110</div>
+              <div class="result-label">ELITE ROI</div>
               <div class="result-detail">Best-in-class profitability</div>
             </div>
           </div>
@@ -315,8 +315,8 @@
           <ol>
             <li>Check this page before games start (updated daily)</li>
             <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
-            <li><strong>Play 3:</strong> Bet the recommended team's spread at -110 (Kelly: 8% for HIGH, 6% for STRONG)</li>
-            <li><strong>Play 4:</strong> Bet the CDS-flagged team's spread at -110 (Kelly: 10% ELITE, 8% HIGH, 6% STRONG)</li>
+            <li><strong>Play 3:</strong> Bet the recommended team's moneyline (Kelly: 8% for HIGH, 6% for STRONG)</li>
+            <li><strong>Play 4:</strong> Bet the CDS-flagged team's moneyline (Kelly: 10% ELITE, 8% HIGH, 6% STRONG)</li>
             <li>When both models flag the same game, use the higher Kelly sizing</li>
             <li>Track results on the History tab</li>
           </ol>
@@ -327,8 +327,8 @@
           <ul class="notes-list">
             <li>Play 3 has ~83% ML accuracy — the favorite <em>wins</em> 83% of the time</li>
             <li>Play 4 ELITE has ~91% ML accuracy on a smaller sample (11 games)</li>
-            <li>Spread coverage is lower (~70-75%) because spreads are set near the expected margin</li>
-            <li>Even at 70% spread coverage, ROI is +27% at -110 — highly profitable</li>
+            <li>Moneyline odds vary by matchup — heavier favorites (-500) pay less than light favorites (-150)</li>
+            <li>The model targets lopsided matchups, so ML odds are typically -200 to -600 range</li>
             <li>Combined: ~8-11 qualifying picks per month between both models</li>
           </ul>
         </div>
