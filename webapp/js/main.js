@@ -469,8 +469,9 @@
 
       if (pred && pred.signals && pred.signals.length > 0) {
         const actualMargin = game.home_score - game.away_score;
-        const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
         const actualMarginAbs = Math.abs(actualMargin);
+        const favActualMargin = pred.favIsHome ? actualMargin : -actualMargin;
+        const coveredSpread = favActualMargin > pred.predictedMargin;
 
         historyPicks.push({
           date: game.date,
@@ -480,10 +481,10 @@
           confidence: pred.signals[0].confidence,
           predictedMargin: pred.predictedMargin,
           actualMargin: actualMarginAbs,
-          favWon,
+          coveredSpread,
           homeScore: game.home_score,
           awayScore: game.away_score,
-          pnl: favWon ? 91 : -100,
+          pnl: coveredSpread ? 91 : -100,
         });
       }
 
@@ -509,7 +510,8 @@
       if (pred && pred.isIncremental) {
         // Only show incremental picks (ones Play 3 misses)
         const actualMargin = game.home_score - game.away_score;
-        const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
+        const favActualMargin = pred.favIsHome ? actualMargin : -actualMargin;
+        const coveredSpread = favActualMargin > pred.predictedMargin;
 
         cdsHistoryPicks.push({
           date: game.date,
@@ -522,8 +524,8 @@
           dimensions: pred.dimensions,
           predictedMargin: pred.predictedMargin,
           actualMargin: Math.abs(actualMargin),
-          favWon,
-          pnl: favWon ? 91 : -100,
+          coveredSpread,
+          pnl: coveredSpread ? 91 : -100,
         });
       }
 
@@ -594,7 +596,7 @@
     if (g.status === 'STATUS_FINAL') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
       const oppScore = pick.isHome ? g.away_score : g.home_score;
-      const won = favScore > oppScore;
+      const won = (favScore - oppScore) > pick.predictedMargin;
       liveHtml = `
         <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
           <span class="live-label">FINAL</span>
@@ -684,7 +686,7 @@
     if (g.status === 'STATUS_FINAL') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
       const oppScore = pick.isHome ? g.away_score : g.home_score;
-      const won = favScore > oppScore;
+      const won = (favScore - oppScore) > pick.predictedMargin;
       liveHtml = `
         <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
           <span class="live-label">FINAL</span>
@@ -811,9 +813,9 @@
       tbody.innerHTML = '<tr><td colspan="8" class="muted">No picks in this period</td></tr>';
     } else {
       tbody.innerHTML = filtered.map(p => {
-        const resClass = p.favWon ? 'result-win' : 'result-loss';
-        const resText = p.favWon ? 'W' : 'L';
-        const pnlText = p.favWon ? '+$91' : '-$100';
+        const resClass = p.coveredSpread ? 'result-win' : 'result-loss';
+        const resText = p.coveredSpread ? 'W' : 'L';
+        const pnlText = p.coveredSpread ? '+$91' : '-$100';
         const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
         const dateFormatted = formatDate(p.date);
 
@@ -860,9 +862,9 @@
       };
 
       tbody.innerHTML = filtered.map(p => {
-        const resClass = p.favWon ? 'result-win' : 'result-loss';
-        const resText = p.favWon ? 'W' : 'L';
-        const pnlText = p.favWon ? '+$91' : '-$100';
+        const resClass = p.coveredSpread ? 'result-win' : 'result-loss';
+        const resText = p.coveredSpread ? 'W' : 'L';
+        const pnlText = p.coveredSpread ? '+$91' : '-$100';
         const tierClass = p.tier === 'ELITE' ? 'conf-diamond' : p.tier === 'HIGH' ? 'conf-high' : 'conf-strong';
         const dateFormatted = formatDate(p.date);
         const pathwayLabel = PATHWAY_LABELS[p.pathway] || p.pathway;
@@ -890,7 +892,7 @@
     const summary = document.getElementById('history-summary');
     if (!summary) return;
 
-    const wins = filtered.filter(p => p.favWon).length;
+    const wins = filtered.filter(p => p.coveredSpread).length;
     const total = filtered.length;
     const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
     const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '0';
@@ -914,13 +916,13 @@
     const summary = document.getElementById('cds-history-summary');
     if (!summary) return;
 
-    const wins = filtered.filter(p => p.favWon).length;
+    const wins = filtered.filter(p => p.coveredSpread).length;
     const total = filtered.length;
     const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
     const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '—';
 
     const eliteGames = filtered.filter(p => p.tier === 'ELITE');
-    const eliteWins = eliteGames.filter(p => p.favWon).length;
+    const eliteWins = eliteGames.filter(p => p.coveredSpread).length;
     const eliteAcc = eliteGames.length > 0 ? ((eliteWins / eliteGames.length) * 100).toFixed(1) : '—';
 
     summary.innerHTML = `
@@ -963,7 +965,7 @@
     el('metric-games').textContent = todayGames.length;
 
     if (historyPicks.length > 0) {
-      const wins = historyPicks.filter(p => p.favWon).length;
+      const wins = historyPicks.filter(p => p.coveredSpread).length;
       const total = historyPicks.length;
       const accuracy = ((wins / total) * 100).toFixed(1);
       const totalPnl = historyPicks.reduce((s, p) => s + p.pnl, 0);
@@ -973,7 +975,7 @@
 
       // CDS accuracy
       if (cdsHistoryPicks.length > 0) {
-        const cdsWins = cdsHistoryPicks.filter(p => p.favWon).length;
+        const cdsWins = cdsHistoryPicks.filter(p => p.coveredSpread).length;
         const cdsTotal = cdsHistoryPicks.length;
         const cdsAcc = ((cdsWins / cdsTotal) * 100).toFixed(1);
         const cdsPnl = cdsHistoryPicks.reduce((s, p) => s + p.pnl, 0);
