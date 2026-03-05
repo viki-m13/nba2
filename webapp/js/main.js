@@ -13,14 +13,18 @@
   let historyPicks = [];        // Historical Play 3 picks with results
   let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
   let parlayHistory = [];        // Historical daily parlays with results
+  let todayPactPicks = [];       // Games flagged by PACT model (Play 6: totals)
+  let pactHistoryPicks = [];     // Historical Play 6 PACT picks with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 'all';
   let currentCdsHistoryPeriod = 'all';
   let currentParlayHistoryPeriod = 'all';
+  let currentPactHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
+  const PACTModel = window.ParlayEngine.PACTModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -274,9 +278,11 @@
       await fetchTodayGames();
       runPredictions();
       runCDSPredictions();
+      runPACTPredictions();
       buildHistory();
       buildCDSHistory();
       buildParlayHistory();
+      buildPACTHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -329,15 +335,18 @@
       } catch (e) { /* skip failed dates */ }
     }
 
-    // Feed all data into both models
+    // Feed all data into all models
     seasonData.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
     Model.reset();
     CDSModel.reset();
+    PACTModel.teamHistory = {};
     for (const g of seasonData) {
       Model.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       Model.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
       CDSModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       CDSModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
+      PACTModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
+      PACTModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
     }
 
     console.log(`[APP] Models trained on ${seasonData.length} games, ${Object.keys(Model.teamHistory).length} teams`);
@@ -497,6 +506,45 @@
     console.log(`[CDS] ${todayCdsPicks.length} picks from ${todayGames.length} games`);
   }
 
+  // ── PACT Predictions (Play 6) ──────────────────────────────────────────
+
+  function runPACTPredictions() {
+    todayPactPicks = [];
+
+    for (const game of todayGames) {
+      const pred = PACTModel.predictGame(game.home_team, game.away_team);
+      if (pred) {
+        todayPactPicks.push({
+          game,
+          prediction: pred,
+          direction: pred.direction,
+          predTotal: pred.predTotal,
+          pactStrength: pred.pactStrength,
+          tier: pred.tier,
+          factors: pred.factors,
+          combinedDef: pred.combinedDef,
+          minPace: pred.minPace,
+          hTrend: pred.hTrend,
+          aTrend: pred.aTrend,
+          homeOff: pred.homeOff,
+          homeDef: pred.homeDef,
+          awayOff: pred.awayOff,
+          awayDef: pred.awayDef,
+        });
+      }
+    }
+
+    // Sort: ELITE first, then by strength
+    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
+    todayPactPicks.sort((a, b) => {
+      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
+      if (to !== 0) return to;
+      return b.pactStrength - a.pactStrength;
+    });
+
+    console.log(`[PACT] ${todayPactPicks.length} picks from ${todayGames.length} games`);
+  }
+
   // ── History Builders ─────────────────────────────────────────────────────
 
   function buildHistory() {
@@ -628,6 +676,44 @@
     console.log(`[PARLAY] Built history: ${parlayHistory.length} daily parlays`);
   }
 
+  function buildPACTHistory() {
+    pactHistoryPicks = [];
+
+    const pact = Object.create(PACTModel);
+    pact.teamHistory = {};
+
+    const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    for (const game of sorted) {
+      const pred = pact.predictGame(game.home_team, game.away_team);
+
+      if (pred) {
+        const actualTotal = game.home_score + game.away_score;
+        const isOver = pred.direction === 'OVER';
+        const hit = isOver ? actualTotal > PACTModel.LEAGUE_AVG_TOTAL : actualTotal < PACTModel.LEAGUE_AVG_TOTAL;
+
+        pactHistoryPicks.push({
+          date: game.date,
+          home: game.home_team,
+          away: game.away_team,
+          direction: pred.direction,
+          predTotal: pred.predTotal,
+          actualTotal,
+          pactStrength: pred.pactStrength,
+          tier: pred.tier,
+          factors: pred.factors,
+          hit,
+          pnl: hit ? 91 : -100,
+        });
+      }
+
+      pact.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      pact.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+    }
+
+    console.log(`[PACT] Built history: ${pactHistoryPicks.length} total picks`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -675,6 +761,16 @@
         parlayContainer.innerHTML = renderTodayParlayCard(allLegs);
       } else if (parlayContainer) {
         parlayContainer.style.display = 'none';
+      }
+
+      // Play 6 — PACT Totals
+      const pactContainer = document.getElementById('pact-container');
+      if (pactContainer && todayPactPicks.length > 0) {
+        pactContainer.style.display = '';
+        pactContainer.innerHTML = '<h3 class="section-title">Play 6 — PACT Over/Under Picks <span class="pact-badge">-110</span></h3>' +
+          '<div class="picks-grid">' + todayPactPicks.map(renderPACTCard).join('') + '</div>';
+      } else if (pactContainer) {
+        pactContainer.style.display = 'none';
       }
     }
 
@@ -933,6 +1029,85 @@
       </div>`;
   }
 
+  function renderPACTCard(pick) {
+    const g = pick.game;
+    const tierClass = pick.tier === 'ELITE' ? 'conf-pact-elite' : pick.tier === 'HIGH' ? 'conf-pact-high' : 'conf-pact';
+    const dirClass = pick.direction === 'OVER' ? 'pact-over' : 'pact-under';
+    const dirLabel = pick.direction;
+
+    const FACTOR_LABELS = {
+      high_total: 'High Matchup Total',
+      low_total: 'Low Matchup Total',
+      both_trending_up: 'Both Teams Scoring More',
+      both_trending_down: 'Both Teams Scoring Less',
+      strong_defense: 'Strong Combined Defense',
+      weak_defense: 'Weak Combined Defense',
+      fast_pace: 'Fast Pace Matchup',
+      slow_pace: 'Slow Pace Matchup',
+    };
+    const factorList = pick.factors.map(f => FACTOR_LABELS[f] || f).join(', ');
+
+    let liveHtml = '';
+    if (g.status === 'STATUS_FINAL') {
+      const actualTotal = g.home_score + g.away_score;
+      const isOver = pick.direction === 'OVER';
+      const won = isOver ? actualTotal > PACTModel.LEAGUE_AVG_TOTAL : actualTotal < PACTModel.LEAGUE_AVG_TOTAL;
+      liveHtml = `
+        <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+          <span class="live-label">FINAL</span>
+          <span class="live-score">Total: ${actualTotal} (pred: ${pick.predTotal})</span>
+          <span class="live-result">${won ? 'W' : 'L'}</span>
+        </div>`;
+    } else if (g.status === 'STATUS_IN_PROGRESS' || g.status === 'STATUS_HALFTIME') {
+      const currentTotal = g.home_score + g.away_score;
+      liveHtml = `
+        <div class="pick-live live-active">
+          <span class="live-label">LIVE Q${g.period} ${g.clock}</span>
+          <span class="live-score">Running total: ${currentTotal}</span>
+        </div>`;
+    } else {
+      liveHtml = `
+        <div class="pick-live live-scheduled">
+          <span class="live-label">${g.time}</span>
+          <span class="live-status">Pre-Game — Bet ${dirLabel} at -110</span>
+        </div>`;
+    }
+
+    return `
+      <div class="pick-card ${tierClass}">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 6</span>
+          <span class="pick-conf">${pick.tier} — PACT ${pick.pactStrength}</span>
+        </div>
+        <div class="pick-bet-line ${dirClass}">
+          ${dirLabel} ${pick.predTotal} at -110
+        </div>
+        <div class="pick-matchup">
+          ${teamName(g.away_team)} @ ${teamName(g.home_team)}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Direction</span>
+            <span class="detail-value ${dirClass}">${dirLabel}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Pred Total</span>
+            <span class="detail-value">${pick.predTotal}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Strength</span>
+            <span class="detail-value">${pick.pactStrength}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Factors</span>
+            <span class="detail-value">${pick.factors.length}</span>
+          </div>
+        </div>
+        <div class="pact-factors">${factorList}</div>
+        ${liveHtml}
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -973,6 +1148,7 @@
     renderSpreadHistory();
     renderCDSHistory();
     renderParlayHistory();
+    renderPACTHistory();
   }
 
   function renderSpreadHistory() {
@@ -1211,6 +1387,114 @@
       </div>`;
   }
 
+  function renderPACTHistory() {
+    const tbody = document.getElementById('pact-history-body');
+    if (!tbody) return;
+
+    let filtered = pactHistoryPicks;
+    if (currentPactHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentPactHistoryPeriod));
+      filtered = pactHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No PACT picks in this period</td></tr>';
+    } else {
+      const FACTOR_SHORT = {
+        high_total: 'High Total',
+        low_total: 'Low Total',
+        both_trending_up: 'Trend Up',
+        both_trending_down: 'Trend Down',
+        strong_defense: 'Strong Def',
+        weak_defense: 'Weak Def',
+        fast_pace: 'Fast Pace',
+        slow_pace: 'Slow Pace',
+      };
+
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.hit ? 'result-win' : 'result-loss';
+        const resText = p.hit ? 'W' : 'L';
+        const pnlText = p.hit ? '+$91' : '-$100';
+        const tierClass = p.tier === 'ELITE' ? 'conf-pact-elite' : p.tier === 'HIGH' ? 'conf-pact-high' : 'conf-pact';
+        const dirClass = p.direction === 'OVER' ? 'pact-over' : 'pact-under';
+        const dateFormatted = formatDate(p.date);
+        const factorStr = p.factors.map(f => FACTOR_SHORT[f] || f).join(', ');
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td><span class="${dirClass}">${p.direction}</span></td>
+            <td>${p.away} @ ${p.home}</td>
+            <td><span class="badge ${tierClass}">${p.tier}</span></td>
+            <td>${p.pactStrength}</td>
+            <td>${p.predTotal}</td>
+            <td>${p.actualTotal}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderPACTSummary(filtered);
+  }
+
+  function renderPACTSummary(filtered) {
+    const summary = document.getElementById('pact-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.hit).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    const overs = filtered.filter(p => p.direction === 'OVER');
+    const unders = filtered.filter(p => p.direction === 'UNDER');
+    const overHits = overs.filter(p => p.hit).length;
+    const underHits = unders.filter(p => p.hit).length;
+    const overPnl = overs.reduce((s, p) => s + p.pnl, 0);
+    const underPnl = unders.reduce((s, p) => s + p.pnl, 0);
+
+    const elites = filtered.filter(p => p.tier === 'ELITE');
+    const eliteHits = elites.filter(p => p.hit).length;
+    const eliteRate = elites.length > 0 ? ((eliteHits / elites.length) * 100).toFixed(1) : '—';
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-pact">
+          <div class="summary-title">Play 6 — PACT Totals (at -110)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">OVER / UNDER Breakdown</div>
+          <div class="summary-stat">
+            <span class="summary-record">OVER: ${overHits}-${overs.length - overHits}</span>
+            <span class="summary-pct">${overs.length > 0 ? (overHits / overs.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">UNDER: ${underHits}-${unders.length - underHits}</span>
+            <span class="summary-pct">${unders.length > 0 ? (underHits / unders.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+        </div>
+        <div class="summary-card summary-pact-elite">
+          <div class="summary-title">ELITE Tier Only</div>
+          <div class="summary-stat">
+            <span class="summary-record">${elites.length > 0 ? eliteHits + '-' + (elites.length - eliteHits) : '—'}</span>
+            <span class="summary-pct">${eliteRate}${elites.length > 0 ? '%' : ''}</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
@@ -1311,6 +1595,15 @@
         document.querySelectorAll('.parlay-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentParlayHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.pact-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pact-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPactHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
