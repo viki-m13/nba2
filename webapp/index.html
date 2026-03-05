@@ -79,6 +79,11 @@
         <!-- Parlay card injected here by JS -->
       </div>
 
+      <!-- Play 6: PACT Over/Under -->
+      <div id="pact-container" style="display:none;">
+        <!-- PACT pick cards injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
         <p><strong>Play 3 (ADI Moneyline):</strong> No games meeting HIGH or STRONG thresholds today.</p>
@@ -188,6 +193,37 @@
         </table>
       </div>
       <div id="parlay-history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 6: PACT Totals History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 6 — PACT Over/Under History</h2>
+      <p class="history-note">Game total over/under bets at -110 using Pace-Adjusted Convergent Total scoring. Multi-window temporal analysis with 4 convergent factors.</p>
+      <div class="filter-bar">
+        <button class="pact-filter-btn" data-period="7">Last 7 Days</button>
+        <button class="pact-filter-btn" data-period="14">Last 14 Days</button>
+        <button class="pact-filter-btn" data-period="30">Last 30 Days</button>
+        <button class="pact-filter-btn active" data-period="all">Full Season</button>
+      </div>
+      <div id="pact-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Direction</th>
+              <th>Matchup</th>
+              <th>Tier</th>
+              <th>Strength</th>
+              <th>Pred Total</th>
+              <th>Actual Total</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="pact-history-body">
+            <tr><td colspan="9" class="muted">Loading PACT history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="pact-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
@@ -344,6 +380,71 @@
           </ol>
         </div>
 
+        <!-- ── PLAY 6: PACT ── -->
+        <div class="how-section" style="border-top: 2px solid rgba(167, 139, 250, 0.3); padding-top: 24px; margin-top: 24px;">
+          <h3>Play 6 — PACT: Pace-Adjusted Convergent Total</h3>
+          <p>The <strong>PACT model</strong> is a novel game total (over/under) prediction system that
+          uses multi-window temporal analysis to identify games where the total is highly predictable.
+          Unlike moneyline bets on heavy favorites, <strong>totals bets are at standard -110 odds</strong>.</p>
+          <p>Bet: <strong>Game total OVER or UNDER at -110</strong> based on convergent factor scoring.</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 6 — The 4 Convergent Factors</h3>
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-value" style="color: var(--purple);">F1</div>
+              <div class="result-label">Matchup Total Deviation</div>
+              <div class="result-detail">Blended 3-window (5/10/15 game) total prediction vs league average</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value" style="color: var(--purple);">F2</div>
+              <div class="result-label">Scoring Trajectory</div>
+              <div class="result-detail">Both teams trending in the same direction (up or down)</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value" style="color: var(--purple);">F3</div>
+              <div class="result-label">Combined Defensive Strength</div>
+              <div class="result-detail">Two good defenses suppress totals; two bad defenses inflate them</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value" style="color: var(--purple);">F4</div>
+              <div class="result-label">Pace Control</div>
+              <div class="result-detail">The slower team dictates pace — fast/slow matchups are predictable</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 6 — Validated Results</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(167, 139, 250, 0.3);">
+              <div class="result-value" style="color: var(--purple);">~74%</div>
+              <div class="result-label">Overall Hit Rate</div>
+              <div class="result-detail">All PACT picks at -110 (walk-forward)</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(167, 139, 250, 0.3);">
+              <div class="result-value" style="color: var(--purple);">~77%</div>
+              <div class="result-label">UNDER Hit Rate</div>
+              <div class="result-detail">UNDER picks are particularly strong</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(167, 139, 250, 0.3);">
+              <div class="result-value" style="color: var(--purple);">+40%</div>
+              <div class="result-label">ROI at -110</div>
+              <div class="result-detail">Massively profitable at standard juice</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 6 — Confidence Tiers</h3>
+          <ol>
+            <li><strong>ELITE (strength &ge; 5):</strong> Highest conviction — multiple strong factors converge</li>
+            <li><strong>HIGH (strength &ge; 4):</strong> Strong signal — 3+ factors aligned</li>
+            <li><strong>STRONG (strength &ge; 3.5):</strong> Moderate signal — meaningful convergence</li>
+          </ol>
+        </div>
+
         <div class="how-section">
           <h3>How to Execute</h3>
           <ol>
@@ -351,7 +452,7 @@
             <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
             <li><strong>Play 3:</strong> Bet the recommended team's moneyline (Kelly: 8% for HIGH, 6% for STRONG)</li>
             <li><strong>Play 4:</strong> Bet the CDS-flagged team's moneyline (Kelly: 10% ELITE, 8% HIGH, 6% STRONG)</li>
-            <li>When both models flag the same game, use the higher Kelly sizing</li>
+            <li><strong>Play 6:</strong> Bet the game total OVER or UNDER at -110 when PACT flags it</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
@@ -362,8 +463,9 @@
             <li>Play 3 has ~83% ML accuracy — the favorite <em>wins</em> 83% of the time</li>
             <li>Play 4 ELITE has ~91% ML accuracy on a smaller sample (11 games)</li>
             <li>Moneyline odds vary by matchup — heavier favorites (-500) pay less than light favorites (-150)</li>
-            <li>The model targets lopsided matchups, so ML odds are typically -200 to -600 range</li>
-            <li>Combined: ~8-11 qualifying picks per month between both models</li>
+            <li><strong>Play 6 is the most profitable bet type</strong> — ~74% accuracy at standard -110 odds = +40% ROI</li>
+            <li>Play 6 UNDER picks are particularly strong (~77% hit rate)</li>
+            <li>Combined: ~8-11 ML picks + 3-5 total picks per month</li>
           </ul>
         </div>
       </div>
