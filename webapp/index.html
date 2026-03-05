@@ -12,7 +12,7 @@
   <header class="header">
     <div class="header-left">
       <span class="brand">NBA Dominance</span>
-      <span class="brand-tag">ADI Pre-Game Model</span>
+      <span class="brand-tag">ADI + CDS Pre-Game Models</span>
     </div>
     <nav class="header-nav">
       <button class="nav-btn active" data-view="picks">Today's Picks</button>
@@ -36,20 +36,16 @@
       <span class="metric-label">Games Today</span>
     </div>
     <div class="metric">
-      <span class="metric-value diamond-text" id="metric-diamond">100%</span>
-      <span class="metric-label">Diamond ML</span>
-    </div>
-    <div class="metric">
       <span class="metric-value" id="metric-accuracy">—</span>
-      <span class="metric-label">Spread ML Win</span>
+      <span class="metric-label">Play 3 ML Win</span>
     </div>
     <div class="metric">
-      <span class="metric-value cyan" id="metric-tt-accuracy">—</span>
-      <span class="metric-label">Team Total Over</span>
+      <span class="metric-value cyan" id="metric-cds-accuracy">—</span>
+      <span class="metric-label">Play 4 ML Win</span>
     </div>
     <div class="metric">
       <span class="metric-value" id="metric-roi">—</span>
-      <span class="metric-label">Play 3 ROI</span>
+      <span class="metric-label">Combined ROI</span>
     </div>
     <div class="metric">
       <span class="metric-value" id="metric-record">—</span>
@@ -68,21 +64,21 @@
         <p>Loading team data and today's games...</p>
       </div>
 
-      <!-- DIAMOND ML Live Signals (Play 1) -->
-      <div id="diamond-container" class="picks-grid" style="display:none;">
-        <!-- DIAMOND pick cards injected here by JS -->
-      </div>
-
-      <!-- Pre-game Spread Picks (Play 3) -->
+      <!-- Pre-game Spread Picks (Play 3: ADI) -->
       <div id="picks-container" class="picks-grid" style="display:none;">
         <!-- Pick cards injected here by JS -->
       </div>
 
+      <!-- Pre-game CDS Picks (Play 4: Convergent Dominance) -->
+      <div id="cds-container" class="picks-grid" style="display:none;">
+        <!-- CDS pick cards injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
-        <p><strong>Play 1 (DIAMOND ML):</strong> Signals fire during live games at halftime when a team has a 15+ point lead with momentum. Check back when games are in progress.</p>
-        <p><strong>Play 3 (Spread):</strong> The ADI model found no games meeting HIGH or STRONG thresholds today.</p>
-        <p class="subtle">Play 1 fires during live games. Play 3 averages 4-6 qualifying pre-game picks per month.</p>
+        <p><strong>Play 3 (ADI Spread):</strong> No games meeting HIGH or STRONG thresholds today.</p>
+        <p><strong>Play 4 (CDS Spread):</strong> No games reaching the Convergent Dominance threshold today.</p>
+        <p class="subtle">Play 3 averages 4-6 qualifying picks per month. Play 4 adds 3-5 incremental picks per month that Play 3 misses.</p>
       </div>
 
       <div id="all-games-section" style="display:none;">
@@ -97,32 +93,8 @@
     <!-- ═══════ VIEW: HISTORY ═══════ -->
     <div id="view-history" class="view">
 
-      <!-- ── PLAY 1: DIAMOND ML History ── -->
-      <h2 class="section-title">Play 1 — DIAMOND ML History</h2>
-      <p class="history-note">Live in-game signals from 2023-24 season validation — 37 games, 37-0 record, 100% ML win rate.</p>
-      <div id="diamond-history-table-wrap" class="table-wrap">
-        <table class="data-table diamond-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Pick</th>
-              <th>Matchup</th>
-              <th>Tier</th>
-              <th>Lead</th>
-              <th>Momentum</th>
-              <th>Result</th>
-              <th>P&amp;L</th>
-            </tr>
-          </thead>
-          <tbody id="diamond-history-body">
-            <tr><td colspan="8" class="muted">Loading DIAMOND history...</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div id="diamond-history-summary" class="history-summary"></div>
-
-      <!-- ── PLAY 3: Spread + Team Total History ── -->
-      <h2 class="section-title" style="margin-top: 32px;">Play 3 — Spread &amp; Team Total History</h2>
+      <!-- ── PLAY 3: Spread History ── -->
+      <h2 class="section-title">Play 3 — ADI Spread History</h2>
       <p class="history-note">Pre-game spread bets (HIGH + STRONG) from 2024-25 walk-forward validation.</p>
       <div class="filter-bar">
         <button class="filter-btn" data-period="7">Last 7 Days</button>
@@ -142,15 +114,38 @@
               <th>Actual Margin</th>
               <th>Result</th>
               <th>P&amp;L</th>
-              <th>Team Total</th>
             </tr>
           </thead>
           <tbody id="history-body">
-            <tr><td colspan="9" class="muted">Loading history...</td></tr>
+            <tr><td colspan="8" class="muted">Loading history...</td></tr>
           </tbody>
         </table>
       </div>
       <div id="history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 4: CDS History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 4 — Convergent Dominance History</h2>
+      <p class="history-note">Pre-game CDS spread bets — incremental picks that Play 3 misses. Multi-dimensional dominance scoring.</p>
+      <div id="cds-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Pick</th>
+              <th>Matchup</th>
+              <th>CDS Score</th>
+              <th>Tier</th>
+              <th>Pathway</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="cds-history-body">
+            <tr><td colspan="8" class="muted">Loading CDS history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="cds-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
@@ -159,126 +154,151 @@
         <h2>How the System Works</h2>
 
         <div class="how-section">
-          <h3>Two Plays, Two Edge Types</h3>
-          <p>This system has <strong>two independent betting strategies</strong> that target different edges:</p>
+          <h3>Two Pre-Game Models, Complementary Edges</h3>
+          <p>This system runs <strong>two independent pre-game betting models</strong> that target different edges:</p>
           <ol>
-            <li><strong>Play 1 — DIAMOND ML:</strong> Live in-game moneyline bets when a team is dominating at halftime (100% accuracy, heavy juice odds ~-800 to -2000)</li>
-            <li><strong>Play 3 — Pre-Game Spread + Team Total:</strong> Pre-game spread and team total bets on high-confidence blowout matchups (~83% ML accuracy at -110)</li>
+            <li><strong>Play 3 — ADI Spread:</strong> Rigid-filter model using net gap, offensive rating, and home court (~83% ML accuracy at -110)</li>
+            <li><strong>Play 4 — CDS Spread:</strong> Multi-dimensional scoring model using 7 dominance dimensions — captures games Play 3 misses (~81-91% ML accuracy at -110)</li>
           </ol>
         </div>
 
-        <!-- ── PLAY 1: DIAMOND ML ── -->
-        <div class="how-section diamond-section">
-          <h3>Play 1 — DIAMOND ML</h3>
-          <p>During live games, the <strong>Absorbing Barrier Model</strong> (Brownian motion with drift) evaluates
-          whether a leading team's advantage is mathematically insurmountable. When a team leads by 15+ points at
-          halftime with strong momentum (12+ point differential in last 5 minutes), the model fires a DIAMOND signal.</p>
-          <div class="results-grid">
-            <div class="result-card highlight-diamond">
-              <div class="result-value diamond-text">100%</div>
-              <div class="result-label">ML Win Rate</div>
-              <div class="result-detail">37/37 unique games (467 qualifying states)</div>
-            </div>
-            <div class="result-card">
-              <div class="result-value">-1050</div>
-              <div class="result-label">Avg ML Odds</div>
-              <div class="result-detail">Heavy juice — use parlays to improve returns</div>
-            </div>
-            <div class="result-card">
-              <div class="result-value">15%</div>
-              <div class="result-label">Kelly Sizing</div>
-              <div class="result-detail">Aggressive sizing justified by 100% hit rate</div>
-            </div>
-          </div>
-          <h4>DIAMOND Signal Conditions</h4>
-          <p>A DIAMOND ML signal fires when <strong>all</strong> of these are met during halftime:</p>
-          <ol>
-            <li>Lead &ge; 15 points</li>
-            <li>5-minute momentum differential &ge; +12 points (leader outscoring)</li>
-            <li>18-24 minutes remaining (halftime window)</li>
-          </ol>
-          <h4>How to Execute Play 1</h4>
-          <ol>
-            <li>Watch this page during live games — DIAMOND cards appear automatically</li>
-            <li>When a DIAMOND signal fires, immediately bet the <strong>leading team's moneyline</strong></li>
-            <li>Odds will be heavy juice (-800 to -2000) — this is expected and profitable</li>
-            <li>For better odds, parlay 2+ DIAMOND signals from the same night (~-878 combined odds)</li>
-            <li>Kelly sizing: 15% of bankroll per signal</li>
-          </ol>
-        </div>
-
-        <!-- ── PLAY 3: PRE-GAME ── -->
+        <!-- ── PLAY 3: ADI PRE-GAME ── -->
         <div class="how-section">
-          <h3>Play 3 — Pre-Game Spread + Team Total</h3>
-          <p>Before each game, the <strong>Asymmetric Dominance Index (ADI)</strong> analyzes
+          <h3>Play 3 — ADI Pre-Game Spread</h3>
+          <p>The <strong>Asymmetric Dominance Index (ADI)</strong> analyzes
           rolling team metrics to identify lopsided matchups. When a strong offensive team
           (118+ PPG) faces a weaker opponent with a large net rating gap (10+ points)
           at home, the model flags it as a <strong>HIGH confidence</strong> pick.</p>
-          <p>You then place <strong>two bets</strong>:</p>
-          <ol>
-            <li><strong>Pre-game spread at -110</strong> on the favored team (primary bet)</li>
-            <li><strong>Team Total OVER</strong> on the favored team (secondary bet — 97.6% hit rate)</li>
-          </ol>
+          <p>Bet: <strong>Pre-game spread at -110</strong> on the favored team.</p>
         </div>
 
         <div class="how-section">
-          <h3>Validated Results</h3>
+          <h3>Play 3 — Validated Results</h3>
           <div class="results-grid">
             <div class="result-card">
               <div class="result-value">83.3%</div>
               <div class="result-label">ML Win Rate (HIGH)</div>
               <div class="result-detail">35 of 42 games — favorite wins outright</div>
             </div>
-            <div class="result-card highlight-cyan">
-              <div class="result-value">97.6%</div>
-              <div class="result-label">Score 110+ (HIGH)</div>
-              <div class="result-detail">41 of 42 games — favorite scores 110+</div>
-            </div>
             <div class="result-card">
-              <div class="result-value">88.1%</div>
-              <div class="result-label">Score 115+ (HIGH)</div>
-              <div class="result-detail">37 of 42 games — fav scores 115+ (avg: 125)</div>
-            </div>
-            <div class="result-card">
-              <div class="result-value">481</div>
-              <div class="result-label">Games Analyzed</div>
+              <div class="result-value">47</div>
+              <div class="result-label">Qualifying Games</div>
               <div class="result-detail">2024-25 season walk-forward validation</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">+55%</div>
+              <div class="result-label">ROI at -110</div>
+              <div class="result-detail">Highly profitable at standard juice</div>
             </div>
           </div>
         </div>
 
         <div class="how-section">
-          <h3>Team Total Over — Why It Works</h3>
-          <p>In HIGH confidence games, the favorite is a <strong>118+ PPG offensive team at home</strong>
-          against a weak opponent. They almost always deliver big scoring nights:</p>
-          <ul class="factor-list">
-            <li><strong>97.6%</strong> scored 110+ points (41 of 42 games)</li>
-            <li><strong>88.1%</strong> scored 115+ points (37 of 42 games)</li>
-            <li><strong>Average score: 125 points</strong> — well above any typical team total line</li>
-            <li>Only <strong>1 miss</strong> in 42 games (NYK scored 100 vs ATL on 12/11)</li>
-          </ul>
-          <p>Look for the <strong>"Team Totals"</strong> market on your sportsbook and bet the
-          favorite's <strong>OVER</strong> at -110. This is a separate bet from the game total.</p>
-        </div>
-
-        <div class="how-section">
-          <h3>Model Factors</h3>
-          <ul class="factor-list">
-            <li><strong>Offensive Rating</strong> — Favorite's points per game (rolling 15-game avg)</li>
-            <li><strong>Defensive Rating</strong> — Opponent's points allowed per game</li>
-            <li><strong>Net Rating Gap</strong> — Difference in team net ratings (points scored minus allowed)</li>
-            <li><strong>Home Court</strong> — 3.5-point home advantage multiplier</li>
-            <li><strong>Blowout Probability Score (BPS)</strong> — Composite of all factors, weighted 40% net gap</li>
-          </ul>
-        </div>
-
-        <div class="how-section">
-          <h3>HIGH Confidence Filter</h3>
-          <p>A game qualifies as HIGH confidence when <strong>all three</strong> conditions are met:</p>
+          <h3>Play 3 — HIGH Confidence Filter</h3>
+          <p>A game qualifies when <strong>all three</strong> conditions are met:</p>
           <ol>
             <li>Net rating gap between teams &ge; 10 points</li>
             <li>Favorite's offensive rating &ge; 118 PPG</li>
             <li>Favorite is playing at home</li>
+          </ol>
+        </div>
+
+        <!-- ── PLAY 4: CDS PRE-GAME ── -->
+        <div class="how-section diamond-section">
+          <h3>Play 4 — Convergent Dominance Score (CDS)</h3>
+          <p>The <strong>Convergent Dominance Score</strong> is a novel multi-dimensional model that
+          identifies games where multiple independent dimensions of team dominance <strong>converge</strong>,
+          creating near-deterministic outcomes.</p>
+          <p>Unlike Play 3's rigid binary filters, CDS uses <strong>7 continuous dimensions</strong> with
+          trade-offs between them. A team can qualify through different "pathways to dominance" —
+          elite defense compensates for moderate offense, high consistency compensates for away-game
+          disadvantage, etc.</p>
+          <p>Bet: <strong>Pre-game spread at -110</strong> on the favored team (same bet type, different model).</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 4 — The 7 Dimensions</h3>
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-value">D1</div>
+              <div class="result-label">Net Rating Gap (0-3)</div>
+              <div class="result-detail">Overall quality differential between teams</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">D2</div>
+              <div class="result-label">Offensive Firepower (0-3)</div>
+              <div class="result-detail">Favorite's raw scoring ability (PPG)</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">D3</div>
+              <div class="result-label">Defensive Cage (0-3)</div>
+              <div class="result-detail">Favorite's defense vs opponent's offense</div>
+            </div>
+            <div class="result-card highlight-cyan">
+              <div class="result-value">D4</div>
+              <div class="result-label">Win Consistency (0-3)</div>
+              <div class="result-detail">Record gap reflecting sustained excellence</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">D5</div>
+              <div class="result-label">Home Court (0-1.5)</div>
+              <div class="result-detail">Venue advantage amplifier</div>
+            </div>
+            <div class="result-card highlight-cyan">
+              <div class="result-value">D6</div>
+              <div class="result-label">Dual-Edge Bonus (0-1.5)</div>
+              <div class="result-detail">Elite on BOTH offense AND defense</div>
+            </div>
+            <div class="result-card highlight-cyan">
+              <div class="result-value">D7</div>
+              <div class="result-label">Opponent Weakness (0-1)</div>
+              <div class="result-detail">Opponent bad at BOTH ends of the floor</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 4 — Validated Results</h3>
+          <div class="results-grid">
+            <div class="result-card highlight-diamond">
+              <div class="result-value diamond-text">90.9%</div>
+              <div class="result-label">ELITE ML Win Rate</div>
+              <div class="result-detail">10/11 games at CDS &ge; 11 (walk-forward)</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">80.0%</div>
+              <div class="result-label">STRONG ML Win Rate</div>
+              <div class="result-detail">32/40 games at CDS &ge; 8 (walk-forward)</div>
+            </div>
+            <div class="result-card highlight-cyan">
+              <div class="result-value">25</div>
+              <div class="result-label">Incremental Picks</div>
+              <div class="result-detail">Games Play 3 missed — 80% ML accuracy</div>
+            </div>
+            <div class="result-card">
+              <div class="result-value">+73.6%</div>
+              <div class="result-label">ELITE ROI at -110</div>
+              <div class="result-detail">Best-in-class profitability</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 4 — Why It Captures Games Play 3 Misses</h3>
+          <ul class="factor-list">
+            <li><strong>Away favorites:</strong> Play 3 requires home court. CDS identifies dominant road teams (OKC, CLE, BOS) when the quality gap is extreme enough.</li>
+            <li><strong>Defense-first teams:</strong> Play 3 requires 118+ offensive rating. CDS gives credit for elite defense (e.g., OKC with 102-108 defensive rating).</li>
+            <li><strong>Consistency gap:</strong> When a 70%+ win team faces a 20% win team, the outcome is predictable even without extreme offensive stats.</li>
+            <li><strong>Dual-edge bonus:</strong> Teams elite on BOTH offense AND defense get extra credit — the compounding effect of two-way dominance.</li>
+          </ul>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 4 — Confidence Tiers</h3>
+          <ol>
+            <li><strong>ELITE (CDS &ge; 11):</strong> 90.9% ML accuracy, 10% Kelly sizing — convergent dominance across 4+ dimensions</li>
+            <li><strong>HIGH (CDS &ge; 9):</strong> 78.6% ML accuracy, 8% Kelly sizing — strong multi-dimensional dominance</li>
+            <li><strong>STRONG (CDS &ge; 8):</strong> 80.0% ML accuracy, 6% Kelly sizing — significant dominance convergence</li>
           </ol>
         </div>
 
@@ -287,8 +307,9 @@
           <ol>
             <li>Check this page before games start (updated daily)</li>
             <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
-            <li><strong>Bet 1 — Spread:</strong> Bet the recommended team's spread at -110 (Kelly: 8% for HIGH, 6% for STRONG)</li>
-            <li><strong>Bet 2 — Team Total Over:</strong> Find the team's individual total and bet OVER at -110 (Kelly: 4%)</li>
+            <li><strong>Play 3:</strong> Bet the recommended team's spread at -110 (Kelly: 8% for HIGH, 6% for STRONG)</li>
+            <li><strong>Play 4:</strong> Bet the CDS-flagged team's spread at -110 (Kelly: 10% ELITE, 8% HIGH, 6% STRONG)</li>
+            <li>When both models flag the same game, use the higher Kelly sizing</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
@@ -296,11 +317,11 @@
         <div class="how-section">
           <h3>Important Notes</h3>
           <ul class="notes-list">
-            <li>This model has ~83% ML accuracy — the favorite <em>wins</em> 83% of the time</li>
+            <li>Play 3 has ~83% ML accuracy — the favorite <em>wins</em> 83% of the time</li>
+            <li>Play 4 ELITE has ~91% ML accuracy on a smaller sample (11 games)</li>
             <li>Spread coverage is lower (~70-75%) because spreads are set near the expected margin</li>
             <li>Even at 70% spread coverage, ROI is +27% at -110 — highly profitable</li>
-            <li>Average of 4-6 qualifying picks per month — be patient, only bet when model fires</li>
-            <li>In-game DIAMOND/PLATINUM ML signals remain available in the backend for live game monitoring</li>
+            <li>Combined: ~8-11 qualifying picks per month between both models</li>
           </ul>
         </div>
       </div>

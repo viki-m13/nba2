@@ -1,5 +1,5 @@
 // =============================================================================
-// MAIN APP CONTROLLER — NBA Dominance System (Play 1 + Play 3)
+// MAIN APP CONTROLLER — NBA Dominance System (Play 3 ADI + Play 4 CDS)
 // =============================================================================
 
 (function () {
@@ -9,9 +9,9 @@
   let currentView = 'picks';
   let todayGames = [];          // All games today
   let todayPicks = [];          // Games flagged by ADI model (Play 3: spread)
-  let diamondPicks = [];        // Live DIAMOND ML signals (Play 1)
+  let todayCdsPicks = [];       // Games flagged by CDS model (Play 4: spread)
   let historyPicks = [];        // Historical Play 3 picks with results
-  let diamondHistory = [];      // Historical Play 1 DIAMOND signals
+  let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 'all';
@@ -48,10 +48,171 @@
     return map[abbr] || abbr;
   }
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // CONVERGENT DOMINANCE SCORE (CDS) — PLAY 4 MODEL
+  // ══════════════════════════════════════════════════════════════════════════
+
+  const CDSModel = {
+    LOOKBACK: 15,
+    teamHistory: {},
+
+    reset() {
+      this.teamHistory = {};
+    },
+
+    updateTeam(team, pointsFor, pointsAgainst, date) {
+      if (!this.teamHistory[team]) this.teamHistory[team] = [];
+      this.teamHistory[team].push({
+        pf: pointsFor,
+        pa: pointsAgainst,
+        margin: pointsFor - pointsAgainst,
+        date: date,
+      });
+      if (this.teamHistory[team].length > this.LOOKBACK * 2) {
+        this.teamHistory[team] = this.teamHistory[team].slice(-this.LOOKBACK);
+      }
+    },
+
+    getMetrics(team) {
+      const history = (this.teamHistory[team] || []).slice(-this.LOOKBACK);
+      if (history.length < 8) return null;
+      const pf = history.map(g => g.pf);
+      const pa = history.map(g => g.pa);
+      const margins = history.map(g => g.margin);
+      const avgMargin = margins.reduce((a, b) => a + b, 0) / margins.length;
+      return {
+        offRating: pf.reduce((a, b) => a + b, 0) / pf.length,
+        defRating: pa.reduce((a, b) => a + b, 0) / pa.length,
+        netRating: avgMargin,
+        winPct: margins.filter(m => m > 0).length / margins.length,
+        games: history.length,
+      };
+    },
+
+    computeCDS(favM, dogM, favIsHome) {
+      let score = 0;
+      const dims = {};
+
+      // D1: Net Rating Gap
+      const ng = Math.abs(favM.netRating - dogM.netRating);
+      let d1 = 0;
+      if (ng >= 14) d1 = 3.0;
+      else if (ng >= 10) d1 = 2.0 + (ng - 10) / 4.0;
+      else if (ng >= 7) d1 = 1.0 + (ng - 7) / 3.0;
+      else if (ng >= 4) d1 = (ng - 4) / 3.0;
+      dims.net_gap = +d1.toFixed(2);
+      score += d1;
+
+      // D2: Offensive Firepower
+      const fo = favM.offRating;
+      let d2 = 0;
+      if (fo >= 122) d2 = 3.0;
+      else if (fo >= 118) d2 = 2.0 + (fo - 118) / 4.0;
+      else if (fo >= 115) d2 = 1.0 + (fo - 115) / 3.0;
+      else if (fo >= 112) d2 = (fo - 112) / 3.0;
+      dims.offense = +d2.toFixed(2);
+      score += d2;
+
+      // D3: Defensive Cage
+      const cage = favM.defRating - dogM.offRating;
+      let d3 = 0;
+      if (cage <= -6) d3 = 3.0;
+      else if (cage <= -3) d3 = 2.0 + (-3 - cage) / 3.0;
+      else if (cage <= 0) d3 = 1.0 + (0 - cage) / 3.0;
+      else if (cage <= 3) d3 = (3 - cage) / 3.0;
+      dims.defense = +d3.toFixed(2);
+      score += d3;
+
+      // D4: Win Consistency Gap
+      const wpg = Math.abs(favM.winPct - dogM.winPct);
+      let d4 = 0;
+      if (wpg >= 0.5) d4 = 3.0;
+      else if (wpg >= 0.4) d4 = 2.0 + (wpg - 0.4) / 0.1;
+      else if (wpg >= 0.3) d4 = 1.0 + (wpg - 0.3) / 0.1;
+      else if (wpg >= 0.2) d4 = (wpg - 0.2) / 0.1;
+      dims.consistency = +d4.toFixed(2);
+      score += d4;
+
+      // D5: Home Court
+      const d5 = favIsHome ? 1.5 : 0;
+      dims.home = d5;
+      score += d5;
+
+      // D6: Dual-Edge Bonus
+      let d6 = 0;
+      if (favM.offRating >= 115 && favM.defRating <= 110) d6 = 1.5;
+      else if (favM.offRating >= 112 && favM.defRating <= 108) d6 = 1.0;
+      dims.dual_edge = d6;
+      score += d6;
+
+      // D7: Opponent Weakness Amplifier
+      let d7 = 0;
+      if (dogM.offRating <= 110 && dogM.defRating >= 114) d7 = 1.0;
+      else if (dogM.offRating <= 112 && dogM.defRating >= 112) d7 = 0.5;
+      dims.opp_weakness = d7;
+      score += d7;
+
+      return { score: +score.toFixed(1), dimensions: dims };
+    },
+
+    predictGame(homeTeam, awayTeam) {
+      const homeM = this.getMetrics(homeTeam);
+      const awayM = this.getMetrics(awayTeam);
+      if (!homeM || !awayM) return null;
+
+      const HOME_ADV = 3.5;
+      const netDiff = homeM.netRating - awayM.netRating;
+      const predictedMargin = netDiff + HOME_ADV;
+
+      let fav, dog, favM, dogM, favIsHome;
+      if (predictedMargin > 0) {
+        fav = homeTeam; dog = awayTeam; favM = homeM; dogM = awayM; favIsHome = true;
+      } else {
+        fav = awayTeam; dog = homeTeam; favM = awayM; dogM = homeM; favIsHome = false;
+      }
+
+      const { score, dimensions } = this.computeCDS(favM, dogM, favIsHome);
+
+      // Determine tier
+      let tier = null, kelly = 0;
+      if (score >= 11) { tier = 'ELITE'; kelly = 0.10; }
+      else if (score >= 9) { tier = 'HIGH'; kelly = 0.08; }
+      else if (score >= 8) { tier = 'STRONG'; kelly = 0.06; }
+
+      if (!tier) return null;
+
+      // Top pathway
+      const topDim = Object.entries(dimensions).sort((a, b) => b[1] - a[1])[0];
+      const pathway = topDim ? topDim[0] : 'none';
+
+      // Check if Play 3 would also flag this game
+      const netGap = Math.abs(netDiff);
+      const play3Also = netGap >= 10 && favM.offRating >= 118 && favIsHome;
+
+      return {
+        favorite: fav,
+        underdog: dog,
+        favIsHome,
+        predictedMargin: +Math.abs(predictedMargin).toFixed(1),
+        cdsScore: score,
+        tier,
+        dimensions,
+        pathway,
+        netGap: +netGap.toFixed(1),
+        favOffRating: +favM.offRating.toFixed(1),
+        favDefRating: +favM.defRating.toFixed(1),
+        winPctGap: +Math.abs(favM.winPct - dogM.winPct).toFixed(2),
+        kellyFraction: kelly,
+        play3Also,
+        isIncremental: !play3Also,
+      };
+    },
+  };
+
   // ── Initialization ─────────────────────────────────────────────────────────
 
   async function init() {
-    console.log('[ADI] Initializing...');
+    console.log('[APP] Initializing...');
     setupNavigation();
     setupHistoryFilters();
     setStatus('loading', 'Loading model data...');
@@ -61,35 +222,28 @@
       const probe = await fetch('/api/nba?endpoint=espn_scoreboard', { method: 'HEAD' });
       useProxy = probe.ok || probe.status === 405 || probe.status === 200;
     } catch (e) { useProxy = false; }
-    console.log('[ADI] Proxy available:', useProxy);
+    console.log('[APP] Proxy available:', useProxy);
 
     try {
-      // Step 1: Load season data to train the ADI model
       await loadSeasonData();
-
-      // Step 2: Fetch today's games
       await fetchTodayGames();
-
-      // Step 3: Run ADI predictions on today's games
       runPredictions();
-
-      // Step 4: Build history from season data
+      runCDSPredictions();
       buildHistory();
-
-      // Step 5: Render everything
+      buildCDSHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
       updateMetrics();
 
-      setStatus('online', 'Model Active');
+      setStatus('online', 'Models Active');
       modelReady = true;
 
       // Poll for live score updates every 30s
       setInterval(refreshScores, 30000);
 
     } catch (err) {
-      console.error('[ADI] Init error:', err);
+      console.error('[APP] Init error:', err);
       setStatus('error', 'Failed to load');
     }
   }
@@ -97,20 +251,19 @@
   // ── Data Loading ───────────────────────────────────────────────────────────
 
   async function loadSeasonData() {
-    console.log('[ADI] Loading season data...');
+    console.log('[APP] Loading season data...');
 
-    // Try to load the pre-built season file
     try {
       const resp = await fetch('data/espn_full_season_2025.json');
       if (resp.ok) {
         seasonData = await resp.json();
-        console.log(`[ADI] Loaded ${seasonData.length} games from season file`);
+        console.log(`[APP] Loaded ${seasonData.length} games from season file`);
       }
     } catch (e) {
-      console.warn('[ADI] Could not load season file, will fetch from ESPN');
+      console.warn('[APP] Could not load season file, will fetch from ESPN');
     }
 
-    // Also fetch recent games from ESPN to fill gaps
+    // Fetch recent games from ESPN to fill gaps
     const recentDates = getRecentDates(30);
     let fetched = 0;
     const existingDates = new Set(seasonData.map(g => g.date));
@@ -125,62 +278,23 @@
           }
         }
         fetched++;
-        if (fetched % 5 === 0) {
-          console.log(`[ADI] Fetched ${fetched} recent dates...`);
-        }
+        if (fetched % 5 === 0) console.log(`[APP] Fetched ${fetched} recent dates...`);
         await sleep(300);
       } catch (e) { /* skip failed dates */ }
     }
 
-    // Feed all data into the PreGameModel
+    // Feed all data into both models
     seasonData.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
     Model.reset();
+    CDSModel.reset();
     for (const g of seasonData) {
       Model.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       Model.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
+      CDSModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
+      CDSModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
     }
 
-    console.log(`[ADI] Model trained on ${seasonData.length} games, ${Object.keys(Model.teamHistory).length} teams`);
-
-    // Load DIAMOND historical validation data
-    await loadDiamondHistory();
-  }
-
-  async function loadDiamondHistory() {
-    try {
-      const resp = await fetch('data/diamond_history.json');
-      if (!resp.ok) return;
-      const games = await resp.json();
-
-      diamondHistory = games.map(d => {
-        const leader = d.side === 'home' ? d.home_team : d.away_team;
-        const trailer = d.side === 'home' ? d.away_team : d.home_team;
-        // Estimate ML odds from lead: -lead * 70 (minimum -300)
-        const estOdds = -Math.max(300, d.actual_lead * 70);
-        const mlPayout = d.ml_won ? Math.round(100 * (100 / Math.abs(estOdds))) : -100;
-        return {
-          date: d.date,
-          play: 'DIAMOND_ML',
-          team: leader,
-          opponent: trailer,
-          isHome: d.side === 'home',
-          lead: d.actual_lead,
-          momentum: d.actual_mom,
-          minsRemaining: d.mins_remaining,
-          window: d.window,
-          mlWon: d.ml_won,
-          homeScore: d.final_home,
-          awayScore: d.final_away,
-          estOdds,
-          pnl: mlPayout,
-        };
-      });
-
-      diamondHistory.sort((a, b) => a.date.localeCompare(b.date));
-      console.log(`[DIAMOND] Loaded ${diamondHistory.length} historical signals (${diamondHistory.filter(d => d.mlWon).length}/${diamondHistory.length} ML wins)`);
-    } catch (e) {
-      console.warn('[DIAMOND] Could not load validation data:', e);
-    }
+    console.log(`[APP] Models trained on ${seasonData.length} games, ${Object.keys(Model.teamHistory).length} teams`);
   }
 
   async function fetchESPNGamesForDate(dateStr) {
@@ -214,7 +328,7 @@
   }
 
   async function fetchTodayGames() {
-    console.log('[ADI] Fetching today\'s games...');
+    console.log('[APP] Fetching today\'s games...');
     const url = useProxy
       ? '/api/nba?endpoint=espn_scoreboard'
       : 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
@@ -254,13 +368,13 @@
         });
       }
 
-      console.log(`[ADI] Found ${todayGames.length} games today`);
+      console.log(`[APP] Found ${todayGames.length} games today`);
     } catch (e) {
-      console.error('[ADI] Error fetching today:', e);
+      console.error('[APP] Error fetching today:', e);
     }
   }
 
-  // ── ADI Predictions ────────────────────────────────────────────────────────
+  // ── ADI Predictions (Play 3) ─────────────────────────────────────────────
 
   function runPredictions() {
     todayPicks = [];
@@ -281,12 +395,10 @@
           dogDefRating: pred.dogDefRating,
           bps: pred.bps,
           kellyFraction: pred.betRecommendation.kellyFraction,
-          teamTotalBet: pred.teamTotalBet || null,
         });
       }
     }
 
-    // Sort: HIGH first, then STRONG, then by predicted margin
     const confOrder = { HIGH: 0, STRONG: 1, MODERATE: 2 };
     todayPicks.sort((a, b) => {
       const co = (confOrder[a.confidence] || 9) - (confOrder[b.confidence] || 9);
@@ -297,13 +409,50 @@
     console.log(`[ADI] ${todayPicks.length} picks from ${todayGames.length} games`);
   }
 
-  // ── History Builder ────────────────────────────────────────────────────────
+  // ── CDS Predictions (Play 4) ─────────────────────────────────────────────
+
+  function runCDSPredictions() {
+    todayCdsPicks = [];
+
+    for (const game of todayGames) {
+      const pred = CDSModel.predictGame(game.home_team, game.away_team);
+      if (pred) {
+        todayCdsPicks.push({
+          game,
+          prediction: pred,
+          betTeam: pred.favorite,
+          isHome: pred.favIsHome,
+          predictedMargin: pred.predictedMargin,
+          cdsScore: pred.cdsScore,
+          tier: pred.tier,
+          pathway: pred.pathway,
+          dimensions: pred.dimensions,
+          netGap: pred.netGap,
+          favOffRating: pred.favOffRating,
+          favDefRating: pred.favDefRating,
+          winPctGap: pred.winPctGap,
+          kellyFraction: pred.kellyFraction,
+          play3Also: pred.play3Also,
+          isIncremental: pred.isIncremental,
+        });
+      }
+    }
+
+    // Sort: ELITE first, then HIGH, then STRONG, then by CDS score
+    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
+    todayCdsPicks.sort((a, b) => {
+      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
+      if (to !== 0) return to;
+      return b.cdsScore - a.cdsScore;
+    });
+
+    console.log(`[CDS] ${todayCdsPicks.length} picks from ${todayGames.length} games`);
+  }
+
+  // ── History Builders ─────────────────────────────────────────────────────
 
   function buildHistory() {
-    // Walk through season data chronologically and simulate the model's picks
     historyPicks = [];
-
-    // Create an independent model instance for walk-forward history
     const tempModel = {
       teamHistory: {},
       lookbackWindow: 15,
@@ -315,17 +464,12 @@
     const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
 
     for (const game of sorted) {
-      // Predict BEFORE updating
       const pred = tempModel.predictGame(game.home_team, game.away_team);
 
       if (pred && pred.signals && pred.signals.length > 0) {
         const actualMargin = game.home_score - game.away_score;
         const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
         const actualMarginAbs = Math.abs(actualMargin);
-
-        const favScore = pred.favIsHome ? game.home_score : game.away_score;
-        const teamTotalSignal = pred.teamTotalBet;
-        const teamTotalHit = teamTotalSignal ? favScore > teamTotalSignal.line : null;
 
         historyPicks.push({
           date: game.date,
@@ -338,15 +482,10 @@
           favWon,
           homeScore: game.home_score,
           awayScore: game.away_score,
-          favScore,
-          teamTotalLine: teamTotalSignal ? teamTotalSignal.line : null,
-          teamTotalHit,
-          pnl: favWon ? 91 : -100, // at -110 odds: win $91 or lose $100
-          teamTotalPnl: teamTotalHit === true ? 91 : teamTotalHit === false ? -100 : 0,
+          pnl: favWon ? 91 : -100,
         });
       }
 
-      // Update AFTER prediction
       tempModel.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
       tempModel.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
     }
@@ -354,117 +493,98 @@
     console.log(`[ADI] Built history: ${historyPicks.length} picks`);
   }
 
+  function buildCDSHistory() {
+    cdsHistoryPicks = [];
+
+    // Create independent CDS model for walk-forward
+    const tempCDS = {
+      teamHistory: {},
+      LOOKBACK: 15,
+      updateTeam: CDSModel.updateTeam.bind({ teamHistory: {}, LOOKBACK: 15 }),
+      getMetrics: CDSModel.getMetrics,
+      computeCDS: CDSModel.computeCDS,
+      predictGame: CDSModel.predictGame,
+    };
+    // Need to properly bind
+    const cds = Object.create(CDSModel);
+    cds.teamHistory = {};
+
+    const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    for (const game of sorted) {
+      const pred = cds.predictGame(game.home_team, game.away_team);
+
+      if (pred && pred.isIncremental) {
+        // Only show incremental picks (ones Play 3 misses)
+        const actualMargin = game.home_score - game.away_score;
+        const favWon = (pred.favIsHome && actualMargin > 0) || (!pred.favIsHome && actualMargin < 0);
+
+        cdsHistoryPicks.push({
+          date: game.date,
+          favorite: pred.favorite,
+          underdog: pred.underdog,
+          favIsHome: pred.favIsHome,
+          cdsScore: pred.cdsScore,
+          tier: pred.tier,
+          pathway: pred.pathway,
+          dimensions: pred.dimensions,
+          predictedMargin: pred.predictedMargin,
+          actualMargin: Math.abs(actualMargin),
+          favWon,
+          pnl: favWon ? 91 : -100,
+        });
+      }
+
+      cds.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      cds.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+    }
+
+    console.log(`[CDS] Built history: ${cdsHistoryPicks.length} incremental picks`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
     const loading = document.getElementById('picks-loading');
     const container = document.getElementById('picks-container');
+    const cdsContainer = document.getElementById('cds-container');
     const empty = document.getElementById('picks-empty');
     const allSection = document.getElementById('all-games-section');
-    const diamondContainer = document.getElementById('diamond-container');
 
     loading.style.display = 'none';
 
-    // Render DIAMOND ML live signals (Play 1)
-    if (diamondContainer) {
-      if (diamondPicks.length > 0) {
-        diamondContainer.style.display = '';
-        diamondContainer.innerHTML = diamondPicks.map(renderDiamondCard).join('');
-      } else {
-        diamondContainer.style.display = 'none';
-      }
-    }
+    const hasPicks = todayPicks.length > 0 || todayCdsPicks.length > 0;
 
-    // Render pre-game spread picks (Play 3)
-    if (todayPicks.length === 0 && diamondPicks.length === 0) {
+    if (!hasPicks) {
       container.style.display = 'none';
+      if (cdsContainer) cdsContainer.style.display = 'none';
       empty.style.display = 'block';
     } else {
       empty.style.display = 'none';
+
+      // Play 3 picks
       if (todayPicks.length > 0) {
         container.style.display = '';
-        container.innerHTML = todayPicks.map(renderPickCard).join('');
+        container.innerHTML = '<h3 class="section-title">Play 3 — ADI Spread Picks</h3>' +
+          '<div class="picks-grid">' + todayPicks.map(renderPickCard).join('') + '</div>';
       } else {
         container.style.display = 'none';
+      }
+
+      // Play 4 CDS picks (only show incremental ones that Play 3 misses)
+      if (cdsContainer && todayCdsPicks.length > 0) {
+        // Filter to show all CDS picks, but mark incremental ones
+        cdsContainer.style.display = '';
+        cdsContainer.innerHTML = '<h3 class="section-title">Play 4 — CDS Spread Picks</h3>' +
+          '<div class="picks-grid">' + todayCdsPicks.map(renderCDSCard).join('') + '</div>';
+      } else if (cdsContainer) {
+        cdsContainer.style.display = 'none';
       }
     }
 
     if (todayGames.length > 0) {
       allSection.style.display = '';
     }
-  }
-
-  function renderDiamondCard(pick) {
-    const g = pick.game;
-    const teamFull = teamName(pick.team);
-    const oppFull = teamName(pick.opponent);
-    const homeAway = pick.isHome ? 'Home' : 'Away';
-
-    // Live score
-    const teamScore = pick.isHome ? g.home_score : g.away_score;
-    const oppScore = pick.isHome ? g.away_score : g.home_score;
-
-    let statusHtml;
-    if (g.status === 'STATUS_FINAL') {
-      const won = teamScore > oppScore;
-      statusHtml = `
-        <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
-          <span class="live-label">FINAL</span>
-          <span class="live-score">${pick.team} ${teamScore} — ${pick.opponent} ${oppScore}</span>
-          <span class="live-result">${won ? 'W' : 'L'}</span>
-        </div>`;
-    } else {
-      statusHtml = `
-        <div class="pick-live live-active">
-          <span class="live-label">LIVE Q${g.period} ${g.clock}</span>
-          <span class="live-score">${pick.team} ${teamScore} — ${pick.opponent} ${oppScore}</span>
-          <span class="live-track">SIGNAL ACTIVE</span>
-        </div>`;
-    }
-
-    return `
-      <div class="pick-card conf-diamond">
-        <div class="pick-header">
-          <span class="pick-verdict diamond-verdict">PLAY 1</span>
-          <span class="pick-conf diamond-conf">DIAMOND ML</span>
-        </div>
-        <div class="pick-bet-line diamond-bet">
-          ${pick.team} Moneyline (${pick.estOdds})
-        </div>
-        <div class="pick-matchup">
-          ${teamFull} vs ${oppFull}
-        </div>
-        <div class="pick-details">
-          <div class="detail">
-            <span class="detail-label">Side</span>
-            <span class="detail-value">${homeAway}</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Lead</span>
-            <span class="detail-value diamond-value">${pick.lead}</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Momentum</span>
-            <span class="detail-value diamond-value">+${pick.momentum}</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Time Left</span>
-            <span class="detail-value">${pick.minsRemaining}min</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Win Prob</span>
-            <span class="detail-value diamond-value">${(pick.winProbability * 100).toFixed(1)}%</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Kelly</span>
-            <span class="detail-value">${(pick.kellyFraction * 100).toFixed(0)}%</span>
-          </div>
-        </div>
-        <div class="diamond-accuracy">
-          100% ML accuracy — 37/37 games validated. Bet ML at heavy juice, add to parlay.
-        </div>
-        ${statusHtml}
-      </div>`;
   }
 
   function renderPickCard(pick) {
@@ -478,7 +598,6 @@
     const oppFull = teamName(oppTeam);
     const homeAway = pick.isHome ? 'Home' : 'Away';
 
-    // Live score display
     let liveHtml = '';
     if (g.status === 'STATUS_FINAL') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
@@ -493,12 +612,10 @@
     } else if (g.status === 'STATUS_IN_PROGRESS' || g.status === 'STATUS_HALFTIME') {
       const favScore = pick.isHome ? g.home_score : g.away_score;
       const oppScore = pick.isHome ? g.away_score : g.home_score;
-      const ahead = favScore > oppScore;
       liveHtml = `
         <div class="pick-live live-active">
           <span class="live-label">LIVE Q${g.period} ${g.clock}</span>
           <span class="live-score">${pick.betTeam} ${favScore} — ${oppTeam} ${oppScore}</span>
-          <span class="live-track">${ahead ? 'On Track' : 'Behind'}</span>
         </div>`;
     } else {
       liveHtml = `
@@ -508,33 +625,10 @@
         </div>`;
     }
 
-    // Team Total Over bet section
-    let teamTotalHtml = '';
-    if (pick.teamTotalBet) {
-      teamTotalHtml = `
-        <div class="pick-team-total">
-          <div class="team-total-header">
-            <span class="team-total-badge">BET 2</span>
-            <span class="team-total-label">TEAM TOTAL</span>
-          </div>
-          <div class="team-total-line">
-            ${pick.betTeam} Team Total OVER ${pick.teamTotalBet.line}
-          </div>
-          <div class="team-total-stats">
-            <span class="tt-stat"><strong>97.6%</strong> hit rate at 110+</span>
-            <span class="tt-stat"><strong>88.1%</strong> hit rate at 115+</span>
-            <span class="tt-stat">Avg score: <strong>125</strong></span>
-          </div>
-          <div class="team-total-note">
-            Find "${pick.betTeam} Team Total" on your sportsbook &mdash; bet OVER at -110
-          </div>
-        </div>`;
-    }
-
     return `
       <div class="pick-card ${confClass}">
         <div class="pick-header">
-          <span class="pick-verdict">BET</span>
+          <span class="pick-verdict">PLAY 3</span>
           <span class="pick-conf">${confLabel}</span>
         </div>
         <div class="pick-bet-line">
@@ -565,7 +659,101 @@
             <span class="detail-value">${(pick.kellyFraction * 100).toFixed(0)}%</span>
           </div>
         </div>
-        ${teamTotalHtml}
+        ${liveHtml}
+      </div>`;
+  }
+
+  function renderCDSCard(pick) {
+    const g = pick.game;
+    const tierClass = pick.tier === 'ELITE' ? 'conf-diamond' : pick.tier === 'HIGH' ? 'conf-high' : 'conf-strong';
+    const tierLabel = pick.tier === 'ELITE' ? 'ELITE' : pick.tier === 'HIGH' ? 'HIGH' : 'STRONG';
+
+    const favFull = teamName(pick.betTeam);
+    const oppTeam = pick.isHome ? g.away_team : g.home_team;
+    const oppFull = teamName(oppTeam);
+    const homeAway = pick.isHome ? 'Home' : 'Away';
+
+    const PATHWAY_LABELS = {
+      net_gap: 'Net Rating Gap',
+      offense: 'Offensive Firepower',
+      defense: 'Defensive Cage',
+      consistency: 'Win Consistency',
+      home: 'Home Court',
+      dual_edge: 'Two-Way Dominance',
+      opp_weakness: 'Opponent Weakness',
+    };
+    const pathwayLabel = PATHWAY_LABELS[pick.pathway] || pick.pathway;
+
+    const incrementalBadge = pick.isIncremental
+      ? '<span class="pick-incremental">INCREMENTAL — Play 3 misses this game</span>'
+      : '<span class="pick-overlap">Also flagged by Play 3</span>';
+
+    let liveHtml = '';
+    if (g.status === 'STATUS_FINAL') {
+      const favScore = pick.isHome ? g.home_score : g.away_score;
+      const oppScore = pick.isHome ? g.away_score : g.home_score;
+      const won = favScore > oppScore;
+      liveHtml = `
+        <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+          <span class="live-label">FINAL</span>
+          <span class="live-score">${pick.betTeam} ${favScore} — ${oppTeam} ${oppScore}</span>
+          <span class="live-result">${won ? 'W' : 'L'}</span>
+        </div>`;
+    } else if (g.status === 'STATUS_IN_PROGRESS' || g.status === 'STATUS_HALFTIME') {
+      const favScore = pick.isHome ? g.home_score : g.away_score;
+      const oppScore = pick.isHome ? g.away_score : g.home_score;
+      liveHtml = `
+        <div class="pick-live live-active">
+          <span class="live-label">LIVE Q${g.period} ${g.clock}</span>
+          <span class="live-score">${pick.betTeam} ${favScore} — ${oppTeam} ${oppScore}</span>
+        </div>`;
+    } else {
+      liveHtml = `
+        <div class="pick-live live-scheduled">
+          <span class="live-label">${g.time}</span>
+          <span class="live-status">Pre-Game — Bet Before Tip-Off</span>
+        </div>`;
+    }
+
+    return `
+      <div class="pick-card ${tierClass}">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 4</span>
+          <span class="pick-conf">${tierLabel} — CDS ${pick.cdsScore}</span>
+        </div>
+        <div class="pick-bet-line">
+          ${pick.betTeam} spread at -110
+        </div>
+        <div class="pick-matchup">
+          ${favFull} vs ${oppFull}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Side</span>
+            <span class="detail-value">${homeAway}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">CDS Score</span>
+            <span class="detail-value diamond-value">${pick.cdsScore}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Top Path</span>
+            <span class="detail-value">${pathwayLabel}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Net Gap</span>
+            <span class="detail-value">${pick.netGap}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Off/Def</span>
+            <span class="detail-value">${pick.favOffRating}/${pick.favDefRating}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Kelly</span>
+            <span class="detail-value">${(pick.kellyFraction * 100).toFixed(0)}%</span>
+          </div>
+        </div>
+        ${incrementalBadge}
         ${liveHtml}
       </div>`;
   }
@@ -577,8 +765,9 @@
     if (!grid || todayGames.length === 0) return;
 
     grid.innerHTML = todayGames.map(g => {
-      const isPick = todayPicks.some(p => p.game.id === g.id);
-      const pickClass = isPick ? 'game-picked' : '';
+      const isP3 = todayPicks.some(p => p.game.id === g.id);
+      const isP4 = todayCdsPicks.some(p => p.game.id === g.id);
+      const pickClass = (isP3 || isP4) ? 'game-picked' : '';
 
       let statusHtml;
       if (g.status === 'STATUS_FINAL') {
@@ -589,11 +778,16 @@
         statusHtml = `<span class="game-status scheduled">${g.time}</span>`;
       }
 
+      let badge = '';
+      if (isP3 && isP4) badge = '<span class="game-badge">P3 + P4</span>';
+      else if (isP3) badge = '<span class="game-badge">P3 PICK</span>';
+      else if (isP4) badge = '<span class="game-badge">P4 CDS</span>';
+
       return `
         <div class="game-card ${pickClass}">
           <div class="game-teams">${g.away_team} @ ${g.home_team}</div>
           ${statusHtml}
-          ${isPick ? '<span class="game-badge">ADI PICK</span>' : ''}
+          ${badge}
         </div>`;
     }).join('');
   }
@@ -602,25 +796,23 @@
 
   function renderHistory() {
     renderSpreadHistory();
-    renderDiamondHistory();
+    renderCDSHistory();
   }
 
   function renderSpreadHistory() {
     const tbody = document.getElementById('history-body');
     if (!tbody) return;
 
-    // Filter by period
     let filtered = historyPicks;
     if (currentHistoryPeriod !== 'all') {
       const cutoff = getCutoffDate(parseInt(currentHistoryPeriod));
       filtered = historyPicks.filter(p => p.date >= cutoff);
     }
 
-    // Reverse chronological
     filtered = [...filtered].reverse();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="muted">No picks in this period</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No picks in this period</td></tr>';
     } else {
       tbody.innerHTML = filtered.map(p => {
         const resClass = p.favWon ? 'result-win' : 'result-loss';
@@ -628,14 +820,6 @@
         const pnlText = p.favWon ? '+$91' : '-$100';
         const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
         const dateFormatted = formatDate(p.date);
-
-        // Team total column
-        let ttHtml = '<span class="muted">—</span>';
-        if (p.teamTotalLine !== null) {
-          const ttClass = p.teamTotalHit ? 'result-win' : 'result-loss';
-          const ttLabel = p.teamTotalHit ? 'OVER' : 'UNDER';
-          ttHtml = `<span class="badge ${ttClass}">${ttLabel}</span> <small>${p.favScore} / ${p.teamTotalLine}</small>`;
-        }
 
         return `
           <tr>
@@ -647,7 +831,6 @@
             <td>${p.actualMargin}</td>
             <td><span class="badge ${resClass}">${resText}</span></td>
             <td class="${resClass}">${pnlText}</td>
-            <td>${ttHtml}</td>
           </tr>`;
       }).join('');
     }
@@ -655,119 +838,113 @@
     renderHistorySummary(filtered);
   }
 
-  function renderDiamondHistory() {
-    const tbody = document.getElementById('diamond-history-body');
+  function renderCDSHistory() {
+    const tbody = document.getElementById('cds-history-body');
     if (!tbody) return;
 
-    // Always show all DIAMOND history (validation data from 2023-24 season)
-    const filtered = [...diamondHistory].reverse();
+    const filtered = [...cdsHistoryPicks].reverse();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="muted">No DIAMOND signals in this period</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No CDS picks found</td></tr>';
     } else {
-      tbody.innerHTML = filtered.map(d => {
-        const resClass = d.mlWon ? 'result-win' : 'result-loss';
-        const resText = d.mlWon ? 'W' : 'L';
-        const pnlText = d.pnl >= 0 ? '+$' + d.pnl : '-$' + Math.abs(d.pnl);
-        const dateFormatted = formatDate(d.date);
+      const PATHWAY_LABELS = {
+        net_gap: 'Net Gap',
+        offense: 'Offense',
+        defense: 'Defense',
+        consistency: 'Consistency',
+        home: 'Home',
+        dual_edge: 'Two-Way',
+        opp_weakness: 'Opp Weak',
+      };
+
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.favWon ? 'result-win' : 'result-loss';
+        const resText = p.favWon ? 'W' : 'L';
+        const pnlText = p.favWon ? '+$91' : '-$100';
+        const tierClass = p.tier === 'ELITE' ? 'conf-diamond' : p.tier === 'HIGH' ? 'conf-high' : 'conf-strong';
+        const dateFormatted = formatDate(p.date);
+        const pathwayLabel = PATHWAY_LABELS[p.pathway] || p.pathway;
 
         return `
           <tr>
             <td>${dateFormatted}</td>
-            <td><strong>${d.team}</strong> ML</td>
-            <td>${d.team} ${d.isHome ? 'vs' : '@'} ${d.opponent}</td>
-            <td><span class="badge conf-diamond">DIAMOND</span></td>
-            <td>${d.lead}</td>
-            <td>+${d.momentum}</td>
+            <td><strong>${p.favorite}</strong> spread</td>
+            <td>${p.favorite} ${p.favIsHome ? 'vs' : '@'} ${p.underdog}</td>
+            <td><strong>${p.cdsScore}</strong></td>
+            <td><span class="badge ${tierClass}">${p.tier}</span></td>
+            <td>${pathwayLabel}</td>
             <td><span class="badge ${resClass}">${resText}</span></td>
             <td class="${resClass}">${pnlText}</td>
           </tr>`;
       }).join('');
     }
 
-    // Diamond summary
-    renderDiamondSummary(filtered);
+    renderCDSSummary(filtered);
   }
 
   function renderHistorySummary(filtered) {
     const summary = document.getElementById('history-summary');
     if (!summary) return;
 
-    const spreadWins = filtered.filter(p => p.favWon).length;
-    const spreadTotal = filtered.length;
-    const spreadPnl = filtered.reduce((s, p) => s + p.pnl, 0);
-    const spreadAcc = spreadTotal > 0 ? ((spreadWins / spreadTotal) * 100).toFixed(1) : '0';
-
-    const ttPicks = filtered.filter(p => p.teamTotalLine !== null);
-    const ttHits = ttPicks.filter(p => p.teamTotalHit).length;
-    const ttTotal = ttPicks.length;
-    const ttPnl = ttPicks.reduce((s, p) => s + p.teamTotalPnl, 0);
-    const ttAcc = ttTotal > 0 ? ((ttHits / ttTotal) * 100).toFixed(1) : '—';
-
-    const combinedPnl = spreadPnl + ttPnl;
+    const wins = filtered.filter(p => p.favWon).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '0';
 
     summary.innerHTML = `
       <div class="summary-grid">
         <div class="summary-card">
-          <div class="summary-title">Spread Bets</div>
+          <div class="summary-title">Play 3 — Spread Bets</div>
           <div class="summary-stat">
-            <span class="summary-record">${spreadWins}-${spreadTotal - spreadWins}</span>
-            <span class="summary-pct">${spreadAcc}%</span>
+            <span class="summary-record">${wins}-${total - wins}</span>
+            <span class="summary-pct">${acc}%</span>
           </div>
-          <div class="summary-pnl ${spreadPnl >= 0 ? 'result-win' : 'result-loss'}">
-            ${spreadPnl >= 0 ? '+' : ''}$${spreadPnl}
-          </div>
-        </div>
-        <div class="summary-card summary-cyan">
-          <div class="summary-title">Team Total Over</div>
-          <div class="summary-stat">
-            <span class="summary-record">${ttTotal > 0 ? ttHits + '-' + (ttTotal - ttHits) : '—'}</span>
-            <span class="summary-pct">${ttAcc}${ttTotal > 0 ? '%' : ''}</span>
-          </div>
-          <div class="summary-pnl ${ttPnl >= 0 ? 'result-win' : 'result-loss'}">
-            ${ttTotal > 0 ? (ttPnl >= 0 ? '+' : '') + '$' + ttPnl : '—'}
-          </div>
-        </div>
-        <div class="summary-card summary-combined">
-          <div class="summary-title">Play 3 Combined</div>
-          <div class="summary-pnl-big ${combinedPnl >= 0 ? 'result-win' : 'result-loss'}">
-            ${combinedPnl >= 0 ? '+' : ''}$${combinedPnl}
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl}
           </div>
         </div>
       </div>`;
   }
 
-  function renderDiamondSummary(filtered) {
-    const summary = document.getElementById('diamond-history-summary');
+  function renderCDSSummary(filtered) {
+    const summary = document.getElementById('cds-history-summary');
     if (!summary) return;
 
-    const dWins = filtered.filter(d => d.mlWon).length;
-    const dTotal = filtered.length;
-    const dPnl = filtered.reduce((s, d) => s + d.pnl, 0);
-    const dAcc = dTotal > 0 ? ((dWins / dTotal) * 100).toFixed(1) : '—';
+    const wins = filtered.filter(p => p.favWon).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const acc = total > 0 ? ((wins / total) * 100).toFixed(1) : '—';
+
+    const eliteGames = filtered.filter(p => p.tier === 'ELITE');
+    const eliteWins = eliteGames.filter(p => p.favWon).length;
+    const eliteAcc = eliteGames.length > 0 ? ((eliteWins / eliteGames.length) * 100).toFixed(1) : '—';
 
     summary.innerHTML = `
       <div class="summary-grid">
-        <div class="summary-card summary-diamond">
-          <div class="summary-title">DIAMOND ML (Play 1)</div>
+        <div class="summary-card summary-cyan">
+          <div class="summary-title">Play 4 — CDS Incremental</div>
           <div class="summary-stat">
-            <span class="summary-record">${dWins}-${dTotal - dWins}</span>
-            <span class="summary-pct">${dAcc}%</span>
+            <span class="summary-record">${total > 0 ? wins + '-' + (total - wins) : '—'}</span>
+            <span class="summary-pct">${acc}${total > 0 ? '%' : ''}</span>
           </div>
-          <div class="summary-pnl ${dPnl >= 0 ? 'result-win' : 'result-loss'}">
-            ${dTotal > 0 ? (dPnl >= 0 ? '+' : '') + '$' + dPnl : '—'}
-          </div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-title">Avg ML Odds</div>
-          <div class="summary-pnl-big" style="color: var(--text-primary);">
-            ${dTotal > 0 ? Math.round(filtered.reduce((s, d) => s + d.estOdds, 0) / dTotal) : '—'}
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${total > 0 ? (pnl >= 0 ? '+' : '') + '$' + pnl : '—'}
           </div>
         </div>
-        <div class="summary-card">
-          <div class="summary-title">Avg Lead at Signal</div>
-          <div class="summary-pnl-big" style="color: var(--text-primary);">
-            ${dTotal > 0 ? (filtered.reduce((s, d) => s + d.lead, 0) / dTotal).toFixed(1) : '—'}
+        <div class="summary-card summary-diamond">
+          <div class="summary-title">ELITE Tier Only</div>
+          <div class="summary-stat">
+            <span class="summary-record">${eliteGames.length > 0 ? eliteWins + '-' + (eliteGames.length - eliteWins) : '—'}</span>
+            <span class="summary-pct">${eliteAcc}${eliteGames.length > 0 ? '%' : ''}</span>
+          </div>
+        </div>
+        <div class="summary-card summary-combined">
+          <div class="summary-title">Combined (P3 + P4)</div>
+          <div class="summary-pnl-big ${(pnl + historyPicks.reduce((s, p) => s + p.pnl, 0)) >= 0 ? 'result-win' : 'result-loss'}">
+            ${(() => {
+              const combinedPnl = pnl + historyPicks.reduce((s, p) => s + p.pnl, 0);
+              return (combinedPnl >= 0 ? '+' : '') + '$' + combinedPnl;
+            })()}
           </div>
         </div>
       </div>`;
@@ -778,107 +955,39 @@
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayPicks.length + diamondPicks.length;
+    el('metric-picks').textContent = todayPicks.length + todayCdsPicks.length;
     el('metric-games').textContent = todayGames.length;
 
     if (historyPicks.length > 0) {
-      // Spread ML accuracy (all picks)
       const wins = historyPicks.filter(p => p.favWon).length;
       const total = historyPicks.length;
       const accuracy = ((wins / total) * 100).toFixed(1);
       const totalPnl = historyPicks.reduce((s, p) => s + p.pnl, 0);
 
-      // Team total over accuracy (HIGH picks only — those with a team total bet)
-      const ttPicks = historyPicks.filter(p => p.teamTotalLine !== null);
-      const ttHits = ttPicks.filter(p => p.teamTotalHit).length;
-      const ttTotal = ttPicks.length;
-      const ttAccuracy = ttTotal > 0 ? ((ttHits / ttTotal) * 100).toFixed(1) : '—';
-      const ttPnl = ttPicks.reduce((s, p) => s + p.teamTotalPnl, 0);
-
-      // Combined ROI (spread + team total)
-      const combinedBets = total + ttTotal;
-      const combinedPnl = totalPnl + ttPnl;
-      const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
-
       el('metric-accuracy').textContent = accuracy + '%';
-      el('metric-tt-accuracy').textContent = ttTotal > 0 ? ttAccuracy + '%' : '—';
-      el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
       el('metric-record').textContent = `${wins}-${total - wins}`;
-    }
 
-    // DIAMOND ML accuracy
-    if (diamondHistory.length > 0) {
-      const dWins = diamondHistory.filter(d => d.mlWon).length;
-      const dTotal = diamondHistory.length;
-      const dAcc = ((dWins / dTotal) * 100).toFixed(1);
-      el('metric-diamond').textContent = dAcc + '%';
-    }
-  }
+      // CDS accuracy
+      if (cdsHistoryPicks.length > 0) {
+        const cdsWins = cdsHistoryPicks.filter(p => p.favWon).length;
+        const cdsTotal = cdsHistoryPicks.length;
+        const cdsAcc = ((cdsWins / cdsTotal) * 100).toFixed(1);
+        const cdsPnl = cdsHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+        el('metric-cds-accuracy').textContent = cdsAcc + '%';
 
-  // ── DIAMOND Live Detection ────────────────────────────────────────────────
+        // Combined ROI
+        const combinedBets = total + cdsTotal;
+        const combinedPnl = totalPnl + cdsPnl;
+        const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
+        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
 
-  async function evaluateLiveDiamonds() {
-    const liveGames = todayGames.filter(g =>
-      g.status === 'STATUS_IN_PROGRESS' || g.status === 'STATUS_HALFTIME'
-    );
-
-    if (liveGames.length === 0) return;
-
-    const Engine = window.ParlayEngine;
-
-    for (const game of liveGames) {
-      // Need play-by-play to evaluate — fetch from ESPN summary
-      try {
-        const summaryUrl = useProxy
-          ? `/api/nba?endpoint=espn_summary&eventId=${game.id}`
-          : `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${game.id}`;
-        const resp = await fetch(summaryUrl);
-        if (!resp.ok) continue;
-        const data = await resp.json();
-        const plays = data.plays || [];
-        if (plays.length === 0) continue;
-
-        // Build game states and evaluate for signals
-        const states = Engine.buildGameStates(plays, 'espn');
-        if (states.length === 0) continue;
-
-        // Evaluate the current (latest) state
-        const currentState = states[states.length - 1];
-        const signal = Engine.evaluateState(
-          currentState,
-          game.home_team, game.away_team, game.id
-        );
-
-        if (signal && signal.tier === 'DIAMOND') {
-          // Check if we already have this signal for this game
-          const existingIdx = diamondPicks.findIndex(p => p.gameId === game.id);
-          const pick = {
-            game,
-            gameId: game.id,
-            tier: 'DIAMOND',
-            team: signal.team,
-            opponent: signal.opponent,
-            isHome: signal.side === 'home',
-            lead: signal.lead,
-            momentum: signal.momentum,
-            minsRemaining: signal.minsRemaining,
-            window: signal.window,
-            winProbability: signal.winProbability,
-            dominanceScore: signal.dominanceScore,
-            estOdds: signal.estimatedMlOdds,
-            betInstruction: signal.betInstruction,
-            kellyFraction: signal.kellyFraction,
-          };
-
-          if (existingIdx >= 0) {
-            diamondPicks[existingIdx] = pick; // Update with latest state
-          } else {
-            diamondPicks.push(pick);
-            console.log(`[DIAMOND] SIGNAL FIRED: ${signal.team} ML | Lead=${signal.lead} Mom=${signal.momentum} | ${signal.minsRemaining}min remaining`);
-          }
-        }
-      } catch (e) {
-        // Skip failed games silently
+        // Combined record
+        const combinedWins = wins + cdsWins;
+        const combinedTotal = total + cdsTotal;
+        el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
+      } else {
+        const roi = total > 0 ? ((totalPnl / (total * 100)) * 100).toFixed(0) : '0';
+        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
       }
     }
   }
@@ -889,12 +998,11 @@
     if (!modelReady) return;
     try {
       await fetchTodayGames();
-      await evaluateLiveDiamonds();
       renderPicks();
       renderAllGames();
       updateMetrics();
     } catch (e) {
-      console.warn('[ADI] Score refresh failed:', e);
+      console.warn('[APP] Score refresh failed:', e);
     }
   }
 
