@@ -716,6 +716,62 @@ td.result-loss { color: var(--red); }
   color: #b9f2ff;
 }
 
+/* Play 5 Parlay styles */
+.pick-card.conf-parlay {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(135deg, #2a1f0a 0%, var(--bg-card) 100%);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.conf-parlay .pick-verdict {
+  background: #f59e0b;
+  color: #0a0e17;
+}
+
+.conf-parlay .pick-conf {
+  color: #f59e0b;
+}
+
+.conf-parlay .pick-bet-line {
+  color: #fbbf24;
+  font-size: 22px;
+}
+
+.parlay-legs {
+  padding: 8px 16px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parlay-leg {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.parlay-legs-cell {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.summary-card.summary-parlay {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.summary-parlay .summary-title {
+  color: #f59e0b;
+}
+
 .summary-stat {
   display: flex;
   justify-content: center;

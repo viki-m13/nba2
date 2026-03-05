@@ -74,6 +74,11 @@
         <!-- CDS pick cards injected here by JS -->
       </div>
 
+      <!-- Play 5: Daily Parlay -->
+      <div id="parlay-container" style="display:none;">
+        <!-- Parlay card injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
         <p><strong>Play 3 (ADI Moneyline):</strong> No games meeting HIGH or STRONG thresholds today.</p>
@@ -154,6 +159,35 @@
         </table>
       </div>
       <div id="cds-history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 5: Parlay History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 5 — Daily Parlay History</h2>
+      <p class="history-note">All-in parlay combining every Play 3 + Play 4 pick each day. $100 flat bet per parlay. Requires 2+ legs.</p>
+      <div class="filter-bar">
+        <button class="parlay-filter-btn" data-period="7">Last 7 Days</button>
+        <button class="parlay-filter-btn" data-period="14">Last 14 Days</button>
+        <button class="parlay-filter-btn" data-period="30">Last 30 Days</button>
+        <button class="parlay-filter-btn active" data-period="all">Full Season</button>
+      </div>
+      <div id="parlay-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Legs</th>
+              <th>Combined Odds</th>
+              <th>Potential Payout</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="parlay-history-body">
+            <tr><td colspan="7" class="muted">Loading parlay history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="parlay-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
