@@ -497,16 +497,7 @@
   function buildCDSHistory() {
     cdsHistoryPicks = [];
 
-    // Create independent CDS model for walk-forward
-    const tempCDS = {
-      teamHistory: {},
-      LOOKBACK: 15,
-      updateTeam: CDSModel.updateTeam.bind({ teamHistory: {}, LOOKBACK: 15 }),
-      getMetrics: CDSModel.getMetrics,
-      computeCDS: CDSModel.computeCDS,
-      predictGame: CDSModel.predictGame,
-    };
-    // Need to properly bind
+    // Independent CDS model instance for walk-forward backtesting
     const cds = Object.create(CDSModel);
     cds.teamHistory = {};
 
@@ -852,7 +843,7 @@
     const filtered = [...picks].reverse();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="muted">No CDS picks found</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" class="muted">No CDS picks found</td></tr>';
     } else {
       const PATHWAY_LABELS = {
         net_gap: 'Net Gap',
@@ -880,6 +871,8 @@
             <td><strong>${p.cdsScore}</strong></td>
             <td><span class="badge ${tierClass}">${p.tier}</span></td>
             <td>${pathwayLabel}</td>
+            <td>${p.predictedMargin.toFixed(1)}</td>
+            <td>${p.actualMargin}</td>
             <td><span class="badge ${resClass}">${resText}</span></td>
             <td class="${resClass}">${pnlText}</td>
           </tr>`;
