@@ -690,7 +690,7 @@
       if (pred) {
         const actualTotal = game.home_score + game.away_score;
         const isOver = pred.direction === 'OVER';
-        const hit = isOver ? actualTotal > PACTModel.LEAGUE_AVG_TOTAL : actualTotal < PACTModel.LEAGUE_AVG_TOTAL;
+        const hit = isOver ? actualTotal > pred.predTotal : actualTotal < pred.predTotal;
 
         pactHistoryPicks.push({
           date: game.date,
@@ -1051,7 +1051,7 @@
     if (g.status === 'STATUS_FINAL') {
       const actualTotal = g.home_score + g.away_score;
       const isOver = pick.direction === 'OVER';
-      const won = isOver ? actualTotal > PACTModel.LEAGUE_AVG_TOTAL : actualTotal < PACTModel.LEAGUE_AVG_TOTAL;
+      const won = isOver ? actualTotal > pick.predTotal : actualTotal < pick.predTotal;
       liveHtml = `
         <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
           <span class="live-label">FINAL</span>
