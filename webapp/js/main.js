@@ -12,10 +12,12 @@
   let todayCdsPicks = [];       // Games flagged by CDS model (Play 4: moneyline)
   let historyPicks = [];        // Historical Play 3 picks with results
   let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
+  let parlayHistory = [];        // Historical daily parlays with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 'all';
   let currentCdsHistoryPeriod = 'all';
+  let currentParlayHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const Model = window.ParlayEngine.PreGameModel;
@@ -67,6 +69,22 @@
   // e.g. -200 → $50 profit, -300 → $33.33 profit
   function moneylineProfit(odds) {
     return Math.round((100 / Math.abs(odds)) * 100);
+  }
+
+  // Convert American odds to decimal odds (e.g. -200 → 1.50, -300 → 1.333)
+  function americanToDecimal(odds) {
+    return 1 + (100 / Math.abs(odds));
+  }
+
+  // Calculate parlay decimal odds from array of American odds
+  function parlayDecimalOdds(oddsArray) {
+    return oddsArray.reduce((acc, odds) => acc * americanToDecimal(odds), 1);
+  }
+
+  // Calculate parlay payout on $100 bet (profit only, not including stake)
+  function parlayPayout(oddsArray) {
+    const decimal = parlayDecimalOdds(oddsArray);
+    return Math.round((decimal - 1) * 100);
   }
 
   // Normalize ESPN abbreviations to our format
@@ -258,6 +276,7 @@
       runCDSPredictions();
       buildHistory();
       buildCDSHistory();
+      buildParlayHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -568,6 +587,47 @@
     console.log(`[CDS] Built history: ${cdsHistoryPicks.length} incremental picks`);
   }
 
+  function buildParlayHistory() {
+    parlayHistory = [];
+
+    // Combine all history picks (Play 3 + Play 4) and group by date
+    const allPicks = [
+      ...historyPicks.map(p => ({ ...p, source: 'P3' })),
+      ...cdsHistoryPicks.map(p => ({ ...p, source: 'P4' })),
+    ];
+
+    const byDate = {};
+    for (const p of allPicks) {
+      if (!byDate[p.date]) byDate[p.date] = [];
+      byDate[p.date].push(p);
+    }
+
+    const dates = Object.keys(byDate).sort();
+    for (const date of dates) {
+      const legs = byDate[date];
+      if (legs.length < 2) continue; // Need 2+ legs for a parlay
+
+      const oddsArray = legs.map(l => l.mlOdds);
+      const allWon = legs.every(l => l.favWon);
+      const losses = legs.filter(l => !l.favWon).length;
+      const payout = parlayPayout(oddsArray);
+
+      parlayHistory.push({
+        date,
+        legs,
+        legCount: legs.length,
+        oddsArray,
+        parlayDecimal: parlayDecimalOdds(oddsArray),
+        payout,       // potential profit on $100
+        allWon,
+        losses,
+        pnl: allWon ? payout : -100,
+      });
+    }
+
+    console.log(`[PARLAY] Built history: ${parlayHistory.length} daily parlays`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -605,6 +665,16 @@
           '<div class="picks-grid">' + todayCdsPicks.map(renderCDSCard).join('') + '</div>';
       } else if (cdsContainer) {
         cdsContainer.style.display = 'none';
+      }
+
+      // Play 5 — Daily Parlay (all picks combined)
+      const parlayContainer = document.getElementById('parlay-container');
+      const allLegs = [...todayPicks, ...todayCdsPicks];
+      if (parlayContainer && allLegs.length >= 2) {
+        parlayContainer.style.display = '';
+        parlayContainer.innerHTML = renderTodayParlayCard(allLegs);
+      } else if (parlayContainer) {
+        parlayContainer.style.display = 'none';
       }
     }
 
@@ -788,6 +858,81 @@
       </div>`;
   }
 
+  function renderTodayParlayCard(allLegs) {
+    const oddsArray = allLegs.map(l => l.mlOdds);
+    const payout = parlayPayout(oddsArray);
+    const decimalOdds = parlayDecimalOdds(oddsArray);
+    const impliedProb = (1 / decimalOdds * 100).toFixed(1);
+
+    // Check live results
+    const finalLegs = allLegs.filter(l => l.game.status === 'STATUS_FINAL');
+    const bustedLegs = finalLegs.filter(l => {
+      const favScore = l.isHome ? l.game.home_score : l.game.away_score;
+      const oppScore = l.isHome ? l.game.away_score : l.game.home_score;
+      return favScore <= oppScore;
+    });
+    const allFinal = finalLegs.length === allLegs.length;
+    const busted = bustedLegs.length > 0;
+
+    let statusHtml = '';
+    if (allFinal && !busted) {
+      statusHtml = `<div class="pick-live live-win"><span class="live-label">FINAL</span><span class="live-result">PARLAY HITS! +$${payout}</span></div>`;
+    } else if (busted) {
+      const bustedNames = bustedLegs.map(l => l.betTeam).join(', ');
+      statusHtml = `<div class="pick-live live-loss"><span class="live-label">${allFinal ? 'FINAL' : 'BUSTED'}</span><span class="live-result">Lost on: ${bustedNames}</span></div>`;
+    } else if (finalLegs.length > 0) {
+      statusHtml = `<div class="pick-live live-active"><span class="live-label">LIVE</span><span class="live-result">${finalLegs.length}/${allLegs.length} legs hit so far</span></div>`;
+    } else {
+      statusHtml = `<div class="pick-live live-scheduled"><span class="live-label">PRE-GAME</span><span class="live-status">All legs must win</span></div>`;
+    }
+
+    const legsHtml = allLegs.map(l => {
+      const oppTeam = l.isHome ? l.game.away_team : l.game.home_team;
+      let legStatus = '';
+      if (l.game.status === 'STATUS_FINAL') {
+        const favScore = l.isHome ? l.game.home_score : l.game.away_score;
+        const oppScore = l.isHome ? l.game.away_score : l.game.home_score;
+        const won = favScore > oppScore;
+        legStatus = `<span class="badge ${won ? 'result-win' : 'result-loss'}">${won ? 'W' : 'L'}</span>`;
+      }
+      return `<div class="parlay-leg">${l.betTeam} ML (${l.mlOdds}) vs ${oppTeam} ${legStatus}</div>`;
+    }).join('');
+
+    return `
+      <h3 class="section-title">Play 5 — Daily Parlay</h3>
+      <div class="pick-card conf-parlay">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 5</span>
+          <span class="pick-conf">${allLegs.length}-LEG PARLAY</span>
+        </div>
+        <div class="pick-bet-line">
+          $100 to win $${payout}
+        </div>
+        <div class="parlay-legs">
+          ${legsHtml}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Legs</span>
+            <span class="detail-value">${allLegs.length}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Combined Odds</span>
+            <span class="detail-value">${decimalOdds.toFixed(2)}x</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Implied Prob</span>
+            <span class="detail-value">${impliedProb}%</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Payout</span>
+            <span class="detail-value">+$${payout}</span>
+          </div>
+        </div>
+        ${statusHtml}
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -827,6 +972,7 @@
   function renderHistory() {
     renderSpreadHistory();
     renderCDSHistory();
+    renderParlayHistory();
   }
 
   function renderSpreadHistory() {
@@ -988,6 +1134,83 @@
       </div>`;
   }
 
+  function renderParlayHistory() {
+    const tbody = document.getElementById('parlay-history-body');
+    if (!tbody) return;
+
+    let filtered = parlayHistory;
+    if (currentParlayHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentParlayHistoryPeriod));
+      filtered = parlayHistory.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="muted">No parlays in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.allWon ? 'result-win' : 'result-loss';
+        const resText = p.allWon ? 'HIT' : 'MISS';
+        const pnlText = p.allWon ? '+$' + p.payout : '-$100';
+        const dateFormatted = formatDate(p.date);
+        const legsDetail = p.legs.map(l => l.favorite + ' (' + l.mlOdds + ')').join(', ');
+        const lossDetail = p.allWon ? '' : ` — ${p.losses} leg${p.losses > 1 ? 's' : ''} lost`;
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td>${p.legCount}-leg</td>
+            <td class="parlay-legs-cell" title="${legsDetail}">${legsDetail}</td>
+            <td>${p.parlayDecimal.toFixed(2)}x</td>
+            <td>+$${p.payout}</td>
+            <td><span class="badge ${resClass}">${resText}</span>${lossDetail}</td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderParlaySummary(filtered);
+  }
+
+  function renderParlaySummary(filtered) {
+    const summary = document.getElementById('parlay-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.allWon).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+    const avgPayout = hits > 0 ? Math.round(filtered.filter(p => p.allWon).reduce((s, p) => s + p.payout, 0) / hits) : 0;
+    const avgLegs = total > 0 ? (filtered.reduce((s, p) => s + p.legCount, 0) / total).toFixed(1) : '0';
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-parlay">
+          <div class="summary-title">Play 5 — Daily Parlay</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}% hit rate</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Parlay Stats</div>
+          <div class="summary-stat">
+            <span class="summary-record">Avg ${avgLegs} legs</span>
+            <span class="summary-pct">Avg +$${avgPayout} payout</span>
+          </div>
+          <div class="summary-pnl ${roi >= 0 ? 'result-win' : 'result-loss'}">
+            ROI: ${roi >= 0 ? '+' : ''}${roi}%
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
@@ -1079,6 +1302,15 @@
         document.querySelectorAll('.cds-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentCdsHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.parlay-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.parlay-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentParlayHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
