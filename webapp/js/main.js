@@ -624,7 +624,7 @@
           <span class="pick-conf">${confLabel}</span>
         </div>
         <div class="pick-bet-line">
-          ${pick.betTeam} spread at -110
+          ${pick.betTeam} -${pick.predictedMargin.toFixed(1)} at -110
         </div>
         <div class="pick-matchup">
           ${favFull} vs ${oppFull}
@@ -635,16 +635,16 @@
             <span class="detail-value">${homeAway}</span>
           </div>
           <div class="detail">
+            <span class="detail-label">Spread</span>
+            <span class="detail-value">-${pick.predictedMargin.toFixed(1)}</span>
+          </div>
+          <div class="detail">
             <span class="detail-label">Net Gap</span>
             <span class="detail-value">${pick.netGap.toFixed(1)}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Off Rating</span>
             <span class="detail-value">${pick.favOffRating.toFixed(1)}</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Pred. Margin</span>
-            <span class="detail-value">${pick.predictedMargin.toFixed(1)}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Kelly</span>
@@ -714,7 +714,7 @@
           <span class="pick-conf">${tierLabel} — CDS ${pick.cdsScore}</span>
         </div>
         <div class="pick-bet-line">
-          ${pick.betTeam} spread at -110
+          ${pick.betTeam} -${pick.predictedMargin.toFixed(1)} at -110
         </div>
         <div class="pick-matchup">
           ${favFull} vs ${oppFull}
@@ -725,16 +725,16 @@
             <span class="detail-value">${homeAway}</span>
           </div>
           <div class="detail">
+            <span class="detail-label">Spread</span>
+            <span class="detail-value">-${pick.predictedMargin.toFixed(1)}</span>
+          </div>
+          <div class="detail">
             <span class="detail-label">CDS Score</span>
             <span class="detail-value diamond-value">${pick.cdsScore}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Top Path</span>
             <span class="detail-value">${pathwayLabel}</span>
-          </div>
-          <div class="detail">
-            <span class="detail-label">Pred. Margin</span>
-            <span class="detail-value">${pick.predictedMargin.toFixed(1)}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Net Gap</span>
