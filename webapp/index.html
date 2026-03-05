@@ -12,7 +12,7 @@
   <header class="header">
     <div class="header-left">
       <span class="brand">NBA Dominance</span>
-      <span class="brand-tag">CDS + PRISM Pre-Game Models</span>
+      <span class="brand-tag">CDS + PRISM + APEX Pre-Game Models</span>
     </div>
     <nav class="header-nav">
       <button class="nav-btn active" data-view="picks">Today's Picks</button>
@@ -74,11 +74,17 @@
         <!-- PRISM pick cards injected here by JS -->
       </div>
 
+      <!-- Play 8: APEX Adaptive Pace Exploiter -->
+      <div id="apex-container" style="display:none;">
+        <!-- APEX pick cards injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
         <p><strong>Play 4 (CDS Moneyline):</strong> No games reaching the Convergent Dominance threshold today.</p>
         <p><strong>Play 7 (PRISM):</strong> No convergent signals detected today.</p>
-        <p class="subtle">Play 4 averages 5-8 qualifying picks per month. Play 7 adds 8-12 spread/total picks per month.</p>
+        <p><strong>Play 8 (APEX):</strong> No adaptive pace signals detected today.</p>
+        <p class="subtle">Play 4 averages 5-8 qualifying picks per month. Play 7 adds 8-12 spread/total picks. Play 8 adds 8-15 OVER/ML picks per month.</p>
       </div>
 
       <div id="all-games-section" style="display:none;">
@@ -155,6 +161,37 @@
         </table>
       </div>
       <div id="prism-history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 8: APEX History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 8 — APEX Adaptive Pace Exploiter History</h2>
+      <p class="history-note">Weighted multi-signal OVER totals system at -110. 9 pace/offense/defense signals with weighted scoring (0.5-2.0x per signal).</p>
+      <div class="filter-bar">
+        <button class="apex-filter-btn" data-period="7">Last 7 Days</button>
+        <button class="apex-filter-btn" data-period="14">Last 14 Days</button>
+        <button class="apex-filter-btn" data-period="30">Last 30 Days</button>
+        <button class="apex-filter-btn active" data-period="all">Full Season</button>
+      </div>
+      <div id="apex-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Bet</th>
+              <th>Matchup</th>
+              <th>Tier</th>
+              <th>Strength</th>
+              <th>Actual</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="apex-history-body">
+            <tr><td colspan="9" class="muted">Loading APEX history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="apex-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
@@ -307,6 +344,58 @@
           </div>
         </div>
 
+        <!-- ── PLAY 8: APEX ── -->
+        <div class="how-section" style="border-top: 2px solid rgba(245, 158, 11, 0.3); padding-top: 24px; margin-top: 24px;">
+          <h3>Play 8 — APEX: Adaptive Pace EXploiter</h3>
+          <p>The <strong>APEX model</strong> is a proprietary OVER totals system that exploits
+          market inefficiencies using <strong>weighted signal scoring</strong>. Unlike simple threshold models,
+          APEX assigns different weights (0.5 to 2.0) to each signal based on its predictive power,
+          creating a composite score that dramatically outperforms individual signals.</p>
+          <p>Bet: <strong>OVER totals at -110</strong> when 9 independent pace/offense/defense signals converge.</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 8 — The 9+9 Signal Architecture</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">S1-3</div>
+              <div class="result-label">Pace &amp; Offense</div>
+              <div class="result-detail">Pace Rating (2.0w), Offense Heating (1.5w), Recent Totals (1.5w) — top-weighted signals capturing scoring environment.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">S4-6</div>
+              <div class="result-label">Consistency &amp; Defense</div>
+              <div class="result-detail">Multi-Window (1.5w), Scoring Asymmetry (1.0w), Poor Defense (1.0w) — structural indicators of high-scoring games.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">S7-9</div>
+              <div class="result-label">Trends &amp; Momentum</div>
+              <div class="result-detail">Defense Declining (0.5w), Last Game High (0.5w), Consistent High (1.0w) — momentum signals confirming scoring trajectory.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 8 — Validated Results</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">63.2%</div>
+              <div class="result-label">OVER Hit Rate</div>
+              <div class="result-detail">60-35 picks at -110 (walk-forward)</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">+$1,960</div>
+              <div class="result-label">Season P&amp;L</div>
+              <div class="result-detail">+20.6% ROI on $100 flat bets</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">66.7%</div>
+              <div class="result-label">ELITE Tier</div>
+              <div class="result-detail">24-12 at 8+ score (break-even: 52.4%)</div>
+            </div>
+          </div>
+        </div>
+
         <div class="how-section">
           <h3>How to Execute</h3>
           <ol>
@@ -314,6 +403,7 @@
             <li>When a pick is shown, go to your sportsbook's pre-game lines</li>
             <li><strong>Play 4:</strong> Bet the CDS-flagged team's moneyline (Kelly: 10% ELITE, 8% HIGH, 6% STRONG)</li>
             <li><strong>Play 7:</strong> Bet spread or total at -110 when PRISM flags convergent signals</li>
+            <li><strong>Play 8:</strong> Bet OVER total at -110 when APEX flags convergent pace/offense signals</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
@@ -325,7 +415,9 @@
             <li>Moneyline odds vary by matchup — heavier favorites (-500) pay less than light favorites (-150)</li>
             <li><strong>Play 7 bets at -110 odds</strong> — convergent signals at 57-65% accuracy</li>
             <li>Play 7 needs >52.4% to profit at -110 — the edge is real and validated (+17% ROI)</li>
-            <li>Combined: ~5-8 ML picks + 8-12 totals/spread picks per month</li>
+            <li><strong>Play 8 OVER bets at -110</strong> — weighted signals at 63.2% accuracy (+20.6% ROI)</li>
+            <li>Play 8 ELITE tier hits at 66.7% — strongest convergence signals</li>
+            <li>Combined: ~5-8 ML picks + 8-12 totals/spread picks + 6-12 APEX OVER picks per month</li>
           </ul>
         </div>
       </div>
