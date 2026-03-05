@@ -733,6 +733,10 @@
             <span class="detail-value">${pathwayLabel}</span>
           </div>
           <div class="detail">
+            <span class="detail-label">Pred. Margin</span>
+            <span class="detail-value">${pick.predictedMargin.toFixed(1)}</span>
+          </div>
+          <div class="detail">
             <span class="detail-label">Net Gap</span>
             <span class="detail-value">${pick.netGap}</span>
           </div>
