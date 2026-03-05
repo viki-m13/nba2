@@ -550,7 +550,8 @@ body {
 
 .filter-btn,
 .cds-filter-btn,
-.prism-filter-btn {
+.prism-filter-btn,
+.apex-filter-btn {
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text-secondary);
@@ -563,17 +564,24 @@ body {
 
 .filter-btn:hover,
 .cds-filter-btn:hover,
-.prism-filter-btn:hover {
+.prism-filter-btn:hover,
+.apex-filter-btn:hover {
   border-color: var(--border-light);
   color: var(--text-primary);
 }
 
 .filter-btn.active,
 .cds-filter-btn.active,
-.prism-filter-btn.active {
+.prism-filter-btn.active,
+.apex-filter-btn.active {
   background: var(--bg-accent);
   border-color: var(--cyan);
   color: var(--cyan);
+}
+
+.apex-filter-btn.active {
+  border-color: var(--amber);
+  color: var(--amber);
 }
 
 .table-wrap {
@@ -943,6 +951,91 @@ td.result-loss { color: var(--red); }
 
 .summary-prism .summary-title {
   color: #10b981;
+}
+
+/* ── APEX (Play 8) — Amber/Gold ── */
+.pick-card.conf-apex {
+  border-left: 4px solid var(--amber);
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.04);
+}
+.pick-card.conf-apex-high {
+  border-left: 4px solid var(--amber);
+  border-color: rgba(245, 158, 11, 0.6);
+  background: rgba(245, 158, 11, 0.08);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
+.pick-card.conf-apex-elite {
+  border-left: 4px solid #fbbf24;
+  border-color: rgba(251, 191, 36, 0.8);
+  background: rgba(245, 158, 11, 0.12);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.conf-apex .pick-verdict,
+.conf-apex-high .pick-verdict,
+.conf-apex-elite .pick-verdict {
+  background: var(--amber);
+  color: #0a0e17;
+}
+
+.conf-apex .pick-conf,
+.conf-apex-high .pick-conf,
+.conf-apex-elite .pick-conf {
+  color: #fbbf24;
+}
+
+.apex-over {
+  color: #34d399;
+  font-weight: 700;
+}
+.apex-ml {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.apex-badge {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--amber);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.apex-factors {
+  font-size: 12px;
+  color: rgba(245, 158, 11, 0.8);
+  padding: 4px 20px 12px;
+  font-style: italic;
+}
+
+.badge.conf-apex {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.badge.conf-apex-high {
+  background: rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+.badge.conf-apex-elite {
+  background: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.7);
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.summary-card.summary-apex {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.summary-apex .summary-title {
+  color: var(--amber);
 }
 
 .summary-stat {
