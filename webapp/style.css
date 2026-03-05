@@ -549,7 +549,8 @@ body {
 }
 
 .filter-btn,
-.cds-filter-btn {
+.cds-filter-btn,
+.prism-filter-btn {
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text-secondary);
@@ -561,18 +562,15 @@ body {
 }
 
 .filter-btn:hover,
-.cds-filter-btn:hover {
+.cds-filter-btn:hover,
+.prism-filter-btn:hover {
   border-color: var(--border-light);
   color: var(--text-primary);
 }
 
-.filter-btn.active {
-  background: var(--bg-accent);
-  border-color: var(--green);
-  color: var(--green);
-}
-
-.cds-filter-btn.active {
+.filter-btn.active,
+.cds-filter-btn.active,
+.prism-filter-btn.active {
   background: var(--bg-accent);
   border-color: var(--cyan);
   color: var(--cyan);
