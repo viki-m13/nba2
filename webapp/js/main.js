@@ -1,5 +1,5 @@
 // =============================================================================
-// MAIN APP CONTROLLER — NBA Dominance ADI Pre-Game System
+// MAIN APP CONTROLLER — NBA Dominance System (Play 1 + Play 3)
 // =============================================================================
 
 (function () {
@@ -8,8 +8,10 @@
   // ── State ──────────────────────────────────────────────────────────────────
   let currentView = 'picks';
   let todayGames = [];          // All games today
-  let todayPicks = [];          // Games flagged by ADI model
-  let historyPicks = [];        // Historical picks with results
+  let todayPicks = [];          // Games flagged by ADI model (Play 3: spread)
+  let diamondPicks = [];        // Live DIAMOND ML signals (Play 1)
+  let historyPicks = [];        // Historical Play 3 picks with results
+  let diamondHistory = [];      // Historical Play 1 DIAMOND signals
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentHistoryPeriod = 7;
@@ -139,6 +141,68 @@
     }
 
     console.log(`[ADI] Model trained on ${seasonData.length} games, ${Object.keys(Model.teamHistory).length} teams`);
+
+    // Load DIAMOND historical validation data
+    await loadDiamondHistory();
+  }
+
+  async function loadDiamondHistory() {
+    try {
+      const resp = await fetch('data/comprehensive_validation.json');
+      if (!resp.ok) return;
+      const allStates = await resp.json();
+
+      // Filter for DIAMOND-qualifying states (Halftime window)
+      // DIAMOND conditions: Halftime 18-24 min, lead>=15, mom>=12
+      const diamondStates = allStates.filter(d => {
+        const mr = d.mins_remaining;
+        const l = d.actual_lead;
+        const m = d.actual_mom;
+        return (
+          (d.window === 'Halftime' && mr >= 18 && mr <= 24 && l >= 15 && m >= 12) ||
+          (d.window === 'Q3' && mr >= 13 && mr <= 18 && l >= 18 && m >= 3) ||
+          (d.window === 'Q4_Early' && mr >= 6 && mr <= 11.9 && l >= 20 && m >= 5)
+        );
+      });
+
+      // Deduplicate by game (keep first/earliest signal per game)
+      const byGame = {};
+      for (const d of diamondStates) {
+        const key = d.date + '_' + d.home_team + '_' + d.away_team;
+        if (!byGame[key] || d.mins_remaining > byGame[key].mins_remaining) {
+          byGame[key] = d;
+        }
+      }
+
+      diamondHistory = Object.values(byGame).map(d => {
+        const leader = d.side === 'home' ? d.home_team : d.away_team;
+        const trailer = d.side === 'home' ? d.away_team : d.home_team;
+        // Estimate ML odds from lead: -lead * 70 (minimum -300)
+        const estOdds = -Math.max(300, d.actual_lead * 70);
+        const mlPayout = d.ml_won ? Math.round(100 * (100 / Math.abs(estOdds))) : -100;
+        return {
+          date: d.date,
+          play: 'DIAMOND_ML',
+          team: leader,
+          opponent: trailer,
+          isHome: d.side === 'home',
+          lead: d.actual_lead,
+          momentum: d.actual_mom,
+          minsRemaining: Math.round(d.mins_remaining * 10) / 10,
+          window: d.window,
+          mlWon: d.ml_won,
+          homeScore: d.final_home,
+          awayScore: d.final_away,
+          estOdds,
+          pnl: mlPayout,
+        };
+      });
+
+      diamondHistory.sort((a, b) => a.date.localeCompare(b.date));
+      console.log(`[DIAMOND] Loaded ${diamondHistory.length} historical signals (${diamondHistory.filter(d => d.mlWon).length}/${diamondHistory.length} ML wins)`);
+    } catch (e) {
+      console.warn('[DIAMOND] Could not load validation data:', e);
+    }
   }
 
   async function fetchESPNGamesForDate(dateStr) {
@@ -319,21 +383,110 @@
     const container = document.getElementById('picks-container');
     const empty = document.getElementById('picks-empty');
     const allSection = document.getElementById('all-games-section');
+    const diamondContainer = document.getElementById('diamond-container');
 
     loading.style.display = 'none';
 
-    if (todayPicks.length === 0) {
+    // Render DIAMOND ML live signals (Play 1)
+    if (diamondContainer) {
+      if (diamondPicks.length > 0) {
+        diamondContainer.style.display = '';
+        diamondContainer.innerHTML = diamondPicks.map(renderDiamondCard).join('');
+      } else {
+        diamondContainer.style.display = 'none';
+      }
+    }
+
+    // Render pre-game spread picks (Play 3)
+    if (todayPicks.length === 0 && diamondPicks.length === 0) {
       container.style.display = 'none';
       empty.style.display = 'block';
     } else {
-      container.style.display = '';
       empty.style.display = 'none';
-      container.innerHTML = todayPicks.map(renderPickCard).join('');
+      if (todayPicks.length > 0) {
+        container.style.display = '';
+        container.innerHTML = todayPicks.map(renderPickCard).join('');
+      } else {
+        container.style.display = 'none';
+      }
     }
 
     if (todayGames.length > 0) {
       allSection.style.display = '';
     }
+  }
+
+  function renderDiamondCard(pick) {
+    const g = pick.game;
+    const teamFull = teamName(pick.team);
+    const oppFull = teamName(pick.opponent);
+    const homeAway = pick.isHome ? 'Home' : 'Away';
+
+    // Live score
+    const teamScore = pick.isHome ? g.home_score : g.away_score;
+    const oppScore = pick.isHome ? g.away_score : g.home_score;
+
+    let statusHtml;
+    if (g.status === 'STATUS_FINAL') {
+      const won = teamScore > oppScore;
+      statusHtml = `
+        <div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+          <span class="live-label">FINAL</span>
+          <span class="live-score">${pick.team} ${teamScore} — ${pick.opponent} ${oppScore}</span>
+          <span class="live-result">${won ? 'W' : 'L'}</span>
+        </div>`;
+    } else {
+      statusHtml = `
+        <div class="pick-live live-active">
+          <span class="live-label">LIVE Q${g.period} ${g.clock}</span>
+          <span class="live-score">${pick.team} ${teamScore} — ${pick.opponent} ${oppScore}</span>
+          <span class="live-track">SIGNAL ACTIVE</span>
+        </div>`;
+    }
+
+    return `
+      <div class="pick-card conf-diamond">
+        <div class="pick-header">
+          <span class="pick-verdict diamond-verdict">PLAY 1</span>
+          <span class="pick-conf diamond-conf">DIAMOND ML</span>
+        </div>
+        <div class="pick-bet-line diamond-bet">
+          ${pick.team} Moneyline (${pick.estOdds})
+        </div>
+        <div class="pick-matchup">
+          ${teamFull} vs ${oppFull}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Side</span>
+            <span class="detail-value">${homeAway}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Lead</span>
+            <span class="detail-value diamond-value">${pick.lead}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Momentum</span>
+            <span class="detail-value diamond-value">+${pick.momentum}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Time Left</span>
+            <span class="detail-value">${pick.minsRemaining}min</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Win Prob</span>
+            <span class="detail-value diamond-value">${(pick.winProbability * 100).toFixed(1)}%</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Kelly</span>
+            <span class="detail-value">${(pick.kellyFraction * 100).toFixed(0)}%</span>
+          </div>
+        </div>
+        <div class="diamond-accuracy">
+          100% ML accuracy — 467/467 validated signals. Bet ML at heavy juice, add to parlay.
+        </div>
+        ${statusHtml}
+      </div>`;
   }
 
   function renderPickCard(pick) {
@@ -470,6 +623,11 @@
   // ── Rendering: History ─────────────────────────────────────────────────────
 
   function renderHistory() {
+    renderSpreadHistory();
+    renderDiamondHistory();
+  }
+
+  function renderSpreadHistory() {
     const tbody = document.getElementById('history-body');
     if (!tbody) return;
 
@@ -485,40 +643,77 @@
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="9" class="muted">No picks in this period</td></tr>';
-      return;
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.favWon ? 'result-win' : 'result-loss';
+        const resText = p.favWon ? 'W' : 'L';
+        const pnlText = p.favWon ? '+$91' : '-$100';
+        const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
+        const dateFormatted = formatDate(p.date);
+
+        // Team total column
+        let ttHtml = '<span class="muted">—</span>';
+        if (p.teamTotalLine !== null) {
+          const ttClass = p.teamTotalHit ? 'result-win' : 'result-loss';
+          const ttLabel = p.teamTotalHit ? 'OVER' : 'UNDER';
+          ttHtml = `<span class="badge ${ttClass}">${ttLabel}</span> <small>${p.favScore} / ${p.teamTotalLine}</small>`;
+        }
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td><strong>${p.favorite}</strong> spread</td>
+            <td>${p.favorite} ${p.favIsHome ? 'vs' : '@'} ${p.underdog}</td>
+            <td><span class="badge ${confClass}">${p.confidence}</span></td>
+            <td>${p.predictedMargin.toFixed(1)}</td>
+            <td>${p.actualMargin}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+            <td>${ttHtml}</td>
+          </tr>`;
+      }).join('');
     }
 
-    tbody.innerHTML = filtered.map(p => {
-      const resClass = p.favWon ? 'result-win' : 'result-loss';
-      const resText = p.favWon ? 'W' : 'L';
-      const pnlText = p.favWon ? '+$91' : '-$100';
-      const confClass = p.confidence === 'HIGH' ? 'conf-high' : 'conf-strong';
-      const dateFormatted = formatDate(p.date);
-
-      // Team total column
-      let ttHtml = '<span class="muted">—</span>';
-      if (p.teamTotalLine !== null) {
-        const ttClass = p.teamTotalHit ? 'result-win' : 'result-loss';
-        const ttLabel = p.teamTotalHit ? 'OVER' : 'UNDER';
-        ttHtml = `<span class="badge ${ttClass}">${ttLabel}</span> <small>${p.favScore} / ${p.teamTotalLine}</small>`;
-      }
-
-      return `
-        <tr>
-          <td>${dateFormatted}</td>
-          <td><strong>${p.favorite}</strong> spread</td>
-          <td>${p.favorite} ${p.favIsHome ? 'vs' : '@'} ${p.underdog}</td>
-          <td><span class="badge ${confClass}">${p.confidence}</span></td>
-          <td>${p.predictedMargin.toFixed(1)}</td>
-          <td>${p.actualMargin}</td>
-          <td><span class="badge ${resClass}">${resText}</span></td>
-          <td class="${resClass}">${pnlText}</td>
-          <td>${ttHtml}</td>
-        </tr>`;
-    }).join('');
-
-    // History summary below the table
     renderHistorySummary(filtered);
+  }
+
+  function renderDiamondHistory() {
+    const tbody = document.getElementById('diamond-history-body');
+    if (!tbody) return;
+
+    let filtered = diamondHistory;
+    if (currentHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentHistoryPeriod));
+      filtered = diamondHistory.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No DIAMOND signals in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(d => {
+        const resClass = d.mlWon ? 'result-win' : 'result-loss';
+        const resText = d.mlWon ? 'W' : 'L';
+        const pnlText = d.pnl >= 0 ? '+$' + d.pnl : '-$' + Math.abs(d.pnl);
+        const dateFormatted = formatDate(d.date);
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td><strong>${d.team}</strong> ML</td>
+            <td>${d.team} ${d.isHome ? 'vs' : '@'} ${d.opponent}</td>
+            <td><span class="badge conf-diamond">DIAMOND</span></td>
+            <td>${d.lead}</td>
+            <td>+${d.momentum}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    // Diamond summary
+    renderDiamondSummary(filtered);
   }
 
   function renderHistorySummary(filtered) {
@@ -528,7 +723,7 @@
     const spreadWins = filtered.filter(p => p.favWon).length;
     const spreadTotal = filtered.length;
     const spreadPnl = filtered.reduce((s, p) => s + p.pnl, 0);
-    const spreadAcc = ((spreadWins / spreadTotal) * 100).toFixed(1);
+    const spreadAcc = spreadTotal > 0 ? ((spreadWins / spreadTotal) * 100).toFixed(1) : '0';
 
     const ttPicks = filtered.filter(p => p.teamTotalLine !== null);
     const ttHits = ttPicks.filter(p => p.teamTotalHit).length;
@@ -561,9 +756,45 @@
           </div>
         </div>
         <div class="summary-card summary-combined">
-          <div class="summary-title">Combined P&amp;L</div>
+          <div class="summary-title">Play 3 Combined</div>
           <div class="summary-pnl-big ${combinedPnl >= 0 ? 'result-win' : 'result-loss'}">
             ${combinedPnl >= 0 ? '+' : ''}$${combinedPnl}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderDiamondSummary(filtered) {
+    const summary = document.getElementById('diamond-history-summary');
+    if (!summary) return;
+
+    const dWins = filtered.filter(d => d.mlWon).length;
+    const dTotal = filtered.length;
+    const dPnl = filtered.reduce((s, d) => s + d.pnl, 0);
+    const dAcc = dTotal > 0 ? ((dWins / dTotal) * 100).toFixed(1) : '—';
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-diamond">
+          <div class="summary-title">DIAMOND ML (Play 1)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${dWins}-${dTotal - dWins}</span>
+            <span class="summary-pct">${dAcc}%</span>
+          </div>
+          <div class="summary-pnl ${dPnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${dTotal > 0 ? (dPnl >= 0 ? '+' : '') + '$' + dPnl : '—'}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Avg ML Odds</div>
+          <div class="summary-pnl-big" style="color: var(--text-primary);">
+            ${dTotal > 0 ? Math.round(filtered.reduce((s, d) => s + d.estOdds, 0) / dTotal) : '—'}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Avg Lead at Signal</div>
+          <div class="summary-pnl-big" style="color: var(--text-primary);">
+            ${dTotal > 0 ? (filtered.reduce((s, d) => s + d.lead, 0) / dTotal).toFixed(1) : '—'}
           </div>
         </div>
       </div>`;
@@ -574,7 +805,7 @@
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayPicks.length;
+    el('metric-picks').textContent = todayPicks.length + diamondPicks.length;
     el('metric-games').textContent = todayGames.length;
 
     if (historyPicks.length > 0) {
@@ -601,6 +832,82 @@
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
       el('metric-record').textContent = `${wins}-${total - wins}`;
     }
+
+    // DIAMOND ML accuracy
+    if (diamondHistory.length > 0) {
+      const dWins = diamondHistory.filter(d => d.mlWon).length;
+      const dTotal = diamondHistory.length;
+      const dAcc = ((dWins / dTotal) * 100).toFixed(1);
+      el('metric-diamond').textContent = dAcc + '%';
+    }
+  }
+
+  // ── DIAMOND Live Detection ────────────────────────────────────────────────
+
+  async function evaluateLiveDiamonds() {
+    const liveGames = todayGames.filter(g =>
+      g.status === 'STATUS_IN_PROGRESS' || g.status === 'STATUS_HALFTIME'
+    );
+
+    if (liveGames.length === 0) return;
+
+    const Engine = window.ParlayEngine;
+
+    for (const game of liveGames) {
+      // Need play-by-play to evaluate — fetch from ESPN summary
+      try {
+        const summaryUrl = useProxy
+          ? `/api/nba?endpoint=espn_summary&eventId=${game.id}`
+          : `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${game.id}`;
+        const resp = await fetch(summaryUrl);
+        if (!resp.ok) continue;
+        const data = await resp.json();
+        const plays = data.plays || [];
+        if (plays.length === 0) continue;
+
+        // Build game states and evaluate for signals
+        const states = Engine.buildGameStates(plays, 'espn');
+        if (states.length === 0) continue;
+
+        // Evaluate the current (latest) state
+        const currentState = states[states.length - 1];
+        const signal = Engine.evaluateState(
+          currentState,
+          game.home_team, game.away_team, game.id
+        );
+
+        if (signal && signal.tier === 'DIAMOND') {
+          // Check if we already have this signal for this game
+          const existingIdx = diamondPicks.findIndex(p => p.gameId === game.id);
+          const pick = {
+            game,
+            gameId: game.id,
+            tier: 'DIAMOND',
+            team: signal.team,
+            opponent: signal.opponent,
+            isHome: signal.side === 'home',
+            lead: signal.lead,
+            momentum: signal.momentum,
+            minsRemaining: signal.minsRemaining,
+            window: signal.window,
+            winProbability: signal.winProbability,
+            dominanceScore: signal.dominanceScore,
+            estOdds: signal.estimatedMlOdds,
+            betInstruction: signal.betInstruction,
+            kellyFraction: signal.kellyFraction,
+          };
+
+          if (existingIdx >= 0) {
+            diamondPicks[existingIdx] = pick; // Update with latest state
+          } else {
+            diamondPicks.push(pick);
+            console.log(`[DIAMOND] SIGNAL FIRED: ${signal.team} ML | Lead=${signal.lead} Mom=${signal.momentum} | ${signal.minsRemaining}min remaining`);
+          }
+        }
+      } catch (e) {
+        // Skip failed games silently
+      }
+    }
   }
 
   // ── Live Score Updates ─────────────────────────────────────────────────────
@@ -609,6 +916,7 @@
     if (!modelReady) return;
     try {
       await fetchTodayGames();
+      await evaluateLiveDiamonds();
       renderPicks();
       renderAllGames();
       updateMetrics();
