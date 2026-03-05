@@ -649,6 +649,14 @@ def _get_pregame_recommendation(signals, fav_team):
 
 
 # =============================================================================
+# PLAY 4: CONVERGENT DOMINANCE SCORE (CDS) MODEL
+# =============================================================================
+
+# Import the CDS model for use alongside the ADI model
+from convergent_dominance_model import ConvergentDominanceModel
+
+
+# =============================================================================
 # ESPN DATA INTEGRATION
 # =============================================================================
 
