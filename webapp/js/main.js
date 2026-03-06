@@ -1081,106 +1081,121 @@
 
   function generateTodayPulsePicks() {
     todayPulseParlays = [];
-    if (!trainedPulseModel || todayGames.length === 0) return;
+    if (!trainedPulseModel || todayGames.length === 0) {
+      console.log(`[PULSE] Skipping today's picks: model=${!!trainedPulseModel}, games=${todayGames.length}`);
+      return;
+    }
 
-    const dayCandidates = [];
+    try {
+      const dayCandidates = [];
 
-    for (const game of todayGames) {
-      const gameKey = `${game.away_team}@${game.home_team}`;
-      // Find known players for each team
-      const teamPlayers = [];
-      for (const [name, team] of Object.entries(playerTeamMap)) {
-        if (team === game.home_team || team === game.away_team) {
-          teamPlayers.push({ name, team, pts: 0, reb: 0, ast: 0, min: 30 });
+      for (const game of todayGames) {
+        const gameKey = `${game.away_team}@${game.home_team}`;
+        const teamPlayers = [];
+        for (const [name, team] of Object.entries(playerTeamMap)) {
+          if (team === game.home_team || team === game.away_team) {
+            teamPlayers.push({ name, team, pts: 0, reb: 0, ast: 0, min: 30 });
+          }
+        }
+
+        const picks = trainedPulseModel.predictGame(teamPlayers);
+        for (const pick of picks) {
+          dayCandidates.push({
+            ...pick,
+            gameKey,
+            gameDisplay: `${game.away_team} @ ${game.home_team}`,
+          });
         }
       }
 
-      const picks = trainedPulseModel.predictGame(teamPlayers);
-      for (const pick of picks) {
-        dayCandidates.push({
-          ...pick,
-          gameKey,
-          gameDisplay: `${game.away_team} @ ${game.home_team}`,
+      // Select top 2 from different games
+      dayCandidates.sort((a, b) => b.strength - a.strength);
+      const selected = [];
+      const usedGames = new Set();
+      for (const c of dayCandidates) {
+        if (usedGames.has(c.gameKey)) continue;
+        selected.push(c);
+        usedGames.add(c.gameKey);
+        if (selected.length >= 2) break;
+      }
+
+      if (selected.length >= 2) {
+        todayPulseParlays.push({
+          leg1: selected[0],
+          leg2: selected[1],
         });
       }
-    }
 
-    // Select top 2 from different games
-    dayCandidates.sort((a, b) => b.strength - a.strength);
-    const selected = [];
-    const usedGames = new Set();
-    for (const c of dayCandidates) {
-      if (usedGames.has(c.gameKey)) continue;
-      selected.push(c);
-      usedGames.add(c.gameKey);
-      if (selected.length >= 2) break;
+      console.log(`[PULSE] Today's picks: ${todayPulseParlays.length} parlays from ${dayCandidates.length} candidates across ${todayGames.length} games`);
+    } catch (e) {
+      console.error('[PULSE] Error generating today picks:', e);
     }
-
-    if (selected.length >= 2) {
-      todayPulseParlays.push({
-        leg1: selected[0],
-        leg2: selected[1],
-      });
-    }
-
-    console.log(`[PULSE] Today's picks: ${todayPulseParlays.length} parlays from ${dayCandidates.length} candidates`);
   }
 
   function generateTodayVaultPicks() {
     todayVaultParlays = [];
-    if (!trainedVaultModel || todayGames.length === 0) return;
+    if (!trainedVaultModel || todayGames.length === 0) {
+      console.log(`[VAULT] Skipping today's picks: model=${!!trainedVaultModel}, games=${todayGames.length}`);
+      return;
+    }
 
-    const dayCandidates = [];
+    try {
+      const dayCandidates = [];
 
-    for (const game of todayGames) {
-      const gameKey = `${game.away_team}@${game.home_team}`;
-      // Find known players for each team
-      const teamPlayers = [];
-      for (const [name, team] of Object.entries(playerTeamMap)) {
-        if (team === game.home_team || team === game.away_team) {
-          teamPlayers.push({ name, team, pts: 0, min: 30 });
+      for (const game of todayGames) {
+        const gameKey = `${game.away_team}@${game.home_team}`;
+        const teamPlayers = [];
+        for (const [name, team] of Object.entries(playerTeamMap)) {
+          if (team === game.home_team || team === game.away_team) {
+            teamPlayers.push({ name, team, pts: 0, min: 30 });
+          }
+        }
+
+        const picks = trainedVaultModel.predictGame(teamPlayers);
+        for (const pick of picks) {
+          dayCandidates.push({
+            ...pick,
+            gameKey,
+            gameDisplay: `${game.away_team} @ ${game.home_team}`,
+          });
         }
       }
 
-      const picks = trainedVaultModel.predictGame(teamPlayers);
-      for (const pick of picks) {
-        dayCandidates.push({
-          ...pick,
-          gameKey,
-          gameDisplay: `${game.away_team} @ ${game.home_team}`,
+      console.log(`[VAULT] ${dayCandidates.length} qualifying players across ${todayGames.length} games`);
+
+      // Select top legs sorted by confidence, max 1 per game
+      dayCandidates.sort((a, b) => b.confidence - a.confidence);
+      const selected = [];
+      const usedGames = new Set();
+      for (const c of dayCandidates) {
+        if (usedGames.has(c.gameKey)) continue;
+        selected.push(c);
+        usedGames.add(c.gameKey);
+        if (selected.length >= 8) break;
+      }
+
+      // Build parlay if we have enough legs (minimum 4)
+      if (selected.length >= 4) {
+        const odds = vaultParlayAmerican(selected.length);
+        todayVaultParlays.push({
+          legs: selected.map(s => ({
+            player: s.player,
+            team: s.team,
+            line: s.line,
+            confidence: s.confidence,
+            l10Avg: s.l10Avg,
+            l10Min: s.l10Min,
+            gameDisplay: s.gameDisplay,
+          })),
+          numLegs: selected.length,
+          odds,
         });
       }
-    }
 
-    // Select top 4-8 from different games
-    dayCandidates.sort((a, b) => b.confidence - a.confidence);
-    const selected = [];
-    const usedGames = new Set();
-    for (const c of dayCandidates) {
-      if (usedGames.has(c.gameKey)) continue;
-      selected.push(c);
-      usedGames.add(c.gameKey);
-      if (selected.length >= 8) break;
+      console.log(`[VAULT] Today's picks: ${todayVaultParlays.length} parlays (${selected.length} legs from ${usedGames.size} games)`);
+    } catch (e) {
+      console.error('[VAULT] Error generating today picks:', e);
     }
-
-    if (selected.length >= 4) {
-      const odds = vaultParlayAmerican(selected.length);
-      todayVaultParlays.push({
-        legs: selected.map(s => ({
-          player: s.player,
-          team: s.team,
-          line: s.line,
-          confidence: s.confidence,
-          l10Avg: s.l10Avg,
-          l10Min: s.l10Min,
-          gameDisplay: s.gameDisplay,
-        })),
-        numLegs: selected.length,
-        odds,
-      });
-    }
-
-    console.log(`[VAULT] Today's picks: ${todayVaultParlays.length} parlays from ${dayCandidates.length} candidates`);
   }
 
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
@@ -2380,6 +2395,13 @@
     if (!modelReady) return;
     try {
       await fetchTodayGames();
+      // Regenerate all today's predictions with fresh game data
+      runCDSPredictions();
+      runPRISMPredictions();
+      runNOVAPredictions();
+      buildFusionParlays();
+      generateTodayPulsePicks();
+      generateTodayVaultPicks();
       renderPicks();
       renderAllGames();
       updateMetrics();
@@ -2505,9 +2527,7 @@
     return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
   }
 
-  let _cachedLatestDate = '';
   function getLatestDataDate() {
-    if (_cachedLatestDate) return _cachedLatestDate;
     let latest = '';
     for (const p of cdsHistoryPicks) { if (p.date > latest) latest = p.date; }
     for (const p of prismHistoryPicks) { if (p.date > latest) latest = p.date; }
@@ -2518,8 +2538,11 @@
     if (playerBoxScores && playerBoxScores.length > 0) {
       for (const g of playerBoxScores) { if (g.date > latest) latest = g.date; }
     }
-    _cachedLatestDate = latest || '';
-    return _cachedLatestDate;
+    if (seasonData && seasonData.length > 0) {
+      for (const g of seasonData) { if (g.date > latest) latest = g.date; }
+    }
+    console.log(`[FILTER] getLatestDataDate=${latest}, historyLens: cds=${cdsHistoryPicks.length} prism=${prismHistoryPicks.length} pulse=${pulseHistoryPicks.length} vault=${vaultHistoryPicks.length}`);
+    return latest || '';
   }
 
   function formatDate(dateStr) {
