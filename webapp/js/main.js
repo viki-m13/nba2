@@ -1,5 +1,5 @@
 // =============================================================================
-// MAIN APP CONTROLLER — NBA Dominance System (Play 4 CDS + Play 7 PRISM + Play 8 APEX)
+// MAIN APP CONTROLLER — NBA Dominance System (Play 4 CDS + Play 7 PRISM + Play 8 NOVA)
 // =============================================================================
 
 (function () {
@@ -12,17 +12,17 @@
   let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
   let todayPrismPicks = [];      // Games flagged by PRISM model (Play 7: convergent -110)
   let prismHistoryPicks = [];    // Historical Play 7 PRISM picks with results
-  let todayApexPicks = [];       // Games flagged by APEX model (Play 8: adaptive pace)
-  let apexHistoryPicks = [];     // Historical Play 8 APEX picks with results
+  let todayNovaPicks = [];       // Games flagged by NOVA model (Play 8: compound OVER -110)
+  let novaHistoryPicks = [];     // Historical Play 8 NOVA picks with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
   let currentPrismHistoryPeriod = 'all';
-  let currentApexHistoryPeriod = 'all';
+  let currentNovaHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
-  const APEXModel = window.ParlayEngine.APEXModel;
+  const NOVAModel = window.ParlayEngine.NOVAModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -256,10 +256,10 @@
       await fetchTodayGames();
       runCDSPredictions();
       runPRISMPredictions();
-      runAPEXPredictions();
+      runNOVAPredictions();
       buildCDSHistory();
       buildPRISMHistory();
-      buildAPEXHistory();
+      buildNOVAHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -316,14 +316,14 @@
     seasonData.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
     CDSModel.reset();
     PRISMModel.teamHistory = {};
-    APEXModel.teamHistory = {};
+    NOVAModel.teamHistory = {};
     for (const g of seasonData) {
       CDSModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       CDSModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
       PRISMModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       PRISMModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
-      APEXModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date, true);
-      APEXModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date, false);
+      NOVAModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
+      NOVAModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
     }
 
     console.log(`[APP] Models trained on ${seasonData.length} games, ${Object.keys(CDSModel.teamHistory).length} teams`);
@@ -469,30 +469,6 @@
     console.log(`[PRISM] ${todayPrismPicks.length} picks from ${todayGames.length} games`);
   }
 
-  // ── APEX Predictions (Play 8) ──────────────────────────────────────────
-
-  function runAPEXPredictions() {
-    todayApexPicks = [];
-
-    for (const game of todayGames) {
-      const picks = APEXModel.predictGame(game.home_team, game.away_team);
-      if (picks) {
-        for (const pick of picks) {
-          todayApexPicks.push({ game, ...pick });
-        }
-      }
-    }
-
-    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
-    todayApexPicks.sort((a, b) => {
-      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
-      if (to !== 0) return to;
-      return b.strength - a.strength;
-    });
-
-    console.log(`[APEX] ${todayApexPicks.length} picks from ${todayGames.length} games`);
-  }
-
   // ── History Builders ─────────────────────────────────────────────────────
 
   function buildCDSHistory() {
@@ -590,34 +566,59 @@
     console.log(`[PRISM] Built history: ${prismHistoryPicks.length} total picks`);
   }
 
-  function buildAPEXHistory() {
-    apexHistoryPicks = [];
+  // ── NOVA Predictions (Play 8) ──────────────────────────────────────────────
 
-    const apex = Object.create(APEXModel);
-    apex.teamHistory = {};
+  function runNOVAPredictions() {
+    todayNovaPicks = [];
+
+    for (const game of todayGames) {
+      const picks = NOVAModel.predictGame(game.home_team, game.away_team);
+      if (picks) {
+        for (const pick of picks) {
+          todayNovaPicks.push({ game, ...pick });
+        }
+      }
+    }
+
+    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
+    todayNovaPicks.sort((a, b) => {
+      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
+      if (to !== 0) return to;
+      return b.strength - a.strength;
+    });
+
+    console.log(`[NOVA] ${todayNovaPicks.length} picks from ${todayGames.length} games`);
+  }
+
+  function buildNOVAHistory() {
+    novaHistoryPicks = [];
+
+    const nova = Object.create(NOVAModel);
+    nova.teamHistory = {};
 
     const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
 
     for (const game of sorted) {
-      const picks = apex.predictGame(game.home_team, game.away_team);
+      const picks = nova.predictGame(game.home_team, game.away_team);
 
       if (picks) {
         const actualTotal = game.home_score + game.away_score;
 
         for (const pick of picks) {
-          // APEX is OVER-only at -110
           const hit = actualTotal > pick.predTotal;
 
-          apexHistoryPicks.push({
+          novaHistoryPicks.push({
             date: game.date,
             home: game.home_team,
             away: game.away_team,
-            type: 'over',
-            direction: 'OVER',
             predTotal: pick.predTotal,
             strength: pick.strength,
             tier: pick.tier,
             factors: pick.factors,
+            hPpg5: pick.hPpg5,
+            aPpg5: pick.aPpg5,
+            hAvgTotal3: pick.hAvgTotal3,
+            aAvgTotal3: pick.aAvgTotal3,
             actualTotal,
             hit,
             pnl: hit ? 91 : -100,
@@ -625,11 +626,11 @@
         }
       }
 
-      apex.updateTeam(game.home_team, game.home_score, game.away_score, game.date, true);
-      apex.updateTeam(game.away_team, game.away_score, game.home_score, game.date, false);
+      nova.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      nova.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
     }
 
-    console.log(`[APEX] Built history: ${apexHistoryPicks.length} total picks`);
+    console.log(`[NOVA] Built history: ${novaHistoryPicks.length} total picks`);
   }
 
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
@@ -642,7 +643,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayApexPicks.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -669,15 +670,16 @@
         prismContainer.style.display = 'none';
       }
 
-      // Play 8 — APEX Adaptive Pace Exploiter
-      const apexContainer = document.getElementById('apex-container');
-      if (apexContainer && todayApexPicks.length > 0) {
-        apexContainer.style.display = '';
-        apexContainer.innerHTML = '<h3 class="section-title">Play 8 — APEX OVER Totals <span class="apex-badge">-110</span></h3>' +
-          '<div class="picks-grid">' + todayApexPicks.map(renderAPEXCard).join('') + '</div>';
-      } else if (apexContainer) {
-        apexContainer.style.display = 'none';
+      // Play 8 — NOVA Compound OVER
+      const novaContainer = document.getElementById('nova-container');
+      if (novaContainer && todayNovaPicks.length > 0) {
+        novaContainer.style.display = '';
+        novaContainer.innerHTML = '<h3 class="section-title">Play 8 — NOVA Compound OVER <span class="nova-badge">-110</span></h3>' +
+          '<div class="picks-grid">' + todayNovaPicks.map(renderNOVACard).join('') + '</div>';
+      } else if (novaContainer) {
+        novaContainer.style.display = 'none';
       }
+
     }
 
     if (todayGames.length > 0) {
@@ -863,30 +865,25 @@
       </div>`;
   }
 
-  function renderAPEXCard(pick) {
+  function renderNOVACard(pick) {
     const g = pick.game;
-    const tierClass = pick.tier === 'ELITE' ? 'conf-apex-elite' : pick.tier === 'HIGH' ? 'conf-apex-high' : 'conf-apex';
+    const tierClass = pick.tier === 'ELITE' ? 'conf-nova-elite' : pick.tier === 'HIGH' ? 'conf-nova-high' : 'conf-nova';
 
     const FACTOR_LABELS = {
-      elite_pace: 'Elite Pace', fast_pace: 'Fast Pace',
-      both_surging: 'Both Surging', both_heating: 'Both Heating',
-      extreme_recent: 'Extreme Recent', recent_high: 'Recent High', recent_elevated: 'Recent Elevated',
-      all_windows: 'All Windows High', multi_window: 'Multi-Window',
-      extreme_asym: 'Extreme Asymmetry', scoring_asym: 'Scoring Asymmetry',
-      terrible_def: 'Terrible Defense', poor_def: 'Poor Defense',
-      def_collapsing: 'Def Collapsing', def_softening: 'Def Softening',
-      last_game_high: 'Last Game High', consistent_high: 'Consistent High',
-      fortress_home: 'Fortress Home', away_roadkill: 'Away Roadkill',
-      net_dominance: 'Net Dominance', net_edge: 'Net Edge',
-      home_surging: 'Home Surging', home_improving: 'Home Improving',
-      away_cratering: 'Away Cratering', away_fading: 'Away Fading',
-      off_crush: 'Offense Crush', off_edge: 'Offense Edge',
-      huge_wpct_gap: 'Huge Win% Gap', wpct_gap: 'Win% Gap',
-      home_hot: 'Home Hot', away_cold: 'Away Cold',
+      both_ppg_118_L5: 'Both PPG 118+ (L5)',
+      both_ppg_118_L3: 'Both PPG 118+ (L3)',
+      both_total_225_L3: 'Both Totals 225+ (L3)',
+      porous_defense: 'Porous Defense',
+      home_porous_defense: 'Home Porous Def',
+      away_porous_defense: 'Away Porous Def',
+      home_scoring_rising: 'Home Scoring Rising',
+      away_scoring_rising: 'Away Scoring Rising',
+      home_high_totals: 'Home High Totals',
+      away_high_totals: 'Away High Totals',
+      home_high_scoring: 'Home High Scoring',
+      away_high_scoring: 'Away High Scoring',
     };
     const factorList = pick.factors.map(f => FACTOR_LABELS[f] || f).join(', ');
-
-    const betLine = `<div class="pick-bet-line apex-over">OVER ${pick.predTotal} at -110</div>`;
     const matchupHtml = `${teamName(g.away_team)} @ ${teamName(g.home_team)}`;
 
     let liveHtml = '';
@@ -896,41 +893,49 @@
       liveHtml = `<div class="pick-live ${won ? 'live-win' : 'live-loss'}">
         <span class="live-label">FINAL</span>
         <span class="live-score">Total: ${actualTotal} (pred: ${pick.predTotal})</span>
-        <span class="live-result">${won ? 'W' : 'L'}</span></div>`;
+        <span class="live-result">${won ? 'W (+$91)' : 'L (-$100)'}</span></div>`;
     } else if (g.status !== 'STATUS_SCHEDULED') {
       liveHtml = `<div class="pick-live live-active"><span class="live-label">LIVE Q${g.period} ${g.clock}</span></div>`;
     } else {
       liveHtml = `<div class="pick-live live-scheduled"><span class="live-label">${g.time}</span>
-        <span class="live-status">Pre-Game</span></div>`;
+        <span class="live-status">Pre-Game — Bet OVER at -110</span></div>`;
     }
 
     return `
       <div class="pick-card ${tierClass}">
         <div class="pick-header">
           <span class="pick-verdict">PLAY 8</span>
-          <span class="pick-conf">${pick.tier} — OVER TOTAL</span>
+          <span class="pick-conf">${pick.tier} — NOVA Score ${pick.strength}</span>
         </div>
-        ${betLine}
+        <div class="pick-bet-line nova-over">OVER ${pick.predTotal} at -110</div>
         <div class="pick-matchup">${matchupHtml}</div>
         <div class="pick-details">
           <div class="detail">
-            <span class="detail-label">Pred Total</span>
-            <span class="detail-value">${pick.predTotal}</span>
+            <span class="detail-label">Home PPG (L5)</span>
+            <span class="detail-value">${pick.hPpg5}</span>
           </div>
           <div class="detail">
-            <span class="detail-label">Strength</span>
-            <span class="detail-value">${pick.strength}</span>
+            <span class="detail-label">Away PPG (L5)</span>
+            <span class="detail-value">${pick.aPpg5}</span>
           </div>
           <div class="detail">
-            <span class="detail-label">Signals</span>
-            <span class="detail-value">${pick.factors.length}</span>
+            <span class="detail-label">Home Avg Total (L3)</span>
+            <span class="detail-value">${pick.hAvgTotal3}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Away Avg Total (L3)</span>
+            <span class="detail-value">${pick.aAvgTotal3}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">NOVA Score</span>
+            <span class="detail-value nova-value">${pick.strength}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Odds</span>
             <span class="detail-value">-110</span>
           </div>
         </div>
-        <div class="apex-factors">${factorList}</div>
+        <div class="nova-factors">${factorList}</div>
         ${liveHtml}
       </div>`;
   }
@@ -944,7 +949,7 @@
     grid.innerHTML = todayGames.map(g => {
       const isP4 = todayCdsPicks.some(p => p.game.id === g.id);
       const isP7 = todayPrismPicks.some(p => p.game.id === g.id);
-      const isP8 = todayApexPicks.some(p => p.game.id === g.id);
+      const isP8 = todayNovaPicks.some(p => p.game.id === g.id);
       const pickClass = (isP4 || isP7 || isP8) ? 'game-picked' : '';
 
       let statusHtml;
@@ -977,7 +982,7 @@
   function renderHistory() {
     renderCDSHistory();
     renderPRISMHistory();
-    renderAPEXHistory();
+    renderNOVAHistory();
   }
 
   function renderCDSHistory() {
@@ -1189,71 +1194,48 @@
       </div>`;
   }
 
-  function renderAPEXHistory() {
-    const tbody = document.getElementById('apex-history-body');
+  function renderNOVAHistory() {
+    const tbody = document.getElementById('nova-history-body');
     if (!tbody) return;
 
-    let filtered = apexHistoryPicks;
-    if (currentApexHistoryPeriod !== 'all') {
-      const cutoff = getCutoffDate(parseInt(currentApexHistoryPeriod));
-      filtered = apexHistoryPicks.filter(p => p.date >= cutoff);
+    let filtered = novaHistoryPicks;
+    if (currentNovaHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentNovaHistoryPeriod));
+      filtered = novaHistoryPicks.filter(p => p.date >= cutoff);
     }
 
     filtered = [...filtered].reverse();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="muted">No APEX picks in this period</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="muted">No NOVA picks in this period</td></tr>';
     } else {
-      const FACTOR_SHORT = {
-        elite_pace: 'Pace+', fast_pace: 'Pace',
-        both_surging: 'Surge', both_heating: 'Heat',
-        extreme_recent: 'Rcnt+', recent_high: 'Rcnt', recent_elevated: 'Rcnt-',
-        all_windows: 'AllW', multi_window: 'MultiW',
-        extreme_asym: 'Asym+', scoring_asym: 'Asym',
-        terrible_def: 'Def--', poor_def: 'Def-',
-        def_collapsing: 'DefCol', def_softening: 'DefSoft',
-        last_game_high: 'LastHi', consistent_high: 'ConstHi',
-        fortress_home: 'Fort', away_roadkill: 'Road-',
-        net_dominance: 'NetDom', net_edge: 'NetEdge',
-        home_surging: 'HmSurge', home_improving: 'HmUp',
-        away_cratering: 'AwCrater', away_fading: 'AwFade',
-        off_crush: 'OffCrush', off_edge: 'OffEdge',
-        huge_wpct_gap: 'WPct+', wpct_gap: 'WPct',
-        home_hot: 'HmHot', away_cold: 'AwCold',
-      };
-
       tbody.innerHTML = filtered.map(p => {
         const resClass = p.hit ? 'result-win' : 'result-loss';
         const resText = p.hit ? 'W' : 'L';
-        const pnlVal = p.pnl;
-        const pnlText = pnlVal >= 0 ? `+$${pnlVal}` : `-$${Math.abs(pnlVal)}`;
-        const tierClass = p.tier === 'ELITE' ? 'conf-apex-elite' : p.tier === 'HIGH' ? 'conf-apex-high' : 'conf-apex';
+        const pnlText = p.hit ? '+$91' : '-$100';
+        const tierClass = p.tier === 'ELITE' ? 'conf-nova-elite' : p.tier === 'HIGH' ? 'conf-nova-high' : 'conf-nova';
         const dateFormatted = formatDate(p.date);
-        const factorStr = p.factors.map(f => FACTOR_SHORT[f] || f).join(', ');
-
-        const betCol = `<span class="apex-over">OVER</span> ${p.predTotal}`;
-        const actualCol = `${p.actualTotal}`;
 
         return `
           <tr>
             <td>${dateFormatted}</td>
-            <td>${p.type === 'over' ? 'OVER' : 'HOME ML'}</td>
-            <td>${betCol}</td>
+            <td><span class="nova-over">OVER</span> ${p.predTotal}</td>
             <td>${p.away} @ ${p.home}</td>
             <td><span class="badge ${tierClass}">${p.tier}</span></td>
             <td>${p.strength}</td>
-            <td>${actualCol}</td>
+            <td>${p.hPpg5} / ${p.aPpg5}</td>
+            <td>${p.actualTotal}</td>
             <td><span class="badge ${resClass}">${resText}</span></td>
             <td class="${resClass}">${pnlText}</td>
           </tr>`;
       }).join('');
     }
 
-    renderAPEXSummary(filtered);
+    renderNOVASummary(filtered);
   }
 
-  function renderAPEXSummary(filtered) {
-    const summary = document.getElementById('apex-history-summary');
+  function renderNOVASummary(filtered) {
+    const summary = document.getElementById('nova-history-summary');
     if (!summary) return;
 
     const hits = filtered.filter(p => p.hit).length;
@@ -1263,15 +1245,17 @@
     const totalWagered = total * 100;
     const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
 
-    // Tier breakdown
-    const elites = filtered.filter(p => p.tier === 'ELITE');
-    const eliteHits = elites.filter(p => p.hit).length;
-    const elitePnl = elites.reduce((s, p) => s + p.pnl, 0);
+    const elitePicks = filtered.filter(p => p.tier === 'ELITE');
+    const eliteHits = elitePicks.filter(p => p.hit).length;
+    const elitePnl = elitePicks.reduce((s, p) => s + p.pnl, 0);
+
+    const highPicks = filtered.filter(p => p.tier === 'HIGH');
+    const highHits = highPicks.filter(p => p.hit).length;
 
     summary.innerHTML = `
       <div class="summary-grid">
-        <div class="summary-card summary-apex">
-          <div class="summary-title">Play 8 — APEX OVER at -110</div>
+        <div class="summary-card summary-nova">
+          <div class="summary-title">Play 8 — NOVA Compound OVER (at -110)</div>
           <div class="summary-stat">
             <span class="summary-record">${hits}-${total - hits}</span>
             <span class="summary-pct">${hitRate}%</span>
@@ -1280,26 +1264,21 @@
             ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
           </div>
         </div>
-        <div class="summary-card">
-          <div class="summary-title">ELITE Tier Only</div>
+        <div class="summary-card summary-nova-elite">
+          <div class="summary-title">ELITE Tier</div>
           <div class="summary-stat">
-            <span class="summary-record">${eliteHits}-${elites.length - eliteHits}</span>
-            <span class="summary-pct">${elites.length > 0 ? (eliteHits / elites.length * 100).toFixed(1) + '%' : '—'}</span>
+            <span class="summary-record">${elitePicks.length > 0 ? eliteHits + '-' + (elitePicks.length - eliteHits) : '—'}</span>
+            <span class="summary-pct">${elitePicks.length > 0 ? (eliteHits / elitePicks.length * 100).toFixed(1) + '%' : '—'}</span>
           </div>
           <div class="summary-pnl ${elitePnl >= 0 ? 'result-win' : 'result-loss'}">
-            ${elitePnl >= 0 ? '+' : ''}$${elitePnl}
+            ${elitePicks.length > 0 ? (elitePnl >= 0 ? '+' : '') + '$' + elitePnl : '—'}
           </div>
         </div>
         <div class="summary-card">
-          <div class="summary-title">All OVER Bets at -110</div>
-          <div class="summary-pnl result-win">
-            Win: +$91
-          </div>
-          <div class="summary-pnl result-loss">
-            Loss: -$100
-          </div>
-          <div class="summary-pnl" style="color: var(--text-muted); font-size: 12px;">
-            Break-even: 52.4%
+          <div class="summary-title">HIGH Tier</div>
+          <div class="summary-stat">
+            <span class="summary-record">${highPicks.length > 0 ? highHits + '-' + (highPicks.length - highHits) : '—'}</span>
+            <span class="summary-pct">${highPicks.length > 0 ? (highHits / highPicks.length * 100).toFixed(1) + '%' : '—'}</span>
           </div>
         </div>
       </div>`;
@@ -1310,7 +1289,7 @@
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayApexPicks.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -1322,34 +1301,35 @@
       el('metric-accuracy').textContent = cdsAcc + '%';
 
       // Play 7 PRISM accuracy
-      if (prismHistoryPicks.length > 0) {
-        const prismHits = prismHistoryPicks.filter(p => p.hit).length;
-        const prismTotal = prismHistoryPicks.length;
+      const prismHits = prismHistoryPicks.filter(p => p.hit).length;
+      const prismTotal = prismHistoryPicks.length;
+      if (prismTotal > 0) {
         const prismAcc = ((prismHits / prismTotal) * 100).toFixed(1);
-        const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
         el('metric-cds-accuracy').textContent = prismAcc + '%';
-
-        // APEX stats
-        const apexHits = apexHistoryPicks.filter(p => p.hit).length;
-        const apexTotal = apexHistoryPicks.length;
-        const apexPnl = apexHistoryPicks.reduce((s, p) => s + p.pnl, 0);
-
-        // Combined ROI (all plays)
-        const combinedBets = cdsTotal + prismTotal + apexTotal;
-        const combinedPnl = cdsPnl + prismPnl + apexPnl;
-        const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
-        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
-
-        // Combined record
-        const combinedWins = cdsWins + prismHits + apexHits;
-        const combinedTotal = cdsTotal + prismTotal + apexTotal;
-        el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
       } else {
         el('metric-cds-accuracy').textContent = '—';
-        const roi = cdsTotal > 0 ? ((cdsPnl / (cdsTotal * 100)) * 100).toFixed(0) : '0';
-        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
-        el('metric-record').textContent = `${cdsWins}-${cdsTotal - cdsWins}`;
       }
+
+      // Play 8 NOVA accuracy
+      const novaHits = novaHistoryPicks.filter(p => p.hit).length;
+      const novaTotal = novaHistoryPicks.length;
+      const novaMetric = document.getElementById('metric-nova-accuracy');
+      if (novaMetric && novaTotal > 0) {
+        novaMetric.textContent = ((novaHits / novaTotal) * 100).toFixed(1) + '%';
+      }
+
+      // Combined ROI (all models)
+      const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const combinedBets = cdsTotal + prismTotal + novaTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl;
+      const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
+      el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
+
+      // Combined record
+      const combinedWins = cdsWins + prismHits + novaHits;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal;
+      el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
 
@@ -1406,14 +1386,15 @@
       });
     });
 
-    document.querySelectorAll('.apex-filter-btn').forEach(btn => {
+    document.querySelectorAll('.nova-filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.apex-filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nova-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        currentApexHistoryPeriod = btn.dataset.period;
+        currentNovaHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
+
   }
 
   // ── Status ─────────────────────────────────────────────────────────────────
