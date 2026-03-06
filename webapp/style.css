@@ -1177,6 +1177,131 @@ td.result-loss { color: var(--red); }
   color: #ec4899;
 }
 
+/* ── PULSE (Play 10) — Purple/Violet ── */
+.pick-card.conf-pulse {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.conf-pulse .pick-verdict {
+  background: #8b5cf6;
+  color: #0a0e17;
+}
+
+.conf-pulse .pick-conf {
+  color: #a78bfa;
+}
+
+.pulse-text {
+  color: #8b5cf6;
+}
+
+.pulse-payout {
+  color: #8b5cf6 !important;
+}
+
+.pulse-value {
+  color: #8b5cf6;
+  font-weight: 700;
+}
+
+.pulse-badge {
+  display: inline-block;
+  background: rgba(139, 92, 246, 0.2);
+  color: #8b5cf6;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.pulse-under {
+  color: #8b5cf6;
+  font-weight: 700;
+}
+
+.pulse-legs {
+  padding: 8px 20px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pulse-leg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.pulse-leg-player {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pulse-leg-bet {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.pulse-leg-spike {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-left: auto;
+  background: rgba(139, 92, 246, 0.15);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.pulse-plus {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #8b5cf6;
+}
+
+.pulse-filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.pulse-filter-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.pulse-filter-btn.active {
+  background: var(--bg-accent);
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+}
+
+.badge.conf-pulse {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.summary-card.summary-pulse {
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.summary-pulse .summary-title {
+  color: #8b5cf6;
+}
+
 .summary-stat {
   display: flex;
   justify-content: center;

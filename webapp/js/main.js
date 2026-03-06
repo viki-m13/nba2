@@ -16,16 +16,21 @@
   let novaHistoryPicks = [];     // Historical Play 8 NOVA picks with results
   let todayFusionParlays = [];   // Play 9: FUSION parlays (2-leg -110/-110 = +264)
   let fusionHistoryPicks = [];   // Historical Play 9 FUSION parlay results
+  let todayPulseParlays = [];    // Play 10: PULSE player prop UNDER parlays (+251)
+  let pulseHistoryPicks = [];    // Historical Play 10 PULSE parlay results
+  let playerBoxScores = [];      // Player box score data for PULSE model
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
   let currentPrismHistoryPeriod = 'all';
   let currentNovaHistoryPeriod = 'all';
   let currentFusionHistoryPeriod = 'all';
+  let currentPulseHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
   const NOVAModel = window.ParlayEngine.NOVAModel;
+  const PULSEModel = window.ParlayEngine.PULSEModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -261,6 +266,8 @@
       runPRISMPredictions();
       runNOVAPredictions();
       buildFusionParlays();
+      await loadPlayerData();
+      buildPulseHistory();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -807,6 +814,138 @@
     console.log(`[FUSION] Built history: ${fusionHistoryPicks.length} parlays`);
   }
 
+  // ── PULSE Player Props (Play 10) ──────────────────────────────────────────
+
+  async function loadPlayerData() {
+    try {
+      const resp = await fetch('data/player_boxscores.json');
+      if (resp.ok) {
+        playerBoxScores = await resp.json();
+        console.log(`[PULSE] Loaded ${playerBoxScores.length} games with player data`);
+      }
+    } catch (e) {
+      console.warn('[PULSE] Could not load player box scores');
+    }
+  }
+
+  function parsePlayerMins(m) {
+    if (typeof m === 'number') return m;
+    try {
+      return parseInt(m);
+    } catch (e) {
+      try {
+        return parseInt(m.split(':')[0]);
+      } catch (e2) {
+        return 0;
+      }
+    }
+  }
+
+  function buildPulseHistory() {
+    pulseHistoryPicks = [];
+    if (!playerBoxScores || playerBoxScores.length === 0) return;
+
+    const pulse = Object.create(PULSEModel);
+    pulse.playerHistory = {};
+
+    // Sort by date
+    const sorted = [...playerBoxScores].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    // Group by date
+    const byDate = {};
+    for (const game of sorted) {
+      if (!byDate[game.date]) byDate[game.date] = [];
+      byDate[game.date].push(game);
+    }
+
+    const processedDates = new Set();
+
+    for (const game of sorted) {
+      const date = game.date;
+
+      if (!processedDates.has(date)) {
+        const dayGames = byDate[date] || [];
+        const dayCandidates = [];
+
+        // Generate UNDER picks for all games on this date
+        for (const dg of dayGames) {
+          const players = (dg.players || []).map(p => ({
+            name: p.name,
+            team: p.team,
+            pts: p.pts,
+            reb: p.reb,
+            ast: p.ast,
+            min: parsePlayerMins(p.min),
+          }));
+
+          const picks = pulse.predictGame(players);
+          for (const pick of picks) {
+            // Check actual result
+            const actualPlayer = dg.players.find(pp => pp.name === pick.player);
+            if (!actualPlayer) continue;
+
+            const hit = actualPlayer.pts < pick.line;
+            dayCandidates.push({
+              ...pick,
+              actual: actualPlayer.pts,
+              hit,
+              gameKey: `${dg.away}@${dg.home}`,
+              gameDisplay: `${dg.away} @ ${dg.home}`,
+            });
+          }
+        }
+
+        // Select top 2 from different games
+        dayCandidates.sort((a, b) => b.strength - a.strength);
+        const selected = [];
+        const usedGames = new Set();
+
+        for (const c of dayCandidates) {
+          if (usedGames.has(c.gameKey)) continue;
+          selected.push(c);
+          usedGames.add(c.gameKey);
+          if (selected.length >= 2) break;
+        }
+
+        if (selected.length >= 2) {
+          const allHit = selected.every(s => s.hit);
+          pulseHistoryPicks.push({
+            date,
+            leg1Player: selected[0].player,
+            leg1Team: selected[0].team,
+            leg1Line: selected[0].line,
+            leg1Actual: selected[0].actual,
+            leg1Hit: selected[0].hit,
+            leg1Spike: selected[0].spikePct,
+            leg1Tier: selected[0].tier,
+            leg1Game: selected[0].gameDisplay,
+            leg2Player: selected[1].player,
+            leg2Team: selected[1].team,
+            leg2Line: selected[1].line,
+            leg2Actual: selected[1].actual,
+            leg2Hit: selected[1].hit,
+            leg2Spike: selected[1].spikePct,
+            leg2Tier: selected[1].tier,
+            leg2Game: selected[1].gameDisplay,
+            won: allHit,
+            pnl: allHit ? 251 : -100,
+          });
+        }
+
+        processedDates.add(date);
+      }
+
+      // Update PULSE model with all players from this game
+      for (const p of (game.players || [])) {
+        const mins = parsePlayerMins(p.min);
+        if (mins < 10) continue;
+        pulse.updatePlayer(p.name, p.pts, p.reb, p.ast, game.date);
+      }
+    }
+
+    console.log(`[PULSE] Built history: ${pulseHistoryPicks.length} parlays`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -817,7 +956,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0 || todayPulseParlays.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -862,6 +1001,16 @@
           '<div class="picks-grid">' + todayFusionParlays.map(renderFusionCard).join('') + '</div>';
       } else if (fusionContainer) {
         fusionContainer.style.display = 'none';
+      }
+
+      // Play 10 — PULSE Player Prop Parlay
+      const pulseContainer = document.getElementById('pulse-container');
+      if (pulseContainer && todayPulseParlays.length > 0) {
+        pulseContainer.style.display = '';
+        pulseContainer.innerHTML = '<h3 class="section-title">Play 10 — PULSE Player Prop Parlay <span class="pulse-badge">+251</span></h3>' +
+          '<div class="picks-grid">' + todayPulseParlays.map(renderPulseCard).join('') + '</div>';
+      } else if (pulseContainer) {
+        pulseContainer.style.display = 'none';
       }
 
     }
@@ -1203,6 +1352,54 @@
       </div>`;
   }
 
+  function renderPulseCard(parlay) {
+    const l1 = parlay.leg1;
+    const l2 = parlay.leg2;
+
+    return `
+      <div class="pick-card conf-pulse">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 10</span>
+          <span class="pick-conf">PULSE PARLAY — +251</span>
+        </div>
+        <div class="pick-bet-line pulse-payout">2-Leg Player Prop Parlay at +251 ($100 → $351)</div>
+        <div class="pulse-legs">
+          <div class="pulse-leg">
+            <span class="pulse-leg-player">${l1.player}</span>
+            <span class="pulse-leg-bet">UNDER ${l1.line} PTS at -115</span>
+            <span class="pulse-leg-spike">+${l1.spikePct}% spike</span>
+          </div>
+          <div class="pulse-plus">+</div>
+          <div class="pulse-leg">
+            <span class="pulse-leg-player">${l2.player}</span>
+            <span class="pulse-leg-bet">UNDER ${l2.line} PTS at -115</span>
+            <span class="pulse-leg-spike">+${l2.spikePct}% spike</span>
+          </div>
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Parlay Odds</span>
+            <span class="detail-value pulse-value">+251</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Each Leg</span>
+            <span class="detail-value">-115</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Win Payout</span>
+            <span class="detail-value pulse-value">+$251</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Break-Even</span>
+            <span class="detail-value">28.5%</span>
+          </div>
+        </div>
+        <div class="pick-live live-scheduled">
+          <span class="live-status">Pre-Game — Place 2-Leg Player Prop Parlay</span>
+        </div>
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -1247,6 +1444,7 @@
     renderPRISMHistory();
     renderNOVAHistory();
     renderFusionHistory();
+    renderPulseHistory();
   }
 
   function renderCDSHistory() {
@@ -1626,12 +1824,97 @@
       </div>`;
   }
 
+  function renderPulseHistory() {
+    const tbody = document.getElementById('pulse-history-body');
+    if (!tbody) return;
+
+    let filtered = pulseHistoryPicks;
+    if (currentPulseHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentPulseHistoryPeriod));
+      filtered = pulseHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No PULSE parlays in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.won ? 'result-win' : 'result-loss';
+        const resText = p.won ? 'W' : 'L';
+        const pnlText = p.won ? '+$251' : '-$100';
+        const dateFormatted = formatDate(p.date);
+        const l1Class = p.leg1Hit ? 'result-win' : 'result-loss';
+        const l2Class = p.leg2Hit ? 'result-win' : 'result-loss';
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td>${p.leg1Player} <span class="pulse-under">U${p.leg1Line}</span> <span class="badge ${l1Class}">${p.leg1Hit ? 'W' : 'L'}</span> (got ${p.leg1Actual})</td>
+            <td>${p.leg1Game}</td>
+            <td>${p.leg2Player} <span class="pulse-under">U${p.leg2Line}</span> <span class="badge ${l2Class}">${p.leg2Hit ? 'W' : 'L'}</span> (got ${p.leg2Actual})</td>
+            <td>${p.leg2Game}</td>
+            <td>+251</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderPulseSummary(filtered);
+  }
+
+  function renderPulseSummary(filtered) {
+    const summary = document.getElementById('pulse-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.won).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    // Individual leg accuracy
+    const l1Hits = filtered.filter(p => p.leg1Hit).length;
+    const l2Hits = filtered.filter(p => p.leg2Hit).length;
+    const legTotal = total * 2;
+    const legHits = l1Hits + l2Hits;
+    const legPct = legTotal > 0 ? ((legHits / legTotal) * 100).toFixed(1) : '0';
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-pulse">
+          <div class="summary-title">Play 10 — PULSE Player Prop Parlay (at +251)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Leg Details</div>
+          <div class="summary-stat">
+            <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Each leg: -115 | Parlay: +251</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Break-even: 28.5%</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length + todayPulseParlays.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -1670,17 +1953,27 @@
         fusionMetric.textContent = (fusionRoi >= 0 ? '+' : '') + fusionRoi + '%';
       }
 
+      // Play 10 PULSE metrics
+      const pulseWins = pulseHistoryPicks.filter(p => p.won).length;
+      const pulseTotal = pulseHistoryPicks.length;
+      const pulsePnl = pulseHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const pulseMetric = document.getElementById('metric-pulse-accuracy');
+      if (pulseMetric && pulseTotal > 0) {
+        const pulseRoi = ((pulsePnl / (pulseTotal * 100)) * 100).toFixed(0);
+        pulseMetric.textContent = (pulseRoi >= 0 ? '+' : '') + pulseRoi + '%';
+      }
+
       // Combined ROI (all models)
       const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
       const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
-      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal;
-      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl;
+      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl + pulsePnl;
       const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
 
       // Combined record
-      const combinedWins = cdsWins + prismHits + novaHits + fusionWins;
-      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal;
+      const combinedWins = cdsWins + prismHits + novaHits + fusionWins + pulseWins;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal;
       el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
@@ -1752,6 +2045,15 @@
         document.querySelectorAll('.fusion-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFusionHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.pulse-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pulse-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPulseHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
