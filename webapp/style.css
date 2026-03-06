@@ -1640,6 +1640,40 @@ td.result-loss { color: var(--red); }
   border-radius: 3px;
 }
 
+.siege-leg-team {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 11px;
+}
+
+.siege-live-tag {
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: 3px;
+  letter-spacing: 0.5px;
+}
+
+.siege-books-count {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.siege-odds-tag {
+  font-size: 10px;
+  color: #ef4444;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0 4px;
+  border-radius: 2px;
+  margin: 0 2px;
+}
+
 .siege-plus {
   text-align: center;
   font-size: 14px;

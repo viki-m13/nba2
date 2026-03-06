@@ -291,7 +291,7 @@
       generateTodayPulsePicks();
       generateTodayVaultPicks();
       generateTodayFortressPicks();
-      generateTodaySiegePicks();
+      await generateTodaySiegePicks();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -1496,12 +1496,27 @@
 
   // ── SIEGE History Builder (Play 13) ──────────────────────────────────────
 
-  function siegeParlayOdds(legs) {
-    // All legs at estimated -175 sportsbook odds
-    // 2 legs: +147, 3 legs: +288
-    const decPerLeg = 1 + 100 / 175;  // 1.5714
-    const dec = Math.pow(decPerLeg, legs.length);
-    return Math.round((dec - 1) * 100);
+  // SIEGE: Calculate parlay odds from mixed per-leg odds
+  function siegeCalcParlayOdds(legs) {
+    let decimal = 1;
+    for (const leg of legs) {
+      const odds = leg.liveOdds || leg.estOdds || -300;
+      if (odds > 0) {
+        decimal *= 1 + odds / 100;
+      } else {
+        decimal *= 1 + 100 / Math.abs(odds);
+      }
+    }
+    if (decimal >= 2.0) {
+      return Math.round((decimal - 1) * 100);
+    } else {
+      return Math.round(-100 / (decimal - 1));
+    }
+  }
+
+  // SIEGE: Format American odds for display
+  function siegeFormatOdds(odds) {
+    return odds > 0 ? `+${odds}` : `${odds}`;
   }
 
   function buildSiegeHistory() {
@@ -1553,7 +1568,7 @@
           }
         }
 
-        // Select top 3 legs from different games, sorted by momentum z-score
+        // Sort by confidence (safest legs first)
         dayCandidates.sort((a, b) => b.confidence - a.confidence);
         const selected = [];
         const usedGames = new Set();
@@ -1562,13 +1577,17 @@
           if (usedGames.has(c.gameKey)) continue;
           selected.push(c);
           usedGames.add(c.gameKey);
-          if (selected.length >= 3) break;
+          if (selected.length >= 2) break;  // 2-leg parlays for highest accuracy
         }
 
         if (selected.length >= 2) {
           const allHit = selected.every(s => s.hit);
-          const odds = siegeParlayOdds(selected);
-          const pnl = allHit ? odds : -100;
+          const odds = siegeCalcParlayOdds(selected);
+          const parlayDecimal = selected.reduce((d, s) => {
+            const o = s.estOdds || -300;
+            return d * (o > 0 ? 1 + o/100 : 1 + 100/Math.abs(o));
+          }, 1);
+          const pnl = allHit ? Math.round((parlayDecimal - 1) * 100) : -100;
 
           siegeHistoryPicks.push({
             date,
@@ -1580,12 +1599,13 @@
               actual: s.actual,
               hit: s.hit,
               confidence: s.confidence,
-              overRate: s.overRate,
               l10Avg: s.l10Avg,
-              l5Avg: s.l5Avg,
               l3Avg: s.l3Avg,
-              sbOdds: s.sbOdds,
+              l10Min: s.l10Min,
+              estOdds: s.estOdds || -200,
               ratio: s.ratio,
+              cv: s.cv,
+              momentum: s.momentum,
               gameDisplay: s.gameDisplay,
             })),
             numLegs: selected.length,
@@ -1617,10 +1637,114 @@
       for (const l of p.legs) { legTotal++; if (l.hit) legHits++; }
     }
     const avgOdds = total > 0 ? Math.round(siegeHistoryPicks.reduce((s, p) => s + p.odds, 0) / total) : 0;
-    console.log(`[SIEGE] Built history: ${total} parlays, ${wins}-${total-wins} (${total > 0 ? (wins/total*100).toFixed(1) : 0}%), P&L: $${pnl}, ROI: ${total > 0 ? (pnl/(total*100)*100).toFixed(0) : 0}%, Legs: ${legHits}/${legTotal} (${legTotal > 0 ? (legHits/legTotal*100).toFixed(1) : 0}%), Avg odds: +${avgOdds}`);
+    console.log(`[SIEGE] Built history: ${total} parlays, ${wins}-${total-wins} (${total > 0 ? (wins/total*100).toFixed(1) : 0}%), P&L: $${pnl}, ROI: ${total > 0 ? (pnl/(total*100)*100).toFixed(0) : 0}%, Legs: ${legHits}/${legTotal} (${legTotal > 0 ? (legHits/legTotal*100).toFixed(1) : 0}%), Avg odds: ${siegeFormatOdds(avgOdds)}`);
   }
 
-  function generateTodaySiegePicks() {
+  // SIEGE: Fetch live odds from The Odds API for player_points_alternate
+  const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
+  const ODDS_API_BASE = 'https://api.the-odds-api.com/v4';
+
+  async function fetchSiegeOddsFromAPI() {
+    try {
+      // 1. Get today's NBA events
+      const eventsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events?apiKey=${ODDS_API_KEY}`;
+      const eventsRes = await fetch(eventsUrl);
+      if (!eventsRes.ok) {
+        console.warn('[SIEGE] Events API returned', eventsRes.status);
+        return null;
+      }
+      const events = await eventsRes.json();
+      if (!events || events.length === 0) return null;
+
+      const remaining = eventsRes.headers.get('x-requests-remaining');
+      console.log(`[SIEGE] Odds API: ${events.length} events, ${remaining} requests remaining`);
+
+      // 2. Fetch alternate player points odds for each event
+      const allOdds = {}; // playerName -> { threshold -> { bestOdds, bestBook, allBooks } }
+
+      for (const event of events) {
+        try {
+          const oddsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=player_points_alternate&oddsFormat=american`;
+          const oddsRes = await fetch(oddsUrl);
+          if (!oddsRes.ok) continue;
+          const oddsData = await oddsRes.json();
+
+          if (!oddsData || !oddsData.bookmakers) continue;
+
+          for (const book of oddsData.bookmakers) {
+            const market = book.markets && book.markets.find(m => m.key === 'player_points_alternate');
+            if (!market) continue;
+
+            for (const outcome of (market.outcomes || [])) {
+              if (outcome.name !== 'Over') continue;
+              const player = outcome.description;
+              const threshold = outcome.point;
+              const odds = outcome.price;
+
+              if (!allOdds[player]) allOdds[player] = {};
+              if (!allOdds[player][threshold]) allOdds[player][threshold] = [];
+              allOdds[player][threshold].push({
+                book: book.title,
+                bookKey: book.key,
+                odds: odds,
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('[SIEGE] Error fetching odds for event:', event.id, e);
+        }
+      }
+
+      // 3. For each player/threshold, find best odds across books
+      for (const player of Object.keys(allOdds)) {
+        for (const threshold of Object.keys(allOdds[player])) {
+          const bookOdds = allOdds[player][threshold];
+          bookOdds.sort((a, b) => b.odds - a.odds); // Least negative first
+          allOdds[player][threshold] = {
+            bestOdds: bookOdds[0].odds,
+            bestBook: bookOdds[0].book,
+            numBooks: bookOdds.length,
+            allBooks: bookOdds,
+          };
+        }
+      }
+
+      console.log(`[SIEGE] Fetched odds for ${Object.keys(allOdds).length} players`);
+      return allOdds;
+    } catch (e) {
+      console.error('[SIEGE] Error fetching odds from API:', e);
+      return null;
+    }
+  }
+
+  // Find best live odds for a player at a given floor
+  function findBestLiveOdds(liveOdds, playerName, floorLine) {
+    if (!liveOdds || !liveOdds[playerName]) return null;
+
+    const playerThresholds = liveOdds[playerName];
+    let bestMatch = null;
+
+    // Find the highest threshold that is <= our floor line
+    // This ensures the actual bet is at least as safe as our model predicts
+    for (const threshold of Object.keys(playerThresholds)) {
+      const t = parseFloat(threshold);
+      if (t <= floorLine) {
+        const data = playerThresholds[threshold];
+        if (!bestMatch || t > bestMatch.threshold) {
+          bestMatch = {
+            threshold: t,
+            odds: data.bestOdds,
+            book: data.bestBook,
+            numBooks: data.numBooks,
+          };
+        }
+      }
+    }
+
+    return bestMatch;
+  }
+
+  async function generateTodaySiegePicks() {
     todaySiegeParlays = [];
     if (!trainedSiegeModel || todayGames.length === 0) {
       console.log(`[SIEGE] Skipping today's picks: model=${!!trainedSiegeModel}, games=${todayGames.length}`);
@@ -1628,6 +1752,14 @@
     }
 
     try {
+      // Fetch live odds from Odds API
+      let liveOdds = null;
+      try {
+        liveOdds = await fetchSiegeOddsFromAPI();
+      } catch (e) {
+        console.warn('[SIEGE] Could not fetch live odds, using estimates:', e);
+      }
+
       const dayCandidates = [];
 
       for (const game of todayGames) {
@@ -1641,16 +1773,29 @@
 
         const picks = trainedSiegeModel.predictGame(teamPlayers);
         for (const pick of picks) {
+          // Try to find live odds from the API
+          const live = findBestLiveOdds(liveOdds, pick.player, pick.line);
+
           dayCandidates.push({
             ...pick,
             gameKey,
             gameDisplay: `${game.away_team} @ ${game.home_team}`,
+            liveOdds: live ? live.odds : null,
+            liveThreshold: live ? live.threshold : null,
+            bestBook: live ? live.book : null,
+            numBooks: live ? live.numBooks : 0,
+            hasLiveOdds: !!live,
           });
         }
       }
 
       console.log(`[SIEGE] ${dayCandidates.length} qualifying players across ${todayGames.length} games`);
+      if (liveOdds) {
+        const withLive = dayCandidates.filter(c => c.hasLiveOdds).length;
+        console.log(`[SIEGE] ${withLive}/${dayCandidates.length} have live odds from API`);
+      }
 
+      // Sort by confidence (safest legs first)
       dayCandidates.sort((a, b) => b.confidence - a.confidence);
       const selected = [];
       const usedGames = new Set();
@@ -1658,11 +1803,13 @@
         if (usedGames.has(c.gameKey)) continue;
         selected.push(c);
         usedGames.add(c.gameKey);
-        if (selected.length >= 3) break;
+        if (selected.length >= 2) break;  // 2-leg for highest accuracy
       }
 
       if (selected.length >= 2) {
-        const odds = siegeParlayOdds(selected);
+        const odds = siegeCalcParlayOdds(selected);
+        const hasAnyLive = selected.some(s => s.hasLiveOdds);
+
         todaySiegeParlays.push({
           legs: selected.map(s => ({
             player: s.player,
@@ -1670,16 +1817,23 @@
             line: s.line,
             displayLine: s.displayLine,
             confidence: s.confidence,
-            overRate: s.overRate,
             l10Avg: s.l10Avg,
-            l5Avg: s.l5Avg,
             l3Avg: s.l3Avg,
-            sbOdds: s.sbOdds,
+            l10Min: s.l10Min,
+            estOdds: s.estOdds,
+            liveOdds: s.liveOdds,
+            liveThreshold: s.liveThreshold,
+            bestBook: s.bestBook,
+            numBooks: s.numBooks,
+            hasLiveOdds: s.hasLiveOdds,
             ratio: s.ratio,
+            cv: s.cv,
+            momentum: s.momentum,
             gameDisplay: s.gameDisplay,
           })),
           numLegs: selected.length,
           odds,
+          hasLiveOdds: hasAnyLive,
         });
       }
 
@@ -1776,11 +1930,11 @@
         fortressContainer.style.display = 'none';
       }
 
-      // Play 13 — SIEGE Sportsbook-Aligned Parlay
+      // Play 13 — SIEGE Adaptive Edge Parlay
       const siegeContainer = document.getElementById('siege-container');
       if (siegeContainer && todaySiegeParlays.length > 0) {
         siegeContainer.style.display = '';
-        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Sportsbook-Aligned Parlay <span class="siege-badge">Real SB Odds</span></h3>' +
+        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Adaptive Edge Parlay <span class="siege-badge">+125 / Live Odds</span></h3>' +
           '<div class="picks-grid">' + todaySiegeParlays.map(renderSiegeCard).join('') + '</div>';
       } else if (siegeContainer) {
         siegeContainer.style.display = 'none';
@@ -2262,37 +2416,50 @@
   }
 
   function renderSiegeCard(parlay) {
-    const legsHtml = parlay.legs.map((l, i) => `
-      <div class="siege-leg">
-        <span class="siege-leg-player">${l.player}</span>
-        <span class="siege-leg-bet">${l.displayLine} PTS at ~-175</span>
-        <span class="siege-leg-odds">L10: ${l.l10Avg} | L3: ${l.l3Avg} | z=${l.confidence}</span>
-      </div>
-      ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
-    `).join('');
+    const legsHtml = parlay.legs.map((l, i) => {
+      const oddsDisplay = l.hasLiveOdds
+        ? `<span class="siege-live-tag">LIVE</span> ${siegeFormatOdds(l.liveOdds)} (${l.bestBook})`
+        : `Est. ${siegeFormatOdds(l.estOdds)}`;
+      const bookInfo = l.hasLiveOdds && l.numBooks > 1
+        ? `<span class="siege-books-count">${l.numBooks} books compared</span>`
+        : '';
+
+      return `
+        <div class="siege-leg">
+          <span class="siege-leg-player">${l.player} <span class="siege-leg-team">(${l.team})</span></span>
+          <span class="siege-leg-bet">${l.displayLine} PTS ${oddsDisplay}</span>
+          <span class="siege-leg-odds">L10: ${l.l10Avg} | Min: ${l.l10Min} | Conf: ${l.confidence}x ${bookInfo}</span>
+        </div>
+        ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
+      `;
+    }).join('');
+
+    const oddsLabel = parlay.odds >= 0 ? `+${parlay.odds}` : `${parlay.odds}`;
+    const payoutAmt = parlay.odds >= 0 ? parlay.odds : Math.round(10000 / Math.abs(parlay.odds));
+    const oddsSource = parlay.hasLiveOdds ? 'Live Odds API' : 'Estimated';
 
     return `
       <div class="pick-card conf-siege">
         <div class="pick-header">
           <span class="pick-verdict">PLAY 13</span>
-          <span class="pick-conf">SIEGE PARLAY — +${parlay.odds}</span>
+          <span class="pick-conf">SIEGE — ${oddsLabel} ${parlay.hasLiveOdds ? '🔴 LIVE' : ''}</span>
         </div>
-        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg OVER/UNDER Parlay at +${parlay.odds} ($100 → $${parlay.odds + 100})</div>
+        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg Adaptive Floor Parlay — ${oddsLabel} ($100 → $${payoutAmt + 100})</div>
         <div class="siege-legs">
           ${legsHtml}
         </div>
         <div class="pick-details">
           <div class="detail">
             <span class="detail-label">Parlay Odds</span>
-            <span class="detail-value siege-value">+${parlay.odds}</span>
+            <span class="detail-value siege-value">${oddsLabel}</span>
           </div>
           <div class="detail">
-            <span class="detail-label">Each Leg</span>
-            <span class="detail-value">~-175 per leg</span>
+            <span class="detail-label">Source</span>
+            <span class="detail-value">${oddsSource}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Win Payout</span>
-            <span class="detail-value siege-value">+$${parlay.odds}</span>
+            <span class="detail-value siege-value">$${payoutAmt + 100}</span>
           </div>
           <div class="detail">
             <span class="detail-label">Legs</span>
@@ -2300,7 +2467,7 @@
           </div>
         </div>
         <div class="pick-live live-scheduled">
-          <span class="live-status">Pre-Game — Use Player Points OVER on your sportsbook (~-175/leg)</span>
+          <span class="live-status">Pre-Game — ${parlay.hasLiveOdds ? 'Shop the recommended books per leg for best pricing' : 'Use Player Points alternate lines on your sportsbook'}</span>
         </div>
       </div>`;
   }
@@ -3029,12 +3196,12 @@
       tbody.innerHTML = filtered.map(p => {
         const resClass = p.won ? 'result-win' : 'result-loss';
         const resText = p.won ? 'W' : 'L';
-        const pnlText = p.won ? `+$${p.odds}` : '-$100';
+        const pnlText = p.won ? `+$${p.pnl}` : '-$100';
         const dateFormatted = formatDate(p.date);
 
         const legsStr = p.legs.map(l => {
           const lClass = l.hit ? 'result-win' : 'result-loss';
-          return `${l.player} <span class="siege-over">${l.displayLine}</span> <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual} pts)`;
+          return `${l.player} <span class="siege-over">${l.displayLine}</span> <span class="siege-odds-tag">${siegeFormatOdds(l.estOdds)}</span> <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual} pts)`;
         }).join(' <span class="siege-sep">|</span> ');
 
         return `
@@ -3042,7 +3209,7 @@
             <td>${dateFormatted}</td>
             <td class="siege-legs-cell">${legsStr}</td>
             <td>${p.numLegs}</td>
-            <td>+${p.odds}</td>
+            <td>${siegeFormatOdds(p.odds)}</td>
             <td><span class="badge ${resClass}">${resText}</span></td>
             <td class="${resClass}">${pnlText}</td>
           </tr>`;
@@ -3078,7 +3245,7 @@
     summary.innerHTML = `
       <div class="summary-grid">
         <div class="summary-card summary-siege">
-          <div class="summary-title">Play 13 — SIEGE OVER/UNDER Momentum Parlay (avg +${avgOdds})</div>
+          <div class="summary-title">Play 13 — SIEGE Adaptive Edge Parlay (avg ${siegeFormatOdds(avgOdds)})</div>
           <div class="summary-stat">
             <span class="summary-record">${hits}-${total - hits}</span>
             <span class="summary-pct">${hitRate}%</span>
@@ -3088,12 +3255,12 @@
           </div>
         </div>
         <div class="summary-card">
-          <div class="summary-title">Leg Details (~-175 OVER)</div>
+          <div class="summary-title">Leg Details (Adaptive Floors + Cross-Book Shopping)</div>
           <div class="summary-stat">
             <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
           </div>
           <div class="summary-stat">
-            <span class="summary-record">Player Points OVER at ~-175 per leg</span>
+            <span class="summary-record">Dynamic per-player floors with Odds API pricing</span>
           </div>
           <div class="summary-stat">
             <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>
@@ -3176,14 +3343,14 @@
         fortressMetric.textContent = (fortressRoi >= 0 ? '+' : '') + fortressRoi + '%';
       }
 
-      // Play 13: SIEGE ROI
+      // Play 13: SIEGE accuracy
       const siegeTotal = siegeHistoryPicks.length;
       const siegeWins = siegeHistoryPicks.filter(p => p.won).length;
       const siegePnl = siegeHistoryPicks.reduce((s, p) => s + p.pnl, 0);
       const siegeMetric = document.getElementById('metric-siege-accuracy');
       if (siegeMetric && siegeTotal > 0) {
-        const siegeRoi = ((siegePnl / (siegeTotal * 100)) * 100).toFixed(0);
-        siegeMetric.textContent = (siegeRoi >= 0 ? '+' : '') + siegeRoi + '%';
+        const siegeAcc = ((siegeWins / siegeTotal) * 100).toFixed(1);
+        siegeMetric.textContent = siegeAcc + '%';
       }
 
       // Combined ROI (all models)
@@ -3215,7 +3382,7 @@
       generateTodayPulsePicks();
       generateTodayVaultPicks();
       generateTodayFortressPicks();
-      generateTodaySiegePicks();
+      await generateTodaySiegePicks();
       renderPicks();
       renderAllGames();
       updateMetrics();
