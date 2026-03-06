@@ -365,7 +365,7 @@
 
       <!-- ── PLAY 13: SIEGE OVER/UNDER Momentum Parlay History ── -->
       <h2 class="section-title" style="margin-top: 32px;">Play 13 — SIEGE Adaptive Edge Parlay History</h2>
-      <p class="history-note">Player Points OVER parlays with FanDuel-calibrated odds per leg. Floor lines set at 55% of L10 average — odds estimated from the floor/average ratio to match real FanDuel alternate lines pricing.</p>
+      <p class="history-note">Player Points OVER parlays with EV-optimized floors per player. Each leg's floor is dynamically chosen (55–82% of L10 avg) to maximize Expected Value — odds calibrated to real FanDuel alternate lines. Today's picks use live Odds API pricing.</p>
       <div class="filter-bar">
         <button class="siege-filter-btn" data-period="7">Last 7 Days</button>
         <button class="siege-filter-btn" data-period="14">Last 14 Days</button>
@@ -819,14 +819,14 @@
 
         <!-- ── PLAY 13: SIEGE ── -->
         <div class="how-section" style="border-top: 2px solid rgba(239, 68, 68, 0.3); padding-top: 24px; margin-top: 24px;">
-          <h3>Play 13 — SIEGE: Adaptive Edge Parlay Engine</h3>
-          <p>The <strong>SIEGE engine</strong> combines proprietary player floor analysis with <strong>real-time cross-book odds shopping</strong>
-          via The Odds API. SIEGE uses a higher 55% floor than FORTRESS (50%), paired with strict consistency filtering (CV &lt; 0.28)
-          and L10 minimum safety checks to achieve <strong>92.1% parlay accuracy</strong>.</p>
-          <p>Optimized for <strong>2-leg parlays at +125</strong> — sacrificing higher payout odds for elite hit rate. SIEGE then shops
-          <strong>7+ bookmakers</strong> via The Odds API for the best alternate line price per leg, maximizing parlay value beyond
-          the estimated baseline.</p>
-          <p>Bet: <strong>2-leg floor OVER parlay at +125</strong> — $100 → $225 with 92%+ hit rate.</p>
+          <h3>Play 13 — SIEGE: EV-Optimized Edge Parlay Engine</h3>
+          <p>The <strong>SIEGE engine</strong> dynamically optimizes each player's floor line to maximize <strong>Expected Value</strong>.
+          Instead of a fixed floor, it tests floors from 55–82% of L10 average per player, selecting the level where
+          (hit rate × FanDuel payout) is highest. Paired with consistency filtering (CV &lt; 0.30)
+          and L10 safety checks.</p>
+          <p>Today's picks use <strong>live FanDuel odds</strong> from The Odds API. History uses FanDuel-calibrated estimates
+          based on the floor/average ratio — matching real alternate line pricing.</p>
+          <p>Up to <strong>3-leg parlays</strong> optimized for the best balance of accuracy and payout.</p>
         </div>
 
         <div class="how-section">
@@ -862,7 +862,7 @@
             <li><strong>Play 10:</strong> Place a 2-leg player prop UNDER parlay at +251 when PULSE detects two scoring regression candidates</li>
             <li><strong>Play 11:</strong> Place a 4-8 leg player Points OVER floor parlay when VAULT detects qualified floor candidates across multiple games</li>
             <li><strong>Play 12:</strong> Place a 3-5 leg player Points OVER higher-floor parlay when FORTRESS detects qualified candidates — better sportsbook odds than VAULT</li>
-            <li><strong>Play 13:</strong> Place a 2-3 leg player Points OVER parlay using SIEGE's adaptive floors — shop the recommended bookmaker per leg for optimal pricing via live Odds API</li>
+            <li><strong>Play 13:</strong> Place a 2-3 leg player Points OVER parlay using SIEGE's EV-optimized floors — uses live FanDuel Odds API pricing for today's picks</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>

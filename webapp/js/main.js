@@ -1568,8 +1568,8 @@
           }
         }
 
-        // Sort by confidence (safest legs first)
-        dayCandidates.sort((a, b) => b.confidence - a.confidence);
+        // Sort by EV (best expected value first)
+        dayCandidates.sort((a, b) => (b.ev || 0) - (a.ev || 0) || b.confidence - a.confidence);
         const selected = [];
         const usedGames = new Set();
 
@@ -1577,7 +1577,7 @@
           if (usedGames.has(c.gameKey)) continue;
           selected.push(c);
           usedGames.add(c.gameKey);
-          if (selected.length >= 2) break;  // 2-leg parlays for highest accuracy
+          if (selected.length >= 3) break;  // Up to 3-leg parlays for optimal EV × payout
         }
 
         if (selected.length >= 2) {
@@ -1606,6 +1606,8 @@
               ratio: s.ratio,
               cv: s.cv,
               momentum: s.momentum,
+              hitRate: s.hitRate,
+              ev: s.ev,
               gameDisplay: s.gameDisplay,
             })),
             numLegs: selected.length,
@@ -1803,15 +1805,15 @@
         console.log(`[SIEGE] ${withLive}/${dayCandidates.length} have live odds from API`);
       }
 
-      // Sort by confidence (safest legs first)
-      dayCandidates.sort((a, b) => b.confidence - a.confidence);
+      // Sort by EV (best expected value first)
+      dayCandidates.sort((a, b) => (b.ev || 0) - (a.ev || 0) || b.confidence - a.confidence);
       const selected = [];
       const usedGames = new Set();
       for (const c of dayCandidates) {
         if (usedGames.has(c.gameKey)) continue;
         selected.push(c);
         usedGames.add(c.gameKey);
-        if (selected.length >= 2) break;  // 2-leg for highest accuracy
+        if (selected.length >= 3) break;  // Up to 3-leg for optimal EV × payout
       }
 
       if (selected.length >= 2) {
@@ -1942,7 +1944,7 @@
       const siegeContainer = document.getElementById('siege-container');
       if (siegeContainer && todaySiegeParlays.length > 0) {
         siegeContainer.style.display = '';
-        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Adaptive Edge Parlay <span class="siege-badge">FanDuel Live Odds</span></h3>' +
+        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE EV-Optimized Parlay <span class="siege-badge">FanDuel Live Odds</span></h3>' +
           '<div class="picks-grid">' + todaySiegeParlays.map(renderSiegeCard).join('') + '</div>';
       } else if (siegeContainer) {
         siegeContainer.style.display = 'none';
@@ -2434,7 +2436,7 @@
         <div class="siege-leg">
           <span class="siege-leg-player">${l.player} <span class="siege-leg-team">(${l.team})</span></span>
           <span class="siege-leg-bet">${l.displayLine} PTS ${oddsDisplay}</span>
-          <span class="siege-leg-odds">L10: ${l.l10Avg} | Min: ${l.l10Min} | Conf: ${l.confidence}x ${bookInfo}</span>
+          <span class="siege-leg-odds">L10: ${l.l10Avg} | Min: ${l.l10Min} | Floor: ${l.ratio}% | EV: ${l.ev ? '+' + (l.ev * 100).toFixed(1) + '%' : '—'} ${bookInfo}</span>
         </div>
         ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
       `;
@@ -2450,7 +2452,7 @@
           <span class="pick-verdict">PLAY 13</span>
           <span class="pick-conf">SIEGE — ${oddsLabel} ${parlay.hasLiveOdds ? '🔴 LIVE' : ''}</span>
         </div>
-        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg Adaptive Floor Parlay — ${oddsLabel} ($100 → $${payoutAmt + 100})</div>
+        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg EV-Optimized Parlay — ${oddsLabel} ($100 → $${payoutAmt + 100})</div>
         <div class="siege-legs">
           ${legsHtml}
         </div>
@@ -3251,7 +3253,7 @@
     summary.innerHTML = `
       <div class="summary-grid">
         <div class="summary-card summary-siege">
-          <div class="summary-title">Play 13 — SIEGE Adaptive Edge Parlay (avg ${siegeFormatOdds(avgOdds)})</div>
+          <div class="summary-title">Play 13 — SIEGE EV-Optimized Parlay (avg ${siegeFormatOdds(avgOdds)})</div>
           <div class="summary-stat">
             <span class="summary-record">${hits}-${total - hits}</span>
             <span class="summary-pct">${hitRate}%</span>
@@ -3261,12 +3263,12 @@
           </div>
         </div>
         <div class="summary-card">
-          <div class="summary-title">Leg Details (Adaptive Floors + FanDuel Odds)</div>
+          <div class="summary-title">Leg Details (EV-Optimized Floors + FanDuel Odds)</div>
           <div class="summary-stat">
             <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
           </div>
           <div class="summary-stat">
-            <span class="summary-record">Odds estimated from floor/avg ratio, calibrated to FanDuel</span>
+            <span class="summary-record">Dynamic floors (55–82%) optimized per player for max EV</span>
           </div>
           <div class="summary-stat">
             <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>

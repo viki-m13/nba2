@@ -1554,7 +1554,7 @@ window.ParlayEngine = (function () {
   // Live picks: fetches player_points_alternate from The Odds API,
   // shops across 7+ bookmakers for the best price per leg.
   //
-  // Backtest: 92.1% parlay accuracy, 96.1% per-leg, FanDuel-calibrated odds
+  // Dynamic EV-optimized floors with FanDuel-calibrated odds per player
   // ===========================================================================
 
   // Estimate American odds from floor/average ratio
@@ -1601,6 +1601,8 @@ window.ParlayEngine = (function () {
     },
 
     // Generate OVER floor picks for players in a game
+    // Uses dynamic EV-optimized floors: tests multiple floor levels per player
+    // and picks the one that maximizes Expected Value (hitRate × payout - missRate × stake)
     // players: array of { name, team, pts, min }
     predictGame(players) {
       const picks = [];
@@ -1616,6 +1618,7 @@ window.ParlayEngine = (function () {
         const avgPts10 = l10.reduce((s, g) => s + g.pts, 0) / 10;
         const avgPts3 = l3.reduce((s, g) => s + g.pts, 0) / 3;
         const minPts10 = Math.min(...l10.map(g => g.pts));
+        const ptsSorted = l10.map(g => g.pts).sort((a, b) => a - b);
 
         // Only established starters averaging 20+ PPG, 28+ min
         if (avgMin10 < 28 || avgPts10 < 20) continue;
@@ -1624,25 +1627,57 @@ window.ParlayEngine = (function () {
         const l3MinAvg = l3.reduce((s, g) => s + g.min, 0) / 3;
         if (l3MinAvg < 25) continue;
 
-        // Consistency filter: CV < 0.28 (tighter than FORTRESS)
+        // Consistency filter: CV < 0.30
         const variance = l10.reduce((s, g) => s + (g.pts - avgPts10) ** 2, 0) / 10;
         const stddev = Math.sqrt(variance);
         const cv = stddev / avgPts10;
-        if (cv > 0.28) continue;
+        if (cv > 0.30) continue;
 
-        // Floor at 55% of L10 average (higher than FORTRESS 50%)
-        // Higher floor = better sportsbook odds per leg
-        const floorLine = Math.round(avgPts10 * 0.55 * 2) / 2;
-        if (floorLine < 8) continue;
+        // Dynamic EV-optimized floor selection
+        // Test floors from 55% to 82% of L10 avg in 2.5% steps
+        // Pick the floor that maximizes EV = hitRate × decimalPayout - 1
+        let bestFloor = null;
+        let bestEV = -Infinity;
+        let bestRatio = 0;
+        let bestOdds = -200;
+        let bestHitRate = 0;
 
-        // Safety: L10 minimum must exceed the floor
-        if (minPts10 <= floorLine) continue;
+        for (let pct = 0.55; pct <= 0.82; pct += 0.025) {
+          const candidate = Math.round(avgPts10 * pct * 2) / 2;
+          if (candidate < 8) continue;
 
-        // Confidence: how far above the floor is their worst game
-        const confidence = floorLine > 0 ? minPts10 / floorLine : 0;
+          // L10 hit rate at this floor
+          const hits = l10.filter(g => g.pts > candidate).length;
+          const hitRate = hits / 10;
 
-        // Floor/average ratio
-        const ratio = Math.round((floorLine / avgPts10) * 100);
+          // Must have hit 8+ of last 10 (80%+ historical hit rate)
+          if (hits < 8) continue;
+
+          // Worst game must be within 3 pts of floor (not too far below)
+          // but floor must be achievable
+          if (minPts10 <= candidate * 0.85) continue;
+
+          const r = candidate / avgPts10;
+          const odds = estimateSiegeOdds(r);
+          const decimal = this.oddsToDecimal(odds);
+
+          // EV per $1: hitRate × decimal - 1 (positive = profitable)
+          const ev = hitRate * decimal - 1;
+
+          if (ev > bestEV) {
+            bestEV = ev;
+            bestFloor = candidate;
+            bestRatio = Math.round(r * 100);
+            bestOdds = odds;
+            bestHitRate = hitRate;
+          }
+        }
+
+        // No profitable floor found for this player
+        if (!bestFloor || bestEV < 0) continue;
+
+        // Safety: require the floor is at least somewhat above minimum
+        const confidence = bestFloor > 0 ? minPts10 / bestFloor : 0;
 
         // Momentum indicator
         const momentum = avgPts3 > avgPts10 ? 'UP' : 'STABLE';
@@ -1653,23 +1688,25 @@ window.ParlayEngine = (function () {
           type: 'player_prop',
           direction: 'OVER',
           stat: 'PTS',
-          line: floorLine,
-          displayLine: `OVER ${floorLine}`,
+          line: bestFloor,
+          displayLine: `OVER ${bestFloor}`,
           l10Avg: Math.round(avgPts10 * 10) / 10,
           l3Avg: Math.round(avgPts3 * 10) / 10,
           l10Min: minPts10,
           confidence: Math.round(confidence * 100) / 100,
-          ratio,
+          ratio: bestRatio,
           cv: Math.round(cv * 100) / 100,
           momentum,
+          hitRate: bestHitRate,
+          ev: Math.round(bestEV * 1000) / 1000,
           // Estimated odds based on floor/avg ratio, calibrated to FanDuel alternate lines
           // Live picks override with real Odds API pricing
-          estOdds: estimateSiegeOdds(ratio / 100),
+          estOdds: bestOdds,
         });
       }
 
-      // Sort by confidence (highest first = safest legs)
-      picks.sort((a, b) => b.confidence - a.confidence);
+      // Sort by EV (highest expected value first), then confidence as tiebreaker
+      picks.sort((a, b) => b.ev - a.ev || b.confidence - a.confidence);
       return picks;
     },
   };
