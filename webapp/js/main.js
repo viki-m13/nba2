@@ -1,5 +1,5 @@
 // =============================================================================
-// MAIN APP CONTROLLER — NBA Dominance System (Play 4 CDS + Play 7 PRISM)
+// MAIN APP CONTROLLER — NBA Dominance System (Play 4 CDS + Play 7 PRISM + Play 8 NOVA)
 // =============================================================================
 
 (function () {
@@ -12,13 +12,17 @@
   let cdsHistoryPicks = [];     // Historical Play 4 CDS picks with results
   let todayPrismPicks = [];      // Games flagged by PRISM model (Play 7: convergent -110)
   let prismHistoryPicks = [];    // Historical Play 7 PRISM picks with results
+  let todayNovaPicks = [];       // Games flagged by NOVA model (Play 8: compound OVER -110)
+  let novaHistoryPicks = [];     // Historical Play 8 NOVA picks with results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
   let currentPrismHistoryPeriod = 'all';
+  let currentNovaHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
+  const NOVAModel = window.ParlayEngine.NOVAModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -252,8 +256,10 @@
       await fetchTodayGames();
       runCDSPredictions();
       runPRISMPredictions();
+      runNOVAPredictions();
       buildCDSHistory();
       buildPRISMHistory();
+      buildNOVAHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -310,11 +316,14 @@
     seasonData.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
     CDSModel.reset();
     PRISMModel.teamHistory = {};
+    NOVAModel.teamHistory = {};
     for (const g of seasonData) {
       CDSModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       CDSModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
       PRISMModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
       PRISMModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
+      NOVAModel.updateTeam(g.home_team, g.home_score, g.away_score, g.date);
+      NOVAModel.updateTeam(g.away_team, g.away_score, g.home_score, g.date);
     }
 
     console.log(`[APP] Models trained on ${seasonData.length} games, ${Object.keys(CDSModel.teamHistory).length} teams`);
@@ -557,6 +566,73 @@
     console.log(`[PRISM] Built history: ${prismHistoryPicks.length} total picks`);
   }
 
+  // ── NOVA Predictions (Play 8) ──────────────────────────────────────────────
+
+  function runNOVAPredictions() {
+    todayNovaPicks = [];
+
+    for (const game of todayGames) {
+      const picks = NOVAModel.predictGame(game.home_team, game.away_team);
+      if (picks) {
+        for (const pick of picks) {
+          todayNovaPicks.push({ game, ...pick });
+        }
+      }
+    }
+
+    const tierOrder = { ELITE: 0, HIGH: 1, STRONG: 2 };
+    todayNovaPicks.sort((a, b) => {
+      const to = (tierOrder[a.tier] || 9) - (tierOrder[b.tier] || 9);
+      if (to !== 0) return to;
+      return b.strength - a.strength;
+    });
+
+    console.log(`[NOVA] ${todayNovaPicks.length} picks from ${todayGames.length} games`);
+  }
+
+  function buildNOVAHistory() {
+    novaHistoryPicks = [];
+
+    const nova = Object.create(NOVAModel);
+    nova.teamHistory = {};
+
+    const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    for (const game of sorted) {
+      const picks = nova.predictGame(game.home_team, game.away_team);
+
+      if (picks) {
+        const actualTotal = game.home_score + game.away_score;
+
+        for (const pick of picks) {
+          const hit = actualTotal > pick.predTotal;
+
+          novaHistoryPicks.push({
+            date: game.date,
+            home: game.home_team,
+            away: game.away_team,
+            predTotal: pick.predTotal,
+            strength: pick.strength,
+            tier: pick.tier,
+            factors: pick.factors,
+            hPpg5: pick.hPpg5,
+            aPpg5: pick.aPpg5,
+            hAvgTotal3: pick.hAvgTotal3,
+            aAvgTotal3: pick.aAvgTotal3,
+            actualTotal,
+            hit,
+            pnl: hit ? 91 : -100,
+          });
+        }
+      }
+
+      nova.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      nova.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+    }
+
+    console.log(`[NOVA] Built history: ${novaHistoryPicks.length} total picks`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -567,7 +643,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -592,6 +668,16 @@
           '<div class="picks-grid">' + todayPrismPicks.map(renderPRISMCard).join('') + '</div>';
       } else if (prismContainer) {
         prismContainer.style.display = 'none';
+      }
+
+      // Play 8 — NOVA Compound OVER
+      const novaContainer = document.getElementById('nova-container');
+      if (novaContainer && todayNovaPicks.length > 0) {
+        novaContainer.style.display = '';
+        novaContainer.innerHTML = '<h3 class="section-title">Play 8 — NOVA Compound OVER <span class="nova-badge">-110</span></h3>' +
+          '<div class="picks-grid">' + todayNovaPicks.map(renderNOVACard).join('') + '</div>';
+      } else if (novaContainer) {
+        novaContainer.style.display = 'none';
       }
 
     }
@@ -779,6 +865,81 @@
       </div>`;
   }
 
+  function renderNOVACard(pick) {
+    const g = pick.game;
+    const tierClass = pick.tier === 'ELITE' ? 'conf-nova-elite' : pick.tier === 'HIGH' ? 'conf-nova-high' : 'conf-nova';
+
+    const FACTOR_LABELS = {
+      both_ppg_118_L5: 'Both PPG 118+ (L5)',
+      both_ppg_118_L3: 'Both PPG 118+ (L3)',
+      both_total_225_L3: 'Both Totals 225+ (L3)',
+      porous_defense: 'Porous Defense',
+      home_porous_defense: 'Home Porous Def',
+      away_porous_defense: 'Away Porous Def',
+      home_scoring_rising: 'Home Scoring Rising',
+      away_scoring_rising: 'Away Scoring Rising',
+      home_high_totals: 'Home High Totals',
+      away_high_totals: 'Away High Totals',
+      home_high_scoring: 'Home High Scoring',
+      away_high_scoring: 'Away High Scoring',
+    };
+    const factorList = pick.factors.map(f => FACTOR_LABELS[f] || f).join(', ');
+    const matchupHtml = `${teamName(g.away_team)} @ ${teamName(g.home_team)}`;
+
+    let liveHtml = '';
+    if (g.status === 'STATUS_FINAL') {
+      const actualTotal = g.home_score + g.away_score;
+      const won = actualTotal > pick.predTotal;
+      liveHtml = `<div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+        <span class="live-label">FINAL</span>
+        <span class="live-score">Total: ${actualTotal} (pred: ${pick.predTotal})</span>
+        <span class="live-result">${won ? 'W (+$91)' : 'L (-$100)'}</span></div>`;
+    } else if (g.status !== 'STATUS_SCHEDULED') {
+      liveHtml = `<div class="pick-live live-active"><span class="live-label">LIVE Q${g.period} ${g.clock}</span></div>`;
+    } else {
+      liveHtml = `<div class="pick-live live-scheduled"><span class="live-label">${g.time}</span>
+        <span class="live-status">Pre-Game — Bet OVER at -110</span></div>`;
+    }
+
+    return `
+      <div class="pick-card ${tierClass}">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 8</span>
+          <span class="pick-conf">${pick.tier} — NOVA Score ${pick.strength}</span>
+        </div>
+        <div class="pick-bet-line nova-over">OVER ${pick.predTotal} at -110</div>
+        <div class="pick-matchup">${matchupHtml}</div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Home PPG (L5)</span>
+            <span class="detail-value">${pick.hPpg5}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Away PPG (L5)</span>
+            <span class="detail-value">${pick.aPpg5}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Home Avg Total (L3)</span>
+            <span class="detail-value">${pick.hAvgTotal3}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Away Avg Total (L3)</span>
+            <span class="detail-value">${pick.aAvgTotal3}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">NOVA Score</span>
+            <span class="detail-value nova-value">${pick.strength}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Odds</span>
+            <span class="detail-value">-110</span>
+          </div>
+        </div>
+        <div class="nova-factors">${factorList}</div>
+        ${liveHtml}
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -788,7 +949,8 @@
     grid.innerHTML = todayGames.map(g => {
       const isP4 = todayCdsPicks.some(p => p.game.id === g.id);
       const isP7 = todayPrismPicks.some(p => p.game.id === g.id);
-      const pickClass = (isP4 || isP7) ? 'game-picked' : '';
+      const isP8 = todayNovaPicks.some(p => p.game.id === g.id);
+      const pickClass = (isP4 || isP7 || isP8) ? 'game-picked' : '';
 
       let statusHtml;
       if (g.status === 'STATUS_FINAL') {
@@ -803,6 +965,7 @@
       const badges = [];
       if (isP4) badges.push('P4');
       if (isP7) badges.push('P7');
+      if (isP8) badges.push('P8');
       if (badges.length > 0) badge = '<span class="game-badge">' + badges.join(' + ') + '</span>';
 
       return `
@@ -819,6 +982,7 @@
   function renderHistory() {
     renderCDSHistory();
     renderPRISMHistory();
+    renderNOVAHistory();
   }
 
   function renderCDSHistory() {
@@ -1030,12 +1194,102 @@
       </div>`;
   }
 
+  function renderNOVAHistory() {
+    const tbody = document.getElementById('nova-history-body');
+    if (!tbody) return;
+
+    let filtered = novaHistoryPicks;
+    if (currentNovaHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentNovaHistoryPeriod));
+      filtered = novaHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="muted">No NOVA picks in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.hit ? 'result-win' : 'result-loss';
+        const resText = p.hit ? 'W' : 'L';
+        const pnlText = p.hit ? '+$91' : '-$100';
+        const tierClass = p.tier === 'ELITE' ? 'conf-nova-elite' : p.tier === 'HIGH' ? 'conf-nova-high' : 'conf-nova';
+        const dateFormatted = formatDate(p.date);
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td><span class="nova-over">OVER</span> ${p.predTotal}</td>
+            <td>${p.away} @ ${p.home}</td>
+            <td><span class="badge ${tierClass}">${p.tier}</span></td>
+            <td>${p.strength}</td>
+            <td>${p.hPpg5} / ${p.aPpg5}</td>
+            <td>${p.actualTotal}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderNOVASummary(filtered);
+  }
+
+  function renderNOVASummary(filtered) {
+    const summary = document.getElementById('nova-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.hit).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    const elitePicks = filtered.filter(p => p.tier === 'ELITE');
+    const eliteHits = elitePicks.filter(p => p.hit).length;
+    const elitePnl = elitePicks.reduce((s, p) => s + p.pnl, 0);
+
+    const highPicks = filtered.filter(p => p.tier === 'HIGH');
+    const highHits = highPicks.filter(p => p.hit).length;
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-nova">
+          <div class="summary-title">Play 8 — NOVA Compound OVER (at -110)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card summary-nova-elite">
+          <div class="summary-title">ELITE Tier</div>
+          <div class="summary-stat">
+            <span class="summary-record">${elitePicks.length > 0 ? eliteHits + '-' + (elitePicks.length - eliteHits) : '—'}</span>
+            <span class="summary-pct">${elitePicks.length > 0 ? (eliteHits / elitePicks.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+          <div class="summary-pnl ${elitePnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${elitePicks.length > 0 ? (elitePnl >= 0 ? '+' : '') + '$' + elitePnl : '—'}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">HIGH Tier</div>
+          <div class="summary-stat">
+            <span class="summary-record">${highPicks.length > 0 ? highHits + '-' + (highPicks.length - highHits) : '—'}</span>
+            <span class="summary-pct">${highPicks.length > 0 ? (highHits / highPicks.length * 100).toFixed(1) + '%' : '—'}</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -1047,29 +1301,35 @@
       el('metric-accuracy').textContent = cdsAcc + '%';
 
       // Play 7 PRISM accuracy
-      if (prismHistoryPicks.length > 0) {
-        const prismHits = prismHistoryPicks.filter(p => p.hit).length;
-        const prismTotal = prismHistoryPicks.length;
+      const prismHits = prismHistoryPicks.filter(p => p.hit).length;
+      const prismTotal = prismHistoryPicks.length;
+      if (prismTotal > 0) {
         const prismAcc = ((prismHits / prismTotal) * 100).toFixed(1);
-        const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
         el('metric-cds-accuracy').textContent = prismAcc + '%';
-
-        // Combined ROI
-        const combinedBets = cdsTotal + prismTotal;
-        const combinedPnl = cdsPnl + prismPnl;
-        const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
-        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
-
-        // Combined record
-        const combinedWins = cdsWins + prismHits;
-        const combinedTotal = cdsTotal + prismTotal;
-        el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
       } else {
         el('metric-cds-accuracy').textContent = '—';
-        const roi = cdsTotal > 0 ? ((cdsPnl / (cdsTotal * 100)) * 100).toFixed(0) : '0';
-        el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
-        el('metric-record').textContent = `${cdsWins}-${cdsTotal - cdsWins}`;
       }
+
+      // Play 8 NOVA accuracy
+      const novaHits = novaHistoryPicks.filter(p => p.hit).length;
+      const novaTotal = novaHistoryPicks.length;
+      const novaMetric = document.getElementById('metric-nova-accuracy');
+      if (novaMetric && novaTotal > 0) {
+        novaMetric.textContent = ((novaHits / novaTotal) * 100).toFixed(1) + '%';
+      }
+
+      // Combined ROI (all models)
+      const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const combinedBets = cdsTotal + prismTotal + novaTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl;
+      const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
+      el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
+
+      // Combined record
+      const combinedWins = cdsWins + prismHits + novaHits;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal;
+      el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
 
@@ -1122,6 +1382,15 @@
         document.querySelectorAll('.prism-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentPrismHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.nova-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nova-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentNovaHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });

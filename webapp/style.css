@@ -953,51 +953,52 @@ td.result-loss { color: var(--red); }
   color: #10b981;
 }
 
-/* ── APEX (Play 8) — Amber/Gold ── */
-.pick-card.conf-apex {
-  border-left: 4px solid var(--amber);
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.04);
+/* ── NOVA (Play 8) — Orange ── */
+.pick-card.conf-nova {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.04);
 }
-.pick-card.conf-apex-high {
-  border-left: 4px solid var(--amber);
-  border-color: rgba(245, 158, 11, 0.6);
-  background: rgba(245, 158, 11, 0.08);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+.pick-card.conf-nova-high {
+  border-color: rgba(251, 146, 60, 0.6);
+  background: rgba(251, 146, 60, 0.08);
+  box-shadow: 0 0 12px rgba(251, 146, 60, 0.15);
 }
-.pick-card.conf-apex-elite {
-  border-left: 4px solid #fbbf24;
-  border-color: rgba(251, 191, 36, 0.8);
-  background: rgba(245, 158, 11, 0.12);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+.pick-card.conf-nova-elite {
+  border-color: rgba(251, 146, 60, 0.8);
+  background: rgba(251, 146, 60, 0.12);
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.25);
 }
 
-.conf-apex .pick-verdict,
-.conf-apex-high .pick-verdict,
-.conf-apex-elite .pick-verdict {
-  background: var(--amber);
-  color: #0a0e17;
+.conf-nova .pick-verdict,
+.conf-nova-high .pick-verdict,
+.conf-nova-elite .pick-verdict {
+  color: #fb923c;
 }
 
-.conf-apex .pick-conf,
-.conf-apex-high .pick-conf,
-.conf-apex-elite .pick-conf {
-  color: #fbbf24;
+.conf-nova .pick-conf,
+.conf-nova-high .pick-conf,
+.conf-nova-elite .pick-conf {
+  color: #fdba74;
 }
 
-.apex-over {
-  color: #34d399;
-  font-weight: 700;
-}
-.apex-ml {
-  color: #fbbf24;
+.nova-over {
+  color: #fb923c;
   font-weight: 700;
 }
 
-.apex-badge {
+.nova-text {
+  color: #fb923c;
+}
+
+.nova-value {
+  color: #fb923c;
+  font-weight: 700;
+}
+
+.nova-badge {
   display: inline-block;
-  background: rgba(245, 158, 11, 0.2);
-  color: var(--amber);
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -1005,37 +1006,45 @@ td.result-loss { color: var(--red); }
   margin-left: 8px;
 }
 
-.apex-factors {
+.nova-factors {
   font-size: 12px;
-  color: rgba(245, 158, 11, 0.8);
-  padding: 4px 20px 12px;
-  font-style: italic;
+  color: rgba(251, 146, 60, 0.8);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(251, 146, 60, 0.15);
 }
 
-.badge.conf-apex {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+.badge.conf-nova {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fdba74;
+  border: 1px solid rgba(251, 146, 60, 0.3);
 }
-.badge.conf-apex-high {
-  background: rgba(245, 158, 11, 0.25);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.5);
+.badge.conf-nova-high {
+  background: rgba(251, 146, 60, 0.25);
+  color: #fb923c;
+  border: 1px solid rgba(251, 146, 60, 0.5);
 }
-.badge.conf-apex-elite {
-  background: rgba(245, 158, 11, 0.35);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.7);
-  text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
-}
-
-.summary-card.summary-apex {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.04);
+.badge.conf-nova-elite {
+  background: rgba(251, 146, 60, 0.35);
+  color: #fb923c;
+  border: 1px solid rgba(251, 146, 60, 0.7);
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
 }
 
-.summary-apex .summary-title {
-  color: var(--amber);
+.summary-card.summary-nova {
+  border-color: rgba(251, 146, 60, 0.3);
+  background: rgba(251, 146, 60, 0.04);
+}
+.summary-card.summary-nova-elite {
+  border-color: rgba(251, 146, 60, 0.5);
+  background: rgba(251, 146, 60, 0.08);
+}
+
+.summary-nova .summary-title {
+  color: #fb923c;
+}
+.summary-nova-elite .summary-title {
+  color: #fb923c;
 }
 
 .summary-stat {
