@@ -29,6 +29,9 @@
   let currentFusionHistoryPeriod = 'all';
   let currentPulseHistoryPeriod = 'all';
   let currentVaultHistoryPeriod = 'all';
+  let trainedPulseModel = null;  // PULSE model trained on all historical data
+  let trainedVaultModel = null;  // VAULT model trained on all historical data
+  let playerTeamMap = {};        // player name -> most recent team abbreviation
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
@@ -273,6 +276,8 @@
       await loadPlayerData();
       buildPulseHistory();
       buildVaultHistory();
+      generateTodayPulsePicks();
+      generateTodayVaultPicks();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -948,6 +953,16 @@
       }
     }
 
+    // Save trained model for today's predictions
+    trainedPulseModel = pulse;
+
+    // Build player → team map from all box scores
+    for (const game of sorted) {
+      for (const p of (game.players || [])) {
+        playerTeamMap[p.name] = p.team;
+      }
+    }
+
     console.log(`[PULSE] Built history: ${pulseHistoryPicks.length} parlays`);
   }
 
@@ -1056,7 +1071,116 @@
       }
     }
 
+    // Save trained model for today's predictions
+    trainedVaultModel = vault;
+
     console.log(`[VAULT] Built history: ${vaultHistoryPicks.length} parlays`);
+  }
+
+  // ── Generate Today's PULSE + VAULT Picks ─────────────────────────────────
+
+  function generateTodayPulsePicks() {
+    todayPulseParlays = [];
+    if (!trainedPulseModel || todayGames.length === 0) return;
+
+    const dayCandidates = [];
+
+    for (const game of todayGames) {
+      const gameKey = `${game.away_team}@${game.home_team}`;
+      // Find known players for each team
+      const teamPlayers = [];
+      for (const [name, team] of Object.entries(playerTeamMap)) {
+        if (team === game.home_team || team === game.away_team) {
+          teamPlayers.push({ name, team, pts: 0, reb: 0, ast: 0, min: 30 });
+        }
+      }
+
+      const picks = trainedPulseModel.predictGame(teamPlayers);
+      for (const pick of picks) {
+        dayCandidates.push({
+          ...pick,
+          gameKey,
+          gameDisplay: `${game.away_team} @ ${game.home_team}`,
+        });
+      }
+    }
+
+    // Select top 2 from different games
+    dayCandidates.sort((a, b) => b.strength - a.strength);
+    const selected = [];
+    const usedGames = new Set();
+    for (const c of dayCandidates) {
+      if (usedGames.has(c.gameKey)) continue;
+      selected.push(c);
+      usedGames.add(c.gameKey);
+      if (selected.length >= 2) break;
+    }
+
+    if (selected.length >= 2) {
+      todayPulseParlays.push({
+        leg1: selected[0],
+        leg2: selected[1],
+      });
+    }
+
+    console.log(`[PULSE] Today's picks: ${todayPulseParlays.length} parlays from ${dayCandidates.length} candidates`);
+  }
+
+  function generateTodayVaultPicks() {
+    todayVaultParlays = [];
+    if (!trainedVaultModel || todayGames.length === 0) return;
+
+    const dayCandidates = [];
+
+    for (const game of todayGames) {
+      const gameKey = `${game.away_team}@${game.home_team}`;
+      // Find known players for each team
+      const teamPlayers = [];
+      for (const [name, team] of Object.entries(playerTeamMap)) {
+        if (team === game.home_team || team === game.away_team) {
+          teamPlayers.push({ name, team, pts: 0, min: 30 });
+        }
+      }
+
+      const picks = trainedVaultModel.predictGame(teamPlayers);
+      for (const pick of picks) {
+        dayCandidates.push({
+          ...pick,
+          gameKey,
+          gameDisplay: `${game.away_team} @ ${game.home_team}`,
+        });
+      }
+    }
+
+    // Select top 4-8 from different games
+    dayCandidates.sort((a, b) => b.confidence - a.confidence);
+    const selected = [];
+    const usedGames = new Set();
+    for (const c of dayCandidates) {
+      if (usedGames.has(c.gameKey)) continue;
+      selected.push(c);
+      usedGames.add(c.gameKey);
+      if (selected.length >= 8) break;
+    }
+
+    if (selected.length >= 4) {
+      const odds = vaultParlayAmerican(selected.length);
+      todayVaultParlays.push({
+        legs: selected.map(s => ({
+          player: s.player,
+          team: s.team,
+          line: s.line,
+          confidence: s.confidence,
+          l10Avg: s.l10Avg,
+          l10Min: s.l10Min,
+          gameDisplay: s.gameDisplay,
+        })),
+        numLegs: selected.length,
+        odds,
+      });
+    }
+
+    console.log(`[VAULT] Today's picks: ${todayVaultParlays.length} parlays from ${dayCandidates.length} candidates`);
   }
 
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
@@ -2366,9 +2490,31 @@
   }
 
   function getCutoffDate(days) {
-    const d = new Date();
+    // Use the latest date in any history data, not today's real date.
+    // This ensures filters work correctly even when data is older.
+    const latestDate = getLatestDataDate();
+    const d = latestDate ? parseDateStr(latestDate) : new Date();
     d.setDate(d.getDate() - days);
     return d.toISOString().slice(0, 10).replace(/-/g, '');
+  }
+
+  function parseDateStr(s) {
+    // '20250224' → Date(2025, 1, 24)
+    return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
+  }
+
+  function getLatestDataDate() {
+    let latest = '';
+    for (const p of cdsHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of prismHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of novaHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of fusionHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of pulseHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of vaultHistoryPicks) { if (p.date > latest) latest = p.date; }
+    if (playerBoxScores && playerBoxScores.length > 0) {
+      for (const g of playerBoxScores) { if (g.date > latest) latest = g.date; }
+    }
+    return latest || '';
   }
 
   function formatDate(dateStr) {
