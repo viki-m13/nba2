@@ -1497,12 +1497,11 @@
   // ── SIEGE History Builder (Play 13) ──────────────────────────────────────
 
   function siegeParlayOdds(legs) {
-    // Calculate parlay odds from estimated sportsbook odds per leg
-    let dec = 1;
-    for (const l of legs) {
-      dec *= (1 + 100 / Math.abs(l.sbOdds));
-    }
-    return dec >= 2.0 ? Math.round((dec - 1) * 100) : Math.round(-100 / (dec - 1));
+    // All legs at estimated -175 sportsbook odds
+    // 2 legs: +147, 3 legs: +288
+    const decPerLeg = 1 + 100 / 175;  // 1.5714
+    const dec = Math.pow(decPerLeg, legs.length);
+    return Math.round((dec - 1) * 100);
   }
 
   function buildSiegeHistory() {
@@ -1554,8 +1553,8 @@
           }
         }
 
-        // Select top 2-3 legs from different games, sorted by clear rate then confidence
-        dayCandidates.sort((a, b) => (b.clearRate || 10) - (a.clearRate || 10) || b.confidence - a.confidence);
+        // Select top 3 legs from different games, sorted by momentum z-score
+        dayCandidates.sort((a, b) => b.confidence - a.confidence);
         const selected = [];
         const usedGames = new Set();
 
@@ -1581,9 +1580,10 @@
               actual: s.actual,
               hit: s.hit,
               confidence: s.confidence,
-              clearRate: s.clearRate,
+              overRate: s.overRate,
               l10Avg: s.l10Avg,
-              l10Min: s.l10Min,
+              l5Avg: s.l5Avg,
+              l3Avg: s.l3Avg,
               sbOdds: s.sbOdds,
               ratio: s.ratio,
               gameDisplay: s.gameDisplay,
@@ -1607,7 +1607,17 @@
     }
 
     trainedSiegeModel = siege;
-    console.log(`[SIEGE] Built history: ${siegeHistoryPicks.length} parlays`);
+
+    // Validation logging
+    const total = siegeHistoryPicks.length;
+    const wins = siegeHistoryPicks.filter(p => p.won).length;
+    const pnl = siegeHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+    let legHits = 0, legTotal = 0;
+    for (const p of siegeHistoryPicks) {
+      for (const l of p.legs) { legTotal++; if (l.hit) legHits++; }
+    }
+    const avgOdds = total > 0 ? Math.round(siegeHistoryPicks.reduce((s, p) => s + p.odds, 0) / total) : 0;
+    console.log(`[SIEGE] Built history: ${total} parlays, ${wins}-${total-wins} (${total > 0 ? (wins/total*100).toFixed(1) : 0}%), P&L: $${pnl}, ROI: ${total > 0 ? (pnl/(total*100)*100).toFixed(0) : 0}%, Legs: ${legHits}/${legTotal} (${legTotal > 0 ? (legHits/legTotal*100).toFixed(1) : 0}%), Avg odds: +${avgOdds}`);
   }
 
   function generateTodaySiegePicks() {
@@ -1641,7 +1651,7 @@
 
       console.log(`[SIEGE] ${dayCandidates.length} qualifying players across ${todayGames.length} games`);
 
-      dayCandidates.sort((a, b) => (b.clearRate || 10) - (a.clearRate || 10) || b.confidence - a.confidence);
+      dayCandidates.sort((a, b) => b.confidence - a.confidence);
       const selected = [];
       const usedGames = new Set();
       for (const c of dayCandidates) {
@@ -1660,9 +1670,10 @@
             line: s.line,
             displayLine: s.displayLine,
             confidence: s.confidence,
-            clearRate: s.clearRate,
+            overRate: s.overRate,
             l10Avg: s.l10Avg,
-            l10Min: s.l10Min,
+            l5Avg: s.l5Avg,
+            l3Avg: s.l3Avg,
             sbOdds: s.sbOdds,
             ratio: s.ratio,
             gameDisplay: s.gameDisplay,
@@ -2254,8 +2265,8 @@
     const legsHtml = parlay.legs.map((l, i) => `
       <div class="siege-leg">
         <span class="siege-leg-player">${l.player}</span>
-        <span class="siege-leg-bet">OVER ${l.line} PTS (${l.displayLine}) at ${l.sbOdds}</span>
-        <span class="siege-leg-odds">${l.clearRate || 10}/10 cleared | ${l.ratio}%</span>
+        <span class="siege-leg-bet">${l.displayLine} PTS at ~-175</span>
+        <span class="siege-leg-odds">L10: ${l.l10Avg} | L3: ${l.l3Avg} | z=${l.confidence}</span>
       </div>
       ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
     `).join('');
@@ -2266,7 +2277,7 @@
           <span class="pick-verdict">PLAY 13</span>
           <span class="pick-conf">SIEGE PARLAY — +${parlay.odds}</span>
         </div>
-        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg Sportsbook-Aligned Parlay at +${parlay.odds} ($100 → $${parlay.odds + 100})</div>
+        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg OVER/UNDER Parlay at +${parlay.odds} ($100 → $${parlay.odds + 100})</div>
         <div class="siege-legs">
           ${legsHtml}
         </div>
@@ -2277,7 +2288,7 @@
           </div>
           <div class="detail">
             <span class="detail-label">Each Leg</span>
-            <span class="detail-value">~-175 avg</span>
+            <span class="detail-value">~-175 per leg</span>
           </div>
           <div class="detail">
             <span class="detail-label">Win Payout</span>
@@ -2289,7 +2300,7 @@
           </div>
         </div>
         <div class="pick-live live-scheduled">
-          <span class="live-status">Pre-Game — Use "To Score ${parlay.legs[0] ? parlay.legs[0].displayLine : '20+'} Points" props</span>
+          <span class="live-status">Pre-Game — Use Player Points OVER on your sportsbook (~-175/leg)</span>
         </div>
       </div>`;
   }
@@ -3023,7 +3034,7 @@
 
         const legsStr = p.legs.map(l => {
           const lClass = l.hit ? 'result-win' : 'result-loss';
-          return `${l.player} <span class="siege-over">${l.displayLine}</span>[${l.sbOdds}] <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual})`;
+          return `${l.player} <span class="siege-over">${l.displayLine}</span> <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual} pts)`;
         }).join(' <span class="siege-sep">|</span> ');
 
         return `
@@ -3067,7 +3078,7 @@
     summary.innerHTML = `
       <div class="summary-grid">
         <div class="summary-card summary-siege">
-          <div class="summary-title">Play 13 — SIEGE Sportsbook-Aligned Parlay (avg +${avgOdds})</div>
+          <div class="summary-title">Play 13 — SIEGE OVER/UNDER Momentum Parlay (avg +${avgOdds})</div>
           <div class="summary-stat">
             <span class="summary-record">${hits}-${total - hits}</span>
             <span class="summary-pct">${hitRate}%</span>
@@ -3077,12 +3088,12 @@
           </div>
         </div>
         <div class="summary-card">
-          <div class="summary-title">Leg Details (Real SB Odds)</div>
+          <div class="summary-title">Leg Details (~-175 OVER)</div>
           <div class="summary-stat">
             <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
           </div>
           <div class="summary-stat">
-            <span class="summary-record">Uses 20+ and 25+ sportsbook thresholds</span>
+            <span class="summary-record">Player Points OVER at ~-175 per leg</span>
           </div>
           <div class="summary-stat">
             <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>
