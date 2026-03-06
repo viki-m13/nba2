@@ -2495,7 +2495,9 @@
     const latestDate = getLatestDataDate();
     const d = latestDate ? parseDateStr(latestDate) : new Date();
     d.setDate(d.getDate() - days);
-    return d.toISOString().slice(0, 10).replace(/-/g, '');
+    const cutoff = d.toISOString().slice(0, 10).replace(/-/g, '');
+    console.log(`[FILTER] getCutoffDate(${days}): latestDate=${latestDate}, cutoff=${cutoff}`);
+    return cutoff;
   }
 
   function parseDateStr(s) {
@@ -2503,7 +2505,9 @@
     return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
   }
 
+  let _cachedLatestDate = '';
   function getLatestDataDate() {
+    if (_cachedLatestDate) return _cachedLatestDate;
     let latest = '';
     for (const p of cdsHistoryPicks) { if (p.date > latest) latest = p.date; }
     for (const p of prismHistoryPicks) { if (p.date > latest) latest = p.date; }
@@ -2514,7 +2518,8 @@
     if (playerBoxScores && playerBoxScores.length > 0) {
       for (const g of playerBoxScores) { if (g.date > latest) latest = g.date; }
     }
-    return latest || '';
+    _cachedLatestDate = latest || '';
+    return _cachedLatestDate;
   }
 
   function formatDate(dateStr) {
