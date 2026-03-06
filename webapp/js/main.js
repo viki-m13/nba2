@@ -836,6 +836,109 @@
     } catch (e) {
       console.warn('[PULSE] Could not load player box scores');
     }
+
+    // Fetch recent player box scores from ESPN to keep PULSE/VAULT models current
+    await fetchRecentPlayerBoxScores();
+  }
+
+  async function fetchRecentPlayerBoxScores() {
+    const existingDates = new Set((playerBoxScores || []).map(g => g.date));
+    const recentDates = getRecentDates(30);
+    let fetched = 0;
+
+    for (const dateStr of recentDates) {
+      if (existingDates.has(dateStr)) continue;
+
+      try {
+        // First get event IDs from scoreboard for this date
+        const sbUrl = useProxy
+          ? `/api/nba?endpoint=espn_scoreboard&dates=${dateStr}`
+          : `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${dateStr}`;
+        const sbResp = await fetch(sbUrl);
+        if (!sbResp.ok) continue;
+        const sbData = await sbResp.json();
+
+        for (const event of (sbData.events || [])) {
+          const comp = (event.competitions || [{}])[0];
+          const status = (comp.status || {}).type || {};
+          if (status.name !== 'STATUS_FINAL') continue;
+
+          const eventId = event.id;
+          try {
+            const sumUrl = useProxy
+              ? `/api/nba?endpoint=espn_summary&eventId=${eventId}`
+              : `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${eventId}`;
+            const sumResp = await fetch(sumUrl);
+            if (!sumResp.ok) continue;
+            const sumData = await sumResp.json();
+
+            const boxscore = sumData.boxscore;
+            if (!boxscore || !boxscore.teams || !boxscore.players) continue;
+
+            const competitors = comp.competitors || [];
+            const homeComp = competitors.find(c => c.homeAway === 'home') || competitors[0];
+            const awayComp = competitors.find(c => c.homeAway === 'away') || competitors[1];
+            const homeTeam = norm(homeComp.team.abbreviation);
+            const awayTeam = norm(awayComp.team.abbreviation);
+            const homeScore = parseInt(homeComp.score) || 0;
+            const awayScore = parseInt(awayComp.score) || 0;
+
+            const players = [];
+            for (const teamPlayers of boxscore.players) {
+              const teamAbbr = norm(teamPlayers.team.abbreviation);
+              for (const statGroup of (teamPlayers.statistics || [])) {
+                // Find column indices for pts, reb, ast, min
+                const labels = (statGroup.labels || []).map(l => l.toLowerCase());
+                const minIdx = labels.indexOf('min');
+                const ptsIdx = labels.indexOf('pts');
+                const rebIdx = labels.indexOf('reb');
+                const astIdx = labels.indexOf('ast');
+
+                for (const athlete of (statGroup.athletes || [])) {
+                  const stats = athlete.stats || [];
+                  if (stats.length === 0) continue;
+                  const name = athlete.athlete ? athlete.athlete.displayName : '';
+                  if (!name) continue;
+
+                  const min = minIdx >= 0 ? stats[minIdx] : '0';
+                  const pts = ptsIdx >= 0 ? parseInt(stats[ptsIdx]) || 0 : 0;
+                  const reb = rebIdx >= 0 ? parseInt(stats[rebIdx]) || 0 : 0;
+                  const ast = astIdx >= 0 ? parseInt(stats[astIdx]) || 0 : 0;
+
+                  players.push({ team: teamAbbr, name, min, pts, reb, ast });
+                }
+              }
+            }
+
+            if (players.length > 0) {
+              playerBoxScores.push({
+                event_id: eventId,
+                date: dateStr,
+                home: homeTeam,
+                away: awayTeam,
+                home_score: homeScore,
+                away_score: awayScore,
+                players,
+              });
+            }
+
+            await sleep(200);
+          } catch (e) {
+            console.warn(`[PULSE] Could not fetch summary for event ${eventId}:`, e.message);
+          }
+        }
+
+        fetched++;
+        if (fetched % 5 === 0) console.log(`[PULSE] Fetched player data for ${fetched} recent dates...`);
+        await sleep(300);
+      } catch (e) {
+        console.warn(`[PULSE] Could not fetch scoreboard for ${dateStr}:`, e.message);
+      }
+    }
+
+    if (fetched > 0) {
+      console.log(`[PULSE] Augmented player data with ${fetched} recent dates. Total: ${playerBoxScores.length} games`);
+    }
   }
 
   function parsePlayerMins(m) {
@@ -2137,7 +2240,8 @@
 
     let filtered = pulseHistoryPicks;
     if (currentPulseHistoryPeriod !== 'all') {
-      const cutoff = getCutoffDate(parseInt(currentPulseHistoryPeriod));
+      const latestPulseDate = getLatestDateFromPicks(pulseHistoryPicks);
+      const cutoff = getCutoffDate(parseInt(currentPulseHistoryPeriod), latestPulseDate);
       filtered = pulseHistoryPicks.filter(p => p.date >= cutoff);
     }
 
@@ -2224,7 +2328,8 @@
 
     let filtered = vaultHistoryPicks;
     if (currentVaultHistoryPeriod !== 'all') {
-      const cutoff = getCutoffDate(parseInt(currentVaultHistoryPeriod));
+      const latestVaultDate = getLatestDateFromPicks(vaultHistoryPicks);
+      const cutoff = getCutoffDate(parseInt(currentVaultHistoryPeriod), latestVaultDate);
       filtered = vaultHistoryPicks.filter(p => p.date >= cutoff);
     }
 
@@ -2511,15 +2616,22 @@
     return dates;
   }
 
-  function getCutoffDate(days) {
-    // Use the latest date in any history data, not today's real date.
-    // This ensures filters work correctly even when data is older.
-    const latestDate = getLatestDataDate();
+  function getCutoffDate(days, referenceDate) {
+    // Use model-specific latest date if provided, otherwise global latest.
+    // This prevents models with older data (PULSE/VAULT) from being filtered
+    // against a much newer global latest date (from ESPN-fetched season data).
+    const latestDate = referenceDate || getLatestDataDate();
     const d = latestDate ? parseDateStr(latestDate) : new Date();
     d.setDate(d.getDate() - days);
     const cutoff = d.toISOString().slice(0, 10).replace(/-/g, '');
     console.log(`[FILTER] getCutoffDate(${days}): latestDate=${latestDate}, cutoff=${cutoff}`);
     return cutoff;
+  }
+
+  function getLatestDateFromPicks(picks) {
+    let latest = '';
+    for (const p of picks) { if (p.date > latest) latest = p.date; }
+    return latest;
   }
 
   function parseDateStr(s) {
