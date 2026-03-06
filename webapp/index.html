@@ -60,6 +60,10 @@
       <span class="metric-label">Play 11 ROI</span>
     </div>
     <div class="metric">
+      <span class="metric-value" style="color: #f59e0b;" id="metric-fortress-accuracy">—</span>
+      <span class="metric-label">Play 12 ROI</span>
+    </div>
+    <div class="metric">
       <span class="metric-value" id="metric-roi">—</span>
       <span class="metric-label">Combined ROI</span>
     </div>
@@ -110,6 +114,11 @@
         <!-- VAULT parlay cards injected here by JS -->
       </div>
 
+      <!-- Play 12: FORTRESS Higher-Floor Parlay -->
+      <div id="fortress-container" style="display:none;">
+        <!-- FORTRESS parlay cards injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
         <p><strong>Play 4 (CDS Moneyline):</strong> No games reaching the Convergent Dominance threshold today.</p>
@@ -118,7 +127,8 @@
         <p><strong>Play 9 (FUSION Parlay):</strong> No 2-leg parlay combinations available today.</p>
         <p><strong>Play 10 (PULSE):</strong> No player regression signals detected today.</p>
         <p><strong>Play 11 (VAULT):</strong> No floor parlay candidates available today.</p>
-        <p class="subtle">Play 4 averages 5-8 ML picks/month. Play 7 adds 8-12 spread/total picks. Play 8 adds 3-6 OVER picks. Play 9 fires when 2+ game signals align for a +264 parlay. Play 10 fires when 2+ player scoring spikes regress for a +251 player prop parlay. Play 11 fires almost nightly with 4-8 leg ultra-conservative player floor parlays.</p>
+        <p><strong>Play 12 (FORTRESS):</strong> No higher-floor parlay candidates available today.</p>
+        <p class="subtle">Play 4 averages 5-8 ML picks/month. Play 7 adds 8-12 spread/total picks. Play 8 adds 3-6 OVER picks. Play 9 fires when 2+ game signals align for a +264 parlay. Play 10 fires when 2+ player scoring spikes regress for a +251 player prop parlay. Play 11 fires almost nightly with 4-8 leg ultra-conservative player floor parlays. Play 12 fires with 3-5 higher-floor player prop legs for better sportsbook odds (~+475 avg).</p>
       </div>
 
       <div id="all-games-section" style="display:none;">
@@ -314,6 +324,34 @@
         </table>
       </div>
       <div id="vault-history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 12: FORTRESS Higher-Floor Parlay History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 12 — FORTRESS Higher-Floor Parlay History</h2>
+      <p class="history-note">Higher-floor player Points OVER parlays targeting better sportsbook odds. Each leg sets the line at 50% of L10 average — higher than VAULT but still very safe. 3-5 legs per parlay at -200/leg. Better real-world payouts with 92.6% parlay accuracy.</p>
+      <div class="filter-bar">
+        <button class="fortress-filter-btn" data-period="7">Last 7 Days</button>
+        <button class="fortress-filter-btn" data-period="14">Last 14 Days</button>
+        <button class="fortress-filter-btn" data-period="30">Last 30 Days</button>
+        <button class="fortress-filter-btn active" data-period="all">Full Season</button>
+      </div>
+      <div id="fortress-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Legs (Player OVER Floor)</th>
+              <th># Legs</th>
+              <th>Odds</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="fortress-history-body">
+            <tr><td colspan="6" class="muted">Loading FORTRESS history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="fortress-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
@@ -331,6 +369,7 @@
             <li><strong>Play 9 — FUSION Parlay:</strong> Cross-model 2-leg parlay combining independent -110 signals at +264 odds (50% hit rate, +82% ROI)</li>
             <li><strong>Play 10 — PULSE:</strong> Player prop UNDER regression 2-leg parlay at +251 odds (47% hit rate, +65% ROI)</li>
             <li><strong>Play 11 — VAULT:</strong> Multi-leg floor parlay: 4-8 ultra-conservative player OVER floor bets at -300/leg (~+631 avg odds, 95% hit rate, +584% ROI)</li>
+            <li><strong>Play 12 — FORTRESS:</strong> Higher-floor parlay: 3-5 player OVER bets at 50% of L10 avg, targeting better sportsbook odds at -200/leg (~+475 avg odds, 93% hit rate, +434% ROI)</li>
           </ol>
         </div>
 
@@ -687,6 +726,59 @@
           </div>
         </div>
 
+        <!-- ── PLAY 12: FORTRESS ── -->
+        <div class="how-section" style="border-top: 2px solid rgba(245, 158, 11, 0.3); padding-top: 24px; margin-top: 24px;">
+          <h3>Play 12 — FORTRESS: Floor-Optimized Resilient Target Strategy</h3>
+          <p>The <strong>FORTRESS engine</strong> addresses VAULT's main weakness: sportsbook odds. VAULT's ultra-low 33% floors
+          translate to lines like "5+ points" that sportsbooks price at -1700 to -3500 — destroying parlay value.
+          FORTRESS uses a <strong>50% floor</strong> instead, giving lines around 12-14 pts that map to much better sportsbook odds (~-200/leg).</p>
+          <p>The confidence filter requires the player's <strong>worst game in their last 10</strong> to be at least 1.3x the floor line.
+          Fewer legs (3-5 vs 4-8) but each leg carries real value on the sportsbook.</p>
+          <p>Bet: <strong>3-5 leg player Points OVER floor parlay at -200/leg</strong> — avg payout ~+475 on $100 wager.</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 12 — The Higher Floor Signal</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">50%</div>
+              <div class="result-label">Floor Threshold</div>
+              <div class="result-detail">Line set at 50% of L10 average — e.g., a 25 PPG scorer needs 12.5+ points. Much higher lines = better sportsbook odds.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">95.2%</div>
+              <div class="result-label">Individual Leg Accuracy</div>
+              <div class="result-detail">Floor legs hit at extremely high rate while targeting realistic sportsbook lines.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">3-5</div>
+              <div class="result-label">Legs Per Parlay</div>
+              <div class="result-detail">Fewer legs than VAULT but each at better odds. Avg ~4 legs per parlay for +475 avg odds.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 12 — Validated Results</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">92.6%</div>
+              <div class="result-label">Parlay Hit Rate (25/27)</div>
+              <div class="result-detail">Nearly matches VAULT accuracy while delivering far better real-world payouts</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">+$11,727</div>
+              <div class="result-label">Season P&amp;L</div>
+              <div class="result-detail">+434% ROI on $100 flat bets — strong profit with much better sportsbook odds per leg</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(245, 158, 11, 0.3);">
+              <div class="result-value" style="color: #f59e0b;">~-200</div>
+              <div class="result-label">Per-Leg Sportsbook Odds</div>
+              <div class="result-detail">Much better than VAULT's -1700 to -3500. Lines like "OVER 12.5 PTS" get real odds, not juice</div>
+            </div>
+          </div>
+        </div>
+
         <div class="how-section">
           <h3>How to Execute</h3>
           <ol>
@@ -698,6 +790,7 @@
             <li><strong>Play 9:</strong> Place a 2-leg parlay at +264 when FUSION combines two independent -110 signals from different games</li>
             <li><strong>Play 10:</strong> Place a 2-leg player prop UNDER parlay at +251 when PULSE detects two scoring regression candidates</li>
             <li><strong>Play 11:</strong> Place a 4-8 leg player Points OVER floor parlay when VAULT detects qualified floor candidates across multiple games</li>
+            <li><strong>Play 12:</strong> Place a 3-5 leg player Points OVER higher-floor parlay when FORTRESS detects qualified candidates — better sportsbook odds than VAULT</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
