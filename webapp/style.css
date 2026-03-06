@@ -551,7 +551,7 @@ body {
 .filter-btn,
 .cds-filter-btn,
 .prism-filter-btn,
-.apex-filter-btn {
+.nova-filter-btn {
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text-secondary);
@@ -565,23 +565,23 @@ body {
 .filter-btn:hover,
 .cds-filter-btn:hover,
 .prism-filter-btn:hover,
-.apex-filter-btn:hover {
+.nova-filter-btn:hover {
   border-color: var(--border-light);
   color: var(--text-primary);
 }
 
 .filter-btn.active,
 .cds-filter-btn.active,
-.prism-filter-btn.active,
-.apex-filter-btn.active {
+.prism-filter-btn.active {
   background: var(--bg-accent);
   border-color: var(--cyan);
   color: var(--cyan);
 }
 
-.apex-filter-btn.active {
-  border-color: var(--amber);
-  color: var(--amber);
+.nova-filter-btn.active {
+  background: var(--bg-accent);
+  border-color: #fb923c;
+  color: #fb923c;
 }
 
 .table-wrap {
