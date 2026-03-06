@@ -1582,11 +1582,15 @@
 
         if (selected.length >= 2) {
           const allHit = selected.every(s => s.hit);
-          const odds = siegeCalcParlayOdds(selected);
+          // Compute decimal from each leg's estimated odds (FanDuel-calibrated)
           const parlayDecimal = selected.reduce((d, s) => {
             const o = s.estOdds;
             return d * (o > 0 ? 1 + o/100 : 1 + 100/Math.abs(o));
           }, 1);
+          // Convert to American for display
+          const odds = parlayDecimal >= 2.0
+            ? Math.round((parlayDecimal - 1) * 100)
+            : Math.round(-100 / (parlayDecimal - 1));
           const pnl = allHit ? Math.round((parlayDecimal - 1) * 100) : -100;
 
           siegeHistoryPicks.push({
