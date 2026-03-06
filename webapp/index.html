@@ -12,7 +12,7 @@
   <header class="header">
     <div class="header-left">
       <span class="brand">NBA Dominance</span>
-      <span class="brand-tag">CDS + PRISM + NOVA + FUSION + PULSE + VAULT Pre-Game Models</span>
+      <span class="brand-tag">CDS + PRISM + NOVA + FUSION + PULSE + VAULT + SIEGE Pre-Game Models</span>
     </div>
     <nav class="header-nav">
       <button class="nav-btn active" data-view="picks">Today's Picks</button>
@@ -62,6 +62,10 @@
     <div class="metric">
       <span class="metric-value" style="color: #f59e0b;" id="metric-fortress-accuracy">—</span>
       <span class="metric-label">Play 12 ROI</span>
+    </div>
+    <div class="metric">
+      <span class="metric-value" style="color: #ef4444;" id="metric-siege-accuracy">—</span>
+      <span class="metric-label">Play 13 ROI</span>
     </div>
     <div class="metric">
       <span class="metric-value" id="metric-roi">—</span>
@@ -119,6 +123,11 @@
         <!-- FORTRESS parlay cards injected here by JS -->
       </div>
 
+      <!-- Play 13: SIEGE Sportsbook-Aligned Parlay -->
+      <div id="siege-container" style="display:none;">
+        <!-- SIEGE parlay cards injected here by JS -->
+      </div>
+
       <div id="picks-empty" class="empty-state" style="display:none;">
         <h2>No Qualifying Picks Right Now</h2>
         <p><strong>Play 4 (CDS Moneyline):</strong> No games reaching the Convergent Dominance threshold today.</p>
@@ -128,7 +137,8 @@
         <p><strong>Play 10 (PULSE):</strong> No player regression signals detected today.</p>
         <p><strong>Play 11 (VAULT):</strong> No floor parlay candidates available today.</p>
         <p><strong>Play 12 (FORTRESS):</strong> No higher-floor parlay candidates available today.</p>
-        <p class="subtle">Play 4 averages 5-8 ML picks/month. Play 7 adds 8-12 spread/total picks. Play 8 adds 3-6 OVER picks. Play 9 fires when 2+ game signals align for a +264 parlay. Play 10 fires when 2+ player scoring spikes regress for a +251 player prop parlay. Play 11 fires almost nightly with 4-8 leg ultra-conservative player floor parlays. Play 12 fires with 3-5 higher-floor player prop legs for better sportsbook odds (~+475 avg).</p>
+        <p><strong>Play 13 (SIEGE):</strong> No sportsbook-aligned parlay candidates available today.</p>
+        <p class="subtle">Play 4 averages 5-8 ML picks/month. Play 7 adds 8-12 spread/total picks. Play 8 adds 3-6 OVER picks. Play 9 fires when 2+ game signals align for a +264 parlay. Play 10 fires when 2+ player scoring spikes regress for a +251 player prop parlay. Play 11 fires almost nightly with 4-8 leg ultra-conservative player floor parlays. Play 12 fires with 3-5 higher-floor player prop legs for better sportsbook odds (~+475 avg). Play 13 targets actual sportsbook thresholds (20+/25+ pts) for real high-value payouts.</p>
       </div>
 
       <div id="all-games-section" style="display:none;">
@@ -352,6 +362,34 @@
         </table>
       </div>
       <div id="fortress-history-summary" class="history-summary"></div>
+
+      <!-- ── PLAY 13: SIEGE Sportsbook-Aligned Parlay History ── -->
+      <h2 class="section-title" style="margin-top: 32px;">Play 13 — SIEGE Sportsbook-Aligned Parlay History</h2>
+      <p class="history-note">Sportsbook-aligned player Points OVER parlays targeting real high-value thresholds. Each leg uses actual sportsbook thresholds (19.5/24.5) that map to 20+/25+ point markets. 2-5 legs per parlay with estimated SB odds per leg. Higher payouts with real sportsbook alignment.</p>
+      <div class="filter-bar">
+        <button class="siege-filter-btn" data-period="7">Last 7 Days</button>
+        <button class="siege-filter-btn" data-period="14">Last 14 Days</button>
+        <button class="siege-filter-btn" data-period="30">Last 30 Days</button>
+        <button class="siege-filter-btn active" data-period="all">Full Season</button>
+      </div>
+      <div id="siege-history-table-wrap" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Legs (Player OVER Threshold)</th>
+              <th># Legs</th>
+              <th>Est. Odds</th>
+              <th>Result</th>
+              <th>P&amp;L</th>
+            </tr>
+          </thead>
+          <tbody id="siege-history-body">
+            <tr><td colspan="6" class="muted">Loading SIEGE history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="siege-history-summary" class="history-summary"></div>
     </div>
 
     <!-- ═══════ VIEW: HOW IT WORKS ═══════ -->
@@ -779,6 +817,39 @@
           </div>
         </div>
 
+        <!-- ── PLAY 13: SIEGE ── -->
+        <div class="how-section" style="border-top: 2px solid rgba(239, 68, 68, 0.3); padding-top: 24px; margin-top: 24px;">
+          <h3>Play 13 — SIEGE: Sportsbook-Integrated Elite Gain Engine</h3>
+          <p>The <strong>SIEGE engine</strong> solves the fundamental problem with all previous player prop models: sportsbook threshold alignment.
+          Sportsbooks use fixed 5-point increment thresholds (5+, 10+, 15+, 20+, 25+) for "To Score X+ Points" markets. Any floor below the next
+          threshold gets rounded down to heavily juiced odds. SIEGE targets <strong>actual sportsbook thresholds (19.5/24.5)</strong> that map directly
+          to the 20+ and 25+ point markets, ensuring real payout value.</p>
+          <p>Only elite scorers qualify (24+ PPG avg, 28+ min), with ratio and confidence filters ensuring each leg has
+          realistic estimated odds between -120 and -275. No more -1700 juice legs.</p>
+          <p>Bet: <strong>2-5 leg player Points OVER threshold parlay</strong> — targeting real sportsbook odds for meaningful payouts.</p>
+        </div>
+
+        <div class="how-section">
+          <h3>Play 13 — The Threshold Signal</h3>
+          <div class="results-grid">
+            <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
+              <div class="result-value" style="color: #ef4444;">19.5 / 24.5</div>
+              <div class="result-label">Sportsbook Thresholds</div>
+              <div class="result-detail">Maps to 20+ and 25+ point markets. Elite scorers (28+ PPG) get the 24.5 threshold, stars (24+ PPG) get 19.5.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
+              <div class="result-value" style="color: #ef4444;">-120 to -275</div>
+              <div class="result-label">Per-Leg Est. Odds</div>
+              <div class="result-detail">Real sportsbook-level odds per leg. No more -1700 juice. Each leg carries genuine payout value.</div>
+            </div>
+            <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
+              <div class="result-value" style="color: #ef4444;">2-5</div>
+              <div class="result-label">Legs Per Parlay</div>
+              <div class="result-detail">Fewer elite-quality legs with real odds = genuine high-value parlay payouts.</div>
+            </div>
+          </div>
+        </div>
+
         <div class="how-section">
           <h3>How to Execute</h3>
           <ol>
@@ -791,6 +862,7 @@
             <li><strong>Play 10:</strong> Place a 2-leg player prop UNDER parlay at +251 when PULSE detects two scoring regression candidates</li>
             <li><strong>Play 11:</strong> Place a 4-8 leg player Points OVER floor parlay when VAULT detects qualified floor candidates across multiple games</li>
             <li><strong>Play 12:</strong> Place a 3-5 leg player Points OVER higher-floor parlay when FORTRESS detects qualified candidates — better sportsbook odds than VAULT</li>
+            <li><strong>Play 13:</strong> Place a 2-5 leg player Points OVER parlay at actual sportsbook thresholds (20+/25+) when SIEGE detects elite scorer candidates — highest real-world payouts</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>

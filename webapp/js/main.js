@@ -22,7 +22,9 @@
   let vaultHistoryPicks = [];    // Historical Play 11 VAULT parlay results
   let todayFortressParlays = []; // Play 12: FORTRESS higher-floor parlays
   let fortressHistoryPicks = []; // Historical Play 12 FORTRESS parlay results
-  let playerBoxScores = [];      // Player box score data for PULSE/VAULT/FORTRESS models
+  let todaySiegeParlays = [];    // Play 13: SIEGE sportsbook-aligned parlays
+  let siegeHistoryPicks = [];    // Historical Play 13 SIEGE parlay results
+  let playerBoxScores = [];      // Player box score data for PULSE/VAULT/FORTRESS/SIEGE models
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
@@ -32,9 +34,11 @@
   let currentPulseHistoryPeriod = 'all';
   let currentVaultHistoryPeriod = 'all';
   let currentFortressHistoryPeriod = 'all';
+  let currentSiegeHistoryPeriod = 'all';
   let trainedPulseModel = null;  // PULSE model trained on all historical data
   let trainedVaultModel = null;  // VAULT model trained on all historical data
   let trainedFortressModel = null; // FORTRESS model trained on all historical data
+  let trainedSiegeModel = null;  // SIEGE model trained on all historical data
   let playerTeamMap = {};        // player name -> most recent team abbreviation
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
@@ -43,6 +47,7 @@
   const PULSEModel = window.ParlayEngine.PULSEModel;
   const VAULTModel = window.ParlayEngine.VAULTModel;
   const FORTRESSModel = window.ParlayEngine.FORTRESSModel;
+  const SIEGEModel = window.ParlayEngine.SIEGEModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -282,9 +287,11 @@
       buildPulseHistory();
       buildVaultHistory();
       buildFortressHistory();
+      buildSiegeHistory();
       generateTodayPulsePicks();
       generateTodayVaultPicks();
       generateTodayFortressPicks();
+      generateTodaySiegePicks();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -1487,6 +1494,188 @@
     }
   }
 
+  // ── SIEGE History Builder (Play 13) ──────────────────────────────────────
+
+  function siegeParlayOdds(legs) {
+    // Calculate parlay odds from estimated sportsbook odds per leg
+    let dec = 1;
+    for (const l of legs) {
+      dec *= (1 + 100 / Math.abs(l.sbOdds));
+    }
+    return dec >= 2.0 ? Math.round((dec - 1) * 100) : Math.round(-100 / (dec - 1));
+  }
+
+  function buildSiegeHistory() {
+    siegeHistoryPicks = [];
+    if (!playerBoxScores || playerBoxScores.length === 0) return;
+
+    const siege = Object.create(SIEGEModel);
+    siege.playerHistory = {};
+
+    const sorted = [...playerBoxScores].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    const byDate = {};
+    for (const game of sorted) {
+      if (!byDate[game.date]) byDate[game.date] = [];
+      byDate[game.date].push(game);
+    }
+
+    const processedDates = new Set();
+
+    for (const game of sorted) {
+      const date = game.date;
+
+      if (!processedDates.has(date)) {
+        const dayGames = byDate[date] || [];
+        const dayCandidates = [];
+
+        for (const dg of dayGames) {
+          const gameKey = `${dg.away}@${dg.home}`;
+          const players = (dg.players || []).map(p => ({
+            name: p.name,
+            team: p.team,
+            pts: p.pts,
+            min: parsePlayerMins(p.min),
+          }));
+
+          const picks = siege.predictGame(players);
+          for (const pick of picks) {
+            const actualPlayer = dg.players.find(pp => pp.name === pick.player);
+            if (!actualPlayer) continue;
+
+            const hit = actualPlayer.pts > pick.line;
+            dayCandidates.push({
+              ...pick,
+              actual: actualPlayer.pts,
+              hit,
+              gameKey,
+              gameDisplay: `${dg.away} @ ${dg.home}`,
+            });
+          }
+        }
+
+        // Select top 2-5 legs from different games, sorted by confidence
+        dayCandidates.sort((a, b) => b.confidence - a.confidence);
+        const selected = [];
+        const usedGames = new Set();
+
+        for (const c of dayCandidates) {
+          if (usedGames.has(c.gameKey)) continue;
+          selected.push(c);
+          usedGames.add(c.gameKey);
+          if (selected.length >= 5) break;
+        }
+
+        if (selected.length >= 2) {
+          const allHit = selected.every(s => s.hit);
+          const odds = siegeParlayOdds(selected);
+          const pnl = allHit ? odds : -100;
+
+          siegeHistoryPicks.push({
+            date,
+            legs: selected.map(s => ({
+              player: s.player,
+              team: s.team,
+              line: s.line,
+              displayLine: s.displayLine,
+              actual: s.actual,
+              hit: s.hit,
+              confidence: s.confidence,
+              l10Avg: s.l10Avg,
+              l10Min: s.l10Min,
+              sbOdds: s.sbOdds,
+              ratio: s.ratio,
+              gameDisplay: s.gameDisplay,
+            })),
+            numLegs: selected.length,
+            odds,
+            won: allHit,
+            pnl,
+          });
+        }
+
+        processedDates.add(date);
+      }
+
+      // Update SIEGE model with all players from this game
+      for (const p of (game.players || [])) {
+        const mins = parsePlayerMins(p.min);
+        if (mins < 10) continue;
+        siege.updatePlayer(p.name, p.pts, mins, game.date);
+      }
+    }
+
+    trainedSiegeModel = siege;
+    console.log(`[SIEGE] Built history: ${siegeHistoryPicks.length} parlays`);
+  }
+
+  function generateTodaySiegePicks() {
+    todaySiegeParlays = [];
+    if (!trainedSiegeModel || todayGames.length === 0) {
+      console.log(`[SIEGE] Skipping today's picks: model=${!!trainedSiegeModel}, games=${todayGames.length}`);
+      return;
+    }
+
+    try {
+      const dayCandidates = [];
+
+      for (const game of todayGames) {
+        const gameKey = `${game.away_team}@${game.home_team}`;
+        const teamPlayers = [];
+        for (const [name, team] of Object.entries(playerTeamMap)) {
+          if (team === game.home_team || team === game.away_team) {
+            teamPlayers.push({ name, team, pts: 0, min: 30 });
+          }
+        }
+
+        const picks = trainedSiegeModel.predictGame(teamPlayers);
+        for (const pick of picks) {
+          dayCandidates.push({
+            ...pick,
+            gameKey,
+            gameDisplay: `${game.away_team} @ ${game.home_team}`,
+          });
+        }
+      }
+
+      console.log(`[SIEGE] ${dayCandidates.length} qualifying players across ${todayGames.length} games`);
+
+      dayCandidates.sort((a, b) => b.confidence - a.confidence);
+      const selected = [];
+      const usedGames = new Set();
+      for (const c of dayCandidates) {
+        if (usedGames.has(c.gameKey)) continue;
+        selected.push(c);
+        usedGames.add(c.gameKey);
+        if (selected.length >= 5) break;
+      }
+
+      if (selected.length >= 2) {
+        const odds = siegeParlayOdds(selected);
+        todaySiegeParlays.push({
+          legs: selected.map(s => ({
+            player: s.player,
+            team: s.team,
+            line: s.line,
+            displayLine: s.displayLine,
+            confidence: s.confidence,
+            l10Avg: s.l10Avg,
+            l10Min: s.l10Min,
+            sbOdds: s.sbOdds,
+            ratio: s.ratio,
+            gameDisplay: s.gameDisplay,
+          })),
+          numLegs: selected.length,
+          odds,
+        });
+      }
+
+      console.log(`[SIEGE] Today's picks: ${todaySiegeParlays.length} parlays (${selected.length} legs from ${usedGames.size} games)`);
+    } catch (e) {
+      console.error('[SIEGE] Error generating today picks:', e);
+    }
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -1497,7 +1686,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0 || todayPulseParlays.length > 0 || todayVaultParlays.length > 0 || todayFortressParlays.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0 || todayPulseParlays.length > 0 || todayVaultParlays.length > 0 || todayFortressParlays.length > 0 || todaySiegeParlays.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -1572,6 +1761,16 @@
           '<div class="picks-grid">' + todayFortressParlays.map(renderFortressCard).join('') + '</div>';
       } else if (fortressContainer) {
         fortressContainer.style.display = 'none';
+      }
+
+      // Play 13 — SIEGE Sportsbook-Aligned Parlay
+      const siegeContainer = document.getElementById('siege-container');
+      if (siegeContainer && todaySiegeParlays.length > 0) {
+        siegeContainer.style.display = '';
+        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Sportsbook-Aligned Parlay <span class="siege-badge">Real SB Odds</span></h3>' +
+          '<div class="picks-grid">' + todaySiegeParlays.map(renderSiegeCard).join('') + '</div>';
+      } else if (siegeContainer) {
+        siegeContainer.style.display = 'none';
       }
 
     }
@@ -2049,6 +2248,50 @@
       </div>`;
   }
 
+  function renderSiegeCard(parlay) {
+    const legsHtml = parlay.legs.map((l, i) => `
+      <div class="siege-leg">
+        <span class="siege-leg-player">${l.player}</span>
+        <span class="siege-leg-bet">OVER ${l.line} PTS (${l.displayLine}) at ${l.sbOdds}</span>
+        <span class="siege-leg-conf">${l.confidence.toFixed(1)}x | ${l.ratio}%</span>
+      </div>
+      ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
+    `).join('');
+
+    return `
+      <div class="pick-card conf-siege">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 13</span>
+          <span class="pick-conf">SIEGE PARLAY — +${parlay.odds}</span>
+        </div>
+        <div class="pick-bet-line siege-payout">${parlay.numLegs}-Leg Sportsbook-Aligned Parlay at +${parlay.odds} ($100 → $${parlay.odds + 100})</div>
+        <div class="siege-legs">
+          ${legsHtml}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Parlay Odds</span>
+            <span class="detail-value siege-value">+${parlay.odds}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Each Leg</span>
+            <span class="detail-value">~-175 avg</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Win Payout</span>
+            <span class="detail-value siege-value">+$${parlay.odds}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Legs</span>
+            <span class="detail-value">${parlay.numLegs}</span>
+          </div>
+        </div>
+        <div class="pick-live live-scheduled">
+          <span class="live-status">Pre-Game — Use "To Score ${parlay.legs[0] ? parlay.legs[0].displayLine : '20+'} Points" props</span>
+        </div>
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -2096,6 +2339,7 @@
     renderPulseHistory();
     renderVaultHistory();
     renderFortressHistory();
+    renderSiegeHistory();
   }
 
   function renderCDSHistory() {
@@ -2751,12 +2995,106 @@
       </div>`;
   }
 
+  // ── SIEGE History Rendering ────────────────────────────────────────────
+
+  function renderSiegeHistory() {
+    const tbody = document.getElementById('siege-history-body');
+    if (!tbody) return;
+
+    let filtered = siegeHistoryPicks;
+    if (currentSiegeHistoryPeriod !== 'all') {
+      const latestSiegeDate = getLatestDateFromPicks(siegeHistoryPicks);
+      const cutoff = getCutoffDate(parseInt(currentSiegeHistoryPeriod), latestSiegeDate);
+      filtered = siegeHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="muted">No SIEGE parlays in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.won ? 'result-win' : 'result-loss';
+        const resText = p.won ? 'W' : 'L';
+        const pnlText = p.won ? `+$${p.odds}` : '-$100';
+        const dateFormatted = formatDate(p.date);
+
+        const legsStr = p.legs.map(l => {
+          const lClass = l.hit ? 'result-win' : 'result-loss';
+          return `${l.player} <span class="siege-over">${l.displayLine}</span>[${l.sbOdds}] <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual})`;
+        }).join(' <span class="siege-sep">|</span> ');
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td class="siege-legs-cell">${legsStr}</td>
+            <td>${p.numLegs}</td>
+            <td>+${p.odds}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderSiegeSummary(filtered);
+  }
+
+  function renderSiegeSummary(filtered) {
+    const summary = document.getElementById('siege-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.won).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    let legHits = 0, legTotal = 0;
+    for (const p of filtered) {
+      for (const l of p.legs) {
+        legTotal++;
+        if (l.hit) legHits++;
+      }
+    }
+    const legPct = legTotal > 0 ? ((legHits / legTotal) * 100).toFixed(1) : '0';
+
+    const avgLegs = total > 0 ? (filtered.reduce((s, p) => s + p.numLegs, 0) / total).toFixed(1) : '0';
+    const avgOdds = total > 0 ? Math.round(filtered.reduce((s, p) => s + p.odds, 0) / total) : 0;
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-siege">
+          <div class="summary-title">Play 13 — SIEGE Sportsbook-Aligned Parlay (avg +${avgOdds})</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Leg Details (Real SB Odds)</div>
+          <div class="summary-stat">
+            <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Uses 20+ and 25+ sportsbook thresholds</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length + todayPulseParlays.length + todayVaultParlays.length + todayFortressParlays.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length + todayPulseParlays.length + todayVaultParlays.length + todayFortressParlays.length + todaySiegeParlays.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -2825,17 +3163,27 @@
         fortressMetric.textContent = (fortressRoi >= 0 ? '+' : '') + fortressRoi + '%';
       }
 
+      // Play 13: SIEGE ROI
+      const siegeTotal = siegeHistoryPicks.length;
+      const siegeWins = siegeHistoryPicks.filter(p => p.won).length;
+      const siegePnl = siegeHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const siegeMetric = document.getElementById('metric-siege-accuracy');
+      if (siegeMetric && siegeTotal > 0) {
+        const siegeRoi = ((siegePnl / (siegeTotal * 100)) * 100).toFixed(0);
+        siegeMetric.textContent = (siegeRoi >= 0 ? '+' : '') + siegeRoi + '%';
+      }
+
       // Combined ROI (all models)
       const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
       const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
-      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal + fortressTotal;
-      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl + pulsePnl + vaultPnl + fortressPnl;
+      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal + fortressTotal + siegeTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl + pulsePnl + vaultPnl + fortressPnl + siegePnl;
       const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
 
       // Combined record
-      const combinedWins = cdsWins + prismHits + novaHits + fusionWins + pulseWins + vaultWins + fortressWins;
-      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal + fortressTotal;
+      const combinedWins = cdsWins + prismHits + novaHits + fusionWins + pulseWins + vaultWins + fortressWins + siegeWins;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal + fortressTotal + siegeTotal;
       el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
@@ -2853,6 +3201,8 @@
       buildFusionParlays();
       generateTodayPulsePicks();
       generateTodayVaultPicks();
+      generateTodayFortressPicks();
+      generateTodaySiegePicks();
       renderPicks();
       renderAllGames();
       updateMetrics();
@@ -2945,6 +3295,15 @@
       });
     });
 
+    document.querySelectorAll('.siege-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.siege-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSiegeHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
   }
 
   // ── Status ─────────────────────────────────────────────────────────────────
@@ -3003,13 +3362,14 @@
     for (const p of pulseHistoryPicks) { if (p.date > latest) latest = p.date; }
     for (const p of vaultHistoryPicks) { if (p.date > latest) latest = p.date; }
     for (const p of fortressHistoryPicks) { if (p.date > latest) latest = p.date; }
+    for (const p of siegeHistoryPicks) { if (p.date > latest) latest = p.date; }
     if (playerBoxScores && playerBoxScores.length > 0) {
       for (const g of playerBoxScores) { if (g.date > latest) latest = g.date; }
     }
     if (seasonData && seasonData.length > 0) {
       for (const g of seasonData) { if (g.date > latest) latest = g.date; }
     }
-    console.log(`[FILTER] getLatestDataDate=${latest}, historyLens: cds=${cdsHistoryPicks.length} prism=${prismHistoryPicks.length} pulse=${pulseHistoryPicks.length} vault=${vaultHistoryPicks.length} fortress=${fortressHistoryPicks.length}`);
+    console.log(`[FILTER] getLatestDataDate=${latest}, historyLens: cds=${cdsHistoryPicks.length} prism=${prismHistoryPicks.length} pulse=${pulseHistoryPicks.length} vault=${vaultHistoryPicks.length} fortress=${fortressHistoryPicks.length} siege=${siegeHistoryPicks.length}`);
     return latest || '';
   }
 

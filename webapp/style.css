@@ -1562,6 +1562,140 @@ td.result-loss { color: var(--red); }
   color: #f59e0b;
 }
 
+/* ── SIEGE (Play 13) — Red/Crimson ── */
+
+.pick-card.conf-siege {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.conf-siege .pick-verdict {
+  background: #ef4444;
+  color: #0a0e17;
+}
+
+.conf-siege .pick-conf {
+  color: #f87171;
+}
+
+.siege-payout {
+  color: #ef4444 !important;
+}
+
+.siege-value {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.siege-badge {
+  display: inline-block;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.siege-over {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.siege-legs {
+  padding: 8px 20px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.siege-leg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.siege-leg-player {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.siege-leg-bet {
+  color: #f87171;
+  font-weight: 600;
+}
+
+.siege-leg-odds {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-left: auto;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.siege-plus {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.siege-filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.siege-filter-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.siege-filter-btn.active {
+  background: var(--bg-accent);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.siege-sep {
+  color: var(--text-muted);
+  margin: 0 2px;
+}
+
+.siege-legs-cell {
+  font-size: 12px;
+  max-width: 600px;
+  white-space: normal;
+  line-height: 1.6;
+}
+
+.badge.conf-siege {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.summary-card.summary-siege {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.summary-siege .summary-title {
+  color: #ef4444;
+}
+
 .summary-stat {
   display: flex;
   justify-content: center;
