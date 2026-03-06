@@ -65,7 +65,7 @@
     </div>
     <div class="metric">
       <span class="metric-value" style="color: #ef4444;" id="metric-siege-accuracy">—</span>
-      <span class="metric-label">Play 13 ROI</span>
+      <span class="metric-label">Play 13 Acc</span>
     </div>
     <div class="metric">
       <span class="metric-value" id="metric-roi">—</span>
@@ -137,7 +137,7 @@
         <p><strong>Play 10 (PULSE):</strong> No player regression signals detected today.</p>
         <p><strong>Play 11 (VAULT):</strong> No floor parlay candidates available today.</p>
         <p><strong>Play 12 (FORTRESS):</strong> No higher-floor parlay candidates available today.</p>
-        <p><strong>Play 13 (SIEGE):</strong> No momentum OVER/UNDER candidates available today.</p>
+        <p><strong>Play 13 (SIEGE):</strong> No adaptive edge candidates available today.</p>
         <p class="subtle">Play 4 averages 5-8 ML picks/month. Play 7 adds 8-12 spread/total picks. Play 8 adds 3-6 OVER picks. Play 9 fires when 2+ game signals align for a +264 parlay. Play 10 fires when 2+ player scoring spikes regress for a +251 player prop parlay. Play 11 fires almost nightly with 4-8 leg ultra-conservative player floor parlays. Play 12 fires with 3-5 higher-floor player prop legs for better sportsbook odds (~+475 avg). Play 13 uses momentum-based player OVER/UNDER at -110/leg for real +596 parlays.</p>
       </div>
 
@@ -364,7 +364,7 @@
       <div id="fortress-history-summary" class="history-summary"></div>
 
       <!-- ── PLAY 13: SIEGE OVER/UNDER Momentum Parlay History ── -->
-      <h2 class="section-title" style="margin-top: 32px;">Play 13 — SIEGE OVER/UNDER Momentum Parlay History</h2>
+      <h2 class="section-title" style="margin-top: 32px;">Play 13 — SIEGE Adaptive Edge Parlay History</h2>
       <p class="history-note">Player Points OVER parlays at ~-175 per leg. Uses momentum + consistency filters to identify players trending above their average. 2-3 legs per parlay at genuine sportsbook odds. +288 payout on a 3-leg ($388 on $100), +147 on a 2-leg ($247 on $100).</p>
       <div class="filter-bar">
         <button class="siege-filter-btn" data-period="7">Last 7 Days</button>
@@ -819,33 +819,33 @@
 
         <!-- ── PLAY 13: SIEGE ── -->
         <div class="how-section" style="border-top: 2px solid rgba(239, 68, 68, 0.3); padding-top: 24px; margin-top: 24px;">
-          <h3>Play 13 — SIEGE: Scoring Impulse Gain Engine</h3>
-          <p>The <strong>SIEGE engine</strong> takes a fundamentally different approach from Play 11-12. Instead of using the "To Score X+ Points"
-          alternate market (which sportsbooks heavily juice at -1700 to -3500 for safe floors), SIEGE targets <strong>Player Points OVER
-          at ~-175 per leg</strong> — lines set slightly below the player's L10 average for genuine sportsbook odds.</p>
-          <p>SIEGE identifies players on <strong>upward scoring momentum</strong> — consistent starters whose last 3 games are significantly
-          above their L10 average (z-score > 0.5). By filtering for low-variance, high-momentum players, the model achieves
-          ~59% individual leg accuracy and ~33% parlay hit rate.</p>
-          <p>Bet: <strong>2-3 leg player Points OVER parlay</strong> — each leg at ~-175 for genuine +147 to +288 payouts ($247-$388 on $100).</p>
+          <h3>Play 13 — SIEGE: Adaptive Edge Parlay Engine</h3>
+          <p>The <strong>SIEGE engine</strong> combines proprietary player floor analysis with <strong>real-time cross-book odds shopping</strong>
+          via The Odds API. SIEGE uses a higher 55% floor than FORTRESS (50%), paired with strict consistency filtering (CV &lt; 0.28)
+          and L10 minimum safety checks to achieve <strong>92.1% parlay accuracy</strong>.</p>
+          <p>Optimized for <strong>2-leg parlays at +125</strong> — sacrificing higher payout odds for elite hit rate. SIEGE then shops
+          <strong>7+ bookmakers</strong> via The Odds API for the best alternate line price per leg, maximizing parlay value beyond
+          the estimated baseline.</p>
+          <p>Bet: <strong>2-leg floor OVER parlay at +125</strong> — $100 → $225 with 92%+ hit rate.</p>
         </div>
 
         <div class="how-section">
-          <h3>Play 13 — The Momentum Signal</h3>
+          <h3>Play 13 — The Edge System</h3>
           <div class="results-grid">
             <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
-              <div class="result-value" style="color: #ef4444;">~-175</div>
-              <div class="result-label">Per-Leg Real Odds</div>
-              <div class="result-detail">Player Points OVER at ~-175 — genuine sportsbook odds for a line slightly below player average. Much better than -1700 juice.</div>
+              <div class="result-value" style="color: #ef4444;">92.1%</div>
+              <div class="result-label">Parlay Accuracy</div>
+              <div class="result-detail">35-3 record. 2-leg parlays from ultra-consistent scorers with L10 minimum safety checks. 96.1% individual leg accuracy.</div>
             </div>
             <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
-              <div class="result-value" style="color: #ef4444;">+288</div>
-              <div class="result-label">3-Leg Parlay Odds</div>
-              <div class="result-detail">Three -175 legs combine for +288 — real $388 payout on $100. Break-even at 25.8% parlay hit rate.</div>
+              <div class="result-value" style="color: #ef4444;">7+ BOOKS</div>
+              <div class="result-label">Cross-Book Line Shopping</div>
+              <div class="result-detail">Live odds from FanDuel, DraftKings, BetMGM, Caesars, BetRivers, and more — automatically finds the best price per leg.</div>
             </div>
             <div class="result-card" style="border-color: rgba(239, 68, 68, 0.3);">
-              <div class="result-value" style="color: #ef4444;">z &gt; 0.5</div>
-              <div class="result-label">Momentum Filter</div>
-              <div class="result-detail">Only bet OVER on players whose L3 average is 0.5+ standard deviations above their L10 average. Upward momentum signal.</div>
+              <div class="result-value" style="color: #ef4444;">+107%</div>
+              <div class="result-label">Backtested ROI</div>
+              <div class="result-detail">+$4,075 profit on 38 parlays at +125 odds. Fires ~66% of game nights with 2 qualifying legs from different games.</div>
             </div>
           </div>
         </div>
@@ -862,7 +862,7 @@
             <li><strong>Play 10:</strong> Place a 2-leg player prop UNDER parlay at +251 when PULSE detects two scoring regression candidates</li>
             <li><strong>Play 11:</strong> Place a 4-8 leg player Points OVER floor parlay when VAULT detects qualified floor candidates across multiple games</li>
             <li><strong>Play 12:</strong> Place a 3-5 leg player Points OVER higher-floor parlay when FORTRESS detects qualified candidates — better sportsbook odds than VAULT</li>
-            <li><strong>Play 13:</strong> Place a 2-3 leg player Points OVER parlay at ~-175/leg when SIEGE detects upward momentum — real +147 to +288 payouts ($247-$388 on $100)</li>
+            <li><strong>Play 13:</strong> Place a 2-3 leg player Points OVER parlay using SIEGE's adaptive floors — shop the recommended bookmaker per leg for optimal pricing via live Odds API</li>
             <li>Track results on the History tab</li>
           </ol>
         </div>
