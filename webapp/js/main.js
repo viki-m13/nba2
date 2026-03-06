@@ -1671,45 +1671,46 @@
 
           if (!oddsData || !oddsData.bookmakers) continue;
 
-          for (const book of oddsData.bookmakers) {
-            const market = book.markets && book.markets.find(m => m.key === 'player_points_alternate');
-            if (!market) continue;
+          // Only use FanDuel odds — most reliable for player availability
+          const fdBook = oddsData.bookmakers.find(b => b.key === 'fanduel');
+          if (!fdBook) continue;
 
-            for (const outcome of (market.outcomes || [])) {
-              if (outcome.name !== 'Over') continue;
-              const player = outcome.description;
-              const threshold = outcome.point;
-              const odds = outcome.price;
+          const market = fdBook.markets && fdBook.markets.find(m => m.key === 'player_points_alternate');
+          if (!market) continue;
 
-              if (!allOdds[player]) allOdds[player] = {};
-              if (!allOdds[player][threshold]) allOdds[player][threshold] = [];
-              allOdds[player][threshold].push({
-                book: book.title,
-                bookKey: book.key,
-                odds: odds,
-              });
-            }
+          for (const outcome of (market.outcomes || [])) {
+            if (outcome.name !== 'Over') continue;
+            const player = outcome.description;
+            const threshold = outcome.point;
+            const odds = outcome.price;
+
+            if (!allOdds[player]) allOdds[player] = {};
+            if (!allOdds[player][threshold]) allOdds[player][threshold] = [];
+            allOdds[player][threshold].push({
+              book: fdBook.title,
+              bookKey: fdBook.key,
+              odds: odds,
+            });
           }
         } catch (e) {
           console.warn('[SIEGE] Error fetching odds for event:', event.id, e);
         }
       }
 
-      // 3. For each player/threshold, find best odds across books
+      // 3. For each player/threshold, use FanDuel odds
       for (const player of Object.keys(allOdds)) {
         for (const threshold of Object.keys(allOdds[player])) {
           const bookOdds = allOdds[player][threshold];
-          bookOdds.sort((a, b) => b.odds - a.odds); // Least negative first
           allOdds[player][threshold] = {
             bestOdds: bookOdds[0].odds,
-            bestBook: bookOdds[0].book,
-            numBooks: bookOdds.length,
+            bestBook: 'FanDuel',
+            numBooks: 1,
             allBooks: bookOdds,
           };
         }
       }
 
-      console.log(`[SIEGE] Fetched odds for ${Object.keys(allOdds).length} players`);
+      console.log(`[SIEGE] Fetched FanDuel odds for ${Object.keys(allOdds).length} players`);
       return allOdds;
     } catch (e) {
       console.error('[SIEGE] Error fetching odds from API:', e);
@@ -1776,15 +1777,22 @@
           // Try to find live odds from the API
           const live = findBestLiveOdds(liveOdds, pick.player, pick.line);
 
+          // FILTER: Only include players with live FanDuel odds
+          // Players who are injured/out won't have props listed on FanDuel
+          if (!live) {
+            console.log(`[SIEGE] Skipping ${pick.player} — no FanDuel odds available (likely injured/out)`);
+            continue;
+          }
+
           dayCandidates.push({
             ...pick,
             gameKey,
             gameDisplay: `${game.away_team} @ ${game.home_team}`,
-            liveOdds: live ? live.odds : null,
-            liveThreshold: live ? live.threshold : null,
-            bestBook: live ? live.book : null,
-            numBooks: live ? live.numBooks : 0,
-            hasLiveOdds: !!live,
+            liveOdds: live.odds,
+            liveThreshold: live.threshold,
+            bestBook: live.book,
+            numBooks: live.numBooks,
+            hasLiveOdds: true,
           });
         }
       }
@@ -2420,9 +2428,7 @@
       const oddsDisplay = l.hasLiveOdds
         ? `<span class="siege-live-tag">LIVE</span> ${siegeFormatOdds(l.liveOdds)} (${l.bestBook})`
         : `Est. ${siegeFormatOdds(l.estOdds)}`;
-      const bookInfo = l.hasLiveOdds && l.numBooks > 1
-        ? `<span class="siege-books-count">${l.numBooks} books compared</span>`
-        : '';
+      const bookInfo = '';
 
       return `
         <div class="siege-leg">
@@ -2467,7 +2473,7 @@
           </div>
         </div>
         <div class="pick-live live-scheduled">
-          <span class="live-status">Pre-Game — ${parlay.hasLiveOdds ? 'Shop the recommended books per leg for best pricing' : 'Use Player Points alternate lines on your sportsbook'}</span>
+          <span class="live-status">Pre-Game — ${parlay.hasLiveOdds ? 'FanDuel Player Points alternate lines' : 'Use Player Points alternate lines on FanDuel'}</span>
         </div>
       </div>`;
   }
