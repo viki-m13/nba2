@@ -1047,6 +1047,136 @@ td.result-loss { color: var(--red); }
   color: #fb923c;
 }
 
+/* ── FUSION (Play 9) — Pink/Magenta ── */
+.pick-card.conf-fusion {
+  border-color: rgba(236, 72, 153, 0.4);
+  background: rgba(236, 72, 153, 0.04);
+}
+
+.conf-fusion .pick-verdict {
+  background: #ec4899;
+  color: #0a0e17;
+}
+
+.conf-fusion .pick-conf {
+  color: #f472b6;
+}
+
+.fusion-text {
+  color: #ec4899;
+}
+
+.fusion-payout {
+  color: #ec4899 !important;
+}
+
+.fusion-value {
+  color: #ec4899;
+  font-weight: 700;
+}
+
+.fusion-badge {
+  display: inline-block;
+  background: rgba(236, 72, 153, 0.2);
+  color: #ec4899;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.fusion-legs {
+  padding: 8px 20px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fusion-leg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(236, 72, 153, 0.06);
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.fusion-leg-source {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.fusion-nova {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
+}
+
+.fusion-prism {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.fusion-leg-bet {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.fusion-leg-game {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.fusion-plus {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ec4899;
+}
+
+.fusion-filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.fusion-filter-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.fusion-filter-btn.active {
+  background: var(--bg-accent);
+  border-color: #ec4899;
+  color: #ec4899;
+}
+
+.badge.conf-fusion {
+  background: rgba(236, 72, 153, 0.15);
+  color: #f472b6;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.summary-card.summary-fusion {
+  border-color: rgba(236, 72, 153, 0.3);
+  background: rgba(236, 72, 153, 0.04);
+}
+
+.summary-fusion .summary-title {
+  color: #ec4899;
+}
+
 .summary-stat {
   display: flex;
   justify-content: center;

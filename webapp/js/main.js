@@ -14,11 +14,14 @@
   let prismHistoryPicks = [];    // Historical Play 7 PRISM picks with results
   let todayNovaPicks = [];       // Games flagged by NOVA model (Play 8: compound OVER -110)
   let novaHistoryPicks = [];     // Historical Play 8 NOVA picks with results
+  let todayFusionParlays = [];   // Play 9: FUSION parlays (2-leg -110/-110 = +264)
+  let fusionHistoryPicks = [];   // Historical Play 9 FUSION parlay results
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
   let currentPrismHistoryPeriod = 'all';
   let currentNovaHistoryPeriod = 'all';
+  let currentFusionHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
@@ -257,9 +260,11 @@
       runCDSPredictions();
       runPRISMPredictions();
       runNOVAPredictions();
+      buildFusionParlays();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
+      buildFusionHistory();
       renderPicks();
       renderAllGames();
       renderHistory();
@@ -633,6 +638,175 @@
     console.log(`[NOVA] Built history: ${novaHistoryPicks.length} total picks`);
   }
 
+  // ── FUSION Parlays (Play 9) ────────────────────────────────────────────────
+  // Combines 2 independent -110 picks from different models/games into a
+  // 2-leg parlay at +264 American odds. Win = +$264, Loss = -$100.
+  // Priority: NOVA OVER > PRISM Spread > PRISM OVER > PRISM UNDER
+
+  function buildFusionParlays() {
+    todayFusionParlays = [];
+
+    // Group picks by signal type
+    const novaOvers = todayNovaPicks.filter(p => p.type === 'total' && p.direction === 'OVER');
+    const prismSpreads = todayPrismPicks.filter(p => p.type === 'spread');
+    const prismOvers = todayPrismPicks.filter(p => p.type === 'total' && p.direction === 'OVER');
+    const prismUnders = todayPrismPicks.filter(p => p.type === 'total' && p.direction === 'UNDER');
+
+    // Priority-ordered pick pool: NOVA > spread > over > under
+    const pool = [
+      ...novaOvers.map(p => ({ ...p, source: 'NOVA', label: `OVER ${p.predTotal}`, gameKey: p.game.id })),
+      ...prismSpreads.map(p => ({ ...p, source: 'PRISM', label: `${p.betTeam} covers`, gameKey: p.game.id })),
+      ...prismOvers.map(p => ({ ...p, source: 'PRISM', label: `OVER ${p.predTotal}`, gameKey: p.game.id })),
+      ...prismUnders.map(p => ({ ...p, source: 'PRISM', label: `UNDER ${p.predTotal}`, gameKey: p.game.id })),
+    ];
+
+    if (pool.length < 2) return;
+
+    // Select best 2 from different games AND different signal types
+    const selected = [];
+    const usedGames = new Set();
+    const usedSources = new Set();
+
+    for (const pick of pool) {
+      if (usedGames.has(pick.gameKey)) continue;
+      // Prefer cross-model parlays (NOVA+PRISM), then cross-type
+      if (selected.length === 1 && usedSources.has(pick.source) && pool.some(p => !usedGames.has(p.gameKey) && !usedSources.has(p.source))) continue;
+      selected.push(pick);
+      usedGames.add(pick.gameKey);
+      usedSources.add(pick.source);
+      if (selected.length >= 2) break;
+    }
+
+    if (selected.length < 2) return;
+
+    todayFusionParlays.push({
+      leg1: selected[0],
+      leg2: selected[1],
+      parlayOdds: '+264',
+      parlayDecimal: 3.64,
+      winPayout: 264,
+    });
+
+    console.log(`[FUSION] ${todayFusionParlays.length} parlays built`);
+  }
+
+  function buildFusionHistory() {
+    fusionHistoryPicks = [];
+
+    const prism = Object.create(PRISMModel);
+    prism.teamHistory = {};
+    const nova = Object.create(NOVAModel);
+    nova.teamHistory = {};
+
+    const sorted = [...seasonData].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    // Group games by date for parlay building
+    const gamesByDate = {};
+    for (const game of sorted) {
+      if (!gamesByDate[game.date]) gamesByDate[game.date] = [];
+      gamesByDate[game.date].push(game);
+    }
+
+    const processedDates = new Set();
+
+    for (const game of sorted) {
+      const date = game.date;
+
+      // After updating all games for this date, build parlays
+      if (!processedDates.has(date)) {
+        // First, generate all picks for all games on this date
+        const dayGames = gamesByDate[date] || [];
+        const dayPicks = [];
+
+        for (const dg of dayGames) {
+          // PRISM picks
+          const prismPicks = prism.predictGame(dg.home_team, dg.away_team);
+          if (prismPicks) {
+            const actualTotal = dg.home_score + dg.away_score;
+            const actualHM = dg.home_score - dg.away_score;
+            for (const pick of prismPicks) {
+              let hit = false;
+              if (pick.type === 'total') {
+                hit = pick.direction === 'OVER' ? actualTotal > pick.predTotal : actualTotal < pick.predTotal;
+              } else if (pick.type === 'spread') {
+                hit = actualHM < pick.predMargin;
+              }
+              dayPicks.push({ ...pick, source: 'PRISM', hit, game: dg, label: pick.type === 'total' ? `${pick.direction} ${pick.predTotal}` : `${pick.betTeam} covers` });
+            }
+          }
+
+          // NOVA picks
+          const novaPicks = nova.predictGame(dg.home_team, dg.away_team);
+          if (novaPicks) {
+            const actualTotal = dg.home_score + dg.away_score;
+            for (const pick of novaPicks) {
+              const hit = actualTotal > pick.predTotal;
+              dayPicks.push({ ...pick, source: 'NOVA', hit, game: dg, label: `OVER ${pick.predTotal}` });
+            }
+          }
+        }
+
+        // Build best 2-leg parlay from different games + preferably different sources
+        const pool = [
+          ...dayPicks.filter(p => p.source === 'NOVA'),
+          ...dayPicks.filter(p => p.source === 'PRISM' && p.type === 'spread'),
+          ...dayPicks.filter(p => p.source === 'PRISM' && p.type === 'total' && p.direction === 'OVER'),
+          ...dayPicks.filter(p => p.source === 'PRISM' && p.type === 'total' && p.direction === 'UNDER'),
+        ];
+
+        if (pool.length >= 2) {
+          const selected = [];
+          const usedGames = new Set();
+          const usedSources = new Set();
+
+          for (const pick of pool) {
+            const gk = pick.game.home_team + pick.game.away_team;
+            if (usedGames.has(gk)) continue;
+            if (selected.length === 1 && usedSources.has(pick.source)) {
+              // Check if a cross-source pick is available
+              const crossAvail = pool.some(p => {
+                const pk = p.game.home_team + p.game.away_team;
+                return !usedGames.has(pk) && !usedSources.has(p.source);
+              });
+              if (crossAvail) continue;
+            }
+            selected.push(pick);
+            usedGames.add(gk);
+            usedSources.add(pick.source);
+            if (selected.length >= 2) break;
+          }
+
+          if (selected.length >= 2) {
+            const allHit = selected.every(p => p.hit);
+            fusionHistoryPicks.push({
+              date,
+              leg1Source: selected[0].source,
+              leg1Label: selected[0].label,
+              leg1Game: `${selected[0].game.away_team}@${selected[0].game.home_team}`,
+              leg1Hit: selected[0].hit,
+              leg2Source: selected[1].source,
+              leg2Label: selected[1].label,
+              leg2Game: `${selected[1].game.away_team}@${selected[1].game.home_team}`,
+              leg2Hit: selected[1].hit,
+              hit: allHit,
+              pnl: allHit ? 264 : -100,
+            });
+          }
+        }
+
+        processedDates.add(date);
+      }
+
+      // Update models with this game
+      prism.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      prism.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+      nova.updateTeam(game.home_team, game.home_score, game.away_score, game.date);
+      nova.updateTeam(game.away_team, game.away_score, game.home_score, game.date);
+    }
+
+    console.log(`[FUSION] Built history: ${fusionHistoryPicks.length} parlays`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -643,7 +817,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -678,6 +852,16 @@
           '<div class="picks-grid">' + todayNovaPicks.map(renderNOVACard).join('') + '</div>';
       } else if (novaContainer) {
         novaContainer.style.display = 'none';
+      }
+
+      // Play 9 — FUSION Parlay
+      const fusionContainer = document.getElementById('fusion-container');
+      if (fusionContainer && todayFusionParlays.length > 0) {
+        fusionContainer.style.display = '';
+        fusionContainer.innerHTML = '<h3 class="section-title">Play 9 — FUSION 2-Leg Parlay <span class="fusion-badge">+264</span></h3>' +
+          '<div class="picks-grid">' + todayFusionParlays.map(renderFusionCard).join('') + '</div>';
+      } else if (fusionContainer) {
+        fusionContainer.style.display = 'none';
       }
 
     }
@@ -940,6 +1124,85 @@
       </div>`;
   }
 
+  function renderFusionCard(parlay) {
+    const l1 = parlay.leg1;
+    const l2 = parlay.leg2;
+    const g1 = l1.game;
+    const g2 = l2.game;
+
+    let leg1Html = `<div class="fusion-leg">
+      <span class="fusion-leg-source ${l1.source === 'NOVA' ? 'fusion-nova' : 'fusion-prism'}">${l1.source}</span>
+      <span class="fusion-leg-bet">${l1.label} at -110</span>
+      <span class="fusion-leg-game">${teamName(g1.away_team)} @ ${teamName(g1.home_team)}</span>
+    </div>`;
+
+    let leg2Html = `<div class="fusion-leg">
+      <span class="fusion-leg-source ${l2.source === 'NOVA' ? 'fusion-nova' : 'fusion-prism'}">${l2.source}</span>
+      <span class="fusion-leg-bet">${l2.label} at -110</span>
+      <span class="fusion-leg-game">${teamName(g2.away_team)} @ ${teamName(g2.home_team)}</span>
+    </div>`;
+
+    // Check if any game is final
+    let liveHtml = '';
+    const g1Final = g1.status === 'STATUS_FINAL';
+    const g2Final = g2.status === 'STATUS_FINAL';
+    if (g1Final && g2Final) {
+      let l1Hit, l2Hit;
+      if (l1.type === 'total') {
+        const at = g1.home_score + g1.away_score;
+        l1Hit = l1.direction === 'OVER' ? at > l1.predTotal : at < l1.predTotal;
+      } else {
+        l1Hit = (g1.home_score - g1.away_score) < l1.predMargin;
+      }
+      if (l2.type === 'total') {
+        const at = g2.home_score + g2.away_score;
+        l2Hit = l2.direction === 'OVER' ? at > l2.predTotal : at < l2.predTotal;
+      } else {
+        l2Hit = (g2.home_score - g2.away_score) < l2.predMargin;
+      }
+      const won = l1Hit && l2Hit;
+      liveHtml = `<div class="pick-live ${won ? 'live-win' : 'live-loss'}">
+        <span class="live-label">FINAL</span>
+        <span class="live-result">${won ? 'W (+$264)' : 'L (-$100)'}</span></div>`;
+    } else {
+      liveHtml = `<div class="pick-live live-scheduled">
+        <span class="live-status">Pre-Game — Place 2-Leg Parlay</span></div>`;
+    }
+
+    return `
+      <div class="pick-card conf-fusion">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 9</span>
+          <span class="pick-conf">FUSION PARLAY — +264</span>
+        </div>
+        <div class="pick-bet-line fusion-payout">2-Leg Parlay at +264 ($100 → $364)</div>
+        <div class="fusion-legs">
+          ${leg1Html}
+          <div class="fusion-plus">+</div>
+          ${leg2Html}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Parlay Odds</span>
+            <span class="detail-value fusion-value">+264</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Each Leg</span>
+            <span class="detail-value">-110</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Win Payout</span>
+            <span class="detail-value fusion-value">+$264</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Break-Even</span>
+            <span class="detail-value">27.5%</span>
+          </div>
+        </div>
+        ${liveHtml}
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -983,6 +1246,7 @@
     renderCDSHistory();
     renderPRISMHistory();
     renderNOVAHistory();
+    renderFusionHistory();
   }
 
   function renderCDSHistory() {
@@ -1284,12 +1548,90 @@
       </div>`;
   }
 
+  function renderFusionHistory() {
+    const tbody = document.getElementById('fusion-history-body');
+    if (!tbody) return;
+
+    let filtered = fusionHistoryPicks;
+    if (currentFusionHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentFusionHistoryPeriod));
+      filtered = fusionHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="muted">No FUSION parlays in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.hit ? 'result-win' : 'result-loss';
+        const resText = p.hit ? 'W' : 'L';
+        const pnlText = p.hit ? '+$264' : '-$100';
+        const dateFormatted = formatDate(p.date);
+        const l1Class = p.leg1Hit ? 'result-win' : 'result-loss';
+        const l2Class = p.leg2Hit ? 'result-win' : 'result-loss';
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td><span class="${p.leg1Source === 'NOVA' ? 'fusion-nova' : 'fusion-prism'}">${p.leg1Source}</span> ${p.leg1Label}</td>
+            <td>${p.leg1Game}</td>
+            <td><span class="badge ${l1Class}">${p.leg1Hit ? 'W' : 'L'}</span></td>
+            <td><span class="${p.leg2Source === 'NOVA' ? 'fusion-nova' : 'fusion-prism'}">${p.leg2Source}</span> ${p.leg2Label}</td>
+            <td>${p.leg2Game}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderFusionSummary(filtered);
+  }
+
+  function renderFusionSummary(filtered) {
+    const summary = document.getElementById('fusion-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.hit).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-fusion">
+          <div class="summary-title">Play 9 — FUSION 2-Leg Parlay (at +264)</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Parlay Details</div>
+          <div class="summary-stat">
+            <span class="summary-record">Each leg: -110</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Parlay: +264</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Break-even: 27.5%</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -1318,17 +1660,27 @@
         novaMetric.textContent = ((novaHits / novaTotal) * 100).toFixed(1) + '%';
       }
 
+      // Play 9 FUSION metrics
+      const fusionWins = fusionHistoryPicks.filter(p => p.won).length;
+      const fusionTotal = fusionHistoryPicks.length;
+      const fusionPnl = fusionHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const fusionMetric = document.getElementById('metric-fusion-accuracy');
+      if (fusionMetric && fusionTotal > 0) {
+        const fusionRoi = ((fusionPnl / (fusionTotal * 100)) * 100).toFixed(0);
+        fusionMetric.textContent = (fusionRoi >= 0 ? '+' : '') + fusionRoi + '%';
+      }
+
       // Combined ROI (all models)
       const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
       const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
-      const combinedBets = cdsTotal + prismTotal + novaTotal;
-      const combinedPnl = cdsPnl + prismPnl + novaPnl;
+      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl;
       const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
 
       // Combined record
-      const combinedWins = cdsWins + prismHits + novaHits;
-      const combinedTotal = cdsTotal + prismTotal + novaTotal;
+      const combinedWins = cdsWins + prismHits + novaHits + fusionWins;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal;
       el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
@@ -1391,6 +1743,15 @@
         document.querySelectorAll('.nova-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentNovaHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.fusion-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.fusion-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFusionHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });
