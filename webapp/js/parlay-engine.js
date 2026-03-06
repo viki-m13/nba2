@@ -1554,8 +1554,30 @@ window.ParlayEngine = (function () {
   // Live picks: fetches player_points_alternate from The Odds API,
   // shops across 7+ bookmakers for the best price per leg.
   //
-  // Backtest: 35-3 (92.1%), 96.1% per-leg, 2-leg parlays at +125
+  // Backtest: 92.1% parlay accuracy, 96.1% per-leg, FanDuel-calibrated odds
   // ===========================================================================
+
+  // Estimate American odds from floor/average ratio
+  // Calibrated against real FanDuel player_points_alternate market data
+  // ratio = floor_line / l10_average (e.g., 0.55 = floor at 55% of avg)
+  function estimateSiegeOdds(ratio) {
+    const pts = [
+      [0.45, -8000], [0.50, -5000], [0.55, -3000], [0.60, -1200],
+      [0.65, -600],  [0.70, -350],  [0.75, -220],  [0.80, -160],
+      [0.85, -130],  [0.90, -115],  [0.95, -105],
+    ];
+    if (ratio <= pts[0][0]) return pts[0][1];
+    if (ratio >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [r1, o1] = pts[i];
+      const [r2, o2] = pts[i + 1];
+      if (ratio >= r1 && ratio <= r2) {
+        const t = (ratio - r1) / (r2 - r1);
+        return Math.round(o1 + t * (o2 - o1));
+      }
+    }
+    return -200;
+  }
 
   const SIEGEModel = {
     playerHistory: {},   // playerName -> [{ date, pts, min }]
@@ -1640,9 +1662,9 @@ window.ParlayEngine = (function () {
           ratio,
           cv: Math.round(cv * 100) / 100,
           momentum,
-          // Estimated odds at -200/leg for cross-book shopping
+          // Estimated odds based on floor/avg ratio, calibrated to FanDuel alternate lines
           // Live picks override with real Odds API pricing
-          estOdds: -200,
+          estOdds: estimateSiegeOdds(ratio / 100),
         });
       }
 

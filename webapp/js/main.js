@@ -1500,7 +1500,7 @@
   function siegeCalcParlayOdds(legs) {
     let decimal = 1;
     for (const leg of legs) {
-      const odds = leg.liveOdds || leg.estOdds || -300;
+      const odds = leg.liveOdds || leg.estOdds || -200;
       if (odds > 0) {
         decimal *= 1 + odds / 100;
       } else {
@@ -1584,7 +1584,7 @@
           const allHit = selected.every(s => s.hit);
           const odds = siegeCalcParlayOdds(selected);
           const parlayDecimal = selected.reduce((d, s) => {
-            const o = s.estOdds || -300;
+            const o = s.estOdds;
             return d * (o > 0 ? 1 + o/100 : 1 + 100/Math.abs(o));
           }, 1);
           const pnl = allHit ? Math.round((parlayDecimal - 1) * 100) : -100;
@@ -1602,7 +1602,7 @@
               l10Avg: s.l10Avg,
               l3Avg: s.l3Avg,
               l10Min: s.l10Min,
-              estOdds: s.estOdds || -200,
+              estOdds: s.estOdds,
               ratio: s.ratio,
               cv: s.cv,
               momentum: s.momentum,
@@ -1942,7 +1942,7 @@
       const siegeContainer = document.getElementById('siege-container');
       if (siegeContainer && todaySiegeParlays.length > 0) {
         siegeContainer.style.display = '';
-        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Adaptive Edge Parlay <span class="siege-badge">+125 / Live Odds</span></h3>' +
+        siegeContainer.innerHTML = '<h3 class="section-title">Play 13 — SIEGE Adaptive Edge Parlay <span class="siege-badge">FanDuel Live Odds</span></h3>' +
           '<div class="picks-grid">' + todaySiegeParlays.map(renderSiegeCard).join('') + '</div>';
       } else if (siegeContainer) {
         siegeContainer.style.display = 'none';
@@ -3261,12 +3261,12 @@
           </div>
         </div>
         <div class="summary-card">
-          <div class="summary-title">Leg Details (Adaptive Floors + Cross-Book Shopping)</div>
+          <div class="summary-title">Leg Details (Adaptive Floors + FanDuel Odds)</div>
           <div class="summary-stat">
             <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
           </div>
           <div class="summary-stat">
-            <span class="summary-record">Dynamic per-player floors with Odds API pricing</span>
+            <span class="summary-record">Odds estimated from floor/avg ratio, calibrated to FanDuel</span>
           </div>
           <div class="summary-stat">
             <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>
