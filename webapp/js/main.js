@@ -1554,8 +1554,8 @@
           }
         }
 
-        // Select top 2-5 legs from different games, sorted by confidence
-        dayCandidates.sort((a, b) => b.confidence - a.confidence);
+        // Select top 2-3 legs from different games, sorted by clear rate then confidence
+        dayCandidates.sort((a, b) => (b.clearRate || 10) - (a.clearRate || 10) || b.confidence - a.confidence);
         const selected = [];
         const usedGames = new Set();
 
@@ -1563,7 +1563,7 @@
           if (usedGames.has(c.gameKey)) continue;
           selected.push(c);
           usedGames.add(c.gameKey);
-          if (selected.length >= 5) break;
+          if (selected.length >= 3) break;
         }
 
         if (selected.length >= 2) {
@@ -1581,6 +1581,7 @@
               actual: s.actual,
               hit: s.hit,
               confidence: s.confidence,
+              clearRate: s.clearRate,
               l10Avg: s.l10Avg,
               l10Min: s.l10Min,
               sbOdds: s.sbOdds,
@@ -1640,14 +1641,14 @@
 
       console.log(`[SIEGE] ${dayCandidates.length} qualifying players across ${todayGames.length} games`);
 
-      dayCandidates.sort((a, b) => b.confidence - a.confidence);
+      dayCandidates.sort((a, b) => (b.clearRate || 10) - (a.clearRate || 10) || b.confidence - a.confidence);
       const selected = [];
       const usedGames = new Set();
       for (const c of dayCandidates) {
         if (usedGames.has(c.gameKey)) continue;
         selected.push(c);
         usedGames.add(c.gameKey);
-        if (selected.length >= 5) break;
+        if (selected.length >= 3) break;
       }
 
       if (selected.length >= 2) {
@@ -1659,6 +1660,7 @@
             line: s.line,
             displayLine: s.displayLine,
             confidence: s.confidence,
+            clearRate: s.clearRate,
             l10Avg: s.l10Avg,
             l10Min: s.l10Min,
             sbOdds: s.sbOdds,
@@ -2253,7 +2255,7 @@
       <div class="siege-leg">
         <span class="siege-leg-player">${l.player}</span>
         <span class="siege-leg-bet">OVER ${l.line} PTS (${l.displayLine}) at ${l.sbOdds}</span>
-        <span class="siege-leg-conf">${l.confidence.toFixed(1)}x | ${l.ratio}%</span>
+        <span class="siege-leg-odds">${l.clearRate || 10}/10 cleared | ${l.ratio}%</span>
       </div>
       ${i < parlay.legs.length - 1 ? '<div class="siege-plus">+</div>' : ''}
     `).join('');

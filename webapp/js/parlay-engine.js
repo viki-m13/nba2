@@ -1560,12 +1560,11 @@ window.ParlayEngine = (function () {
       }
     },
 
-    // Snap to sportsbook threshold: 19.5 (="20+") or 24.5 (="25+")
+    // Snap to sportsbook threshold based on scoring tier
+    // Use 19.5 (="20+") for all qualifying scorers — this gives real SB odds
+    // while being much more hittable than 24.5 for a parlay
     getThreshold(avgPts) {
-      // For elite scorers (28+), use 25+ threshold if ratio is good
-      if (avgPts >= 28) return 24.5;
-      // For star scorers (24+), use 20+ threshold
-      if (avgPts >= 24) return 19.5;
+      if (avgPts >= 24) return 19.5;  // 20+ market for all stars/elite
       return null;
     },
 
@@ -1599,19 +1598,22 @@ window.ParlayEngine = (function () {
         const threshold = this.getThreshold(avgPts);
         if (!threshold) continue;
 
-        // Ratio filter: threshold must be >= 70% of avg for decent sportsbook odds
-        const ratio = threshold / avgPts;
-        if (ratio < 0.70) continue;
+        // Streak filter: player must have cleared threshold in >= 9 of last 10 games
+        const clearCount = l10.filter(g => g.pts > threshold).length;
+        if (clearCount < 9) continue;
 
-        // Confidence: L10 minimum vs threshold
+        // Ratio filter: threshold must be >= 65% of avg for decent sportsbook odds
+        const ratio = threshold / avgPts;
+        if (ratio < 0.65) continue;
+
+        // Confidence: L10 minimum vs threshold (for sorting/display)
         const confidence = threshold > 0 ? minPts / threshold : 0;
-        if (confidence < 0.80) continue;
 
         const sbOdds = this.estimateSbOdds(threshold, avgPts);
         // Filter out heavily juiced legs (worse than -300)
         if (sbOdds < -300) continue;
 
-        const displayLine = threshold === 24.5 ? '25+' : '20+';
+        const displayLine = '20+';
 
         picks.push({
           player: p.name,
@@ -1624,13 +1626,14 @@ window.ParlayEngine = (function () {
           l10Avg: Math.round(avgPts * 10) / 10,
           l10Min: minPts,
           confidence: Math.round(confidence * 100) / 100,
+          clearRate: clearCount,  // out of 10
           sbOdds,
           ratio: Math.round(ratio * 100),
         });
       }
 
-      // Sort by confidence (highest first)
-      picks.sort((a, b) => b.confidence - a.confidence);
+      // Sort by confidence (highest first), then by clear rate
+      picks.sort((a, b) => b.clearRate - a.clearRate || b.confidence - a.confidence);
       return picks;
     },
   };
