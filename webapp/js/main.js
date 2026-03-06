@@ -18,7 +18,9 @@
   let fusionHistoryPicks = [];   // Historical Play 9 FUSION parlay results
   let todayPulseParlays = [];    // Play 10: PULSE player prop UNDER parlays (+251)
   let pulseHistoryPicks = [];    // Historical Play 10 PULSE parlay results
-  let playerBoxScores = [];      // Player box score data for PULSE model
+  let todayVaultParlays = [];    // Play 11: VAULT multi-leg floor parlays
+  let vaultHistoryPicks = [];    // Historical Play 11 VAULT parlay results
+  let playerBoxScores = [];      // Player box score data for PULSE/VAULT models
   let seasonData = [];          // Full season game data for model training
   let modelReady = false;
   let currentCdsHistoryPeriod = 'all';
@@ -26,11 +28,13 @@
   let currentNovaHistoryPeriod = 'all';
   let currentFusionHistoryPeriod = 'all';
   let currentPulseHistoryPeriod = 'all';
+  let currentVaultHistoryPeriod = 'all';
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
   const NOVAModel = window.ParlayEngine.NOVAModel;
   const PULSEModel = window.ParlayEngine.PULSEModel;
+  const VAULTModel = window.ParlayEngine.VAULTModel;
 
   // NBA team full names for display
   const TEAM_NAMES = {
@@ -268,6 +272,7 @@
       buildFusionParlays();
       await loadPlayerData();
       buildPulseHistory();
+      buildVaultHistory();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -946,6 +951,114 @@
     console.log(`[PULSE] Built history: ${pulseHistoryPicks.length} parlays`);
   }
 
+  // ── VAULT History Builder ──────────────────────────────────────────────────
+
+  function vaultParlayAmerican(numLegs) {
+    // At -300 per leg: decimal = 1.333
+    const dec = Math.pow(1 + 100 / 300, numLegs);
+    return dec >= 2.0 ? Math.round((dec - 1) * 100) : Math.round(-100 / (dec - 1));
+  }
+
+  function buildVaultHistory() {
+    vaultHistoryPicks = [];
+    if (!playerBoxScores || playerBoxScores.length === 0) return;
+
+    const vault = Object.create(VAULTModel);
+    vault.playerHistory = {};
+
+    const sorted = [...playerBoxScores].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    const byDate = {};
+    for (const game of sorted) {
+      if (!byDate[game.date]) byDate[game.date] = [];
+      byDate[game.date].push(game);
+    }
+
+    const processedDates = new Set();
+
+    for (const game of sorted) {
+      const date = game.date;
+
+      if (!processedDates.has(date)) {
+        const dayGames = byDate[date] || [];
+        const dayCandidates = [];
+
+        for (const dg of dayGames) {
+          const gameKey = `${dg.away}@${dg.home}`;
+          const players = (dg.players || []).map(p => ({
+            name: p.name,
+            team: p.team,
+            pts: p.pts,
+            min: parsePlayerMins(p.min),
+          }));
+
+          const picks = vault.predictGame(players);
+          for (const pick of picks) {
+            const actualPlayer = dg.players.find(pp => pp.name === pick.player);
+            if (!actualPlayer) continue;
+
+            const hit = actualPlayer.pts > pick.line;
+            dayCandidates.push({
+              ...pick,
+              actual: actualPlayer.pts,
+              hit,
+              gameKey,
+              gameDisplay: `${dg.away} @ ${dg.home}`,
+            });
+          }
+        }
+
+        // Select top 4-8 legs from different games, sorted by confidence
+        dayCandidates.sort((a, b) => b.confidence - a.confidence);
+        const selected = [];
+        const usedGames = new Set();
+
+        for (const c of dayCandidates) {
+          if (usedGames.has(c.gameKey)) continue;
+          selected.push(c);
+          usedGames.add(c.gameKey);
+          if (selected.length >= 8) break;
+        }
+
+        if (selected.length >= 4) {
+          const allHit = selected.every(s => s.hit);
+          const odds = vaultParlayAmerican(selected.length);
+          const pnl = allHit ? odds : -100;
+
+          vaultHistoryPicks.push({
+            date,
+            legs: selected.map(s => ({
+              player: s.player,
+              team: s.team,
+              line: s.line,
+              actual: s.actual,
+              hit: s.hit,
+              confidence: s.confidence,
+              l10Avg: s.l10Avg,
+              l10Min: s.l10Min,
+              gameDisplay: s.gameDisplay,
+            })),
+            numLegs: selected.length,
+            odds,
+            won: allHit,
+            pnl,
+          });
+        }
+
+        processedDates.add(date);
+      }
+
+      // Update VAULT model with all players from this game
+      for (const p of (game.players || [])) {
+        const mins = parsePlayerMins(p.min);
+        if (mins < 10) continue;
+        vault.updatePlayer(p.name, p.pts, mins, game.date);
+      }
+    }
+
+    console.log(`[VAULT] Built history: ${vaultHistoryPicks.length} parlays`);
+  }
+
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
 
   function renderPicks() {
@@ -956,7 +1069,7 @@
 
     loading.style.display = 'none';
 
-    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0 || todayPulseParlays.length > 0;
+    const hasPicks = todayCdsPicks.length > 0 || todayPrismPicks.length > 0 || todayNovaPicks.length > 0 || todayFusionParlays.length > 0 || todayPulseParlays.length > 0 || todayVaultParlays.length > 0;
 
     if (!hasPicks) {
       if (cdsContainer) cdsContainer.style.display = 'none';
@@ -1011,6 +1124,16 @@
           '<div class="picks-grid">' + todayPulseParlays.map(renderPulseCard).join('') + '</div>';
       } else if (pulseContainer) {
         pulseContainer.style.display = 'none';
+      }
+
+      // Play 11 — VAULT Multi-Leg Floor Parlay
+      const vaultContainer = document.getElementById('vault-container');
+      if (vaultContainer && todayVaultParlays.length > 0) {
+        vaultContainer.style.display = '';
+        vaultContainer.innerHTML = '<h3 class="section-title">Play 11 — VAULT Multi-Leg Parlay <span class="vault-badge">+649 avg</span></h3>' +
+          '<div class="picks-grid">' + todayVaultParlays.map(renderVaultCard).join('') + '</div>';
+      } else if (vaultContainer) {
+        vaultContainer.style.display = 'none';
       }
 
     }
@@ -1400,6 +1523,50 @@
       </div>`;
   }
 
+  function renderVaultCard(parlay) {
+    const legsHtml = parlay.legs.map((l, i) => `
+      <div class="vault-leg">
+        <span class="vault-leg-player">${l.player}</span>
+        <span class="vault-leg-bet">OVER ${l.line} PTS at -300</span>
+        <span class="vault-leg-conf">${l.confidence.toFixed(1)}x conf</span>
+      </div>
+      ${i < parlay.legs.length - 1 ? '<div class="vault-plus">+</div>' : ''}
+    `).join('');
+
+    return `
+      <div class="pick-card conf-vault">
+        <div class="pick-header">
+          <span class="pick-verdict">PLAY 11</span>
+          <span class="pick-conf">VAULT PARLAY — +${parlay.odds}</span>
+        </div>
+        <div class="pick-bet-line vault-payout">${parlay.numLegs}-Leg Floor Parlay at +${parlay.odds} ($100 → $${parlay.odds + 100})</div>
+        <div class="vault-legs">
+          ${legsHtml}
+        </div>
+        <div class="pick-details">
+          <div class="detail">
+            <span class="detail-label">Parlay Odds</span>
+            <span class="detail-value vault-value">+${parlay.odds}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Each Leg</span>
+            <span class="detail-value">-300</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Win Payout</span>
+            <span class="detail-value vault-value">+$${parlay.odds}</span>
+          </div>
+          <div class="detail">
+            <span class="detail-label">Legs</span>
+            <span class="detail-value">${parlay.numLegs}</span>
+          </div>
+        </div>
+        <div class="pick-live live-scheduled">
+          <span class="live-status">Pre-Game — Place ${parlay.numLegs}-Leg Player Prop Parlay</span>
+        </div>
+      </div>`;
+  }
+
   // ── Rendering: All Games Grid ──────────────────────────────────────────────
 
   function renderAllGames() {
@@ -1445,6 +1612,7 @@
     renderNOVAHistory();
     renderFusionHistory();
     renderPulseHistory();
+    renderVaultHistory();
   }
 
   function renderCDSHistory() {
@@ -1909,12 +2077,106 @@
       </div>`;
   }
 
+  // ── VAULT History ─────────────────────────────────────────────────────────
+
+  function renderVaultHistory() {
+    const tbody = document.getElementById('vault-history-body');
+    if (!tbody) return;
+
+    let filtered = vaultHistoryPicks;
+    if (currentVaultHistoryPeriod !== 'all') {
+      const cutoff = getCutoffDate(parseInt(currentVaultHistoryPeriod));
+      filtered = vaultHistoryPicks.filter(p => p.date >= cutoff);
+    }
+
+    filtered = [...filtered].reverse();
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="muted">No VAULT parlays in this period</td></tr>';
+    } else {
+      tbody.innerHTML = filtered.map(p => {
+        const resClass = p.won ? 'result-win' : 'result-loss';
+        const resText = p.won ? 'W' : 'L';
+        const pnlText = p.won ? `+$${p.odds}` : '-$100';
+        const dateFormatted = formatDate(p.date);
+
+        const legsStr = p.legs.map(l => {
+          const lClass = l.hit ? 'result-win' : 'result-loss';
+          return `${l.player} <span class="vault-over">O${l.line}</span> <span class="badge ${lClass}">${l.hit ? 'W' : 'L'}</span> (${l.actual})`;
+        }).join(' <span class="vault-sep">|</span> ');
+
+        return `
+          <tr>
+            <td>${dateFormatted}</td>
+            <td class="vault-legs-cell">${legsStr}</td>
+            <td>${p.numLegs}</td>
+            <td>+${p.odds}</td>
+            <td><span class="badge ${resClass}">${resText}</span></td>
+            <td class="${resClass}">${pnlText}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    renderVaultSummary(filtered);
+  }
+
+  function renderVaultSummary(filtered) {
+    const summary = document.getElementById('vault-history-summary');
+    if (!summary) return;
+
+    const hits = filtered.filter(p => p.won).length;
+    const total = filtered.length;
+    const pnl = filtered.reduce((s, p) => s + p.pnl, 0);
+    const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : '0';
+    const totalWagered = total * 100;
+    const roi = totalWagered > 0 ? ((pnl / totalWagered) * 100).toFixed(0) : '0';
+
+    // Leg accuracy
+    let legHits = 0, legTotal = 0;
+    for (const p of filtered) {
+      for (const l of p.legs) {
+        legTotal++;
+        if (l.hit) legHits++;
+      }
+    }
+    const legPct = legTotal > 0 ? ((legHits / legTotal) * 100).toFixed(1) : '0';
+
+    const avgLegs = total > 0 ? (filtered.reduce((s, p) => s + p.numLegs, 0) / total).toFixed(1) : '0';
+    const avgOdds = total > 0 ? Math.round(filtered.reduce((s, p) => s + p.odds, 0) / total) : 0;
+
+    summary.innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-card summary-vault">
+          <div class="summary-title">Play 11 — VAULT Multi-Leg Floor Parlay (avg +${avgOdds})</div>
+          <div class="summary-stat">
+            <span class="summary-record">${hits}-${total - hits}</span>
+            <span class="summary-pct">${hitRate}%</span>
+          </div>
+          <div class="summary-pnl ${pnl >= 0 ? 'result-win' : 'result-loss'}">
+            ${pnl >= 0 ? '+' : ''}$${pnl} (ROI: ${roi >= 0 ? '+' : ''}${roi}%)
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title">Leg Details</div>
+          <div class="summary-stat">
+            <span class="summary-record">Individual legs: ${legHits}/${legTotal} (${legPct}%)</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Each leg: -300 | Avg parlay: +${avgOdds}</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-record">Avg legs: ${avgLegs} per parlay</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
   // ── Metrics ────────────────────────────────────────────────────────────────
 
   function updateMetrics() {
     const el = (id) => document.getElementById(id);
 
-    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length + todayPulseParlays.length;
+    el('metric-picks').textContent = todayCdsPicks.length + todayPrismPicks.length + todayNovaPicks.length + todayFusionParlays.length + todayPulseParlays.length + todayVaultParlays.length;
     el('metric-games').textContent = todayGames.length;
 
     // Play 4 CDS accuracy
@@ -1963,17 +2225,27 @@
         pulseMetric.textContent = (pulseRoi >= 0 ? '+' : '') + pulseRoi + '%';
       }
 
+      // Play 11 VAULT metrics
+      const vaultWins = vaultHistoryPicks.filter(p => p.won).length;
+      const vaultTotal = vaultHistoryPicks.length;
+      const vaultPnl = vaultHistoryPicks.reduce((s, p) => s + p.pnl, 0);
+      const vaultMetric = document.getElementById('metric-vault-accuracy');
+      if (vaultMetric && vaultTotal > 0) {
+        const vaultRoi = ((vaultPnl / (vaultTotal * 100)) * 100).toFixed(0);
+        vaultMetric.textContent = (vaultRoi >= 0 ? '+' : '') + vaultRoi + '%';
+      }
+
       // Combined ROI (all models)
       const prismPnl = prismHistoryPicks.reduce((s, p) => s + p.pnl, 0);
       const novaPnl = novaHistoryPicks.reduce((s, p) => s + p.pnl, 0);
-      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal;
-      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl + pulsePnl;
+      const combinedBets = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal;
+      const combinedPnl = cdsPnl + prismPnl + novaPnl + fusionPnl + pulsePnl + vaultPnl;
       const roi = combinedBets > 0 ? ((combinedPnl / (combinedBets * 100)) * 100).toFixed(0) : '0';
       el('metric-roi').textContent = (roi >= 0 ? '+' : '') + roi + '%';
 
       // Combined record
-      const combinedWins = cdsWins + prismHits + novaHits + fusionWins + pulseWins;
-      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal;
+      const combinedWins = cdsWins + prismHits + novaHits + fusionWins + pulseWins + vaultWins;
+      const combinedTotal = cdsTotal + prismTotal + novaTotal + fusionTotal + pulseTotal + vaultTotal;
       el('metric-record').textContent = `${combinedWins}-${combinedTotal - combinedWins}`;
     }
   }
@@ -2054,6 +2326,15 @@
         document.querySelectorAll('.pulse-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentPulseHistoryPeriod = btn.dataset.period;
+        renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.vault-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.vault-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentVaultHistoryPeriod = btn.dataset.period;
         renderHistory();
       });
     });

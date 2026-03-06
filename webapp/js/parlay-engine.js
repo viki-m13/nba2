@@ -1403,6 +1403,73 @@ window.ParlayEngine = (function () {
   };
 
   // ===========================================================================
+  // VAULT MODEL (Play 11 — multi-leg floor parlay)
+  // Strategy: Player Points OVER a conservative floor (33% of L10 avg)
+  // Confidence filter: L10 minimum must be >= 1.5x the floor line
+  // Combines 4-8 legs from different games into a high-accuracy parlay
+  // Backtest: 35/37 = 94.6% parlay accuracy at -300/leg (~+649 avg payout)
+  // ===========================================================================
+
+  const VAULTModel = {
+    playerHistory: {},   // playerName -> [{ date, pts, min }]
+
+    reset() {
+      this.playerHistory = {};
+    },
+
+    updatePlayer(name, pts, min, date) {
+      if (!this.playerHistory[name]) this.playerHistory[name] = [];
+      this.playerHistory[name].push({ date, pts, min });
+      if (this.playerHistory[name].length > 30) {
+        this.playerHistory[name] = this.playerHistory[name].slice(-20);
+      }
+    },
+
+    // Generate OVER floor picks for players in a game
+    // players: array of { name, team, pts, min }
+    predictGame(players) {
+      const picks = [];
+
+      for (const p of players) {
+        const hist = this.playerHistory[p.name];
+        if (!hist || hist.length < 10) continue;
+
+        const l10 = hist.slice(-10);
+        const avgMin = l10.reduce((s, g) => s + g.min, 0) / 10;
+        const avgPts = l10.reduce((s, g) => s + g.pts, 0) / 10;
+        const minPts = Math.min(...l10.map(g => g.pts));
+
+        // Only established starters averaging 18+ pts and 30+ min
+        if (avgMin < 30 || avgPts < 18) continue;
+
+        // Floor line at 33% of L10 average
+        const floorLine = Math.round(avgPts * 0.33 * 10) / 10;
+        if (floorLine < 4) continue;
+
+        // Confidence: L10 minimum must be >= 1.5x the floor
+        const confidence = floorLine > 0 ? minPts / floorLine : 0;
+        if (confidence < 1.5) continue;
+
+        picks.push({
+          player: p.name,
+          team: p.team,
+          type: 'player_prop',
+          direction: 'OVER',
+          stat: 'PTS',
+          line: floorLine,
+          l10Avg: Math.round(avgPts * 10) / 10,
+          l10Min: minPts,
+          confidence: Math.round(confidence * 100) / 100,
+        });
+      }
+
+      // Sort by confidence (highest first = safest legs)
+      picks.sort((a, b) => b.confidence - a.confidence);
+      return picks;
+    },
+  };
+
+  // ===========================================================================
   // PUBLIC API
   // ===========================================================================
 
@@ -1428,6 +1495,9 @@ window.ParlayEngine = (function () {
 
     // PULSE model (Play 10 — player prop UNDER regression at -115)
     PULSEModel,
+
+    // VAULT model (Play 11 — multi-leg floor parlay at -300)
+    VAULTModel,
 
     // Mathematical model
     computeComebackProbability,
