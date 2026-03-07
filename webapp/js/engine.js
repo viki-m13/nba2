@@ -146,6 +146,10 @@ window.BettingEngine = (function () {
       const statConfig = CONFIG[statType.toUpperCase()];
       if (!statConfig) return null;
 
+      // Injury/inactivity check: if most recent game has <5 min, player is likely out
+      const lastGame = hist[hist.length - 1];
+      if (lastGame.min < 5) return null;
+
       const fw = cfg.FLOOR_WINDOW || 20;
       const l10 = hist.slice(-10);
       const lfw = hist.slice(-fw);

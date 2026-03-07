@@ -91,6 +91,10 @@ window.SuperPayoutEngine = (function () {
       const avgMin = l10.reduce((s, g) => s + g.min, 0) / l10.length;
       const l3Min = l3.reduce((s, g) => s + g.min, 0) / l3.length;
 
+      // Injury/inactivity check: if most recent game has 0 min, player is likely out
+      const lastGame = hist[hist.length - 1];
+      if (lastGame.min < 5) return null;
+
       // Must have decent playing time
       if (avg < SP_CONFIG.MIN_AVG) return null;
       if (avgMin < 20) return null;
