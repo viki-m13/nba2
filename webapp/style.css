@@ -400,17 +400,52 @@ h2 {
 .pnl-pos { color: var(--accent); }
 .pnl-neg { color: var(--red); }
 
-/* Chart */
-.chart-container {
+/* History Stats */
+.history-stats {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-canvas {
-  width: 100%;
-  height: auto;
+.history-stat-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.history-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.history-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.history-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-stat-breakdowns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.history-stat-breakdown {
+  font-size: 0.8rem;
+  color: var(--text-dim);
 }
 
 /* Method */
