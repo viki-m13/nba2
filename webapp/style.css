@@ -229,6 +229,7 @@ h2 {
   padding: 0.6rem 0;
   border-top: 1px solid var(--border);
   font-size: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .parlay-leg:first-child { border-top: none; }
@@ -633,6 +634,79 @@ h2 {
 .sp-section-header .sp-badge {
   font-size: 0.65rem;
   padding: 0.2rem 0.5rem;
+}
+
+/* ============================================================
+   Alt-Line Slip Builder Styles
+   ============================================================ */
+
+.slip-section {
+  margin-bottom: 1.5rem;
+}
+
+.slip-section h3 {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.slip-tag {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-left: 0.5rem;
+}
+
+#alt-core-slips h3 { border-bottom-color: var(--accent); }
+#alt-screenshot-slips h3 { border-bottom-color: var(--gold); }
+#alt-nuke-slips h3 { border-bottom-color: var(--red); }
+
+/* Builder-specific card styles */
+.pick-card.builder-core {
+  border-left-color: var(--accent);
+}
+.pick-card.builder-core .pick-type {
+  color: var(--accent);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.pick-card.builder-screenshot {
+  border-left-color: var(--gold);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), var(--surface));
+}
+.pick-card.builder-screenshot .pick-type {
+  color: var(--gold);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.pick-card.builder-sgp {
+  border-left-color: var(--blue);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.04), var(--surface));
+}
+.pick-card.builder-sgp .pick-type {
+  color: var(--blue);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.pick-card.builder-nuke {
+  border-left-color: var(--red);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.04), var(--surface));
+}
+.pick-card.builder-nuke .pick-type {
+  color: var(--red);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* Role-specific leg indicators */
+.parlay-leg.role-creator { border-left: 2px solid var(--blue); padding-left: 0.5rem; }
+.parlay-leg.role-scorer { border-left: 2px solid var(--gold); padding-left: 0.5rem; }
+.parlay-leg.role-big { border-left: 2px solid var(--purple); padding-left: 0.5rem; }
+
+.parlay-leg-meta {
+  width: 100%;
+  text-align: right;
 }
 
 /* Responsive */

@@ -13,6 +13,7 @@
   let historicalOdds = [];
   let rebAstProps = [];
   let livePicksData = null;
+  let altBacktestResults = null;
 
   document.addEventListener('DOMContentLoaded', init);
 
@@ -21,6 +22,9 @@
     setupFilters();
     await loadData();
     runBacktest();
+
+    // Run alt-line backtest using existing historical data
+    runAltBacktest();
 
     // Seed live history for recent days if needed
     await seedLiveHistory(5);
@@ -36,6 +40,26 @@
     renderDashboard();
     renderHistory();
     await generateTodayPicks();
+  }
+
+  function runAltBacktest() {
+    if (!window.NbaAltBacktest || !playerBoxScores.length) return;
+    console.log('[APP] Running alt-line walk-forward backtest...');
+    try {
+      altBacktestResults = window.NbaAltBacktest.runBacktest(playerBoxScores, historicalOdds, rebAstProps);
+      if (altBacktestResults && altBacktestResults.stats) {
+        const s = altBacktestResults.stats;
+        console.log('[ALT-BACKTEST] Results:');
+        console.log(`  Legs: ${s.overall.legs.total} total, ${s.overall.legs.hitRate * 100}% hit rate, ROI ${s.overall.legs.roi}%`);
+        console.log(`  Parlays: ${s.overall.parlays.total} total, ${s.overall.parlays.hitRate * 100}% hit rate, ROI ${s.overall.parlays.roi}%`);
+        console.log('  By market:', s.byMarket);
+        console.log('  By builder:', s.byBuilder);
+        console.log('  By role:', s.byRole);
+        console.log('  By edge bucket:', s.byEdge);
+      }
+    } catch (e) {
+      console.warn('[APP] Alt backtest error:', e);
+    }
   }
 
   // --- Data Loading ---
@@ -225,7 +249,7 @@
         for (const [name, lines] of Object.entries(gameData.astLines || {})) addPick(model.findBestProp(name, 'assists', lines));
       }
 
-      // Build parlays
+      // Build legacy parlays
       todayParlays = window.BettingEngine.buildParlays(todaySingles);
       for (const parlay of todayParlays) {
         parlay.legs = parlay.legs.map(leg => {
@@ -234,14 +258,48 @@
         });
       }
 
-      // Save to live tracking
+      // --- Alt-Line Pipeline ---
+      // Share the model with the engine so the feature table can access history
+      window.BettingEngine.PlayerModel.history = model.history;
+
+      // Build game-level odds map for environment context
+      const gameOddsMap = {};
+      // Try to get spread/total from ESPN
+      try {
+        const espnData = await window.NbaApi.fetchESPNOdds();
+        for (const game of todayGames) {
+          const gk = `${game.awayTeam}@${game.homeTeam}`;
+          if (game.ouLine || espnData.odds[`${game.homeTeam}-${game.awayTeam}`]) {
+            gameOddsMap[gk] = {
+              total: game.ouLine || espnData.odds[`${game.homeTeam}-${game.awayTeam}`] || 220,
+              spread_point: 0,
+            };
+          }
+        }
+      } catch (e) { console.warn('Could not build game odds map:', e); }
+
+      // Generate feature table and slips
+      const featureTable = window.BettingEngine.generateFeatureTable(liveOdds, gameOddsMap);
+      const slips = window.BettingEngine.generateSlips(featureTable);
+
+      // Render alt-line slips
+      renderAltSlips(slips, featureTable);
+
+      // Save all parlays (legacy + new) to live tracking
+      const allParlays = [
+        ...todayParlays,
+        ...(slips.core || []),
+        ...(slips.screenshot || []),
+        ...(slips.nuke || []),
+      ];
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      window.BettingEngine.saveTodayParlays(todayParlays, [], today);
+      window.BettingEngine.saveTodayParlays(allParlays, [], today);
       livePicksData = window.BettingEngine.loadLivePicks();
       renderLiveHistory();
 
-      if (todayParlays.length === 0) {
-        statusEl.textContent = 'No qualifying parlays today. Floor filters are strict for safety.';
+      const totalSlips = (slips.core || []).length + (slips.screenshot || []).length + (slips.nuke || []).length;
+      if (totalSlips === 0 && todayParlays.length === 0) {
+        statusEl.textContent = 'No qualifying parlays today. Filters are strict for safety.';
       } else {
         statusEl.style.display = 'none';
         renderTodayPicks();
@@ -497,5 +555,114 @@
 
   function formatDate(dateStr) {
     return `${dateStr.slice(4, 6)}/${dateStr.slice(6, 8)}/${dateStr.slice(0, 4)}`;
+  }
+
+  // =========================================================================
+  // Alt-Line Slip Rendering
+  // =========================================================================
+
+  function renderAltSlips(slips, featureTable) {
+    renderSlipSection('alt-core-slips', slips.core || [], 'core');
+    renderSlipSection('alt-screenshot-slips', slips.screenshot || [], 'screenshot');
+    renderSlipSection('alt-nuke-slips', slips.nuke || [], 'nuke');
+    renderFeatureTable(featureTable || []);
+  }
+
+  function renderSlipSection(containerId, parlays, type) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const grid = container.querySelector('.picks-grid');
+    if (!grid) return;
+
+    if (parlays.length === 0) {
+      grid.innerHTML = `<p class="status-msg" style="margin: 0.5rem 0; font-size: 0.85rem;">No ${type} parlays qualify today.</p>`;
+      return;
+    }
+
+    grid.innerHTML = parlays.map(p => renderAltParlayCard(p)).join('');
+  }
+
+  function renderAltParlayCard(parlay) {
+    const legsHtml = parlay.legs.map(leg => {
+      const roleClass = leg.roleTag === 'primary_creator' ? 'role-creator' :
+                         leg.roleTag === 'high_usage_scorer' ? 'role-scorer' :
+                         leg.roleTag === 'rebound_heavy_big' ? 'role-big' : '';
+      return `
+        <div class="parlay-leg ${roleClass}">
+          <div class="parlay-leg-info">
+            <span class="parlay-leg-player">${leg.player} <span style="opacity: 0.6;">(${leg.team})</span></span>
+            <span class="parlay-leg-game">${leg.gameDisplay || ''}</span>
+          </div>
+          <div class="parlay-leg-right">
+            <span class="parlay-leg-stat">${leg.marketLabel || leg.statLabel || 'ALT PTS'}</span>
+            <span class="parlay-leg-line">OVER ${leg.line}</span>
+            <span class="parlay-leg-odds">${window.BettingEngine.formatOdds(leg.bookOdds || leg.odds)}</span>
+          </div>
+          <div class="parlay-leg-meta" style="font-size: 0.7rem; opacity: 0.5; margin-top: 2px;">
+            ${leg.roleTag || ''} | prob ${((leg.modelProb || 0) * 100).toFixed(0)}% | edge ${((leg.edge || 0) * 100).toFixed(1)}% | avg ${leg.avg || '--'}
+          </div>
+        </div>`;
+    }).join('');
+
+    const builder = parlay.builder || 'PARLAY';
+    const builderClass = builder === 'CORE' ? 'builder-core' :
+                         builder === 'SCREENSHOT' ? 'builder-screenshot' :
+                         builder === 'NUKE' ? 'builder-nuke' :
+                         builder === 'SGP' ? 'builder-sgp' : '';
+
+    return `
+      <div class="pick-card parlay multi-stat ${builderClass}">
+        <div class="pick-header">
+          <span class="pick-type">${builder} ${parlay.numLegs}-Leg${parlay.hasSGP ? ' (SGP)' : ''}</span>
+          <span class="pick-odds">${window.BettingEngine.formatOdds(parlay.odds)}</span>
+        </div>
+        <div class="parlay-legs">${legsHtml}</div>
+        <div class="parlay-summary">
+          <span>Combined Prob: ${(parlay.combinedHitRate * 100).toFixed(2)}%</span>
+          <span class="parlay-ev">EV: ${parlay.ev > 0 ? '+' : ''}${(parlay.ev * 100).toFixed(1)}%</span>
+          <span class="parlay-payout">$100 wins $${Math.round((parlay.decimalOdds - 1) * 100)}</span>
+        </div>
+      </div>`;
+  }
+
+  function renderFeatureTable(featureTable) {
+    const container = document.getElementById('feature-table-container');
+    if (!container) return;
+
+    if (featureTable.length === 0) {
+      container.innerHTML = '<p class="status-msg">No candidate legs available.</p>';
+      return;
+    }
+
+    const headers = ['Player', 'Team', 'Opp', 'Market', 'Line', 'Odds', 'Role', 'Min Cert', 'L10 Hit', 'Model Prob', 'Edge', 'Fragility', 'Avg', 'Floor', 'EV'];
+    const headerHtml = headers.map(h => `<th style="padding: 4px 6px; text-align: left; font-size: 0.7rem; white-space: nowrap;">${h}</th>`).join('');
+
+    const rowsHtml = featureTable.slice(0, 100).map(r => {
+      const edgeClass = r.edge >= 0.05 ? 'pnl-pos' : r.edge >= 0.02 ? '' : 'pnl-neg';
+      return `<tr style="font-size: 0.7rem;">
+        <td style="padding: 3px 6px; white-space: nowrap;">${r.player}</td>
+        <td style="padding: 3px 6px;">${r.team}</td>
+        <td style="padding: 3px 6px;">${r.opponent}</td>
+        <td style="padding: 3px 6px;">${r.marketLabel}</td>
+        <td style="padding: 3px 6px;">${r.line}</td>
+        <td style="padding: 3px 6px;">${window.BettingEngine.formatOdds(r.bookOdds)}</td>
+        <td style="padding: 3px 6px; font-size: 0.65rem;">${r.roleTag}</td>
+        <td style="padding: 3px 6px;">${((r.minutesCertainty || 0) * 100).toFixed(0)}%</td>
+        <td style="padding: 3px 6px;">${((r.l10Hit || 0) * 100).toFixed(0)}%</td>
+        <td style="padding: 3px 6px;">${((r.modelProb || 0) * 100).toFixed(1)}%</td>
+        <td style="padding: 3px 6px;" class="${edgeClass}">${((r.edge || 0) * 100).toFixed(1)}%</td>
+        <td style="padding: 3px 6px;">${((r.fragility || 0) * 100).toFixed(0)}%</td>
+        <td style="padding: 3px 6px;">${r.avg || '--'}</td>
+        <td style="padding: 3px 6px;">${r.floor || '--'}</td>
+        <td style="padding: 3px 6px;">${((r.ev || 0) * 100).toFixed(1)}%</td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <table style="border-collapse: collapse; width: 100%; background: var(--card-bg, #1a1a2e); border-radius: 8px;">
+        <thead><tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">${headerHtml}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+      ${featureTable.length > 100 ? `<p style="font-size: 0.7rem; opacity: 0.5; margin-top: 4px;">Showing top 100 of ${featureTable.length} candidate legs</p>` : ''}`;
   }
 })();

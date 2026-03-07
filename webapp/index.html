@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NBA Prop Picks — Validated FanDuel Strategy</title>
+  <title>NBA Alt-Line Parlay Engine</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="header-content">
-      <h1>NBA PROP PICKS</h1>
-      <p class="subtitle">Multi-Stat OVER Parlays — Points, Rebounds, Assists</p>
+      <h1>NBA ALT-LINE ENGINE</h1>
+      <p class="subtitle">Alt Props — PTS, AST, REB, PTS+AST, PTS+REB, PRA</p>
     </div>
     <nav>
       <button class="nav-btn active" data-view="today">Today's Picks</button>
@@ -56,7 +56,31 @@
     <div id="view-today" class="view active">
       <h2>Today's Picks</h2>
       <div id="today-status" class="status-msg">Loading today's games...</div>
-      <div id="today-parlays" class="picks-grid"></div>
+
+      <!-- Alt-Line Slip Builders -->
+      <div id="alt-slips-section">
+        <div id="alt-core-slips" class="slip-section">
+          <h3>CORE Builder <span class="slip-tag">3-4 Legs — Highest Quality</span></h3>
+          <div class="picks-grid"></div>
+        </div>
+        <div id="alt-screenshot-slips" class="slip-section">
+          <h3>SCREENSHOT Builder <span class="slip-tag">5-8 Legs — SGP Style</span></h3>
+          <div class="picks-grid"></div>
+        </div>
+        <div id="alt-nuke-slips" class="slip-section">
+          <h3>NUKE Builder <span class="slip-tag">8-12 Legs — Strict Quality Only</span></h3>
+          <div class="picks-grid"></div>
+        </div>
+      </div>
+
+      <!-- Feature Table -->
+      <details id="feature-table-section" style="margin-top: 1.5rem;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--text-bright, #fff);">Feature Table (All Candidate Legs)</summary>
+        <div id="feature-table-container" style="overflow-x: auto; margin-top: 0.5rem;"></div>
+      </details>
+
+      <!-- Legacy parlays -->
+      <div id="today-parlays" class="picks-grid" style="margin-top: 1.5rem;"></div>
       <div id="today-games" class="today-games-section"></div>
     </div>
 
@@ -94,35 +118,43 @@
       <h2>Strategy Details</h2>
       <div class="method-content">
         <div class="method-card">
-          <h3>How It Works</h3>
-          <p>We bet Player OVER on FanDuel's alternate lines across <strong>Points, Rebounds, and Assists</strong>. We use a dual-confirmation system to find props where the player's actual hit rate significantly exceeds the market-implied probability.</p>
-          <p>Each qualifying leg targets the "sweet spot" odds range (-500 to -150) where market mispricing is largest: ~88% actual hit rate vs ~75-83% implied = +5-13% edge per leg. Combined into 3-4 leg parlays at +100 to +250 odds.</p>
+          <h3>Alt-Line Parlay Engine</h3>
+          <p>Multi-market alternate prop engine supporting <strong>PTS, AST, REB, PTS+AST, PTS+REB, PTS+REB+AST</strong> alternate lines from FanDuel.</p>
+          <p>Uses market-specific evaluators, role-aware logic, alt-rung ladder optimization, same-game correlation, and three parlay constructors (Core / Screenshot / Nuke).</p>
         </div>
         <div class="method-card">
-          <h3>Dual Confirmation Filter</h3>
+          <h3>Market-Specific Evaluation</h3>
           <ul>
-            <li><strong>L10 Floor > Line:</strong> Player's minimum over the last 10 games is strictly above the line (recent form confirmation)</li>
-            <li><strong>L20 Hit Rate ≥ 85%:</strong> Player has cleared this line in 17+ of their last 20 games (long-term consistency)</li>
-            <li><strong>Sweet Spot Odds:</strong> Only lines with odds between -500 and -150 (where genuine edge exists)</li>
-            <li><strong>Best Edge Selection:</strong> For each player+stat, picks the line with highest edge (hit rate minus implied probability)</li>
+            <li><strong>Points:</strong> Weights usage, shot volume, scoring role, opponent defense</li>
+            <li><strong>Assists:</strong> Weights creator role, touches, playmaking environment, pace</li>
+            <li><strong>Rebounds:</strong> Weights minutes, rebounding role, matchup, game total</li>
+            <li><strong>Combos:</strong> Direct historical hit rate + component stat context</li>
           </ul>
-          <p>4 parameters total = minimal overfitting risk. The strategy is deliberately simple and data-driven.</p>
+          <p>Each market has its own model probability estimator with role, environment, and stability adjustments.</p>
         </div>
         <div class="method-card">
-          <h3>Parlay Construction</h3>
-          <p>Legs are ranked by edge (hit rate minus market implied probability). The parlay builder selects the highest-edge legs first, with max 2 legs per game for diversification.</p>
-          <p>We build parlays at 3-4 legs for the optimal risk/reward balance. Backtested at 50-58% win rate with +35-45% ROI.</p>
+          <h3>Alt-Rung Ladder Optimization</h3>
+          <p>For each player + market, evaluates every available rung (e.g., 10+, 12+, 15+ points). Selects the <strong>highest rung</strong> that still clears safety thresholds — not the lowest.</p>
+          <p>Each rung is scored on: model probability, fair odds vs book odds, edge, clearance margin, and fragility.</p>
         </div>
         <div class="method-card">
-          <h3>Anti-Overfitting</h3>
-          <p>Walk-forward backtest: predictions use ONLY data available BEFORE each game. The model never sees future data.</p>
-          <p>75/25 train/test split: Train +19.1% ROI, <strong>Test +92.0% ROI</strong> (4-1 record). Core filter has just 4 parameters — too few to overfit. Edge validated across PTS, REB, and AST prop types.</p>
+          <h3>Three Builders</h3>
+          <ul>
+            <li><strong>CORE (3-4 legs):</strong> Highest quality edges — disciplined and sustainable</li>
+            <li><strong>SCREENSHOT (5-8 legs):</strong> SGP-style slips with correlation-aware construction</li>
+            <li><strong>NUKE (8-12 legs):</strong> Long parlays only when every leg clears strict thresholds</li>
+          </ul>
         </div>
       </div>
     </div>
   </main>
 
   <script src="js/nba-api.js"></script>
+  <script src="js/nba-role-engine.js"></script>
+  <script src="js/nba-alt-rung-evaluator.js"></script>
+  <script src="js/nba-correlation-engine.js"></script>
+  <script src="js/nba-screenshot-slip-builder.js"></script>
+  <script src="js/nba-alt-backtest.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/app.js"></script>
 </body>
