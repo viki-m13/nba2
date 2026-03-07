@@ -96,22 +96,45 @@
     try {
       let todayGames = [];
       try {
-        todayGames = await window.NbaApi.fetchScoreboard();
+        const sbResult = await window.NbaApi.fetchScoreboard();
+        todayGames = (sbResult && sbResult.games) || sbResult || [];
+        if (!Array.isArray(todayGames)) todayGames = [];
       } catch (e) {
         console.warn('Could not fetch scoreboard:', e);
       }
 
-      if (!todayGames || todayGames.length === 0) {
+      if (todayGames.length === 0) {
         statusEl.textContent = 'No games scheduled today.';
+        renderTodayGames([]); // Show empty state
         return;
       }
 
       statusEl.textContent = `Found ${todayGames.length} games. Fetching FanDuel odds (points, rebounds, assists)...`;
+      renderTodayGames(todayGames);
+
+      // Check data freshness — warn if box scores are from a different season
+      const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
+      const latestBoxDate = sorted.length > 0 ? sorted[sorted.length - 1].date : '';
+      const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const daysSinceLastBox = latestBoxDate ? Math.floor(
+        (new Date(todayStr.slice(0,4) + '-' + todayStr.slice(4,6) + '-' + todayStr.slice(6,8))
+        - new Date(latestBoxDate.slice(0,4) + '-' + latestBoxDate.slice(4,6) + '-' + latestBoxDate.slice(6,8)))
+        / (1000 * 60 * 60 * 24)
+      ) : 999;
+
+      if (daysSinceLastBox > 60) {
+        console.warn(`[APP] Box score data is ${daysSinceLastBox} days old (last: ${latestBoxDate}). Model uses prior season stats.`);
+        const warnEl = document.createElement('div');
+        warnEl.className = 'status-msg';
+        warnEl.style.color = 'var(--gold)';
+        warnEl.textContent = `Note: Player stats are from the ${latestBoxDate.slice(0,4)}-${parseInt(latestBoxDate.slice(0,4))+1} season. Picks use live FanDuel odds but evaluate against last season's performance data.`;
+        const parlaysEl = document.getElementById('today-parlays');
+        parlaysEl.parentNode.insertBefore(warnEl, parlaysEl);
+      }
 
       // Train the model on all historical data
       const model = Object.create(window.BettingEngine.PlayerModel);
       model.history = {};
-      const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
       for (const g of sorted) {
         for (const p of (g.players || [])) {
           const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
@@ -345,6 +368,59 @@
       </div>`;
   }
 
+  function renderTodayGames(games) {
+    const container = document.getElementById('today-games');
+    if (!container) return;
+
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    if (!games || games.length === 0) {
+      container.innerHTML = `
+        <div class="today-games-header">
+          <h3>Today's Games</h3>
+          <span class="today-games-date">${dateStr}</span>
+        </div>
+        <p class="status-msg">No games scheduled.</p>`;
+      return;
+    }
+
+    const gamesHtml = games.map(g => {
+      const away = g.awayTeam || g.away_team || '???';
+      const home = g.homeTeam || g.home_team || '???';
+      let timeInfo = '';
+      if (g.status === 'final') {
+        timeInfo = `Final: ${g.awayScore}-${g.homeScore}`;
+      } else if (g.status === 'live' || g.status === 'halftime') {
+        timeInfo = g.statusText || 'Live';
+      } else if (g.gameTime) {
+        // Parse ET time
+        try {
+          const gt = new Date(g.gameTime);
+          timeInfo = gt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        } catch (e) {
+          timeInfo = g.statusText || 'TBD';
+        }
+      } else {
+        timeInfo = g.statusText || 'TBD';
+      }
+
+      return `<div class="today-game-card">
+        <span class="today-game-teams">${away} @ ${home}</span>
+        <span class="today-game-time">${timeInfo}</span>
+      </div>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="today-games-header">
+        <h3>Today's Games</h3>
+        <span class="today-games-date">${dateStr}</span>
+      </div>
+      <div class="today-games-grid">${gamesHtml}</div>`;
+  }
+
   // --- Dashboard ---
 
   function renderDashboard() {
@@ -551,6 +627,6 @@
   // --- Helpers ---
 
   function formatDate(dateStr) {
-    return `${dateStr.slice(4, 6)}/${dateStr.slice(6, 8)}`;
+    return `${dateStr.slice(4, 6)}/${dateStr.slice(6, 8)}/${dateStr.slice(0, 4)}`;
   }
 })();

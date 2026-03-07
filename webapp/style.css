@@ -520,6 +520,57 @@ h2 {
   background: var(--accent);
 }
 
+/* Today's Games Section */
+.today-games-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.today-games-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.today-games-header h3 {
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.today-games-date {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.today-games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.today-game-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.today-game-teams {
+  font-weight: 600;
+}
+
+.today-game-time {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
 /* Super Payout card styling */
 .stat-card.sp-highlight {
   border-color: var(--gold);
