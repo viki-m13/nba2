@@ -10,7 +10,7 @@
   <header>
     <div class="header-content">
       <h1>NBA PROP PICKS</h1>
-      <p class="subtitle">Player Points OVER — Validated on Real FanDuel Odds</p>
+      <p class="subtitle">Player Points OVER Parlays — Validated on Real FanDuel Odds</p>
     </div>
     <nav>
       <button class="nav-btn active" data-view="today">Today's Picks</button>
@@ -24,11 +24,11 @@
     <div class="dashboard">
       <div class="stat-card highlight">
         <div class="stat-value" id="stat-accuracy">--</div>
-        <div class="stat-label">Overall Accuracy</div>
+        <div class="stat-label">Parlay Accuracy</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-record">--</div>
-        <div class="stat-label">Win-Loss Record</div>
+        <div class="stat-label">Parlay Record</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-pnl">--</div>
@@ -40,7 +40,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-parlay-record">--</div>
-        <div class="stat-label">Parlay Record</div>
+        <div class="stat-label">Singles Record</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-days">--</div>
@@ -52,7 +52,6 @@
     <div id="view-today" class="view active">
       <h2>Today's Picks</h2>
       <div id="today-status" class="status-msg">Loading today's games...</div>
-      <div id="today-singles" class="picks-grid"></div>
       <div id="today-parlays" class="picks-grid"></div>
     </div>
 
@@ -66,31 +65,13 @@
       </div>
 
       <div class="history-section">
-        <h3>Singles</h3>
-        <table class="history-table" id="singles-history">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Player</th>
-              <th>Line</th>
-              <th>Odds</th>
-              <th>Actual</th>
-              <th>Result</th>
-              <th>P&L</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-
-      <div class="history-section">
         <h3>Parlays</h3>
         <table class="history-table" id="parlays-history">
           <thead>
             <tr>
               <th>Date</th>
               <th>Legs</th>
-              <th>Odds</th>
+              <th>Parlay Odds</th>
               <th>Result</th>
               <th>P&L</th>
             </tr>
@@ -124,7 +105,7 @@
             <li><strong>Line <= 65% of L10 Avg:</strong> The line is deeply conservative relative to their average</li>
             <li><strong>CV < 0.35:</strong> Only consistent scorers, no boom-or-bust players</li>
             <li><strong>No Declining Scorers:</strong> L5 average must not be trending down significantly</li>
-            <li><strong>Odds -1500 to -100:</strong> Reasonable juice range for positive expected value</li>
+            <li><strong>Odds -2500 to -100:</strong> Reasonable juice range for positive expected value</li>
           </ul>
         </div>
         <div class="method-card">
