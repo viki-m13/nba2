@@ -247,6 +247,25 @@ h2 {
 }
 
 .parlay-ev { color: var(--accent); font-weight: 600; }
+.parlay-payout { color: var(--gold); font-weight: 600; }
+
+/* Date in pick cards */
+.pick-date {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+/* Mega parlay styling */
+.pick-card.mega-parlay {
+  border-left-color: var(--gold);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), var(--surface));
+}
+
+.pick-card.mega-parlay .pick-type {
+  color: var(--gold);
+  background: rgba(245, 158, 11, 0.15);
+}
 
 /* Parlay leg layout with game info */
 .parlay-leg-info {

@@ -7,7 +7,7 @@ global.localStorage = { getItem: () => null, setItem: () => {} };
 
 eval(fs.readFileSync('webapp/js/engine.js', 'utf8'));
 
-const seasonData = JSON.parse(fs.readFileSync('data/espn_full_season_2025.json', 'utf8'));
+const seasonData = JSON.parse(fs.readFileSync('webapp/data/espn_full_season_2025.json', 'utf8'));
 const boxScores = JSON.parse(fs.readFileSync('webapp/data/player_boxscores.json', 'utf8'));
 const historicalOdds = JSON.parse(fs.readFileSync('webapp/data/historical_odds.json', 'utf8'));
 
@@ -23,7 +23,7 @@ console.log('SINGLES (Player Points OVER):');
 console.log(`  Record: ${s.singles.wins}-${s.singles.losses} (${(s.singles.hitRate * 100).toFixed(1)}%)`);
 console.log(`  P&L: $${s.singles.pnl} | ROI: ${s.singles.roi}%`);
 console.log('');
-console.log('PARLAYS (2-3 leg):');
+console.log('PARLAYS (2-8 leg):');
 console.log(`  Record: ${s.parlays.wins}-${s.parlays.losses} (${(s.parlays.hitRate * 100).toFixed(1)}%)`);
 console.log(`  P&L: $${s.parlays.pnl} | ROI: ${s.parlays.roi}%`);
 console.log('');

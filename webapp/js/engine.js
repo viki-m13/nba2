@@ -38,7 +38,7 @@ window.BettingEngine = (function () {
     MAX_ODDS: -100,          // Must have some juice (real alternate lines do)
     UNIT_SIZE: 100,
     PARLAY_MIN_LEGS: 2,
-    PARLAY_MAX_LEGS: 3,
+    PARLAY_MAX_LEGS: 8,
   };
 
   const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
@@ -205,16 +205,36 @@ window.BettingEngine = (function () {
     const sorted = [...singles].sort((a, b) => b.confidence - a.confidence);
 
     // Use top candidates only
-    const candidates = sorted.slice(0, 10);
+    const candidates = sorted.slice(0, 12);
 
     // Build best 2-leg parlay
     const best2 = findBestParlay(candidates, 2);
     if (best2) parlays.push(best2);
 
-    // Build best 3-leg parlay if enough legs
+    // Build best 3-leg parlay
     if (candidates.length >= 3) {
       const best3 = findBestParlay(candidates, 3);
       if (best3) parlays.push(best3);
+    }
+
+    // Build best 4-leg parlay
+    if (candidates.length >= 4) {
+      const best4 = findBestParlay(candidates, 4);
+      if (best4) parlays.push(best4);
+    }
+
+    // Build best 5-leg parlay
+    if (candidates.length >= 5) {
+      const best5 = findBestParlay(candidates, 5);
+      if (best5) parlays.push(best5);
+    }
+
+    // Build mega parlays (6-8 legs) for huge payouts if enough qualifying legs
+    for (let n = 6; n <= Math.min(8, candidates.length); n++) {
+      const mega = findBestParlay(candidates, n);
+      if (mega && mega.combinedHitRate >= 0.90) {
+        parlays.push(mega);
+      }
     }
 
     return parlays;
@@ -223,6 +243,37 @@ window.BettingEngine = (function () {
   function findBestParlay(legs, numLegs) {
     let best = null;
     let bestScore = -Infinity;
+
+    // For large parlays (6+), use greedy top-N approach instead of full combinatorics
+    if (numLegs >= 6) {
+      // Take top N unique players by confidence
+      const uniquePlayers = [];
+      const seen = new Set();
+      for (const leg of legs) {
+        if (!seen.has(leg.player)) {
+          seen.add(leg.player);
+          uniquePlayers.push(leg);
+        }
+      }
+      if (uniquePlayers.length < numLegs) return null;
+      const combo = uniquePlayers.slice(0, numLegs);
+      const parlayDecimal = combo.reduce((d, l) => d * americanToDecimal(l.odds), 1);
+      const parlayOdds = decimalToAmerican(parlayDecimal);
+      const combinedHitRate = combo.reduce((p, l) => p * l.hitRate, 1);
+      const ev = combinedHitRate * parlayDecimal - 1;
+      if (ev >= 0) {
+        return {
+          legs: combo.map(l => ({ ...l })),
+          numLegs,
+          odds: parlayOdds,
+          decimalOdds: Math.round(parlayDecimal * 100) / 100,
+          combinedHitRate: Math.round(combinedHitRate * 1000) / 1000,
+          ev: Math.round(ev * 1000) / 1000,
+          confidence: Math.round(combinedHitRate * 1000) / 1000,
+        };
+      }
+      return null;
+    }
 
     const combos = getCombinations(legs, numLegs);
     for (const combo of combos) {
@@ -497,6 +548,163 @@ window.BettingEngine = (function () {
     }
   }
 
+  // --- Incremental Daily Odds Cache ---
+
+  const DAILY_ODDS_KEY = 'nba_daily_odds_cache';
+
+  function loadCachedDailyOdds() {
+    try {
+      return JSON.parse(localStorage.getItem(DAILY_ODDS_KEY) || '{}');
+    } catch (e) { return {}; }
+  }
+
+  function saveCachedDailyOdds(cache) {
+    try {
+      localStorage.setItem(DAILY_ODDS_KEY, JSON.stringify(cache));
+    } catch (e) {}
+  }
+
+  // Fetch historical odds for a specific date from The Odds API
+  async function fetchHistoricalOddsForDate(dateStr) {
+    const isoDate = `${dateStr.slice(0,4)}-${dateStr.slice(4,6)}-${dateStr.slice(6,8)}T12:00:00Z`;
+    const result = [];
+
+    try {
+      // Fetch game-level odds
+      const gamesUrl = `${ODDS_API_BASE}/historical/sports/basketball_nba/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=h2h,spreads,totals&oddsFormat=american&date=${isoDate}&bookmakers=fanduel`;
+      const gamesRes = await fetch(gamesUrl);
+      if (!gamesRes.ok) return result;
+      const gamesData = await gamesRes.json();
+      const events = gamesData.data || [];
+
+      for (const event of events) {
+        const homeAbbr = teamAbbr(event.home_team);
+        const awayAbbr = teamAbbr(event.away_team);
+        const gameKey = `${awayAbbr}@${homeAbbr}`;
+
+        const fd = (event.bookmakers || []).find(b => b.key === 'fanduel');
+        if (!fd) continue;
+
+        const record = {
+          date: dateStr,
+          gameKey,
+          eventId: event.id,
+          homeTeam: homeAbbr,
+          awayTeam: awayAbbr,
+          commenceTime: event.commence_time,
+        };
+
+        for (const mkt of (fd.markets || [])) {
+          if (mkt.key === 'h2h') {
+            const homeO = mkt.outcomes.find(o => o.name === event.home_team);
+            const awayO = mkt.outcomes.find(o => o.name === event.away_team);
+            if (homeO) record.home_ml = homeO.price;
+            if (awayO) record.away_ml = awayO.price;
+          } else if (mkt.key === 'spreads') {
+            const homeO = mkt.outcomes.find(o => o.name === event.home_team);
+            if (homeO) { record.spread_home = homeO.price; record.spread_point = homeO.point; }
+          } else if (mkt.key === 'totals') {
+            const overO = mkt.outcomes.find(o => o.name === 'Over');
+            if (overO) { record.total = overO.point; record.total_over = overO.price; }
+          }
+        }
+
+        // Fetch player props for this event
+        try {
+          const propsUrl = `${ODDS_API_BASE}/historical/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=player_points_alternate&oddsFormat=american&date=${isoDate}&bookmakers=fanduel`;
+          const propsRes = await fetch(propsUrl);
+          if (propsRes.ok) {
+            const propsData = await propsRes.json();
+            const eventData = propsData.data || propsData;
+            const fdBook = (eventData.bookmakers || []).find(b => b.key === 'fanduel');
+            if (fdBook) {
+              const mkt = (fdBook.markets || []).find(m => m.key === 'player_points_alternate');
+              if (mkt) {
+                const playerLines = {};
+                for (const outcome of (mkt.outcomes || [])) {
+                  const player = outcome.description;
+                  const threshold = outcome.point;
+                  if (!playerLines[player]) playerLines[player] = {};
+                  if (!playerLines[player][threshold]) playerLines[player][threshold] = {};
+                  if (outcome.name === 'Over') {
+                    playerLines[player][threshold].overOdds = outcome.price;
+                  }
+                }
+                record.playerProps = playerLines;
+              }
+            }
+          }
+        } catch (e) { /* skip props for this event */ }
+
+        result.push(record);
+      }
+    } catch (e) {
+      console.warn(`[ENGINE] Error fetching historical odds for ${dateStr}:`, e);
+    }
+
+    return result;
+  }
+
+  // Fetch and cache odds for dates not in the main historical dataset
+  async function fetchMissingDailyOdds(historicalOdds, maxDates) {
+    const existingDates = new Set(historicalOdds.map(o => o.date));
+    const cache = loadCachedDailyOdds();
+    let newOdds = [];
+    let fetchedCount = 0;
+
+    // Get dates from last historical date to yesterday
+    const lastDate = [...existingDates].sort().pop() || '20250224';
+    const today = new Date();
+    const dates = [];
+    const startDate = new Date(`${lastDate.slice(0,4)}-${lastDate.slice(4,6)}-${lastDate.slice(6,8)}`);
+    startDate.setDate(startDate.getDate() + 1);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    for (let d = new Date(startDate); d <= yesterday; d.setDate(d.getDate() + 1)) {
+      const ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      if (!existingDates.has(ds)) {
+        dates.push(ds);
+      }
+    }
+
+    console.log(`[ENGINE] ${dates.length} dates missing from historical data`);
+
+    for (const date of dates) {
+      // Check localStorage cache first
+      if (cache[date]) {
+        newOdds.push(...cache[date]);
+        continue;
+      }
+
+      // Rate limit: only fetch up to maxDates per session
+      if (fetchedCount >= (maxDates || 5)) {
+        console.log(`[ENGINE] Rate limited, will fetch more dates next load`);
+        break;
+      }
+
+      console.log(`[ENGINE] Fetching odds for ${date}...`);
+      const dateOdds = await fetchHistoricalOddsForDate(date);
+      if (dateOdds.length > 0) {
+        cache[date] = dateOdds;
+        newOdds.push(...dateOdds);
+        saveCachedDailyOdds(cache);
+        console.log(`[ENGINE] Cached ${dateOdds.length} odds for ${date}`);
+      } else {
+        // Mark as empty so we don't re-fetch
+        cache[date] = [];
+        saveCachedDailyOdds(cache);
+      }
+      fetchedCount++;
+
+      // Rate limit between fetches
+      await new Promise(r => setTimeout(r, 300));
+    }
+
+    return newOdds;
+  }
+
   // --- Public API ---
 
   return {
@@ -506,6 +714,9 @@ window.BettingEngine = (function () {
     runBacktest,
     fetchLiveOdds,
     saveOddsToHistory,
+    fetchMissingDailyOdds,
+    fetchHistoricalOddsForDate,
+    loadCachedDailyOdds,
     americanToDecimal,
     decimalToAmerican,
     formatOdds,
