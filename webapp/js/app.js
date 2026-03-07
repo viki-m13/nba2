@@ -112,10 +112,29 @@
       statusEl.textContent = `Found ${todayGames.length} games. Fetching FanDuel odds (points, rebounds, assists)...`;
       renderTodayGames(todayGames);
 
+      // Check data freshness — warn if box scores are from a different season
+      const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
+      const latestBoxDate = sorted.length > 0 ? sorted[sorted.length - 1].date : '';
+      const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const daysSinceLastBox = latestBoxDate ? Math.floor(
+        (new Date(todayStr.slice(0,4) + '-' + todayStr.slice(4,6) + '-' + todayStr.slice(6,8))
+        - new Date(latestBoxDate.slice(0,4) + '-' + latestBoxDate.slice(4,6) + '-' + latestBoxDate.slice(6,8)))
+        / (1000 * 60 * 60 * 24)
+      ) : 999;
+
+      if (daysSinceLastBox > 60) {
+        console.warn(`[APP] Box score data is ${daysSinceLastBox} days old (last: ${latestBoxDate}). Model uses prior season stats.`);
+        const warnEl = document.createElement('div');
+        warnEl.className = 'status-msg';
+        warnEl.style.color = 'var(--gold)';
+        warnEl.textContent = `Note: Player stats are from the ${latestBoxDate.slice(0,4)}-${parseInt(latestBoxDate.slice(0,4))+1} season. Picks use live FanDuel odds but evaluate against last season's performance data.`;
+        const parlaysEl = document.getElementById('today-parlays');
+        parlaysEl.parentNode.insertBefore(warnEl, parlaysEl);
+      }
+
       // Train the model on all historical data
       const model = Object.create(window.BettingEngine.PlayerModel);
       model.history = {};
-      const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
       for (const g of sorted) {
         for (const p of (g.players || [])) {
           const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
@@ -608,6 +627,6 @@
   // --- Helpers ---
 
   function formatDate(dateStr) {
-    return `${dateStr.slice(4, 6)}/${dateStr.slice(6, 8)}`;
+    return `${dateStr.slice(4, 6)}/${dateStr.slice(6, 8)}/${dateStr.slice(0, 4)}`;
   }
 })();
