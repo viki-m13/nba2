@@ -1,14 +1,11 @@
 // =============================================================================
-// NBA Prop Picks — App Controller v4.0
+// NBA Alt-Line Engine — App Controller v5.0
 // =============================================================================
 
 (function () {
   'use strict';
 
-  let backtestResults = null;
-  let todayParlays = [];
   let currentPeriod = 'all';
-  let seasonData = [];
   let playerBoxScores = [];
   let historicalOdds = [];
   let rebAstProps = [];
@@ -21,13 +18,9 @@
     setupNavigation();
     setupFilters();
     await loadData();
-    runBacktest();
-
-    // Run alt-line backtest using existing historical data
     runAltBacktest();
-
-    // Seed live history for recent days if needed
-    await seedLiveHistory(5);
+    renderDashboard();
+    renderHistory();
 
     // Resolve any unresolved live picks
     try {
@@ -36,11 +29,36 @@
       console.warn('Could not resolve live picks:', e);
       livePicksData = window.BettingEngine.loadLivePicks();
     }
+    renderLiveHistory();
 
-    renderDashboard();
-    renderHistory();
     await generateTodayPicks();
   }
+
+  // --- Data Loading ---
+
+  async function loadData() {
+    try {
+      const [boxRes, oddsRes, rebAstRes, livePicksRes] = await Promise.all([
+        fetch('data/player_boxscores.json'),
+        fetch('data/historical_odds.json'),
+        fetch('data/historical_reb_ast_props.json').catch(() => null),
+        fetch('data/live_picks_2026.json').catch(() => null),
+      ]);
+
+      playerBoxScores = await boxRes.json();
+      historicalOdds = await oddsRes.json();
+      if (rebAstRes && rebAstRes.ok) rebAstProps = await rebAstRes.json();
+      if (livePicksRes && livePicksRes.ok) {
+        window.BettingEngine.setBasePicksData(await livePicksRes.json());
+      }
+
+      console.log(`Loaded: ${playerBoxScores.length} box scores, ${historicalOdds.length} odds`);
+    } catch (e) {
+      console.error('Error loading data:', e);
+    }
+  }
+
+  // --- Alt-Line Backtest ---
 
   function runAltBacktest() {
     if (!window.NbaAltBacktest || !playerBoxScores.length) return;
@@ -49,125 +67,11 @@
       altBacktestResults = window.NbaAltBacktest.runBacktest(playerBoxScores, historicalOdds, rebAstProps);
       if (altBacktestResults && altBacktestResults.stats) {
         const s = altBacktestResults.stats;
-        console.log('[ALT-BACKTEST] Results:');
-        console.log(`  Legs: ${s.overall.legs.total} total, ${s.overall.legs.hitRate * 100}% hit rate, ROI ${s.overall.legs.roi}%`);
-        console.log(`  Parlays: ${s.overall.parlays.total} total, ${s.overall.parlays.hitRate * 100}% hit rate, ROI ${s.overall.parlays.roi}%`);
-        console.log('  By market:', s.byMarket);
-        console.log('  By builder:', s.byBuilder);
-        console.log('  By role:', s.byRole);
-        console.log('  By edge bucket:', s.byEdge);
+        console.log(`[ALT-BACKTEST] Legs: ${s.overall.legs.total}, ${(s.overall.legs.hitRate*100).toFixed(1)}% hit, ROI ${s.overall.legs.roi}%`);
+        console.log(`[ALT-BACKTEST] Parlays: ${s.overall.parlays.total}, ${(s.overall.parlays.hitRate*100).toFixed(1)}% win, ROI ${s.overall.parlays.roi}%`);
       }
     } catch (e) {
       console.warn('[APP] Alt backtest error:', e);
-    }
-  }
-
-  // --- Data Loading ---
-
-  async function loadData() {
-    try {
-      const [seasonRes, boxRes, oddsRes, rebAstRes, livePicksRes] = await Promise.all([
-        fetch('data/espn_full_season_2025.json'),
-        fetch('data/player_boxscores.json'),
-        fetch('data/historical_odds.json'),
-        fetch('data/historical_reb_ast_props.json').catch(() => null),
-        fetch('data/live_picks_2026.json').catch(() => null),
-      ]);
-
-      seasonData = await seasonRes.json();
-      playerBoxScores = await boxRes.json();
-      historicalOdds = await oddsRes.json();
-      if (rebAstRes && rebAstRes.ok) rebAstProps = await rebAstRes.json();
-      if (livePicksRes && livePicksRes.ok) {
-        window.BettingEngine.setBasePicksData(await livePicksRes.json());
-      }
-
-      console.log(`Loaded: ${seasonData.length} games, ${playerBoxScores.length} box scores, ${historicalOdds.length} odds`);
-    } catch (e) {
-      console.error('Error loading data:', e);
-    }
-  }
-
-  // --- Backtest ---
-
-  function runBacktest() {
-    if (!seasonData.length || !playerBoxScores.length || !historicalOdds.length) return;
-    backtestResults = window.BettingEngine.runBacktest(seasonData, playerBoxScores, historicalOdds, rebAstProps);
-    console.log('Backtest results:', backtestResults.stats);
-  }
-
-  // --- Seed Live History ---
-
-  async function seedLiveHistory(numDays) {
-    const existing = window.BettingEngine.loadLivePicks();
-    const existingDates = new Set(existing.parlays.map(p => p.date));
-
-    const today = new Date();
-    const datesToSeed = [];
-    for (let i = 1; i <= numDays; i++) {
-      const d = new Date(today);
-      d.setDate(d.getDate() - i);
-      const ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
-      if (!existingDates.has(ds)) datesToSeed.push(ds);
-    }
-
-    if (datesToSeed.length === 0) return;
-
-    // Build model from all box score data
-    const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
-    const model = Object.create(window.BettingEngine.PlayerModel);
-    model.history = {};
-    for (const g of sorted) {
-      for (const p of (g.players || [])) {
-        const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
-        if (mins < 10) continue;
-        model.update(p.name, {
-          pts: p.pts,
-          reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
-          ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
-          min: mins,
-        }, g.date, p.team);
-      }
-    }
-
-    for (const date of datesToSeed) {
-      try {
-        const dayOdds = await window.BettingEngine.fetchHistoricalOddsForDate(date);
-        if (!dayOdds || dayOdds.length === 0) continue;
-
-        const daySingles = [];
-        for (const record of dayOdds) {
-          const gameKey = record.gameKey;
-          const gameDisplay = `${record.awayTeam} @ ${record.homeTeam}`;
-
-          const addPick = (prop) => {
-            if (!prop) return;
-            if (!daySingles.find(s => s.player === prop.player && s.statType === prop.statType && s.line === prop.line)) {
-              daySingles.push({ ...prop, gameKey, gameDisplay });
-            }
-          };
-
-          for (const [name, lines] of Object.entries(record.playerProps || {})) addPick(model.findBestProp(name, 'points', lines));
-          for (const [name, lines] of Object.entries(record.playerRebProps || {})) addPick(model.findBestProp(name, 'rebounds', lines));
-          for (const [name, lines] of Object.entries(record.playerAstProps || {})) addPick(model.findBestProp(name, 'assists', lines));
-        }
-
-        const dayParlays = window.BettingEngine.buildParlays(daySingles);
-        for (const parlay of dayParlays) {
-          parlay.legs = parlay.legs.map(leg => {
-            const match = daySingles.find(s => s.player === leg.player && s.line === leg.line && s.statType === leg.statType);
-            return { ...leg, gameKey: match ? match.gameKey : '', gameDisplay: match ? match.gameDisplay : '' };
-          });
-        }
-
-        if (dayParlays.length > 0) {
-          window.BettingEngine.saveTodayParlays(dayParlays, [], date);
-        }
-
-        await new Promise(r => setTimeout(r, 500));
-      } catch (e) {
-        console.warn(`[SEED] Error seeding ${date}:`, e);
-      }
     }
   }
 
@@ -179,7 +83,7 @@
     try {
       statusEl.textContent = 'Fetching FanDuel odds...';
 
-      // Build model from historical data first (always needed)
+      // Build model from historical data
       const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
       const model = Object.create(window.BettingEngine.PlayerModel);
       model.history = {};
@@ -196,7 +100,7 @@
         }
       }
 
-      // Fetch live odds from Odds API — this is the primary game source
+      // Fetch live odds from Odds API — primary game source
       let liveOdds = null;
       try {
         liveOdds = await window.BettingEngine.fetchLiveOdds();
@@ -210,43 +114,33 @@
         return;
       }
 
-      // Build today's games list from Odds API events (always available)
+      // Build today's games from Odds API events
       let todayGames = [];
       if (liveOdds && liveOdds.events && liveOdds.events.length > 0) {
-        todayGames = liveOdds.events.map(e => {
-          const homeAbbr = window.BettingEngine.teamAbbr(e.home_team);
-          const awayAbbr = window.BettingEngine.teamAbbr(e.away_team);
-          return {
-            homeTeam: homeAbbr,
-            awayTeam: awayAbbr,
-            homeName: e.home_team,
-            awayName: e.away_team,
-            gameTime: e.commence_time,
-            status: 'scheduled',
-            statusText: '',
-          };
-        });
+        todayGames = liveOdds.events.map(e => ({
+          homeTeam: window.BettingEngine.teamAbbr(e.home_team),
+          awayTeam: window.BettingEngine.teamAbbr(e.away_team),
+          gameTime: e.commence_time,
+          status: 'scheduled',
+          statusText: '',
+        }));
       }
 
-      // Try scoreboard for live scores (nice-to-have, not required)
+      // Try scoreboard for live scores (optional, non-blocking)
       try {
         const sbResult = await window.NbaApi.fetchScoreboard();
         const sbGames = (sbResult && sbResult.games) || [];
-        if (sbGames.length > 0) {
-          // Merge scoreboard info into todayGames
-          for (const sb of sbGames) {
-            const match = todayGames.find(g => g.homeTeam === sb.homeTeam && g.awayTeam === sb.awayTeam);
-            if (match) {
-              match.homeScore = sb.homeScore;
-              match.awayScore = sb.awayScore;
-              match.status = sb.status;
-              match.statusText = sb.statusText;
-              match.ouLine = sb.ouLine;
-            }
+        for (const sb of sbGames) {
+          const match = todayGames.find(g => g.homeTeam === sb.homeTeam && g.awayTeam === sb.awayTeam);
+          if (match) {
+            match.homeScore = sb.homeScore;
+            match.awayScore = sb.awayScore;
+            match.status = sb.status;
+            match.statusText = sb.statusText;
+            match.ouLine = sb.ouLine;
           }
-          // If scoreboard has games not in odds API, add them
-          if (todayGames.length === 0) todayGames = sbGames;
         }
+        if (todayGames.length === 0 && sbGames.length > 0) todayGames = sbGames;
       } catch (e) {
         console.warn('Scoreboard fetch failed (non-critical):', e);
       }
@@ -265,17 +159,16 @@
         return;
       }
 
-      // --- Alt-Line Pipeline (primary strategy) ---
+      // --- Alt-Line Pipeline ---
       window.BettingEngine.PlayerModel.history = model.history;
 
-      // Build game-level odds map for environment context
       const gameOddsMap = {};
       try {
         const espnData = await window.NbaApi.fetchESPNOdds();
         for (const game of todayGames) {
           const gk = `${game.awayTeam}@${game.homeTeam}`;
           const espnKey = `${game.homeTeam}-${game.awayTeam}`;
-          if (game.ouLine || espnData.odds[espnKey]) {
+          if (game.ouLine || (espnData && espnData.odds && espnData.odds[espnKey])) {
             gameOddsMap[gk] = {
               total: game.ouLine || espnData.odds[espnKey] || 220,
               spread_point: 0,
@@ -284,11 +177,9 @@
         }
       } catch (e) { console.warn('Could not build game odds map:', e); }
 
-      // Generate feature table and slips
       const featureTable = window.BettingEngine.generateFeatureTable(liveOdds, gameOddsMap);
       const slips = window.BettingEngine.generateSlips(featureTable);
 
-      // Render alt-line slips
       renderAltSlips(slips, featureTable);
 
       // Save to live tracking
@@ -314,10 +205,7 @@
     }
   }
 
-  // --- Rendering (Alt-Line Only) ---
-
-  // Legacy renderTodayPicks and renderParlayCard removed.
-  // Alt-line slips are now the only today's pick output (via renderAltSlips).
+  // --- Rendering ---
 
   function renderTodayGames(games) {
     const container = document.getElementById('today-games');
@@ -333,8 +221,8 @@
     }
 
     const gamesHtml = games.map(g => {
-      const away = g.awayTeam || g.away_team || '???';
-      const home = g.homeTeam || g.home_team || '???';
+      const away = g.awayTeam || '???';
+      const home = g.homeTeam || '???';
       let timeInfo = '';
       if (g.status === 'final') timeInfo = `Final: ${g.awayScore}-${g.homeScore}`;
       else if (g.status === 'live' || g.status === 'halftime') timeInfo = g.statusText || 'Live';
@@ -347,73 +235,28 @@
     container.innerHTML = `<div class="today-games-header"><h3>Today's Games</h3><span class="today-games-date">${dateStr}</span></div><div class="today-games-grid">${gamesHtml}</div>`;
   }
 
-  // --- Dashboard ---
+  // --- Dashboard (Alt-Line Stats) ---
 
   function renderDashboard() {
-    if (!backtestResults) return;
-    const s = backtestResults.stats;
+    if (!altBacktestResults || !altBacktestResults.stats) return;
+    const s = altBacktestResults.stats;
+    const legs = s.overall.legs;
+    const parlays = s.overall.parlays;
 
-    document.getElementById('stat-accuracy').textContent = `${(s.parlays.hitRate * 100).toFixed(1)}%`;
-    document.getElementById('stat-record').textContent = `${s.parlays.wins}-${s.parlays.losses}`;
-    document.getElementById('stat-pnl').textContent = `$${s.parlays.pnl >= 0 ? '+' : ''}${s.parlays.pnl}`;
-    document.getElementById('stat-roi').textContent = `${s.parlays.roi >= 0 ? '+' : ''}${s.parlays.roi}%`;
-    document.getElementById('stat-parlay-record').textContent = `${s.singles.wins}-${s.singles.losses}`;
-    document.getElementById('stat-days').textContent = `${s.daysWithPicks}/${s.totalDays}`;
-
-    if (s.recent30) {
-      const el = document.getElementById('stat-recent');
-      if (el) el.textContent = `${(s.recent30.hitRate * 100).toFixed(1)}%`;
-    }
+    document.getElementById('stat-accuracy').textContent = `${parlays.total > 0 ? (parlays.hitRate * 100).toFixed(1) : '--'}%`;
+    document.getElementById('stat-record').textContent = `${parlays.wins}-${parlays.losses}`;
+    document.getElementById('stat-pnl').textContent = `$${parlays.pnl >= 0 ? '+' : ''}${parlays.pnl}`;
+    document.getElementById('stat-roi').textContent = `${parlays.roi >= 0 ? '+' : ''}${parlays.roi}%`;
+    document.getElementById('stat-leg-record').textContent = `${legs.wins}-${legs.losses}`;
+    document.getElementById('stat-leg-hit').textContent = `${legs.total > 0 ? (legs.hitRate * 100).toFixed(1) : '--'}%`;
+    document.getElementById('stat-days').textContent = `${altBacktestResults.dates.length}`;
   }
 
-  // --- History ---
+  // --- History (Alt-Line Only) ---
 
   function renderHistory() {
-    if (!backtestResults) return;
-
-    const parlays = getFilteredParlays();
-    const wins = parlays.filter(p => p.won).length;
-    const total = parlays.length;
-    const pnl = parlays.reduce((s, p) => s + p.pnl, 0);
-    const roi = total > 0 ? (pnl / (total * 100) * 100).toFixed(1) : '0.0';
-
-    const allDates = [...new Set(parlays.map(p => p.date))].sort();
-    const r14Cutoff = allDates[Math.max(0, allDates.length - 14)] || '';
-    const recent14 = parlays.filter(p => p.date >= r14Cutoff);
-    const r14Wins = recent14.filter(p => p.won).length;
-    const r14Rate = recent14.length > 0 ? (r14Wins / recent14.length * 100).toFixed(1) : '--';
-
-    const byLegs = {};
-    for (const p of parlays) {
-      const n = p.numLegs || p.legs.length;
-      if (!byLegs[n]) byLegs[n] = { wins: 0, total: 0 };
-      byLegs[n].total++;
-      if (p.won) byLegs[n].wins++;
-    }
-    const breakdownHtml = Object.keys(byLegs).sort((a, b) => a - b).map(n => {
-      const g = byLegs[n];
-      return `<span class="history-stat-breakdown">${n}-Leg: ${g.wins}-${g.total - g.wins} (${(g.wins/g.total*100).toFixed(0)}%)</span>`;
-    }).join('');
-
-    document.getElementById('history-stats').innerHTML = `
-      <div class="history-stat-row">
-        <div class="history-stat"><span class="history-stat-value">${total > 0 ? (wins/total*100).toFixed(1) : '--'}%</span><span class="history-stat-label">Walk-Forward Accuracy</span></div>
-        <div class="history-stat"><span class="history-stat-value highlight-recent">${r14Rate}%</span><span class="history-stat-label">Last 14 Days</span></div>
-        <div class="history-stat"><span class="history-stat-value">${wins}-${total-wins}</span><span class="history-stat-label">Record</span></div>
-        <div class="history-stat"><span class="history-stat-value ${pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">$${pnl >= 0 ? '+' : ''}${pnl}</span><span class="history-stat-label">P&L ($100/bet)</span></div>
-        <div class="history-stat"><span class="history-stat-value">${roi >= 0 ? '+' : ''}${roi}%</span><span class="history-stat-label">ROI</span></div>
-      </div>
-      <div class="history-stat-breakdowns">${breakdownHtml}</div>`;
-
-    document.querySelector('#parlays-history tbody').innerHTML = renderParlayRows(
-      parlays.sort((a, b) => b.date.localeCompare(a.date))
-    );
-
     renderAltBacktestHistory();
-    renderLiveHistory();
   }
-
-  // --- Alt-Line Backtest History ---
 
   function renderAltBacktestHistory() {
     const section = document.getElementById('alt-backtest-section');
@@ -429,7 +272,6 @@
     const legs = s.overall.legs;
     const parlays = s.overall.parlays;
 
-    // Summary stats
     document.getElementById('alt-backtest-stats').innerHTML = `
       <div class="history-stat-row">
         <div class="history-stat"><span class="history-stat-value">${legs.total > 0 ? (legs.hitRate * 100).toFixed(1) : '--'}%</span><span class="history-stat-label">Leg Hit Rate (${legs.total} legs)</span></div>
@@ -442,7 +284,6 @@
     // Breakdown by builder, market, role
     let breakdownHtml = '<div style="display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.8rem;">';
 
-    // By builder
     breakdownHtml += '<div><strong style="color: var(--text-dim);">By Builder</strong>';
     for (const [k, v] of Object.entries(s.byBuilder)) {
       if (v.total === 0) continue;
@@ -451,7 +292,6 @@
     }
     breakdownHtml += '</div>';
 
-    // By market
     breakdownHtml += '<div><strong style="color: var(--text-dim);">By Market</strong>';
     for (const [k, v] of Object.entries(s.byMarket)) {
       if (v.total === 0) continue;
@@ -460,7 +300,6 @@
     }
     breakdownHtml += '</div>';
 
-    // By role
     breakdownHtml += '<div><strong style="color: var(--text-dim);">By Role</strong>';
     for (const [k, v] of Object.entries(s.byRole)) {
       if (v.total === 0) continue;
@@ -472,7 +311,7 @@
     breakdownHtml += '</div>';
     document.getElementById('alt-backtest-breakdown').innerHTML = breakdownHtml;
 
-    // Parlay rows
+    // Parlay rows (filtered)
     const altParlays = altBacktestResults.parlays || [];
     let filtered = altParlays;
     if (currentPeriod !== 'all') {
@@ -527,42 +366,7 @@
     }).join('');
   }
 
-  function renderParlayRows(list) {
-    return list.map(p => {
-      const numLegs = p.numLegs || p.legs.length;
-      const legsHtml = p.legs.map(l => {
-        const lbl = l.statLabel || window.BettingEngine.statLabel(l.statType || 'points');
-        const hasResult = l.actual !== null && l.actual !== undefined;
-        const cls = hasResult ? (l.won ? 'result-win' : 'result-loss') : '';
-        const txt = hasResult ? `${l.actual} ${lbl.toLowerCase()}` : 'Pending';
-        return `<div class="history-leg">
-          <span class="history-leg-player">${l.player} (${l.team})</span>
-          <span class="history-leg-stat">${lbl}</span>
-          <span class="history-leg-line">OVER ${l.line}</span>
-          <span class="history-leg-odds">${window.BettingEngine.formatOdds(l.odds)}</span>
-          <span class="history-leg-game">${l.gameDisplay || (l.gameKey || '').replace('@', ' @ ')}</span>
-          <span class="history-leg-actual ${cls}">${txt}</span>
-        </div>`;
-      }).join('');
-
-      const statTypes = new Set(p.legs.map(l => l.statType || 'points'));
-      const typeLabel = statTypes.size > 1 ? `${numLegs}-Leg Multi` : `${numLegs}-Leg`;
-      const isResolved = p.resolved !== undefined ? p.resolved : true;
-      const resultText = isResolved ? (p.won ? 'WIN' : 'LOSS') : 'PENDING';
-      const resultClass = isResolved ? (p.won ? 'result-win' : 'result-loss') : 'result-pending';
-      const pnlText = isResolved ? `${p.pnl >= 0 ? '+' : ''}$${p.pnl}` : '--';
-      const pnlClass = isResolved ? (p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg') : '';
-
-      return `<tr>
-        <td>${formatDate(p.date)}</td>
-        <td>${typeLabel}</td>
-        <td class="legs-cell">${legsHtml}</td>
-        <td>${window.BettingEngine.formatOdds(p.odds)}</td>
-        <td class="${resultClass}">${resultText}</td>
-        <td class="${pnlClass}">${pnlText}</td>
-      </tr>`;
-    }).join('');
-  }
+  // --- Live Tracking History ---
 
   function renderLiveHistory() {
     if (!livePicksData) return;
@@ -589,26 +393,14 @@
         2025-26 Live Tracking <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">Auto-resolves daily</span>
       </h3>
       <div class="history-stats">${statsHtml}</div>
-      <table class="history-table"><thead><tr><th>Date</th><th>Type</th><th>Legs</th><th>Parlay Odds</th><th>Result</th><th>P&L</th></tr></thead>
-        <tbody>${renderParlayRows(liveParlays.sort((a, b) => b.date.localeCompare(a.date)))}</tbody>
+      <table class="history-table"><thead><tr><th>Date</th><th>Builder</th><th>Legs</th><th>Parlay Odds</th><th>Result</th><th>P&L</th></tr></thead>
+        <tbody>${renderAltParlayRows(liveParlays.sort((a, b) => b.date.localeCompare(a.date)))}</tbody>
       </table>`;
 
     const historyView = document.getElementById('view-history');
     const old = historyView.querySelector('.live-tracking-section');
     if (old) old.remove();
     historyView.appendChild(section);
-  }
-
-  function getFilteredParlays() {
-    if (!backtestResults) return [];
-    let parlays = backtestResults.parlays;
-    if (currentPeriod !== 'all') {
-      const days = parseInt(currentPeriod);
-      const allDates = [...new Set(parlays.map(p => p.date))].sort();
-      const cutoff = allDates[Math.max(0, allDates.length - days)] || '';
-      parlays = parlays.filter(p => p.date >= cutoff);
-    }
-    return parlays;
   }
 
   // --- Navigation ---
@@ -640,7 +432,7 @@
   }
 
   // =========================================================================
-  // Alt-Line Slip Rendering
+  // Alt-Line Slip Rendering (Today's Picks)
   // =========================================================================
 
   function renderAltSlips(slips, featureTable) {
