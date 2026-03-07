@@ -476,17 +476,18 @@ window.BettingEngine = (function () {
             };
 
             const ptsLines = og && og.playerProps && og.playerProps[actualPlayer.name];
-            const rebLines = ra && ra.rebProps && ra.rebProps[actualPlayer.name];
-            const astLines = ra && ra.astProps && ra.astProps[actualPlayer.name];
+            // Reb/ast: check dedicated file first, then inline props from incremental loader
+            const rebLines = (ra && ra.rebProps && ra.rebProps[actualPlayer.name])
+              || (og && og.playerRebProps && og.playerRebProps[actualPlayer.name]);
+            const astLines = (ra && ra.astProps && ra.astProps[actualPlayer.name])
+              || (og && og.playerAstProps && og.playerAstProps[actualPlayer.name]);
             const actualReb = typeof actualPlayer.reb === 'number' ? actualPlayer.reb : parseInt(actualPlayer.reb) || 0;
             const actualAst = typeof actualPlayer.ast === 'number' ? actualPlayer.ast : parseInt(actualPlayer.ast) || 0;
 
-            // --- Tier 1 (Strict) picks ---
+            // --- Tier 1 (Strict) picks — real odds only ---
             if (ptsLines) addSingle(model.findBestStatProp(actualPlayer.name, 'points', ptsLines), actualPlayer.pts);
             if (rebLines) addSingle(model.findBestStatProp(actualPlayer.name, 'rebounds', rebLines), actualReb);
-            else addSingle(model.findBestStatPropNoOdds(actualPlayer.name, 'rebounds'), actualReb);
             if (astLines) addSingle(model.findBestStatProp(actualPlayer.name, 'assists', astLines), actualAst);
-            else addSingle(model.findBestStatPropNoOdds(actualPlayer.name, 'assists'), actualAst);
 
             // --- Tier 2 (Enhanced) picks — only with real odds ---
             if (ptsLines) {

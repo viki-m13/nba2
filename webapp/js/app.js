@@ -96,17 +96,21 @@
     try {
       let todayGames = [];
       try {
-        todayGames = await window.NbaApi.fetchScoreboard();
+        const sbResult = await window.NbaApi.fetchScoreboard();
+        todayGames = (sbResult && sbResult.games) || sbResult || [];
+        if (!Array.isArray(todayGames)) todayGames = [];
       } catch (e) {
         console.warn('Could not fetch scoreboard:', e);
       }
 
-      if (!todayGames || todayGames.length === 0) {
+      if (todayGames.length === 0) {
         statusEl.textContent = 'No games scheduled today.';
+        renderTodayGames([]); // Show empty state
         return;
       }
 
       statusEl.textContent = `Found ${todayGames.length} games. Fetching FanDuel odds (points, rebounds, assists)...`;
+      renderTodayGames(todayGames);
 
       // Train the model on all historical data
       const model = Object.create(window.BettingEngine.PlayerModel);
@@ -343,6 +347,59 @@
           <span class="parlay-payout">$100 wins $${Math.round((parlay.decimalOdds - 1) * 100)}</span>
         </div>
       </div>`;
+  }
+
+  function renderTodayGames(games) {
+    const container = document.getElementById('today-games');
+    if (!container) return;
+
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    if (!games || games.length === 0) {
+      container.innerHTML = `
+        <div class="today-games-header">
+          <h3>Today's Games</h3>
+          <span class="today-games-date">${dateStr}</span>
+        </div>
+        <p class="status-msg">No games scheduled.</p>`;
+      return;
+    }
+
+    const gamesHtml = games.map(g => {
+      const away = g.awayTeam || g.away_team || '???';
+      const home = g.homeTeam || g.home_team || '???';
+      let timeInfo = '';
+      if (g.status === 'final') {
+        timeInfo = `Final: ${g.awayScore}-${g.homeScore}`;
+      } else if (g.status === 'live' || g.status === 'halftime') {
+        timeInfo = g.statusText || 'Live';
+      } else if (g.gameTime) {
+        // Parse ET time
+        try {
+          const gt = new Date(g.gameTime);
+          timeInfo = gt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        } catch (e) {
+          timeInfo = g.statusText || 'TBD';
+        }
+      } else {
+        timeInfo = g.statusText || 'TBD';
+      }
+
+      return `<div class="today-game-card">
+        <span class="today-game-teams">${away} @ ${home}</span>
+        <span class="today-game-time">${timeInfo}</span>
+      </div>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="today-games-header">
+        <h3>Today's Games</h3>
+        <span class="today-games-date">${dateStr}</span>
+      </div>
+      <div class="today-games-grid">${gamesHtml}</div>`;
   }
 
   // --- Dashboard ---
