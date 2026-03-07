@@ -1921,4 +1921,345 @@ td.result-loss { color: var(--red); }
   .results-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .master-dashboard {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .master-method-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   MASTER BET RECOMMENDER STYLES
+   ============================================================ */
+
+.master-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1a1f2e 50%, #0f172a 100%);
+  border: 1px solid #334155;
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.master-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.master-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f59e0b;
+  letter-spacing: -0.5px;
+}
+
+.master-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0a0e17;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  padding: 2px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.master-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Master Dashboard Stats */
+.master-dashboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.master-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.master-stat-card.master-stat-overall {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.master-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.master-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
+}
+
+.master-stat-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Section Titles */
+.master-section-title {
+  color: #f59e0b !important;
+  border-bottom-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.master-subsystem-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-accent);
+  border-left: 3px solid;
+}
+
+.ironlock-title {
+  color: #3b82f6;
+  border-left-color: #3b82f6;
+}
+
+.bedrock-title {
+  color: #22c55e;
+  border-left-color: #22c55e;
+}
+
+.apex-title {
+  color: #a78bfa;
+  border-left-color: #a78bfa;
+}
+
+/* Today's Master Picks */
+.master-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.master-pick-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+
+.master-pick-card:hover {
+  border-color: var(--border-light);
+}
+
+.master-pick-card.ironlock-card {
+  border-left: 4px solid #3b82f6;
+}
+
+.master-pick-card.bedrock-card {
+  border-left: 4px solid #22c55e;
+}
+
+.master-pick-card.apex-card {
+  border-left: 4px solid #a78bfa;
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.05) 0%, var(--bg-card) 100%);
+}
+
+.master-pick-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.master-pick-type {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.master-pick-type.ironlock {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.master-pick-type.bedrock {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.master-pick-type.apex {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.15);
+}
+
+.master-pick-confidence {
+  font-size: 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-secondary);
+}
+
+.master-pick-bet {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.master-pick-matchup {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.master-pick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.master-stat-mini {
+  text-align: center;
+  padding: 6px;
+  background: var(--bg-accent);
+  border-radius: var(--radius-sm);
+}
+
+.master-stat-mini-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.master-stat-mini-value {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-primary);
+}
+
+/* Parlay legs display */
+.master-parlay-legs {
+  margin: 8px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.master-parlay-leg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  margin: 4px 0;
+  background: var(--bg-accent);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+.master-parlay-leg-type {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.master-parlay-leg-type.ironlock { color: #3b82f6; background: rgba(59, 130, 246, 0.15); }
+.master-parlay-leg-type.bedrock { color: #22c55e; background: rgba(34, 197, 94, 0.15); }
+
+.master-parlay-leg-info {
+  flex: 1;
+  margin: 0 8px;
+  color: var(--text-primary);
+}
+
+.master-parlay-leg-odds {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--text-secondary);
+}
+
+/* Empty state */
+.master-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+/* Equity Curve */
+.master-equity-curve {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+}
+
+#master-equity-canvas {
+  width: 100%;
+  height: 300px;
+}
+
+/* Methodology Cards */
+.master-methodology {
+  margin-top: 32px;
+}
+
+.master-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.master-method-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.master-method-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-left: 12px;
+}
+
+.master-method-card p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.method-detail {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
 }
