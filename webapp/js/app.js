@@ -25,7 +25,6 @@
     runBacktest();
     renderDashboard();
     renderHistory();
-    renderEquityCurve();
     await generateTodayPicks();
   }
 
@@ -243,9 +242,53 @@
 
     const { parlays } = getFilteredResults();
 
+    // Walk-forward accuracy stats
+    const statsEl = document.getElementById('history-stats');
+    const wins = parlays.filter(p => p.won).length;
+    const total = parlays.length;
+    const hitRate = total > 0 ? (wins / total * 100).toFixed(1) : '0.0';
+    const pnl = parlays.reduce((s, p) => s + p.pnl, 0);
+    const roi = total > 0 ? (pnl / (total * 100) * 100).toFixed(1) : '0.0';
+
+    // Breakdown by leg count
+    const byLegs = {};
+    for (const p of parlays) {
+      const n = p.numLegs || p.legs.length;
+      if (!byLegs[n]) byLegs[n] = { wins: 0, total: 0 };
+      byLegs[n].total++;
+      if (p.won) byLegs[n].wins++;
+    }
+    const breakdownHtml = Object.keys(byLegs).sort((a, b) => a - b).map(n => {
+      const g = byLegs[n];
+      const rate = (g.wins / g.total * 100).toFixed(0);
+      return `<span class="history-stat-breakdown">${n}-Leg: ${g.wins}-${g.total - g.wins} (${rate}%)</span>`;
+    }).join('');
+
+    statsEl.innerHTML = `
+      <div class="history-stat-row">
+        <div class="history-stat">
+          <span class="history-stat-value">${hitRate}%</span>
+          <span class="history-stat-label">Walk-Forward Accuracy</span>
+        </div>
+        <div class="history-stat">
+          <span class="history-stat-value">${wins}-${total - wins}</span>
+          <span class="history-stat-label">Record</span>
+        </div>
+        <div class="history-stat">
+          <span class="history-stat-value ${pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">$${pnl >= 0 ? '+' : ''}${pnl}</span>
+          <span class="history-stat-label">P&L ($100/bet)</span>
+        </div>
+        <div class="history-stat">
+          <span class="history-stat-value">${roi >= 0 ? '+' : ''}${roi}%</span>
+          <span class="history-stat-label">ROI</span>
+        </div>
+      </div>
+      <div class="history-stat-breakdowns">${breakdownHtml}</div>`;
+
     // Parlays table
     const parlaysBody = document.querySelector('#parlays-history tbody');
     parlaysBody.innerHTML = parlays.slice().reverse().map(p => {
+      const numLegs = p.numLegs || p.legs.length;
       const legsHtml = p.legs.map(l => {
         const game = formatGameKey(l.gameKey);
         const resultClass = l.won ? 'result-win' : 'result-loss';
@@ -261,6 +304,7 @@
       return `
         <tr>
           <td>${formatDate(p.date)}</td>
+          <td>${numLegs}-Leg</td>
           <td class="legs-cell">${legsHtml}</td>
           <td>${window.BettingEngine.formatOdds(p.odds)}</td>
           <td class="${p.won ? 'result-win' : 'result-loss'}">${p.won ? 'WIN' : 'LOSS'}</td>
@@ -282,109 +326,6 @@
     }
 
     return { parlays };
-  }
-
-  // --- Equity Curve ---
-
-  function renderEquityCurve() {
-    if (!backtestResults) return;
-
-    const canvas = document.getElementById('equity-chart');
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = canvas.offsetWidth * dpr;
-    canvas.height = 300 * dpr;
-    ctx.scale(dpr, dpr);
-
-    const w = canvas.offsetWidth;
-    const h = 300;
-    const pad = { top: 20, right: 20, bottom: 30, left: 50 };
-    const plotW = w - pad.left - pad.right;
-    const plotH = h - pad.top - pad.bottom;
-
-    // Build cumulative P&L from parlays only
-    const allPicks = [...backtestResults.parlays]
-      .sort((a, b) => a.date.localeCompare(b.date));
-
-    let cumPnl = 0;
-    const points = [{ x: 0, y: 0 }];
-    for (let i = 0; i < allPicks.length; i++) {
-      cumPnl += allPicks[i].pnl;
-      points.push({ x: i + 1, y: cumPnl });
-    }
-
-    const maxX = points.length - 1;
-    const minY = Math.min(0, ...points.map(p => p.y));
-    const maxY = Math.max(100, ...points.map(p => p.y));
-    const rangeY = maxY - minY;
-
-    const scaleX = (x) => pad.left + (x / maxX) * plotW;
-    const scaleY = (y) => pad.top + plotH - ((y - minY) / rangeY) * plotH;
-
-    // Background
-    ctx.fillStyle = '#1a1d27';
-    ctx.fillRect(0, 0, w, h);
-
-    // Grid lines
-    ctx.strokeStyle = '#2d3140';
-    ctx.lineWidth = 1;
-    const ySteps = 5;
-    for (let i = 0; i <= ySteps; i++) {
-      const yVal = minY + (rangeY * i / ySteps);
-      const y = scaleY(yVal);
-      ctx.beginPath();
-      ctx.moveTo(pad.left, y);
-      ctx.lineTo(w - pad.right, y);
-      ctx.stroke();
-
-      ctx.fillStyle = '#8b8fa3';
-      ctx.font = '11px sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText('$' + Math.round(yVal), pad.left - 8, y + 4);
-    }
-
-    // Zero line
-    const zeroY = scaleY(0);
-    ctx.strokeStyle = '#4a4e5c';
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    ctx.moveTo(pad.left, zeroY);
-    ctx.lineTo(w - pad.right, zeroY);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // P&L line
-    ctx.strokeStyle = '#a78bfa';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    for (let i = 0; i < points.length; i++) {
-      const x = scaleX(points[i].x);
-      const y = scaleY(points[i].y);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-
-    // Fill below line
-    ctx.lineTo(scaleX(maxX), scaleY(0));
-    ctx.lineTo(scaleX(0), scaleY(0));
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(167, 139, 250, 0.08)';
-    ctx.fill();
-
-    // Endpoint dot
-    const lastPt = points[points.length - 1];
-    ctx.fillStyle = '#a78bfa';
-    ctx.beginPath();
-    ctx.arc(scaleX(lastPt.x), scaleY(lastPt.y), 4, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Label
-    ctx.fillStyle = '#a78bfa';
-    ctx.font = 'bold 12px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`$${cumPnl}`, scaleX(lastPt.x) + 8, scaleY(lastPt.y) + 4);
   }
 
   // --- Navigation ---
