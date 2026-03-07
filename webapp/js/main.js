@@ -41,6 +41,9 @@
   let trainedSiegeModel = null;  // SIEGE model trained on all historical data
   let playerTeamMap = {};        // player name -> most recent team abbreviation
   let useProxy = false;        // True when running on Vercel (CORS proxy available)
+  let masterBacktestResults = null; // Master Bet Recommender backtest results
+  let masterTodayPicks = [];       // Master Bet Recommender today's picks
+  let currentMasterHistoryPeriod = 'all';
 
   const PRISMModel = window.ParlayEngine.PRISMModel;
   const NOVAModel = window.ParlayEngine.NOVAModel;
@@ -292,6 +295,8 @@
       generateTodayVaultPicks();
       generateTodayFortressPicks();
       await generateTodaySiegePicks();
+      runMasterBacktest();
+      await generateMasterTodayPicks();
       buildCDSHistory();
       buildPRISMHistory();
       buildNOVAHistory();
@@ -299,6 +304,7 @@
       renderPicks();
       renderAllGames();
       renderHistory();
+      renderMasterView();
       updateMetrics();
 
       setStatus('online', 'Models Active');
@@ -1851,6 +1857,468 @@
     } catch (e) {
       console.error('[SIEGE] Error generating today picks:', e);
     }
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // MASTER BET RECOMMENDER INTEGRATION
+  // ══════════════════════════════════════════════════════════════════════════
+
+  function runMasterBacktest() {
+    if (!seasonData || seasonData.length === 0 || !playerBoxScores) {
+      console.log('[MASTER] Skipping backtest: insufficient data');
+      return;
+    }
+    try {
+      console.log(`[MASTER] Running walk-forward backtest on ${seasonData.length} games, ${playerBoxScores.length} box scores...`);
+      masterBacktestResults = window.MasterBetEngine.runOfflineBacktest(seasonData, playerBoxScores);
+
+      const s = masterBacktestResults.stats;
+      console.log(`[MASTER] Backtest complete:`);
+      console.log(`  IRONLOCK: ${s.ironlock.wins}/${s.ironlock.total} = ${(s.ironlock.hitRate * 100).toFixed(1)}%, P&L: $${s.ironlock.pnl}, ROI: ${s.ironlock.roi}%`);
+      console.log(`  BEDROCK: ${s.bedrock.wins}/${s.bedrock.total} = ${(s.bedrock.hitRate * 100).toFixed(1)}%, P&L: $${s.bedrock.pnl}, ROI: ${s.bedrock.roi}%`);
+      console.log(`  APEX: ${s.apex.wins}/${s.apex.total} = ${(s.apex.hitRate * 100).toFixed(1)}%, P&L: $${s.apex.pnl}, ROI: ${s.apex.roi}%`);
+      console.log(`  OVERALL: ${s.overall.wins}/${s.overall.total} = ${(s.overall.hitRate * 100).toFixed(1)}%, P&L: $${s.overall.pnl}, ROI: ${s.overall.roi}%`);
+    } catch (e) {
+      console.error('[MASTER] Backtest error:', e);
+    }
+  }
+
+  async function generateMasterTodayPicks() {
+    masterTodayPicks = [];
+    if (todayGames.length === 0) return;
+
+    try {
+      // Fetch live FanDuel odds
+      let liveOdds = null;
+      try {
+        liveOdds = await window.MasterBetEngine.fetchLiveOdds();
+      } catch (e) {
+        console.warn('[MASTER] Could not fetch live odds:', e);
+      }
+
+      // Initialize and train the recommender
+      const MR = window.MasterBetEngine.MasterRecommender;
+      const recommender = Object.create(MR);
+      recommender.init();
+      masterTodayPicks = await recommender.generateTodayPicks(todayGames, seasonData, playerBoxScores, liveOdds);
+      console.log(`[MASTER] Today's picks: ${masterTodayPicks.length} recommendations`);
+    } catch (e) {
+      console.error('[MASTER] Error generating today picks:', e);
+    }
+  }
+
+  function renderMasterView() {
+    renderMasterDashboard();
+    renderMasterTodayPicks();
+    renderMasterHistory();
+    renderMasterEquityCurve();
+  }
+
+  function renderMasterDashboard() {
+    if (!masterBacktestResults || !masterBacktestResults.stats) return;
+    const s = masterBacktestResults.stats;
+
+    const setEl = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+
+    // Overall
+    setEl('master-overall-accuracy', s.overall.total > 0 ? `${(s.overall.hitRate * 100).toFixed(1)}%` : '—');
+    setEl('master-overall-record', s.overall.total > 0 ? `${s.overall.wins}-${s.overall.losses}` : 'No data');
+
+    // Ironlock
+    setEl('master-ironlock-accuracy', s.ironlock.total > 0 ? `${(s.ironlock.hitRate * 100).toFixed(1)}%` : '—');
+    setEl('master-ironlock-record', s.ironlock.total > 0 ? `${s.ironlock.wins}-${s.ironlock.losses} | ROI ${s.ironlock.roi}%` : 'No data');
+
+    // Bedrock
+    setEl('master-bedrock-accuracy', s.bedrock.total > 0 ? `${(s.bedrock.hitRate * 100).toFixed(1)}%` : '—');
+    setEl('master-bedrock-record', s.bedrock.total > 0 ? `${s.bedrock.wins}-${s.bedrock.losses} | ROI ${s.bedrock.roi}%` : 'No data');
+
+    // Apex
+    setEl('master-apex-accuracy', s.apex.total > 0 ? `${(s.apex.hitRate * 100).toFixed(1)}%` : '—');
+    setEl('master-apex-record', s.apex.total > 0 ? `${s.apex.wins}-${s.apex.losses} | ROI ${s.apex.roi}%` : 'No data');
+
+    // P&L
+    const pnlColor = s.overall.pnl >= 0 ? 'var(--green)' : 'var(--red)';
+    const pnlEl = document.getElementById('master-total-pnl');
+    if (pnlEl) {
+      pnlEl.textContent = `$${s.overall.pnl >= 0 ? '+' : ''}${s.overall.pnl}`;
+      pnlEl.style.color = pnlColor;
+    }
+    setEl('master-total-roi', `ROI: ${s.overall.roi}%`);
+
+    // Active days
+    setEl('master-active-days', `${s.daysWithPicks || 0}`);
+    setEl('master-picks-per-day', `of ${s.totalDays || 0} total days`);
+  }
+
+  function renderMasterTodayPicks() {
+    const loading = document.getElementById('master-today-loading');
+    const empty = document.getElementById('master-today-empty');
+    const grid = document.getElementById('master-today-picks');
+    if (!loading || !empty || !grid) return;
+
+    loading.style.display = 'none';
+
+    if (masterTodayPicks.length === 0) {
+      empty.style.display = 'block';
+      grid.style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+    grid.style.display = '';
+
+    grid.innerHTML = masterTodayPicks.filter(p => p.recommended !== false).map(pick => {
+      if (pick.category === 'APEX') {
+        return renderMasterApexCard(pick);
+      } else if (pick.category === 'IRONLOCK') {
+        return renderMasterIronlockCard(pick);
+      } else {
+        return renderMasterBedrockCard(pick);
+      }
+    }).join('');
+  }
+
+  function renderMasterIronlockCard(pick) {
+    return `
+      <div class="master-pick-card ironlock-card">
+        <div class="master-pick-header">
+          <span class="master-pick-type ironlock">IRONLOCK</span>
+          <span class="master-pick-confidence">${(pick.confidence * 100).toFixed(0)}% conf</span>
+        </div>
+        <div class="master-pick-bet">${pick.team} ML ${window.MasterBetEngine.formatOdds(pick.odds)}</div>
+        <div class="master-pick-matchup">${pick.gameDisplay || `${pick.opponent} @ ${pick.team}`}</div>
+        <div class="master-pick-stats">
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">CDS Score</div>
+            <div class="master-stat-mini-value">${pick.cdsScore}</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">Model Prob</div>
+            <div class="master-stat-mini-value">${(pick.modelProb * 100).toFixed(0)}%</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">Edge</div>
+            <div class="master-stat-mini-value" style="color: var(--green)">+${(pick.edge * 100).toFixed(1)}%</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderMasterBedrockCard(pick) {
+    return `
+      <div class="master-pick-card bedrock-card">
+        <div class="master-pick-header">
+          <span class="master-pick-type bedrock">BEDROCK</span>
+          <span class="master-pick-confidence">${(pick.confidence * 100).toFixed(0)}% conf</span>
+        </div>
+        <div class="master-pick-bet">${pick.player} ${pick.displayLine} ${window.MasterBetEngine.formatOdds(pick.odds)}</div>
+        <div class="master-pick-matchup">${pick.gameDisplay || pick.team}</div>
+        <div class="master-pick-stats">
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">L10 Avg</div>
+            <div class="master-stat-mini-value">${pick.l10Avg}</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">L10 Floor</div>
+            <div class="master-stat-mini-value">${pick.l10Min}</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">Hit Rate</div>
+            <div class="master-stat-mini-value" style="color: var(--green)">${(pick.hitRate * 100).toFixed(0)}%</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderMasterApexCard(pick) {
+    const legsHtml = pick.legs.map(leg => {
+      const typeClass = leg.legType === 'IRONLOCK' ? 'ironlock' : 'bedrock';
+      const info = leg.legType === 'IRONLOCK'
+        ? `${leg.team} ML`
+        : `${leg.player} ${leg.displayLine}`;
+      return `<div class="master-parlay-leg">
+        <span class="master-parlay-leg-type ${typeClass}">${leg.legType}</span>
+        <span class="master-parlay-leg-info">${info}</span>
+        <span class="master-parlay-leg-odds">${window.MasterBetEngine.formatOdds(leg.odds)}</span>
+      </div>`;
+    }).join('');
+
+    return `
+      <div class="master-pick-card apex-card">
+        <div class="master-pick-header">
+          <span class="master-pick-type apex">APEX ${pick.numLegs}-LEG</span>
+          <span class="master-pick-confidence">${(pick.combinedHitRate * 100).toFixed(0)}% combined</span>
+        </div>
+        <div class="master-pick-bet">${pick.numLegs}-Leg Parlay ${window.MasterBetEngine.formatOdds(pick.odds)}</div>
+        <ul class="master-parlay-legs">${legsHtml}</ul>
+        <div class="master-pick-stats">
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">Parlay Odds</div>
+            <div class="master-stat-mini-value">${window.MasterBetEngine.formatOdds(pick.odds)}</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label">EV</div>
+            <div class="master-stat-mini-value" style="color: ${pick.ev > 0 ? 'var(--green)' : 'var(--red)'}">
+              ${pick.ev > 0 ? '+' : ''}${(pick.ev * 100).toFixed(1)}%</div>
+          </div>
+          <div class="master-stat-mini">
+            <div class="master-stat-mini-label"># Legs</div>
+            <div class="master-stat-mini-value">${pick.numLegs}</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderMasterHistory() {
+    if (!masterBacktestResults) return;
+
+    const period = currentMasterHistoryPeriod;
+    let cutoff = '';
+    if (period !== 'all') {
+      const days = parseInt(period);
+      const latestDate = masterBacktestResults.dates && masterBacktestResults.dates.length > 0
+        ? masterBacktestResults.dates[masterBacktestResults.dates.length - 1] : '';
+      if (latestDate) {
+        const d = parseDateStr(latestDate);
+        d.setDate(d.getDate() - days);
+        cutoff = d.toISOString().slice(0, 10).replace(/-/g, '');
+      }
+    }
+
+    // IRONLOCK history
+    const ironlockBody = document.getElementById('master-ironlock-body');
+    if (ironlockBody) {
+      const picks = masterBacktestResults.ironlockPicks.filter(p => !cutoff || p.date >= cutoff);
+      if (picks.length === 0) {
+        ironlockBody.innerHTML = '<tr><td colspan="9" class="muted">No IRONLOCK picks in this period</td></tr>';
+      } else {
+        ironlockBody.innerHTML = picks.slice().reverse().map(p => {
+          const result = p.won ? '<span style="color:var(--green)">W</span>' : '<span style="color:var(--red)">L</span>';
+          const pnlClass = p.pnl >= 0 ? 'style="color:var(--green)"' : 'style="color:var(--red)"';
+          return `<tr>
+            <td>${formatDate(p.date)}</td>
+            <td><strong>${p.team} ML</strong></td>
+            <td>${p.awayTeam} @ ${p.homeTeam}</td>
+            <td>${p.cdsScore}</td>
+            <td>${window.MasterBetEngine.formatOdds(p.odds)}</td>
+            <td>+${(p.edge * 100).toFixed(1)}%</td>
+            <td>${p.homeScore ? `${p.awayTeam} ${p.awayScore} — ${p.homeTeam} ${p.homeScore}` : '—'}</td>
+            <td>${result}</td>
+            <td ${pnlClass}>$${p.pnl >= 0 ? '+' : ''}${p.pnl}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      // Summary
+      const summary = document.getElementById('master-ironlock-summary');
+      if (summary && picks.length > 0) {
+        const wins = picks.filter(p => p.won).length;
+        const pnl = picks.reduce((s, p) => s + p.pnl, 0);
+        summary.innerHTML = `<strong>IRONLOCK:</strong> ${wins}-${picks.length - wins} (${(wins/picks.length*100).toFixed(1)}%) | P&L: $${pnl >= 0 ? '+' : ''}${pnl} | ROI: ${(pnl / (picks.length * 100) * 100).toFixed(1)}%`;
+      }
+    }
+
+    // BEDROCK history
+    const bedrockBody = document.getElementById('master-bedrock-body');
+    if (bedrockBody) {
+      const picks = masterBacktestResults.bedrockPicks.filter(p => !cutoff || p.date >= cutoff);
+      if (picks.length === 0) {
+        bedrockBody.innerHTML = '<tr><td colspan="10" class="muted">No BEDROCK picks in this period</td></tr>';
+      } else {
+        bedrockBody.innerHTML = picks.slice().reverse().map(p => {
+          const result = p.won ? '<span style="color:var(--green)">W</span>' : '<span style="color:var(--red)">L</span>';
+          const pnlClass = p.pnl >= 0 ? 'style="color:var(--green)"' : 'style="color:var(--red)"';
+          return `<tr>
+            <td>${formatDate(p.date)}</td>
+            <td><strong>${p.player}</strong></td>
+            <td>${p.displayLine}</td>
+            <td>${window.MasterBetEngine.formatOdds(p.odds)}</td>
+            <td>${p.l10Avg}</td>
+            <td>${p.l10Min}</td>
+            <td>${(p.hitRate * 100).toFixed(0)}%</td>
+            <td>${p.actual !== undefined ? p.actual : '—'}</td>
+            <td>${result}</td>
+            <td ${pnlClass}>$${p.pnl >= 0 ? '+' : ''}${p.pnl}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      const summary = document.getElementById('master-bedrock-summary');
+      if (summary && picks.length > 0) {
+        const wins = picks.filter(p => p.won).length;
+        const pnl = picks.reduce((s, p) => s + p.pnl, 0);
+        summary.innerHTML = `<strong>BEDROCK:</strong> ${wins}-${picks.length - wins} (${(wins/picks.length*100).toFixed(1)}%) | P&L: $${pnl >= 0 ? '+' : ''}${pnl} | ROI: ${(pnl / (picks.length * 100) * 100).toFixed(1)}%`;
+      }
+    }
+
+    // APEX parlay history
+    const apexBody = document.getElementById('master-apex-body');
+    if (apexBody) {
+      const picks = masterBacktestResults.apexParlays.filter(p => !cutoff || p.date >= cutoff);
+      if (picks.length === 0) {
+        apexBody.innerHTML = '<tr><td colspan="8" class="muted">No APEX parlays in this period</td></tr>';
+      } else {
+        apexBody.innerHTML = picks.slice().reverse().map(p => {
+          const result = p.won ? '<span style="color:var(--green)">W</span>' : '<span style="color:var(--red)">L</span>';
+          const pnlClass = p.pnl >= 0 ? 'style="color:var(--green)"' : 'style="color:var(--red)"';
+          const legsStr = p.legs.map(l => {
+            const wonMark = l.won ? '&#10003;' : '&#10007;';
+            const wonColor = l.won ? 'var(--green)' : 'var(--red)';
+            if (l.legType === 'IRONLOCK') {
+              return `<span style="color:${wonColor}">${wonMark}</span> ${l.team} ML`;
+            } else {
+              return `<span style="color:${wonColor}">${wonMark}</span> ${l.player} ${l.displayLine}`;
+            }
+          }).join('<br>');
+          return `<tr>
+            <td>${formatDate(p.date)}</td>
+            <td>${legsStr}</td>
+            <td>${p.numLegs}</td>
+            <td>${window.MasterBetEngine.formatOdds(p.odds)}</td>
+            <td>${(p.combinedHitRate * 100).toFixed(0)}%</td>
+            <td>${(p.ev * 100).toFixed(1)}%</td>
+            <td>${result}</td>
+            <td ${pnlClass}>$${p.pnl >= 0 ? '+' : ''}${p.pnl}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      const summary = document.getElementById('master-apex-summary');
+      if (summary && picks.length > 0) {
+        const wins = picks.filter(p => p.won).length;
+        const pnl = picks.reduce((s, p) => s + p.pnl, 0);
+        summary.innerHTML = `<strong>APEX:</strong> ${wins}-${picks.length - wins} (${(wins/picks.length*100).toFixed(1)}%) | P&L: $${pnl >= 0 ? '+' : ''}${pnl} | ROI: ${(pnl / (picks.length * 100) * 100).toFixed(1)}%`;
+      }
+    }
+  }
+
+  function renderMasterEquityCurve() {
+    const canvas = document.getElementById('master-equity-canvas');
+    if (!canvas || !masterBacktestResults) return;
+
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const w = rect.width - 32;
+    const h = 300;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(dpr, dpr);
+
+    // Build cumulative P&L data
+    const allPicks = [
+      ...masterBacktestResults.ironlockPicks.map(p => ({ date: p.date, pnl: p.pnl })),
+      ...masterBacktestResults.bedrockPicks.map(p => ({ date: p.date, pnl: p.pnl })),
+      ...masterBacktestResults.apexParlays.map(p => ({ date: p.date, pnl: p.pnl })),
+    ].sort((a, b) => a.date.localeCompare(b.date));
+
+    if (allPicks.length === 0) {
+      ctx.fillStyle = '#64748b';
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('No backtest data available', w / 2, h / 2);
+      return;
+    }
+
+    let cumPnl = 0;
+    const points = [{ x: 0, y: 0 }];
+    for (let i = 0; i < allPicks.length; i++) {
+      cumPnl += allPicks[i].pnl;
+      points.push({ x: i + 1, y: cumPnl });
+    }
+
+    const maxX = points.length - 1;
+    const minY = Math.min(0, ...points.map(p => p.y));
+    const maxY = Math.max(100, ...points.map(p => p.y));
+    const rangeY = maxY - minY;
+
+    const pad = { top: 20, right: 20, bottom: 30, left: 60 };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    const sx = (x) => pad.left + (x / maxX) * plotW;
+    const sy = (y) => pad.top + plotH - ((y - minY) / rangeY) * plotH;
+
+    // Background
+    ctx.fillStyle = '#1a1f2e';
+    ctx.fillRect(0, 0, w, h);
+
+    // Grid lines
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 1;
+    const gridSteps = 5;
+    for (let i = 0; i <= gridSteps; i++) {
+      const yVal = minY + (rangeY / gridSteps) * i;
+      const yPos = sy(yVal);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, yPos);
+      ctx.lineTo(w - pad.right, yPos);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(`$${Math.round(yVal)}`, pad.left - 8, yPos + 4);
+    }
+
+    // Zero line
+    if (minY < 0) {
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, sy(0));
+      ctx.lineTo(w - pad.right, sy(0));
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Equity curve fill
+    ctx.beginPath();
+    ctx.moveTo(sx(points[0].x), sy(0));
+    for (const p of points) {
+      ctx.lineTo(sx(p.x), sy(p.y));
+    }
+    ctx.lineTo(sx(points[points.length - 1].x), sy(0));
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0, sy(maxY), 0, sy(minY));
+    grad.addColorStop(0, 'rgba(34, 197, 94, 0.15)');
+    grad.addColorStop(1, 'rgba(34, 197, 94, 0.02)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Equity curve line
+    ctx.beginPath();
+    ctx.moveTo(sx(points[0].x), sy(points[0].y));
+    for (const p of points) {
+      ctx.lineTo(sx(p.x), sy(p.y));
+    }
+    ctx.strokeStyle = cumPnl >= 0 ? '#22c55e' : '#ef4444';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // End point
+    const lastP = points[points.length - 1];
+    ctx.beginPath();
+    ctx.arc(sx(lastP.x), sy(lastP.y), 4, 0, Math.PI * 2);
+    ctx.fillStyle = cumPnl >= 0 ? '#22c55e' : '#ef4444';
+    ctx.fill();
+
+    // Labels
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${allPicks.length} bets`, w / 2, h - 5);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = cumPnl >= 0 ? '#22c55e' : '#ef4444';
+    ctx.font = 'bold 12px monospace';
+    ctx.fillText(`$${cumPnl >= 0 ? '+' : ''}${cumPnl}`, w - pad.right, pad.top - 5);
   }
 
   // ── Rendering: Today's Picks ───────────────────────────────────────────────
@@ -3489,6 +3957,15 @@
         btn.classList.add('active');
         currentSiegeHistoryPeriod = btn.dataset.period;
         renderHistory();
+      });
+    });
+
+    document.querySelectorAll('.master-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.master-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMasterHistoryPeriod = btn.dataset.period;
+        renderMasterHistory();
       });
     });
 
