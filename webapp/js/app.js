@@ -442,7 +442,122 @@
       parlays.sort((a, b) => b.date.localeCompare(a.date))
     );
 
+    renderAltBacktestHistory();
     renderLiveHistory();
+  }
+
+  // --- Alt-Line Backtest History ---
+
+  function renderAltBacktestHistory() {
+    const section = document.getElementById('alt-backtest-section');
+    if (!section) return;
+
+    if (!altBacktestResults || !altBacktestResults.stats) {
+      section.style.display = 'none';
+      return;
+    }
+    section.style.display = '';
+
+    const s = altBacktestResults.stats;
+    const legs = s.overall.legs;
+    const parlays = s.overall.parlays;
+
+    // Summary stats
+    document.getElementById('alt-backtest-stats').innerHTML = `
+      <div class="history-stat-row">
+        <div class="history-stat"><span class="history-stat-value">${legs.total > 0 ? (legs.hitRate * 100).toFixed(1) : '--'}%</span><span class="history-stat-label">Leg Hit Rate (${legs.total} legs)</span></div>
+        <div class="history-stat"><span class="history-stat-value">${parlays.total > 0 ? (parlays.hitRate * 100).toFixed(1) : '--'}%</span><span class="history-stat-label">Parlay Win Rate</span></div>
+        <div class="history-stat"><span class="history-stat-value">${parlays.wins}-${parlays.losses}</span><span class="history-stat-label">Parlay Record</span></div>
+        <div class="history-stat"><span class="history-stat-value ${parlays.pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">$${parlays.pnl >= 0 ? '+' : ''}${parlays.pnl}</span><span class="history-stat-label">P&L ($100/bet)</span></div>
+        <div class="history-stat"><span class="history-stat-value">${parlays.roi >= 0 ? '+' : ''}${parlays.roi}%</span><span class="history-stat-label">ROI</span></div>
+      </div>`;
+
+    // Breakdown by builder, market, role
+    let breakdownHtml = '<div style="display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.8rem;">';
+
+    // By builder
+    breakdownHtml += '<div><strong style="color: var(--text-dim);">By Builder</strong>';
+    for (const [k, v] of Object.entries(s.byBuilder)) {
+      if (v.total === 0) continue;
+      const cls = v.pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
+      breakdownHtml += `<div>${k}: ${v.wins}-${v.losses} (${(v.hitRate*100).toFixed(0)}%) <span class="${cls}">$${v.pnl >= 0 ? '+' : ''}${v.pnl}</span></div>`;
+    }
+    breakdownHtml += '</div>';
+
+    // By market
+    breakdownHtml += '<div><strong style="color: var(--text-dim);">By Market</strong>';
+    for (const [k, v] of Object.entries(s.byMarket)) {
+      if (v.total === 0) continue;
+      const label = k.replace('player_', '').replace('_alternate', '').toUpperCase();
+      breakdownHtml += `<div>${label}: ${v.wins}-${v.losses} (${(v.hitRate*100).toFixed(0)}%)</div>`;
+    }
+    breakdownHtml += '</div>';
+
+    // By role
+    breakdownHtml += '<div><strong style="color: var(--text-dim);">By Role</strong>';
+    for (const [k, v] of Object.entries(s.byRole)) {
+      if (v.total === 0) continue;
+      const cls = v.pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
+      breakdownHtml += `<div>${k.replace(/_/g, ' ')}: ${(v.hitRate*100).toFixed(0)}% <span class="${cls}">${v.roi >= 0 ? '+' : ''}${v.roi}%</span></div>`;
+    }
+    breakdownHtml += '</div>';
+
+    breakdownHtml += '</div>';
+    document.getElementById('alt-backtest-breakdown').innerHTML = breakdownHtml;
+
+    // Parlay rows
+    const altParlays = altBacktestResults.parlays || [];
+    let filtered = altParlays;
+    if (currentPeriod !== 'all') {
+      const days = parseInt(currentPeriod);
+      const allDates = [...new Set(filtered.map(p => p.date))].sort();
+      const cutoff = allDates[Math.max(0, allDates.length - days)] || '';
+      filtered = filtered.filter(p => p.date >= cutoff);
+    }
+    document.querySelector('#alt-parlays-history tbody').innerHTML = renderAltParlayRows(
+      filtered.sort((a, b) => b.date.localeCompare(a.date))
+    );
+  }
+
+  function renderAltParlayRows(list) {
+    return list.map(p => {
+      const numLegs = p.numLegs || p.legs.length;
+      const legsHtml = p.legs.map(l => {
+        const lbl = l.marketLabel || window.BettingEngine.statLabel(l.statType || l.marketType || 'points');
+        const hasResult = l.actual !== null && l.actual !== undefined;
+        const cls = hasResult ? (l.won ? 'result-win' : 'result-loss') : '';
+        const txt = hasResult ? `${l.actual} ${lbl.toLowerCase()}` : 'Pending';
+        const roleTag = l.roleTag ? `<span style="font-size: 0.65rem; opacity: 0.5;"> [${l.roleTag.replace(/_/g, ' ')}]</span>` : '';
+        const probEdge = l.modelProb ? `<span style="font-size: 0.65rem; opacity: 0.5;"> prob ${(l.modelProb*100).toFixed(0)}% edge ${((l.edge||0)*100).toFixed(1)}%</span>` : '';
+        return `<div class="history-leg">
+          <span class="history-leg-player">${l.player} (${l.team})${roleTag}</span>
+          <span class="history-leg-stat">${lbl}</span>
+          <span class="history-leg-line">OVER ${l.line}</span>
+          <span class="history-leg-odds">${window.BettingEngine.formatOdds(l.bookOdds || l.odds)}</span>
+          <span class="history-leg-game">${l.gameDisplay || (l.gameKey || '').replace('@', ' @ ')}</span>
+          <span class="history-leg-actual ${cls}">${txt}${probEdge}</span>
+        </div>`;
+      }).join('');
+
+      const builder = p.builder || 'PARLAY';
+      const builderClass = builder === 'CORE' ? 'builder-core' :
+                           builder === 'SCREENSHOT' ? 'builder-screenshot' :
+                           builder === 'NUKE' ? 'builder-nuke' : '';
+      const isResolved = p.resolved !== undefined ? p.resolved : true;
+      const resultText = isResolved ? (p.won ? 'WIN' : 'LOSS') : 'PENDING';
+      const resultClass = isResolved ? (p.won ? 'result-win' : 'result-loss') : 'result-pending';
+      const pnlText = isResolved ? `${p.pnl >= 0 ? '+' : ''}$${p.pnl}` : '--';
+      const pnlClass = isResolved ? (p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg') : '';
+
+      return `<tr>
+        <td>${formatDate(p.date)}</td>
+        <td><span class="${builderClass}" style="font-weight: 600; font-size: 0.8rem;">${builder}</span> ${numLegs}-Leg</td>
+        <td class="legs-cell">${legsHtml}</td>
+        <td>${window.BettingEngine.formatOdds(p.odds)}</td>
+        <td class="${resultClass}">${resultText}</td>
+        <td class="${pnlClass}">${pnlText}</td>
+      </tr>`;
+    }).join('');
   }
 
   function renderParlayRows(list) {
