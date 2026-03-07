@@ -256,15 +256,35 @@ h2 {
   font-weight: 500;
 }
 
-/* Mega parlay styling */
-.pick-card.mega-parlay {
+/* Multi-stat parlay styling */
+.pick-card.multi-stat {
   border-left-color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), var(--surface));
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), var(--surface));
 }
 
-.pick-card.mega-parlay .pick-type {
+.pick-card.multi-stat .pick-type {
   color: var(--gold);
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+/* Stat type badges */
+.parlay-leg-stat,
+.history-leg-stat {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--purple);
+  margin-right: 0.3rem;
+}
+
+/* Recent accuracy highlight */
+.highlight-recent {
+  color: var(--gold);
 }
 
 /* Parlay leg layout with game info */
@@ -446,35 +466,6 @@ h2 {
 .history-stat-breakdown {
   font-size: 0.8rem;
   color: var(--text-dim);
-}
-
-/* Tier badges */
-.tier-badge {
-  display: inline-block;
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.tier-strict {
-  background: rgba(34, 197, 94, 0.12);
-  color: var(--accent);
-}
-
-.tier-value {
-  background: rgba(167, 139, 250, 0.12);
-  color: var(--purple);
-}
-
-.value-parlay {
-  border-color: var(--purple) !important;
-}
-
-.value-parlay .pick-type {
-  color: var(--purple);
 }
 
 /* Method */
