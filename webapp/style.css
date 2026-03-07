@@ -85,7 +85,7 @@ main {
 /* Dashboard */
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -520,9 +520,69 @@ h2 {
   background: var(--accent);
 }
 
+/* Super Payout card styling */
+.stat-card.sp-highlight {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), var(--surface));
+}
+
+.stat-card.sp-highlight .stat-value { color: var(--gold); }
+
+.pick-card.super-payout {
+  border-left-color: var(--gold);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(239, 68, 68, 0.03), var(--surface));
+  border-image: linear-gradient(to bottom, var(--gold), #ef4444) 1;
+  border-left-width: 3px;
+  border-left-style: solid;
+}
+
+.pick-card.super-payout .pick-type {
+  color: var(--gold);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.08));
+  font-weight: 700;
+}
+
+.pick-card.super-payout .pick-odds {
+  font-size: 1.1rem;
+}
+
+.sp-badge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--gold), #ef4444);
+  color: #fff;
+  margin-left: 0.3rem;
+}
+
+.sp-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.sp-section-header h3 {
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 0;
+}
+
+.sp-section-header .sp-badge {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .dashboard { grid-template-columns: repeat(3, 1fr); }
+  .sp-section-header { margin-top: 1rem; }
   .method-content { grid-template-columns: 1fr; }
 }
 

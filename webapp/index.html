@@ -50,6 +50,14 @@
         <div class="stat-value" id="stat-days">--</div>
         <div class="stat-label">Active Days</div>
       </div>
+      <div class="stat-card sp-highlight">
+        <div class="stat-value" id="stat-sp-record">--</div>
+        <div class="stat-label">Super Payout Record</div>
+      </div>
+      <div class="stat-card sp-highlight">
+        <div class="stat-value" id="stat-sp-pnl">--</div>
+        <div class="stat-label">Super Payout P&L</div>
+      </div>
     </div>
 
     <!-- Today's Picks -->
@@ -114,6 +122,12 @@
           <p>Each individual leg has 95%+ historical accuracy. The parlay builder prioritizes stat-type diversity to minimize correlation and maximize payout.</p>
           <p>2-3 leg parlays offer the best balance of accuracy (~93-98%) and payout. 4-6 leg parlays offer larger payouts with 88%+ combined hit rate.</p>
         </div>
+        <div class="method-card" style="border-color: var(--gold);">
+          <h3 style="color: var(--gold);">Super Payout Strategy <span class="sp-badge">NEW</span></h3>
+          <p>A separate, points-only strategy targeting <strong>higher-paying parlays</strong>. Instead of ultra-safe heavy-juice legs, we find lines priced at -150 to -600 by FanDuel where the player's L12 floor is still above the line.</p>
+          <p>Key differences from the main strategy: shorter floor window (12 games vs 20), higher line ratios (75% vs 60%), and leg selection prioritizes <strong>confidence</strong> for maximum reliability at higher odds.</p>
+          <p>Result: 2-leg parlays at ~-180 odds (1.55x), 3-leg parlays at ~-60 odds (1.87x), and 4-5 leg parlays crossing into <strong>positive odds (+140 to +200)</strong>.</p>
+        </div>
         <div class="method-card">
           <h3>Anti-Overfitting Validation</h3>
           <p>Parameters were selected using only Q1+Q2 data (Oct-Dec 2024), then validated on Q3+Q4 (Jan-Mar 2025). The 0.0pp accuracy gap between training and validation confirms zero overfitting.</p>
@@ -125,6 +139,7 @@
 
   <script src="js/nba-api.js"></script>
   <script src="js/engine.js"></script>
+  <script src="js/engine-superpayout.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
