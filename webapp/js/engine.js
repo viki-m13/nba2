@@ -632,11 +632,18 @@ window.BettingEngine = (function () {
     try {
       const eventsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events?apiKey=${ODDS_API_KEY}`;
       const eventsRes = await fetch(eventsUrl);
-      if (!eventsRes.ok) return result;
-      const events = await eventsRes.json();
-
       const remaining = eventsRes.headers.get('x-requests-remaining');
-      console.log(`[ENGINE] Odds API: ${events.length} events, ${remaining} requests remaining`);
+      console.log(`[ENGINE] Odds API: remaining=${remaining}, status=${eventsRes.status}`);
+
+      if (!eventsRes.ok) {
+        if (eventsRes.status === 401 || remaining === '0') {
+          result.quotaExhausted = true;
+          console.warn('[ENGINE] Odds API quota exhausted');
+        }
+        return result;
+      }
+
+      const events = await eventsRes.json();
 
       result.events = events;
 

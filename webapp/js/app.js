@@ -168,6 +168,12 @@
         return;
       }
 
+      if (liveOdds && liveOdds.quotaExhausted) {
+        statusEl.textContent = 'Odds API monthly quota exhausted. Props will resume when quota resets. Live tracking continues for past picks.';
+        statusEl.style.color = 'var(--gold)';
+        return;
+      }
+
       if (!liveOdds || Object.keys(liveOdds.playerProps).length === 0) {
         statusEl.textContent = 'No FanDuel player props available right now. Check back closer to game time.';
         return;
