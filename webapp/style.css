@@ -699,6 +699,11 @@ h2 {
   background: rgba(239, 68, 68, 0.12);
 }
 
+/* Builder labels in history table */
+span.builder-core { color: var(--green); }
+span.builder-screenshot { color: var(--blue); }
+span.builder-nuke { color: var(--red); }
+
 /* Role-specific leg indicators */
 .parlay-leg.role-creator { border-left: 2px solid var(--blue); padding-left: 0.5rem; }
 .parlay-leg.role-scorer { border-left: 2px solid var(--gold); padding-left: 0.5rem; }

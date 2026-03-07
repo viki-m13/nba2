@@ -96,12 +96,32 @@
       <div class="history-stats" id="history-stats"></div>
 
       <div class="history-section">
-        <h3>Parlays</h3>
+        <h3>Legacy Engine Parlays</h3>
         <table class="history-table" id="parlays-history">
           <thead>
             <tr>
               <th>Date</th>
               <th>Type</th>
+              <th>Legs</th>
+              <th>Parlay Odds</th>
+              <th>Result</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Alt-Line Backtest Section -->
+      <div class="history-section" id="alt-backtest-section" style="margin-top: 2rem; border-top: 2px solid var(--accent); padding-top: 1rem;">
+        <h3>Alt-Line Engine <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">Walk-Forward Backtest (CORE / SCREENSHOT / NUKE)</span></h3>
+        <div id="alt-backtest-stats" class="history-stats"></div>
+        <div id="alt-backtest-breakdown" style="margin: 0.75rem 0;"></div>
+        <table class="history-table" id="alt-parlays-history">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Builder</th>
               <th>Legs</th>
               <th>Parlay Odds</th>
               <th>Result</th>
