@@ -91,138 +91,144 @@ window.NbaAltRungEvaluator = (function () {
   function modelProbPoints(stats, roleInfo, envContext) {
     if (!stats) return 0;
 
-    // Base: weighted hit rate blend
-    let prob = stats.l10Hit * 0.40 + stats.l20Hit * 0.35 + stats.fullHit * 0.25;
+    // Base: weighted hit rate blend, shrunk toward 0.85 to avoid overconfidence
+    const rawProb = stats.l10Hit * 0.40 + stats.l20Hit * 0.35 + stats.fullHit * 0.25;
+    let prob = rawProb * 0.9 + 0.85 * 0.1; // 10% shrinkage toward base rate
 
-    // Floor bonus: if L10 floor is above the line, much safer
+    // Floor bonus: if L10 floor is above the line, safer — but capped conservatively
     if (stats.floorClearance > 0) {
-      prob += Math.min(0.08, stats.floorClearance * 0.01);
+      prob += Math.min(0.04, stats.floorClearance * 0.006);
     } else if (stats.floorClearance < -2) {
-      prob -= 0.05; // Floor below line is concerning
+      prob -= 0.06;
     }
 
     // Low variance bonus
-    if (stats.cv < 0.2) prob += 0.03;
-    else if (stats.cv > 0.35) prob -= 0.04;
+    if (stats.cv < 0.2) prob += 0.02;
+    else if (stats.cv > 0.35) prob -= 0.05;
 
-    // Role adjustment: high-usage scorers more reliable for points
+    // Role adjustment
     if (roleInfo) {
       if (roleInfo.role === 'high_usage_scorer') prob += 0.02;
-      if (roleInfo.role === 'volatile_bench') prob -= 0.06;
-      if (roleInfo.role === 'low_minute_rotation') prob -= 0.08;
+      if (roleInfo.role === 'rebound_heavy_big') prob -= 0.03; // Bigs are weaker on points
+      if (roleInfo.role === 'volatile_bench') prob -= 0.07;
+      if (roleInfo.role === 'low_minute_rotation') prob -= 0.09;
     }
 
-    // Game environment: high implied total helps points
+    // Game environment
     if (envContext) {
-      if (envContext.teamImpliedTotal >= 115) prob += 0.02;
+      if (envContext.teamImpliedTotal >= 115) prob += 0.015;
       else if (envContext.teamImpliedTotal <= 105) prob -= 0.02;
-      if (envContext.blowoutRisk > 0.6) prob -= 0.04;
+      if (envContext.blowoutRisk > 0.6) prob -= 0.05;
     }
 
-    return Math.max(0, Math.min(0.99, prob));
+    return Math.max(0, Math.min(0.97, prob)); // Cap at 97% — never assign near-certainty
   }
 
   function modelProbAssists(stats, roleInfo, envContext) {
     if (!stats) return 0;
 
     // Assists are more role-dependent, weight recent performance higher
-    let prob = stats.l10Hit * 0.45 + stats.l20Hit * 0.30 + stats.fullHit * 0.25;
+    const rawProb = stats.l10Hit * 0.45 + stats.l20Hit * 0.30 + stats.fullHit * 0.25;
+    let prob = rawProb * 0.88 + 0.82 * 0.12; // 12% shrinkage — assists are more volatile
 
-    // Floor bonus
+    // Floor bonus — conservative
     if (stats.floorClearance > 0) {
-      prob += Math.min(0.07, stats.floorClearance * 0.015);
+      prob += Math.min(0.04, stats.floorClearance * 0.01);
     } else if (stats.floorClearance < -1) {
-      prob -= 0.06;
+      prob -= 0.07;
     }
 
     // Assists have higher variance, so CV penalty is stronger
-    if (stats.cv < 0.25) prob += 0.03;
-    else if (stats.cv > 0.4) prob -= 0.06;
+    if (stats.cv < 0.25) prob += 0.02;
+    else if (stats.cv > 0.4) prob -= 0.07;
 
     // Role is critical for assists
     if (roleInfo) {
-      if (roleInfo.role === 'primary_creator') prob += 0.04;
-      else if (roleInfo.role === 'secondary_creator') prob += 0.02;
-      else if (roleInfo.role === 'high_usage_scorer') prob -= 0.02; // scorers assist less
-      else if (roleInfo.role === 'rebound_heavy_big') prob -= 0.04;
-      else if (roleInfo.role === 'volatile_bench') prob -= 0.08;
+      if (roleInfo.role === 'primary_creator') prob += 0.03;
+      else if (roleInfo.role === 'secondary_creator') prob += 0.015;
+      else if (roleInfo.role === 'high_usage_scorer') prob -= 0.03;
+      else if (roleInfo.role === 'rebound_heavy_big') prob -= 0.05;
+      else if (roleInfo.role === 'volatile_bench') prob -= 0.09;
     }
 
-    // Game environment: competitive, fast games = more assists
+    // Game environment
     if (envContext) {
-      if (envContext.total >= 230) prob += 0.02;
-      if (Math.abs(envContext.spread || 0) <= 5) prob += 0.01; // competitive game
-      if (envContext.blowoutRisk > 0.6) prob -= 0.05;
+      if (envContext.total >= 230) prob += 0.015;
+      if (Math.abs(envContext.spread || 0) <= 5) prob += 0.01;
+      if (envContext.blowoutRisk > 0.6) prob -= 0.06;
     }
 
-    return Math.max(0, Math.min(0.99, prob));
+    return Math.max(0, Math.min(0.96, prob)); // Cap at 96%
   }
 
   function modelProbRebounds(stats, roleInfo, envContext) {
     if (!stats) return 0;
 
-    // Rebounds are more stable for bigs, weight consistency higher
-    let prob = stats.l10Hit * 0.35 + stats.l20Hit * 0.40 + stats.fullHit * 0.25;
+    // Rebounds weight consistency higher — but shrink more aggressively
+    // Backtest showed rebound-heavy bigs have negative ROI
+    const rawProb = stats.l10Hit * 0.35 + stats.l20Hit * 0.40 + stats.fullHit * 0.25;
+    let prob = rawProb * 0.85 + 0.80 * 0.15; // 15% shrinkage — rebounds overestimated
 
-    // Floor bonus
+    // Floor bonus — very conservative for rebounds
     if (stats.floorClearance > 0) {
-      prob += Math.min(0.06, stats.floorClearance * 0.012);
+      prob += Math.min(0.03, stats.floorClearance * 0.008);
     } else if (stats.floorClearance < -2) {
-      prob -= 0.04;
+      prob -= 0.06;
     }
 
-    // Rebounds are relatively stable for bigs
-    if (stats.cv < 0.25) prob += 0.03;
-    else if (stats.cv > 0.4) prob -= 0.04;
+    // CV penalty
+    if (stats.cv < 0.25) prob += 0.02;
+    else if (stats.cv > 0.4) prob -= 0.05;
 
-    // Role
+    // Role — bigs get a small bonus but not as much as before
     if (roleInfo) {
-      if (roleInfo.role === 'rebound_heavy_big') prob += 0.04;
-      else if (roleInfo.role === 'primary_creator') prob -= 0.02;
-      else if (roleInfo.role === 'volatile_bench') prob -= 0.06;
+      if (roleInfo.role === 'rebound_heavy_big') prob += 0.01; // Reduced from 0.04
+      else if (roleInfo.role === 'primary_creator') prob -= 0.03;
+      else if (roleInfo.role === 'volatile_bench') prob -= 0.07;
     }
 
-    // Environment: higher totals = more rebounds available
+    // Environment
     if (envContext) {
-      if (envContext.total >= 230) prob += 0.015;
-      if (envContext.blowoutRisk > 0.6) prob -= 0.03;
+      if (envContext.total >= 230) prob += 0.01;
+      if (envContext.blowoutRisk > 0.6) prob -= 0.04;
     }
 
-    return Math.max(0, Math.min(0.99, prob));
+    return Math.max(0, Math.min(0.95, prob)); // Cap at 95% — rebounds are less predictable
   }
 
   function modelProbCombo(stats, roleInfo, envContext, marketType) {
     if (!stats) return 0;
 
     // Combo stats use direct historical hit rate + component adjustments
-    let prob = stats.l10Hit * 0.40 + stats.l20Hit * 0.35 + stats.fullHit * 0.25;
+    const rawProb = stats.l10Hit * 0.40 + stats.l20Hit * 0.35 + stats.fullHit * 0.25;
+    let prob = rawProb * 0.87 + 0.82 * 0.13; // 13% shrinkage — combos are harder
 
-    // Floor bonus (combo floors are harder to maintain)
+    // Floor bonus — conservative for combos
     if (stats.floorClearance > 0) {
-      prob += Math.min(0.05, stats.floorClearance * 0.008);
+      prob += Math.min(0.03, stats.floorClearance * 0.005);
     } else if (stats.floorClearance < -3) {
-      prob -= 0.05;
+      prob -= 0.06;
     }
 
     // Combo stats have inherently higher variance
-    if (stats.cv < 0.2) prob += 0.03;
-    else if (stats.cv > 0.3) prob -= 0.04;
+    if (stats.cv < 0.2) prob += 0.02;
+    else if (stats.cv > 0.3) prob -= 0.05;
 
     // Role adjustments for combos
     if (roleInfo) {
-      if (roleInfo.role === 'primary_creator') prob += 0.03; // good at P+A
-      if (roleInfo.role === 'high_usage_scorer' && marketType.includes('points')) prob += 0.02;
-      if (roleInfo.role === 'rebound_heavy_big' && marketType.includes('rebounds')) prob += 0.02;
-      if (roleInfo.role === 'volatile_bench') prob -= 0.07;
+      if (roleInfo.role === 'primary_creator') prob += 0.02;
+      if (roleInfo.role === 'high_usage_scorer' && marketType.includes('points')) prob += 0.015;
+      if (roleInfo.role === 'rebound_heavy_big' && marketType.includes('rebounds')) prob += 0.005;
+      if (roleInfo.role === 'volatile_bench') prob -= 0.08;
     }
 
     // Environment
     if (envContext) {
-      if (envContext.teamImpliedTotal >= 115) prob += 0.02;
-      if (envContext.blowoutRisk > 0.6) prob -= 0.04;
+      if (envContext.teamImpliedTotal >= 115) prob += 0.015;
+      if (envContext.blowoutRisk > 0.6) prob -= 0.05;
     }
 
-    return Math.max(0, Math.min(0.99, prob));
+    return Math.max(0, Math.min(0.95, prob)); // Cap at 95%
   }
 
   // --- Fragility score (0 = solid, 1 = fragile) ---
