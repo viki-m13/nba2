@@ -21,6 +21,7 @@
     setupNavigation();
     setupFilters();
     await loadData();
+    await loadIncrementalOdds();
     runBacktest();
     renderDashboard();
     renderHistory();
@@ -45,6 +46,21 @@
       console.log(`Loaded: ${seasonData.length} games, ${playerBoxScores.length} box scores, ${historicalOdds.length} historical odds`);
     } catch (e) {
       console.error('Error loading data:', e);
+    }
+  }
+
+  // --- Incremental Odds Loading ---
+
+  async function loadIncrementalOdds() {
+    try {
+      const newOdds = await window.BettingEngine.fetchMissingDailyOdds(historicalOdds, 10);
+      if (newOdds.length > 0) {
+        historicalOdds = [...historicalOdds, ...newOdds];
+        historicalOdds.sort((a, b) => a.date.localeCompare(b.date) || a.gameKey.localeCompare(b.gameKey));
+        console.log(`Merged ${newOdds.length} new odds records. Total: ${historicalOdds.length}`);
+      }
+    } catch (e) {
+      console.warn('Error loading incremental odds:', e);
     }
   }
 
@@ -184,16 +200,23 @@
         </div>
       </div>`).join('');
 
+    const today = new Date();
+    const dateStr = `${String(today.getMonth()+1).padStart(2,'0')}/${String(today.getDate()).padStart(2,'0')}/${today.getFullYear()}`;
+    const isMega = parlay.numLegs >= 6;
+    const parlayLabel = isMega ? `${parlay.numLegs}-Leg Mega Parlay` : `${parlay.numLegs}-Leg Parlay`;
+
     return `
-      <div class="pick-card parlay">
+      <div class="pick-card parlay${isMega ? ' mega-parlay' : ''}">
         <div class="pick-header">
-          <span class="pick-type">${parlay.numLegs}-Leg Parlay</span>
+          <span class="pick-date">${dateStr}</span>
+          <span class="pick-type">${parlayLabel}</span>
           <span class="pick-odds">${window.BettingEngine.formatOdds(parlay.odds)}</span>
         </div>
         <div class="parlay-legs">${legsHtml}</div>
         <div class="parlay-summary">
           <span>Combined Hit Rate: ${(parlay.combinedHitRate * 100).toFixed(1)}%</span>
           <span class="parlay-ev">EV: ${parlay.ev > 0 ? '+' : ''}${(parlay.ev * 100).toFixed(1)}%</span>
+          <span class="parlay-payout">$100 wins $${Math.round((parlay.decimalOdds - 1) * 100)}</span>
         </div>
       </div>`;
   }

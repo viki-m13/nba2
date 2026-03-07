@@ -8175,5 +8175,689 @@
     "home_record": "29-28",
     "away_record": "14-42",
     "event_id": "401705394"
+  },
+  {
+    "date": "20250225",
+    "home_team": "TOR",
+    "away_team": "BOS",
+    "home_score": 101,
+    "away_score": 111,
+    "margin": -10,
+    "event_id": "401705395"
+  },
+  {
+    "date": "20250225",
+    "home_team": "ORL",
+    "away_team": "CLE",
+    "home_score": 82,
+    "away_score": 122,
+    "margin": -40,
+    "event_id": "401705396"
+  },
+  {
+    "date": "20250225",
+    "home_team": "HOU",
+    "away_team": "MIL",
+    "home_score": 100,
+    "away_score": 97,
+    "margin": 3,
+    "event_id": "401705397"
+  },
+  {
+    "date": "20250225",
+    "home_team": "MEM",
+    "away_team": "PHX",
+    "home_score": 151,
+    "away_score": 148,
+    "margin": 3,
+    "event_id": "401705398"
+  },
+  {
+    "date": "20250225",
+    "home_team": "NO",
+    "away_team": "SA",
+    "home_score": 109,
+    "away_score": 103,
+    "margin": 6,
+    "event_id": "401705399"
+  },
+  {
+    "date": "20250225",
+    "home_team": "GS",
+    "away_team": "CHA",
+    "home_score": 128,
+    "away_score": 92,
+    "margin": 36,
+    "event_id": "401705400"
+  },
+  {
+    "date": "20250225",
+    "home_team": "LAL",
+    "away_team": "DAL",
+    "home_score": 107,
+    "away_score": 99,
+    "margin": 8,
+    "event_id": "401705401"
+  },
+  {
+    "date": "20250226",
+    "home_team": "DET",
+    "away_team": "BOS",
+    "home_score": 117,
+    "away_score": 97,
+    "margin": 20,
+    "event_id": "401705402"
+  },
+  {
+    "date": "20250226",
+    "home_team": "IND",
+    "away_team": "TOR",
+    "home_score": 111,
+    "away_score": 91,
+    "margin": 20,
+    "event_id": "401705403"
+  },
+  {
+    "date": "20250226",
+    "home_team": "NY",
+    "away_team": "PHI",
+    "home_score": 110,
+    "away_score": 105,
+    "margin": 5,
+    "event_id": "401705404"
+  },
+  {
+    "date": "20250226",
+    "home_team": "WSH",
+    "away_team": "POR",
+    "home_score": 121,
+    "away_score": 129,
+    "margin": -8,
+    "event_id": "401705405"
+  },
+  {
+    "date": "20250226",
+    "home_team": "BKN",
+    "away_team": "OKC",
+    "home_score": 121,
+    "away_score": 129,
+    "margin": -8,
+    "event_id": "401705406"
+  },
+  {
+    "date": "20250226",
+    "home_team": "MIA",
+    "away_team": "ATL",
+    "home_score": 131,
+    "away_score": 109,
+    "margin": 22,
+    "event_id": "401705407"
+  },
+  {
+    "date": "20250226",
+    "home_team": "CHI",
+    "away_team": "LAC",
+    "home_score": 117,
+    "away_score": 122,
+    "margin": -5,
+    "event_id": "401705408"
+  },
+  {
+    "date": "20250226",
+    "home_team": "UTAH",
+    "away_team": "SAC",
+    "home_score": 101,
+    "away_score": 118,
+    "margin": -17,
+    "event_id": "401705409"
+  },
+  {
+    "date": "20250226",
+    "home_team": "HOU",
+    "away_team": "SA",
+    "home_score": 118,
+    "away_score": 106,
+    "margin": 12,
+    "event_id": "401705410"
+  },
+  {
+    "date": "20250227",
+    "home_team": "ORL",
+    "away_team": "GS",
+    "home_score": 115,
+    "away_score": 121,
+    "margin": -6,
+    "event_id": "401705411"
+  },
+  {
+    "date": "20250227",
+    "home_team": "MIL",
+    "away_team": "DEN",
+    "home_score": 121,
+    "away_score": 112,
+    "margin": 9,
+    "event_id": "401705412"
+  },
+  {
+    "date": "20250227",
+    "home_team": "DAL",
+    "away_team": "CHA",
+    "home_score": 103,
+    "away_score": 96,
+    "margin": 7,
+    "event_id": "401705413"
+  },
+  {
+    "date": "20250227",
+    "home_team": "PHX",
+    "away_team": "NO",
+    "home_score": 116,
+    "away_score": 124,
+    "margin": -8,
+    "event_id": "401705414"
+  },
+  {
+    "date": "20250227",
+    "home_team": "LAL",
+    "away_team": "MIN",
+    "home_score": 111,
+    "away_score": 102,
+    "margin": 9,
+    "event_id": "401705415"
+  },
+  {
+    "date": "20250228",
+    "home_team": "DET",
+    "away_team": "DEN",
+    "home_score": 119,
+    "away_score": 134,
+    "margin": -15,
+    "event_id": "401705416"
+  },
+  {
+    "date": "20250228",
+    "home_team": "ATL",
+    "away_team": "OKC",
+    "home_score": 119,
+    "away_score": 135,
+    "margin": -16,
+    "event_id": "401705417"
+  },
+  {
+    "date": "20250228",
+    "home_team": "BOS",
+    "away_team": "CLE",
+    "home_score": 116,
+    "away_score": 123,
+    "margin": -7,
+    "event_id": "401705418"
+  },
+  {
+    "date": "20250228",
+    "home_team": "BKN",
+    "away_team": "POR",
+    "home_score": 102,
+    "away_score": 121,
+    "margin": -19,
+    "event_id": "401705419"
+  },
+  {
+    "date": "20250228",
+    "home_team": "MIA",
+    "away_team": "IND",
+    "home_score": 125,
+    "away_score": 120,
+    "margin": 5,
+    "event_id": "401705420"
+  },
+  {
+    "date": "20250228",
+    "home_team": "CHI",
+    "away_team": "TOR",
+    "home_score": 125,
+    "away_score": 115,
+    "margin": 10,
+    "event_id": "401705421"
+  },
+  {
+    "date": "20250228",
+    "home_team": "MEM",
+    "away_team": "NY",
+    "home_score": 113,
+    "away_score": 114,
+    "margin": -1,
+    "event_id": "401705422"
+  },
+  {
+    "date": "20250228",
+    "home_team": "PHX",
+    "away_team": "NO",
+    "home_score": 125,
+    "away_score": 108,
+    "margin": 17,
+    "event_id": "401705423"
+  },
+  {
+    "date": "20250228",
+    "home_team": "UTAH",
+    "away_team": "MIN",
+    "home_score": 117,
+    "away_score": 116,
+    "margin": 1,
+    "event_id": "401705424"
+  },
+  {
+    "date": "20250228",
+    "home_team": "LAL",
+    "away_team": "LAC",
+    "home_score": 106,
+    "away_score": 102,
+    "margin": 4,
+    "event_id": "401705425"
+  },
+  {
+    "date": "20250301",
+    "home_team": "CHA",
+    "away_team": "WSH",
+    "home_score": 100,
+    "away_score": 113,
+    "margin": -13,
+    "event_id": "401705426"
+  },
+  {
+    "date": "20250301",
+    "home_team": "DET",
+    "away_team": "BKN",
+    "home_score": 115,
+    "away_score": 94,
+    "margin": 21,
+    "event_id": "401705427"
+  },
+  {
+    "date": "20250301",
+    "home_team": "HOU",
+    "away_team": "SAC",
+    "home_score": 103,
+    "away_score": 113,
+    "margin": -10,
+    "event_id": "401705428"
+  },
+  {
+    "date": "20250301",
+    "home_team": "MEM",
+    "away_team": "SA",
+    "home_score": 128,
+    "away_score": 130,
+    "margin": -2,
+    "event_id": "401705429"
+  },
+  {
+    "date": "20250301",
+    "home_team": "PHI",
+    "away_team": "GS",
+    "home_score": 126,
+    "away_score": 119,
+    "margin": 7,
+    "event_id": "401705430"
+  },
+  {
+    "date": "20250301",
+    "home_team": "DAL",
+    "away_team": "MIL",
+    "home_score": 117,
+    "away_score": 132,
+    "margin": -15,
+    "event_id": "401705431"
+  },
+  {
+    "date": "20250302",
+    "home_team": "BOS",
+    "away_team": "DEN",
+    "home_score": 110,
+    "away_score": 103,
+    "margin": 7,
+    "event_id": "401705432"
+  },
+  {
+    "date": "20250302",
+    "home_team": "CLE",
+    "away_team": "POR",
+    "home_score": 133,
+    "away_score": 129,
+    "margin": 4,
+    "event_id": "401705433"
+  },
+  {
+    "date": "20250302",
+    "home_team": "IND",
+    "away_team": "CHI",
+    "home_score": 127,
+    "away_score": 112,
+    "margin": 15,
+    "event_id": "401705434"
+  },
+  {
+    "date": "20250302",
+    "home_team": "MIA",
+    "away_team": "NY",
+    "home_score": 112,
+    "away_score": 116,
+    "margin": -4,
+    "event_id": "401705435"
+  },
+  {
+    "date": "20250302",
+    "home_team": "ORL",
+    "away_team": "TOR",
+    "home_score": 102,
+    "away_score": 104,
+    "margin": -2,
+    "event_id": "401705436"
+  },
+  {
+    "date": "20250302",
+    "home_team": "SA",
+    "away_team": "OKC",
+    "home_score": 132,
+    "away_score": 146,
+    "margin": -14,
+    "event_id": "401705437"
+  },
+  {
+    "date": "20250302",
+    "home_team": "UTAH",
+    "away_team": "NO",
+    "home_score": 121,
+    "away_score": 128,
+    "margin": -7,
+    "event_id": "401705438"
+  },
+  {
+    "date": "20250302",
+    "home_team": "PHX",
+    "away_team": "MIN",
+    "home_score": 98,
+    "away_score": 116,
+    "margin": -18,
+    "event_id": "401705439"
+  },
+  {
+    "date": "20250302",
+    "home_team": "LAL",
+    "away_team": "LAC",
+    "home_score": 108,
+    "away_score": 102,
+    "margin": 6,
+    "event_id": "401705440"
+  },
+  {
+    "date": "20250303",
+    "home_team": "CHA",
+    "away_team": "GS",
+    "home_score": 101,
+    "away_score": 119,
+    "margin": -18,
+    "event_id": "401705441"
+  },
+  {
+    "date": "20250303",
+    "home_team": "PHI",
+    "away_team": "POR",
+    "home_score": 102,
+    "away_score": 119,
+    "margin": -17,
+    "event_id": "401705442"
+  },
+  {
+    "date": "20250303",
+    "home_team": "MIA",
+    "away_team": "WSH",
+    "home_score": 106,
+    "away_score": 90,
+    "margin": 16,
+    "event_id": "401705443"
+  },
+  {
+    "date": "20250303",
+    "home_team": "MEM",
+    "away_team": "ATL",
+    "home_score": 130,
+    "away_score": 132,
+    "margin": -2,
+    "event_id": "401705444"
+  },
+  {
+    "date": "20250303",
+    "home_team": "OKC",
+    "away_team": "HOU",
+    "home_score": 137,
+    "away_score": 128,
+    "margin": 9,
+    "event_id": "401705445"
+  },
+  {
+    "date": "20250303",
+    "home_team": "DAL",
+    "away_team": "SAC",
+    "home_score": 98,
+    "away_score": 122,
+    "margin": -24,
+    "event_id": "401705446"
+  },
+  {
+    "date": "20250303",
+    "home_team": "UTAH",
+    "away_team": "DET",
+    "home_score": 106,
+    "away_score": 134,
+    "margin": -28,
+    "event_id": "401705447"
+  },
+  {
+    "date": "20250304",
+    "home_team": "IND",
+    "away_team": "HOU",
+    "home_score": 115,
+    "away_score": 102,
+    "margin": 13,
+    "event_id": "401705448"
+  },
+  {
+    "date": "20250304",
+    "home_team": "ORL",
+    "away_team": "TOR",
+    "home_score": 113,
+    "away_score": 114,
+    "margin": -1,
+    "event_id": "401705449"
+  },
+  {
+    "date": "20250304",
+    "home_team": "ATL",
+    "away_team": "MIL",
+    "home_score": 121,
+    "away_score": 127,
+    "margin": -6,
+    "event_id": "401705450"
+  },
+  {
+    "date": "20250304",
+    "home_team": "NY",
+    "away_team": "GS",
+    "home_score": 102,
+    "away_score": 114,
+    "margin": -12,
+    "event_id": "401705451"
+  },
+  {
+    "date": "20250304",
+    "home_team": "CHI",
+    "away_team": "CLE",
+    "home_score": 117,
+    "away_score": 139,
+    "margin": -22,
+    "event_id": "401705452"
+  },
+  {
+    "date": "20250304",
+    "home_team": "MIN",
+    "away_team": "PHI",
+    "home_score": 126,
+    "away_score": 112,
+    "margin": 14,
+    "event_id": "401705453"
+  },
+  {
+    "date": "20250304",
+    "home_team": "SA",
+    "away_team": "BKN",
+    "home_score": 127,
+    "away_score": 113,
+    "margin": 14,
+    "event_id": "401705454"
+  },
+  {
+    "date": "20250304",
+    "home_team": "PHX",
+    "away_team": "LAC",
+    "home_score": 119,
+    "away_score": 117,
+    "margin": 2,
+    "event_id": "401705455"
+  },
+  {
+    "date": "20250304",
+    "home_team": "LAL",
+    "away_team": "NO",
+    "home_score": 136,
+    "away_score": 115,
+    "margin": 21,
+    "event_id": "401705456"
+  },
+  {
+    "date": "20250305",
+    "home_team": "BOS",
+    "away_team": "POR",
+    "home_score": 128,
+    "away_score": 118,
+    "margin": 10,
+    "event_id": "401705457"
+  },
+  {
+    "date": "20250305",
+    "home_team": "CHA",
+    "away_team": "MIN",
+    "home_score": 110,
+    "away_score": 125,
+    "margin": -15,
+    "event_id": "401705458"
+  },
+  {
+    "date": "20250305",
+    "home_team": "CLE",
+    "away_team": "MIA",
+    "home_score": 112,
+    "away_score": 107,
+    "margin": 5,
+    "event_id": "401705459"
+  },
+  {
+    "date": "20250305",
+    "home_team": "WSH",
+    "away_team": "UTAH",
+    "home_score": 125,
+    "away_score": 122,
+    "margin": 3,
+    "event_id": "401705460"
+  },
+  {
+    "date": "20250305",
+    "home_team": "MIL",
+    "away_team": "DAL",
+    "home_score": 137,
+    "away_score": 107,
+    "margin": 30,
+    "event_id": "401705463"
+  },
+  {
+    "date": "20250305",
+    "home_team": "DEN",
+    "away_team": "SAC",
+    "home_score": 116,
+    "away_score": 110,
+    "margin": 6,
+    "event_id": "401705462"
+  },
+  {
+    "date": "20250305",
+    "home_team": "MEM",
+    "away_team": "OKC",
+    "home_score": 103,
+    "away_score": 120,
+    "margin": -17,
+    "event_id": "401705461"
+  },
+  {
+    "date": "20250305",
+    "home_team": "LAC",
+    "away_team": "DET",
+    "home_score": 123,
+    "away_score": 115,
+    "margin": 8,
+    "event_id": "401705464"
+  },
+  {
+    "date": "20250306",
+    "home_team": "ORL",
+    "away_team": "CHI",
+    "home_score": 123,
+    "away_score": 125,
+    "margin": -2,
+    "event_id": "401705510"
+  },
+  {
+    "date": "20250306",
+    "home_team": "ATL",
+    "away_team": "IND",
+    "home_score": 124,
+    "away_score": 118,
+    "margin": 6,
+    "event_id": "401705465"
+  },
+  {
+    "date": "20250306",
+    "home_team": "BOS",
+    "away_team": "PHI",
+    "home_score": 123,
+    "away_score": 105,
+    "margin": 18,
+    "event_id": "401705466"
+  },
+  {
+    "date": "20250306",
+    "home_team": "BKN",
+    "away_team": "GS",
+    "home_score": 119,
+    "away_score": 121,
+    "margin": -2,
+    "event_id": "401705467"
+  },
+  {
+    "date": "20250306",
+    "home_team": "NO",
+    "away_team": "HOU",
+    "home_score": 97,
+    "away_score": 109,
+    "margin": -12,
+    "event_id": "401705468"
+  },
+  {
+    "date": "20250306",
+    "home_team": "LAL",
+    "away_team": "NY",
+    "home_score": 113,
+    "away_score": 109,
+    "margin": 4,
+    "event_id": "401705469"
   }
 ]
