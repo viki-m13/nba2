@@ -1,26 +1,24 @@
 // =============================================================================
-// NBA PROP BETTING ENGINE v5.0 — Dual-Confirmation Edge Strategy
+// NBA PROP BETTING ENGINE v6.0 — Alt-Line Parlay Engine
 // =============================================================================
 //
-// STRATEGY: Player OVER props on FanDuel alternate lines (PTS, REB, AST).
-// Dual confirmation: L10 floor > line (recent form) AND L20 hit rate >= 85%
-// (long-term consistency). Only select legs in the "sweet spot" odds range
-// (-500 to -150) where market-implied probability is significantly below
-// the player's actual hit rate. Combine 3-4 legs into small parlays.
+// Multi-market alternate prop engine supporting:
+//   - player_points_alternate
+//   - player_assists_alternate
+//   - player_rebounds_alternate
+//   - player_points_assists_alternate
+//   - player_points_rebounds_alternate
+//   - player_points_rebounds_assists_alternate
 //
-// VALIDATED: Walk-forward backtest on 2024-25 season, 75/25 train/test split.
-//   Train: 47.6% win rate, +23.1% ROI
-//   Test:  85.7% win rate, +98.3% ROI
+// Uses market-specific evaluators, role-aware logic, alt-rung ladder
+// optimization, same-game correlation, and three parlay constructors
+// (Core / Screenshot / Nuke) to produce screenshot-style FanDuel slips.
 //
-// CORE FILTER (4 parameters — minimal, hard to overfit):
-//   1. L10 floor STRICTLY above the line (recent form confirmation)
-//   2. L20 hit rate >= 85% (long-term consistency)
-//   3. Per-leg odds between -500 and -150 (sweet spot — genuine edge zone)
-//   4. Minimum 10 games of history
-//
-// KEY INSIGHT: Market misprices props in the -500 to -200 range for consistent
-// players. Actual hit rate ~88% vs implied ~75-83% = +5-13% edge per leg.
-// This edge compounds well in 3-4 leg parlays at +100 to +250 odds.
+// Integrates with:
+//   - NbaRoleEngine — player role classification
+//   - NbaAltRungEvaluator — market-specific rung evaluation
+//   - NbaCorrelationEngine — SGP correlation scoring
+//   - NbaScreenshotSlipBuilder — parlay construction
 //
 // =============================================================================
 
@@ -434,7 +432,16 @@ window.BettingEngine = (function () {
       const events = await eventsRes.json();
       result.events = events;
 
-      const markets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate';
+      // All supported alternate markets including combo stats
+      const ALL_ALT_MARKETS = [
+        'player_points_alternate',
+        'player_rebounds_alternate',
+        'player_assists_alternate',
+        'player_points_assists_alternate',
+        'player_points_rebounds_alternate',
+        'player_points_rebounds_assists_alternate',
+      ];
+      const markets = ALL_ALT_MARKETS.join(',');
 
       for (const event of events) {
         try {
@@ -450,11 +457,17 @@ window.BettingEngine = (function () {
           const fd = propsData.bookmakers && propsData.bookmakers.find(b => b.key === 'fanduel');
           if (!fd) continue;
 
-          const gameProps = { points: {}, rebounds: {}, assists: {} };
+          const gameProps = {
+            points: {}, rebounds: {}, assists: {},
+            points_assists: {}, points_rebounds: {}, points_rebounds_assists: {},
+          };
           const marketMap = {
             'player_points_alternate': 'points',
             'player_rebounds_alternate': 'rebounds',
             'player_assists_alternate': 'assists',
+            'player_points_assists_alternate': 'points_assists',
+            'player_points_rebounds_alternate': 'points_rebounds',
+            'player_points_rebounds_assists_alternate': 'points_rebounds_assists',
           };
 
           for (const mkt of (fd.markets || [])) {
@@ -475,6 +488,9 @@ window.BettingEngine = (function () {
             lines: gameProps.points,
             rebLines: gameProps.rebounds,
             astLines: gameProps.assists,
+            ptsAstLines: gameProps.points_assists,
+            ptsRebLines: gameProps.points_rebounds,
+            praLines: gameProps.points_rebounds_assists,
             eventId: event.id,
             home: homeAbbr,
             away: awayAbbr,
@@ -627,8 +643,14 @@ window.BettingEngine = (function () {
           if (leg.actual !== null && leg.actual !== undefined) continue;
           const pStats = findPlayer(leg.player);
           if (pStats) {
-            const key = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
-            leg.actual = pStats[key];
+            let actual;
+            if (leg.statType === 'rebounds') actual = pStats.reb;
+            else if (leg.statType === 'assists') actual = pStats.ast;
+            else if (leg.statType === 'points_assists') actual = (pStats.pts || 0) + (pStats.ast || 0);
+            else if (leg.statType === 'points_rebounds') actual = (pStats.pts || 0) + (pStats.reb || 0);
+            else if (leg.statType === 'points_rebounds_assists') actual = (pStats.pts || 0) + (pStats.reb || 0) + (pStats.ast || 0);
+            else actual = pStats.pts;
+            leg.actual = actual;
             leg.won = leg.actual > leg.line;
           } else if (allFinal) {
             leg.actual = 0;
@@ -690,8 +712,8 @@ window.BettingEngine = (function () {
           }
         }
 
-        // Fetch player props
-        const propMarkets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate';
+        // Fetch player props — all alternate markets including combos
+        const propMarkets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_assists_alternate,player_points_rebounds_alternate,player_points_rebounds_assists_alternate';
         try {
           const propsUrl = `${ODDS_API_BASE}/historical/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${propMarkets}&oddsFormat=american&date=${isoDate}&bookmakers=fanduel`;
           const propsRes = await fetch(propsUrl);
@@ -704,6 +726,9 @@ window.BettingEngine = (function () {
                 'player_points_alternate': 'playerProps',
                 'player_rebounds_alternate': 'playerRebProps',
                 'player_assists_alternate': 'playerAstProps',
+                'player_points_assists_alternate': 'playerPtsAstProps',
+                'player_points_rebounds_alternate': 'playerPtsRebProps',
+                'player_points_rebounds_assists_alternate': 'playerPRAProps',
               };
               for (const mkt of (fdBook.markets || [])) {
                 const propKey = mmap[mkt.key];
@@ -782,6 +807,187 @@ window.BettingEngine = (function () {
   // Legacy no-ops for backward compatibility
   function saveOddsToHistory() {}
 
+  // =========================================================================
+  // ALT-LINE PARLAY ENGINE — Feature Table + Slip Generation
+  // =========================================================================
+
+  // All supported markets and their line accessors from fetched odds
+  const MARKET_LINE_KEYS = {
+    'player_points_alternate':                   'lines',
+    'player_assists_alternate':                  'astLines',
+    'player_rebounds_alternate':                 'rebLines',
+    'player_points_assists_alternate':           'ptsAstLines',
+    'player_points_rebounds_alternate':          'ptsRebLines',
+    'player_points_rebounds_assists_alternate':  'praLines',
+  };
+
+  const MARKET_LABELS = {
+    'player_points_alternate': 'ALT PTS',
+    'player_assists_alternate': 'ALT AST',
+    'player_rebounds_alternate': 'ALT REB',
+    'player_points_assists_alternate': 'ALT PTS+AST',
+    'player_points_rebounds_alternate': 'ALT PTS+REB',
+    'player_points_rebounds_assists_alternate': 'ALT PTS+REB+AST',
+  };
+
+  // Build game environment context from game odds data
+  function buildEnvContext(gameOdds) {
+    if (!gameOdds) return null;
+    const spread = gameOdds.spread_point || 0;
+    const total = gameOdds.total || 220;
+    const homeML = gameOdds.home_ml || 0;
+    const awayML = gameOdds.away_ml || 0;
+
+    // Approximate team implied totals
+    const teamImpliedTotal = total / 2 + (spread / 2);
+    const oppImpliedTotal = total / 2 - (spread / 2);
+
+    // Blowout risk: large spread = more blowout risk
+    const blowoutRisk = Math.min(1, Math.abs(spread) / 15);
+
+    return {
+      spread,
+      total,
+      teamImpliedTotal: Math.round(teamImpliedTotal * 10) / 10,
+      oppImpliedTotal: Math.round(oppImpliedTotal * 10) / 10,
+      blowoutRisk: Math.round(blowoutRisk * 100) / 100,
+      homeML,
+      awayML,
+    };
+  }
+
+  // Generate the nightly player-market-rung feature table
+  // This is the CORE decision object for the alt-line engine
+  function generateFeatureTable(liveOdds, gameOddsMap) {
+    if (!liveOdds || !liveOdds.playerProps) return [];
+    if (!window.NbaRoleEngine || !window.NbaAltRungEvaluator) {
+      console.warn('[ENGINE] Alt-line modules not loaded');
+      return [];
+    }
+
+    const RoleEngine = window.NbaRoleEngine;
+    const RungEval = window.NbaAltRungEvaluator;
+    const featureTable = [];
+
+    for (const [gameKey, gameProps] of Object.entries(liveOdds.playerProps)) {
+      const envContext = gameOddsMap ? buildEnvContext(gameOddsMap[gameKey]) : null;
+
+      // Process each market type
+      for (const [marketType, lineKey] of Object.entries(MARKET_LINE_KEYS)) {
+        const playerLines = gameProps[lineKey];
+        if (!playerLines) continue;
+
+        for (const [playerName, lines] of Object.entries(playerLines)) {
+          // Get player history from model
+          const hist = PlayerModel.history[playerName];
+          if (!hist || hist.length < CONFIG.MIN_GAMES) continue;
+
+          // Build game log in the format expected by evaluators
+          const gameLog = hist.map(g => ({
+            pts: g.pts || 0,
+            reb: g.reb || 0,
+            ast: g.ast || 0,
+            min: g.min || 0,
+          }));
+
+          // Classify player role
+          const roleInfo = RoleEngine.classifyPlayer(gameLog);
+          const marketFit = RoleEngine.getMarketFit(roleInfo.role, marketType);
+          const minutesCertainty = RoleEngine.getMinutesCertainty(gameLog);
+          const isElevated = RoleEngine.detectInjuryElevation(gameLog);
+
+          if (isElevated) roleInfo.role = 'injury_elevated';
+
+          // Evaluate the full ladder for this player + market
+          const ladder = RungEval.evaluateLadder(
+            gameLog, marketType, lines, roleInfo, envContext, minutesCertainty
+          );
+
+          // Select the best rung (highest safe rung)
+          const bestRung = RungEval.selectBestRung(ladder);
+          if (!bestRung) continue;
+
+          // Determine player team
+          const team = hist[hist.length - 1].team || '';
+
+          featureTable.push({
+            player: playerName,
+            team,
+            opponent: gameKey.includes('@') ?
+              (gameKey.split('@')[1] === team ? gameKey.split('@')[0] : gameKey.split('@')[1]) : '',
+            gameId: gameProps.eventId || gameKey,
+            gameKey,
+            gameDisplay: gameKey.replace('@', ' @ '),
+            marketType,
+            marketLabel: MARKET_LABELS[marketType] || marketType,
+            line: bestRung.line,
+            bookOdds: bestRung.bookOdds,
+            roleTag: roleInfo.role,
+            roleConfidence: roleInfo.confidence,
+            minutesCertainty,
+            marketFit,
+            expectedMinutes: roleInfo.avgMin || 0,
+            l5Hit: bestRung.l5Hit,
+            l10Hit: bestRung.l10Hit,
+            l20Hit: bestRung.l20Hit,
+            avg: bestRung.avg,
+            floor: bestRung.floor,
+            cv: bestRung.cv,
+            modelProb: bestRung.modelProb,
+            impliedProb: bestRung.impliedProb,
+            fairOdds: bestRung.fairOdds,
+            edge: bestRung.edge,
+            ev: bestRung.ev,
+            fragility: bestRung.fragility,
+            stability: bestRung.stability,
+            clearance: bestRung.clearance,
+            floorClearance: bestRung.floorClearance,
+            games: bestRung.games,
+            envContext,
+            // Full ladder for inspection
+            ladderSize: ladder.length,
+          });
+        }
+      }
+    }
+
+    // Sort by composite score
+    featureTable.sort((a, b) => {
+      const scoreA = a.edge * 3 + a.stability * 2 + a.modelProb;
+      const scoreB = b.edge * 3 + b.stability * 2 + b.modelProb;
+      return scoreB - scoreA;
+    });
+
+    console.log(`[ENGINE] Feature table: ${featureTable.length} candidate legs across ${Object.keys(liveOdds.playerProps).length} games`);
+    return featureTable;
+  }
+
+  // Generate all parlay slips from the feature table
+  function generateSlips(featureTable) {
+    if (!window.NbaScreenshotSlipBuilder) {
+      console.warn('[ENGINE] Slip builder not loaded');
+      return { core: [], screenshot: [], nuke: [] };
+    }
+    return window.NbaScreenshotSlipBuilder.buildAll(featureTable);
+  }
+
+  // Full pipeline: fetch odds → build model → generate feature table → build slips
+  async function runAltLinePipeline(gameOddsMap) {
+    console.log('[ENGINE] Running alt-line pipeline...');
+    const liveOdds = await fetchLiveOdds();
+
+    if (liveOdds.quotaExhausted) {
+      console.warn('[ENGINE] API quota exhausted');
+      return { featureTable: [], slips: { core: [], screenshot: [], nuke: [] }, quotaExhausted: true };
+    }
+
+    const featureTable = generateFeatureTable(liveOdds, gameOddsMap);
+    const slips = generateSlips(featureTable);
+
+    console.log(`[ENGINE] Pipeline complete: ${slips.core.length} core, ${slips.screenshot.length} screenshot, ${slips.nuke.length} nuke parlays`);
+    return { featureTable, slips, liveOdds };
+  }
+
   // --- Public API ---
 
   return {
@@ -804,5 +1010,12 @@ window.BettingEngine = (function () {
     statLabel,
     teamAbbr,
     TEAM_MAP,
+    // Alt-line engine exports
+    generateFeatureTable,
+    generateSlips,
+    runAltLinePipeline,
+    buildEnvContext,
+    MARKET_LINE_KEYS,
+    MARKET_LABELS,
   };
 })();
