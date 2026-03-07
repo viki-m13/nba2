@@ -1,5 +1,5 @@
 // =============================================================================
-// NBA Prop Picks — App Controller
+// NBA Prop Picks — App Controller (Parlays Only)
 // =============================================================================
 
 (function () {
@@ -129,13 +129,25 @@
       // Build parlays
       todayParlays = window.BettingEngine.buildParlays(todaySingles);
 
+      // Add gameDisplay to parlay legs
+      for (const parlay of todayParlays) {
+        parlay.legs = parlay.legs.map(leg => {
+          const matchingSingle = todaySingles.find(s => s.player === leg.player && s.line === leg.line);
+          return {
+            ...leg,
+            gameKey: matchingSingle ? matchingSingle.gameKey : '',
+            gameDisplay: matchingSingle ? matchingSingle.gameDisplay : '',
+          };
+        });
+      }
+
       // Save odds to local history for future reference
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
       window.BettingEngine.saveOddsToHistory(todaySingles, today);
 
       // Render
-      if (todaySingles.length === 0 && todayParlays.length === 0) {
-        statusEl.textContent = 'No qualifying picks for today\'s games. Our filters are strict to maintain high accuracy.';
+      if (todayParlays.length === 0) {
+        statusEl.textContent = 'No qualifying parlays for today\'s games. Our filters are strict to maintain high accuracy.';
       } else {
         statusEl.style.display = 'none';
         renderTodayPicks();
@@ -147,66 +159,29 @@
   }
 
   function renderTodayPicks() {
-    const singlesEl = document.getElementById('today-singles');
     const parlaysEl = document.getElementById('today-parlays');
 
-    // Singles
-    if (todaySingles.length > 0) {
-      const header = '<h3 style="grid-column:1/-1;color:var(--accent);font-size:0.9rem;margin-bottom:-0.5rem">Singles</h3>';
-      singlesEl.innerHTML = header + todaySingles.map(renderSingleCard).join('');
-    }
-
-    // Parlays
     if (todayParlays.length > 0) {
-      const header = '<h3 style="grid-column:1/-1;color:var(--purple);font-size:0.9rem;margin-bottom:-0.5rem">Parlays</h3>';
-      parlaysEl.innerHTML = header + todayParlays.map(renderParlayCard).join('');
+      parlaysEl.innerHTML = todayParlays.map(renderParlayCard).join('');
     }
   }
 
-  function renderSingleCard(pick) {
-    return `
-      <div class="pick-card">
-        <div class="pick-header">
-          <span class="pick-type">Single</span>
-          <span class="pick-odds">${window.BettingEngine.formatOdds(pick.odds)}</span>
-        </div>
-        <div class="pick-player">${pick.player}</div>
-        <div class="pick-line">OVER ${pick.line} PTS</div>
-        <div class="pick-stats">
-          <div class="pick-stat">
-            <div class="pick-stat-label">L10 Avg</div>
-            <div class="pick-stat-value">${pick.l10Avg}</div>
-          </div>
-          <div class="pick-stat">
-            <div class="pick-stat-label">L10 Floor</div>
-            <div class="pick-stat-value">${pick.l10Min}</div>
-          </div>
-          <div class="pick-stat">
-            <div class="pick-stat-label">Floor Ratio</div>
-            <div class="pick-stat-value">${pick.floorRatio}x</div>
-          </div>
-          <div class="pick-stat">
-            <div class="pick-stat-label">CV</div>
-            <div class="pick-stat-value">${pick.cv}</div>
-          </div>
-          <div class="pick-stat">
-            <div class="pick-stat-label">Hit Rate</div>
-            <div class="pick-stat-value">${(pick.hitRate * 100).toFixed(0)}%</div>
-          </div>
-          <div class="pick-stat">
-            <div class="pick-stat-label">Trend</div>
-            <div class="pick-stat-value">${pick.momentum}</div>
-          </div>
-        </div>
-      </div>`;
+  function formatGameKey(gameKey) {
+    if (!gameKey) return '';
+    return gameKey.replace('@', ' @ ');
   }
 
   function renderParlayCard(parlay) {
     const legsHtml = parlay.legs.map(leg => `
       <div class="parlay-leg">
-        <span class="parlay-leg-player">${leg.player}</span>
-        <span class="parlay-leg-line">OVER ${leg.line}</span>
-        <span class="parlay-leg-odds">${window.BettingEngine.formatOdds(leg.odds)}</span>
+        <div class="parlay-leg-info">
+          <span class="parlay-leg-player">${leg.player} (${leg.team})</span>
+          <span class="parlay-leg-game">${leg.gameDisplay || formatGameKey(leg.gameKey)}</span>
+        </div>
+        <div class="parlay-leg-right">
+          <span class="parlay-leg-line">OVER ${leg.line}</span>
+          <span class="parlay-leg-odds">${window.BettingEngine.formatOdds(leg.odds)}</span>
+        </div>
       </div>`).join('');
 
     return `
@@ -229,11 +204,12 @@
     if (!backtestResults) return;
     const s = backtestResults.stats;
 
-    document.getElementById('stat-accuracy').textContent = `${(s.overall.hitRate * 100).toFixed(1)}%`;
-    document.getElementById('stat-record').textContent = `${s.overall.wins}-${s.overall.losses}`;
-    document.getElementById('stat-pnl').textContent = `$${s.overall.pnl >= 0 ? '+' : ''}${s.overall.pnl}`;
-    document.getElementById('stat-roi').textContent = `${s.overall.roi >= 0 ? '+' : ''}${s.overall.roi}%`;
-    document.getElementById('stat-parlay-record').textContent = `${s.parlays.wins}-${s.parlays.losses}`;
+    // Show parlay stats prominently since that's all we care about
+    document.getElementById('stat-accuracy').textContent = `${(s.parlays.hitRate * 100).toFixed(1)}%`;
+    document.getElementById('stat-record').textContent = `${s.parlays.wins}-${s.parlays.losses}`;
+    document.getElementById('stat-pnl').textContent = `$${s.parlays.pnl >= 0 ? '+' : ''}${s.parlays.pnl}`;
+    document.getElementById('stat-roi').textContent = `${s.parlays.roi >= 0 ? '+' : ''}${s.parlays.roi}%`;
+    document.getElementById('stat-parlay-record').textContent = `${s.singles.wins}-${s.singles.losses}`;
     document.getElementById('stat-days').textContent = `${s.daysWithPicks}/${s.totalDays}`;
   }
 
@@ -242,31 +218,27 @@
   function renderHistory() {
     if (!backtestResults) return;
 
-    const { singles, parlays } = getFilteredResults();
-
-    // Singles table
-    const singlesBody = document.querySelector('#singles-history tbody');
-    singlesBody.innerHTML = singles.slice().reverse().map(p => `
-      <tr>
-        <td>${formatDate(p.date)}</td>
-        <td>${p.player} (${p.team})</td>
-        <td>OVER ${p.line}</td>
-        <td>${window.BettingEngine.formatOdds(p.odds)}</td>
-        <td>${p.actual}</td>
-        <td class="${p.won ? 'result-win' : 'result-loss'}">${p.won ? 'WIN' : 'LOSS'}</td>
-        <td class="${p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">${p.pnl >= 0 ? '+' : ''}$${p.pnl}</td>
-      </tr>`).join('');
+    const { parlays } = getFilteredResults();
 
     // Parlays table
     const parlaysBody = document.querySelector('#parlays-history tbody');
     parlaysBody.innerHTML = parlays.slice().reverse().map(p => {
-      const legsStr = p.legs.map(l =>
-        `${l.player} O${l.line} (${l.won ? l.actual : 'MISS: ' + l.actual})`
-      ).join(', ');
+      const legsHtml = p.legs.map(l => {
+        const game = formatGameKey(l.gameKey);
+        const resultClass = l.won ? 'result-win' : 'result-loss';
+        return `<div class="history-leg">
+          <span class="history-leg-player">${l.player} (${l.team})</span>
+          <span class="history-leg-line">OVER ${l.line}</span>
+          <span class="history-leg-odds">${window.BettingEngine.formatOdds(l.odds)}</span>
+          <span class="history-leg-game">${game}</span>
+          <span class="history-leg-actual ${resultClass}">${l.actual} pts</span>
+        </div>`;
+      }).join('');
+
       return `
         <tr>
           <td>${formatDate(p.date)}</td>
-          <td>${legsStr}</td>
+          <td class="legs-cell">${legsHtml}</td>
           <td>${window.BettingEngine.formatOdds(p.odds)}</td>
           <td class="${p.won ? 'result-win' : 'result-loss'}">${p.won ? 'WIN' : 'LOSS'}</td>
           <td class="${p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">${p.pnl >= 0 ? '+' : ''}$${p.pnl}</td>
@@ -275,20 +247,18 @@
   }
 
   function getFilteredResults() {
-    if (!backtestResults) return { singles: [], parlays: [] };
+    if (!backtestResults) return { parlays: [] };
 
-    let singles = backtestResults.singles;
     let parlays = backtestResults.parlays;
 
     if (currentPeriod !== 'all') {
       const days = parseInt(currentPeriod);
-      const allDates = [...new Set([...singles, ...parlays].map(p => p.date))].sort();
+      const allDates = [...new Set(parlays.map(p => p.date))].sort();
       const cutoff = allDates[Math.max(0, allDates.length - days)] || '';
-      singles = singles.filter(p => p.date >= cutoff);
       parlays = parlays.filter(p => p.date >= cutoff);
     }
 
-    return { singles, parlays };
+    return { parlays };
   }
 
   // --- Equity Curve ---
@@ -310,8 +280,8 @@
     const plotW = w - pad.left - pad.right;
     const plotH = h - pad.top - pad.bottom;
 
-    // Build cumulative P&L
-    const allPicks = [...backtestResults.singles, ...backtestResults.parlays]
+    // Build cumulative P&L from parlays only
+    const allPicks = [...backtestResults.parlays]
       .sort((a, b) => a.date.localeCompare(b.date));
 
     let cumPnl = 0;
@@ -362,7 +332,7 @@
     ctx.setLineDash([]);
 
     // P&L line
-    ctx.strokeStyle = '#22c55e';
+    ctx.strokeStyle = '#a78bfa';
     ctx.lineWidth = 2;
     ctx.beginPath();
     for (let i = 0; i < points.length; i++) {
@@ -377,18 +347,18 @@
     ctx.lineTo(scaleX(maxX), scaleY(0));
     ctx.lineTo(scaleX(0), scaleY(0));
     ctx.closePath();
-    ctx.fillStyle = 'rgba(34, 197, 94, 0.08)';
+    ctx.fillStyle = 'rgba(167, 139, 250, 0.08)';
     ctx.fill();
 
     // Endpoint dot
     const lastPt = points[points.length - 1];
-    ctx.fillStyle = '#22c55e';
+    ctx.fillStyle = '#a78bfa';
     ctx.beginPath();
     ctx.arc(scaleX(lastPt.x), scaleY(lastPt.y), 4, 0, Math.PI * 2);
     ctx.fill();
 
     // Label
-    ctx.fillStyle = '#22c55e';
+    ctx.fillStyle = '#a78bfa';
     ctx.font = 'bold 12px sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText(`$${cumPnl}`, scaleX(lastPt.x) + 8, scaleY(lastPt.y) + 4);

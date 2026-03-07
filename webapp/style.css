@@ -226,7 +226,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.6rem 0;
   border-top: 1px solid var(--border);
   font-size: 0.85rem;
 }
@@ -247,6 +247,66 @@ h2 {
 }
 
 .parlay-ev { color: var(--accent); font-weight: 600; }
+
+/* Parlay leg layout with game info */
+.parlay-leg-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.parlay-leg-game {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.parlay-leg-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* History leg styling */
+.legs-cell {
+  padding: 0.4rem 0.75rem !important;
+}
+
+.history-leg {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.history-leg + .history-leg {
+  border-top: 1px solid var(--border);
+}
+
+.history-leg-player {
+  font-weight: 600;
+  min-width: 140px;
+}
+
+.history-leg-line {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.history-leg-odds {
+  color: var(--text-dim);
+}
+
+.history-leg-game {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.history-leg-actual {
+  margin-left: auto;
+  font-weight: 600;
+}
 
 /* History */
 .history-filters {

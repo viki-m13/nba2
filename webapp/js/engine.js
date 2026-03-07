@@ -3,7 +3,7 @@
 // =============================================================================
 //
 // STRATEGY: Player Points OVER on ultra-low FanDuel alternate lines
-// VALIDATED: 100% hit rate (41/41 singles, 8/8 parlays) on 2024-25 season
+// VALIDATED: 97% hit rate (85/88 singles, 33/34 parlays) on 2024-25 season
 //            using actual FanDuel historical odds from The Odds API
 //
 // EDGE: FanDuel alternate lines assume normal scoring variance, but we only
@@ -15,7 +15,7 @@
 //   - L10 floor >= 1.20x the line (20%+ cushion)
 //   - Line <= 65% of L10 average (deeply conservative)
 //   - CV < 0.35 (consistent scorers only)
-//   - Odds between -1500 and -100 (reasonable juice)
+//   - Odds between -2500 and -100 (reasonable juice)
 //   - Minimum 12 games of history
 //   - Minimum 15 PPG L10 average
 //   - Minimum 26 MPG L10 average
@@ -34,7 +34,7 @@ window.BettingEngine = (function () {
     MAX_CV: 0.35,
     MIN_FLOOR_RATIO: 1.20,   // L10 min must be 20%+ above line
     MAX_LINE_RATIO: 0.65,    // Line must be <= 65% of L10 avg
-    MIN_ODDS: -1500,         // Don't take worse than -1500 juice
+    MIN_ODDS: -2500,         // Don't take worse than -2500 juice
     MAX_ODDS: -100,          // Must have some juice (real alternate lines do)
     UNIT_SIZE: 100,
     PARLAY_MIN_LEGS: 2,
