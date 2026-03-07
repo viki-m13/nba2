@@ -177,25 +177,9 @@
     const statusEl = document.getElementById('today-status');
 
     try {
-      let todayGames = [];
-      try {
-        const sbResult = await window.NbaApi.fetchScoreboard();
-        todayGames = (sbResult && sbResult.games) || sbResult || [];
-        if (!Array.isArray(todayGames)) todayGames = [];
-      } catch (e) {
-        console.warn('Could not fetch scoreboard:', e);
-      }
+      statusEl.textContent = 'Fetching FanDuel odds...';
 
-      if (todayGames.length === 0) {
-        statusEl.textContent = 'No games scheduled today.';
-        renderTodayGames([]);
-        return;
-      }
-
-      statusEl.textContent = `Found ${todayGames.length} games. Fetching FanDuel odds...`;
-      renderTodayGames(todayGames);
-
-      // Build model from historical data
+      // Build model from historical data first (always needed)
       const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
       const model = Object.create(window.BettingEngine.PlayerModel);
       model.history = {};
@@ -212,13 +196,12 @@
         }
       }
 
-      // Fetch live odds
+      // Fetch live odds from Odds API — this is the primary game source
       let liveOdds = null;
       try {
         liveOdds = await window.BettingEngine.fetchLiveOdds();
       } catch (e) {
-        statusEl.textContent = 'Could not fetch FanDuel odds.';
-        return;
+        console.warn('Could not fetch FanDuel odds:', e);
       }
 
       if (liveOdds && liveOdds.quotaExhausted) {
@@ -227,51 +210,74 @@
         return;
       }
 
+      // Build today's games list from Odds API events (always available)
+      let todayGames = [];
+      if (liveOdds && liveOdds.events && liveOdds.events.length > 0) {
+        todayGames = liveOdds.events.map(e => {
+          const homeAbbr = window.BettingEngine.teamAbbr(e.home_team);
+          const awayAbbr = window.BettingEngine.teamAbbr(e.away_team);
+          return {
+            homeTeam: homeAbbr,
+            awayTeam: awayAbbr,
+            homeName: e.home_team,
+            awayName: e.away_team,
+            gameTime: e.commence_time,
+            status: 'scheduled',
+            statusText: '',
+          };
+        });
+      }
+
+      // Try scoreboard for live scores (nice-to-have, not required)
+      try {
+        const sbResult = await window.NbaApi.fetchScoreboard();
+        const sbGames = (sbResult && sbResult.games) || [];
+        if (sbGames.length > 0) {
+          // Merge scoreboard info into todayGames
+          for (const sb of sbGames) {
+            const match = todayGames.find(g => g.homeTeam === sb.homeTeam && g.awayTeam === sb.awayTeam);
+            if (match) {
+              match.homeScore = sb.homeScore;
+              match.awayScore = sb.awayScore;
+              match.status = sb.status;
+              match.statusText = sb.statusText;
+              match.ouLine = sb.ouLine;
+            }
+          }
+          // If scoreboard has games not in odds API, add them
+          if (todayGames.length === 0) todayGames = sbGames;
+        }
+      } catch (e) {
+        console.warn('Scoreboard fetch failed (non-critical):', e);
+      }
+
+      if (todayGames.length === 0) {
+        statusEl.textContent = 'No games scheduled today.';
+        renderTodayGames([]);
+        return;
+      }
+
+      statusEl.textContent = `Found ${todayGames.length} games. Analyzing player props...`;
+      renderTodayGames(todayGames);
+
       if (!liveOdds || Object.keys(liveOdds.playerProps).length === 0) {
         statusEl.textContent = 'No FanDuel player props available. Check back closer to game time.';
         return;
       }
 
-      // Evaluate all props
-      const todaySingles = [];
-      for (const [gameKey, gameData] of Object.entries(liveOdds.playerProps)) {
-        const gameDisplay = `${gameData.away} @ ${gameData.home}`;
-
-        const addPick = (prop) => {
-          if (!prop) return;
-          if (!todaySingles.find(s => s.player === prop.player && s.statType === prop.statType && s.line === prop.line)) {
-            todaySingles.push({ ...prop, gameKey, gameDisplay });
-          }
-        };
-
-        for (const [name, lines] of Object.entries(gameData.lines || {})) addPick(model.findBestProp(name, 'points', lines));
-        for (const [name, lines] of Object.entries(gameData.rebLines || {})) addPick(model.findBestProp(name, 'rebounds', lines));
-        for (const [name, lines] of Object.entries(gameData.astLines || {})) addPick(model.findBestProp(name, 'assists', lines));
-      }
-
-      // Build legacy parlays
-      todayParlays = window.BettingEngine.buildParlays(todaySingles);
-      for (const parlay of todayParlays) {
-        parlay.legs = parlay.legs.map(leg => {
-          const match = todaySingles.find(s => s.player === leg.player && s.line === leg.line && s.statType === leg.statType);
-          return { ...leg, gameKey: match ? match.gameKey : '', gameDisplay: match ? match.gameDisplay : '' };
-        });
-      }
-
-      // --- Alt-Line Pipeline ---
-      // Share the model with the engine so the feature table can access history
+      // --- Alt-Line Pipeline (primary strategy) ---
       window.BettingEngine.PlayerModel.history = model.history;
 
       // Build game-level odds map for environment context
       const gameOddsMap = {};
-      // Try to get spread/total from ESPN
       try {
         const espnData = await window.NbaApi.fetchESPNOdds();
         for (const game of todayGames) {
           const gk = `${game.awayTeam}@${game.homeTeam}`;
-          if (game.ouLine || espnData.odds[`${game.homeTeam}-${game.awayTeam}`]) {
+          const espnKey = `${game.homeTeam}-${game.awayTeam}`;
+          if (game.ouLine || espnData.odds[espnKey]) {
             gameOddsMap[gk] = {
-              total: game.ouLine || espnData.odds[`${game.homeTeam}-${game.awayTeam}`] || 220,
+              total: game.ouLine || espnData.odds[espnKey] || 220,
               spread_point: 0,
             };
           }
@@ -285,9 +291,8 @@
       // Render alt-line slips
       renderAltSlips(slips, featureTable);
 
-      // Save all parlays (legacy + new) to live tracking
+      // Save to live tracking
       const allParlays = [
-        ...todayParlays,
         ...(slips.core || []),
         ...(slips.screenshot || []),
         ...(slips.nuke || []),
@@ -298,11 +303,10 @@
       renderLiveHistory();
 
       const totalSlips = (slips.core || []).length + (slips.screenshot || []).length + (slips.nuke || []).length;
-      if (totalSlips === 0 && todayParlays.length === 0) {
-        statusEl.textContent = 'No qualifying parlays today. Filters are strict for safety.';
+      if (totalSlips === 0) {
+        statusEl.textContent = `Analyzed ${featureTable.length} candidate legs across ${todayGames.length} games. No parlays pass all filters today.`;
       } else {
         statusEl.style.display = 'none';
-        renderTodayPicks();
       }
     } catch (e) {
       console.error('Error generating picks:', e);
@@ -310,47 +314,10 @@
     }
   }
 
-  // --- Rendering ---
+  // --- Rendering (Alt-Line Only) ---
 
-  function renderTodayPicks() {
-    const parlaysEl = document.getElementById('today-parlays');
-    parlaysEl.innerHTML = todayParlays.map(renderParlayCard).join('');
-  }
-
-  function renderParlayCard(parlay) {
-    const legsHtml = parlay.legs.map(leg => `
-      <div class="parlay-leg">
-        <div class="parlay-leg-info">
-          <span class="parlay-leg-player">${leg.player} (${leg.team})</span>
-          <span class="parlay-leg-game">${leg.gameDisplay || leg.gameKey.replace('@', ' @ ')}</span>
-        </div>
-        <div class="parlay-leg-right">
-          <span class="parlay-leg-stat">${leg.statLabel || 'PTS'}</span>
-          <span class="parlay-leg-line">OVER ${leg.line}</span>
-          <span class="parlay-leg-odds">${window.BettingEngine.formatOdds(leg.odds)}</span>
-        </div>
-      </div>`).join('');
-
-    const today = new Date();
-    const dateStr = `${String(today.getMonth()+1).padStart(2,'0')}/${String(today.getDate()).padStart(2,'0')}/${today.getFullYear()}`;
-    const statTypes = new Set(parlay.legs.map(l => l.statType || 'points'));
-    const label = statTypes.size > 1 ? `${parlay.numLegs}-Leg Multi-Stat Parlay` : `${parlay.numLegs}-Leg Parlay`;
-
-    return `
-      <div class="pick-card parlay${statTypes.size > 1 ? ' multi-stat' : ''}">
-        <div class="pick-header">
-          <span class="pick-date">${dateStr}</span>
-          <span class="pick-type">${label}</span>
-          <span class="pick-odds">${window.BettingEngine.formatOdds(parlay.odds)}</span>
-        </div>
-        <div class="parlay-legs">${legsHtml}</div>
-        <div class="parlay-summary">
-          <span>Hit Rate: ${(parlay.combinedHitRate * 100).toFixed(1)}%</span>
-          <span class="parlay-ev">EV: ${parlay.ev > 0 ? '+' : ''}${(parlay.ev * 100).toFixed(1)}%</span>
-          <span class="parlay-payout">$100 wins $${Math.round((parlay.decimalOdds - 1) * 100)}</span>
-        </div>
-      </div>`;
-  }
+  // Legacy renderTodayPicks and renderParlayCard removed.
+  // Alt-line slips are now the only today's pick output (via renderAltSlips).
 
   function renderTodayGames(games) {
     const container = document.getElementById('today-games');
