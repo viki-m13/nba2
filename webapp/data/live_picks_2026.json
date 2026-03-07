@@ -1,0 +1,1342 @@
+{
+  "parlays": [
+    {
+      "date": "20260306",
+      "numLegs": 2,
+      "odds": -136,
+      "decimalOdds": 1.74,
+      "combinedHitRate": 1,
+      "ev": 0.736,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -320,
+          "gameKey": "POR@HOU",
+          "gameDisplay": "POR @ HOU",
+          "actual": 7,
+          "won": true
+        },
+        {
+          "player": "Jayson Tatum",
+          "team": "BOS",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -310,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 74,
+      "savedAt": "2026-03-07T05:51:25.024Z"
+    },
+    {
+      "date": "20260306",
+      "numLegs": 3,
+      "odds": 103,
+      "decimalOdds": 2.03,
+      "combinedHitRate": 1,
+      "ev": 1.03,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -320,
+          "gameKey": "POR@HOU",
+          "gameDisplay": "POR @ HOU",
+          "actual": 7,
+          "won": true
+        },
+        {
+          "player": "Jayson Tatum",
+          "team": "BOS",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -310,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 15,
+          "won": true
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -590,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 9,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 103,
+      "savedAt": "2026-03-07T05:51:25.025Z"
+    },
+    {
+      "date": "20260306",
+      "numLegs": 4,
+      "odds": 147,
+      "decimalOdds": 2.47,
+      "combinedHitRate": 1,
+      "ev": 1.471,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -320,
+          "gameKey": "POR@HOU",
+          "gameDisplay": "POR @ HOU",
+          "actual": 7,
+          "won": true
+        },
+        {
+          "player": "Jayson Tatum",
+          "team": "BOS",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -310,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 15,
+          "won": true
+        },
+        {
+          "player": "Nikola Vucevic",
+          "team": "CHI",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -460,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -590,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 9,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:25.025Z"
+    },
+    {
+      "date": "20260306",
+      "numLegs": 5,
+      "odds": 105,
+      "decimalOdds": 2.05,
+      "combinedHitRate": 1,
+      "ev": 1.047,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -2500,
+          "gameKey": "POR@HOU",
+          "gameDisplay": "POR @ HOU",
+          "actual": 7,
+          "won": true
+        },
+        {
+          "player": "Jayson Tatum",
+          "team": "BOS",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -310,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 15,
+          "won": true
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -590,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 9,
+          "won": true
+        },
+        {
+          "player": "Nikola Vucevic",
+          "team": "CHI",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -460,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Bam Adebayo",
+          "team": "MIA",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -2200,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 24,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:25.025Z"
+    },
+    {
+      "date": "20260306",
+      "numLegs": 6,
+      "odds": 136,
+      "decimalOdds": 2.36,
+      "combinedHitRate": 1,
+      "ev": 1.362,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -2500,
+          "gameKey": "POR@HOU",
+          "gameDisplay": "POR @ HOU",
+          "actual": 7,
+          "won": true
+        },
+        {
+          "player": "Jayson Tatum",
+          "team": "BOS",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -310,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 15,
+          "won": true
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -590,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 9,
+          "won": true
+        },
+        {
+          "player": "Nikola Vucevic",
+          "team": "CHI",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -460,
+          "gameKey": "DAL@BOS",
+          "gameDisplay": "DAL @ BOS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Bam Adebayo",
+          "team": "MIA",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -2200,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 24,
+          "won": true
+        },
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -650,
+          "gameKey": "MIA@CHA",
+          "gameDisplay": "MIA @ CHA",
+          "actual": 2,
+          "won": false
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:25.025Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 2,
+      "odds": -126,
+      "decimalOdds": 1.79,
+      "combinedHitRate": 1,
+      "ev": 0.795,
+      "legs": [
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -310,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 79,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 3,
+      "odds": 123,
+      "decimalOdds": 2.23,
+      "combinedHitRate": 1,
+      "ev": 1.233,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -410,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 10,
+          "won": true
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -310,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 123,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 4,
+      "odds": 178,
+      "decimalOdds": 2.78,
+      "combinedHitRate": 1,
+      "ev": 1.777,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -410,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 10,
+          "won": true
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -410,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 16,
+          "won": true
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -310,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 178,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 5,
+      "odds": 154,
+      "decimalOdds": 2.54,
+      "combinedHitRate": 1,
+      "ev": 1.543,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -410,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 10,
+          "won": true
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -720,
+          "gameKey": "BKN@MIA",
+          "gameDisplay": "BKN @ MIA",
+          "actual": 5,
+          "won": true
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -410,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 16,
+          "won": true
+        },
+        {
+          "player": "Julius Randle",
+          "team": "MIN",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -1100,
+          "gameKey": "TOR@MIN",
+          "gameDisplay": "TOR @ MIN",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -310,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 8,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 154,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 6,
+      "odds": 245,
+      "decimalOdds": 3.45,
+      "combinedHitRate": 1,
+      "ev": 2.451,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -410,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 10,
+          "won": true
+        },
+        {
+          "player": "Tyler Herro",
+          "team": "MIA",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -720,
+          "gameKey": "BKN@MIA",
+          "gameDisplay": "BKN @ MIA",
+          "actual": 5,
+          "won": true
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -410,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 16,
+          "won": true
+        },
+        {
+          "player": "Julius Randle",
+          "team": "MIN",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -1100,
+          "gameKey": "TOR@MIN",
+          "gameDisplay": "TOR @ MIN",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -310,
+          "gameKey": "GS@HOU",
+          "gameDisplay": "GS @ HOU",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": true,
+      "pnl": 245,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260304",
+      "numLegs": 2,
+      "odds": -181,
+      "decimalOdds": 1.55,
+      "combinedHitRate": 1,
+      "ev": 0.554,
+      "legs": [
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -350,
+          "gameKey": "CHA@BOS",
+          "gameDisplay": "CHA @ BOS",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "Onyeka Okongwu",
+          "team": "ATL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -480,
+          "gameKey": "ATL@MIL",
+          "gameDisplay": "ATL @ MIL",
+          "actual": 8,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:36.911Z"
+    },
+    {
+      "date": "20260304",
+      "numLegs": 3,
+      "odds": -162,
+      "decimalOdds": 1.62,
+      "combinedHitRate": 1,
+      "ev": 0.616,
+      "legs": [
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -350,
+          "gameKey": "CHA@BOS",
+          "gameDisplay": "CHA @ BOS",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "Darius Garland",
+          "team": "CLE",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -2500,
+          "gameKey": "IND@LAC",
+          "gameDisplay": "IND @ LAC",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Onyeka Okongwu",
+          "team": "ATL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -480,
+          "gameKey": "ATL@MIL",
+          "gameDisplay": "ATL @ MIL",
+          "actual": 8,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:36.911Z"
+    },
+    {
+      "date": "20260304",
+      "numLegs": 4,
+      "odds": -124,
+      "decimalOdds": 1.81,
+      "combinedHitRate": 1,
+      "ev": 0.806,
+      "legs": [
+        {
+          "player": "Nikola Vucevic",
+          "team": "CHI",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -850,
+          "gameKey": "CHA@BOS",
+          "gameDisplay": "CHA @ BOS",
+          "actual": 4,
+          "won": true
+        },
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -350,
+          "gameKey": "CHA@BOS",
+          "gameDisplay": "CHA @ BOS",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "Darius Garland",
+          "team": "CLE",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 1.5,
+          "odds": -2500,
+          "gameKey": "IND@LAC",
+          "gameDisplay": "IND @ LAC",
+          "actual": 8,
+          "won": true
+        },
+        {
+          "player": "Onyeka Okongwu",
+          "team": "ATL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -480,
+          "gameKey": "ATL@MIL",
+          "gameDisplay": "ATL @ MIL",
+          "actual": 8,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:36.911Z"
+    },
+    {
+      "date": "20260303",
+      "numLegs": 2,
+      "odds": -286,
+      "decimalOdds": 1.35,
+      "combinedHitRate": 1,
+      "ev": 0.349,
+      "legs": [
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -650,
+          "gameKey": "DAL@CHA",
+          "gameDisplay": "DAL @ CHA",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -590,
+          "gameKey": "NO@LAL",
+          "gameDisplay": "NO @ LAL",
+          "actual": 21,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:44.197Z"
+    },
+    {
+      "date": "20260303",
+      "numLegs": 3,
+      "odds": -226,
+      "decimalOdds": 1.44,
+      "combinedHitRate": 1,
+      "ev": 0.442,
+      "legs": [
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -650,
+          "gameKey": "DAL@CHA",
+          "gameDisplay": "DAL @ CHA",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "Julius Randle",
+          "team": "MIN",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -1450,
+          "gameKey": "MEM@MIN",
+          "gameDisplay": "MEM @ MIN",
+          "actual": 11,
+          "won": true
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -590,
+          "gameKey": "NO@LAL",
+          "gameDisplay": "NO @ LAL",
+          "actual": 21,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:44.197Z"
+    },
+    {
+      "date": "20260303",
+      "numLegs": 4,
+      "odds": -191,
+      "decimalOdds": 1.52,
+      "combinedHitRate": 1,
+      "ev": 0.523,
+      "legs": [
+        {
+          "player": "Miles Bridges",
+          "team": "CHA",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -650,
+          "gameKey": "DAL@CHA",
+          "gameDisplay": "DAL @ CHA",
+          "actual": 3,
+          "won": false
+        },
+        {
+          "player": "Julius Randle",
+          "team": "MIN",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -1450,
+          "gameKey": "MEM@MIN",
+          "gameDisplay": "MEM @ MIN",
+          "actual": 11,
+          "won": true
+        },
+        {
+          "player": "Evan Mobley",
+          "team": "CLE",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -1800,
+          "gameKey": "DET@CLE",
+          "gameDisplay": "DET @ CLE",
+          "actual": 5,
+          "won": true
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -590,
+          "gameKey": "NO@LAL",
+          "gameDisplay": "NO @ LAL",
+          "actual": 21,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:44.197Z"
+    },
+    {
+      "date": "20260302",
+      "numLegs": 2,
+      "odds": -114,
+      "decimalOdds": 1.87,
+      "combinedHitRate": 1,
+      "ev": 0.875,
+      "legs": [
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -295,
+          "gameKey": "DEN@UTAH",
+          "gameDisplay": "DEN @ UTAH",
+          "actual": 11,
+          "won": true
+        },
+        {
+          "player": "Kyle Kuzma",
+          "team": "MIL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -250,
+          "gameKey": "BOS@MIL",
+          "gameDisplay": "BOS @ MIL",
+          "actual": 0,
+          "won": false
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:48.586Z"
+    },
+    {
+      "date": "20260302",
+      "numLegs": 3,
+      "odds": 140,
+      "decimalOdds": 2.4,
+      "combinedHitRate": 1,
+      "ev": 1.395,
+      "legs": [
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -360,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 6,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -295,
+          "gameKey": "DEN@UTAH",
+          "gameDisplay": "DEN @ UTAH",
+          "actual": 11,
+          "won": true
+        },
+        {
+          "player": "Kyle Kuzma",
+          "team": "MIL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -250,
+          "gameKey": "BOS@MIL",
+          "gameDisplay": "BOS @ MIL",
+          "actual": 0,
+          "won": false
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:48.586Z"
+    },
+    {
+      "date": "20260302",
+      "numLegs": 4,
+      "odds": 210,
+      "decimalOdds": 3.1,
+      "combinedHitRate": 1,
+      "ev": 2.1,
+      "legs": [
+        {
+          "player": "John Collins",
+          "team": "UTAH",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -340,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -360,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 6,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -295,
+          "gameKey": "DEN@UTAH",
+          "gameDisplay": "DEN @ UTAH",
+          "actual": 11,
+          "won": true
+        },
+        {
+          "player": "Kyle Kuzma",
+          "team": "MIL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -250,
+          "gameKey": "BOS@MIL",
+          "gameDisplay": "BOS @ MIL",
+          "actual": 0,
+          "won": false
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:48.586Z"
+    },
+    {
+      "date": "20260302",
+      "numLegs": 5,
+      "odds": 270,
+      "decimalOdds": 3.7,
+      "combinedHitRate": 1,
+      "ev": 2.696,
+      "legs": [
+        {
+          "player": "Amen Thompson",
+          "team": "HOU",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 5.5,
+          "odds": -520,
+          "gameKey": "HOU@WSH",
+          "gameDisplay": "HOU @ WSH",
+          "actual": 12,
+          "won": true
+        },
+        {
+          "player": "John Collins",
+          "team": "UTAH",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -340,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Draymond Green",
+          "team": "GS",
+          "statType": "assists",
+          "statLabel": "AST",
+          "line": 3.5,
+          "odds": -360,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 6,
+          "won": true
+        },
+        {
+          "player": "Kyle Kuzma",
+          "team": "MIL",
+          "statType": "rebounds",
+          "statLabel": "REB",
+          "line": 3.5,
+          "odds": -250,
+          "gameKey": "BOS@MIL",
+          "gameDisplay": "BOS @ MIL",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -295,
+          "gameKey": "DEN@UTAH",
+          "gameDisplay": "DEN @ UTAH",
+          "actual": 11,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:48.586Z"
+    }
+  ],
+  "spParlays": [
+    {
+      "date": "20260305",
+      "numLegs": 2,
+      "odds": 105,
+      "decimalOdds": 2.05,
+      "combinedHitRate": 1,
+      "ev": 1.05,
+      "isSuperPayout": true,
+      "legs": [
+        {
+          "player": "Cameron Johnson",
+          "team": "BKN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -196,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 3,
+      "odds": 155,
+      "decimalOdds": 2.55,
+      "combinedHitRate": 1,
+      "ev": 1.549,
+      "isSuperPayout": true,
+      "legs": [
+        {
+          "player": "Cameron Johnson",
+          "team": "BKN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -196,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -410,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 16,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260305",
+      "numLegs": 4,
+      "odds": 214,
+      "decimalOdds": 3.14,
+      "combinedHitRate": 1,
+      "ev": 2.142,
+      "isSuperPayout": true,
+      "legs": [
+        {
+          "player": "Cameron Johnson",
+          "team": "BKN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -196,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "LeBron James",
+          "team": "LAL",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 14.5,
+          "odds": -410,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 16,
+          "won": true
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -280,
+          "gameKey": "LAL@DEN",
+          "gameDisplay": "LAL @ DEN",
+          "actual": 15,
+          "won": true
+        },
+        {
+          "player": "Jaden McDaniels",
+          "team": "MIN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -430,
+          "gameKey": "TOR@MIN",
+          "gameDisplay": "TOR @ MIN",
+          "actual": 8,
+          "won": false
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:32.154Z"
+    },
+    {
+      "date": "20260302",
+      "numLegs": 2,
+      "odds": -136,
+      "decimalOdds": 1.73,
+      "combinedHitRate": 1,
+      "ev": 0.733,
+      "isSuperPayout": true,
+      "legs": [
+        {
+          "player": "John Collins",
+          "team": "UTAH",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -340,
+          "gameKey": "LAC@GS",
+          "gameDisplay": "LAC @ GS",
+          "actual": 0,
+          "won": false
+        },
+        {
+          "player": "Christian Braun",
+          "team": "DEN",
+          "statType": "points",
+          "statLabel": "PTS",
+          "line": 9.5,
+          "odds": -295,
+          "gameKey": "DEN@UTAH",
+          "gameDisplay": "DEN @ UTAH",
+          "actual": 11,
+          "won": true
+        }
+      ],
+      "resolved": true,
+      "won": false,
+      "pnl": -100,
+      "savedAt": "2026-03-07T05:51:48.586Z"
+    }
+  ]
+}
