@@ -417,6 +417,11 @@ h2 {
   font-weight: 600;
 }
 
+.result-pending {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
 .pnl-pos { color: var(--accent); }
 .pnl-neg { color: var(--red); }
 
