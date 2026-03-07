@@ -1,2265 +1,402 @@
 /* ============================================================
-   NBA Dominance System — Pre-Game Picks
-   Dark Trading Terminal Theme
+   NBA Prop Picks — Clean Dark Theme
    ============================================================ */
 
 :root {
-  --bg-primary: #0a0e17;
-  --bg-secondary: #111827;
-  --bg-card: #1a1f2e;
-  --bg-card-hover: #1f2937;
-  --bg-accent: #0f172a;
-  --border: #1e293b;
-  --border-light: #334155;
-
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-
-  --green: #22c55e;
-  --green-dim: #166534;
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #232733;
+  --border: #2d3140;
+  --text: #e4e6ed;
+  --text-dim: #8b8fa3;
+  --accent: #22c55e;
+  --accent-dim: #16a34a;
+  --gold: #f59e0b;
   --red: #ef4444;
-  --red-dim: #7f1d1d;
   --blue: #3b82f6;
-  --amber: #f59e0b;
-  --cyan: #06b6d4;
   --purple: #a78bfa;
-
-  --radius: 8px;
-  --radius-sm: 4px;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
-  line-height: 1.5;
 }
 
-/* ── HEADER ─────────────────────────────────────────────── */
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  height: 56px;
-  background: var(--bg-secondary);
+/* Header */
+header {
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  padding: 1.5rem 2rem 0;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto 1rem;
 }
 
-.brand {
-  font-size: 18px;
+h1 {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--green);
-  letter-spacing: -0.5px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
 }
 
-.brand-tag {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--bg-accent);
-  padding: 2px 8px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+.subtitle {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
-.header-nav {
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  gap: 4px;
+  gap: 0;
 }
 
 .nav-btn {
   background: none;
   border: none;
-  color: var(--text-secondary);
-  padding: 8px 16px;
-  font-size: 13px;
+  color: var(--text-dim);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
 }
 
-.nav-btn:hover {
-  color: var(--text-primary);
-  background: var(--bg-card);
-}
-
+.nav-btn:hover { color: var(--text); }
 .nav-btn.active {
-  color: var(--text-primary);
-  background: var(--bg-card);
-  font-weight: 600;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-
-.status-dot.online { background: var(--green); box-shadow: 0 0 6px var(--green); }
-.status-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
-.status-dot.error { background: var(--red); }
-.status-dot.offline { background: var(--text-muted); }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.status-text {
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-/* ── METRICS BAR ────────────────────────────────────────── */
-
-.metrics-bar {
-  display: flex;
-  gap: 1px;
-  background: var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.metric {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 8px;
-  background: var(--bg-secondary);
-}
-
-.metric-value {
-  font-size: 20px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-.metric-value.cyan {
-  color: var(--cyan);
-}
-
-.metric-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 2px;
-}
-
-/* ── MAIN ───────────────────────────────────────────────── */
-
-.main {
+/* Main */
+main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 1.5rem 2rem;
 }
 
+/* Dashboard */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-card.highlight {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), var(--surface));
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card.highlight .stat-value { color: var(--accent); }
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Views */
 .view { display: none; }
 .view.active { display: block; }
 
-.section-title {
-  font-size: 16px;
-  color: var(--text-secondary);
-  margin: 32px 0 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
 }
 
-/* ── LOADING STATE ──────────────────────────────────────── */
-
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 20px;
-  color: var(--text-muted);
-}
-
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--border);
-  border-top: 3px solid var(--green);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.empty-state {
+/* Status */
+.status-msg {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  padding: 1rem;
   text-align: center;
-  padding: 60px 20px;
 }
 
-.empty-state h2 {
-  font-size: 20px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.empty-state p {
-  color: var(--text-muted);
-  max-width: 460px;
-  margin: 0 auto 8px;
-}
-
-.empty-state .subtle {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-/* ── PICK CARDS ─────────────────────────────────────────── */
-
+/* Picks Grid */
 .picks-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .pick-card {
-  background: var(--bg-card);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: border-color 0.2s;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border-left: 3px solid var(--accent);
 }
 
-.pick-card:hover {
-  border-color: var(--border-light);
-}
-
-.pick-card.conf-high {
-  border-left: 4px solid var(--green);
-}
-
-.pick-card.conf-strong {
-  border-left: 4px solid var(--cyan);
-}
-
-.pick-card.conf-moderate {
-  border-left: 4px solid var(--amber);
-}
-
-.pick-card.conf-diamond {
-  border-left: 4px solid #b9f2ff;
-  background: linear-gradient(135deg, #0a2e3f 0%, var(--bg-card) 100%);
-  border-color: rgba(185, 242, 255, 0.3);
-}
-
-.diamond-verdict {
-  background: #b9f2ff !important;
-  color: #0a0e17 !important;
-}
-
-.diamond-conf {
-  color: #b9f2ff !important;
-}
-
-.diamond-bet {
-  color: #b9f2ff !important;
-}
-
-.diamond-value {
-  color: #b9f2ff !important;
-}
-
-.diamond-text {
-  color: #b9f2ff !important;
-}
-
-.diamond-accuracy {
-  padding: 8px 20px;
-  font-size: 12px;
-  color: rgba(185, 242, 255, 0.7);
-  border-top: 1px solid rgba(185, 242, 255, 0.15);
-  font-style: italic;
+.pick-card.parlay {
+  border-left-color: var(--purple);
 }
 
 .pick-header {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px 0;
-}
-
-.pick-verdict {
-  display: inline-block;
-  padding: 4px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  background: var(--green);
-  color: #000;
-}
-
-.pick-conf {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.conf-high .pick-conf { color: var(--green); }
-.conf-strong .pick-conf { color: var(--cyan); }
-.conf-moderate .pick-conf { color: var(--amber); }
-
-.pick-bet-line {
-  padding: 8px 20px 0;
-  font-size: 24px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-.pick-matchup {
-  padding: 4px 20px 0;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
-.pick-details {
-  display: flex;
-  gap: 24px;
-  padding: 16px 20px;
-  flex-wrap: wrap;
-}
-
-.detail {
-  display: flex;
-  flex-direction: column;
-}
-
-.detail-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-}
-
-.detail-value {
-  font-size: 15px;
-  font-weight: 600;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-/* ── TEAM TOTAL OVER BET ──────────────────────────────── */
-
-.pick-team-total {
-  margin: 0 20px;
-  padding: 14px 16px;
-  background: rgba(6, 182, 212, 0.06);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  border-radius: var(--radius-sm);
-}
-
-.team-total-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.team-total-badge {
-  background: var(--cyan);
-  color: #000;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.5px;
-}
-
-.team-total-label {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--cyan);
-}
-
-.team-total-line {
-  font-size: 18px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--cyan);
-  margin-bottom: 8px;
-}
-
-.team-total-stats {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
-
-.tt-stat strong {
-  color: var(--cyan);
-}
-
-.team-total-note {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* ── PICK LIVE STATUS ───────────────────────────────────── */
-
-.pick-live {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  font-size: 13px;
-  border-top: 1px solid var(--border);
-}
-
-.pick-live.live-scheduled {
-  background: var(--bg-accent);
-  color: var(--text-muted);
-}
-
-.pick-live.live-active {
-  background: rgba(34, 197, 94, 0.08);
-  color: var(--green);
-}
-
-.pick-live.live-win {
-  background: rgba(34, 197, 94, 0.1);
-}
-
-.pick-live.live-loss {
-  background: rgba(239, 68, 68, 0.1);
-}
-
-.live-label {
-  font-weight: 600;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 12px;
-}
-
-.live-score {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-weight: 600;
-}
-
-.live-result {
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.live-win .live-result { color: var(--green); }
-.live-loss .live-result { color: var(--red); }
-
-.live-track {
-  font-weight: 600;
-  font-size: 12px;
-}
-
-.live-status {
-  font-size: 12px;
-}
-
-/* ── ALL GAMES GRID ─────────────────────────────────────── */
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 8px;
-}
-
-.game-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  position: relative;
-}
-
-.game-card.game-picked {
-  border-color: var(--green);
-  background: rgba(34, 197, 94, 0.05);
-}
-
-.game-teams {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.game-status {
-  font-size: 12px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-.game-status.live { color: var(--green); }
-.game-status.final { color: var(--text-muted); }
-.game-status.scheduled { color: var(--text-secondary); }
-
-.game-badge {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  background: var(--green);
-  color: #000;
-}
-
-/* ── HISTORY TABLE ──────────────────────────────────────── */
-
-.filter-bar {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 16px;
-}
-
-.filter-btn,
-.cds-filter-btn,
-.prism-filter-btn,
-.nova-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.filter-btn:hover,
-.cds-filter-btn:hover,
-.prism-filter-btn:hover,
-.nova-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.filter-btn.active,
-.cds-filter-btn.active,
-.prism-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: var(--cyan);
-  color: var(--cyan);
-}
-
-.nova-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #fb923c;
-  color: #fb923c;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.data-table th {
-  text-align: left;
-  padding: 10px 12px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.data-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-secondary);
-}
-
-.data-table tr:hover td {
-  background: var(--bg-card);
-}
-
-.data-table .muted {
-  color: var(--text-muted);
-  text-align: center;
-  padding: 24px;
-}
-
-/* ── BADGES ─────────────────────────────────────────────── */
-
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.badge.conf-high {
-  background: rgba(34, 197, 94, 0.15);
-  color: var(--green);
-}
-
-.badge.conf-strong {
-  background: rgba(6, 182, 212, 0.15);
-  color: var(--cyan);
-}
-
-.badge.conf-diamond {
-  background: rgba(185, 242, 255, 0.15);
-  color: #b9f2ff;
-}
-
-.badge.result-win {
-  background: rgba(34, 197, 94, 0.15);
-  color: var(--green);
-}
-
-.badge.result-loss {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--red);
-}
-
-td.result-win { color: var(--green); }
-td.result-loss { color: var(--red); }
-
-.history-note {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin: 0 0 12px;
-  font-style: italic;
-}
-
-/* ── HISTORY SUMMARY ───────────────────────────────────── */
-
-.history-summary {
-  margin-top: 16px;
-}
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-}
-
-.summary-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  text-align: center;
-}
-
-.summary-card.summary-cyan {
-  border-color: rgba(6, 182, 212, 0.3);
-  background: rgba(6, 182, 212, 0.04);
-}
-
-.summary-card.summary-combined {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 0.75rem;
 }
 
-.summary-title {
-  font-size: 11px;
+.pick-type {
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(34, 197, 94, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.pick-card.parlay .pick-type {
+  color: var(--purple);
+  background: rgba(167, 139, 250, 0.1);
+}
+
+.pick-odds {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.pick-player {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.pick-line {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.pick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.pick-stat {
+  font-size: 0.8rem;
+}
+
+.pick-stat-label {
+  color: var(--text-dim);
+  font-size: 0.7rem;
+}
+
+.pick-stat-value {
   font-weight: 600;
 }
 
-.summary-cyan .summary-title {
-  color: var(--cyan);
-}
-
-.summary-card.summary-diamond {
-  border-color: rgba(185, 242, 255, 0.3);
-  background: rgba(185, 242, 255, 0.04);
-}
-
-.summary-diamond .summary-title {
-  color: #b9f2ff;
-}
-
-/* Play 5 Parlay styles */
-.pick-card.conf-parlay {
-  border-left: 4px solid #f59e0b;
-  background: linear-gradient(135deg, #2a1f0a 0%, var(--bg-card) 100%);
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-.conf-parlay .pick-verdict {
-  background: #f59e0b;
-  color: #0a0e17;
-}
-
-.conf-parlay .pick-conf {
-  color: #f59e0b;
-}
-
-.conf-parlay .pick-bet-line {
-  color: #fbbf24;
-  font-size: 22px;
-}
-
+/* Parlay legs */
 .parlay-legs {
-  padding: 8px 16px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  margin-top: 0.75rem;
 }
 
 .parlay-leg {
-  font-size: 13px;
-  color: var(--text-secondary);
-  padding: 4px 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.parlay-legs-cell {
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12px;
-}
-
-.summary-card.summary-parlay {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.04);
-}
-
-.summary-parlay .summary-title {
-  color: #f59e0b;
-}
-
-/* Play 6 PACT styles */
-.pick-card.conf-pact {
-  border-left: 4px solid var(--purple);
-}
-
-.pick-card.conf-pact-high {
-  border-left: 4px solid var(--purple);
-  background: linear-gradient(135deg, #1a0f2e 0%, var(--bg-card) 100%);
-}
-
-.pick-card.conf-pact-elite {
-  border-left: 4px solid #c4b5fd;
-  background: linear-gradient(135deg, #2d1a4e 0%, var(--bg-card) 100%);
-  border-color: rgba(196, 181, 253, 0.3);
-}
-
-.conf-pact .pick-verdict,
-.conf-pact-high .pick-verdict,
-.conf-pact-elite .pick-verdict {
-  background: var(--purple);
-  color: #0a0e17;
-}
-
-.conf-pact .pick-conf,
-.conf-pact-high .pick-conf,
-.conf-pact-elite .pick-conf {
-  color: var(--purple);
-}
-
-.pact-over {
-  color: #22c55e;
-  font-weight: 700;
-}
-
-.pact-under {
-  color: #ef4444;
-  font-weight: 700;
-}
-
-.pact-badge {
-  font-size: 12px;
-  background: var(--purple);
-  color: #0a0e17;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: 700;
-  margin-left: 8px;
-}
-
-.pact-factors {
-  padding: 4px 16px 8px;
-  font-size: 12px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.badge.conf-pact {
-  background: rgba(167, 139, 250, 0.15);
-  color: var(--purple);
-}
-
-.badge.conf-pact-high {
-  background: rgba(167, 139, 250, 0.2);
-  color: var(--purple);
-}
-
-.badge.conf-pact-elite {
-  background: rgba(196, 181, 253, 0.25);
-  color: #c4b5fd;
-}
-
-.summary-card.summary-pact {
-  border-color: rgba(167, 139, 250, 0.3);
-  background: rgba(167, 139, 250, 0.04);
-}
-
-.summary-pact .summary-title {
-  color: var(--purple);
-}
-
-.summary-card.summary-pact-elite {
-  border-color: rgba(196, 181, 253, 0.3);
-  background: rgba(196, 181, 253, 0.04);
-}
-
-.summary-pact-elite .summary-title {
-  color: #c4b5fd;
-}
-
-/* ── PRISM (Play 7) — Emerald/Teal ── */
-.pick-card.conf-prism {
-  border-color: rgba(16, 185, 129, 0.4);
-  background: rgba(16, 185, 129, 0.04);
-}
-.pick-card.conf-prism-high {
-  border-color: rgba(16, 185, 129, 0.6);
-  background: rgba(16, 185, 129, 0.08);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
-}
-.pick-card.conf-prism-elite {
-  border-color: rgba(16, 185, 129, 0.8);
-  background: rgba(16, 185, 129, 0.12);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
-}
-
-.conf-prism .pick-verdict,
-.conf-prism-high .pick-verdict,
-.conf-prism-elite .pick-verdict {
-  color: #10b981;
-}
-
-.conf-prism .pick-conf,
-.conf-prism-high .pick-conf,
-.conf-prism-elite .pick-conf {
-  color: #6ee7b7;
-}
-
-.prism-over {
-  color: #34d399;
-  font-weight: 700;
-}
-.prism-under {
-  color: #60a5fa;
-  font-weight: 700;
-}
-.prism-spread {
-  color: #fbbf24;
-  font-weight: 700;
-}
-
-.prism-badge {
-  display: inline-block;
-  background: rgba(16, 185, 129, 0.2);
-  color: #10b981;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.prism-factors {
-  font-size: 12px;
-  color: rgba(16, 185, 129, 0.8);
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid rgba(16, 185, 129, 0.15);
-}
-
-.badge.conf-prism {
-  background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-.badge.conf-prism-high {
-  background: rgba(16, 185, 129, 0.25);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.5);
-}
-.badge.conf-prism-elite {
-  background: rgba(16, 185, 129, 0.35);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.7);
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
-}
-
-.summary-card.summary-prism {
-  border-color: rgba(16, 185, 129, 0.3);
-  background: rgba(16, 185, 129, 0.04);
-}
-
-.summary-prism .summary-title {
-  color: #10b981;
-}
-
-/* ── NOVA (Play 8) — Orange ── */
-.pick-card.conf-nova {
-  border-color: rgba(251, 146, 60, 0.4);
-  background: rgba(251, 146, 60, 0.04);
-}
-.pick-card.conf-nova-high {
-  border-color: rgba(251, 146, 60, 0.6);
-  background: rgba(251, 146, 60, 0.08);
-  box-shadow: 0 0 12px rgba(251, 146, 60, 0.15);
-}
-.pick-card.conf-nova-elite {
-  border-color: rgba(251, 146, 60, 0.8);
-  background: rgba(251, 146, 60, 0.12);
-  box-shadow: 0 0 20px rgba(251, 146, 60, 0.25);
-}
-
-.conf-nova .pick-verdict,
-.conf-nova-high .pick-verdict,
-.conf-nova-elite .pick-verdict {
-  color: #fb923c;
-}
-
-.conf-nova .pick-conf,
-.conf-nova-high .pick-conf,
-.conf-nova-elite .pick-conf {
-  color: #fdba74;
-}
-
-.nova-over {
-  color: #fb923c;
-  font-weight: 700;
-}
-
-.nova-text {
-  color: #fb923c;
-}
-
-.nova-value {
-  color: #fb923c;
-  font-weight: 700;
-}
-
-.nova-badge {
-  display: inline-block;
-  background: rgba(251, 146, 60, 0.2);
-  color: #fb923c;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.nova-factors {
-  font-size: 12px;
-  color: rgba(251, 146, 60, 0.8);
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid rgba(251, 146, 60, 0.15);
-}
-
-.badge.conf-nova {
-  background: rgba(251, 146, 60, 0.15);
-  color: #fdba74;
-  border: 1px solid rgba(251, 146, 60, 0.3);
-}
-.badge.conf-nova-high {
-  background: rgba(251, 146, 60, 0.25);
-  color: #fb923c;
-  border: 1px solid rgba(251, 146, 60, 0.5);
-}
-.badge.conf-nova-elite {
-  background: rgba(251, 146, 60, 0.35);
-  color: #fb923c;
-  border: 1px solid rgba(251, 146, 60, 0.7);
-  text-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
-}
-
-.summary-card.summary-nova {
-  border-color: rgba(251, 146, 60, 0.3);
-  background: rgba(251, 146, 60, 0.04);
-}
-.summary-card.summary-nova-elite {
-  border-color: rgba(251, 146, 60, 0.5);
-  background: rgba(251, 146, 60, 0.08);
-}
-
-.summary-nova .summary-title {
-  color: #fb923c;
-}
-.summary-nova-elite .summary-title {
-  color: #fb923c;
-}
-
-/* ── FUSION (Play 9) — Pink/Magenta ── */
-.pick-card.conf-fusion {
-  border-color: rgba(236, 72, 153, 0.4);
-  background: rgba(236, 72, 153, 0.04);
-}
-
-.conf-fusion .pick-verdict {
-  background: #ec4899;
-  color: #0a0e17;
-}
-
-.conf-fusion .pick-conf {
-  color: #f472b6;
-}
-
-.fusion-text {
-  color: #ec4899;
-}
-
-.fusion-payout {
-  color: #ec4899 !important;
-}
-
-.fusion-value {
-  color: #ec4899;
-  font-weight: 700;
-}
-
-.fusion-badge {
-  display: inline-block;
-  background: rgba(236, 72, 153, 0.2);
-  color: #ec4899;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.fusion-legs {
-  padding: 8px 20px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.fusion-leg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: rgba(236, 72, 153, 0.06);
-  border: 1px solid rgba(236, 72, 153, 0.15);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.fusion-leg-source {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.5px;
-}
-
-.fusion-nova {
-  background: rgba(251, 146, 60, 0.2);
-  color: #fb923c;
-}
-
-.fusion-prism {
-  background: rgba(16, 185, 129, 0.2);
-  color: #10b981;
-}
-
-.fusion-leg-bet {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.fusion-leg-game {
-  color: var(--text-muted);
-  font-size: 12px;
-  margin-left: auto;
-}
-
-.fusion-plus {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 700;
-  color: #ec4899;
-}
-
-.fusion-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.fusion-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.fusion-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #ec4899;
-  color: #ec4899;
-}
-
-.badge.conf-fusion {
-  background: rgba(236, 72, 153, 0.15);
-  color: #f472b6;
-  border: 1px solid rgba(236, 72, 153, 0.3);
-}
-
-.summary-card.summary-fusion {
-  border-color: rgba(236, 72, 153, 0.3);
-  background: rgba(236, 72, 153, 0.04);
-}
-
-.summary-fusion .summary-title {
-  color: #ec4899;
-}
-
-/* ── PULSE (Play 10) — Purple/Violet ── */
-.pick-card.conf-pulse {
-  border-color: rgba(139, 92, 246, 0.4);
-  background: rgba(139, 92, 246, 0.04);
-}
-
-.conf-pulse .pick-verdict {
-  background: #8b5cf6;
-  color: #0a0e17;
-}
-
-.conf-pulse .pick-conf {
-  color: #a78bfa;
-}
-
-.pulse-text {
-  color: #8b5cf6;
-}
-
-.pulse-payout {
-  color: #8b5cf6 !important;
-}
-
-.pulse-value {
-  color: #8b5cf6;
-  font-weight: 700;
-}
-
-.pulse-badge {
-  display: inline-block;
-  background: rgba(139, 92, 246, 0.2);
-  color: #8b5cf6;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.pulse-under {
-  color: #8b5cf6;
-  font-weight: 700;
-}
-
-.pulse-legs {
-  padding: 8px 20px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.pulse-leg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: rgba(139, 92, 246, 0.06);
-  border: 1px solid rgba(139, 92, 246, 0.15);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.pulse-leg-player {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.pulse-leg-bet {
-  color: #a78bfa;
-  font-weight: 600;
-}
-
-.pulse-leg-spike {
-  color: var(--text-muted);
-  font-size: 11px;
-  margin-left: auto;
-  background: rgba(139, 92, 246, 0.15);
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
-.pulse-plus {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 700;
-  color: #8b5cf6;
-}
-
-.pulse-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.pulse-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.pulse-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #8b5cf6;
-  color: #8b5cf6;
-}
-
-.badge.conf-pulse {
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(139, 92, 246, 0.3);
-}
-
-.summary-card.summary-pulse {
-  border-color: rgba(139, 92, 246, 0.3);
-  background: rgba(139, 92, 246, 0.04);
-}
-
-.summary-pulse .summary-title {
-  color: #8b5cf6;
-}
-
-/* ── VAULT (Play 11) — emerald green #10b981 ── */
-
-.pick-card.conf-vault {
-  border-color: rgba(16, 185, 129, 0.4);
-  background: rgba(16, 185, 129, 0.04);
-}
-
-.conf-vault .pick-verdict {
-  background: #10b981;
-  color: #0a0e17;
-}
-
-.conf-vault .pick-conf {
-  color: #34d399;
-}
-
-.vault-text {
-  color: #10b981;
-}
-
-.vault-payout {
-  color: #10b981 !important;
-}
-
-.vault-value {
-  color: #10b981;
-  font-weight: 700;
-}
-
-.vault-badge {
-  display: inline-block;
-  background: rgba(16, 185, 129, 0.2);
-  color: #10b981;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.vault-over {
-  color: #10b981;
-  font-weight: 700;
-}
-
-.vault-legs {
-  padding: 8px 20px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.vault-leg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
-  background: rgba(16, 185, 129, 0.06);
-  border: 1px solid rgba(16, 185, 129, 0.15);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.vault-leg-player {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.vault-leg-bet {
-  color: #34d399;
-  font-weight: 600;
-}
-
-.vault-leg-conf {
-  color: var(--text-muted);
-  font-size: 11px;
-  margin-left: auto;
-  background: rgba(16, 185, 129, 0.15);
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
-.vault-plus {
-  text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: #10b981;
-}
-
-.vault-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.vault-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.vault-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #10b981;
-  color: #10b981;
-}
-
-.vault-sep {
-  color: var(--text-muted);
-  margin: 0 2px;
-}
-
-.vault-legs-cell {
-  font-size: 12px;
-  max-width: 600px;
-  white-space: normal;
-  line-height: 1.6;
-}
-
-.summary-card.summary-vault {
-  border-color: rgba(16, 185, 129, 0.3);
-  background: rgba(16, 185, 129, 0.04);
-}
-
-.summary-vault .summary-title {
-  color: #10b981;
-}
-
-/* ── FORTRESS (Play 12) — amber/gold theme ── */
-
-.pick-card.conf-fortress {
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.04);
-}
-
-.conf-fortress .pick-verdict {
-  background: #f59e0b;
-  color: #0a0e17;
-}
-
-.conf-fortress .pick-conf {
-  color: #fbbf24;
-}
-
-.fortress-payout {
-  color: #f59e0b !important;
-}
-
-.fortress-value {
-  color: #f59e0b;
-  font-weight: 700;
-}
-
-.fortress-badge {
-  display: inline-block;
-  background: rgba(245, 158, 11, 0.2);
-  color: #f59e0b;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.fortress-over {
-  color: #f59e0b;
-  font-weight: 700;
-}
-
-.fortress-legs {
-  padding: 8px 20px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.fortress-leg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
-  background: rgba(245, 158, 11, 0.06);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.fortress-leg-player {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.fortress-leg-bet {
-  color: #fbbf24;
-  font-weight: 600;
-}
-
-.fortress-leg-conf {
-  color: var(--text-muted);
-  font-size: 11px;
-  margin-left: auto;
-  background: rgba(245, 158, 11, 0.15);
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
-.fortress-plus {
-  text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: #f59e0b;
-}
-
-.fortress-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.fortress-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.fortress-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #f59e0b;
-  color: #f59e0b;
-}
-
-.fortress-sep {
-  color: var(--text-muted);
-  margin: 0 2px;
-}
-
-.fortress-legs-cell {
-  font-size: 12px;
-  max-width: 600px;
-  white-space: normal;
-  line-height: 1.6;
-}
-
-.summary-card.summary-fortress {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.04);
-}
-
-.summary-fortress .summary-title {
-  color: #f59e0b;
-}
-
-/* ── SIEGE (Play 13) — Red/Crimson ── */
-
-.pick-card.conf-siege {
-  border-color: rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.04);
-}
-
-.conf-siege .pick-verdict {
-  background: #ef4444;
-  color: #0a0e17;
-}
-
-.conf-siege .pick-conf {
-  color: #f87171;
-}
-
-.siege-payout {
-  color: #ef4444 !important;
-}
-
-.siege-value {
-  color: #ef4444;
-  font-weight: 700;
-}
-
-.siege-badge {
-  display: inline-block;
-  background: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
-}
-
-.siege-over {
-  color: #ef4444;
-  font-weight: 700;
-}
-
-.siege-legs {
-  padding: 8px 20px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.siege-leg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
-  background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.15);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.siege-leg-player {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.siege-leg-bet {
-  color: #f87171;
-  font-weight: 600;
-}
-
-.siege-leg-odds {
-  color: var(--text-muted);
-  font-size: 11px;
-  margin-left: auto;
-  background: rgba(239, 68, 68, 0.15);
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
-.siege-leg-team {
-  color: var(--text-muted);
-  font-weight: 400;
-  font-size: 11px;
-}
-
-.siege-live-tag {
-  background: #ef4444;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 1px 4px;
-  border-radius: 3px;
-  margin-right: 3px;
-  letter-spacing: 0.5px;
-}
-
-.siege-books-count {
-  color: var(--text-muted);
-  font-size: 10px;
-  font-style: italic;
-  margin-left: 4px;
-}
-
-.siege-odds-tag {
-  font-size: 10px;
-  color: #ef4444;
-  font-weight: 600;
-  background: rgba(239, 68, 68, 0.1);
-  padding: 0 4px;
-  border-radius: 2px;
-  margin: 0 2px;
-}
-
-.siege-plus {
-  text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: #ef4444;
-}
-
-.siege-filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-
-.siege-filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text-primary);
-}
-
-.siege-filter-btn.active {
-  background: var(--bg-accent);
-  border-color: #ef4444;
-  color: #ef4444;
-}
-
-.siege-sep {
-  color: var(--text-muted);
-  margin: 0 2px;
-}
-
-.siege-legs-cell {
-  font-size: 12px;
-  max-width: 600px;
-  white-space: normal;
-  line-height: 1.6;
-}
-
-.badge.conf-siege {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
-
-.summary-card.summary-siege {
-  border-color: rgba(239, 68, 68, 0.3);
-  background: rgba(239, 68, 68, 0.04);
-}
-
-.summary-siege .summary-title {
-  color: #ef4444;
-}
-
-.summary-stat {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  align-items: baseline;
-  margin-bottom: 4px;
-}
-
-.summary-record {
-  font-size: 18px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-.summary-pct {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.summary-pnl {
-  font-size: 16px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-.summary-pnl-big {
-  font-size: 24px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-@media (max-width: 600px) {
-  .summary-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── HOW IT WORKS ───────────────────────────────────────── */
-
-.how-content {
-  max-width: 720px;
-}
-
-.how-content h2 {
-  font-size: 22px;
-  margin-bottom: 24px;
-}
-
-.how-section {
-  margin-bottom: 32px;
-}
-
-.how-section h3 {
-  font-size: 16px;
-  color: var(--green);
-  margin-bottom: 10px;
-}
-
-.how-section p {
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-  line-height: 1.7;
-}
-
-.how-section ol,
-.how-section ul {
-  color: var(--text-secondary);
-  padding-left: 20px;
-  line-height: 1.8;
-}
-
-.how-section li {
-  margin-bottom: 4px;
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.result-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  text-align: center;
-}
-
-.result-card.highlight-cyan {
-  border-color: rgba(6, 182, 212, 0.4);
-  background: rgba(6, 182, 212, 0.06);
-}
-
-.result-card.highlight-cyan .result-value {
-  color: var(--cyan);
-}
-
-.result-card.highlight-diamond {
-  border-color: rgba(185, 242, 255, 0.4);
-  background: rgba(185, 242, 255, 0.06);
-}
-
-.diamond-section {
-  border-left: 3px solid #b9f2ff;
-  padding-left: 16px;
-}
-
-.diamond-section h3 {
-  color: #b9f2ff;
-}
-
-.diamond-table thead {
-  background: rgba(185, 242, 255, 0.05);
-}
-
-.result-value {
-  font-size: 28px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--green);
-}
-
-.result-label {
-  font-size: 12px;
-  color: var(--text-primary);
-  margin-top: 4px;
-  font-weight: 600;
-}
-
-.result-detail {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.factor-list li {
-  color: var(--text-secondary);
-}
-
-.notes-list li {
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* ── RESPONSIVE ─────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-  .header {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 12px 16px;
-    gap: 8px;
-  }
-
-  .header-nav {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .metrics-bar {
-    flex-wrap: wrap;
-  }
-
-  .metric {
-    min-width: 100px;
-  }
-
-  .main {
-    padding: 16px;
-  }
-
-  .pick-details {
-    gap: 16px;
-  }
-
-  .pick-bet-line {
-    font-size: 20px;
-  }
-
-  .games-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  }
-
-  .results-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .master-dashboard {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .master-method-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ============================================================
-   MASTER BET RECOMMENDER STYLES
-   ============================================================ */
-
-.master-header {
-  background: linear-gradient(135deg, #0f172a 0%, #1a1f2e 50%, #0f172a 100%);
-  border: 1px solid #334155;
-  border-left: 4px solid #f59e0b;
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 24px;
-}
-
-.master-title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.master-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #f59e0b;
-  letter-spacing: -0.5px;
-}
-
-.master-badge {
-  font-size: 10px;
-  font-weight: 700;
-  color: #0a0e17;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  padding: 2px 10px;
-  border-radius: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.master-subtitle {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-/* Master Dashboard Stats */
-.master-dashboard {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.master-stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  text-align: center;
-}
-
-.master-stat-card.master-stat-overall {
-  border-color: #f59e0b;
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.master-stat-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-}
-
-.master-stat-value {
-  font-size: 28px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-.master-stat-sub {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-/* Section Titles */
-.master-section-title {
-  color: #f59e0b !important;
-  border-bottom-color: rgba(245, 158, 11, 0.3) !important;
-}
-
-.master-subsystem-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 16px 0 8px;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-accent);
-  border-left: 3px solid;
-}
-
-.ironlock-title {
-  color: #3b82f6;
-  border-left-color: #3b82f6;
-}
-
-.bedrock-title {
-  color: #22c55e;
-  border-left-color: #22c55e;
-}
-
-.apex-title {
-  color: #a78bfa;
-  border-left-color: #a78bfa;
-}
-
-/* Today's Master Picks */
-.master-picks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.master-pick-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  transition: border-color 0.2s;
-}
-
-.master-pick-card:hover {
-  border-color: var(--border-light);
-}
-
-.master-pick-card.ironlock-card {
-  border-left: 4px solid #3b82f6;
-}
-
-.master-pick-card.bedrock-card {
-  border-left: 4px solid #22c55e;
-}
-
-.master-pick-card.apex-card {
-  border-left: 4px solid #a78bfa;
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.05) 0%, var(--bg-card) 100%);
-}
-
-.master-pick-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.master-pick-type {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-}
-
-.master-pick-type.ironlock {
-  color: #3b82f6;
-  background: rgba(59, 130, 246, 0.15);
-}
-
-.master-pick-type.bedrock {
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.15);
-}
-
-.master-pick-type.apex {
-  color: #a78bfa;
-  background: rgba(167, 139, 250, 0.15);
-}
-
-.master-pick-confidence {
-  font-size: 12px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-secondary);
-}
-
-.master-pick-bet {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-}
-
-.master-pick-matchup {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.master-pick-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.master-stat-mini {
-  text-align: center;
-  padding: 6px;
-  background: var(--bg-accent);
-  border-radius: var(--radius-sm);
-}
-
-.master-stat-mini-label {
-  font-size: 9px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.master-stat-mini-value {
-  font-size: 14px;
-  font-weight: 600;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-primary);
-}
-
-/* Parlay legs display */
-.master-parlay-legs {
-  margin: 8px 0;
-  padding: 0;
-  list-style: none;
-}
-
-.master-parlay-leg {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 8px;
-  margin: 4px 0;
-  background: var(--bg-accent);
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-}
-
-.master-parlay-leg-type {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 1px 5px;
-  border-radius: 3px;
-}
-
-.master-parlay-leg-type.ironlock { color: #3b82f6; background: rgba(59, 130, 246, 0.15); }
-.master-parlay-leg-type.bedrock { color: #22c55e; background: rgba(34, 197, 94, 0.15); }
-
-.master-parlay-leg-info {
-  flex: 1;
-  margin: 0 8px;
-  color: var(--text-primary);
-}
-
-.master-parlay-leg-odds {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  color: var(--text-secondary);
-}
-
-/* Empty state */
-.master-empty {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-muted);
-  background: var(--bg-card);
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-}
-
-/* Equity Curve */
-.master-equity-curve {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  overflow-x: auto;
-}
-
-#master-equity-canvas {
-  width: 100%;
-  height: 300px;
-}
-
-/* Methodology Cards */
-.master-methodology {
-  margin-top: 32px;
-}
-
-.master-method-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.master-method-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-}
-
-.master-method-card h4 {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  padding-left: 12px;
-}
-
-.master-method-card p {
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.method-detail {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-style: italic;
-  padding-top: 8px;
+  padding: 0.5rem 0;
   border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.parlay-leg:first-child { border-top: none; }
+
+.parlay-leg-player { font-weight: 600; }
+.parlay-leg-line { color: var(--accent); }
+.parlay-leg-odds { color: var(--text-dim); }
+
+.parlay-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.parlay-ev { color: var(--accent); font-weight: 600; }
+
+/* History */
+.history-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.history-section {
+  margin-bottom: 2rem;
+}
+
+.history-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-dim);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.history-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.result-win {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.result-loss {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.pnl-pos { color: var(--accent); }
+.pnl-neg { color: var(--red); }
+
+/* Chart */
+.chart-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+}
+
+/* Method */
+.method-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.method-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.method-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+}
+
+.method-card p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.method-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.method-card li {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  padding: 0.25rem 0;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.method-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard { grid-template-columns: repeat(3, 1fr); }
+  .method-content { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  header { padding: 1rem; }
+  main { padding: 1rem; }
+  .dashboard { grid-template-columns: repeat(2, 1fr); }
+  .picks-grid { grid-template-columns: 1fr; }
+  .history-table { font-size: 0.75rem; }
+  .history-table th, .history-table td { padding: 0.4rem; }
 }
