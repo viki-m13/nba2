@@ -28,6 +28,9 @@
     await loadIncrementalOdds();
     runBacktest();
 
+    // Seed live history for recent days if needed, then resolve
+    await seedLiveHistory(5);
+
     // Resolve any unresolved live picks from past days
     try {
       livePicksData = await window.BettingEngine.resolveLivePicks();
@@ -95,6 +98,161 @@
     if (window.SuperPayoutEngine) {
       spBacktestResults = window.SuperPayoutEngine.runBacktest(seasonData, playerBoxScores, historicalOdds);
       console.log('Super Payout backtest:', spBacktestResults.stats);
+    }
+  }
+
+  // --- Seed Live History (backfill recent days) ---
+
+  async function seedLiveHistory(numDays) {
+    const existing = window.BettingEngine.loadLivePicks();
+    const existingDates = new Set([
+      ...existing.parlays.map(p => p.date),
+      ...existing.spParlays.map(p => p.date),
+    ]);
+
+    const today = new Date();
+    const datesToSeed = [];
+    for (let i = 1; i <= numDays; i++) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      if (!existingDates.has(ds)) datesToSeed.push(ds);
+    }
+
+    if (datesToSeed.length === 0) {
+      console.log('[SEED] All recent dates already seeded');
+      return;
+    }
+
+    console.log(`[SEED] Seeding live history for ${datesToSeed.length} dates:`, datesToSeed);
+
+    // Build the model from all box score data (same as generateTodayPicks)
+    const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
+    const model = Object.create(window.BettingEngine.PlayerModel);
+    model.history = {};
+    for (const g of sorted) {
+      for (const p of (g.players || [])) {
+        const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
+        if (mins < 10) continue;
+        model.update(p.name, {
+          pts: p.pts,
+          reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+          ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+          min: mins,
+        }, g.date, p.team);
+      }
+    }
+
+    // Super Payout model
+    let spModel = null;
+    if (window.SuperPayoutEngine) {
+      spModel = Object.create(window.SuperPayoutEngine.PlayerModel);
+      spModel.history = {};
+      for (const g of sorted) {
+        for (const p of (g.players || [])) {
+          const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
+          if (mins < 10) continue;
+          spModel.update(p.name, p.pts, mins, g.date, p.team);
+        }
+      }
+    }
+
+    for (const date of datesToSeed) {
+      try {
+        console.log(`[SEED] Fetching historical odds for ${date}...`);
+        const dayOdds = await window.BettingEngine.fetchHistoricalOddsForDate(date);
+
+        if (!dayOdds || dayOdds.length === 0) {
+          console.log(`[SEED] No odds for ${date}, skipping`);
+          continue;
+        }
+
+        // Build singles from historical odds (same logic as generateTodayPicks)
+        const daySingles = [];
+        for (const record of dayOdds) {
+          const gameKey = record.gameKey;
+          const gameDisplay = `${record.awayTeam} @ ${record.homeTeam}`;
+
+          const addPick = (prop) => {
+            if (!prop) return;
+            if (!daySingles.find(s => s.player === prop.player && s.statType === prop.statType && s.line === prop.line)) {
+              daySingles.push({ ...prop, gameKey, gameDisplay });
+            }
+          };
+
+          // Points
+          for (const [playerName, lines] of Object.entries(record.playerProps || {})) {
+            addPick(model.findBestStatProp(playerName, 'points', lines));
+            addPick(model.findBestT2Prop(playerName, 'points', lines));
+          }
+          // Rebounds
+          for (const [playerName, lines] of Object.entries(record.playerRebProps || {})) {
+            addPick(model.findBestStatProp(playerName, 'rebounds', lines));
+            addPick(model.findBestT2Prop(playerName, 'rebounds', lines));
+          }
+          // Assists
+          for (const [playerName, lines] of Object.entries(record.playerAstProps || {})) {
+            addPick(model.findBestStatProp(playerName, 'assists', lines));
+            addPick(model.findBestT2Prop(playerName, 'assists', lines));
+          }
+        }
+
+        daySingles.sort((a, b) => b.confidence - a.confidence);
+
+        // Build parlays
+        const dayParlays = window.BettingEngine.buildParlays(daySingles);
+        for (const parlay of dayParlays) {
+          parlay.legs = parlay.legs.map(leg => {
+            const match = daySingles.find(s =>
+              s.player === leg.player && s.line === leg.line && s.statType === leg.statType
+            );
+            return {
+              ...leg,
+              gameKey: match ? match.gameKey : '',
+              gameDisplay: match ? match.gameDisplay : '',
+            };
+          });
+        }
+
+        // Super Payout parlays
+        let daySPParlays = [];
+        if (spModel && window.SuperPayoutEngine) {
+          const spSingles = [];
+          for (const record of dayOdds) {
+            const gameKey = record.gameKey;
+            const gameDisplay = `${record.awayTeam} @ ${record.homeTeam}`;
+            for (const [playerName, lines] of Object.entries(record.playerProps || {})) {
+              const prop = spModel.findBestPayoutProp(playerName, lines);
+              if (prop) spSingles.push({ ...prop, gameKey, gameDisplay });
+            }
+          }
+          if (spSingles.length >= 2) {
+            daySPParlays = window.SuperPayoutEngine.buildSuperParlays(spSingles);
+            for (const parlay of daySPParlays) {
+              parlay.legs = parlay.legs.map(leg => {
+                const match = spSingles.find(s => s.player === leg.player && s.line === leg.line);
+                return {
+                  ...leg,
+                  gameKey: match ? match.gameKey : '',
+                  gameDisplay: match ? match.gameDisplay : '',
+                };
+              });
+            }
+          }
+        }
+
+        if (dayParlays.length > 0 || daySPParlays.length > 0) {
+          window.BettingEngine.saveTodayParlays(dayParlays, daySPParlays, date);
+          console.log(`[SEED] ${date}: ${dayParlays.length} parlays, ${daySPParlays.length} SP parlays`);
+        } else {
+          console.log(`[SEED] ${date}: No qualifying parlays`);
+        }
+
+        // Rate limit between days
+        await new Promise(r => setTimeout(r, 500));
+      } catch (e) {
+        console.warn(`[SEED] Error seeding ${date}:`, e);
+      }
     }
   }
 
