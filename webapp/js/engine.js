@@ -726,16 +726,61 @@ window.BettingEngine = (function () {
   // --- Live Pick Tracking (2025-26 Season) ---
 
   const LIVE_PICKS_KEY = 'nba_live_picks';
+  let basePicksData = null; // Static data from live_picks_2026.json
+
+  function setBasePicksData(data) {
+    basePicksData = data;
+    console.log(`[ENGINE] Base picks loaded: ${data.parlays.length} parlays, ${data.spParlays.length} SP parlays`);
+  }
 
   function loadLivePicks() {
+    // Merge base (from data file) + localStorage (incremental new picks)
+    const base = basePicksData || { parlays: [], spParlays: [] };
+    let local;
     try {
-      return JSON.parse(localStorage.getItem(LIVE_PICKS_KEY) || '{"parlays":[],"spParlays":[]}');
-    } catch (e) { return { parlays: [], spParlays: [] }; }
+      local = JSON.parse(localStorage.getItem(LIVE_PICKS_KEY) || '{"parlays":[],"spParlays":[]}');
+    } catch (e) {
+      local = { parlays: [], spParlays: [] };
+    }
+
+    // Deduplicate by date — localStorage entries override base for same date
+    const baseDates = new Set([
+      ...base.parlays.map(p => p.date),
+      ...base.spParlays.map(p => p.date),
+    ]);
+    const localDates = new Set([
+      ...local.parlays.map(p => p.date),
+      ...local.spParlays.map(p => p.date),
+    ]);
+
+    // Use base entries for dates not in localStorage, plus all localStorage entries
+    const parlays = [
+      ...base.parlays.filter(p => !localDates.has(p.date)),
+      ...local.parlays,
+    ];
+    const spParlays = [
+      ...base.spParlays.filter(p => !localDates.has(p.date)),
+      ...local.spParlays,
+    ];
+
+    return { parlays, spParlays };
   }
 
   function saveLivePicks(data) {
+    // Only save non-base entries to localStorage
+    const baseDates = new Set();
+    if (basePicksData) {
+      for (const p of basePicksData.parlays) baseDates.add(p.date);
+      for (const p of basePicksData.spParlays) baseDates.add(p.date);
+    }
+
+    const localOnly = {
+      parlays: data.parlays.filter(p => !baseDates.has(p.date)),
+      spParlays: data.spParlays.filter(p => !baseDates.has(p.date)),
+    };
+
     try {
-      localStorage.setItem(LIVE_PICKS_KEY, JSON.stringify(data));
+      localStorage.setItem(LIVE_PICKS_KEY, JSON.stringify(localOnly));
     } catch (e) {
       console.warn('[ENGINE] Could not save live picks:', e);
     }
@@ -830,61 +875,66 @@ window.BettingEngine = (function () {
         continue;
       }
 
-      // Only resolve if all games are final
-      const allFinal = games.every(g => g.status === 'final');
-      if (!allFinal) {
-        console.log(`[ENGINE] Not all games final for ${date}, skipping`);
-        continue;
-      }
-
-      // Fetch box scores for each game
+      // Fetch box scores for final games only
       const playerStats = {}; // playerName -> { pts, reb, ast }
+      let finalCount = 0;
       for (const [teamKey, eventId] of Object.entries(eventIds)) {
+        const game = games.find(g => g.id === eventId || g.espnId === eventId);
+        if (game && game.status !== 'final') continue; // Skip non-final games
+        finalCount++;
         const boxScore = await window.NbaApi.fetchESPNBoxScore(eventId);
         if (!boxScore) continue;
         for (const p of boxScore) {
-          // Store by lowercase name for fuzzy matching
           playerStats[p.name.toLowerCase()] = p;
         }
         // Rate limit
         await new Promise(r => setTimeout(r, 200));
       }
 
+      const allFinal = finalCount === Object.keys(eventIds).length;
+
       if (Object.keys(playerStats).length === 0) {
         console.warn(`[ENGINE] No box scores found for ${date}`);
         continue;
       }
 
+      // Helper: find player stats by name (exact then fuzzy)
+      const findPlayer = (playerName) => {
+        const lower = playerName.toLowerCase();
+        if (playerStats[lower]) return playerStats[lower];
+        // Fuzzy: match first + last name
+        const parts = lower.split(' ');
+        if (parts.length >= 2) {
+          const found = Object.entries(playerStats).find(([name]) =>
+            name.includes(parts[0]) && name.includes(parts[parts.length - 1])
+          );
+          if (found) return found[1];
+        }
+        return null;
+      };
+
       // Resolve each parlay for this date
       const resolveParlay = (parlay) => {
         if (parlay.date !== date || parlay.resolved) return;
 
-        let allResolved = true;
         for (const leg of parlay.legs) {
-          const pStats = playerStats[leg.player.toLowerCase()];
-          if (!pStats) {
-            // Try partial match
-            const found = Object.entries(playerStats).find(([name]) =>
-              name.includes(leg.player.toLowerCase().split(' ').pop())
-              && name.includes(leg.player.toLowerCase().split(' ')[0])
-            );
-            if (found) {
-              const [, stats] = found;
-              const statKey = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
-              leg.actual = stats[statKey];
-              leg.won = leg.actual > leg.line;
-            } else {
-              allResolved = false;
-              continue;
-            }
-          } else {
+          if (leg.actual !== null && leg.actual !== undefined) continue; // Already resolved
+          const pStats = findPlayer(leg.player);
+          if (pStats) {
             const statKey = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
             leg.actual = pStats[statKey];
             leg.won = leg.actual > leg.line;
+          } else if (allFinal) {
+            // All games final but player not in any box score = DNP → loss
+            leg.actual = 0;
+            leg.won = false;
           }
+          // If not allFinal and player not found, leave pending (game might not be done)
         }
 
-        if (allResolved) {
+        // Check if all legs are resolved
+        const allLegsResolved = parlay.legs.every(l => l.actual !== null && l.actual !== undefined);
+        if (allLegsResolved) {
           parlay.resolved = true;
           parlay.won = parlay.legs.every(l => l.won);
           const UNIT = 100;
@@ -1075,6 +1125,7 @@ window.BettingEngine = (function () {
     saveOddsToHistory,
     saveTodayParlays,
     loadLivePicks,
+    setBasePicksData,
     resolveLivePicks,
     fetchMissingDailyOdds,
     fetchHistoricalOddsForDate,

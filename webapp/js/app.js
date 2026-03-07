@@ -48,11 +48,12 @@
 
   async function loadData() {
     try {
-      const [seasonRes, boxRes, oddsRes, rebAstRes] = await Promise.all([
+      const [seasonRes, boxRes, oddsRes, rebAstRes, livePicksRes] = await Promise.all([
         fetch('data/espn_full_season_2025.json'),
         fetch('data/player_boxscores.json'),
         fetch('data/historical_odds.json'),
         fetch('data/historical_reb_ast_props.json').catch(() => null),
+        fetch('data/live_picks_2026.json').catch(() => null),
       ]);
 
       seasonData = await seasonRes.json();
@@ -60,6 +61,10 @@
       historicalOdds = await oddsRes.json();
       if (rebAstRes && rebAstRes.ok) {
         rebAstProps = await rebAstRes.json();
+      }
+      if (livePicksRes && livePicksRes.ok) {
+        const basePicks = await livePicksRes.json();
+        window.BettingEngine.setBasePicksData(basePicks);
       }
 
       console.log(`Loaded: ${seasonData.length} games, ${playerBoxScores.length} box scores, ${historicalOdds.length} historical odds, ${rebAstProps.length} reb/ast props`);
