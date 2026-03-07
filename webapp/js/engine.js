@@ -562,14 +562,25 @@ window.BettingEngine = (function () {
   function saveTodayParlays(parlays, spParlays, date) {
     const data = loadLivePicks();
 
-    // Remove existing entries for this date
-    data.parlays = data.parlays.filter(p => p.date !== date);
+    // Keep already-resolved entries for this date — only remove unresolved ones
+    data.parlays = data.parlays.filter(p => p.date !== date || p.resolved);
 
     // Merge both standard and SP parlays into one list
     const allParlays = [...(parlays || []), ...(spParlays || [])];
+
+    // Check how many resolved picks already exist for this date
+    const resolvedForDate = data.parlays.filter(p => p.date === date && p.resolved).length;
+    if (resolvedForDate > 0) {
+      console.log(`[ENGINE] ${resolvedForDate} resolved parlays already exist for ${date}, keeping them`);
+      // Don't add new unresolved dupes if we already have resolved data
+      saveLivePicks(data);
+      return;
+    }
+
     for (const parlay of allParlays) {
       data.parlays.push({
         date,
+        builder: parlay.builder || 'PARLAY',
         numLegs: parlay.numLegs || parlay.legs.length,
         odds: parlay.odds,
         decimalOdds: parlay.decimalOdds,
@@ -577,9 +588,14 @@ window.BettingEngine = (function () {
         ev: parlay.ev,
         legs: parlay.legs.map(l => ({
           player: l.player, team: l.team,
-          statType: l.statType || 'points',
-          statLabel: l.statLabel || statLabel(l.statType || 'points'),
-          line: l.line, odds: l.odds,
+          statType: l.statType || l.marketType || 'points',
+          statLabel: l.statLabel || l.marketLabel || statLabel(l.statType || l.marketType || 'points'),
+          marketLabel: l.marketLabel || '',
+          line: l.line, odds: l.odds || l.bookOdds,
+          bookOdds: l.bookOdds || l.odds,
+          roleTag: l.roleTag || '',
+          modelProb: l.modelProb || 0,
+          edge: l.edge || 0,
           gameKey: l.gameKey || '', gameDisplay: l.gameDisplay || '',
           actual: null, won: null,
         })),
@@ -605,22 +621,48 @@ window.BettingEngine = (function () {
     console.log(`[ENGINE] Resolving picks for ${datesToResolve.length} dates`);
 
     for (const date of datesToResolve) {
-      const { games, eventIds } = await window.NbaApi.fetchESPNScoreboardForDate(date);
-      if (!games.length) continue;
+      let playerStats = {};
+      let allFinal = false;
 
-      const playerStats = {};
-      let finalCount = 0;
-      for (const [teamKey, eventId] of Object.entries(eventIds)) {
-        const game = games.find(g => g.id === eventId || g.espnId === eventId);
-        if (game && game.status !== 'final') continue;
-        finalCount++;
-        const boxScore = await window.NbaApi.fetchESPNBoxScore(eventId);
-        if (!boxScore) continue;
-        for (const p of boxScore) playerStats[p.name.toLowerCase()] = p;
-        await new Promise(r => setTimeout(r, 200));
+      // Try ESPN first
+      try {
+        const { games, eventIds } = await window.NbaApi.fetchESPNScoreboardForDate(date);
+        if (games.length) {
+          let finalCount = 0;
+          for (const [teamKey, eventId] of Object.entries(eventIds)) {
+            const game = games.find(g => g.id === eventId || g.espnId === eventId);
+            if (game && game.status !== 'final') continue;
+            finalCount++;
+            const boxScore = await window.NbaApi.fetchESPNBoxScore(eventId);
+            if (!boxScore) continue;
+            for (const p of boxScore) playerStats[p.name.toLowerCase()] = p;
+            await new Promise(r => setTimeout(r, 200));
+          }
+          allFinal = finalCount === Object.keys(eventIds).length;
+        }
+      } catch (e) {
+        console.warn(`[ENGINE] ESPN fetch failed for ${date}, trying local data:`, e.message);
       }
 
-      const allFinal = finalCount === Object.keys(eventIds).length;
+      // Fallback: resolve from local box score data if ESPN failed
+      if (Object.keys(playerStats).length === 0 && window._localBoxScores) {
+        const dayBoxes = window._localBoxScores.filter(b => b.date === date);
+        if (dayBoxes.length > 0) {
+          allFinal = true;
+          for (const box of dayBoxes) {
+            for (const p of (box.players || [])) {
+              playerStats[p.name.toLowerCase()] = {
+                name: p.name, team: p.team,
+                pts: p.pts || 0,
+                reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+                ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+              };
+            }
+          }
+          console.log(`[ENGINE] Resolved ${date} from local box scores (${Object.keys(playerStats).length} players)`);
+        }
+      }
+
       if (Object.keys(playerStats).length === 0) continue;
 
       const findPlayer = (name) => {

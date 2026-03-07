@@ -52,6 +52,9 @@
         window.BettingEngine.setBasePicksData(await livePicksRes.json());
       }
 
+      // Make box scores available for fallback resolution
+      window._localBoxScores = playerBoxScores;
+
       console.log(`Loaded: ${playerBoxScores.length} box scores, ${historicalOdds.length} odds`);
     } catch (e) {
       console.error('Error loading data:', e);
