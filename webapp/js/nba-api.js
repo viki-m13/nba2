@@ -664,6 +664,64 @@ window.NbaApi = (function() {
   }
 
   // =========================================================================
+  // FETCH ESPN BOX SCORE — player stats from completed games
+  // =========================================================================
+  async function fetchESPNBoxScore(eventId) {
+    try {
+      let url;
+      if (useVercelProxy) {
+        url = VERCEL_PROXY_ESPN_SUMMARY(eventId);
+      } else if (corsProxy) {
+        url = proxyUrl(ESPN_SUMMARY_URL(eventId));
+      } else {
+        url = ESPN_SUMMARY_URL(eventId);
+      }
+
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      const boxScore = data.boxscore;
+      if (!boxScore || !boxScore.players) return null;
+
+      const players = [];
+      for (const teamData of boxScore.players) {
+        const teamAbbr = normalizeTricode(teamData.team?.abbreviation || '');
+        for (const statGroup of (teamData.statistics || [])) {
+          // Find column indices for pts, reb, ast, min
+          const labels = (statGroup.labels || []).map(l => l.toLowerCase());
+          const ptsIdx = labels.indexOf('pts');
+          const rebIdx = labels.indexOf('reb');
+          const astIdx = labels.indexOf('ast');
+          const minIdx = labels.indexOf('min');
+
+          for (const athlete of (statGroup.athletes || [])) {
+            const name = athlete.athlete?.displayName || athlete.athlete?.shortName || '';
+            const stats = athlete.stats || [];
+            if (!name || stats.length === 0) continue;
+
+            const pts = ptsIdx >= 0 ? parseInt(stats[ptsIdx]) || 0 : 0;
+            const reb = rebIdx >= 0 ? parseInt(stats[rebIdx]) || 0 : 0;
+            const ast = astIdx >= 0 ? parseInt(stats[astIdx]) || 0 : 0;
+            const minStr = minIdx >= 0 ? stats[minIdx] : '0';
+            const min = parseInt(minStr) || 0;
+
+            players.push({ name, team: teamAbbr, pts, reb, ast, min });
+          }
+        }
+      }
+
+      return players;
+    } catch (error) {
+      console.warn(`[NBA API] ESPN box score fetch error for ${eventId}:`, error.message);
+      return null;
+    }
+  }
+
+  // =========================================================================
   // PUBLIC API
   // =========================================================================
   return {
@@ -679,6 +737,7 @@ window.NbaApi = (function() {
     fetchAllGames,
     fetchESPNScoreboardForDate,
     fetchESPNPlayByPlay,
+    fetchESPNBoxScore,
     getRecentDateStrings,
     normalizeTricode,
   };

@@ -716,28 +716,190 @@ window.BettingEngine = (function () {
     } catch (e) { /* ignore storage errors */ }
   }
 
-  async function saveOddsToHistory(picks, date) {
+  // --- Live Pick Tracking (2025-26 Season) ---
+
+  const LIVE_PICKS_KEY = 'nba_live_picks';
+
+  function loadLivePicks() {
     try {
-      const historyKey = 'nba_odds_history';
-      const existing = JSON.parse(localStorage.getItem(historyKey) || '[]');
-      for (const pick of picks) {
-        existing.push({
-          date,
-          player: pick.player,
-          team: pick.team,
-          statType: pick.statType || 'points',
-          line: pick.line,
-          odds: pick.odds,
-          actual: pick.actual || null,
-          won: pick.won || null,
-          savedAt: new Date().toISOString(),
-        });
-      }
-      localStorage.setItem(historyKey, JSON.stringify(existing));
-      console.log(`[ENGINE] Saved ${picks.length} picks to local history`);
+      return JSON.parse(localStorage.getItem(LIVE_PICKS_KEY) || '{"parlays":[],"spParlays":[]}');
+    } catch (e) { return { parlays: [], spParlays: [] }; }
+  }
+
+  function saveLivePicks(data) {
+    try {
+      localStorage.setItem(LIVE_PICKS_KEY, JSON.stringify(data));
     } catch (e) {
-      console.warn('[ENGINE] Could not save to localStorage:', e);
+      console.warn('[ENGINE] Could not save live picks:', e);
     }
+  }
+
+  function saveTodayParlays(parlays, spParlays, date) {
+    const data = loadLivePicks();
+
+    // Don't duplicate — remove any existing entries for this date
+    data.parlays = data.parlays.filter(p => p.date !== date);
+    data.spParlays = data.spParlays.filter(p => p.date !== date);
+
+    for (const parlay of parlays) {
+      data.parlays.push({
+        date,
+        numLegs: parlay.numLegs || parlay.legs.length,
+        odds: parlay.odds,
+        decimalOdds: parlay.decimalOdds,
+        combinedHitRate: parlay.combinedHitRate,
+        ev: parlay.ev,
+        legs: parlay.legs.map(l => ({
+          player: l.player,
+          team: l.team,
+          statType: l.statType || 'points',
+          statLabel: l.statLabel || statLabel(l.statType || 'points'),
+          line: l.line,
+          odds: l.odds,
+          gameKey: l.gameKey || '',
+          gameDisplay: l.gameDisplay || '',
+          actual: null,
+          won: null,
+        })),
+        resolved: false,
+        won: null,
+        pnl: null,
+        savedAt: new Date().toISOString(),
+      });
+    }
+
+    for (const parlay of spParlays) {
+      data.spParlays.push({
+        date,
+        numLegs: parlay.numLegs || parlay.legs.length,
+        odds: parlay.odds,
+        decimalOdds: parlay.decimalOdds,
+        combinedHitRate: parlay.combinedHitRate,
+        ev: parlay.ev,
+        isSuperPayout: true,
+        legs: parlay.legs.map(l => ({
+          player: l.player,
+          team: l.team,
+          statType: l.statType || 'points',
+          statLabel: l.statLabel || 'PTS',
+          line: l.line,
+          odds: l.odds,
+          gameKey: l.gameKey || '',
+          gameDisplay: l.gameDisplay || '',
+          actual: null,
+          won: null,
+        })),
+        resolved: false,
+        won: null,
+        pnl: null,
+        savedAt: new Date().toISOString(),
+      });
+    }
+
+    saveLivePicks(data);
+    console.log(`[ENGINE] Saved ${parlays.length} parlays + ${spParlays.length} SP parlays for ${date}`);
+  }
+
+  async function resolveLivePicks() {
+    const data = loadLivePicks();
+    const allParlays = [...data.parlays, ...data.spParlays];
+    const unresolvedDates = [...new Set(
+      allParlays.filter(p => !p.resolved).map(p => p.date)
+    )];
+
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+
+    // Only resolve past dates (not today — games may still be in progress)
+    const datesToResolve = unresolvedDates.filter(d => d < today);
+    if (datesToResolve.length === 0) return data;
+
+    console.log(`[ENGINE] Resolving live picks for ${datesToResolve.length} dates:`, datesToResolve);
+
+    for (const date of datesToResolve) {
+      // Fetch ESPN scoreboard for this date to get event IDs
+      const { games, eventIds } = await window.NbaApi.fetchESPNScoreboardForDate(date);
+      if (!games.length) {
+        console.warn(`[ENGINE] No games found for ${date}, skipping`);
+        continue;
+      }
+
+      // Only resolve if all games are final
+      const allFinal = games.every(g => g.status === 'final');
+      if (!allFinal) {
+        console.log(`[ENGINE] Not all games final for ${date}, skipping`);
+        continue;
+      }
+
+      // Fetch box scores for each game
+      const playerStats = {}; // playerName -> { pts, reb, ast }
+      for (const [teamKey, eventId] of Object.entries(eventIds)) {
+        const boxScore = await window.NbaApi.fetchESPNBoxScore(eventId);
+        if (!boxScore) continue;
+        for (const p of boxScore) {
+          // Store by lowercase name for fuzzy matching
+          playerStats[p.name.toLowerCase()] = p;
+        }
+        // Rate limit
+        await new Promise(r => setTimeout(r, 200));
+      }
+
+      if (Object.keys(playerStats).length === 0) {
+        console.warn(`[ENGINE] No box scores found for ${date}`);
+        continue;
+      }
+
+      // Resolve each parlay for this date
+      const resolveParlay = (parlay) => {
+        if (parlay.date !== date || parlay.resolved) return;
+
+        let allResolved = true;
+        for (const leg of parlay.legs) {
+          const pStats = playerStats[leg.player.toLowerCase()];
+          if (!pStats) {
+            // Try partial match
+            const found = Object.entries(playerStats).find(([name]) =>
+              name.includes(leg.player.toLowerCase().split(' ').pop())
+              && name.includes(leg.player.toLowerCase().split(' ')[0])
+            );
+            if (found) {
+              const [, stats] = found;
+              const statKey = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
+              leg.actual = stats[statKey];
+              leg.won = leg.actual > leg.line;
+            } else {
+              allResolved = false;
+              continue;
+            }
+          } else {
+            const statKey = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
+            leg.actual = pStats[statKey];
+            leg.won = leg.actual > leg.line;
+          }
+        }
+
+        if (allResolved) {
+          parlay.resolved = true;
+          parlay.won = parlay.legs.every(l => l.won);
+          const UNIT = 100;
+          parlay.pnl = parlay.won
+            ? Math.round((parlay.decimalOdds - 1) * UNIT)
+            : -UNIT;
+          console.log(`[ENGINE] Resolved ${date} parlay: ${parlay.won ? 'WIN' : 'LOSS'} (${parlay.pnl})`);
+        }
+      };
+
+      data.parlays.forEach(resolveParlay);
+      data.spParlays.forEach(resolveParlay);
+    }
+
+    saveLivePicks(data);
+    return data;
+  }
+
+  // Legacy wrapper for backward compat
+  async function saveOddsToHistory(picks, date) {
+    // No-op: replaced by saveTodayParlays
+    console.log(`[ENGINE] saveOddsToHistory called for ${date} — use saveTodayParlays instead`);
   }
 
   // --- Incremental Daily Odds Cache ---
@@ -904,6 +1066,9 @@ window.BettingEngine = (function () {
     runBacktest,
     fetchLiveOdds,
     saveOddsToHistory,
+    saveTodayParlays,
+    loadLivePicks,
+    resolveLivePicks,
     fetchMissingDailyOdds,
     fetchHistoricalOddsForDate,
     loadCachedDailyOdds,

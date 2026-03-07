@@ -15,6 +15,7 @@
   let playerBoxScores = [];
   let historicalOdds = [];
   let rebAstProps = [];
+  let livePicksData = null; // 2025-26 live tracked picks
 
   // --- Initialization ---
 
@@ -26,6 +27,15 @@
     await loadData();
     await loadIncrementalOdds();
     runBacktest();
+
+    // Resolve any unresolved live picks from past days
+    try {
+      livePicksData = await window.BettingEngine.resolveLivePicks();
+    } catch (e) {
+      console.warn('Could not resolve live picks:', e);
+      livePicksData = window.BettingEngine.loadLivePicks();
+    }
+
     renderDashboard();
     renderHistory();
     await generateTodayPicks();
@@ -254,9 +264,11 @@
         }
       }
 
-      // Save odds to local history
+      // Save parlays to live tracking (2025-26 season)
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      window.BettingEngine.saveOddsToHistory(todaySingles, today);
+      window.BettingEngine.saveTodayParlays(todayParlays, todaySPParlays, today);
+      livePicksData = window.BettingEngine.loadLivePicks();
+      renderLiveHistory();
 
       // Render
       if (todayParlays.length === 0 && todaySPParlays.length === 0) {
@@ -549,19 +561,28 @@
       ...spParlays.map(p => ({ ...p, source: 'sp' })),
     ].sort((a, b) => b.date.localeCompare(a.date));
 
-    parlaysBody.innerHTML = allHistoryParlays.map(p => {
+    parlaysBody.innerHTML = renderParlayRows(allHistoryParlays);
+
+    // --- Live Tracked Picks (2025-26 Season) ---
+    renderLiveHistory();
+  }
+
+  function renderParlayRows(parlayList) {
+    return parlayList.map(p => {
       const numLegs = p.numLegs || p.legs.length;
       const legsHtml = p.legs.map(l => {
-        const game = formatGameKey(l.gameKey);
-        const resultClass = l.won ? 'result-win' : 'result-loss';
+        const game = l.gameDisplay || formatGameKey(l.gameKey);
         const statLbl = l.statLabel || window.BettingEngine.statLabel(l.statType || 'points');
+        const hasResult = l.actual !== null && l.actual !== undefined;
+        const resultClass = hasResult ? (l.won ? 'result-win' : 'result-loss') : '';
+        const actualText = hasResult ? `${l.actual} ${statLbl.toLowerCase()}` : 'Pending';
         return `<div class="history-leg">
           <span class="history-leg-player">${l.player} (${l.team})</span>
           <span class="history-leg-stat">${statLbl}</span>
           <span class="history-leg-line">OVER ${l.line}</span>
           <span class="history-leg-odds">${window.BettingEngine.formatOdds(l.odds)}</span>
           <span class="history-leg-game">${game}</span>
-          <span class="history-leg-actual ${resultClass}">${l.actual} ${statLbl.toLowerCase()}</span>
+          <span class="history-leg-actual ${resultClass}">${actualText}</span>
         </div>`;
       }).join('');
 
@@ -571,16 +592,92 @@
         ? `${numLegs}-Leg SP`
         : (statTypes.size > 1 ? `${numLegs}-Leg Multi` : `${numLegs}-Leg`);
 
+      const isResolved = p.resolved !== undefined ? p.resolved : true;
+      const resultText = isResolved ? (p.won ? 'WIN' : 'LOSS') : 'PENDING';
+      const resultClass = isResolved ? (p.won ? 'result-win' : 'result-loss') : 'result-pending';
+      const pnlText = isResolved ? `${p.pnl >= 0 ? '+' : ''}$${p.pnl}` : '--';
+      const pnlClass = isResolved ? (p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg') : '';
+
       return `
         <tr${isSP ? ' style="background: rgba(245, 158, 11, 0.04);"' : ''}>
           <td>${formatDate(p.date)}</td>
           <td>${typeLabel}${isSP ? ' <span class="sp-badge">SP</span>' : ''}</td>
           <td class="legs-cell">${legsHtml}</td>
           <td>${window.BettingEngine.formatOdds(p.odds)}</td>
-          <td class="${p.won ? 'result-win' : 'result-loss'}">${p.won ? 'WIN' : 'LOSS'}</td>
-          <td class="${p.pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">${p.pnl >= 0 ? '+' : ''}$${p.pnl}</td>
+          <td class="${resultClass}">${resultText}</td>
+          <td class="${pnlClass}">${pnlText}</td>
         </tr>`;
     }).join('');
+  }
+
+  function renderLiveHistory() {
+    if (!livePicksData) return;
+
+    const liveParlays = [
+      ...livePicksData.parlays.map(p => ({ ...p, source: 'standard' })),
+      ...livePicksData.spParlays.map(p => ({ ...p, source: 'sp' })),
+    ];
+
+    if (liveParlays.length === 0) return;
+
+    // Stats for resolved picks only
+    const resolved = liveParlays.filter(p => p.resolved);
+    const liveWins = resolved.filter(p => p.won).length;
+    const liveTotal = resolved.length;
+    const livePnl = resolved.reduce((s, p) => s + (p.pnl || 0), 0);
+    const pending = liveParlays.filter(p => !p.resolved).length;
+
+    const liveStatsHtml = liveTotal > 0 ? `
+      <div class="history-stat-row" style="margin-top: 0.5rem;">
+        <div class="history-stat">
+          <span class="history-stat-value">${liveTotal > 0 ? ((liveWins / liveTotal * 100).toFixed(1)) : '--'}%</span>
+          <span class="history-stat-label">Live Accuracy</span>
+        </div>
+        <div class="history-stat">
+          <span class="history-stat-value">${liveWins}-${liveTotal - liveWins}</span>
+          <span class="history-stat-label">Record</span>
+        </div>
+        <div class="history-stat">
+          <span class="history-stat-value ${livePnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">$${livePnl >= 0 ? '+' : ''}${livePnl}</span>
+          <span class="history-stat-label">P&L</span>
+        </div>
+        ${pending > 0 ? `<div class="history-stat">
+          <span class="history-stat-value" style="color: var(--text-dim);">${pending}</span>
+          <span class="history-stat-label">Pending</span>
+        </div>` : ''}
+      </div>` : `<p class="status-msg" style="margin: 0.5rem 0;">No resolved picks yet. Results update automatically after games finish.</p>`;
+
+    // Build the live section HTML
+    const liveSection = document.createElement('div');
+    liveSection.className = 'history-section';
+    liveSection.innerHTML = `
+      <h3 style="margin-top: 1.5rem; border-top: 2px solid var(--accent); padding-top: 1rem;">
+        2025-26 Live Tracking
+        <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">Auto-resolves daily</span>
+      </h3>
+      <div class="history-stats">${liveStatsHtml}</div>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Legs</th>
+            <th>Parlay Odds</th>
+            <th>Result</th>
+            <th>P&L</th>
+          </tr>
+        </thead>
+        <tbody>${renderParlayRows(liveParlays.sort((a, b) => b.date.localeCompare(a.date)))}</tbody>
+      </table>`;
+
+    // Insert after the backtest history section
+    const historyView = document.getElementById('view-history');
+    // Remove old live section if re-rendering
+    const oldLive = historyView.querySelector('.live-tracking-section');
+    if (oldLive) oldLive.remove();
+
+    liveSection.classList.add('live-tracking-section');
+    historyView.appendChild(liveSection);
   }
 
   function getFilteredResults() {
