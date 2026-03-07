@@ -1050,18 +1050,18 @@
         <div class="master-method-grid">
           <div class="master-method-card">
             <h4 class="ironlock-title">IRONLOCK</h4>
-            <p>Identifies heavy favorites (implied prob 72%+) where our CDS model independently confirms dominance (score 65+). Requires 5+ net rating gap AND 15%+ win% gap. Only fires when FanDuel's pricing AND our model agree the favorite is substantially superior.</p>
+            <p>Identifies heavy favorites (implied prob 75%+, odds -300 or stronger) where our CDS model independently confirms dominance (score 68+). Requires 6+ net rating gap AND underdog win% below .450. Only fires when FanDuel's pricing AND our model agree the favorite is substantially superior.</p>
             <div class="method-detail">Edge Source: Market-model consensus eliminates false favorites</div>
           </div>
           <div class="master-method-card">
             <h4 class="bedrock-title">BEDROCK</h4>
-            <p>Player OVER bets on ultra-conservative alternate lines from FanDuel. Line must be &le;55% of L10 average with L10 minimum 40%+ above the line. Only consistent scorers (CV &lt; 0.28) with stable minutes. 90%+ historical hit rate required.</p>
+            <p>Player OVER bets on ultra-conservative alternate lines from FanDuel. Line must be &le;52% of L10 average with L10 minimum 50%+ above the line and L5 floor 30%+ above. Only consistent scorers (CV &lt; 0.25) with L15 floor check. 90%+ historical hit rate required.</p>
             <div class="method-detail">Edge Source: Alternate lines priced assuming variance; we select only players who never dip that low</div>
           </div>
           <div class="master-method-card">
             <h4 class="apex-title">APEX</h4>
-            <p>Constructs 2-3 leg parlays from IRONLOCK + BEDROCK legs that individually clear 90%+ hit rate. Optimizes for positive EV within +150 to +500 odds range. Max 1 leg per game for independence.</p>
-            <div class="method-detail">Edge Source: Combining individually 90%+ bets into parlays with 80%+ combined rate at plus-money odds</div>
+            <p>Constructs 2-3 leg parlays primarily from BEDROCK legs that individually clear 95%+ hit rate. Prioritizes player prop legs for higher reliability. Optimizes for positive EV with max 1 leg per game for independence.</p>
+            <div class="method-detail">Edge Source: Combining individually 95%+ bets into parlays with 90%+ combined rate at enhanced odds</div>
           </div>
         </div>
       </div>
