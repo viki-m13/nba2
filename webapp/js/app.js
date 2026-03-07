@@ -141,42 +141,11 @@
       // Sort by confidence
       todaySingles.sort((a, b) => b.confidence - a.confidence);
 
-      // Build strict parlays
-      const strictParlays = window.BettingEngine.buildParlays(todaySingles);
-      for (const p of strictParlays) p.tier = 'strict';
+      // Build parlays
+      todayParlays = window.BettingEngine.buildParlays(todaySingles);
 
-      // Build value parlays (evaluate value props separately)
-      const valueSingles = [];
-      for (const [gameKey, gameData] of Object.entries(liveOdds.playerProps)) {
-        for (const [playerName, lines] of Object.entries(gameData.lines)) {
-          const prop = model.findBestValueProp(playerName, lines);
-          if (prop) {
-            valueSingles.push({
-              ...prop,
-              gameKey,
-              gameDisplay: `${gameData.away} @ ${gameData.home}`,
-            });
-          }
-        }
-      }
-      valueSingles.sort((a, b) => b.confidence - a.confidence);
-      const valParlays = window.BettingEngine.buildValueParlays(valueSingles);
-      for (const p of valParlays) {
-        p.tier = 'value';
-        p.legs = p.legs.map(leg => {
-          const matchingSingle = valueSingles.find(s => s.player === leg.player && s.line === leg.line);
-          return {
-            ...leg,
-            gameKey: matchingSingle ? matchingSingle.gameKey : '',
-            gameDisplay: matchingSingle ? matchingSingle.gameDisplay : '',
-          };
-        });
-      }
-
-      todayParlays = [...strictParlays, ...valParlays];
-
-      // Add gameDisplay to strict parlay legs
-      for (const parlay of strictParlays) {
+      // Add gameDisplay to parlay legs
+      for (const parlay of todayParlays) {
         parlay.legs = parlay.legs.map(leg => {
           const matchingSingle = todaySingles.find(s => s.player === leg.player && s.line === leg.line);
           return {
@@ -233,13 +202,10 @@
     const today = new Date();
     const dateStr = `${String(today.getMonth()+1).padStart(2,'0')}/${String(today.getDate()).padStart(2,'0')}/${today.getFullYear()}`;
     const isMega = parlay.numLegs >= 6;
-    const isValue = parlay.tier === 'value';
-    const parlayLabel = isValue
-      ? `${parlay.numLegs}-Leg Value Parlay`
-      : isMega ? `${parlay.numLegs}-Leg Mega Parlay` : `${parlay.numLegs}-Leg Parlay`;
+    const parlayLabel = isMega ? `${parlay.numLegs}-Leg Mega Parlay` : `${parlay.numLegs}-Leg Parlay`;
 
     return `
-      <div class="pick-card parlay${isMega ? ' mega-parlay' : ''}${isValue ? ' value-parlay' : ''}">
+      <div class="pick-card parlay${isMega ? ' mega-parlay' : ''}">
         <div class="pick-header">
           <span class="pick-date">${dateStr}</span>
           <span class="pick-type">${parlayLabel}</span>
@@ -260,17 +226,10 @@
     if (!backtestResults) return;
     const s = backtestResults.stats;
 
-    // Combine strict + value parlay stats for headline
-    const allParlayWins = s.parlays.wins + s.valueParlays.wins;
-    const allParlayTotal = s.parlays.total + s.valueParlays.total;
-    const allParlayPnl = s.parlays.pnl + s.valueParlays.pnl;
-    const allParlayRate = allParlayTotal > 0 ? (allParlayWins / allParlayTotal * 100).toFixed(1) : '0.0';
-    const allParlayRoi = allParlayTotal > 0 ? (allParlayPnl / (allParlayTotal * 100) * 100).toFixed(1) : '0.0';
-
-    document.getElementById('stat-accuracy').textContent = `${allParlayRate}%`;
-    document.getElementById('stat-record').textContent = `${allParlayWins}-${allParlayTotal - allParlayWins}`;
-    document.getElementById('stat-pnl').textContent = `$${allParlayPnl >= 0 ? '+' : ''}${allParlayPnl}`;
-    document.getElementById('stat-roi').textContent = `${allParlayRoi >= 0 ? '+' : ''}${allParlayRoi}%`;
+    document.getElementById('stat-accuracy').textContent = `${(s.parlays.hitRate * 100).toFixed(1)}%`;
+    document.getElementById('stat-record').textContent = `${s.parlays.wins}-${s.parlays.losses}`;
+    document.getElementById('stat-pnl').textContent = `$${s.parlays.pnl >= 0 ? '+' : ''}${s.parlays.pnl}`;
+    document.getElementById('stat-roi').textContent = `${s.parlays.roi >= 0 ? '+' : ''}${s.parlays.roi}%`;
     document.getElementById('stat-parlay-record').textContent = `${s.singles.wins}-${s.singles.losses}`;
     document.getElementById('stat-days').textContent = `${s.daysWithPicks}/${s.totalDays}`;
   }
@@ -290,21 +249,19 @@
     const pnl = parlays.reduce((s, p) => s + p.pnl, 0);
     const roi = total > 0 ? (pnl / (total * 100) * 100).toFixed(1) : '0.0';
 
-    // Breakdown by tier
-    const byTier = { strict: { wins: 0, total: 0, pnl: 0 }, value: { wins: 0, total: 0, pnl: 0 } };
+    // Breakdown by leg count
+    const byLegs = {};
     for (const p of parlays) {
-      const t = p.tier || 'strict';
-      byTier[t].total++;
-      byTier[t].pnl += p.pnl;
-      if (p.won) byTier[t].wins++;
+      const n = p.numLegs || p.legs.length;
+      if (!byLegs[n]) byLegs[n] = { wins: 0, total: 0 };
+      byLegs[n].total++;
+      if (p.won) byLegs[n].wins++;
     }
-    const breakdownHtml = Object.entries(byTier)
-      .filter(([, g]) => g.total > 0)
-      .map(([tier, g]) => {
-        const rate = (g.wins / g.total * 100).toFixed(0);
-        const label = tier === 'strict' ? 'Safe' : 'Value';
-        return `<span class="history-stat-breakdown">${label}: ${g.wins}-${g.total - g.wins} (${rate}%) $${g.pnl >= 0 ? '+' : ''}${g.pnl}</span>`;
-      }).join('');
+    const breakdownHtml = Object.keys(byLegs).sort((a, b) => a - b).map(n => {
+      const g = byLegs[n];
+      const rate = (g.wins / g.total * 100).toFixed(0);
+      return `<span class="history-stat-breakdown">${n}-Leg: ${g.wins}-${g.total - g.wins} (${rate}%)</span>`;
+    }).join('');
 
     statsEl.innerHTML = `
       <div class="history-stat-row">
@@ -331,7 +288,6 @@
     const parlaysBody = document.querySelector('#parlays-history tbody');
     parlaysBody.innerHTML = parlays.slice().reverse().map(p => {
       const numLegs = p.numLegs || p.legs.length;
-      const tierLabel = p.tier === 'value' ? 'Value' : 'Safe';
       const legsHtml = p.legs.map(l => {
         const game = formatGameKey(l.gameKey);
         const resultClass = l.won ? 'result-win' : 'result-loss';
@@ -347,7 +303,7 @@
       return `
         <tr>
           <td>${formatDate(p.date)}</td>
-          <td><span class="tier-badge tier-${p.tier || 'strict'}">${tierLabel}</span> ${numLegs}-Leg</td>
+          <td>${numLegs}-Leg</td>
           <td class="legs-cell">${legsHtml}</td>
           <td>${window.BettingEngine.formatOdds(p.odds)}</td>
           <td class="${p.won ? 'result-win' : 'result-loss'}">${p.won ? 'WIN' : 'LOSS'}</td>
@@ -359,14 +315,7 @@
   function getFilteredResults() {
     if (!backtestResults) return { parlays: [] };
 
-    // Combine strict and value parlays
-    let parlays = [
-      ...backtestResults.parlays.map(p => ({ ...p, tier: p.tier || 'strict' })),
-      ...backtestResults.valueParlays.map(p => ({ ...p, tier: 'value' })),
-    ];
-
-    // Sort by date
-    parlays.sort((a, b) => a.date.localeCompare(b.date));
+    let parlays = backtestResults.parlays;
 
     if (currentPeriod !== 'all') {
       const days = parseInt(currentPeriod);

@@ -41,24 +41,6 @@ window.BettingEngine = (function () {
     PARLAY_MAX_LEGS: 8,
   };
 
-  // Value tier: slightly relaxed filters, picks highest qualifying line
-  // for better per-leg payout. Builds 3-leg parlays for higher combined payout.
-  // Walk-forward validated: 82% parlay accuracy, +9.9% ROI per bet
-  const CONFIG_VALUE = {
-    MIN_GAMES: 12,
-    MIN_AVG_PTS: 15,
-    MIN_AVG_MIN: 26,
-    MIN_L3_MIN: 25,
-    MAX_CV: 0.35,
-    MIN_FLOOR_RATIO: 1.15,   // Slightly relaxed: 15%+ cushion
-    MAX_LINE_RATIO: 0.75,    // Allow lines up to 75% of L10 avg
-    MIN_ODDS: -2500,
-    MAX_ODDS: -100,
-    MIN_HIT_RATE: 0.95,
-    UNIT_SIZE: 100,
-    PARLAY_LEGS: 3,
-  };
-
   const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
   const ODDS_API_BASE = 'https://api.the-odds-api.com/v4';
 
@@ -213,117 +195,7 @@ window.BettingEngine = (function () {
       return best;
     },
 
-    // Value tier: evaluate with relaxed thresholds
-    evaluateValue(playerName, fdLine, fdOdds) {
-      const hist = this.history[playerName];
-      if (!hist || hist.length < CONFIG_VALUE.MIN_GAMES) return null;
-
-      const l10 = hist.slice(-10);
-      const l15 = hist.slice(-15);
-      const l5 = hist.slice(-5);
-      const l3 = hist.slice(-3);
-
-      const avgPts = l10.reduce((s, g) => s + g.pts, 0) / l10.length;
-      const avgMin = l10.reduce((s, g) => s + g.min, 0) / l10.length;
-      const l3Min = l3.reduce((s, g) => s + g.min, 0) / l3.length;
-      const minPts10 = Math.min(...l10.map(g => g.pts));
-      const minPts15 = Math.min(...l15.map(g => g.pts));
-
-      if (avgPts < CONFIG_VALUE.MIN_AVG_PTS) return null;
-      if (avgMin < CONFIG_VALUE.MIN_AVG_MIN) return null;
-      if (l3Min < CONFIG_VALUE.MIN_L3_MIN) return null;
-
-      const variance = l10.reduce((s, g) => s + (g.pts - avgPts) ** 2, 0) / l10.length;
-      const cv = Math.sqrt(variance) / avgPts;
-      if (cv > CONFIG_VALUE.MAX_CV) return null;
-
-      // L15 floor must be STRICTLY above line (keep this — critical safety)
-      if (minPts15 <= fdLine) return null;
-
-      const floorRatio = minPts10 / fdLine;
-      if (floorRatio < CONFIG_VALUE.MIN_FLOOR_RATIO) return null;
-
-      const lineRatio = fdLine / avgPts;
-      if (lineRatio > CONFIG_VALUE.MAX_LINE_RATIO) return null;
-
-      if (fdOdds < CONFIG_VALUE.MIN_ODDS || fdOdds > CONFIG_VALUE.MAX_ODDS) return null;
-
-      const hitsL10 = l10.filter(g => g.pts > fdLine).length;
-      const hitsL15 = l15.filter(g => g.pts > fdLine).length;
-      const hitRateL10 = hitsL10 / l10.length;
-      const hitRateL15 = l15.length >= 10 ? hitsL15 / l15.length : hitRateL10;
-      const hitRate = hitRateL10 * 0.6 + hitRateL15 * 0.4;
-
-      if (hitRate < CONFIG_VALUE.MIN_HIT_RATE) return null;
-
-      const avgPts5 = l5.reduce((s, g) => s + g.pts, 0) / l5.length;
-      const momentum = avgPts5 >= avgPts ? 'UP' : (avgPts5 >= avgPts * 0.92 ? 'STABLE' : 'DOWN');
-      if (momentum === 'DOWN') return null;
-
-      const decimal = americanToDecimal(fdOdds);
-      const ev = hitRate * decimal - 1;
-      const marginOfSafety = minPts10 - fdLine;
-
-      const confidence = Math.min(0.99,
-        hitRate * 0.35 +
-        Math.min(0.25, floorRatio * 0.15) +
-        Math.min(0.20, (1 - cv) * 0.25) +
-        (momentum === 'UP' ? 0.10 : 0.05) +
-        Math.min(0.08, marginOfSafety * 0.01)
-      );
-
-      return {
-        player: playerName,
-        team: l10[l10.length - 1].team,
-        line: fdLine,
-        odds: fdOdds,
-        hitRate: Math.round(hitRate * 1000) / 1000,
-        l10Avg: Math.round(avgPts * 10) / 10,
-        l5Avg: Math.round(avgPts5 * 10) / 10,
-        l10Min: minPts10,
-        l15Min: minPts15,
-        floorRatio: Math.round(floorRatio * 100) / 100,
-        lineRatio: Math.round(lineRatio * 100) / 100,
-        cv: Math.round(cv * 100) / 100,
-        momentum,
-        marginOfSafety,
-        confidence: Math.round(confidence * 1000) / 1000,
-        ev: Math.round(ev * 1000) / 1000,
-        tier: 'value',
-      };
-    },
-
-    // Value tier: find the HIGHEST qualifying line per player (best payout)
-    findBestValueProp(playerName, fdLines) {
-      const qualifying = [];
-      for (const [threshold, data] of Object.entries(fdLines)) {
-        const line = parseFloat(threshold);
-        const odds = data.overOdds;
-        if (!odds) continue;
-        const result = this.evaluateValue(playerName, line, odds);
-        if (result) qualifying.push(result);
-      }
-      if (qualifying.length === 0) return null;
-      // Pick highest line = best payout odds
-      qualifying.sort((a, b) => b.line - a.line);
-      return qualifying[0];
-    },
   };
-
-  // --- Value Parlay Builder (3-leg, higher payout) ---
-
-  function buildValueParlays(singles) {
-    if (singles.length < 3) return [];
-
-    const sorted = [...singles].sort((a, b) => b.confidence - a.confidence);
-    const candidates = sorted.slice(0, 12);
-
-    const best3 = findBestParlay(candidates, 3);
-    if (!best3) return [];
-
-    best3.tier = 'value';
-    return [best3];
-  }
 
   // --- Parlay Builder ---
 
@@ -469,8 +341,6 @@ window.BettingEngine = (function () {
     const results = {
       singles: [],
       parlays: [],
-      valueSingles: [],
-      valueParlays: [],
       dailySummaries: [],
       dates: [],
     };
@@ -488,60 +358,35 @@ window.BettingEngine = (function () {
         const daySingles = [];
 
         // Evaluate player props with real FanDuel lines
-        const dayValueSingles = [];
-
         for (const bg of dayBoxes) {
           const gameKey = `${bg.away}@${bg.home}`;
           const og = dayOdds[gameKey];
           if (!og || !og.playerProps) continue;
 
           for (const [playerName, lines] of Object.entries(og.playerProps)) {
-            // Strict tier
             const prop = model.findBestProp(playerName, lines);
-            if (prop) {
-              const actualPlayer = bg.players.find(p => p.name === playerName);
-              if (actualPlayer) {
-                const won = actualPlayer.pts > prop.line;
-                const pnl = won
-                  ? Math.round((americanToDecimal(prop.odds) - 1) * CONFIG.UNIT_SIZE)
-                  : -CONFIG.UNIT_SIZE;
+            if (!prop) continue;
 
-                daySingles.push({
-                  ...prop,
-                  date,
-                  gameKey,
-                  actual: actualPlayer.pts,
-                  won,
-                  pnl,
-                  tier: 'strict',
-                });
-              }
-            }
+            const actualPlayer = bg.players.find(p => p.name === playerName);
+            if (!actualPlayer) continue;
 
-            // Value tier (picks highest qualifying line for better payout)
-            const valueProp = model.findBestValueProp(playerName, lines);
-            if (valueProp) {
-              const actualPlayer = bg.players.find(p => p.name === playerName);
-              if (actualPlayer) {
-                const won = actualPlayer.pts > valueProp.line;
-                const pnl = won
-                  ? Math.round((americanToDecimal(valueProp.odds) - 1) * CONFIG_VALUE.UNIT_SIZE)
-                  : -CONFIG_VALUE.UNIT_SIZE;
+            const won = actualPlayer.pts > prop.line;
+            const pnl = won
+              ? Math.round((americanToDecimal(prop.odds) - 1) * CONFIG.UNIT_SIZE)
+              : -CONFIG.UNIT_SIZE;
 
-                dayValueSingles.push({
-                  ...valueProp,
-                  date,
-                  gameKey,
-                  actual: actualPlayer.pts,
-                  won,
-                  pnl,
-                });
-              }
-            }
+            daySingles.push({
+              ...prop,
+              date,
+              gameKey,
+              actual: actualPlayer.pts,
+              won,
+              pnl,
+            });
           }
         }
 
-        // Build strict parlays
+        // Build parlays from day's qualifying singles
         const dayParlays = buildParlays(daySingles);
         for (const parlay of dayParlays) {
           const allHit = parlay.legs.every(leg => {
@@ -551,7 +396,6 @@ window.BettingEngine = (function () {
 
           parlay.date = date;
           parlay.won = allHit;
-          parlay.tier = 'strict';
           parlay.pnl = allHit
             ? Math.round((parlay.decimalOdds - 1) * CONFIG.UNIT_SIZE)
             : -CONFIG.UNIT_SIZE;
@@ -561,38 +405,15 @@ window.BettingEngine = (function () {
           });
         }
 
-        // Build value 3-leg parlays
-        const dayValueParlays = buildValueParlays(dayValueSingles);
-        for (const parlay of dayValueParlays) {
-          const allHit = parlay.legs.every(leg => {
-            const match = dayValueSingles.find(p => p.player === leg.player && p.line === leg.line);
-            return match && match.won;
-          });
-
-          parlay.date = date;
-          parlay.won = allHit;
-          parlay.tier = 'value';
-          parlay.pnl = allHit
-            ? Math.round((parlay.decimalOdds - 1) * CONFIG_VALUE.UNIT_SIZE)
-            : -CONFIG_VALUE.UNIT_SIZE;
-          parlay.legs = parlay.legs.map(leg => {
-            const match = dayValueSingles.find(p => p.player === leg.player && p.line === leg.line);
-            return { ...leg, won: match ? match.won : false, actual: match ? match.actual : 0 };
-          });
-        }
-
         results.singles.push(...daySingles);
         results.parlays.push(...dayParlays);
-        results.valueSingles.push(...dayValueSingles);
-        results.valueParlays.push(...dayValueParlays);
 
         const dayAll = [...daySingles, ...dayParlays];
-        if (dayAll.length > 0 || dayValueParlays.length > 0) {
+        if (dayAll.length > 0) {
           results.dailySummaries.push({
             date,
             singles: daySingles.length,
             parlays: dayParlays.length,
-            valueParlays: dayValueParlays.length,
             wins: dayAll.filter(p => p.won).length,
             total: dayAll.length,
             pnl: dayAll.reduce((s, p) => s + p.pnl, 0),
@@ -635,7 +456,6 @@ window.BettingEngine = (function () {
       overall: calcGroup(allPicks),
       singles: calcGroup(results.singles),
       parlays: calcGroup(results.parlays),
-      valueParlays: calcGroup(results.valueParlays),
       totalDays: results.dates.length,
       daysWithPicks: results.dailySummaries.length,
     };
@@ -890,10 +710,8 @@ window.BettingEngine = (function () {
 
   return {
     CONFIG,
-    CONFIG_VALUE,
     PlayerModel,
     buildParlays,
-    buildValueParlays,
     runBacktest,
     fetchLiveOdds,
     saveOddsToHistory,
