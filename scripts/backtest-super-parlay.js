@@ -21,9 +21,14 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'webapp', 'data');
 
-console.log('Loading data...');
-const boxScores = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'player_boxscores.json'), 'utf8'));
-const historicalOdds = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'historical_odds.json'), 'utf8'));
+// Support --season flag: "2025" (default) or "2026"
+const season = process.argv.includes('--2026') ? '2026' : '2025';
+const boxFile = season === '2026' ? 'player_boxscores_2026.json' : 'player_boxscores.json';
+const oddsFile = season === '2026' ? 'historical_odds_2026.json' : 'historical_odds.json';
+
+console.log(`Loading data (${season} season)...`);
+const boxScores = JSON.parse(fs.readFileSync(path.join(DATA_DIR, boxFile), 'utf8'));
+const historicalOdds = JSON.parse(fs.readFileSync(path.join(DATA_DIR, oddsFile), 'utf8'));
 
 console.log(`  Box scores: ${boxScores.length} game records`);
 console.log(`  Historical odds: ${historicalOdds.length} odds records`);
@@ -77,17 +82,26 @@ function findLegs(date, params) {
   const dayOdds = oddsByDate[date] || {};
   const legs = [];
 
-  for (const [gameKey, oddsRecord] of Object.entries(dayOdds)) {
-    if (!oddsRecord.playerProps) continue;
+  // Scan all prop types: points, rebounds, assists
+  const propSources = [
+    { key: 'playerProps', stat: 'pts', label: 'points' },
+    { key: 'rebProps', stat: 'reb', label: 'rebounds' },
+    { key: 'astProps', stat: 'ast', label: 'assists' },
+  ];
 
-    for (const [playerName, lines] of Object.entries(oddsRecord.playerProps)) {
+  for (const [gameKey, oddsRecord] of Object.entries(dayOdds)) {
+    for (const { key: propKey, stat: statField, label: marketLabel } of propSources) {
+      const propData = oddsRecord[propKey];
+      if (!propData) continue;
+
+      for (const [playerName, lines] of Object.entries(propData)) {
       const hist = playerHistory[playerName];
       if (!hist || hist.length < 10) continue;
 
       const avgMin = hist.slice(-10).reduce((s, g) => s + (g.min || 0), 0) / 10;
       if (avgMin < params.minMinutes) continue;
 
-      const values = hist.map(g => g.pts || 0);
+      const values = hist.map(g => g[statField] || 0);
       const l10 = values.slice(-10);
       const l20 = values.slice(-20);
       const l10Floor = Math.min(...l10);
@@ -121,7 +135,7 @@ function findLegs(date, params) {
             avg: Math.round(l10Avg * 10) / 10,
             floor: l10Floor,
             cv: Math.round(cv * 100) / 100,
-            // Score favors: lower CV (consistency), higher line (more parlay value), positive clearance
+            statField, marketLabel,
             score: (1 - cv) * 3 + rung.line * 0.3 + Math.max(0, floorClear) * 1.5,
           };
           break;
@@ -154,13 +168,15 @@ function findLegs(date, params) {
               avg: Math.round(l10Avg * 10) / 10,
               floor: l10Floor,
               cv: Math.round(cv * 100) / 100,
+              statField, marketLabel,
               score: l10Hit * 50 + (1 - cv) * 20,
             });
             break;
           }
         }
       }
-    }
+    } // end playerName loop
+    } // end propSources loop
   }
 
   return legs;
@@ -177,15 +193,21 @@ function buildParlays(legs, date, params) {
   const playerActuals = {};
   for (const bg of dateBoxes) {
     for (const p of (bg.players || [])) {
-      playerActuals[p.name] = { pts: p.pts || 0 };
+      playerActuals[p.name] = {
+        pts: p.pts || 0,
+        reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+        ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+      };
     }
   }
 
   function resolveParlay(selected, builder) {
     const seen = new Set();
     const deduped = selected.filter(l => {
-      if (seen.has(l.player)) return false;
-      seen.add(l.player);
+      // Dedup by player+stat combo (same player can have pts AND ast legs)
+      const key = l.player + '_' + (l.statField || 'pts');
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
     if (deduped.length < 3) return null;
@@ -196,7 +218,8 @@ function buildParlays(legs, date, params) {
     const resolved = deduped.map(leg => {
       const actual = playerActuals[leg.player];
       if (!actual) return { ...leg, actual: null, won: null };
-      return { ...leg, actual: actual.pts, won: actual.pts > leg.line };
+      const statVal = actual[leg.statField || 'pts'] || 0;
+      return { ...leg, actual: statVal, won: statVal > leg.line };
     });
 
     const allResolved = resolved.every(l => l.actual !== null);
@@ -306,12 +329,49 @@ console.log('='.repeat(80));
 console.log('AUTORESEARCH PARAMETER SWEEP');
 console.log('='.repeat(80));
 
-const backtestDates = allDates.slice(20);
+// For 2026 data: preload player history from 2024-25 season, then backtest all 2026 dates
+// For 2025 data: skip first 20 dates to build history naturally
+let warmupDates = 20;
+if (season === '2026') {
+  console.log('\nPreloading player history from 2024-25 season...');
+  const oldBoxScores = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'player_boxscores.json'), 'utf8'));
+  // Only use the warmup preload, don't add to backtest dates
+  for (const bg of oldBoxScores) {
+    for (const p of (bg.players || [])) {
+      const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
+      if (mins < 5) continue;
+      // Use a temp key to avoid confusion with the sweep reset
+      if (!playerHistory[p.name]) playerHistory[p.name] = [];
+      playerHistory[p.name].push({
+        pts: p.pts || 0,
+        reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+        ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+        min: mins,
+        date: bg.date,
+        team: p.team,
+      });
+      if (playerHistory[p.name].length > 50) {
+        playerHistory[p.name] = playerHistory[p.name].slice(-40);
+      }
+    }
+  }
+  const preloadCount = Object.keys(playerHistory).length;
+  console.log(`  Preloaded ${preloadCount} players from ${oldBoxScores.length} games`);
+  warmupDates = 5; // Use first 5 dates as warmup to update with current season data
+}
+const backtestDates = allDates.slice(warmupDates);
 const sweepResults = [];
+// Save preloaded history to restore between sweeps
+const preloadedHistory = season === '2026' ? JSON.parse(JSON.stringify(playerHistory)) : null;
 
 for (const params of paramConfigs) {
-  // Reset player history for each sweep
+  // Reset player history for each sweep (restore preloaded if 2026)
   for (const key of Object.keys(playerHistory)) delete playerHistory[key];
+  if (preloadedHistory) {
+    for (const [key, val] of Object.entries(preloadedHistory)) {
+      playerHistory[key] = JSON.parse(JSON.stringify(val));
+    }
+  }
 
   const allParlays = [];
   const allLegs = [];
@@ -320,26 +380,33 @@ for (const params of paramConfigs) {
     const dateBoxes = boxByDate[date] || [];
     const dateIdx = allDates.indexOf(date);
 
-    if (dateIdx >= 20) {
+    if (dateIdx >= warmupDates) {
       const legs = findLegs(date, params);
 
       // Record individual leg outcomes
       const playerActuals = {};
       for (const bg of dateBoxes) {
         for (const p of (bg.players || [])) {
-          playerActuals[p.name] = { pts: p.pts || 0 };
+          playerActuals[p.name] = {
+            pts: p.pts || 0,
+            reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+            ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+          };
         }
       }
 
       const seenPlayers = new Set();
       for (const leg of legs.sort((a, b) => b.score - a.score)) {
-        if (seenPlayers.has(leg.player + '_' + leg.tier)) continue;
-        seenPlayers.add(leg.player + '_' + leg.tier);
+        const legKey = leg.player + '_' + leg.tier + '_' + (leg.statField || 'pts');
+        if (seenPlayers.has(legKey)) continue;
+        seenPlayers.add(legKey);
         const actual = playerActuals[leg.player];
         if (actual) {
+          const statVal = actual[leg.statField || 'pts'] || 0;
           allLegs.push({
-            tier: leg.tier, won: actual.pts > leg.line,
+            tier: leg.tier, won: statVal > leg.line,
             floorClear: leg.floorClear, cv: leg.cv,
+            market: leg.marketLabel || 'points',
           });
         }
       }
@@ -420,24 +487,29 @@ for (const params of paramConfigs) {
 // FIND BEST CONFIG AND RUN DETAILED REPORT
 // =============================================================================
 
-// Best = highest Sharpe across MOONSHOT or SCREENSHOT strategy
+// Best = highest total ROI across ALL strategies combined
 let bestConfig = null;
-let bestSharpe = -Infinity;
+let bestTotalROI = -Infinity;
 for (const result of sweepResults) {
-  for (const [builder, s] of Object.entries(result.strategies)) {
-    if ((builder === 'MOONSHOT' || builder === 'SCREENSHOT') && s.count >= 3) {
-      if (s.sharpe > bestSharpe) {
-        bestSharpe = s.sharpe;
-        bestConfig = { name: result.name, builder, ...s };
-      }
-    }
+  const totalPnl = Object.values(result.strategies).reduce((s, st) => s + st.totalPnl, 0);
+  const totalCount = Object.values(result.strategies).reduce((s, st) => s + st.count, 0);
+  const totalROI = totalCount > 0 ? totalPnl / (totalCount * 100) : -1;
+  if (totalROI > bestTotalROI && totalCount >= 10) {
+    bestTotalROI = totalROI;
+    bestConfig = {
+      name: result.name,
+      totalPnl, totalCount,
+      roi: totalROI,
+      winRate: Object.values(result.strategies).reduce((s, st) => s + st.wins, 0) / totalCount,
+    };
   }
 }
 
 console.log(`\n${'='.repeat(80)}`);
-console.log(`BEST CONFIG: ${bestConfig ? bestConfig.name + ' → ' + bestConfig.builder : 'NONE'}`);
+console.log(`BEST CONFIG: ${bestConfig ? bestConfig.name : 'NONE'} (best total ROI across all strategies)`);
 if (bestConfig) {
-  console.log(`  Sharpe: ${bestConfig.sharpe.toFixed(3)}, ROI: ${(bestConfig.roi * 100).toFixed(1)}%, Win rate: ${(bestConfig.winRate * 100).toFixed(1)}%`);
+  console.log(`  Total P&L: ${bestConfig.totalPnl > 0 ? '+' : ''}$${bestConfig.totalPnl} across ${bestConfig.totalCount} parlays`);
+  console.log(`  ROI: ${(bestConfig.roi * 100).toFixed(1)}%, Win rate: ${(bestConfig.winRate * 100).toFixed(1)}%`);
 }
 
 // Run detailed report with best config
@@ -448,6 +520,11 @@ console.log('='.repeat(80));
 
 // Reset and re-run
 for (const key of Object.keys(playerHistory)) delete playerHistory[key];
+if (preloadedHistory) {
+  for (const [key, val] of Object.entries(preloadedHistory)) {
+    playerHistory[key] = JSON.parse(JSON.stringify(val));
+  }
+}
 
 const detailedParlays = [];
 const detailedLegs = [];
@@ -456,26 +533,33 @@ for (const date of allDates) {
   const dateBoxes = boxByDate[date] || [];
   const dateIdx = allDates.indexOf(date);
 
-  if (dateIdx >= 20) {
+  if (dateIdx >= warmupDates) {
     const legs = findLegs(date, bestParams);
 
     const playerActuals = {};
     for (const bg of dateBoxes) {
       for (const p of (bg.players || [])) {
-        playerActuals[p.name] = { pts: p.pts || 0 };
+        playerActuals[p.name] = {
+          pts: p.pts || 0,
+          reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+          ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+        };
       }
     }
 
     const seenPlayers = new Set();
     for (const leg of legs.sort((a, b) => b.score - a.score)) {
-      if (seenPlayers.has(leg.player + '_' + leg.tier)) continue;
-      seenPlayers.add(leg.player + '_' + leg.tier);
+      const legKey = leg.player + '_' + leg.tier + '_' + (leg.statField || 'pts');
+      if (seenPlayers.has(legKey)) continue;
+      seenPlayers.add(legKey);
       const actual = playerActuals[leg.player];
       if (actual) {
+        const statVal = actual[leg.statField || 'pts'] || 0;
         detailedLegs.push({
           date, player: leg.player, tier: leg.tier,
-          line: leg.line, actual: actual.pts, won: actual.pts > leg.line,
+          line: leg.line, actual: statVal, won: statVal > leg.line,
           floor: leg.floor, floorClear: leg.floorClear, odds: leg.odds, cv: leg.cv,
+          market: leg.marketLabel || 'points',
         });
       }
     }
@@ -567,12 +651,16 @@ for (const [builder, parlays] of Object.entries(byBuilder).sort((a, b) => {
   console.log(`  ${status} ${builder}: ${wins}/${parlays.length} (${(wins/parlays.length*100).toFixed(0)}%) avg ${avgO > 0 ? '+' : ''}${avgO} ROI ${(roi*100).toFixed(1)}%`);
 }
 
-// Note about data limitations
-console.log(`\n--- DATA LIMITATION NOTE ---`);
-console.log(`  Historical data only contains POINTS alt-line props.`);
-console.log(`  Live mode will also have: assists, rebounds, PRA, pts+ast, pts+reb combos.`);
-console.log(`  Expected coverage improvement: 3-5x more legs per night.`);
-console.log(`  This should increase parlay dates from ${(datesWithParlays.size / backtestDates.length * 100).toFixed(0)}% to ~80-90%.`);
+// Note about data
+console.log(`\n--- DATA NOTE ---`);
+if (season === '2026') {
+  console.log(`  2025-26 data includes points, rebounds, AND assists alt-line props.`);
+  console.log(`  Player history warm-started from 2024-25 season data.`);
+} else {
+  console.log(`  2024-25 data only contains POINTS alt-line props.`);
+  console.log(`  Live mode will also have: assists, rebounds, PRA, pts+ast, pts+reb combos.`);
+  console.log(`  Expected coverage improvement: 3-5x more legs per night.`);
+}
 
 // Save
 const outputPath = path.join(__dirname, '..', 'output', 'super_parlay_backtest.json');
