@@ -1008,9 +1008,18 @@ window.BettingEngine = (function () {
   function generateSlips(featureTable) {
     if (!window.NbaScreenshotSlipBuilder) {
       console.warn('[ENGINE] Slip builder not loaded');
-      return { core: [], screenshot: [], nuke: [] };
+      return { core: [], screenshot: [], nuke: [], super: null };
     }
-    return window.NbaScreenshotSlipBuilder.buildAll(featureTable);
+    const slips = window.NbaScreenshotSlipBuilder.buildAll(featureTable);
+
+    // Super Parlay builder — Floor Fortress + Value Spike strategy
+    if (window.NbaSuperParlayBuilder) {
+      slips.super = window.NbaSuperParlayBuilder.buildAllWithFallback(featureTable);
+    } else {
+      slips.super = null;
+    }
+
+    return slips;
   }
 
   // Full pipeline: fetch odds → build model → generate feature table → build slips

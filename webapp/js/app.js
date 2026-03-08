@@ -442,6 +442,18 @@
     renderSlipSection('alt-core-slips', slips.core || [], 'core');
     renderSlipSection('alt-screenshot-slips', slips.screenshot || [], 'screenshot');
     renderSlipSection('alt-nuke-slips', slips.nuke || [], 'nuke');
+
+    // Super Parlay v6 sections (autoresearch-optimized)
+    if (slips.super) {
+      renderSlipSection('super-safe-parlay', slips.super.safeParlay || [], 'safe-parlay');
+      renderSlipSection('super-screenshot', slips.super.screenshot || [], 'screenshot');
+      renderSlipSection('super-mini', slips.super.mini || [], 'mini-fortress');
+      renderSlipSection('super-fortress-sgp', slips.super.fortressSGP || [], 'fortress-sgp');
+      renderSlipSection('super-fortress-sgp-plus', slips.super.fortressSGPPlus || [], 'fortress-sgp-plus');
+      renderSlipSection('super-moonshot', slips.super.moonshot || [], 'moonshot');
+      renderSlipSection('super-assist-sniper', slips.super.assistSniper || [], 'assist-sniper');
+    }
+
     renderFeatureTable(featureTable || []);
   }
 
@@ -482,15 +494,17 @@
     }).join('');
 
     const builder = parlay.builder || 'PARLAY';
+    const isSuper = builder.startsWith('FORTRESS') || builder.startsWith('MOONSHOT') || builder.startsWith('ASSIST');
     const builderClass = builder === 'CORE' ? 'builder-core' :
                          builder === 'SCREENSHOT' ? 'builder-screenshot' :
                          builder === 'NUKE' ? 'builder-nuke' :
-                         builder === 'SGP' ? 'builder-sgp' : '';
+                         builder === 'SGP' ? 'builder-sgp' :
+                         isSuper ? 'builder-super' : '';
 
     return `
       <div class="pick-card parlay multi-stat ${builderClass}">
         <div class="pick-header">
-          <span class="pick-type">${builder} ${parlay.numLegs}-Leg${parlay.hasSGP ? ' (SGP)' : ''}</span>
+          <span class="pick-type">${builder} ${parlay.numLegs}-Leg${parlay.isSGPPlus ? ' (SGP+)' : parlay.hasSGP ? ' (SGP)' : ''}</span>
           <span class="pick-odds">${window.BettingEngine.formatOdds(parlay.odds)}</span>
         </div>
         <div class="parlay-legs">${legsHtml}</div>
