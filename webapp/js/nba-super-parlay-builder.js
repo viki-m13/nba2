@@ -7,17 +7,17 @@
 // picking the alt line where the player's absolute L10 floor is significantly
 // above the line, then stacking many of these "fortress" legs together.
 //
-// BACKTESTED RESULTS (v6 autoresearch sweep, TIGHT_SAFE config):
-//   - SCREENSHOT:  75.0% win rate, +81.0% ROI, avg +127 odds
-//   - SAFE PARLAY: 66.7% win rate, +38.7% ROI, avg -8 odds
-//   - MINI:        73.7% win rate, +36.9% ROI, avg -94 odds
-//   - Overall: +$1,722 profit across 48 dates, +42.0% ROI
-//   - 75% of parlay dates had at least one winner
+// BACKTESTED RESULTS (v6.1, BASELINE config on 2025-26 season):
+//   - SAFE PARLAY: 50% win rate, +14.1% ROI, avg +85 odds
+//   - MINI:        58% win rate, +8.5% ROI, avg -55 odds
+//   - MOONSHOT:    25% win rate, +29.2% ROI, avg +486 odds
+//   - Overall: +$502 profit across 20 dates, +10.7% ROI
+//   - 57% of parlay dates had at least one winner
 //
-// OPTIMIZED PARAMETERS (from autoresearch evolutionary sweep):
-//   - Safe legs: 90% L10 hit, 85% L20 hit, clearance >= 0, odds -100 to -700
-//   - Spike legs: 80% L10 hit, 70% L20 hit, CV <= 0.35, odds +100 to +400
-//   - Min minutes: 22 (starters/key rotation only)
+// OPTIMIZED PARAMETERS (BASELINE - best total ROI on 2025-26 data):
+//   - Safe legs: 90% L10 hit, 80% L20 hit, clearance >= -0.5, odds -100 to -800
+//   - Spike legs: 70% L10 hit, 60% L20 hit, CV <= 0.50, odds +100 to +500
+//   - Min minutes: 20 (includes key rotation players)
 //   - Leg scoring: consistency (low CV) weighted heavily
 //
 // STRATEGIES:
@@ -46,19 +46,19 @@ window.NbaSuperParlayBuilder = (function () {
   // we select the SAFEST rung — the one with the most floor clearance
   // and highest combined probability.
 
-  // Optimized parameters from autoresearch sweep (TIGHT_SAFE config)
+  // Optimized parameters from autoresearch sweep (BASELINE config - best on 2025-26)
   const TIGHT_SAFE = {
-    minMinutes: 22,
+    minMinutes: 20,
     safeL10Hit: 0.90,
-    safeL20Hit: 0.85,
-    safeClearance: 0,         // Floor at or above line
-    safeMaxOdds: -100,        // Odds range: -100 to -700
-    safeMinOdds: -700,
-    spikeL10Hit: 0.80,
-    spikeL20Hit: 0.70,
-    spikeMaxCV: 0.35,
+    safeL20Hit: 0.80,
+    safeClearance: -0.5,      // Floor can be 0.5 below line
+    safeMaxOdds: -100,        // Odds range: -100 to -800
+    safeMinOdds: -800,
+    spikeL10Hit: 0.70,
+    spikeL20Hit: 0.60,
+    spikeMaxCV: 0.50,
     spikeMinOdds: 100,
-    spikeMaxOdds: 400,
+    spikeMaxOdds: 500,
   };
 
   function selectFortressRung(ladder, opts = {}) {
@@ -164,8 +164,8 @@ window.NbaSuperParlayBuilder = (function () {
 
       const cv = entry.cv !== undefined ? entry.cv : 0.25;
 
-      // FORTRESS/STRONG leg: high hit rate, floor at/above line, sweet-spot odds
-      // Autoresearch finding: 90% L10 hit + 85% L20 hit + clearance >= 0 = 86.6% actual hit rate
+      // FORTRESS/STRONG leg: high hit rate, floor near line, sweet-spot odds
+      // 2025-26 results: 90% L10 hit + 80% L20 hit + clearance >= -0.5 = 72-75% actual hit rate
       if (entry.floor !== undefined && (entry.floor - entry.line) >= TIGHT_SAFE.safeClearance &&
           entry.l10Hit >= TIGHT_SAFE.safeL10Hit && entry.l20Hit >= TIGHT_SAFE.safeL20Hit &&
           entry.bookOdds <= TIGHT_SAFE.safeMaxOdds && entry.bookOdds >= TIGHT_SAFE.safeMinOdds) {
@@ -185,8 +185,8 @@ window.NbaSuperParlayBuilder = (function () {
         }
       }
 
-      // SPIKE leg: positive odds with good hit rate and low variance
-      // Autoresearch finding: CV <= 0.35 filter eliminates boom-bust players
+      // SPIKE leg: positive odds with good hit rate and moderate variance
+      // BASELINE config: CV <= 0.50, wider pool of candidates for better coverage
       if (entry.bookOdds >= TIGHT_SAFE.spikeMinOdds &&
           entry.bookOdds <= TIGHT_SAFE.spikeMaxOdds &&
           entry.l10Hit >= TIGHT_SAFE.spikeL10Hit &&
@@ -550,7 +550,7 @@ window.NbaSuperParlayBuilder = (function () {
   // MAIN ENTRY POINT
   // =========================================================================
 
-  // --- NEW: SAFE PARLAY (3-5 diversified legs, backtested +38.7% ROI) ---
+  // --- NEW: SAFE PARLAY (3-5 diversified legs, backtested +14.1% ROI on 2025-26) ---
   function buildSafeParlay(fortressLegs) {
     if (fortressLegs.length < 3) return [];
 
@@ -581,7 +581,7 @@ window.NbaSuperParlayBuilder = (function () {
     return parlay ? [parlay] : [];
   }
 
-  // --- NEW: MINI (3 safest legs, backtested 73.7% win rate, +36.9% ROI) ---
+  // --- NEW: MINI (3 safest legs, backtested 58% win rate, +8.5% ROI on 2025-26) ---
   function buildMini(fortressLegs) {
     if (fortressLegs.length < 3) return [];
 
@@ -599,7 +599,7 @@ window.NbaSuperParlayBuilder = (function () {
     return parlay ? [parlay] : [];
   }
 
-  // --- NEW: SCREENSHOT (fortress core + spike, backtested 75% win rate, +81% ROI) ---
+  // --- NEW: SCREENSHOT (fortress core + spike, backtested 36% win rate on 2025-26) ---
   function buildScreenshot(fortressLegs, spikeLegs) {
     if (fortressLegs.length < 2 || spikeLegs.length < 1) return [];
 

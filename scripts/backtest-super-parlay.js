@@ -380,7 +380,7 @@ for (const params of paramConfigs) {
     const dateBoxes = boxByDate[date] || [];
     const dateIdx = allDates.indexOf(date);
 
-    if (dateIdx >= 20) {
+    if (dateIdx >= warmupDates) {
       const legs = findLegs(date, params);
 
       // Record individual leg outcomes
@@ -487,24 +487,29 @@ for (const params of paramConfigs) {
 // FIND BEST CONFIG AND RUN DETAILED REPORT
 // =============================================================================
 
-// Best = highest Sharpe across MOONSHOT or SCREENSHOT strategy
+// Best = highest total ROI across ALL strategies combined
 let bestConfig = null;
-let bestSharpe = -Infinity;
+let bestTotalROI = -Infinity;
 for (const result of sweepResults) {
-  for (const [builder, s] of Object.entries(result.strategies)) {
-    if ((builder === 'MOONSHOT' || builder === 'SCREENSHOT') && s.count >= 3) {
-      if (s.sharpe > bestSharpe) {
-        bestSharpe = s.sharpe;
-        bestConfig = { name: result.name, builder, ...s };
-      }
-    }
+  const totalPnl = Object.values(result.strategies).reduce((s, st) => s + st.totalPnl, 0);
+  const totalCount = Object.values(result.strategies).reduce((s, st) => s + st.count, 0);
+  const totalROI = totalCount > 0 ? totalPnl / (totalCount * 100) : -1;
+  if (totalROI > bestTotalROI && totalCount >= 10) {
+    bestTotalROI = totalROI;
+    bestConfig = {
+      name: result.name,
+      totalPnl, totalCount,
+      roi: totalROI,
+      winRate: Object.values(result.strategies).reduce((s, st) => s + st.wins, 0) / totalCount,
+    };
   }
 }
 
 console.log(`\n${'='.repeat(80)}`);
-console.log(`BEST CONFIG: ${bestConfig ? bestConfig.name + ' → ' + bestConfig.builder : 'NONE'}`);
+console.log(`BEST CONFIG: ${bestConfig ? bestConfig.name : 'NONE'} (best total ROI across all strategies)`);
 if (bestConfig) {
-  console.log(`  Sharpe: ${bestConfig.sharpe.toFixed(3)}, ROI: ${(bestConfig.roi * 100).toFixed(1)}%, Win rate: ${(bestConfig.winRate * 100).toFixed(1)}%`);
+  console.log(`  Total P&L: ${bestConfig.totalPnl > 0 ? '+' : ''}$${bestConfig.totalPnl} across ${bestConfig.totalCount} parlays`);
+  console.log(`  ROI: ${(bestConfig.roi * 100).toFixed(1)}%, Win rate: ${(bestConfig.winRate * 100).toFixed(1)}%`);
 }
 
 // Run detailed report with best config
@@ -646,12 +651,16 @@ for (const [builder, parlays] of Object.entries(byBuilder).sort((a, b) => {
   console.log(`  ${status} ${builder}: ${wins}/${parlays.length} (${(wins/parlays.length*100).toFixed(0)}%) avg ${avgO > 0 ? '+' : ''}${avgO} ROI ${(roi*100).toFixed(1)}%`);
 }
 
-// Note about data limitations
-console.log(`\n--- DATA LIMITATION NOTE ---`);
-console.log(`  Historical data only contains POINTS alt-line props.`);
-console.log(`  Live mode will also have: assists, rebounds, PRA, pts+ast, pts+reb combos.`);
-console.log(`  Expected coverage improvement: 3-5x more legs per night.`);
-console.log(`  This should increase parlay dates from ${(datesWithParlays.size / backtestDates.length * 100).toFixed(0)}% to ~80-90%.`);
+// Note about data
+console.log(`\n--- DATA NOTE ---`);
+if (season === '2026') {
+  console.log(`  2025-26 data includes points, rebounds, AND assists alt-line props.`);
+  console.log(`  Player history warm-started from 2024-25 season data.`);
+} else {
+  console.log(`  2024-25 data only contains POINTS alt-line props.`);
+  console.log(`  Live mode will also have: assists, rebounds, PRA, pts+ast, pts+reb combos.`);
+  console.log(`  Expected coverage improvement: 3-5x more legs per night.`);
+}
 
 // Save
 const outputPath = path.join(__dirname, '..', 'output', 'super_parlay_backtest.json');
