@@ -1,7 +1,50 @@
 {
-  "version": "3.0.0",
+  "version": "4.0.0",
   "strategy": "Dominance Confluence Parlay System",
-  "model": "Absorbing Barrier (Brownian Motion with Drift) + Asymmetric Dominance Index",
+  "model": "Absorbing Barrier (Brownian Motion with Drift) + Asymmetric Dominance Index + Enhanced CDS",
+  "enhancements_v4": {
+    "autoresearch_optimizer": {
+      "description": "Autonomous parameter optimization via evolutionary search (inspired by Karpathy's autoresearch)",
+      "method": "Evolutionary search with 40% explore / 60% exploit phases",
+      "metric": "Risk-adjusted ROI (Sharpe-like ratio) on walk-forward validation set",
+      "budget": "30-50 experiments per sweep",
+      "overfitting_guard": "Train/val split with max 2.0x overfit ratio filter",
+      "module": "src/strategy_optimizer.py"
+    },
+    "verification_framework": {
+      "description": "Structured go/no-go evaluation for nightly picks (inspired by everything-claude-code)",
+      "components": [
+        "StrategyRubric: 6-dimension weighted scoring (accuracy, sample_size, roi, drawdown, consistency, edge_stability)",
+        "RegimeDetector: Statistical test for strategy degradation (z-score based)",
+        "AdaptiveConfidence: Rolling Kelly fraction adjustment based on recent tier performance",
+        "NightlyVerifier: Full pipeline producing DEPLOY/HOLD/SKIP recommendation"
+      ],
+      "module": "src/strategy_verifier.py"
+    },
+    "real_odds_validation": {
+      "description": "All profit calculations use REAL FanDuel historical odds from the Odds API",
+      "data_source": "webapp/data/historical_odds.json (693 games with real ML/spread/props)",
+      "no_synthetic_odds": true,
+      "module": "src/real_odds_optimizer.py"
+    },
+    "enhanced_cds_dimensions": {
+      "D8_volatility_mismatch": "Reliable favorites (low variance) vs volatile underdogs (0-2 pts)",
+      "D9_b2b_penalty": "Back-to-back game detection with -1.5 CDS penalty and 0.6-0.8x Kelly",
+      "D10_pace_differential": "Pace mismatch exploitation when fast team faces slow team (0-1.5 pts)"
+    },
+    "correlation_aware_parlays": {
+      "description": "Adjusts parlay probability estimates for inter-leg correlation",
+      "same_division_correlation": 0.08,
+      "same_conference_correlation": 0.05,
+      "independent_correlation": 0.02,
+      "penalty_formula": "P_adjusted = P_independent × (1 - avg_corr × n_pairs × 0.5)"
+    },
+    "back_to_back_detection": {
+      "b2b_home_penalty": "2.5 points, 0.8x Kelly",
+      "b2b_road_penalty": "4.0 points, 0.6x Kelly",
+      "cds_penalty": "-1.5 CDS score for B2B favorites"
+    }
+  },
   "execution": {
     "honest_disclaimer": "When our signal fires (team up 15+ at halftime), the ML is -800 to -2000. There is NO -110 bet available at this game state that hits 90%+. Sportsbooks adjust all lines in real-time.",
     "plays": {
@@ -38,13 +81,16 @@
         "bet": "Pre-game spread on favorite at -110",
         "model": "Convergent Dominance Score (CDS) - 7-dimension continuous scoring",
         "dimensions": [
-          "Net Rating Gap (0-3)",
-          "Offensive Firepower (0-3)",
-          "Defensive Cage (0-3)",
-          "Win Consistency Gap (0-3)",
-          "Home Court (0-1.5)",
-          "Dual-Edge Bonus (0-1.5) - elite on BOTH offense AND defense",
-          "Opponent Weakness Amplifier (0-1) - opponent bad at BOTH ends"
+          "D1: Net Rating Gap (0-3)",
+          "D2: Offensive Firepower (0-3)",
+          "D3: Defensive Cage (0-3)",
+          "D4: Win Consistency Gap (0-3)",
+          "D5: Home Court (0-1.5, parameterized)",
+          "D6: Dual-Edge Bonus (0-1.5) - elite on BOTH offense AND defense",
+          "D7: Opponent Weakness Amplifier (0-1) - opponent bad at BOTH ends",
+          "D8: Volatility Mismatch (0-2) - reliable fav vs volatile dog [NEW v4]",
+          "D9: Back-to-Back Penalty (0 to -2) - B2B adjustment [NEW v4]",
+          "D10: Pace Differential (0-1.5) - pace mismatch [NEW v4]"
         ],
         "tiers": {
           "ELITE": {"min_cds": 11, "accuracy": "90.9% ML (10/11)", "kelly": "10%"},
@@ -98,22 +144,32 @@
     }
   },
   "convergent_dominance_model": {
-    "name": "Convergent Dominance Score (CDS)",
-    "type": "Multi-dimensional continuous scoring system",
+    "name": "Enhanced Convergent Dominance Score (CDS v2)",
+    "type": "Multi-dimensional continuous scoring system with parameterized optimization",
     "lookback_window": 15,
     "home_court_advantage": 3.5,
+    "optimization": {
+      "method": "Evolutionary search (autoresearch pattern)",
+      "metric": "Sharpe ROI on walk-forward validation",
+      "parameterized_dimensions": "D1-D7 breakpoints are tunable via optimizer",
+      "validation": "Real FanDuel odds from Odds API (693 games)"
+    },
     "novel_elements": {
-      "continuous_scoring": "7 dimensions scored 0-3 each with linear interpolation, replacing rigid binary thresholds",
-      "dual_edge_bonus": "Extra credit when team excels on BOTH offense AND defense (compounding two-way dominance)",
-      "opponent_weakness_amplifier": "Detects opponents bad at BOTH offense AND defense (no pathway to competitiveness)",
-      "convergence_threshold": "Outcomes become near-deterministic when 3+ dimensions simultaneously score high",
-      "complementary_design": "Explicitly captures games that Play 3's single-dimension filters miss"
+      "continuous_scoring": "10 dimensions with linear interpolation (expanded from 7)",
+      "dual_edge_bonus": "Extra credit when team excels on BOTH offense AND defense",
+      "opponent_weakness_amplifier": "Detects opponents bad at BOTH offense AND defense",
+      "convergence_threshold": "Outcomes become near-deterministic when 3+ dimensions score high",
+      "complementary_design": "Explicitly captures games that Play 3's single-dimension filters miss",
+      "volatility_mismatch": "NEW: Reliable favorites vs volatile underdogs (D8)",
+      "b2b_awareness": "NEW: Back-to-back penalty reduces CDS and Kelly fraction (D9)",
+      "pace_differential": "NEW: Pace mismatch exploitation (D10)"
     },
     "pathways_to_dominance": {
       "A_offense_plus_gap": "Elite offense (D2) + net rating gap (D1) + home court (D5) [similar to Play 3]",
       "B_defense_first": "Elite defense (D3) + win consistency (D4) + home court (D5)",
       "C_road_favorite": "Extreme two-way dominance (D6) + massive gap (D1) [away games]",
-      "D_total_mismatch": "Opponent weakness (D7) + multiple moderate dimensions"
+      "D_total_mismatch": "Opponent weakness (D7) + multiple moderate dimensions",
+      "E_reliable_dominator": "NEW: Low-variance fav (D8) + pace control (D10) + quality gap (D1)"
     },
     "validated_results": {
       "ELITE_cds_11": {
@@ -174,7 +230,33 @@
     "max_legs": 4,
     "min_combined_probability": 0.85,
     "eligible_tiers": ["DIAMOND", "PLATINUM"],
-    "odds_formula": "Product of individual leg decimal odds",
+    "odds_formula": "Product of individual leg decimal odds × correlation penalty",
+    "correlation_adjustment": {
+      "enabled": true,
+      "same_division_penalty": 0.08,
+      "same_conference_penalty": 0.05,
+      "independent_penalty": 0.02,
+      "note": "Reduces combined probability estimate to account for correlated outcomes"
+    },
+    "adaptive_kelly": {
+      "enabled": true,
+      "lookback": 20,
+      "min_scale": 0.25,
+      "max_scale": 1.5,
+      "note": "Kelly fraction scales based on rolling recent tier performance vs expected"
+    },
+    "b2b_filter": {
+      "enabled": true,
+      "exclude_b2b_road_from_parlays": true,
+      "reduce_b2b_home_kelly": 0.8,
+      "note": "B2B road favorites excluded from parlays; B2B home gets 0.8x Kelly"
+    },
+    "nightly_verification": {
+      "enabled": true,
+      "skip_on_degrading_regime": true,
+      "reduce_on_rubric_hold": true,
+      "note": "Verification framework gates deployment of nightly picks"
+    },
     "examples": {
       "2_leg_at_neg1500": {"decimal": 1.138, "american": "-878", "accuracy": "100%"},
       "3_leg_at_neg1500": {"decimal": 1.213, "american": "-469", "accuracy": "100%"},
