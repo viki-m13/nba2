@@ -1,0 +1,2121 @@
+{
+  "generated": "2026-03-08T04:03:49.221Z",
+  "version": "v6-autoresearch",
+  "best_config": {
+    "name": "TIGHT_SAFE",
+    "builder": "SCREENSHOT",
+    "count": 4,
+    "wins": 3,
+    "winRate": 0.75,
+    "totalPnl": 324,
+    "roi": 0.81,
+    "sharpe": 0.6590922711645382,
+    "avgOdds": 127
+  },
+  "sweep_results": [
+    {
+      "name": "BASELINE",
+      "legs": {
+        "safe": 224,
+        "safeHitRate": 0.84375,
+        "spike": 64,
+        "spikeHitRate": 0.453125
+      },
+      "strategies": {
+        "SAFE PARLAY": {
+          "count": 29,
+          "wins": 12,
+          "winRate": 0.41379310344827586,
+          "totalPnl": -372,
+          "roi": -0.12827586206896552,
+          "sharpe": -0.1220752882350921,
+          "avgOdds": 53
+        },
+        "MINI": {
+          "count": 29,
+          "wins": 15,
+          "winRate": 0.5172413793103449,
+          "totalPnl": -228,
+          "roi": -0.07862068965517241,
+          "sharpe": -0.08772091248798056,
+          "avgOdds": -102
+        },
+        "SCREENSHOT": {
+          "count": 20,
+          "wins": 8,
+          "winRate": 0.4,
+          "totalPnl": 285,
+          "roi": 0.1425,
+          "sharpe": 0.09308718861953467,
+          "avgOdds": 135
+        },
+        "MOONSHOT": {
+          "count": 13,
+          "wins": 3,
+          "winRate": 0.23076923076923078,
+          "totalPnl": 919,
+          "roi": 0.706923076923077,
+          "sharpe": 0.22672928598339806,
+          "avgOdds": 535
+        }
+      },
+      "coverage": 32,
+      "totalParlays": 91
+    },
+    {
+      "name": "TIGHT_SAFE",
+      "legs": {
+        "safe": 119,
+        "safeHitRate": 0.865546218487395,
+        "spike": 7,
+        "spikeHitRate": 0.2857142857142857
+      },
+      "strategies": {
+        "SAFE PARLAY": {
+          "count": 18,
+          "wins": 12,
+          "winRate": 0.6666666666666666,
+          "totalPnl": 697,
+          "roi": 0.3872222222222222,
+          "sharpe": 0.37401612642785814,
+          "avgOdds": -8
+        },
+        "MINI": {
+          "count": 19,
+          "wins": 14,
+          "winRate": 0.7368421052631579,
+          "totalPnl": 701,
+          "roi": 0.3689473684210526,
+          "sharpe": 0.43994924395423135,
+          "avgOdds": -94
+        },
+        "SCREENSHOT": {
+          "count": 4,
+          "wins": 3,
+          "winRate": 0.75,
+          "totalPnl": 324,
+          "roi": 0.81,
+          "sharpe": 0.6590922711645382,
+          "avgOdds": 127
+        }
+      },
+      "coverage": 20,
+      "totalParlays": 41
+    },
+    {
+      "name": "ULTRA_SAFE",
+      "legs": {
+        "safe": 102,
+        "safeHitRate": 0.8823529411764706,
+        "spike": 4,
+        "spikeHitRate": 0.25
+      },
+      "strategies": {
+        "SAFE PARLAY": {
+          "count": 12,
+          "wins": 10,
+          "winRate": 0.8333333333333334,
+          "totalPnl": 999,
+          "roi": 0.8325,
+          "sharpe": 0.9296008110579548,
+          "avgOdds": 31
+        },
+        "MINI": {
+          "count": 13,
+          "wins": 11,
+          "winRate": 0.8461538461538461,
+          "totalPnl": 775,
+          "roi": 0.5961538461538461,
+          "sharpe": 0.8342724062522,
+          "avgOdds": -74
+        },
+        "SCREENSHOT": {
+          "count": 2,
+          "wins": 2,
+          "winRate": 1,
+          "totalPnl": 179,
+          "roi": 0.895,
+          "sharpe": 5.114285714285714,
+          "avgOdds": -16
+        }
+      },
+      "coverage": 13,
+      "totalParlays": 27
+    },
+    {
+      "name": "CONSISTENT",
+      "legs": {
+        "safe": 190,
+        "safeHitRate": 0.8526315789473684,
+        "spike": 12,
+        "spikeHitRate": 0.4166666666666667
+      },
+      "strategies": {
+        "SAFE PARLAY": {
+          "count": 29,
+          "wins": 17,
+          "winRate": 0.5862068965517241,
+          "totalPnl": 529,
+          "roi": 0.1824137931034483,
+          "sharpe": 0.1794233766782589,
+          "avgOdds": -2
+        },
+        "MINI": {
+          "count": 30,
+          "wins": 19,
+          "winRate": 0.6333333333333333,
+          "totalPnl": 344,
+          "roi": 0.11466666666666667,
+          "sharpe": 0.13390076342422605,
+          "avgOdds": -122
+        },
+        "SCREENSHOT": {
+          "count": 9,
+          "wins": 5,
+          "winRate": 0.5555555555555556,
+          "totalPnl": 769,
+          "roi": 0.8544444444444445,
+          "sharpe": 0.44630817836124154,
+          "avgOdds": 192
+        }
+      },
+      "coverage": 31,
+      "totalParlays": 68
+    },
+    {
+      "name": "LOW_VARIANCE",
+      "legs": {
+        "safe": 191,
+        "safeHitRate": 0.8429319371727748,
+        "spike": 15,
+        "spikeHitRate": 0.4
+      },
+      "strategies": {
+        "SAFE PARLAY": {
+          "count": 27,
+          "wins": 11,
+          "winRate": 0.4074074074074074,
+          "totalPnl": -387,
+          "roi": -0.14333333333333334,
+          "sharpe": -0.13628264459511963,
+          "avgOdds": 87
+        },
+        "MINI": {
+          "count": 29,
+          "wins": 15,
+          "winRate": 0.5172413793103449,
+          "totalPnl": -184,
+          "roi": -0.06344827586206897,
+          "sharpe": -0.06964084677683013,
+          "avgOdds": -72
+        },
+        "SCREENSHOT": {
+          "count": 10,
+          "wins": 5,
+          "winRate": 0.5,
+          "totalPnl": 161,
+          "roi": 0.161,
+          "sharpe": 0.12434642210262112,
+          "avgOdds": 88
+        },
+        "MOONSHOT": {
+          "count": 2,
+          "wins": 0,
+          "winRate": 0,
+          "totalPnl": -200,
+          "roi": -1,
+          "sharpe": 0,
+          "avgOdds": 670
+        }
+      },
+      "coverage": 30,
+      "totalParlays": 68
+    }
+  ],
+  "detailed_parlays": [
+    {
+      "date": "20241125",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 187,
+      "won": true,
+      "pnl": 187,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -240,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 14,
+          "won": true,
+          "odds": -350,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -300,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.18
+        },
+        {
+          "player": "Derrick White",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.33
+        }
+      ]
+    },
+    {
+      "date": "20241125",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": 143,
+      "won": true,
+      "pnl": 143,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -240,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 14,
+          "won": true,
+          "odds": -350,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -300,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.18
+        }
+      ]
+    },
+    {
+      "date": "20241127",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": -105,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Anthony Davis",
+          "line": 19.5,
+          "actual": 19,
+          "won": false,
+          "odds": -440,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Nikola Jokic",
+          "line": 19.5,
+          "actual": 30,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.21
+        },
+        {
+          "player": "Nikola Vucevic",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 14,
+          "floorClear": 4.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 27,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.26
+        }
+      ]
+    },
+    {
+      "date": "20241127",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -153,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Anthony Davis",
+          "line": 19.5,
+          "actual": 19,
+          "won": false,
+          "odds": -440,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Nikola Jokic",
+          "line": 19.5,
+          "actual": 30,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.21
+        },
+        {
+          "player": "Nikola Vucevic",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 14,
+          "floorClear": 4.5,
+          "cv": 0.24
+        }
+      ]
+    },
+    {
+      "date": "20241129",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 165,
+      "won": true,
+      "pnl": 165,
+      "legs": [
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Anthony Edwards",
+          "line": 19.5,
+          "actual": 21,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 21,
+          "floorClear": 1.5,
+          "cv": 0.2
+        },
+        {
+          "player": "Cade Cunningham",
+          "line": 14.5,
+          "actual": 24,
+          "won": true,
+          "odds": -490,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 13,
+          "won": true,
+          "odds": -220,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.16
+        }
+      ]
+    },
+    {
+      "date": "20241129",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -121,
+      "won": true,
+      "pnl": 83,
+      "legs": [
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Anthony Edwards",
+          "line": 19.5,
+          "actual": 21,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 21,
+          "floorClear": 1.5,
+          "cv": 0.2
+        },
+        {
+          "player": "Cade Cunningham",
+          "line": 14.5,
+          "actual": 24,
+          "won": true,
+          "odds": -490,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.16
+        }
+      ]
+    },
+    {
+      "date": "20241201",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 139,
+      "won": true,
+      "pnl": 139,
+      "legs": [
+        {
+          "player": "Nikola Jokic",
+          "line": 19.5,
+          "actual": 28,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.18
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 31,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 11,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 12,
+          "floorClear": 2.5,
+          "cv": 0.21
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -270,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.16
+        }
+      ]
+    },
+    {
+      "date": "20241201",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -135,
+      "won": true,
+      "pnl": 74,
+      "legs": [
+        {
+          "player": "Nikola Jokic",
+          "line": 19.5,
+          "actual": 28,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.18
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 31,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 11,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 12,
+          "floorClear": 2.5,
+          "cv": 0.21
+        }
+      ]
+    },
+    {
+      "date": "20241206",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -137,
+      "won": true,
+      "pnl": 73,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 22,
+          "won": true,
+          "odds": -320,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "line": 19.5,
+          "actual": 30,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 20,
+          "floorClear": 0.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Anthony Edwards",
+          "line": 14.5,
+          "actual": 30,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.26
+        }
+      ]
+    },
+    {
+      "date": "20241206",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -137,
+      "won": true,
+      "pnl": 73,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 22,
+          "won": true,
+          "odds": -320,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "line": 19.5,
+          "actual": 30,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 20,
+          "floorClear": 0.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Anthony Edwards",
+          "line": 14.5,
+          "actual": 30,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.26
+        }
+      ]
+    },
+    {
+      "date": "20241216",
+      "builder": "SCREENSHOT",
+      "numLegs": 3,
+      "odds": -139,
+      "won": true,
+      "pnl": 72,
+      "legs": [
+        {
+          "player": "LaMelo Ball",
+          "line": 14.5,
+          "actual": 15,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 19,
+          "floorClear": 4.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.22
+        },
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 28,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.12
+        }
+      ]
+    },
+    {
+      "date": "20241216",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -139,
+      "won": true,
+      "pnl": 72,
+      "legs": [
+        {
+          "player": "LaMelo Ball",
+          "line": 14.5,
+          "actual": 15,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 19,
+          "floorClear": 4.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.22
+        },
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 28,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.12
+        }
+      ]
+    },
+    {
+      "date": "20250103",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": 107,
+      "won": true,
+      "pnl": 107,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 20,
+          "won": true,
+          "odds": -340,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -270,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.32
+        }
+      ]
+    },
+    {
+      "date": "20250103",
+      "builder": "SCREENSHOT",
+      "numLegs": 3,
+      "odds": 107,
+      "won": true,
+      "pnl": 107,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 20,
+          "won": true,
+          "odds": -340,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -270,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.32
+        }
+      ]
+    },
+    {
+      "date": "20250103",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": 107,
+      "won": true,
+      "pnl": 107,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 20,
+          "won": true,
+          "odds": -340,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -270,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.32
+        }
+      ]
+    },
+    {
+      "date": "20250106",
+      "builder": "SCREENSHOT",
+      "numLegs": 3,
+      "odds": 245,
+      "won": true,
+      "pnl": 245,
+      "legs": [
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -470,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.18
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Julian Champagnie",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": 125,
+          "tier": "SPIKE",
+          "floor": 9,
+          "floorClear": -0.5,
+          "cv": 0.34
+        }
+      ]
+    },
+    {
+      "date": "20250113",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -120,
+      "won": true,
+      "pnl": 83,
+      "legs": [
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 32,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.2
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -370,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.24
+        }
+      ]
+    },
+    {
+      "date": "20250113",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -120,
+      "won": true,
+      "pnl": 83,
+      "legs": [
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 32,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.2
+        },
+        {
+          "player": "Josh Hart",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -380,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Scottie Barnes",
+          "line": 14.5,
+          "actual": 23,
+          "won": true,
+          "odds": -370,
+          "tier": "FORTRESS",
+          "floor": 15,
+          "floorClear": 0.5,
+          "cv": 0.24
+        }
+      ]
+    },
+    {
+      "date": "20250127",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 122,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Kevin Durant",
+          "line": 19.5,
+          "actual": 24,
+          "won": true,
+          "odds": -390,
+          "tier": "FORTRESS",
+          "floor": 23,
+          "floorClear": 3.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -410,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.17
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 30,
+          "won": true,
+          "odds": -430,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Ja Morant",
+          "line": 14.5,
+          "actual": 10,
+          "won": false,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.18
+        }
+      ]
+    },
+    {
+      "date": "20250127",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -108,
+      "won": true,
+      "pnl": 93,
+      "legs": [
+        {
+          "player": "Kevin Durant",
+          "line": 19.5,
+          "actual": 24,
+          "won": true,
+          "odds": -390,
+          "tier": "FORTRESS",
+          "floor": 23,
+          "floorClear": 3.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Domantas Sabonis",
+          "line": 14.5,
+          "actual": 21,
+          "won": true,
+          "odds": -410,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.17
+        },
+        {
+          "player": "Tyler Herro",
+          "line": 14.5,
+          "actual": 30,
+          "won": true,
+          "odds": -430,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.19
+        }
+      ]
+    },
+    {
+      "date": "20250131",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -135,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Kevin Durant",
+          "line": 19.5,
+          "actual": 19,
+          "won": false,
+          "odds": -430,
+          "tier": "FORTRESS",
+          "floor": 23,
+          "floorClear": 3.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Norman Powell",
+          "line": 14.5,
+          "actual": 27,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.16
+        },
+        {
+          "player": "James Harden",
+          "line": 14.5,
+          "actual": 14,
+          "won": false,
+          "odds": -450,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.16
+        }
+      ]
+    },
+    {
+      "date": "20250131",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -135,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Kevin Durant",
+          "line": 19.5,
+          "actual": 19,
+          "won": false,
+          "odds": -430,
+          "tier": "FORTRESS",
+          "floor": 23,
+          "floorClear": 3.5,
+          "cv": 0.16
+        },
+        {
+          "player": "Norman Powell",
+          "line": 14.5,
+          "actual": 27,
+          "won": true,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 18,
+          "floorClear": 3.5,
+          "cv": 0.16
+        },
+        {
+          "player": "James Harden",
+          "line": 14.5,
+          "actual": 14,
+          "won": false,
+          "odds": -450,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.16
+        }
+      ]
+    },
+    {
+      "date": "20250201",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -125,
+      "won": true,
+      "pnl": 80,
+      "legs": [
+        {
+          "player": "John Collins",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 14,
+          "floorClear": 4.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 29,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 24,
+          "won": true,
+          "odds": -320,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.32
+        }
+      ]
+    },
+    {
+      "date": "20250201",
+      "builder": "SCREENSHOT",
+      "numLegs": 4,
+      "odds": 296,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "John Collins",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 14,
+          "floorClear": 4.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 29,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 24,
+          "won": true,
+          "odds": -320,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.32
+        },
+        {
+          "player": "Walker Kessler",
+          "line": 9.5,
+          "actual": 8,
+          "won": false,
+          "odds": 120,
+          "tier": "SPIKE",
+          "floor": 6,
+          "floorClear": -3.5,
+          "cv": 0.3
+        }
+      ]
+    },
+    {
+      "date": "20250201",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -125,
+      "won": true,
+      "pnl": 80,
+      "legs": [
+        {
+          "player": "John Collins",
+          "line": 9.5,
+          "actual": 19,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 14,
+          "floorClear": 4.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 29,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.23
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 24,
+          "won": true,
+          "odds": -320,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.32
+        }
+      ]
+    },
+    {
+      "date": "20250203",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -132,
+      "won": true,
+      "pnl": 76,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 34,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 18,
+          "won": true,
+          "odds": -290,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 11,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.34
+        }
+      ]
+    },
+    {
+      "date": "20250203",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -132,
+      "won": true,
+      "pnl": 76,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 34,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.24
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 18,
+          "won": true,
+          "odds": -290,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 11,
+          "won": true,
+          "odds": -700,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.34
+        }
+      ]
+    },
+    {
+      "date": "20250205",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -150,
+      "won": true,
+      "pnl": 67,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 50,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 25,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 23,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.36
+        }
+      ]
+    },
+    {
+      "date": "20250205",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -150,
+      "won": true,
+      "pnl": 67,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 50,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 25,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 23,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.36
+        }
+      ]
+    },
+    {
+      "date": "20250210",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": -111,
+      "won": true,
+      "pnl": 90,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 31,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.25
+        },
+        {
+          "player": "DeMar DeRozan",
+          "line": 14.5,
+          "actual": 42,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.17
+        },
+        {
+          "player": "Franz Wagner",
+          "line": 19.5,
+          "actual": 37,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 20,
+          "floorClear": 0.5,
+          "cv": 0.22
+        }
+      ]
+    },
+    {
+      "date": "20250210",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -164,
+      "won": true,
+      "pnl": 61,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 31,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.25
+        },
+        {
+          "player": "DeMar DeRozan",
+          "line": 14.5,
+          "actual": 42,
+          "won": true,
+          "odds": -600,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -550,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.17
+        }
+      ]
+    },
+    {
+      "date": "20250212",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 118,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 32,
+          "won": true,
+          "odds": -470,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 15,
+          "won": true,
+          "odds": -440,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Franz Wagner",
+          "line": 19.5,
+          "actual": 16,
+          "won": false,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 20,
+          "floorClear": 0.5,
+          "cv": 0.21
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 20,
+          "won": true,
+          "odds": -370,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        }
+      ]
+    },
+    {
+      "date": "20250212",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -139,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "line": 24.5,
+          "actual": 32,
+          "won": true,
+          "odds": -470,
+          "tier": "FORTRESS",
+          "floor": 25,
+          "floorClear": 0.5,
+          "cv": 0.26
+        },
+        {
+          "player": "Darius Garland",
+          "line": 14.5,
+          "actual": 15,
+          "won": true,
+          "odds": -440,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.19
+        },
+        {
+          "player": "Franz Wagner",
+          "line": 19.5,
+          "actual": 16,
+          "won": false,
+          "odds": -650,
+          "tier": "FORTRESS",
+          "floor": 20,
+          "floorClear": 0.5,
+          "cv": 0.21
+        }
+      ]
+    },
+    {
+      "date": "20250224",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 120,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Anthony Edwards",
+          "line": 19.5,
+          "actual": 17,
+          "won": false,
+          "odds": -460,
+          "tier": "FORTRESS",
+          "floor": 21,
+          "floorClear": 1.5,
+          "cv": 0.28
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -330,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 17,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.3
+        },
+        {
+          "player": "Ivica Zubac",
+          "line": 9.5,
+          "actual": 13,
+          "won": true,
+          "odds": -670,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.28
+        }
+      ]
+    },
+    {
+      "date": "20250224",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -109,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Anthony Edwards",
+          "line": 19.5,
+          "actual": 17,
+          "won": false,
+          "odds": -460,
+          "tier": "FORTRESS",
+          "floor": 21,
+          "floorClear": 1.5,
+          "cv": 0.28
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -330,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 17,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.3
+        }
+      ]
+    },
+    {
+      "date": "20250226",
+      "builder": "SAFE PARLAY",
+      "numLegs": 3,
+      "odds": -138,
+      "won": true,
+      "pnl": 73,
+      "legs": [
+        {
+          "player": "Cade Cunningham",
+          "line": 19.5,
+          "actual": 21,
+          "won": true,
+          "odds": -530,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.16
+        },
+        {
+          "player": "DeMar DeRozan",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -620,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.34
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 33,
+          "won": true,
+          "odds": -400,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.21
+        }
+      ]
+    },
+    {
+      "date": "20250226",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -138,
+      "won": true,
+      "pnl": 73,
+      "legs": [
+        {
+          "player": "Cade Cunningham",
+          "line": 19.5,
+          "actual": 21,
+          "won": true,
+          "odds": -530,
+          "tier": "FORTRESS",
+          "floor": 22,
+          "floorClear": 2.5,
+          "cv": 0.16
+        },
+        {
+          "player": "DeMar DeRozan",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -620,
+          "tier": "FORTRESS",
+          "floor": 17,
+          "floorClear": 2.5,
+          "cv": 0.34
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 33,
+          "won": true,
+          "odds": -400,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.21
+        }
+      ]
+    },
+    {
+      "date": "20250228",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": 157,
+      "won": true,
+      "pnl": 157,
+      "legs": [
+        {
+          "player": "Desmond Bane",
+          "line": 14.5,
+          "actual": 24,
+          "won": true,
+          "odds": -370,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -245,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 23,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.3
+        },
+        {
+          "player": "Ivica Zubac",
+          "line": 9.5,
+          "actual": 27,
+          "won": true,
+          "odds": -530,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.33
+        }
+      ]
+    },
+    {
+      "date": "20250228",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": 116,
+      "won": true,
+      "pnl": 116,
+      "legs": [
+        {
+          "player": "Desmond Bane",
+          "line": 14.5,
+          "actual": 24,
+          "won": true,
+          "odds": -370,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.15
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 19,
+          "won": true,
+          "odds": -245,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 23,
+          "won": true,
+          "odds": -480,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.3
+        }
+      ]
+    },
+    {
+      "date": "20250302",
+      "builder": "SAFE PARLAY",
+      "numLegs": 4,
+      "odds": -103,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -530,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 24,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.28
+        },
+        {
+          "player": "Mikal Bridges",
+          "line": 9.5,
+          "actual": 5,
+          "won": false,
+          "odds": -620,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.33
+        },
+        {
+          "player": "Ivica Zubac",
+          "line": 9.5,
+          "actual": 12,
+          "won": true,
+          "odds": -520,
+          "tier": "FORTRESS",
+          "floor": 10,
+          "floorClear": 0.5,
+          "cv": 0.37
+        }
+      ]
+    },
+    {
+      "date": "20250302",
+      "builder": "MINI",
+      "numLegs": 3,
+      "odds": -152,
+      "won": false,
+      "pnl": -100,
+      "legs": [
+        {
+          "player": "Tyrese Haliburton",
+          "line": 14.5,
+          "actual": 17,
+          "won": true,
+          "odds": -530,
+          "tier": "FORTRESS",
+          "floor": 16,
+          "floorClear": 1.5,
+          "cv": 0.25
+        },
+        {
+          "player": "Christian Braun",
+          "line": 9.5,
+          "actual": 24,
+          "won": true,
+          "odds": -500,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.28
+        },
+        {
+          "player": "Mikal Bridges",
+          "line": 9.5,
+          "actual": 5,
+          "won": false,
+          "odds": -620,
+          "tier": "FORTRESS",
+          "floor": 11,
+          "floorClear": 1.5,
+          "cv": 0.33
+        }
+      ]
+    }
+  ]
+}

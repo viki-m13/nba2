@@ -226,6 +226,19 @@ window.NbaAltBacktest = (function () {
           for (const p of (slips.core || [])) results.parlays.push(resolveParlay(p, 'CORE'));
           for (const p of (slips.screenshot || [])) results.parlays.push(resolveParlay(p, 'SCREENSHOT'));
           for (const p of (slips.nuke || [])) results.parlays.push(resolveParlay(p, 'NUKE'));
+
+          // Super Parlay backtest
+          if (window.NbaSuperParlayBuilder) {
+            const superSlips = window.NbaSuperParlayBuilder.buildAllWithFallback(dayLegs);
+            // v6 autoresearch-optimized strategies
+            for (const p of (superSlips.safeParlay || [])) results.parlays.push(resolveParlay(p, p.builder || 'SAFE PARLAY'));
+            for (const p of (superSlips.screenshot || [])) results.parlays.push(resolveParlay(p, p.builder || 'SCREENSHOT SPECIAL'));
+            for (const p of (superSlips.mini || [])) results.parlays.push(resolveParlay(p, p.builder || 'MINI FORTRESS'));
+            for (const p of (superSlips.fortressSGP || [])) results.parlays.push(resolveParlay(p, p.builder || 'FORTRESS SGP'));
+            for (const p of (superSlips.fortressSGPPlus || [])) results.parlays.push(resolveParlay(p, p.builder || 'FORTRESS SGP+'));
+            for (const p of (superSlips.moonshot || [])) results.parlays.push(resolveParlay(p, p.builder || 'MOONSHOT SGP+'));
+            for (const p of (superSlips.assistSniper || [])) results.parlays.push(resolveParlay(p, p.builder || 'ASSIST SNIPER'));
+          }
         }
 
         results.dates.push(date);

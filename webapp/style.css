@@ -699,10 +699,21 @@ h2 {
   background: rgba(239, 68, 68, 0.12);
 }
 
+/* Super Parlay builder style */
+.pick-card.builder-super {
+  border-left-color: #ffd700;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), var(--surface));
+}
+.pick-card.builder-super .pick-type {
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+}
+
 /* Builder labels in history table */
 span.builder-core { color: var(--green); }
 span.builder-screenshot { color: var(--blue); }
 span.builder-nuke { color: var(--red); }
+span.builder-super { color: #ffd700; }
 
 /* Role-specific leg indicators */
 .parlay-leg.role-creator { border-left: 2px solid var(--blue); padding-left: 0.5rem; }
