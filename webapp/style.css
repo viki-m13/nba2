@@ -38,6 +38,50 @@ header {
   margin: 0 auto 1rem;
 }
 
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Sport Toggle */
+.sport-toggle {
+  display: flex;
+  gap: 0;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sport-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.sport-btn:hover {
+  color: var(--text);
+}
+
+.sport-btn.active {
+  background: var(--accent);
+  color: #0f1117;
+}
+
+/* MLB views use same visibility pattern */
+.mlb-view { display: none; }
+.mlb-view.active { display: block; }
+
 h1 {
   font-size: 1.5rem;
   font-weight: 700;
