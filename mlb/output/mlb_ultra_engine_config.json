@@ -1,0 +1,82 @@
+{
+  "config": {
+    "MIN_GAMES": 7,
+    "MIN_AB": 2,
+    "WARM_UP_GAMES": 8,
+    "GFT_WINDOWS": [
+      3,
+      5,
+      10
+    ],
+    "GFT_DECAY_RATE": 0.88,
+    "GFT_GRAVITY_STRENGTH": 0.5,
+    "GFT_MIN_CLEARANCE": 0.1,
+    "GFT_CONVERGENCE_MAX_SPREAD": 4,
+    "BEQ_PRIOR_ALPHA": 1,
+    "BEQ_PRIOR_BETA": 1,
+    "BEQ_CREDIBLE_LEVEL": 0.95,
+    "BEQ_MIN_EDGE": 0.03,
+    "ESI_BINS": 5,
+    "ESI_MAX_ENTROPY": 0.85,
+    "ESI_TREND_WEIGHT": 0.2,
+    "IMAD_MIN_ASYMMETRY": 0.1,
+    "IMAD_VOLUME_DISCOUNT": 0.02,
+    "CGSM_MIN_STREAK": 2,
+    "CGSM_LOOKBACK": 10,
+    "CGSM_WEIGHT": 0.1,
+    "ABVC_MIN_AVG_AB": 4,
+    "ABVC_ELITE_AB": 4,
+    "ABVC_WEIGHT": 0.08,
+    "GATE_MIN_GFT_SCORE": 0.7,
+    "GATE_MIN_BEQ_EDGE": 0.2,
+    "GATE_MIN_ESI_STABILITY": 0.12,
+    "GATE_MIN_IMAD_SCORE": 0.01,
+    "GATE_MIN_HIT_RATE": 0.8,
+    "GATE_MIN_COMBINED": 0.5,
+    "GATE_MIN_STREAK": 2,
+    "GATE_MIN_ABVC": 0.3,
+    "SINGLE_MIN_SCORE": 0.6,
+    "MULTI_SINGLE_MIN_SCORE": 0.55,
+    "PARLAY_LEG_MIN_SCORE": 0.5,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 4,
+    "PARLAY_MAX_CORRELATION": 0.6,
+    "PARLAY_SAME_GAME_ALLOWED": true,
+    "PARLAY_MIN_COMBINED_EDGE": 0.05,
+    "MIN_ODDS": -260,
+    "MAX_ODDS": -200,
+    "PREFERRED_ODDS_RANGE": [
+      -500,
+      -120
+    ],
+    "UNIT_SIZE": 100,
+    "MAX_DAILY_UNITS": 5,
+    "KELLY_FRACTION": 0.25
+  },
+  "score": 229.82857142857142,
+  "improvements": 20,
+  "results": {
+    "total": 7,
+    "accuracy": 1,
+    "roi": 0.49142857142857144,
+    "pnl": 344,
+    "singles": {
+      "total": 7,
+      "wins": 7,
+      "accuracy": 1,
+      "pnl": 344,
+      "roi": 0.49142857142857144
+    },
+    "parlays": {
+      "total": 0,
+      "wins": 0,
+      "accuracy": 0,
+      "pnl": 0,
+      "roi": 0,
+      "totalLegs": 0,
+      "hitLegs": 0,
+      "legAccuracy": 0
+    }
+  },
+  "optimized_at": "2026-03-09T15:04:45.515Z"
+}

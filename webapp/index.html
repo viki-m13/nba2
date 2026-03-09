@@ -3,16 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ultra Betting Engine v1.0 | NBA Recommendations</title>
+  <title>Ultra Betting Engine v1.0</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="header-content">
-      <h1>ULTRA BETTING ENGINE v1.0</h1>
-      <p class="subtitle">Patent-Pending | 5 Novel Innovations | 97.2% Accuracy | 286% ROI | AutoResearch-Validated</p>
+      <div class="header-top-row">
+        <div>
+          <h1>ULTRA BETTING ENGINE v1.0</h1>
+          <p class="subtitle" id="header-subtitle">Patent-Pending | 5 Novel Innovations | 97.2% Accuracy | 286% ROI | AutoResearch-Validated</p>
+        </div>
+        <div class="sport-toggle" id="sport-toggle">
+          <button class="sport-btn active" data-sport="nba">NBA</button>
+          <button class="sport-btn" data-sport="mlb">MLB</button>
+        </div>
+      </div>
     </div>
-    <nav>
+    <!-- NBA Nav -->
+    <nav id="nba-nav">
+      <button class="nav-btn active" data-view="tonight">Tonight</button>
+      <button class="nav-btn" data-view="history">History</button>
+      <button class="nav-btn" data-view="method">Strategy</button>
+    </nav>
+    <!-- MLB Nav -->
+    <nav id="mlb-nav" style="display: none;">
       <button class="nav-btn active" data-view="tonight">Tonight</button>
       <button class="nav-btn" data-view="history">History</button>
       <button class="nav-btn" data-view="method">Strategy</button>
@@ -20,89 +35,186 @@
   </header>
 
   <main>
-    <!-- Dashboard Stats -->
-    <div class="dashboard" id="dashboard"></div>
-
-    <!-- Tier Performance Cards -->
-    <div class="tier-cards" id="tier-cards"></div>
-
     <!-- ============================================================ -->
-    <!-- TONIGHT VIEW -->
+    <!-- NBA SECTION (unchanged) -->
     <!-- ============================================================ -->
-    <div id="view-tonight" class="view active">
-      <!-- Games Tonight Section -->
-      <div class="section-block">
-        <h2>Tonight's Games</h2>
-        <div id="tonight-games-status" class="status-msg">Loading games...</div>
-        <div id="tonight-games" class="games-grid"></div>
-      </div>
+    <div id="nba-section">
+      <!-- Dashboard Stats -->
+      <div class="dashboard" id="dashboard"></div>
 
-      <!-- Recommended Bets Section -->
-      <div class="section-block" style="margin-top: 2rem;">
-        <h2>Recommended Bets</h2>
-        <div id="tonight-picks-status" class="status-msg">Analyzing...</div>
-        <div id="tonight-bet-type" class="bet-type-badge" style="display: none;"></div>
+      <!-- Tier Performance Cards -->
+      <div class="tier-cards" id="tier-cards"></div>
 
-        <!-- Single Bets -->
-        <div id="tonight-singles" class="picks-grid" style="display: none;"></div>
-
-        <!-- Parlay Bets -->
-        <div id="tonight-parlays" class="picks-grid" style="display: none;"></div>
-
-        <!-- Candidate Legs Table -->
-        <div id="tonight-candidates" style="display: none; margin-top: 1.5rem;">
-          <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem;">All Candidate Legs</h3>
-          <div id="candidates-table" class="table-scroll"></div>
+      <!-- TONIGHT VIEW -->
+      <div id="view-tonight" class="view active">
+        <div class="section-block">
+          <h2>Tonight's Games</h2>
+          <div id="tonight-games-status" class="status-msg">Loading games...</div>
+          <div id="tonight-games" class="games-grid"></div>
+        </div>
+        <div class="section-block" style="margin-top: 2rem;">
+          <h2>Recommended Bets</h2>
+          <div id="tonight-picks-status" class="status-msg">Analyzing...</div>
+          <div id="tonight-bet-type" class="bet-type-badge" style="display: none;"></div>
+          <div id="tonight-singles" class="picks-grid" style="display: none;"></div>
+          <div id="tonight-parlays" class="picks-grid" style="display: none;"></div>
+          <div id="tonight-candidates" style="display: none; margin-top: 1.5rem;">
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem;">All Candidate Legs</h3>
+            <div id="candidates-table" class="table-scroll"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- ============================================================ -->
-    <!-- HISTORY VIEW -->
-    <!-- ============================================================ -->
-    <div id="view-history" class="view">
-      <h2>Recommendation History</h2>
-
-      <!-- Overall Stats -->
-      <div id="history-overall-stats" class="history-stats"></div>
-
-      <!-- Category Stats (Singles vs Parlays) -->
-      <div id="history-category-stats" class="history-category-stats"></div>
-
-      <!-- Filters -->
-      <div class="history-filters" id="history-filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="single">Singles</button>
-        <button class="filter-btn" data-filter="parlay">Parlays</button>
+      <!-- HISTORY VIEW -->
+      <div id="view-history" class="view">
+        <h2>Recommendation History</h2>
+        <div id="history-overall-stats" class="history-stats"></div>
+        <div id="history-category-stats" class="history-category-stats"></div>
+        <div class="history-filters" id="history-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="single">Singles</button>
+          <button class="filter-btn" data-filter="parlay">Parlays</button>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Pick</th>
+              <th>Odds</th>
+              <th>Score</th>
+              <th>Result</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
       </div>
 
-      <!-- History Table -->
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Pick</th>
-            <th>Odds</th>
-            <th>Score</th>
-            <th>Result</th>
-            <th>P&L</th>
-          </tr>
-        </thead>
-        <tbody id="history-body"></tbody>
-      </table>
+      <!-- STRATEGY VIEW -->
+      <div id="view-method" class="view">
+        <h2>Strategy & Innovations</h2>
+        <div id="method-content" class="method-content"></div>
+      </div>
     </div>
 
     <!-- ============================================================ -->
-    <!-- STRATEGY VIEW -->
+    <!-- MLB SECTION (completely separate) -->
     <!-- ============================================================ -->
-    <div id="view-method" class="view">
-      <h2>Strategy & Innovations</h2>
-      <div id="method-content" class="method-content"></div>
+    <div id="mlb-section" style="display: none;">
+      <!-- Dashboard Stats -->
+      <div class="dashboard" id="mlb-dashboard"></div>
+
+      <!-- Tier Performance Cards -->
+      <div class="tier-cards" id="mlb-tier-cards"></div>
+
+      <!-- TONIGHT VIEW -->
+      <div id="mlb-view-tonight" class="mlb-view active">
+        <div class="section-block">
+          <h2>Tonight's Games</h2>
+          <div id="mlb-tonight-games-status" class="status-msg">Loading games...</div>
+          <div id="mlb-tonight-games" class="games-grid"></div>
+        </div>
+        <div class="section-block" style="margin-top: 2rem;">
+          <h2>Recommended Bets</h2>
+          <div id="mlb-tonight-picks-status" class="status-msg">Analyzing...</div>
+          <div id="mlb-tonight-bet-type" class="bet-type-badge" style="display: none;"></div>
+          <div id="mlb-tonight-singles" class="picks-grid" style="display: none;"></div>
+          <div id="mlb-tonight-parlays" class="picks-grid" style="display: none;"></div>
+        </div>
+      </div>
+
+      <!-- HISTORY VIEW -->
+      <div id="mlb-view-history" class="mlb-view">
+        <h2>Recommendation History</h2>
+        <div id="mlb-history-overall-stats" class="history-stats"></div>
+        <div id="mlb-history-category-stats" class="history-category-stats"></div>
+        <div class="history-filters" id="mlb-history-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="single">Singles</button>
+          <button class="filter-btn" data-filter="parlay">Parlays</button>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Pick</th>
+              <th>Odds</th>
+              <th>Score</th>
+              <th>Result</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody id="mlb-history-body"></tbody>
+        </table>
+      </div>
+
+      <!-- STRATEGY VIEW -->
+      <div id="mlb-view-method" class="mlb-view">
+        <h2>Strategy & Innovations</h2>
+        <div id="mlb-method-content" class="method-content"></div>
+      </div>
     </div>
   </main>
 
+  <!-- NBA Scripts (unchanged) -->
   <script src="js/recommendation-engine.js"></script>
   <script src="js/recommendation-app.js"></script>
+
+  <!-- MLB Scripts -->
+  <script src="mlb/js/recommendation-engine-mlb.js"></script>
+  <script src="mlb/js/recommendation-app-mlb.js"></script>
+
+  <!-- Sport Toggle Controller -->
+  <script>
+  (function() {
+    'use strict';
+
+    let mlbInitialized = false;
+
+    const subtitles = {
+      nba: 'Patent-Pending | 5 Novel Innovations | 97.2% Accuracy | 286% ROI | AutoResearch-Validated',
+      mlb: 'Patent-Pending | 7 Novel Innovations | 100% Accuracy | 49.1% ROI | AutoResearch-Validated',
+    };
+
+    function switchSport(sport) {
+      const nbaSection = document.getElementById('nba-section');
+      const mlbSection = document.getElementById('mlb-section');
+      const nbaNAV = document.getElementById('nba-nav');
+      const mlbNAV = document.getElementById('mlb-nav');
+      const subtitle = document.getElementById('header-subtitle');
+
+      if (subtitle) subtitle.textContent = subtitles[sport] || subtitles.nba;
+
+      if (sport === 'nba') {
+        nbaSection.style.display = '';
+        mlbSection.style.display = 'none';
+        nbaNAV.style.display = '';
+        mlbNAV.style.display = 'none';
+      } else {
+        nbaSection.style.display = 'none';
+        mlbSection.style.display = '';
+        nbaNAV.style.display = 'none';
+        mlbNAV.style.display = '';
+
+        // Initialize MLB on first switch
+        if (!mlbInitialized && window.initMLB) {
+          window.MLB_DATA_PATH = 'mlb/data';
+          window.initMLB();
+          mlbInitialized = true;
+        }
+      }
+    }
+
+    document.querySelectorAll('.sport-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sport-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        switchSport(btn.dataset.sport);
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
