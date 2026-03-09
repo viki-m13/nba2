@@ -1,0 +1,30 @@
+{
+  "config": {
+    "MIN_GAMES": 15,
+    "MIN_MINUTES": 15,
+    "TCZD_WINDOWS": [
+      5,
+      10,
+      15
+    ],
+    "TCZD_BAND_WIDTH": 2.651,
+    "SINGLE_BET_MIN_CONFIDENCE": 0.92,
+    "MULTI_SINGLE_MIN_CONFIDENCE": 0.88,
+    "PARLAY_LEG_MIN_CONFIDENCE": 0.85,
+    "MSDS_MIN_DEPTH": 2.0,
+    "RAF_LOOKBACK": 20,
+    "RAF_CHANGE_THRESHOLD": 0.25,
+    "VACS_MAX_CV": 0.45,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 4,
+    "MAX_LEGS_PER_GAME": 1,
+    "CSIV_MAX_CORRELATION": 0.35,
+    "MIN_LEG_ODDS": -735,
+    "MAX_LEG_ODDS": -143,
+    "UNIT_SIZE": 100
+  },
+  "score": 0.6509433962264151,
+  "improvements": 3,
+  "iterations": 15,
+  "generated": "2026-03-09T02:08:37.963830"
+}

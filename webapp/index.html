@@ -3,48 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QEPE — Quantum Edge Parlay Engine</title>
+  <title>NBA Betting Recommendation Engine</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="header-content">
-      <h1>QUANTUM EDGE PARLAY ENGINE</h1>
-      <p class="subtitle">Patent-Pending | 6 Proprietary Innovations | AutoResearch-Validated</p>
+      <h1>NBA BETTING RECOMMENDATION ENGINE</h1>
+      <p class="subtitle">Patent-Pending | Confluence Cascade Scoring | AutoResearch-Validated</p>
     </div>
     <nav>
-      <button class="nav-btn active" data-view="today">Today's Picks</button>
+      <button class="nav-btn active" data-view="tonight">Tonight</button>
       <button class="nav-btn" data-view="history">History</button>
       <button class="nav-btn" data-view="method">Strategy</button>
     </nav>
   </header>
 
   <main>
-    <!-- Dashboard -->
+    <!-- Dashboard Stats -->
     <div class="dashboard" id="dashboard"></div>
 
-    <!-- Tier Cards -->
+    <!-- Tier Performance Cards -->
     <div class="tier-cards" id="tier-cards"></div>
 
-    <!-- Today's Picks -->
-    <div id="view-today" class="view active">
-      <h2>Today's Picks</h2>
-      <div id="today-status" class="status-msg">Loading...</div>
-      <div id="today-picks" class="picks-grid"></div>
+    <!-- ============================================================ -->
+    <!-- TONIGHT VIEW -->
+    <!-- ============================================================ -->
+    <div id="view-tonight" class="view active">
+      <!-- Games Tonight Section -->
+      <div class="section-block">
+        <h2>Tonight's Games</h2>
+        <div id="tonight-games-status" class="status-msg">Loading games...</div>
+        <div id="tonight-games" class="games-grid"></div>
+      </div>
+
+      <!-- Recommended Bets Section -->
+      <div class="section-block" style="margin-top: 2rem;">
+        <h2>Recommended Bets</h2>
+        <div id="tonight-picks-status" class="status-msg">Analyzing...</div>
+        <div id="tonight-bet-type" class="bet-type-badge" style="display: none;"></div>
+
+        <!-- Single Bets -->
+        <div id="tonight-singles" class="picks-grid" style="display: none;"></div>
+
+        <!-- Parlay Bets -->
+        <div id="tonight-parlays" class="picks-grid" style="display: none;"></div>
+
+        <!-- Candidate Legs Table -->
+        <div id="tonight-candidates" style="display: none; margin-top: 1.5rem;">
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem;">All Candidate Legs</h3>
+          <div id="candidates-table" class="table-scroll"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- History -->
+    <!-- ============================================================ -->
+    <!-- HISTORY VIEW -->
+    <!-- ============================================================ -->
     <div id="view-history" class="view">
-      <h2>Backtest History</h2>
-      <div id="history-stats" class="history-stats"></div>
-      <div class="history-filters" id="history-filters"></div>
+      <h2>Recommendation History</h2>
+
+      <!-- Overall Stats -->
+      <div id="history-overall-stats" class="history-stats"></div>
+
+      <!-- Category Stats (Singles vs Parlays) -->
+      <div id="history-category-stats" class="history-category-stats"></div>
+
+      <!-- Filters -->
+      <div class="history-filters" id="history-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="single">Singles</button>
+        <button class="filter-btn" data-filter="parlay">Parlays</button>
+      </div>
+
+      <!-- History Table -->
       <table class="history-table">
         <thead>
           <tr>
             <th>Date</th>
-            <th>Tier</th>
-            <th>Legs</th>
+            <th>Type</th>
+            <th>Pick</th>
             <th>Odds</th>
+            <th>CCS</th>
             <th>Result</th>
             <th>P&L</th>
           </tr>
@@ -53,13 +93,16 @@
       </table>
     </div>
 
-    <!-- Strategy / Method -->
+    <!-- ============================================================ -->
+    <!-- STRATEGY VIEW -->
+    <!-- ============================================================ -->
     <div id="view-method" class="view">
       <h2>Strategy & Innovations</h2>
       <div id="method-content" class="method-content"></div>
     </div>
   </main>
 
-  <script src="js/qepe-engine.js"></script>
+  <script src="js/recommendation-engine.js"></script>
+  <script src="js/recommendation-app.js"></script>
 </body>
 </html>
