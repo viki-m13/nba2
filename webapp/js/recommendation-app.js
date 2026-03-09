@@ -228,15 +228,13 @@
 
       // Generate recommendations
       if (Object.keys(liveOdds.playerProps).length === 0) {
-        // Try Ultra Engine pre-computed picks
-        await loadUltraRecommendations(picksStatus);
+        picksStatus.textContent = 'No FanDuel player props available yet. Props typically open 1-2 hours before game time.';
         return;
       }
 
       const recommendation = ENGINE.generateTodayPicks(liveOdds);
       if (!recommendation || (recommendation.singles.length === 0 && recommendation.parlays.length === 0)) {
-        // Fall back to Ultra Engine pre-computed picks
-        await loadUltraRecommendations(picksStatus);
+        picksStatus.textContent = 'No bets meet our strict quality thresholds tonight. The engine only recommends when all 6 gates pass.';
         return;
       }
 
@@ -253,82 +251,6 @@
     } catch (e) {
       console.error('[REC-APP] Error generating tonight picks:', e);
       picksStatus.textContent = 'Error loading picks. See console for details.';
-    }
-  }
-
-  async function loadUltraRecommendations(statusEl) {
-    try {
-      const res = await fetch('data/ultra_recommendations.json').catch(() => null);
-      if (!res || !res.ok) {
-        statusEl.textContent = 'No bets meet our strict quality thresholds tonight. The engine only recommends when confluence is high.';
-        return;
-      }
-      const data = await res.json();
-      const picks = data.tonight_picks || [];
-      if (picks.length === 0) {
-        statusEl.textContent = 'No Ultra Engine recommendations available tonight.';
-        return;
-      }
-
-      statusEl.style.display = 'none';
-
-      // Convert Ultra Engine format to recommendation format
-      const singles = picks.filter(p => p.bet_type !== 'parlay').map(p => ({
-        player: p.player,
-        line: p.line,
-        odds: p.odds,
-        statLabel: (p.stat || 'pts').toUpperCase(),
-        cascadeScore: p.combined_score || 0,
-        hitRate: p.hit_rate || 0,
-        edge: p.edge || 0,
-        tczd: p.combined_score || 0,
-        vacs: p.hit_rate || 0,
-        msds: p.edge || 0,
-        raf: p.bayesian_prob || 0,
-        avg: 0,
-        floor: 0,
-        ev: p.edge || 0,
-        hit: null,
-        actual: null,
-      }));
-
-      const parlays = picks.filter(p => p.bet_type === 'parlay').map(p => {
-        const legs = (p.legs || []).map(l => ({
-          player: l.player,
-          team: '',
-          line: l.line,
-          odds: l.odds,
-          statLabel: (l.stat || 'pts').toUpperCase(),
-          cascadeScore: l.combined_score || 0,
-          hit: null,
-          actual: null,
-        }));
-        const parlayDecimal = (p.legs || []).reduce((d, l) => {
-          const o = l.odds;
-          return d * (o > 0 ? 1 + o / 100 : 1 + 100 / Math.abs(o));
-        }, 1);
-        return {
-          numLegs: (p.legs || []).length,
-          odds: p.parlay_odds || 0,
-          decimalOdds: parlayDecimal,
-          legs: legs,
-          combinedHitRate: p.hit_rate || 0.9,
-          avgCascade: legs.reduce((s, l) => s + l.cascadeScore, 0) / (legs.length || 1),
-          ev: p.parlay_ev || 0,
-        };
-      });
-
-      const betType = parlays.length > 0 ? 'parlay' : (singles.length > 1 ? 'multi_single' : 'single');
-      renderTonightPicks({
-        singles,
-        parlays,
-        betType,
-        reasoning: `Ultra Engine v1.0 — ${picks.length} recommendation${picks.length > 1 ? 's' : ''} (97.2% backtest accuracy, 286% ROI)`,
-      });
-
-    } catch (e) {
-      console.warn('[REC-APP] Error loading Ultra recommendations:', e);
-      statusEl.textContent = 'No bets meet our strict quality thresholds tonight.';
     }
   }
 
