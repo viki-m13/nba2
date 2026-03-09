@@ -1,17 +1,20 @@
 /**
- * MLB Ultra Betting Engine v1.0 — Patent-Pending
+ * MLB Ultra Betting Engine v2.0 — Patent-Pending
  * =================================================
- * 7 Novel Innovations for MLB Batter Prop Betting:
+ * 10 Novel Innovations for MLB Batter Prop Betting:
  *
- * 1. Gravitational Floor Theory (GFT) — Recency-weighted performance floors
- * 2. Bayesian Edge Quantification (BEQ) — Beta posterior with baseball priors
- * 3. Entropic Stability Index (ESI) — Shannon entropy consistency
- * 4. Inverse Market Asymmetry Detection (IMAD) — Multi-signal mispricing
- * 5. Consecutive Game Streak Momentum (CGSM) — Hit streak tracking
- * 6. At-Bat Volume Confidence (ABVC) — Opportunity-weighted confidence
- * 7. Edge-Maximized Parlay Construction (EMPC) — Correlation-verified parlays
+ * 1.  Gravitational Floor Theory (GFT) — Recency-weighted performance floors
+ * 2.  Bayesian Edge Quantification (BEQ) — Beta posterior with credible intervals
+ * 3.  Entropic Stability Index (ESI) — Shannon entropy consistency scoring
+ * 4.  Inverse Market Asymmetry Detection (IMAD) — Multi-signal mispricing fusion
+ * 5.  Consecutive Game Streak Momentum (CGSM) — Hit streak tracking
+ * 6.  At-Bat Volume Confidence (ABVC) — Opportunity-weighted confidence
+ * 7.  Poisson-Bayesian Fusion (PBF) — Discrete outcome probability modeling
+ * 8.  Opponent-Adjusted Lambda (OAL) — Team pitching quality adjustment
+ * 9.  Venue Performance Differential (VPD) — Home/away split analysis
+ * 10. Edge-Maximized Parlay Construction (EMPC) — Correlation-verified parlays
  *
- * 8-Gate Quality Cascade — All gates must pass simultaneously
+ * 9-Gate Quality Cascade — All gates must pass simultaneously
  * AutoResearch-Optimized parameters via monotonic ratchet methodology
  */
 
@@ -19,78 +22,100 @@ window.MLBRecommendationEngine = (function () {
   'use strict';
 
   // =========================================================================
-  // CONFIGURATION — AutoResearch-Optimized for MLB Batter Props
+  // CONFIGURATION — AutoResearch-Optimized for MLB v2.0
   // =========================================================================
 
   const CONFIG = {
     // Player eligibility
-    MIN_GAMES: 7,
+    MIN_GAMES: 8,
     MIN_AB: 2,
-    WARM_UP_GAMES: 8,
+    WARM_UP_GAMES: 10,
 
     // Gravitational Floor Theory (GFT) — tuned for MLB stat scale (0-4 hits)
     GFT_WINDOWS: [3, 5, 10],
-    GFT_DECAY_RATE: 0.88,
-    GFT_GRAVITY_STRENGTH: 0.5,
-    GFT_MIN_CLEARANCE: 0.1,
-    GFT_CONVERGENCE_MAX_SPREAD: 4.0,
+    GFT_DECAY_RATE: 0.90,
+    GFT_GRAVITY_STRENGTH: 0.40,
+    GFT_MIN_CLEARANCE: 0.05,
+    GFT_CONVERGENCE_MAX_SPREAD: 3.0,
 
-    // Bayesian Edge Quantification (BEQ) — baseball-calibrated priors
+    // Bayesian Edge Quantification (BEQ) — calibrated like NBA (87% credible)
     BEQ_PRIOR_ALPHA: 1.0,
     BEQ_PRIOR_BETA: 1.0,
-    BEQ_CREDIBLE_LEVEL: 0.95,
+    BEQ_CREDIBLE_LEVEL: 0.87,
     BEQ_MIN_EDGE: 0.03,
 
     // Entropic Stability Index (ESI)
     ESI_BINS: 5,
     ESI_MAX_ENTROPY: 0.85,
-    ESI_TREND_WEIGHT: 0.2,
+    ESI_TREND_WEIGHT: 0.25,
 
     // Inverse Market Asymmetry Detection (IMAD)
-    IMAD_MIN_ASYMMETRY: 0.1,
+    IMAD_MIN_ASYMMETRY: 0.05,
     IMAD_VOLUME_DISCOUNT: 0.02,
 
-    // Consecutive Game Streak Momentum (CGSM) — NEW MLB Innovation
-    CGSM_MIN_STREAK: 2,           // Minimum consecutive games hitting over
-    CGSM_LOOKBACK: 10,            // Games to check for streak
-    CGSM_WEIGHT: 0.10,            // Weight in combined score
+    // Consecutive Game Streak Momentum (CGSM)
+    CGSM_MIN_STREAK: 2,
+    CGSM_LOOKBACK: 10,
+    CGSM_WEIGHT: 0.08,
 
-    // At-Bat Volume Confidence (ABVC) — NEW MLB Innovation
-    ABVC_MIN_AVG_AB: 4.0,         // Minimum average at-bats
-    ABVC_ELITE_AB: 4.0,           // Elite AB threshold (lineup regulars)
-    ABVC_WEIGHT: 0.08,            // Weight in combined score
+    // At-Bat Volume Confidence (ABVC) — fixed division-by-zero
+    ABVC_MIN_AVG_AB: 3.0,
+    ABVC_ELITE_AB: 5.0,
+    ABVC_WEIGHT: 0.07,
 
-    // Quality Gates — 8-Gate Cascade
-    GATE_MIN_GFT_SCORE: 0.7,
-    GATE_MIN_BEQ_EDGE: 0.2,
-    GATE_MIN_ESI_STABILITY: 0.12,
-    GATE_MIN_IMAD_SCORE: 0.01,
-    GATE_MIN_HIT_RATE: 0.8,
-    GATE_MIN_COMBINED: 0.5,
+    // Poisson-Bayesian Fusion (PBF) — NEW v2.0
+    PBF_DECAY_RATE: 0.92,
+    PBF_MIN_LAMBDA: 0.3,
+    PBF_WEIGHT: 0.10,
+    PBF_MIN_PROB_MARGIN: 0.05,
+
+    // Opponent-Adjusted Lambda (OAL) — NEW v2.0
+    OAL_ENABLED: true,
+    OAL_WEIGHT: 0.05,
+    OAL_MAX_ADJUSTMENT: 0.25,
+
+    // Venue Performance Differential (VPD) — NEW v2.0
+    VPD_ENABLED: true,
+    VPD_MIN_GAMES: 5,
+    VPD_WEIGHT: 0.05,
+    VPD_MAX_BOOST: 0.10,
+
+    // Quality Gates — 9-Gate Cascade
+    GATE_MIN_GFT_SCORE: 0.40,
+    GATE_MIN_BEQ_EDGE: 0.05,
+    GATE_MIN_ESI_STABILITY: 0.15,
+    GATE_MIN_IMAD_SCORE: 0.02,
+    GATE_MIN_HIT_RATE: 0.80,
+    GATE_MIN_COMBINED: 0.55,
     GATE_MIN_STREAK: 2,
-    GATE_MIN_ABVC: 0.3,
+    GATE_MIN_ABVC: 0.30,
+    GATE_MIN_PBF_MARGIN: 0.03,
 
     // Bet Type Selection
-    SINGLE_MIN_SCORE: 0.6,
-    MULTI_SINGLE_MIN_SCORE: 0.55,
-    PARLAY_LEG_MIN_SCORE: 0.50,
+    SINGLE_MIN_SCORE: 0.72,
+    MULTI_SINGLE_MIN_SCORE: 0.65,
+    PARLAY_LEG_MIN_SCORE: 0.58,
 
     // Parlay Construction
     PARLAY_MIN_LEGS: 2,
     PARLAY_MAX_LEGS: 4,
-    PARLAY_MAX_CORRELATION: 0.6,
-    PARLAY_SAME_GAME_ALLOWED: true,
-    PARLAY_MIN_COMBINED_EDGE: 0.05,
+    PARLAY_MAX_CORRELATION: 0.40,
+    PARLAY_SAME_GAME_ALLOWED: false,
+    PARLAY_MIN_COMBINED_EDGE: 0.08,
 
-    // Odds Filters — calibrated for MLB batter prop ranges
-    MIN_ODDS: -260,
-    MAX_ODDS: -200,
-    PREFERRED_ODDS_RANGE: [-500, -120],
+    // Odds Filters — widened to capture MLB prop range
+    MIN_ODDS: -450,
+    MAX_ODDS: -115,
+    PREFERRED_ODDS_RANGE: [-500, -110],
 
     // Bankroll
     UNIT_SIZE: 100,
     MAX_DAILY_UNITS: 5,
     KELLY_FRACTION: 0.25,
+
+    // Contextual adjustments
+    HOME_BOOST: 0.015,
+    BACK_TO_BACK_PENALTY: 0.00,
   };
 
   // =========================================================================
@@ -177,8 +202,32 @@ window.MLBRecommendationEngine = (function () {
     return maxEntropy > 0 ? entropy / maxEntropy : 1.0;
   }
 
+  /**
+   * PATENT-PENDING: Poisson CDF computation for discrete outcome modeling
+   * P(X <= k) where X ~ Poisson(lambda)
+   */
+  function poissonCDF(lambda, k) {
+    if (lambda <= 0) return 1.0;
+    let sum = 0;
+    let term = Math.exp(-lambda);
+    for (let i = 0; i <= k; i++) {
+      sum += term;
+      term *= lambda / (i + 1);
+    }
+    return Math.min(1.0, sum);
+  }
+
+  /**
+   * P(X > line) where X ~ Poisson(lambda)
+   * For fractional lines like 0.5, we need P(X >= 1) = 1 - P(X = 0)
+   */
+  function poissonOverProb(lambda, line) {
+    const k = Math.floor(line);
+    return 1 - poissonCDF(lambda, k);
+  }
+
   // =========================================================================
-  // PLAYER MODEL — with AB filtering and streak tracking
+  // PLAYER MODEL — Enhanced with venue/opponent tracking
   // =========================================================================
 
   const PlayerModel = {
@@ -186,9 +235,9 @@ window.MLBRecommendationEngine = (function () {
 
     reset() { this.profiles = {}; },
 
-    update(name, stats, date, team, opponent) {
+    update(name, stats, date, team, opponent, isHome) {
       if (!this.profiles[name]) this.profiles[name] = { games: [], team: '' };
-      const enriched = { ...stats, date, team, opponent };
+      const enriched = { ...stats, date, team, opponent, isHome: !!isHome };
       if (enriched.hrtb === undefined) {
         enriched.hrtb = (enriched.h || 0) + (enriched.r || 0) + (enriched.tb || 0);
       }
@@ -239,7 +288,6 @@ window.MLBRecommendationEngine = (function () {
       return vals.reduce((s, v) => s + v, 0) / vals.length;
     },
 
-    // NEW: Get consecutive game streak for a stat over a line
     getStreak(name, statKey, line, minAB) {
       const profile = this.profiles[name];
       if (!profile) return 0;
@@ -260,7 +308,6 @@ window.MLBRecommendationEngine = (function () {
       return streak;
     },
 
-    // NEW: Get streak within lookback window (counts games over in last N)
     getStreakInWindow(name, statKey, line, lookback, minAB) {
       const profile = this.profiles[name];
       if (!profile) return { streak: 0, hitsInWindow: 0, windowSize: 0 };
@@ -284,13 +331,102 @@ window.MLBRecommendationEngine = (function () {
       return { streak, hitsInWindow, windowSize: window.length };
     },
 
-    // NEW: Get average AB count over a window
     getAvgAB(name, window) {
       const profile = this.profiles[name];
       if (!profile) return 0;
       const games = profile.games.slice(-(window || 10));
       if (games.length === 0) return 0;
       return games.reduce((s, g) => s + (g.ab || 0), 0) / games.length;
+    },
+
+    /**
+     * PATENT-PENDING: Venue Performance Differential (VPD)
+     * Returns { homeValues, awayValues } for a stat
+     */
+    getVenueSplit(name, statKey, minAB) {
+      const profile = this.profiles[name];
+      if (!profile) return null;
+
+      let games = profile.games;
+      if (minAB && minAB > 0) {
+        games = games.filter(g => (g.ab || 0) >= minAB);
+      }
+
+      const homeGames = games.filter(g => g.isHome);
+      const awayGames = games.filter(g => !g.isHome);
+
+      return {
+        homeValues: homeGames.map(g => g[statKey] || 0),
+        awayValues: awayGames.map(g => g[statKey] || 0),
+        homeCount: homeGames.length,
+        awayCount: awayGames.length,
+      };
+    },
+
+    /**
+     * Get games filtered by opponent for OAL computation
+     */
+    getGamesVsTeam(name, opponent, statKey) {
+      const profile = this.profiles[name];
+      if (!profile) return [];
+      return profile.games
+        .filter(g => g.opponent === opponent)
+        .map(g => g[statKey] || 0);
+    },
+  };
+
+  // =========================================================================
+  // OPPONENT QUALITY TRACKER — For OAL computation
+  // =========================================================================
+
+  const OpponentTracker = {
+    teamStats: {},
+
+    reset() { this.teamStats = {}; },
+
+    update(team, statsAllowed) {
+      if (!this.teamStats[team]) this.teamStats[team] = { gamesAsDefense: [] };
+      this.teamStats[team].gamesAsDefense.push(statsAllowed);
+      if (this.teamStats[team].gamesAsDefense.length > 30) {
+        this.teamStats[team].gamesAsDefense =
+          this.teamStats[team].gamesAsDefense.slice(-30);
+      }
+    },
+
+    /**
+     * PATENT-PENDING: Opponent-Adjusted Lambda (OAL)
+     * Returns a multiplier for how much easier/harder this opponent is to hit against
+     */
+    getOpponentFactor(team, statKey) {
+      if (!this.teamStats[team]) return 1.0;
+      const games = this.teamStats[team].gamesAsDefense;
+      if (games.length < 5) return 1.0;
+
+      // Compute average stat allowed per game by this team's defense
+      const avgAllowed = games.reduce((sum, g) => sum + (g[statKey] || 0), 0) / games.length;
+
+      // League average baseline (approximate — will be refined by optimizer)
+      const leagueAvg = this._getLeagueAvg(statKey);
+      if (leagueAvg <= 0) return 1.0;
+
+      // Factor: >1.0 means team allows more than average (easier opponent)
+      const raw = avgAllowed / leagueAvg;
+      // Clamp adjustment to prevent extreme swings
+      return Math.max(1 - CONFIG.OAL_MAX_ADJUSTMENT, Math.min(1 + CONFIG.OAL_MAX_ADJUSTMENT, raw));
+    },
+
+    _getLeagueAvg(statKey) {
+      const teams = Object.values(this.teamStats);
+      if (teams.length < 5) return 1.0;
+
+      let totalSum = 0, totalGames = 0;
+      for (const t of teams) {
+        for (const g of t.gamesAsDefense) {
+          totalSum += g[statKey] || 0;
+          totalGames++;
+        }
+      }
+      return totalGames > 0 ? totalSum / totalGames : 1.0;
     },
   };
 
@@ -310,7 +446,7 @@ window.MLBRecommendationEngine = (function () {
 
     for (const w of windows) {
       const values = PlayerModel.getValues(name, statKey, w, CONFIG.MIN_AB);
-      if (!values || values.length < Math.min(w, 5)) return null;
+      if (!values || values.length < Math.min(w, 3)) return null;
 
       const n = values.length;
       const weights = [];
@@ -353,7 +489,7 @@ window.MLBRecommendationEngine = (function () {
 
     const convergence = Math.max(0, 1 - floorSpread / maxSpread);
     const avgClearance = clearances.reduce((s, c) => s + c, 0) / clearances.length;
-    const depth = Math.min(1.0, avgClearance / 4.0); // Scaled for MLB (max ~4 hits)
+    const depth = Math.min(1.0, avgClearance / 4.0);
 
     const score = convergence * 0.5 + depth * 0.5;
 
@@ -363,7 +499,7 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // BAYESIAN EDGE QUANTIFICATION (BEQ)
+  // BAYESIAN EDGE QUANTIFICATION (BEQ) — Calibrated like NBA success
   // =========================================================================
 
   function computeBEQ(name, statKey, line, marketOdds) {
@@ -466,8 +602,8 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // NEW INNOVATION: CONSECUTIVE GAME STREAK MOMENTUM (CGSM)
-  // Patent-Pending — Tracks consecutive game hit streaks as a momentum signal
+  // CONSECUTIVE GAME STREAK MOMENTUM (CGSM)
+  // Patent-Pending — Tracks consecutive game hit streaks
   // =========================================================================
 
   function computeCGSM(name, statKey, line) {
@@ -480,11 +616,9 @@ window.MLBRecommendationEngine = (function () {
     const streak = streakInfo.streak;
     const windowHitRate = streakInfo.hitsInWindow / streakInfo.windowSize;
 
-    // Score based on streak length and window consistency
     const streakScore = Math.min(1.0, streak / CONFIG.CGSM_LOOKBACK);
     const consistencyScore = windowHitRate;
 
-    // Combined CGSM score
     const score = streakScore * 0.6 + consistencyScore * 0.4;
 
     return {
@@ -497,7 +631,7 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // NEW INNOVATION: AT-BAT VOLUME CONFIDENCE (ABVC)
+  // AT-BAT VOLUME CONFIDENCE (ABVC) — Fixed division-by-zero bug
   // Patent-Pending — Weights confidence by at-bat opportunity volume
   // =========================================================================
 
@@ -505,11 +639,12 @@ window.MLBRecommendationEngine = (function () {
     const avgAB = PlayerModel.getAvgAB(name, 10);
     if (avgAB < CONFIG.ABVC_MIN_AVG_AB) return null;
 
-    // Score based on AB volume (higher AB = more confident pick)
-    const volumeScore = Math.min(1.0, (avgAB - CONFIG.ABVC_MIN_AVG_AB) /
-      (CONFIG.ABVC_ELITE_AB - CONFIG.ABVC_MIN_AVG_AB));
+    // Fixed: prevent division by zero when MIN == ELITE
+    const abRange = CONFIG.ABVC_ELITE_AB - CONFIG.ABVC_MIN_AVG_AB;
+    const volumeScore = abRange > 0
+      ? Math.min(1.0, (avgAB - CONFIG.ABVC_MIN_AVG_AB) / abRange)
+      : (avgAB >= CONFIG.ABVC_ELITE_AB ? 1.0 : 0.5);
 
-    // Check AB consistency (low variance = reliable lineup spot)
     const abValues = PlayerModel.getValues(name, 'ab', 10, 1);
     if (!abValues || abValues.length < 5) return null;
 
@@ -530,10 +665,156 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // ULTRA SIGNAL — 8-Gate Quality Cascade (Enhanced for MLB)
+  // PATENT-PENDING: POISSON-BAYESIAN FUSION (PBF)
+  // Models discrete baseball outcomes as Poisson process with Bayesian
+  // recency-weighted lambda estimation. Fundamentally different from
+  // continuous-stat NBA approach — accounts for the discrete nature of
+  // hits (0,1,2,3,4) rather than treating them as continuous variables.
+  //
+  // Key innovation: Fuses Poisson probability P(X > line | lambda) with
+  // Bayesian credible interval to produce calibrated discrete probability
+  // that accounts for both the generating process and parameter uncertainty.
   // =========================================================================
 
-  function computeUltraSignal(playerName, statKey, line, marketOdds) {
+  function computePBF(name, statKey, line, marketOdds) {
+    const values = PlayerModel.getValues(name, statKey, 20, CONFIG.MIN_AB);
+    if (!values || values.length < 10) return null;
+
+    // Compute recency-weighted Poisson lambda
+    const decay = CONFIG.PBF_DECAY_RATE;
+    const n = values.length;
+    let weightedSum = 0;
+    let totalWeight = 0;
+    for (let i = 0; i < n; i++) {
+      const w = Math.pow(decay, n - 1 - i);
+      weightedSum += values[i] * w;
+      totalWeight += w;
+    }
+    const lambda = weightedSum / totalWeight;
+
+    if (lambda < CONFIG.PBF_MIN_LAMBDA) return null;
+
+    // Poisson probability of exceeding line
+    const poissonProb = poissonOverProb(lambda, line);
+
+    // Market implied probability
+    const mktProb = impliedProbability(marketOdds);
+
+    // Margin of safety: how much Poisson prob exceeds market
+    const margin = poissonProb - mktProb;
+
+    // Confidence based on sample size and lambda stability
+    const extValues = PlayerModel.getValues(name, statKey, 30, CONFIG.MIN_AB);
+    let lambdaStability = 1.0;
+    if (extValues && extValues.length >= 15) {
+      const extLambda = extValues.reduce((s, v) => s + v, 0) / extValues.length;
+      const lambdaDrift = Math.abs(lambda - extLambda) / (extLambda || 1);
+      lambdaStability = Math.max(0, 1 - lambdaDrift / 0.3);
+    }
+
+    const score = Math.min(1.0, (margin / 0.20 + 0.5)) * lambdaStability;
+
+    return {
+      score,
+      lambda,
+      poissonProb,
+      marketProb: mktProb,
+      margin,
+      lambdaStability,
+    };
+  }
+
+  // =========================================================================
+  // PATENT-PENDING: OPPONENT-ADJUSTED LAMBDA (OAL)
+  // Adjusts player's expected production rate based on opposing team's
+  // defensive quality. Uses rolling team-level stats to identify
+  // plus/minus matchups that the market may not fully price in.
+  //
+  // Key innovation: The adjustment is asymmetric — it boosts confidence
+  // against weak pitching but doesn't penalize against average pitching,
+  // only against elite pitching. This creates a directional edge.
+  // =========================================================================
+
+  function computeOAL(name, statKey, opponent) {
+    if (!CONFIG.OAL_ENABLED) return null;
+
+    const factor = OpponentTracker.getOpponentFactor(opponent, statKey);
+    if (factor === 1.0) return null;
+
+    // Asymmetric: boost for easy opponents, slight penalty for tough ones
+    let adjustment = 0;
+    if (factor > 1.05) {
+      // Opponent allows more than average — favorable matchup
+      adjustment = Math.min(CONFIG.OAL_MAX_ADJUSTMENT, (factor - 1.0) * 0.5);
+    } else if (factor < 0.90) {
+      // Tough opponent — slight confidence reduction
+      adjustment = Math.max(-CONFIG.OAL_MAX_ADJUSTMENT * 0.5, (factor - 1.0) * 0.3);
+    }
+
+    const score = 0.5 + adjustment;
+
+    return {
+      score: Math.max(0, Math.min(1.0, score)),
+      factor,
+      adjustment,
+      opponent,
+    };
+  }
+
+  // =========================================================================
+  // PATENT-PENDING: VENUE PERFORMANCE DIFFERENTIAL (VPD)
+  // Analyzes player's home vs away performance splits to identify
+  // venue-dependent edge. Baseball has significant park factors
+  // (Coors Field, Yankee Stadium, etc.) that affect hitting stats.
+  //
+  // Key innovation: Only applies boost when the venue direction
+  // (home/away) aligns with the player's historical strength,
+  // creating a one-directional confidence enhancer.
+  // =========================================================================
+
+  function computeVPD(name, statKey, isHome) {
+    if (!CONFIG.VPD_ENABLED) return null;
+
+    const split = PlayerModel.getVenueSplit(name, statKey, CONFIG.MIN_AB);
+    if (!split) return null;
+    if (split.homeCount < CONFIG.VPD_MIN_GAMES || split.awayCount < CONFIG.VPD_MIN_GAMES) {
+      return null;
+    }
+
+    const homeMean = split.homeValues.reduce((s, v) => s + v, 0) / split.homeCount;
+    const awayMean = split.awayValues.reduce((s, v) => s + v, 0) / split.awayCount;
+    const overallMean = (homeMean * split.homeCount + awayMean * split.awayCount) /
+      (split.homeCount + split.awayCount);
+
+    if (overallMean === 0) return null;
+
+    // Compute venue differential
+    const currentVenueMean = isHome ? homeMean : awayMean;
+    const venueDiff = (currentVenueMean - overallMean) / overallMean;
+
+    // Only apply boost when player performs BETTER at current venue
+    let boost = 0;
+    if (venueDiff > 0.05) {
+      boost = Math.min(CONFIG.VPD_MAX_BOOST, venueDiff * 0.5);
+    }
+
+    const score = 0.5 + boost;
+
+    return {
+      score: Math.max(0, Math.min(1.0, score)),
+      homeMean,
+      awayMean,
+      venueDiff,
+      boost,
+      isHome,
+    };
+  }
+
+  // =========================================================================
+  // ULTRA SIGNAL — 9-Gate Quality Cascade (v2.0 Enhanced)
+  // =========================================================================
+
+  function computeUltraSignal(playerName, statKey, line, marketOdds, opponent, isHome) {
     // Gate 0: Player eligibility
     if (!PlayerModel.isWarm(playerName, CONFIG.MIN_GAMES)) return null;
     const recentAB = PlayerModel.getRecentAB(playerName, 5);
@@ -564,29 +845,52 @@ window.MLBRecommendationEngine = (function () {
       if (beq.extendedHitRate < CONFIG.GATE_MIN_HIT_RATE - 0.05) return null;
     }
 
-    // Gate 6: Consecutive Game Streak Momentum (NEW)
+    // Gate 6: Consecutive Game Streak Momentum
     const cgsm = computeCGSM(playerName, statKey, line);
     if (!cgsm || cgsm.streak < CONFIG.GATE_MIN_STREAK) return null;
 
-    // Gate 7: At-Bat Volume Confidence (NEW)
+    // Gate 7: At-Bat Volume Confidence
     const abvc = computeABVC(playerName);
     if (!abvc || abvc.score < CONFIG.GATE_MIN_ABVC) return null;
 
-    // Combined score with all 6 signal components
-    const components = [
+    // Gate 8: Poisson-Bayesian Fusion (NEW v2.0)
+    const pbf = computePBF(playerName, statKey, line, marketOdds);
+    if (!pbf || pbf.margin < CONFIG.GATE_MIN_PBF_MARGIN) return null;
+
+    // Compute optional enhancers (don't gate on these — they boost score)
+    const oal = computeOAL(playerName, statKey, opponent);
+    const vpd = computeVPD(playerName, statKey, isHome);
+
+    // Combined score: geometric mean of core 4 + weighted add of MLB-specific signals
+    const coreComponents = [
       gft.score,
       Math.min(1.0, beq.edge / 0.20 + 0.5),
       esi.stability,
       Math.min(1.0, imad.score / 0.15 + 0.5),
     ];
 
-    const logSum = components.reduce((s, c) => s + Math.log(Math.max(0.001, c)), 0);
-    let combined = Math.exp(logSum / components.length);
+    const logSum = coreComponents.reduce((s, c) => s + Math.log(Math.max(0.001, c)), 0);
+    let combined = Math.exp(logSum / coreComponents.length);
 
-    // Boost combined score with CGSM and ABVC
-    combined = combined * (1 - CONFIG.CGSM_WEIGHT - CONFIG.ABVC_WEIGHT)
+    // Weight core signals vs MLB-specific innovations
+    const coreWeight = 1.0 - CONFIG.CGSM_WEIGHT - CONFIG.ABVC_WEIGHT - CONFIG.PBF_WEIGHT;
+    combined = combined * coreWeight
              + cgsm.score * CONFIG.CGSM_WEIGHT
-             + abvc.score * CONFIG.ABVC_WEIGHT;
+             + abvc.score * CONFIG.ABVC_WEIGHT
+             + pbf.score * CONFIG.PBF_WEIGHT;
+
+    // Apply optional boosts from OAL and VPD
+    if (oal && oal.adjustment > 0) {
+      combined += oal.adjustment * CONFIG.OAL_WEIGHT;
+    }
+    if (vpd && vpd.boost > 0) {
+      combined += vpd.boost * CONFIG.VPD_WEIGHT;
+    }
+
+    // Contextual: home boost
+    if (isHome) {
+      combined += CONFIG.HOME_BOOST;
+    }
 
     combined = Math.max(0, Math.min(1.0, combined));
 
@@ -600,9 +904,10 @@ window.MLBRecommendationEngine = (function () {
 
     return {
       player: playerName, stat: statKey, line, odds: marketOdds,
-      combinedScore: combined, gft, beq, esi, imad, cgsm, abvc,
+      combinedScore: combined, gft, beq, esi, imad, cgsm, abvc, pbf, oal, vpd,
       ev, kelly, hitRate: beq.hitRate, bayesianProb: beq.meanProb,
       lowerBoundProb: beq.lowerBound, marketImplied: beq.marketProb, edge: beq.edge,
+      poissonProb: pbf.poissonProb, poissonLambda: pbf.lambda,
     };
   }
 
@@ -610,12 +915,12 @@ window.MLBRecommendationEngine = (function () {
   // EVALUATE A PROP
   // =========================================================================
 
-  function evaluateProp(playerName, statType, line, odds) {
+  function evaluateProp(playerName, statType, line, odds, opponent, isHome) {
     const statKey = STAT_MAP[statType] || statType;
 
     if (odds < CONFIG.MIN_ODDS || odds > CONFIG.MAX_ODDS) return null;
 
-    const signal = computeUltraSignal(playerName, statKey, line, odds);
+    const signal = computeUltraSignal(playerName, statKey, line, odds, opponent, isHome);
     if (!signal) return null;
 
     const profile = PlayerModel.getProfile(playerName);
@@ -634,6 +939,11 @@ window.MLBRecommendationEngine = (function () {
       imad: signal.imad.score,
       cgsm: signal.cgsm.score,
       abvc: signal.abvc.score,
+      pbf: signal.pbf.score,
+      pbfLambda: signal.pbf.lambda,
+      pbfProb: signal.pbf.poissonProb,
+      oal: signal.oal ? signal.oal.score : null,
+      vpd: signal.vpd ? signal.vpd.score : null,
       cascadeScore: signal.combinedScore,
       impliedProb: signal.marketImplied,
       hitRate: signal.hitRate,
@@ -647,10 +957,10 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // FIND BEST PROP
+  // FIND BEST PROP — Evaluates all available lines for a player/stat
   // =========================================================================
 
-  function findBestProp(playerName, statType, fdLines) {
+  function findBestProp(playerName, statType, fdLines, opponent, isHome) {
     if (!fdLines || typeof fdLines !== 'object') return null;
 
     let best = null;
@@ -659,7 +969,7 @@ window.MLBRecommendationEngine = (function () {
       const odds = data.overOdds;
       if (!odds) continue;
 
-      const result = evaluateProp(playerName, statType, line, odds);
+      const result = evaluateProp(playerName, statType, line, odds, opponent, isHome);
       if (!result) continue;
 
       if (!best || result.cascadeScore > best.cascadeScore) {
@@ -670,7 +980,7 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // BET TYPE SELECTOR
+  // BET TYPE SELECTOR — Same structure as NBA model
   // =========================================================================
 
   function selectBetType(candidates) {
@@ -688,7 +998,7 @@ window.MLBRecommendationEngine = (function () {
     };
 
     if (elite.length >= 1) {
-      recommendations.singles = elite.slice(0, CONFIG.MAX_DAILY_UNITS);
+      recommendations.singles = elite.slice(0, 3);
       recommendations.betType = elite.length === 1 ? 'single' : 'multi_single';
       recommendations.reasoning = `${elite.length} elite-confidence pick(s) found (score >= ${CONFIG.SINGLE_MIN_SCORE})`;
     }
@@ -716,7 +1026,7 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // PARLAY CONSTRUCTION — EMPC
+  // PARLAY CONSTRUCTION — EMPC (Edge-Maximized Parlay Construction)
   // =========================================================================
 
   function computeCorrelation(values1, values2) {
@@ -797,11 +1107,12 @@ window.MLBRecommendationEngine = (function () {
   }
 
   // =========================================================================
-  // WALK-FORWARD BACKTEST WITH REAL ODDS
+  // WALK-FORWARD BACKTEST WITH REAL ODDS — Enhanced with OAL/VPD tracking
   // =========================================================================
 
   function runBacktest(boxScores, historicalOdds) {
     PlayerModel.reset();
+    OpponentTracker.reset();
 
     const sortedGames = [...boxScores].sort((a, b) => a.date.localeCompare(b.date));
 
@@ -839,9 +1150,12 @@ window.MLBRecommendationEngine = (function () {
             const ab = player.ab || 0;
             if (ab < CONFIG.MIN_AB) continue;
 
+            const isHome = player.team === bg.home;
+            const opponent = isHome ? bg.away : bg.home;
+
             // Check hits props
             if (og.hitsProps && og.hitsProps[player.name]) {
-              const prop = findBestProp(player.name, 'hits', og.hitsProps[player.name]);
+              const prop = findBestProp(player.name, 'hits', og.hitsProps[player.name], opponent, isHome);
               if (prop) {
                 prop.actual = player.h;
                 prop.hit = player.h > prop.line;
@@ -853,7 +1167,7 @@ window.MLBRecommendationEngine = (function () {
 
             // Check total bases props
             if (og.tbProps && og.tbProps[player.name]) {
-              const prop = findBestProp(player.name, 'total_bases', og.tbProps[player.name]);
+              const prop = findBestProp(player.name, 'total_bases', og.tbProps[player.name], opponent, isHome);
               if (prop) {
                 prop.actual = player.tb;
                 prop.hit = player.tb > prop.line;
@@ -865,7 +1179,7 @@ window.MLBRecommendationEngine = (function () {
 
             // Check RBI props
             if (og.rbiProps && og.rbiProps[player.name]) {
-              const prop = findBestProp(player.name, 'rbis', og.rbiProps[player.name]);
+              const prop = findBestProp(player.name, 'rbis', og.rbiProps[player.name], opponent, isHome);
               if (prop) {
                 prop.actual = player.rbi;
                 prop.hit = player.rbi > prop.line;
@@ -877,7 +1191,7 @@ window.MLBRecommendationEngine = (function () {
 
             // Check runs props
             if (og.runsProps && og.runsProps[player.name]) {
-              const prop = findBestProp(player.name, 'runs', og.runsProps[player.name]);
+              const prop = findBestProp(player.name, 'runs', og.runsProps[player.name], opponent, isHome);
               if (prop) {
                 prop.actual = player.r;
                 prop.hit = player.r > prop.line;
@@ -941,12 +1255,20 @@ window.MLBRecommendationEngine = (function () {
         }
       }
 
-      // Walk-forward: update model AFTER generating signals
+      // Walk-forward: update models AFTER generating signals
       const dateBoxes = boxByDate[game.date] || [];
       for (const bg of dateBoxes) {
+        // Track opponent quality stats for OAL
+        const homePlayerStats = { h: 0, tb: 0, rbi: 0, r: 0, hr: 0, count: 0 };
+        const awayPlayerStats = { h: 0, tb: 0, rbi: 0, r: 0, hr: 0, count: 0 };
+
         for (const p of (bg.players || [])) {
           const ab = p.ab || 0;
           if (ab < 1) continue;
+
+          const isHome = p.team === bg.home;
+          const opponent = isHome ? bg.away : bg.home;
+
           PlayerModel.update(p.name, {
             h: p.h || 0,
             tb: p.tb || 0,
@@ -957,7 +1279,40 @@ window.MLBRecommendationEngine = (function () {
             bb: p.bb || 0,
             so: p.so || 0,
             sb: p.sb || 0,
-          }, game.date, p.team, bg.home === p.team ? bg.away : bg.home);
+          }, game.date, p.team, opponent, isHome);
+
+          // Accumulate team hitting stats for opponent tracking
+          if (isHome) {
+            homePlayerStats.h += p.h || 0;
+            homePlayerStats.tb += p.tb || 0;
+            homePlayerStats.rbi += p.rbi || 0;
+            homePlayerStats.r += p.r || 0;
+            homePlayerStats.count++;
+          } else {
+            awayPlayerStats.h += p.h || 0;
+            awayPlayerStats.tb += p.tb || 0;
+            awayPlayerStats.rbi += p.rbi || 0;
+            awayPlayerStats.r += p.r || 0;
+            awayPlayerStats.count++;
+          }
+        }
+
+        // Update opponent tracker: home team's pitching allowed away team's stats
+        if (awayPlayerStats.count > 0) {
+          OpponentTracker.update(bg.home, {
+            h: awayPlayerStats.h / awayPlayerStats.count,
+            tb: awayPlayerStats.tb / awayPlayerStats.count,
+            rbi: awayPlayerStats.rbi / awayPlayerStats.count,
+            r: awayPlayerStats.r / awayPlayerStats.count,
+          });
+        }
+        if (homePlayerStats.count > 0) {
+          OpponentTracker.update(bg.away, {
+            h: homePlayerStats.h / homePlayerStats.count,
+            tb: homePlayerStats.tb / homePlayerStats.count,
+            rbi: homePlayerStats.rbi / homePlayerStats.count,
+            r: homePlayerStats.r / homePlayerStats.count,
+          });
         }
       }
     }
@@ -1023,10 +1378,15 @@ window.MLBRecommendationEngine = (function () {
     const candidates = [];
 
     for (const [gameKey, gameData] of Object.entries(liveOdds.playerProps)) {
+      const [away, home] = gameKey.split('@');
+
       // Hits
       if (gameData.hitsLines) {
         for (const [playerName, lines] of Object.entries(gameData.hitsLines)) {
-          const prop = findBestProp(playerName, 'hits', lines);
+          const playerTeam = PlayerModel.getTeam(playerName);
+          const isHome = playerTeam === home;
+          const opponent = isHome ? away : home;
+          const prop = findBestProp(playerName, 'hits', lines, opponent, isHome);
           if (prop) {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');
@@ -1038,7 +1398,10 @@ window.MLBRecommendationEngine = (function () {
       // Total Bases
       if (gameData.tbLines) {
         for (const [playerName, lines] of Object.entries(gameData.tbLines)) {
-          const prop = findBestProp(playerName, 'total_bases', lines);
+          const playerTeam = PlayerModel.getTeam(playerName);
+          const isHome = playerTeam === home;
+          const opponent = isHome ? away : home;
+          const prop = findBestProp(playerName, 'total_bases', lines, opponent, isHome);
           if (prop) {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');
@@ -1050,7 +1413,10 @@ window.MLBRecommendationEngine = (function () {
       // RBIs
       if (gameData.rbiLines) {
         for (const [playerName, lines] of Object.entries(gameData.rbiLines)) {
-          const prop = findBestProp(playerName, 'rbis', lines);
+          const playerTeam = PlayerModel.getTeam(playerName);
+          const isHome = playerTeam === home;
+          const opponent = isHome ? away : home;
+          const prop = findBestProp(playerName, 'rbis', lines, opponent, isHome);
           if (prop) {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');
@@ -1062,7 +1428,10 @@ window.MLBRecommendationEngine = (function () {
       // Runs
       if (gameData.runsLines) {
         for (const [playerName, lines] of Object.entries(gameData.runsLines)) {
-          const prop = findBestProp(playerName, 'runs', lines);
+          const playerTeam = PlayerModel.getTeam(playerName);
+          const isHome = playerTeam === home;
+          const opponent = isHome ? away : home;
+          const prop = findBestProp(playerName, 'runs', lines, opponent, isHome);
           if (prop) {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');
@@ -1072,7 +1441,7 @@ window.MLBRecommendationEngine = (function () {
       }
     }
 
-    console.log(`[ULTRA-MLB] Evaluated ${Object.keys(liveOdds.playerProps).length} games, found ${candidates.length} candidates passing all 8 gates`);
+    console.log(`[ULTRA-MLB v2] Evaluated ${Object.keys(liveOdds.playerProps).length} games, found ${candidates.length} candidates passing all 9 gates`);
 
     return selectBetType(candidates);
   }
@@ -1103,6 +1472,9 @@ window.MLBRecommendationEngine = (function () {
         imad: single.imad,
         cgsm: single.cgsm,
         abvc: single.abvc,
+        pbf: single.pbf,
+        oal: single.oal,
+        vpd: single.vpd,
         hitRate: single.hitRate,
         edge: single.edge,
         ev: single.ev,
@@ -1166,7 +1538,7 @@ window.MLBRecommendationEngine = (function () {
         CONFIG[key] = c[key];
       }
     }
-    console.log('[ULTRA-MLB] Loaded optimized config:', configObj.score, 'score,', configObj.improvements, 'improvements');
+    console.log('[ULTRA-MLB v2] Loaded optimized config:', configObj.score, 'score,', configObj.improvements, 'improvements');
   }
 
   // =========================================================================
@@ -1175,6 +1547,7 @@ window.MLBRecommendationEngine = (function () {
 
   return {
     PlayerModel,
+    OpponentTracker,
     CONFIG,
     loadConfig,
     runBacktest,
@@ -1194,6 +1567,9 @@ window.MLBRecommendationEngine = (function () {
     computeIMAD,
     computeCGSM,
     computeABVC,
+    computePBF,
+    computeOAL,
+    computeVPD,
     computeUltraSignal,
   };
 })();
