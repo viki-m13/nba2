@@ -128,8 +128,8 @@ window.RecommendationEngine = (function () {
     return 1 / americanToDecimal(odds);
   }
 
-  const STAT_MAP = { points: 'pts', rebounds: 'reb', assists: 'ast' };
-  const STAT_LABELS = { points: 'PTS', rebounds: 'REB', assists: 'AST', pts: 'PTS', reb: 'REB', ast: 'AST' };
+  const STAT_MAP = { points: 'pts', rebounds: 'reb', assists: 'ast', pra: 'pra' };
+  const STAT_LABELS = { points: 'PTS', rebounds: 'REB', assists: 'AST', pts: 'PTS', reb: 'REB', ast: 'AST', pra: 'PRA' };
 
   // =========================================================================
   // PLAYER MODEL — Rolling profile with multi-window analysis
@@ -142,7 +142,12 @@ window.RecommendationEngine = (function () {
 
     update(name, stats, date, team, opponent) {
       if (!this.profiles[name]) this.profiles[name] = { games: [], team: '' };
-      this.profiles[name].games.push({ ...stats, date, team, opponent });
+      const enriched = { ...stats, date, team, opponent };
+      // Compute PRA (points + rebounds + assists) composite stat
+      if (enriched.pra === undefined) {
+        enriched.pra = (enriched.pts || 0) + (enriched.reb || 0) + (enriched.ast || 0);
+      }
+      this.profiles[name].games.push(enriched);
       this.profiles[name].team = team;
       // Keep last 50 games
       if (this.profiles[name].games.length > 50) {
@@ -843,6 +848,18 @@ window.RecommendationEngine = (function () {
       if (gameData.astLines) {
         for (const [playerName, lines] of Object.entries(gameData.astLines)) {
           const prop = findBestProp(playerName, 'assists', lines);
+          if (prop) {
+            prop.gameKey = gameKey;
+            prop.gameDisplay = gameKey.replace('@', ' @ ');
+            candidates.push(prop);
+          }
+        }
+      }
+
+      // PRA (Points + Rebounds + Assists)
+      if (gameData.praLines) {
+        for (const [playerName, lines] of Object.entries(gameData.praLines)) {
+          const prop = findBestProp(playerName, 'pra', lines);
           if (prop) {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');

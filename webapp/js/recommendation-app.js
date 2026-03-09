@@ -120,11 +120,34 @@
   // BACKTEST
   // ========================================================================
 
+  function populatePlayerModel() {
+    // Populate PlayerModel from box scores so generateTodayPicks can evaluate live props
+    if (!playerBoxScores.length) return;
+    ENGINE.PlayerModel.reset();
+
+    const sortedGames = [...playerBoxScores].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+    for (const game of sortedGames) {
+      for (const p of (game.players || [])) {
+        const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
+        if (mins < 5) continue;
+        ENGINE.PlayerModel.update(p.name, {
+          pts: p.pts || 0,
+          reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+          ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+          min: mins,
+        }, game.date, p.team, game.home === p.team ? game.away : game.home);
+      }
+    }
+    console.log(`[REC-APP] PlayerModel populated with ${Object.keys(ENGINE.PlayerModel.profiles).length} players`);
+  }
+
   function runBacktestAndDisplay() {
     if (useUltraEngine && ultraStats && allSignals.length > 0) {
-      // Use pre-computed Ultra Engine results
+      // Use pre-computed Ultra Engine results for dashboard/history
       console.log('[REC-APP] Using Ultra Engine backtest results');
       backtestResults = { stats: ultraStats, signals: allSignals };
+      // Still populate PlayerModel so live picks can be generated
+      populatePlayerModel();
       renderDashboard();
       renderTierCards();
       renderHistory();
@@ -186,7 +209,7 @@
 
       for (const event of events) {
         try {
-          const markets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate';
+          const markets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate';
           const propsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
           const propsRes = await fetch(propsUrl);
           if (!propsRes.ok) continue;
@@ -199,11 +222,12 @@
           const fd = propsData.bookmakers && propsData.bookmakers.find(b => b.key === 'fanduel');
           if (!fd) continue;
 
-          const gameProps = { lines: {}, rebLines: {}, astLines: {} };
+          const gameProps = { lines: {}, rebLines: {}, astLines: {}, praLines: {} };
           const marketMap = {
             'player_points_alternate': 'lines',
             'player_rebounds_alternate': 'rebLines',
             'player_assists_alternate': 'astLines',
+            'player_points_rebounds_assists_alternate': 'praLines',
           };
 
           for (const mkt of (fd.markets || [])) {
