@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NBA Alt-Line Parlay Engine</title>
+  <title>QEPE — Quantum Edge Parlay Engine</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="header-content">
-      <h1>NBA ALT-LINE ENGINE</h1>
-      <p class="subtitle">Alt Props — PTS, AST, REB, PTS+AST, PTS+REB, PRA</p>
+      <h1>QUANTUM EDGE PARLAY ENGINE</h1>
+      <p class="subtitle">Patent-Pending | 6 Proprietary Innovations | AutoResearch-Validated</p>
     </div>
     <nav>
       <button class="nav-btn active" data-view="today">Today's Picks</button>
@@ -20,204 +20,46 @@
   </header>
 
   <main>
-    <!-- Dashboard — Alt-Line Engine Stats -->
-    <div class="dashboard">
-      <div class="stat-card highlight">
-        <div class="stat-value" id="stat-accuracy">--</div>
-        <div class="stat-label">Parlay Win Rate</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-record">--</div>
-        <div class="stat-label">Parlay Record</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-pnl">--</div>
-        <div class="stat-label">Total P&L ($100/bet)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-roi">--</div>
-        <div class="stat-label">ROI</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-leg-record">--</div>
-        <div class="stat-label">Leg Record</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-leg-hit">--</div>
-        <div class="stat-label">Leg Hit Rate</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-days">--</div>
-        <div class="stat-label">Active Days</div>
-      </div>
-    </div>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard"></div>
+
+    <!-- Tier Cards -->
+    <div class="tier-cards" id="tier-cards"></div>
 
     <!-- Today's Picks -->
     <div id="view-today" class="view active">
       <h2>Today's Picks</h2>
-      <div id="today-status" class="status-msg">Loading today's games...</div>
-
-      <!-- Alt-Line Slip Builders -->
-      <div id="alt-slips-section">
-        <div id="alt-core-slips" class="slip-section">
-          <h3>CORE Builder <span class="slip-tag">3-4 Legs — Highest Quality</span></h3>
-          <div class="picks-grid"></div>
-        </div>
-        <div id="alt-screenshot-slips" class="slip-section">
-          <h3>SCREENSHOT Builder <span class="slip-tag">5-8 Legs — SGP Style</span></h3>
-          <div class="picks-grid"></div>
-        </div>
-        <div id="alt-nuke-slips" class="slip-section">
-          <h3>NUKE Builder <span class="slip-tag">8-12 Legs — Strict Quality Only</span></h3>
-          <div class="picks-grid"></div>
-        </div>
-
-        <!-- AFCE Edge Strategy — AutoResearch Validated -->
-        <div id="edge-strategy-section" style="margin-top: 1.5rem; border-top: 2px solid #00ff88; padding-top: 1rem;">
-          <h2 style="color: #00ff88; font-size: 1.1rem; margin-bottom: 0.75rem;">EDGE STRATEGY v1.0 <span style="font-size: 0.75rem; opacity: 0.7;">AutoResearch-Validated | Real Odds Backtested | +9.7% ROI</span></h2>
-          <div id="edge-dashboard" class="dashboard" style="margin-bottom: 1rem;"></div>
-          <div id="edge-tier-breakdown" style="margin-bottom: 1rem;"></div>
-        </div>
-
-        <!-- Super Parlay Builders v6 — Autoresearch-Optimized -->
-        <div id="super-parlay-section" style="margin-top: 1.5rem; border-top: 2px solid #ffd700; padding-top: 1rem;">
-          <h2 style="color: #ffd700; font-size: 1.1rem; margin-bottom: 0.75rem;">SUPER PARLAY v6.1 <span style="font-size: 0.75rem; opacity: 0.7;">BASELINE Config — Best on 2025-26</span></h2>
-          <div id="super-safe-parlay" class="slip-section">
-            <h3>SAFE PARLAY <span class="slip-tag">3-5 Legs — 50% Win Rate, +14% ROI</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-screenshot" class="slip-section">
-            <h3>SCREENSHOT SPECIAL <span class="slip-tag">3-4 Legs — 36% Win Rate</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-mini" class="slip-section">
-            <h3>MINI FORTRESS <span class="slip-tag">3 Legs — 58% Win Rate, +9% ROI</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-fortress-sgp" class="slip-section">
-            <h3>FORTRESS SGP <span class="slip-tag">4-8 Legs — Single Game Floor Fortress</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-fortress-sgp-plus" class="slip-section">
-            <h3>FORTRESS SGP+ <span class="slip-tag">3-6 Legs — Multi-Game Floor Fortress</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-moonshot" class="slip-section">
-            <h3>MOONSHOT SGP+ <span class="slip-tag">3-5 Legs — Fortress + Value Spike</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-          <div id="super-assist-sniper" class="slip-section">
-            <h3>ASSIST SNIPER <span class="slip-tag">3-5 Legs — Playmaker Assists + Correlated Points</span></h3>
-            <div class="picks-grid"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature Table -->
-      <details id="feature-table-section" style="margin-top: 1.5rem;">
-        <summary style="cursor: pointer; font-weight: 600; color: var(--text-bright, #fff);">Feature Table (All Candidate Legs)</summary>
-        <div id="feature-table-container" style="overflow-x: auto; margin-top: 0.5rem;"></div>
-      </details>
-
-      <div id="today-games" class="today-games-section"></div>
+      <div id="today-status" class="status-msg">Loading...</div>
+      <div id="today-picks" class="picks-grid"></div>
     </div>
 
     <!-- History -->
     <div id="view-history" class="view">
-      <h2>Pick History <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">2024-25 Season Walk-Forward Validation</span></h2>
-      <div class="history-filters">
-        <button class="filter-btn active" data-period="all">All</button>
-        <button class="filter-btn" data-period="30">Last 30 Days</button>
-        <button class="filter-btn" data-period="7">Last 7 Days</button>
-      </div>
-
-      <div id="alt-backtest-stats" class="history-stats"></div>
-      <div id="alt-backtest-breakdown" style="margin: 0.75rem 0;"></div>
-
-      <!-- Edge Strategy History -->
-      <div class="history-section" id="edge-history-section" style="margin-bottom: 1.5rem;">
-        <h3 style="color: #00ff88;">Edge Strategy History <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">DIAMOND / RUBY / EMERALD / SAPPHIRE</span></h3>
-        <table class="history-table" id="edge-history-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Tier</th>
-              <th>Legs</th>
-              <th>Parlay Odds</th>
-              <th>Result</th>
-              <th>P&L</th>
-            </tr>
-          </thead>
-          <tbody id="edge-history-body"></tbody>
-        </table>
-      </div>
-
-      <div class="history-section" id="alt-backtest-section">
-        <h3>Parlays <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">CORE / SCREENSHOT / NUKE</span></h3>
-        <table class="history-table" id="alt-parlays-history">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Builder</th>
-              <th>Legs</th>
-              <th>Parlay Odds</th>
-              <th>Result</th>
-              <th>P&L</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <h2>Backtest History</h2>
+      <div id="history-stats" class="history-stats"></div>
+      <div class="history-filters" id="history-filters"></div>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Tier</th>
+            <th>Legs</th>
+            <th>Odds</th>
+            <th>Result</th>
+            <th>P&L</th>
+          </tr>
+        </thead>
+        <tbody id="history-body"></tbody>
+      </table>
     </div>
 
-    <!-- Strategy -->
+    <!-- Strategy / Method -->
     <div id="view-method" class="view">
-      <h2>Strategy Details</h2>
-      <div class="method-content">
-        <!-- Edge Strategy Method -->
-        <div id="edge-method" style="margin-bottom: 1.5rem;"></div>
-
-        <div class="method-card">
-          <h3>Alt-Line Parlay Engine</h3>
-          <p>Multi-market alternate prop engine supporting <strong>PTS, AST, REB, PTS+AST, PTS+REB, PTS+REB+AST</strong> alternate lines from FanDuel.</p>
-          <p>Uses market-specific evaluators, role-aware logic, alt-rung ladder optimization, same-game correlation, and three parlay constructors (Core / Screenshot / Nuke).</p>
-        </div>
-        <div class="method-card">
-          <h3>Market-Specific Evaluation</h3>
-          <ul>
-            <li><strong>Points:</strong> Weights usage, shot volume, scoring role, opponent defense</li>
-            <li><strong>Assists:</strong> Weights creator role, touches, playmaking environment, pace</li>
-            <li><strong>Rebounds:</strong> Weights minutes, rebounding role, matchup, game total</li>
-            <li><strong>Combos:</strong> Direct historical hit rate + component stat context</li>
-          </ul>
-          <p>Each market has its own model probability estimator with role, environment, and stability adjustments.</p>
-        </div>
-        <div class="method-card">
-          <h3>Alt-Rung Ladder Optimization</h3>
-          <p>For each player + market, evaluates every available rung (e.g., 10+, 12+, 15+ points). Selects the <strong>highest rung</strong> that still clears safety thresholds — not the lowest.</p>
-          <p>Each rung is scored on: model probability, fair odds vs book odds, edge, clearance margin, and fragility.</p>
-        </div>
-        <div class="method-card">
-          <h3>Three Builders</h3>
-          <ul>
-            <li><strong>CORE (3-4 legs):</strong> Highest quality edges — disciplined and sustainable</li>
-            <li><strong>SCREENSHOT (5-8 legs):</strong> SGP-style slips with correlation-aware construction</li>
-            <li><strong>NUKE (8-12 legs):</strong> Long parlays only when every leg clears strict thresholds</li>
-          </ul>
-        </div>
-      </div>
+      <h2>Strategy & Innovations</h2>
+      <div id="method-content" class="method-content"></div>
     </div>
   </main>
 
-  <script src="js/edge-strategy-engine.js"></script>
-  <script src="js/nba-api.js"></script>
-  <script src="js/nba-role-engine.js"></script>
-  <script src="js/nba-alt-rung-evaluator.js"></script>
-  <script src="js/nba-correlation-engine.js"></script>
-  <script src="js/nba-screenshot-slip-builder.js"></script>
-  <script src="js/nba-super-parlay-builder.js"></script>
-  <script src="js/nba-alt-backtest.js"></script>
-  <script src="js/engine.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/qepe-engine.js"></script>
 </body>
 </html>
