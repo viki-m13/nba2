@@ -1,0 +1,139 @@
+{
+  "engine": "Ultra Betting Engine v1.0",
+  "generated": "2026-03-09T02:36:35.852479",
+  "optimization": {
+    "iterations": 80,
+    "improvements": 18,
+    "final_score": 8.340493201644092
+  },
+  "backtest_results": {
+    "total_picks": 168,
+    "active_days": 63,
+    "individual_accuracy": 97.2,
+    "total_roi": 286.2,
+    "total_pnl": 32915,
+    "total_wagered": 11500,
+    "singles": {
+      "count": 3,
+      "accuracy": 100.0,
+      "pnl": 196,
+      "roi": 65.3
+    },
+    "multi_singles": {
+      "count": 106,
+      "accuracy": 97.2,
+      "pnl": 2575
+    },
+    "parlays": {
+      "count": 59,
+      "accuracy": 93.2,
+      "pnl": 30144,
+      "roi": 510.9,
+      "leg_accuracy": 98.2
+    },
+    "risk": {
+      "max_drawdown": 150,
+      "max_consecutive_losses": 2,
+      "max_win_streak": 49
+    }
+  },
+  "validation": {
+    "cv_avg_accuracy": 96.4,
+    "cv_avg_roi": 268.4,
+    "max_parameter_sensitivity": 0.9,
+    "is_stable": true,
+    "overfitting_risk": "LOW",
+    "cv_folds": [
+      {
+        "fold": 0,
+        "accuracy": 0.9473684210526315,
+        "roi": 3.2034146341463416,
+        "picks": 30
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.9523809523809523,
+        "roi": 2.8586046511627905,
+        "picks": 32
+      },
+      {
+        "fold": 2,
+        "accuracy": 1.0,
+        "roi": 2.944186046511628,
+        "picks": 30
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.9545454545454546,
+        "roi": 1.7286363636363635,
+        "picks": 33
+      }
+    ]
+  },
+  "config": {
+    "MIN_GAMES": 17,
+    "MIN_MINUTES": 21,
+    "WARM_UP_GAMES": 20,
+    "STAT_KEYS": [
+      "pts",
+      "reb",
+      "ast",
+      "pra",
+      "3pm"
+    ],
+    "GFT_WINDOWS": [
+      5,
+      10,
+      15
+    ],
+    "GFT_DECAY_RATE": 0.9154,
+    "GFT_GRAVITY_STRENGTH": 0.3593,
+    "GFT_MIN_CLEARANCE": 0.5,
+    "GFT_CONVERGENCE_MAX_SPREAD": 5.6659,
+    "BEQ_PRIOR_ALPHA": 1.0,
+    "BEQ_PRIOR_BETA": 1.0,
+    "BEQ_CREDIBLE_LEVEL": 0.8709,
+    "BEQ_MIN_EDGE": 0.05,
+    "ESI_BINS": 6,
+    "ESI_MAX_ENTROPY": 0.8274,
+    "ESI_TREND_WEIGHT": 0.3007,
+    "IMAD_MIN_ASYMMETRY": 0.1,
+    "IMAD_VOLUME_DISCOUNT": 0.02,
+    "CRF_HOME_BOOST": 0.02,
+    "CRF_B2B_PENALTY": -0.05,
+    "CRF_OPPONENT_FACTOR": true,
+    "GATE_MIN_GFT_SCORE": 0.4,
+    "GATE_MIN_BEQ_EDGE": 0.05,
+    "GATE_MIN_ESI_STABILITY": 0.15,
+    "GATE_MIN_IMAD_SCORE": 0.02,
+    "GATE_MIN_HIT_RATE": 0.8101,
+    "GATE_MIN_COMBINED": 0.55,
+    "SINGLE_MIN_SCORE": 0.75,
+    "MULTI_SINGLE_MIN_SCORE": 0.6685,
+    "PARLAY_LEG_MIN_SCORE": 0.6,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 4,
+    "PARLAY_MAX_CORRELATION": 0.3285,
+    "PARLAY_SAME_GAME_ALLOWED": false,
+    "PARLAY_MIN_COMBINED_EDGE": 0.1,
+    "MIN_ODDS": -324,
+    "MAX_ODDS": -110,
+    "PREFERRED_ODDS_RANGE": [
+      -500,
+      -150
+    ],
+    "UNIT_SIZE": 100,
+    "MAX_DAILY_UNITS": 5,
+    "KELLY_FRACTION": 0.25,
+    "CV_FOLDS": 5,
+    "PURGE_WINDOW": 3,
+    "MIN_SAMPLE_FOR_DEPLOYMENT": 30
+  },
+  "novel_features": [
+    "Gravitational Floor Theory (GFT) - recency-weighted floor with talent gravity",
+    "Bayesian Edge Quantification (BEQ) - Beta posterior credible intervals",
+    "Entropic Stability Index (ESI) - Shannon entropy consistency metric",
+    "Inverse Market Asymmetry Detection (IMAD) - multi-signal mispricing detection",
+    "Edge-Maximized Parlay Construction (EMPC) - correlation-aware parlay builder"
+  ]
+}
