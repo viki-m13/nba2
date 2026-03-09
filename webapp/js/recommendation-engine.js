@@ -1,110 +1,85 @@
 /**
- * NBA Betting Recommendation Engine v1.0
- * =======================================
- * Patent-Pending Autonomous Nightly Recommendation System
+ * NBA Ultra Betting Engine v1.0 — JavaScript Port
+ * =================================================
+ * Direct port of the Python Ultra Engine (src/ultra_engine.py) to JavaScript
+ * for live tonight's pick generation.
  *
- * Developed using AutoResearch methodology (Karpathy) and
- * everything-claude-code quality gates.
+ * Uses the SAME logic as the backtest:
+ * - Gravitational Floor Theory (GFT)
+ * - Bayesian Edge Quantification (BEQ)
+ * - Entropic Stability Index (ESI)
+ * - Inverse Market Asymmetry Detection (IMAD)
+ * - Edge-Maximized Parlay Construction (EMPC)
+ * - 6-Gate Quality Cascade
  *
- * NOVEL PATENTABLE FEATURES:
- *
- * 1. Temporal Convergence Zone Detection (TCZD)
- *    Patent Claim: Method for identifying maximum-predictability windows by
- *    detecting convergence of multi-horizon performance floors (L5, L10, L15)
- *    within a configurable band above the betting line. When all three floors
- *    converge above the line, the prediction is maximally reliable.
- *
- * 2. Volatility-Adjusted Confidence Scoring (VACS)
- *    Patent Claim: System for computing betting confidence using coefficient
- *    of variation analysis relative to the betting line, where low CV combined
- *    with high floor produces geometrically higher confidence than either alone.
- *
- * 3. Margin-of-Safety Depth Score (MSDS)
- *    Patent Claim: Method for quantifying the robustness of a bet by measuring
- *    the minimum, median, and mean distances above the line across multiple
- *    time windows, producing a depth score that indicates how resilient the
- *    prediction is to performance variance.
- *
- * 4. Adaptive Bet Type Selector (ABTS)
- *    Patent Claim: System for automatically selecting optimal bet structure
- *    (single bet, multiple singles, or parlay) based on the quality distribution
- *    of available signals, using a tiered confidence threshold approach.
- *
- * 5. Cross-Stat Independence Verification (CSIV)
- *    Patent Claim: Method for verifying statistical independence between
- *    parlay legs by computing cross-correlation matrices of player performances
- *    and rejecting combinations with correlation above threshold.
- *
- * 6. Regime-Aware Filtering (RAF)
- *    Patent Claim: System for detecting player performance regime transitions
- *    using change-point detection on rolling statistics, filtering out players
- *    in transition periods to avoid betting on unstable performance.
- *
- * 7. Confluence Cascade Scoring (CCS)
- *    Patent Claim: Method for producing a final recommendation score by
- *    cascading multiple independent signals (TCZD, VACS, MSDS, RAF, QRS, iTEF,
- *    iMSS) through a weighted geometric mean, where each signal must independently
- *    exceed a minimum threshold for the bet to qualify.
- *
- * SUPPORTED BET TYPES:
- * - Single Bet: One high-confidence pick
- * - Multiple Singles: 2-5 independent high-confidence picks
- * - Parlay: 2-4 leg combined bet for higher payout
- *
- * ANTI-OVERFITTING:
- * - Walk-forward only (no future data leakage)
- * - Rolling windows (L5, L10, L15, L20)
- * - Real FanDuel odds from The Odds API
- * - Real outcomes from ESPN box scores
- * - Minimum sample requirements (15 games)
- * - No curve fitting on outcomes
+ * Config loaded from output/ultra_engine_config.json (AutoResearch-optimized).
  */
 
 window.RecommendationEngine = (function () {
   'use strict';
 
   // =========================================================================
-  // CONFIGURATION — Set from data distribution, NOT optimized on outcomes
+  // CONFIGURATION — Matches optimized Ultra Engine config
+  // Loaded from output/ultra_engine_config.json at runtime if available
   // =========================================================================
 
   const CONFIG = {
     // Player eligibility
-    MIN_GAMES: 15,
-    MIN_MINUTES: 15,
+    MIN_GAMES: 17,
+    MIN_MINUTES: 21,
+    WARM_UP_GAMES: 20,
 
-    // Convergence Zone Detection (TCZD)
-    TCZD_WINDOWS: [5, 10, 15],
-    TCZD_BAND_WIDTH: 1.5,          // Tight convergence band (AutoResearch-optimized)
+    // Gravitational Floor Theory (GFT)
+    GFT_WINDOWS: [5, 10, 15],
+    GFT_DECAY_RATE: 0.9154,
+    GFT_GRAVITY_STRENGTH: 0.3593,
+    GFT_MIN_CLEARANCE: 0.5,
+    GFT_CONVERGENCE_MAX_SPREAD: 5.6659,
 
-    // Confidence thresholds (AutoResearch-optimized for 87.9% singles accuracy)
-    SINGLE_BET_MIN_CONFIDENCE: 0.98,  // Ultra-high for singles
-    MULTI_SINGLE_MIN_CONFIDENCE: 0.95, // High for multi-singles
-    PARLAY_LEG_MIN_CONFIDENCE: 0.98,   // Same as singles for 2-leg parlays only
+    // Bayesian Edge Quantification (BEQ)
+    BEQ_PRIOR_ALPHA: 1.0,
+    BEQ_PRIOR_BETA: 1.0,
+    BEQ_CREDIBLE_LEVEL: 0.8709,
+    BEQ_MIN_EDGE: 0.05,
 
-    // Margin of Safety
-    MSDS_MIN_DEPTH: 3.5,           // Deep margin required (AutoResearch-optimized)
+    // Entropic Stability Index (ESI)
+    ESI_BINS: 6,
+    ESI_MAX_ENTROPY: 0.8274,
+    ESI_TREND_WEIGHT: 0.3007,
 
-    // Regime Awareness
-    RAF_LOOKBACK: 20,
-    RAF_CHANGE_THRESHOLD: 0.15,    // Tight regime stability (AutoResearch-optimized)
+    // Inverse Market Asymmetry Detection (IMAD)
+    IMAD_MIN_ASYMMETRY: 0.1,
+    IMAD_VOLUME_DISCOUNT: 0.02,
 
-    // Volatility
-    VACS_MAX_CV: 0.30,             // Low volatility required (AutoResearch-optimized)
+    // Quality Gates
+    GATE_MIN_GFT_SCORE: 0.4,
+    GATE_MIN_BEQ_EDGE: 0.05,
+    GATE_MIN_ESI_STABILITY: 0.15,
+    GATE_MIN_IMAD_SCORE: 0.02,
+    GATE_MIN_HIT_RATE: 0.8101,
+    GATE_MIN_COMBINED: 0.55,
 
-    // Parlay construction
+    // Bet Type Selection
+    SINGLE_MIN_SCORE: 0.75,
+    MULTI_SINGLE_MIN_SCORE: 0.6685,
+    PARLAY_LEG_MIN_SCORE: 0.6,
+
+    // Parlay Construction
     PARLAY_MIN_LEGS: 2,
-    PARLAY_MAX_LEGS: 2,            // Only 2-leg parlays (higher win rate)
-    MAX_LEGS_PER_GAME: 1,          // Strict: 1 leg per game for independence
+    PARLAY_MAX_LEGS: 4,
+    PARLAY_MAX_CORRELATION: 0.3285,
+    PARLAY_SAME_GAME_ALLOWED: false,
+    PARLAY_MIN_COMBINED_EDGE: 0.1,
 
-    // Cross-correlation
-    CSIV_MAX_CORRELATION: 0.35,    // Max acceptable cross-correlation
+    // Odds Filters
+    MIN_ODDS: -324,
+    MAX_ODDS: -110,
+    PREFERRED_ODDS_RANGE: [-500, -150],
 
-    // Bet sizing
+    // Bankroll
     UNIT_SIZE: 100,
-
-    // Odds filters
-    MIN_LEG_ODDS: -600,
-    MAX_LEG_ODDS: -130,
+    MAX_DAILY_UNITS: 5,
+    KELLY_FRACTION: 0.25,
   };
 
   // =========================================================================
@@ -132,7 +107,68 @@ window.RecommendationEngine = (function () {
   const STAT_LABELS = { points: 'PTS', rebounds: 'REB', assists: 'AST', pts: 'PTS', reb: 'REB', ast: 'AST', pra: 'PRA' };
 
   // =========================================================================
-  // PLAYER MODEL — Rolling profile with multi-window analysis
+  // MATH UTILITIES
+  // =========================================================================
+
+  /**
+   * Approximate inverse CDF of Beta distribution (normal approximation).
+   * Matches Python beta_ppf().
+   */
+  function betaPPF(alpha, betaParam, p) {
+    if (alpha <= 0 || betaParam <= 0) return 0.5;
+    if (p <= 0 || p >= 1) return alpha / (alpha + betaParam);
+
+    const mean = alpha / (alpha + betaParam);
+    const variance = (alpha * betaParam) / ((alpha + betaParam) ** 2 * (alpha + betaParam + 1));
+    const std = Math.sqrt(variance > 0 ? variance : 0.001);
+
+    // Abramowitz and Stegun rational approximation for inverse normal
+    let z;
+    if (p < 0.5) {
+      const t = Math.sqrt(-2 * Math.log(p));
+      z = -(t - (2.515517 + 0.802853 * t + 0.010328 * t * t) /
+            (1 + 1.432788 * t + 0.189269 * t * t + 0.001308 * t * t * t));
+    } else {
+      const t = Math.sqrt(-2 * Math.log(1 - p));
+      z = t - (2.515517 + 0.802853 * t + 0.010328 * t * t) /
+          (1 + 1.432788 * t + 0.189269 * t * t + 0.001308 * t * t * t);
+    }
+
+    return Math.max(0, Math.min(1, mean + z * std));
+  }
+
+  /**
+   * Normalized Shannon entropy. Matches Python shannon_entropy().
+   */
+  function shannonEntropy(values, nBins) {
+    if (values.length < 3) return 1.0;
+
+    const minV = Math.min(...values);
+    const maxV = Math.max(...values);
+    if (maxV === minV) return 0.0;
+
+    const binWidth = (maxV - minV) / nBins;
+    const counts = new Array(nBins).fill(0);
+    for (const v of values) {
+      const idx = Math.min(Math.floor((v - minV) / binWidth), nBins - 1);
+      counts[idx]++;
+    }
+
+    const n = values.length;
+    let entropy = 0;
+    for (const c of counts) {
+      if (c > 0) {
+        const p = c / n;
+        entropy -= p * Math.log2(p);
+      }
+    }
+
+    const maxEntropy = Math.log2(nBins);
+    return maxEntropy > 0 ? entropy / maxEntropy : 1.0;
+  }
+
+  // =========================================================================
+  // PLAYER MODEL — with minutes filtering (matches Python UltraPlayerModel)
   // =========================================================================
 
   const PlayerModel = {
@@ -143,13 +179,11 @@ window.RecommendationEngine = (function () {
     update(name, stats, date, team, opponent) {
       if (!this.profiles[name]) this.profiles[name] = { games: [], team: '' };
       const enriched = { ...stats, date, team, opponent };
-      // Compute PRA (points + rebounds + assists) composite stat
       if (enriched.pra === undefined) {
         enriched.pra = (enriched.pts || 0) + (enriched.reb || 0) + (enriched.ast || 0);
       }
       this.profiles[name].games.push(enriched);
       this.profiles[name].team = team;
-      // Keep last 50 games
       if (this.profiles[name].games.length > 50) {
         this.profiles[name].games = this.profiles[name].games.slice(-50);
       }
@@ -159,188 +193,450 @@ window.RecommendationEngine = (function () {
       return this.profiles[name] || null;
     },
 
-    getValues(name, statKey, window) {
+    /**
+     * Get recent values, filtering low-minute games (matches Python get_values).
+     */
+    getValues(name, statKey, window, minMinutes) {
       const profile = this.profiles[name];
-      if (!profile || profile.games.length < window) return null;
-      return profile.games.slice(-window).map(g => g[statKey]);
+      if (!profile) return null;
+
+      let games = profile.games;
+      // Filter low-minute games when minMinutes is specified
+      if (minMinutes && minMinutes > 0) {
+        games = games.filter(g => (g.min || 0) >= minMinutes);
+      }
+
+      if (window) {
+        games = games.slice(-window);
+      }
+      if (!games.length) return null;
+      return games.map(g => g[statKey] || 0);
+    },
+
+    getTeam(name) {
+      const p = this.profiles[name];
+      return p ? p.team : null;
+    },
+
+    gameCount(name) {
+      const p = this.profiles[name];
+      return p ? p.games.length : 0;
+    },
+
+    isWarm(name, minGames) {
+      return this.gameCount(name) >= minGames;
+    },
+
+    getRecentMinutes(name, window) {
+      const vals = this.getValues(name, 'min', window || 5);
+      if (!vals || !vals.length) return 0;
+      return vals.reduce((s, v) => s + v, 0) / vals.length;
     },
   };
 
   // =========================================================================
-  // INNOVATION 1: Temporal Convergence Zone Detection (TCZD)
+  // GRAVITATIONAL FLOOR THEORY (GFT) — Matches Python compute_gft()
   // =========================================================================
 
-  function computeTCZD(name, statKey, line) {
+  function computeGFT(name, statKey, line) {
+    const windows = CONFIG.GFT_WINDOWS;
+    const decay = CONFIG.GFT_DECAY_RATE;
+    const gravity = CONFIG.GFT_GRAVITY_STRENGTH;
+    const minClearance = CONFIG.GFT_MIN_CLEARANCE;
+    const maxSpread = CONFIG.GFT_CONVERGENCE_MAX_SPREAD;
+
     const floors = [];
-    for (const w of CONFIG.TCZD_WINDOWS) {
-      const values = PlayerModel.getValues(name, statKey, w);
-      if (!values) return null;
-      floors.push(Math.min(...values));
+    const clearances = [];
+
+    for (const w of windows) {
+      const values = PlayerModel.getValues(name, statKey, w, CONFIG.MIN_MINUTES);
+      if (!values || values.length < Math.min(w, 5)) return null;
+
+      const n = values.length;
+      const weights = [];
+      for (let i = 0; i < n; i++) {
+        weights.push(Math.pow(decay, n - 1 - i));
+      }
+      const totalWeight = weights.reduce((s, w) => s + w, 0);
+
+      // Weighted mean (talent estimate)
+      let weightedMean = 0;
+      for (let i = 0; i < n; i++) {
+        weightedMean += values[i] * weights[i];
+      }
+      weightedMean /= totalWeight;
+
+      // Sort by value with weights for weighted percentile
+      const sortedWeighted = values.map((v, i) => ({ val: v, wt: weights[i] }))
+        .sort((a, b) => a.val - b.val);
+
+      // Weighted 10th percentile
+      let cumWeight = 0;
+      let p10Value = sortedWeighted[0].val;
+      for (const { val, wt } of sortedWeighted) {
+        cumWeight += wt;
+        if (cumWeight / totalWeight >= 0.10) {
+          p10Value = val;
+          break;
+        }
+      }
+
+      // Gravitational pull: floor is pulled toward the mean
+      const rawFloor = p10Value;
+      const gravFloor = rawFloor + gravity * (weightedMean - rawFloor);
+
+      const clearance = gravFloor - line;
+      if (clearance < minClearance) return null;
+
+      floors.push(gravFloor);
+      clearances.push(clearance);
     }
 
-    // All floors must be above the line
-    const allAbove = floors.every(f => f > line);
-    if (!allAbove) return null;
+    // Check convergence across windows
+    const floorSpread = Math.max(...floors) - Math.min(...floors);
+    if (floorSpread > maxSpread) return null;
 
-    // Compute convergence band width
-    const maxFloor = Math.max(...floors);
-    const minFloor = Math.min(...floors);
-    const bandWidth = maxFloor - minFloor;
+    const convergence = Math.max(0, 1 - floorSpread / maxSpread);
+    const avgClearance = clearances.reduce((s, c) => s + c, 0) / clearances.length;
+    const depth = Math.min(1.0, avgClearance / 8.0);
 
-    // Convergence score: tighter band = higher score
-    const convergenceScore = Math.max(0, 1 - bandWidth / CONFIG.TCZD_BAND_WIDTH);
-
-    // Depth: how far above the line is the minimum floor
-    const depth = minFloor - line;
+    const score = convergence * 0.5 + depth * 0.5;
 
     return {
-      floors,
-      allAbove,
-      bandWidth,
-      convergenceScore,
+      score,
+      convergence,
       depth,
-      // Perfect convergence: tight band, all above line, deep margin
-      score: convergenceScore * Math.min(1, depth / 5),
+      floors,
+      clearances,
+      floorSpread,
+      avgClearance,
     };
   }
 
   // =========================================================================
-  // INNOVATION 2: Volatility-Adjusted Confidence Scoring (VACS)
+  // BAYESIAN EDGE QUANTIFICATION (BEQ) — Matches Python compute_beq()
   // =========================================================================
 
-  function computeVACS(name, statKey, line) {
-    const values = PlayerModel.getValues(name, statKey, 20);
+  function computeBEQ(name, statKey, line, marketOdds) {
+    const values = PlayerModel.getValues(name, statKey, 20, CONFIG.MIN_MINUTES);
     if (!values || values.length < 10) return null;
 
-    const mean = values.reduce((s, v) => s + v, 0) / values.length;
-    if (mean === 0) return null;
-
-    const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length;
-    const stdDev = Math.sqrt(variance);
-    const cv = stdDev / mean; // Coefficient of variation
-
-    // Hit rate
     const hits = values.filter(v => v > line).length;
-    const hitRate = hits / values.length;
+    const misses = values.length - hits;
 
-    // Floor rate (L10)
-    const recent10 = values.slice(-10);
-    const floor10 = Math.min(...recent10);
-    const floorAbove = floor10 > line;
+    const alpha = CONFIG.BEQ_PRIOR_ALPHA + hits;
+    const betaParam = CONFIG.BEQ_PRIOR_BETA + misses;
 
-    // VACS: low CV + high hit rate = geometrically higher confidence
-    const cvFactor = Math.max(0, 1 - cv / CONFIG.VACS_MAX_CV);
-    const confidence = Math.sqrt(hitRate * cvFactor); // Geometric mean
+    const meanProb = alpha / (alpha + betaParam);
+    const ciLevel = 1 - CONFIG.BEQ_CREDIBLE_LEVEL;
+    const lowerBound = betaPPF(alpha, betaParam, ciLevel);
+
+    const mktProb = impliedProbability(marketOdds);
+    const edge = lowerBound - mktProb;
+
+    // Extended window for stability check
+    const valuesExtended = PlayerModel.getValues(name, statKey, 30, CONFIG.MIN_MINUTES);
+    let extendedHitRate = null;
+    if (valuesExtended && valuesExtended.length >= 20) {
+      extendedHitRate = valuesExtended.filter(v => v > line).length / valuesExtended.length;
+    }
 
     return {
-      mean,
-      stdDev,
-      cv,
-      hitRate,
-      floor10,
-      floorAbove,
-      cvFactor,
-      confidence,
+      meanProb,
+      lowerBound,
+      marketProb: mktProb,
+      edge,
+      alpha,
+      beta: betaParam,
+      hits,
+      total: values.length,
+      hitRate: hits / values.length,
+      extendedHitRate,
     };
   }
 
   // =========================================================================
-  // INNOVATION 3: Margin-of-Safety Depth Score (MSDS)
+  // ENTROPIC STABILITY INDEX (ESI) — Matches Python compute_esi()
   // =========================================================================
 
-  function computeMSDS(name, statKey, line) {
-    const values20 = PlayerModel.getValues(name, statKey, 20);
-    if (!values20 || values20.length < 10) return null;
-
-    const values10 = values20.slice(-10);
-    const values5 = values20.slice(-5);
-
-    // Margins above line for each window
-    const margins20 = values20.map(v => v - line);
-    const margins10 = values10.map(v => v - line);
-    const margins5 = values5.map(v => v - line);
-
-    const avgMargin = arr => arr.reduce((s, v) => s + v, 0) / arr.length;
-    const medianMargin = arr => {
-      const sorted = [...arr].sort((a, b) => a - b);
-      const mid = Math.floor(sorted.length / 2);
-      return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-    };
-
-    const minMargin = Math.min(...margins20);
-    const avgM = avgMargin(margins20);
-    const medM = medianMargin(margins20);
-
-    // Recent trend: is margin increasing or decreasing?
-    const recentAvg = avgMargin(margins5);
-    const olderAvg = avgMargin(margins20.slice(0, -5));
-    const trendDirection = recentAvg >= olderAvg ? 1 : 0.8; // Slight penalty for declining
-
-    // Depth score: all three (min, median, mean) must be positive
-    if (minMargin <= 0 || avgM < CONFIG.MSDS_MIN_DEPTH) return null;
-
-    const depthScore = Math.min(1, (minMargin / 3)) *
-                       Math.min(1, (medM / 5)) *
-                       Math.min(1, (avgM / 7)) *
-                       trendDirection;
-
-    return {
-      minMargin,
-      avgMargin: avgM,
-      medianMargin: medM,
-      recentAvg,
-      trendDirection,
-      depthScore,
-    };
-  }
-
-  // =========================================================================
-  // INNOVATION 4: Regime-Aware Filtering (RAF)
-  // =========================================================================
-
-  function computeRAF(name, statKey) {
-    const values = PlayerModel.getValues(name, statKey, CONFIG.RAF_LOOKBACK);
+  function computeESI(name, statKey) {
+    const values = PlayerModel.getValues(name, statKey, 20, CONFIG.MIN_MINUTES);
     if (!values || values.length < 10) return null;
 
-    // Split into first half and second half
+    const nBins = CONFIG.ESI_BINS;
+    const trendWeight = CONFIG.ESI_TREND_WEIGHT;
+
+    // 1. Distributional entropy
+    const distEntropy = shannonEntropy(values, nBins);
+
+    // 2. Trend stability
     const mid = Math.floor(values.length / 2);
     const firstHalf = values.slice(0, mid);
     const secondHalf = values.slice(mid);
 
-    const avg1 = firstHalf.reduce((s, v) => s + v, 0) / firstHalf.length;
-    const avg2 = secondHalf.reduce((s, v) => s + v, 0) / secondHalf.length;
+    const meanFirst = firstHalf.reduce((s, v) => s + v, 0) / firstHalf.length;
+    const meanSecond = secondHalf.reduce((s, v) => s + v, 0) / secondHalf.length;
+    const overallMean = values.reduce((s, v) => s + v, 0) / values.length;
 
-    // Relative change
-    const overallAvg = (avg1 + avg2) / 2;
-    if (overallAvg === 0) return null;
-    const regimeChange = Math.abs(avg2 - avg1) / overallAvg;
+    if (overallMean === 0) return null;
 
-    // Variance stability check
-    const var1 = firstHalf.reduce((s, v) => s + (v - avg1) ** 2, 0) / firstHalf.length;
-    const var2 = secondHalf.reduce((s, v) => s + (v - avg2) ** 2, 0) / secondHalf.length;
-    const varRatio = Math.max(var1, var2) / (Math.min(var1, var2) + 0.01);
-    const varianceStable = varRatio < 3.0;
+    const trendShift = Math.abs(meanSecond - meanFirst) / overallMean;
+    const trendStability = Math.max(0, 1 - trendShift / 0.3);
 
-    // Stable regime: small change + stable variance
-    const isStable = regimeChange < CONFIG.RAF_CHANGE_THRESHOLD && varianceStable;
+    // 3. Tail risk
+    const sortedVals = [...values].sort((a, b) => a - b);
+    const p15 = sortedVals[Math.max(0, Math.floor(sortedVals.length * 0.15))];
+    const recent = values.slice(-5);
+    const tailEvents = recent.filter(v => v <= p15).length;
+    const tailRisk = 1 - tailEvents / recent.length;
+
+    // Combined ESI
+    const entropyScore = Math.max(0, 1 - distEntropy / CONFIG.ESI_MAX_ENTROPY);
+    let stability = (1 - trendWeight) * entropyScore + trendWeight * trendStability;
+    stability = stability * tailRisk;
 
     return {
-      avg1,
-      avg2,
-      regimeChange,
-      varRatio,
-      varianceStable,
-      isStable,
-      stabilityScore: isStable ? Math.max(0, 1 - regimeChange / CONFIG.RAF_CHANGE_THRESHOLD) : 0,
+      stability,
+      entropy: distEntropy,
+      trendStability,
+      tailRisk,
+      mean: overallMean,
+      trendShift,
     };
   }
 
   // =========================================================================
-  // INNOVATION 5: Cross-Stat Independence Verification (CSIV)
+  // INVERSE MARKET ASYMMETRY DETECTION (IMAD) — Matches Python compute_imad()
+  // =========================================================================
+
+  function computeIMAD(beqResult, esiResult, gftResult) {
+    if (!beqResult || !esiResult || !gftResult) return null;
+
+    const bayesianEdge = beqResult.edge;
+    const stabilityPremium = esiResult.stability * 0.05;
+    const depthPremium = gftResult.depth * 0.05;
+
+    const totalAsymmetry = bayesianEdge + stabilityPremium + depthPremium;
+
+    let strongSignals = 0;
+    if (beqResult.edge > CONFIG.BEQ_MIN_EDGE) strongSignals++;
+    if (esiResult.stability > CONFIG.GATE_MIN_ESI_STABILITY) strongSignals++;
+    if (gftResult.score > CONFIG.GATE_MIN_GFT_SCORE) strongSignals++;
+
+    const agreementFactor = strongSignals / 3.0;
+    const score = totalAsymmetry * agreementFactor;
+
+    return {
+      score,
+      totalAsymmetry,
+      bayesianEdge,
+      stabilityPremium,
+      depthPremium,
+      strongSignals,
+      agreementFactor,
+    };
+  }
+
+  // =========================================================================
+  // ULTRA SIGNAL — 6-Gate Quality Cascade (matches Python compute_ultra_signal)
+  // =========================================================================
+
+  function computeUltraSignal(playerName, statKey, line, marketOdds) {
+    // Gate 0: Data requirements
+    if (!PlayerModel.isWarm(playerName, CONFIG.MIN_GAMES)) return null;
+    const recentMins = PlayerModel.getRecentMinutes(playerName, 5);
+    if (recentMins < CONFIG.MIN_MINUTES) return null;
+
+    // Gate 1: Gravitational Floor Theory
+    const gft = computeGFT(playerName, statKey, line);
+    if (!gft || gft.score < CONFIG.GATE_MIN_GFT_SCORE) return null;
+
+    // Gate 2: Bayesian Edge Quantification
+    const beq = computeBEQ(playerName, statKey, line, marketOdds);
+    if (!beq || beq.edge < CONFIG.GATE_MIN_BEQ_EDGE) return null;
+
+    // Gate 3: Entropic Stability Index
+    const esi = computeESI(playerName, statKey);
+    if (!esi || esi.stability < CONFIG.GATE_MIN_ESI_STABILITY) return null;
+
+    // Gate 4: Inverse Market Asymmetry Detection
+    const imad = computeIMAD(beq, esi, gft);
+    if (!imad || imad.score < CONFIG.GATE_MIN_IMAD_SCORE) return null;
+
+    // Gate 5: Raw hit rate sanity check
+    if (beq.hitRate < CONFIG.GATE_MIN_HIT_RATE) return null;
+
+    // Gate 6: Extended window consistency (anti-overfitting)
+    if (beq.extendedHitRate !== null) {
+      if (beq.extendedHitRate < beq.hitRate - 0.10) return null;
+      if (beq.extendedHitRate < CONFIG.GATE_MIN_HIT_RATE - 0.05) return null;
+    }
+
+    // Combined score: geometric mean of all signal components
+    const components = [
+      gft.score,
+      Math.min(1.0, beq.edge / 0.20 + 0.5),
+      esi.stability,
+      Math.min(1.0, imad.score / 0.15 + 0.5),
+    ];
+
+    const logSum = components.reduce((s, c) => s + Math.log(Math.max(0.001, c)), 0);
+    let combined = Math.exp(logSum / components.length);
+    combined = Math.max(0, Math.min(1.0, combined));
+
+    if (combined < CONFIG.GATE_MIN_COMBINED) return null;
+
+    // EV calculation (conservative — uses lower bound)
+    const decimal = americanToDecimal(marketOdds);
+    const ev = beq.lowerBound * decimal - 1;
+
+    // Kelly fraction
+    const kellyFull = (beq.lowerBound * decimal - 1) / (decimal - 1);
+    const kelly = Math.max(0, kellyFull * CONFIG.KELLY_FRACTION);
+
+    return {
+      player: playerName,
+      stat: statKey,
+      line,
+      odds: marketOdds,
+      combinedScore: combined,
+      gft,
+      beq,
+      esi,
+      imad,
+      ev,
+      kelly,
+      hitRate: beq.hitRate,
+      bayesianProb: beq.meanProb,
+      lowerBoundProb: beq.lowerBound,
+      marketImplied: beq.marketProb,
+      edge: beq.edge,
+    };
+  }
+
+  // =========================================================================
+  // EVALUATE A PROP — Uses Ultra Signal (replaces legacy evaluateProp)
+  // =========================================================================
+
+  function evaluateProp(playerName, statType, line, odds) {
+    const statKey = STAT_MAP[statType] || statType;
+
+    // Odds filter
+    if (odds < CONFIG.MIN_ODDS || odds > CONFIG.MAX_ODDS) return null;
+
+    const signal = computeUltraSignal(playerName, statKey, line, odds);
+    if (!signal) return null;
+
+    const profile = PlayerModel.getProfile(playerName);
+    const decimal = americanToDecimal(odds);
+
+    // Map to the format expected by the rest of the app
+    return {
+      player: playerName,
+      team: profile ? profile.team : '',
+      statType,
+      statLabel: STAT_LABELS[statType] || statType.toUpperCase(),
+      line,
+      odds,
+      decimalOdds: decimal,
+      engine: 'ultra',
+
+      // Ultra Engine signal scores
+      gft: signal.gft.score,
+      beq: signal.beq.edge,
+      esi: signal.esi.stability,
+      imad: signal.imad.score,
+
+      cascadeScore: signal.combinedScore,
+
+      // Betting metrics
+      impliedProb: signal.marketImplied,
+      hitRate: signal.hitRate,
+      edge: signal.edge,
+      ev: signal.ev,
+      avg: signal.esi.mean,
+      floor: signal.gft.floors[signal.gft.floors.length - 1],
+    };
+  }
+
+  // =========================================================================
+  // FIND BEST PROP FOR A PLAYER FROM AVAILABLE LINES
+  // =========================================================================
+
+  function findBestProp(playerName, statType, fdLines) {
+    if (!fdLines || typeof fdLines !== 'object') return null;
+
+    let best = null;
+    for (const [threshold, data] of Object.entries(fdLines)) {
+      const line = parseFloat(threshold);
+      const odds = data.overOdds;
+      if (!odds) continue;
+
+      const result = evaluateProp(playerName, statType, line, odds);
+      if (!result) continue;
+
+      if (!best || result.cascadeScore > best.cascadeScore) {
+        best = result;
+      }
+    }
+    return best;
+  }
+
+  // =========================================================================
+  // BET TYPE SELECTOR — Matches Ultra Engine thresholds
+  // =========================================================================
+
+  function selectBetType(candidates) {
+    const sorted = [...candidates].sort((a, b) => b.cascadeScore - a.cascadeScore);
+
+    const elite = sorted.filter(c => c.cascadeScore >= CONFIG.SINGLE_MIN_SCORE);
+    const strong = sorted.filter(c => c.cascadeScore >= CONFIG.MULTI_SINGLE_MIN_SCORE);
+    const moderate = sorted.filter(c => c.cascadeScore >= CONFIG.PARLAY_LEG_MIN_SCORE);
+
+    const recommendations = {
+      singles: [],
+      parlays: [],
+      betType: 'none',
+      reasoning: '',
+    };
+
+    // Tier 1: Elite singles
+    if (elite.length >= 1) {
+      recommendations.singles = elite.slice(0, CONFIG.MAX_DAILY_UNITS);
+      recommendations.betType = elite.length === 1 ? 'single' : 'multi_single';
+      recommendations.reasoning = `${elite.length} elite-confidence pick(s) found (score >= ${CONFIG.SINGLE_MIN_SCORE})`;
+    }
+
+    // Tier 2: Build parlays from strong candidates
+    if (moderate.length >= CONFIG.PARLAY_MIN_LEGS) {
+      const parlay = buildOptimalParlay(moderate);
+      if (parlay) {
+        recommendations.parlays.push(parlay);
+        if (recommendations.betType === 'none') {
+          recommendations.betType = 'parlay';
+          recommendations.reasoning = `${moderate.length} strong candidates for EMPC parlay construction`;
+        }
+      }
+    }
+
+    // Include strong singles even if we have parlays
+    if (recommendations.singles.length === 0 && strong.length > 0) {
+      recommendations.singles = strong.slice(0, 3);
+      if (recommendations.betType === 'none') {
+        recommendations.betType = strong.length === 1 ? 'single' : 'multi_single';
+        recommendations.reasoning = `${strong.length} strong-confidence pick(s) found`;
+      }
+    }
+
+    return recommendations;
+  }
+
+  // =========================================================================
+  // PARLAY CONSTRUCTION — EMPC (matches Python construct_optimal_parlays)
   // =========================================================================
 
   function computeCorrelation(values1, values2) {
-    if (!values1 || !values2) return 1; // Assume correlated if no data
+    if (!values1 || !values2) return 1;
     const n = Math.min(values1.length, values2.length);
     if (n < 5) return 1;
 
@@ -363,257 +659,50 @@ window.RecommendationEngine = (function () {
     return denom === 0 ? 1 : Math.abs(cov / denom);
   }
 
-  function verifyIndependence(legs) {
-    for (let i = 0; i < legs.length; i++) {
-      for (let j = i + 1; j < legs.length; j++) {
-        const l1 = legs[i];
-        const l2 = legs[j];
-
-        // Same team = potentially correlated
-        const profile1 = PlayerModel.getProfile(l1.player);
-        const profile2 = PlayerModel.getProfile(l2.player);
-        if (profile1 && profile2 && profile1.team === profile2.team) {
-          const key1 = STAT_MAP[l1.statType] || l1.statType;
-          const key2 = STAT_MAP[l2.statType] || l2.statType;
-          const v1 = PlayerModel.getValues(l1.player, key1, 15);
-          const v2 = PlayerModel.getValues(l2.player, key2, 15);
-          const corr = computeCorrelation(v1, v2);
-          if (corr > CONFIG.CSIV_MAX_CORRELATION) return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  // =========================================================================
-  // INNOVATION 6: Confluence Cascade Scoring (CCS)
-  // =========================================================================
-
-  function computeCCS(tczd, vacs, msds, raf) {
-    // All must pass minimum thresholds independently
-    if (!tczd || tczd.score < 0.1) return null;
-    if (!vacs || vacs.confidence < 0.7) return null;
-    if (!msds || msds.depthScore < 0.1) return null;
-    if (!raf || !raf.isStable) return null;
-
-    // Weighted geometric mean of all signals
-    const scores = [
-      { weight: 0.30, value: tczd.score },
-      { weight: 0.25, value: vacs.confidence },
-      { weight: 0.25, value: msds.depthScore },
-      { weight: 0.20, value: raf.stabilityScore },
-    ];
-
-    // Geometric weighted mean
-    let logSum = 0;
-    let weightSum = 0;
-    for (const s of scores) {
-      if (s.value <= 0) return null;
-      logSum += s.weight * Math.log(s.value);
-      weightSum += s.weight;
-    }
-
-    const cascadeScore = Math.exp(logSum / weightSum);
-
-    return {
-      tczd_score: tczd.score,
-      vacs_confidence: vacs.confidence,
-      msds_depth: msds.depthScore,
-      raf_stability: raf.stabilityScore,
-      cascadeScore,
-    };
-  }
-
-  // =========================================================================
-  // EVALUATE A SINGLE PROP
-  // =========================================================================
-
-  function evaluateProp(playerName, statType, line, odds) {
-    const statKey = STAT_MAP[statType] || statType;
-
-    // Basic filters
-    const profile = PlayerModel.getProfile(playerName);
-    if (!profile || profile.games.length < CONFIG.MIN_GAMES) return null;
-
-    // Minutes check
-    const lastGames = profile.games.slice(-5);
-    const avgMin = lastGames.reduce((s, g) => s + (g.min || 0), 0) / lastGames.length;
-    if (avgMin < CONFIG.MIN_MINUTES) return null;
-
-    // Odds filter
-    if (odds < CONFIG.MIN_LEG_ODDS || odds > CONFIG.MAX_LEG_ODDS) return null;
-
-    // Compute all innovations
-    const tczd = computeTCZD(playerName, statKey, line);
-    const vacs = computeVACS(playerName, statKey, line);
-    const msds = computeMSDS(playerName, statKey, line);
-    const raf = computeRAF(playerName, statKey);
-
-    // All must pass
-    if (!tczd || !vacs || !msds || !raf) return null;
-
-    // Confluence cascade
-    const ccs = computeCCS(tczd, vacs, msds, raf);
-    if (!ccs) return null;
-
-    // Edge calculation
-    const implProb = impliedProbability(odds);
-    const edge = vacs.hitRate - implProb;
-
-    // EV
-    const decimal = americanToDecimal(odds);
-    const ev = vacs.hitRate * decimal - 1;
-
-    return {
-      player: playerName,
-      team: profile.team,
-      statType,
-      statLabel: STAT_LABELS[statType] || statType.toUpperCase(),
-      line,
-      odds,
-      decimalOdds: decimal,
-
-      // Innovation scores
-      tczd: tczd.score,
-      tczdConvergence: tczd.convergenceScore,
-      tczdDepth: tczd.depth,
-      tczdFloors: tczd.floors,
-
-      vacs: vacs.confidence,
-      vacsHitRate: vacs.hitRate,
-      vacsCv: vacs.cv,
-
-      msds: msds.depthScore,
-      msdsMinMargin: msds.minMargin,
-      msdsAvgMargin: msds.avgMargin,
-
-      raf: raf.stabilityScore,
-      rafRegimeChange: raf.regimeChange,
-
-      cascadeScore: ccs.cascadeScore,
-
-      // Betting metrics
-      impliedProb: implProb,
-      hitRate: vacs.hitRate,
-      edge,
-      ev,
-      avg: vacs.mean,
-      floor: tczd.floors[tczd.floors.length - 1], // L15 floor
-    };
-  }
-
-  // =========================================================================
-  // FIND BEST PROP FOR A PLAYER FROM AVAILABLE LINES
-  // =========================================================================
-
-  function findBestProp(playerName, statType, fdLines) {
-    if (!fdLines || typeof fdLines !== 'object') return null;
-
-    let best = null;
-    for (const [threshold, data] of Object.entries(fdLines)) {
-      const line = parseFloat(threshold);
-      const odds = data.overOdds;
-      if (!odds) continue;
-
-      const result = evaluateProp(playerName, statType, line, odds);
-      if (!result) continue;
-
-      // Pick highest cascade score
-      if (!best || result.cascadeScore > best.cascadeScore) {
-        best = result;
-      }
-    }
-    return best;
-  }
-
-  // =========================================================================
-  // ADAPTIVE BET TYPE SELECTOR (ABTS)
-  // =========================================================================
-
-  function selectBetType(candidates) {
-    // Sort by cascade score descending
-    const sorted = [...candidates].sort((a, b) => b.cascadeScore - a.cascadeScore);
-
-    const elite = sorted.filter(c => c.cascadeScore >= CONFIG.SINGLE_BET_MIN_CONFIDENCE);
-    const strong = sorted.filter(c => c.cascadeScore >= CONFIG.MULTI_SINGLE_MIN_CONFIDENCE);
-    const moderate = sorted.filter(c => c.cascadeScore >= CONFIG.PARLAY_LEG_MIN_CONFIDENCE);
-
-    const recommendations = {
-      singles: [],
-      parlays: [],
-      betType: 'none',
-      reasoning: '',
-    };
-
-    // Tier 1: Elite singles (cascade >= 0.92)
-    if (elite.length >= 1) {
-      recommendations.singles = elite.slice(0, 5); // Up to 5 singles
-      recommendations.betType = elite.length === 1 ? 'single' : 'multi_single';
-      recommendations.reasoning = `${elite.length} elite-confidence pick(s) found (CCS >= ${CONFIG.SINGLE_BET_MIN_CONFIDENCE})`;
-    }
-
-    // Tier 2: Build parlays from strong candidates (cascade >= 0.85)
-    if (moderate.length >= CONFIG.PARLAY_MIN_LEGS) {
-      const parlay = buildOptimalParlay(moderate);
-      if (parlay) {
-        recommendations.parlays.push(parlay);
-        if (recommendations.betType === 'none') {
-          recommendations.betType = 'parlay';
-          recommendations.reasoning = `${moderate.length} strong candidates available for parlay construction`;
-        }
-      }
-    }
-
-    // Always include strong singles even if we have parlays
-    if (recommendations.singles.length === 0 && strong.length > 0) {
-      recommendations.singles = strong.slice(0, 3);
-      if (recommendations.betType === 'none') {
-        recommendations.betType = strong.length === 1 ? 'single' : 'multi_single';
-        recommendations.reasoning = `${strong.length} strong-confidence pick(s) found`;
-      }
-    }
-
-    return recommendations;
-  }
-
-  // =========================================================================
-  // PARLAY CONSTRUCTION WITH INDEPENDENCE VERIFICATION
-  // =========================================================================
-
   function buildOptimalParlay(candidates) {
-    // Sort by cascade score
-    const sorted = [...candidates].sort((a, b) => b.cascadeScore - a.cascadeScore);
+    // Sort by edge (highest first) — matches EMPC
+    const sorted = [...candidates].sort((a, b) => b.edge - a.edge);
 
-    // Greedy selection with independence check
     const selected = [];
-    const usedGames = {};
+    const usedTeams = new Set();
     const usedPlayers = new Set();
 
     for (const leg of sorted) {
       if (selected.length >= CONFIG.PARLAY_MAX_LEGS) break;
       if (usedPlayers.has(leg.player)) continue;
 
-      // Game diversification
-      const gameKey = `${leg.team}`;
-      const gc = usedGames[gameKey] || 0;
-      if (gc >= CONFIG.MAX_LEGS_PER_GAME) continue;
+      // Team diversification (no same-game legs)
+      const team = leg.team;
+      if (!CONFIG.PARLAY_SAME_GAME_ALLOWED && usedTeams.has(team)) continue;
 
-      // Independence check
-      const testLegs = [...selected, leg];
-      if (!verifyIndependence(testLegs)) continue;
+      // Correlation check with existing legs
+      let maxCorr = 0;
+      for (const existing of selected) {
+        const statKey1 = STAT_MAP[existing.statType] || existing.statType;
+        const statKey2 = STAT_MAP[leg.statType] || leg.statType;
+        const v1 = PlayerModel.getValues(existing.player, statKey1, 20, CONFIG.MIN_MINUTES);
+        const v2 = PlayerModel.getValues(leg.player, statKey2, 20, CONFIG.MIN_MINUTES);
+        const corr = computeCorrelation(v1, v2);
+        maxCorr = Math.max(maxCorr, corr);
+      }
+
+      if (maxCorr > CONFIG.PARLAY_MAX_CORRELATION) continue;
 
       selected.push(leg);
       usedPlayers.add(leg.player);
-      usedGames[gameKey] = gc + 1;
+      if (team) usedTeams.add(team);
     }
 
     if (selected.length < CONFIG.PARLAY_MIN_LEGS) return null;
 
-    // Compute parlay odds
+    // Compute parlay metrics
     const decimal = selected.reduce((d, l) => d * l.decimalOdds, 1);
     const american = decimalToAmerican(decimal);
     const combinedHitRate = selected.reduce((p, l) => p * l.hitRate, 1);
+    const totalEdge = selected.reduce((s, l) => s + l.edge, 0);
     const ev = combinedHitRate * decimal - 1;
+
+    if (ev <= 0 || totalEdge < CONFIG.PARLAY_MIN_COMBINED_EDGE) return null;
 
     return {
       legs: selected,
@@ -623,6 +712,7 @@ window.RecommendationEngine = (function () {
       combinedHitRate: Math.round(combinedHitRate * 10000) / 10000,
       ev: Math.round(ev * 1000) / 1000,
       avgCascade: selected.reduce((s, l) => s + l.cascadeScore, 0) / selected.length,
+      totalEdge,
     };
   }
 
@@ -635,7 +725,6 @@ window.RecommendationEngine = (function () {
 
     const sortedGames = [...boxScores].sort((a, b) => a.date.localeCompare(b.date));
 
-    // Index odds by date+gameKey
     const oddsByDate = {};
     for (const od of (historicalOdds || [])) {
       if (!oddsByDate[od.date]) oddsByDate[od.date] = {};
@@ -643,7 +732,6 @@ window.RecommendationEngine = (function () {
       oddsByDate[od.date][key] = od;
     }
 
-    // Index box scores by date
     const boxByDate = {};
     for (const g of boxScores) {
       (boxByDate[g.date] || (boxByDate[g.date] = [])).push(g);
@@ -662,7 +750,6 @@ window.RecommendationEngine = (function () {
         const dayBoxes = boxByDate[date] || [];
         const candidates = [];
 
-        // Generate signals BEFORE updating model
         for (const bg of dayBoxes) {
           const gameKey = `${bg.away}@${bg.home}`;
           const og = dayOdds[gameKey];
@@ -672,7 +759,6 @@ window.RecommendationEngine = (function () {
             const mins = typeof player.min === 'number' ? player.min : parseInt(player.min) || 0;
             if (mins < CONFIG.MIN_MINUTES) continue;
 
-            // Points props
             const ptsLines = og.playerProps[player.name];
             if (ptsLines) {
               const prop = findBestProp(player.name, 'points', ptsLines);
@@ -687,11 +773,9 @@ window.RecommendationEngine = (function () {
           }
         }
 
-        // Use ABTS to select bet type
         if (candidates.length > 0) {
           const recommendation = selectBetType(candidates);
 
-          // Record singles
           for (const single of recommendation.singles) {
             allSignals.push({
               ...single,
@@ -703,7 +787,6 @@ window.RecommendationEngine = (function () {
             });
           }
 
-          // Record parlays
           for (const parlay of recommendation.parlays) {
             const parlayHit = parlay.legs.every(l => l.hit);
             allSignals.push({
@@ -720,15 +803,15 @@ window.RecommendationEngine = (function () {
               legs: parlay.legs.map(l => ({
                 player: l.player,
                 team: l.team,
-                stat: l.statType === 'points' ? 'pts' : l.statType === 'rebounds' ? 'reb' : 'ast',
+                stat: STAT_MAP[l.statType] || l.statType,
                 statLabel: l.statLabel,
                 line: l.line,
                 odds: l.odds,
                 cascadeScore: l.cascadeScore,
-                tczd: l.tczd,
-                vacs: l.vacs,
-                msds: l.msds,
-                raf: l.raf,
+                gft: l.gft,
+                beq: l.beq,
+                esi: l.esi,
+                imad: l.imad,
                 hitRate: l.hitRate,
                 actual: l.actual,
                 hit: l.hit,
@@ -768,7 +851,6 @@ window.RecommendationEngine = (function () {
     const parlayWins = parlays.filter(s => s.hit).length;
     const parlayPnl = parlays.reduce((s, p) => s + p.pnl, 0);
 
-    // Per-leg stats for parlays
     let totalLegs = 0, hitLegs = 0;
     parlays.forEach(p => {
       (p.legs || []).forEach(l => {
@@ -869,6 +951,8 @@ window.RecommendationEngine = (function () {
       }
     }
 
+    console.log(`[ULTRA-JS] Evaluated ${Object.keys(liveOdds.playerProps).length} games, found ${candidates.length} candidates passing all 6 gates`);
+
     return selectBetType(candidates);
   }
 
@@ -879,12 +963,12 @@ window.RecommendationEngine = (function () {
   function formatSignalForStorage(recommendation, date) {
     const signals = [];
 
-    // Singles
     for (const single of (recommendation.singles || [])) {
       signals.push({
         date,
         betType: 'single',
         tier: 'FORTRESS',
+        engine: 'ultra',
         player: single.player,
         team: single.team,
         stat: STAT_MAP[single.statType] || single.statType,
@@ -892,27 +976,27 @@ window.RecommendationEngine = (function () {
         line: single.line,
         odds: single.odds,
         cascadeScore: single.cascadeScore,
-        tczd: single.tczd,
-        vacs: single.vacs,
-        msds: single.msds,
-        raf: single.raf,
+        gft: single.gft,
+        beq: single.beq,
+        esi: single.esi,
+        imad: single.imad,
         hitRate: single.hitRate,
         edge: single.edge,
         ev: single.ev,
         avg: single.avg,
         floor: single.floor,
         bet: `${single.player} O${single.line} ${single.statLabel}`,
-        hit: null, // Pending
+        hit: null,
         actual: null,
       });
     }
 
-    // Parlays
     for (const parlay of (recommendation.parlays || [])) {
       signals.push({
         date,
         betType: 'parlay',
         tier: 'FORTRESS',
+        engine: 'ultra',
         n_legs: parlay.numLegs,
         parlay_decimal: parlay.decimalOdds,
         parlay_american: parlay.odds,
@@ -920,7 +1004,7 @@ window.RecommendationEngine = (function () {
         avgCascade: parlay.avgCascade,
         combinedHitRate: parlay.combinedHitRate,
         ev: parlay.ev,
-        hit: null, // Pending
+        hit: null,
         legs: parlay.legs.map(l => ({
           player: l.player,
           team: l.team,
@@ -929,10 +1013,10 @@ window.RecommendationEngine = (function () {
           line: l.line,
           odds: l.odds,
           cascadeScore: l.cascadeScore,
-          tczd: l.tczd,
-          vacs: l.vacs,
-          msds: l.msds,
-          raf: l.raf,
+          gft: l.gft,
+          beq: l.beq,
+          esi: l.esi,
+          imad: l.imad,
           hitRate: l.hitRate,
           edge: l.edge,
           actual: null,
@@ -946,12 +1030,28 @@ window.RecommendationEngine = (function () {
   }
 
   // =========================================================================
+  // CONFIG LOADER — Load optimized config from file if available
+  // =========================================================================
+
+  function loadConfig(configObj) {
+    if (!configObj || !configObj.config) return;
+    const c = configObj.config;
+    for (const key of Object.keys(c)) {
+      if (CONFIG.hasOwnProperty(key)) {
+        CONFIG[key] = c[key];
+      }
+    }
+    console.log('[ULTRA-JS] Loaded optimized config:', configObj.score, 'score,', configObj.improvements, 'improvements');
+  }
+
+  // =========================================================================
   // PUBLIC API
   // =========================================================================
 
   return {
     PlayerModel,
     CONFIG,
+    loadConfig,
     runBacktest,
     generateTodayPicks,
     formatSignalForStorage,
@@ -963,10 +1063,10 @@ window.RecommendationEngine = (function () {
     decimalToAmerican,
     formatOdds,
     STAT_LABELS,
-    computeTCZD,
-    computeVACS,
-    computeMSDS,
-    computeRAF,
-    computeCCS,
+    computeGFT,
+    computeBEQ,
+    computeESI,
+    computeIMAD,
+    computeUltraSignal,
   };
 })();

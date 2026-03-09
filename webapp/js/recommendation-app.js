@@ -89,9 +89,10 @@
 
       // Load Ultra Engine signals and stats (preferred over legacy engine)
       try {
-        const [ultraSignalsRes, ultraStatsRes] = await Promise.all([
+        const [ultraSignalsRes, ultraStatsRes, ultraConfigRes] = await Promise.all([
           fetch('data/ultra_signals.json').catch(() => null),
           fetch('data/ultra_backtest_stats.json').catch(() => null),
+          fetch('../output/ultra_engine_config.json').catch(() => null),
         ]);
         if (ultraSignalsRes && ultraSignalsRes.ok) {
           const ultraSignals = await ultraSignalsRes.json();
@@ -105,8 +106,13 @@
           ultraStats = await ultraStatsRes.json();
           console.log('[REC-APP] Ultra Engine stats loaded');
         }
+        // Load optimized config into the JS engine
+        if (ultraConfigRes && ultraConfigRes.ok) {
+          const ultraConfig = await ultraConfigRes.json();
+          ENGINE.loadConfig(ultraConfig);
+        }
       } catch (e) {
-        console.warn('[REC-APP] Ultra Engine data not available, using legacy engine');
+        console.warn('[REC-APP] Ultra Engine data not available, using defaults');
         useUltraEngine = false;
       }
 
