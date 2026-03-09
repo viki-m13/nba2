@@ -1,5 +1,5 @@
 /* ============================================================
-   NBA Prop Picks — Clean Dark Theme
+   QEPE — Quantum Edge Parlay Engine — Clean Dark Theme
    ============================================================ */
 
 :root {
@@ -87,7 +87,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .stat-card {
@@ -117,6 +117,39 @@ main {
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Tier Cards */
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.tier-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.tier-icon { font-size: 1.2rem; }
+.tier-name { font-weight: 700; font-size: 0.9rem; }
+.tier-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+
+.tier-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.8rem;
 }
 
 /* Views */
@@ -169,26 +202,13 @@ h2 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--accent);
-  background: rgba(34, 197, 94, 0.1);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-}
-
-.pick-card.parlay .pick-type {
-  color: var(--purple);
-  background: rgba(167, 139, 250, 0.1);
 }
 
 .pick-odds {
   font-weight: 700;
   color: var(--gold);
-}
-
-.pick-player {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
 }
 
 .pick-line {
@@ -204,23 +224,17 @@ h2 {
   gap: 0.5rem;
 }
 
-.pick-stat {
-  font-size: 0.8rem;
-}
+.pick-stat { font-size: 0.8rem; }
 
 .pick-stat-label {
   color: var(--text-dim);
   font-size: 0.7rem;
 }
 
-.pick-stat-value {
-  font-weight: 600;
-}
+.pick-stat-value { font-weight: 600; }
 
-/* Parlay legs */
-.parlay-legs {
-  margin-top: 0.75rem;
-}
+/* Parlay Legs */
+.parlay-legs { margin-top: 0.75rem; }
 
 .parlay-leg {
   display: flex;
@@ -233,62 +247,10 @@ h2 {
 }
 
 .parlay-leg:first-child { border-top: none; }
-
 .parlay-leg-player { font-weight: 600; }
 .parlay-leg-line { color: var(--accent); }
 .parlay-leg-odds { color: var(--text-dim); }
 
-.parlay-summary {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.85rem;
-}
-
-.parlay-ev { color: var(--accent); font-weight: 600; }
-.parlay-payout { color: var(--gold); font-weight: 600; }
-
-/* Date in pick cards */
-.pick-date {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  font-weight: 500;
-}
-
-/* Multi-stat parlay styling */
-.pick-card.multi-stat {
-  border-left-color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), var(--surface));
-}
-
-.pick-card.multi-stat .pick-type {
-  color: var(--gold);
-  background: rgba(245, 158, 11, 0.12);
-}
-
-/* Stat type badges */
-.parlay-leg-stat,
-.history-leg-stat {
-  display: inline-block;
-  padding: 0.1rem 0.35rem;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: rgba(99, 102, 241, 0.12);
-  color: var(--purple);
-  margin-right: 0.3rem;
-}
-
-/* Recent accuracy highlight */
-.highlight-recent {
-  color: var(--gold);
-}
-
-/* Parlay leg layout with game info */
 .parlay-leg-info {
   display: flex;
   flex-direction: column;
@@ -306,100 +268,71 @@ h2 {
   gap: 0.75rem;
 }
 
-/* History leg styling */
-.legs-cell {
-  padding: 0.4rem 0.75rem !important;
-}
-
-.history-leg {
+.parlay-summary {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.3rem 0;
-  font-size: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.history-leg + .history-leg {
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
   border-top: 1px solid var(--border);
+  font-size: 0.85rem;
 }
 
-.history-leg-player {
-  font-weight: 600;
-  min-width: 140px;
-}
+.parlay-payout { color: var(--gold); font-weight: 600; }
 
-.history-leg-line {
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.history-leg-odds {
-  color: var(--text-dim);
-}
-
-.history-leg-game {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-}
-
-.history-leg-actual {
-  margin-left: auto;
-  font-weight: 600;
-}
-
-/* Edge Strategy Tier Cards */
-.tier-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.tier-card {
-  background: var(--surface);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-}
-
-.tier-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.tier-icon { font-size: 1.2rem; }
-.tier-name { font-weight: 700; font-size: 0.9rem; }
-.tier-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
-
-.tier-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.8rem;
-}
-
-.legs-row td { padding: 0.25rem 0.5rem !important; }
-.legs-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.leg-chip {
-  font-size: 0.7rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-}
-.leg-chip.hit { border-color: #22c55e40; }
-.leg-chip.miss { border-color: #ef444440; }
-.leg-chip em { color: var(--text-dim); font-style: normal; }
+/* Result badges */
+.result-win { color: var(--accent); font-weight: 600; }
+.result-loss { color: var(--red); font-weight: 600; }
+.result-pending { color: var(--text-dim); font-style: italic; }
+.pnl-pos { color: var(--accent); }
+.pnl-neg { color: var(--red); }
 
 /* History */
+.history-stats {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.history-stat-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.history-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.history-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.history-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-stat-breakdowns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.history-stat-breakdown {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
 .history-filters {
   display: flex;
   gap: 0.5rem;
@@ -421,16 +354,6 @@ h2 {
   border-color: var(--accent);
   color: var(--accent);
   background: rgba(34, 197, 94, 0.08);
-}
-
-.history-section {
-  margin-bottom: 2rem;
-}
-
-.history-section h3 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-dim);
 }
 
 .history-table {
@@ -459,71 +382,23 @@ h2 {
   background: rgba(255, 255, 255, 0.02);
 }
 
-.result-win {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.result-loss {
-  color: var(--red);
-  font-weight: 600;
-}
-
-.result-pending {
-  color: var(--text-dim);
-  font-style: italic;
-}
-
-.pnl-pos { color: var(--accent); }
-.pnl-neg { color: var(--red); }
-
-/* History Stats */
-.history-stats {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.history-stat-row {
+.legs-row td { padding: 0.25rem 0.5rem !important; }
+.legs-container {
   display: flex;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
-.history-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.history-stat-value {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.history-stat-label {
+.leg-chip {
   font-size: 0.7rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
 }
-
-.history-stat-breakdowns {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.history-stat-breakdown {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
+.leg-chip.hit { border-color: #22c55e40; }
+.leg-chip.miss { border-color: #ef444440; }
+.leg-chip em { color: var(--text-dim); font-style: normal; }
 
 /* Method */
 .method-content {
@@ -577,209 +452,12 @@ h2 {
   background: var(--accent);
 }
 
-/* Today's Games Section */
-.today-games-section {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.today-games-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.today-games-header h3 {
-  font-size: 1rem;
-  color: var(--text-dim);
-  margin: 0;
-}
-
-.today-games-date {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-}
-
-.today-games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
-}
-
-.today-game-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-}
-
-.today-game-teams {
-  font-weight: 600;
-}
-
-.today-game-time {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-}
-
-/* Super Payout card styling */
-.stat-card.sp-highlight {
-  border-color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), var(--surface));
-}
-
-.stat-card.sp-highlight .stat-value { color: var(--gold); }
-
-.pick-card.super-payout {
-  border-left-color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(239, 68, 68, 0.03), var(--surface));
-  border-image: linear-gradient(to bottom, var(--gold), #ef4444) 1;
-  border-left-width: 3px;
-  border-left-style: solid;
-}
-
-.pick-card.super-payout .pick-type {
-  color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.08));
-  font-weight: 700;
-}
-
-.pick-card.super-payout .pick-odds {
-  font-size: 1.1rem;
-}
-
-.sp-badge {
-  display: inline-block;
-  padding: 0.15rem 0.4rem;
-  border-radius: 3px;
-  font-size: 0.6rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  background: linear-gradient(135deg, var(--gold), #ef4444);
-  color: #fff;
-  margin-left: 0.3rem;
-}
-
-.sp-section-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 2rem 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--gold);
-}
-
-.sp-section-header h3 {
-  font-size: 1rem;
-  color: var(--gold);
-  margin: 0;
-}
-
-.sp-section-header .sp-badge {
-  font-size: 0.65rem;
-  padding: 0.2rem 0.5rem;
-}
-
-/* ============================================================
-   Alt-Line Slip Builder Styles
-   ============================================================ */
-
-.slip-section {
-  margin-bottom: 1.5rem;
-}
-
-.slip-section h3 {
-  font-size: 0.95rem;
-  color: var(--text);
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border);
-}
-
-.slip-tag {
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--text-dim);
-  margin-left: 0.5rem;
-}
-
-#alt-core-slips h3 { border-bottom-color: var(--accent); }
-#alt-screenshot-slips h3 { border-bottom-color: var(--gold); }
-#alt-nuke-slips h3 { border-bottom-color: var(--red); }
-
-/* Builder-specific card styles */
-.pick-card.builder-core {
-  border-left-color: var(--accent);
-}
-.pick-card.builder-core .pick-type {
-  color: var(--accent);
-  background: rgba(34, 197, 94, 0.12);
-}
-
-.pick-card.builder-screenshot {
-  border-left-color: var(--gold);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), var(--surface));
-}
-.pick-card.builder-screenshot .pick-type {
-  color: var(--gold);
-  background: rgba(245, 158, 11, 0.12);
-}
-
-.pick-card.builder-sgp {
-  border-left-color: var(--blue);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.04), var(--surface));
-}
-.pick-card.builder-sgp .pick-type {
-  color: var(--blue);
-  background: rgba(59, 130, 246, 0.12);
-}
-
-.pick-card.builder-nuke {
-  border-left-color: var(--red);
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.04), var(--surface));
-}
-.pick-card.builder-nuke .pick-type {
-  color: var(--red);
-  background: rgba(239, 68, 68, 0.12);
-}
-
-/* Super Parlay builder style */
-.pick-card.builder-super {
-  border-left-color: #ffd700;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), var(--surface));
-}
-.pick-card.builder-super .pick-type {
-  color: #ffd700;
-  background: rgba(255, 215, 0, 0.15);
-}
-
-/* Builder labels in history table */
-span.builder-core { color: var(--green); }
-span.builder-screenshot { color: var(--blue); }
-span.builder-nuke { color: var(--red); }
-span.builder-super { color: #ffd700; }
-
-/* Role-specific leg indicators */
-.parlay-leg.role-creator { border-left: 2px solid var(--blue); padding-left: 0.5rem; }
-.parlay-leg.role-scorer { border-left: 2px solid var(--gold); padding-left: 0.5rem; }
-.parlay-leg.role-big { border-left: 2px solid var(--purple); padding-left: 0.5rem; }
-
-.parlay-leg-meta {
-  width: 100%;
-  text-align: right;
-}
+.method-card a { color: var(--blue); text-decoration: none; }
+.method-card a:hover { text-decoration: underline; }
 
 /* Responsive */
 @media (max-width: 1024px) {
   .dashboard { grid-template-columns: repeat(3, 1fr); }
-  .sp-section-header { margin-top: 1rem; }
   .method-content { grid-template-columns: 1fr; }
 }
 
@@ -790,4 +468,5 @@ span.builder-super { color: #ffd700; }
   .picks-grid { grid-template-columns: 1fr; }
   .history-table { font-size: 0.75rem; }
   .history-table th, .history-table td { padding: 0.4rem; }
+  .tier-cards { grid-template-columns: 1fr; }
 }
