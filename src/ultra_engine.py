@@ -1676,6 +1676,194 @@ def generate_nightly_picks(config=None):
 
 
 # =========================================================================
+# WEBAPP EXPORT - Converts backtest results to webapp-compatible signals
+# =========================================================================
+
+STAT_LABELS = {
+    'pts': 'PTS',
+    'reb': 'REB',
+    'ast': 'AST',
+    'pra': 'PRA',
+    '3pm': '3PM',
+}
+
+
+def export_webapp_signals(config=None):
+    """
+    Run the Ultra Engine backtest and export all signals in the format
+    expected by the webapp (recommendation-app.js).
+
+    This generates:
+    1. ultra_signals.json - All historical signals with results
+    2. ultra_backtest_stats.json - Aggregated stats for dashboard
+
+    The webapp loads these and renders them in the History view and Dashboard.
+    """
+    if config is None:
+        config_path = os.path.join(OUTPUT_DIR, 'ultra_engine_config.json')
+        if os.path.exists(config_path):
+            with open(config_path) as f:
+                config = json.load(f).get('config', ULTRA_CONFIG)
+        else:
+            config = dict(ULTRA_CONFIG)
+
+    box_scores, odds_data = load_all_data()
+    if not box_scores or not odds_data:
+        print("ERROR: No data available")
+        return
+
+    print(f"Running Ultra Engine backtest ({len(box_scores)} box scores, {len(odds_data)} odds)...")
+    results = run_ultra_backtest(box_scores, odds_data, config)
+
+    # Convert picks to webapp signal format
+    webapp_signals = []
+
+    for pick in results.get('picks', []):
+        bet_type = pick.get('bet_type', 'single')
+        stat_key = pick.get('stat', 'pts')
+        stat_label = STAT_LABELS.get(stat_key, stat_key.upper())
+
+        if bet_type in ('single', 'multi_single'):
+            signal = {
+                'date': pick.get('date', ''),
+                'betType': 'single',  # webapp uses 'single' for both singles and multi-singles
+                'player': pick.get('player', ''),
+                'team': '',
+                'opponent': '',
+                'line': pick.get('line', 0),
+                'odds': pick.get('odds', -110),
+                'stat': stat_key,
+                'statLabel': stat_label,
+                'cascadeScore': pick.get('combined_score', 0),
+                'gft': pick.get('gft', {}).get('score', 0) if isinstance(pick.get('gft'), dict) else 0,
+                'beq': pick.get('beq', {}).get('edge', 0) if isinstance(pick.get('beq'), dict) else 0,
+                'esi': pick.get('esi', {}).get('stability', 0) if isinstance(pick.get('esi'), dict) else 0,
+                'imad': pick.get('imad', {}).get('score', 0) if isinstance(pick.get('imad'), dict) else 0,
+                'hitRate': pick.get('hit_rate', 0),
+                'edge': pick.get('edge', 0),
+                'ev': pick.get('ev', 0),
+                'avg': pick.get('esi', {}).get('mean', 0) if isinstance(pick.get('esi'), dict) else 0,
+                'floor': pick.get('gft', {}).get('floors', [0])[0] if isinstance(pick.get('gft'), dict) and pick.get('gft', {}).get('floors') else 0,
+                'actual': pick.get('actual'),
+                'hit': pick.get('hit'),
+                'pnl': pick.get('pnl', 0),
+                'bet': f"{pick.get('player', '')} O{pick.get('line', 0)} {stat_label}",
+                'engine': 'ultra',
+                'betSubType': bet_type,
+            }
+            webapp_signals.append(signal)
+
+        elif bet_type == 'parlay':
+            legs = []
+            for leg in pick.get('legs', []):
+                leg_stat = leg.get('stat', 'pts')
+                leg_label = STAT_LABELS.get(leg_stat, leg_stat.upper())
+                legs.append({
+                    'player': leg.get('player', ''),
+                    'team': '',
+                    'line': leg.get('line', 0),
+                    'odds': leg.get('odds', -110),
+                    'stat': leg_stat,
+                    'statLabel': leg_label,
+                    'cascadeScore': leg.get('combined_score', 0),
+                    'hit': leg.get('hit'),
+                    'actual': leg.get('actual'),
+                    'edge': leg.get('edge', 0),
+                })
+
+            avg_cascade = sum(l.get('cascadeScore', 0) for l in legs) / len(legs) if legs else 0
+
+            signal = {
+                'date': pick.get('date', ''),
+                'betType': 'parlay',
+                'n_legs': pick.get('n_legs', len(legs)),
+                'legs': legs,
+                'parlay_american': pick.get('parlay_american', 0),
+                'parlay_decimal': pick.get('parlay_decimal', 1),
+                'odds': pick.get('parlay_american', 0),
+                'combinedHitRate': pick.get('combined_true_prob', 0),
+                'avgCascade': avg_cascade,
+                'ev': pick.get('parlay_ev', 0),
+                'hit': pick.get('hit'),
+                'pnl': pick.get('pnl', 0),
+                'bet': f"{pick.get('n_legs', len(legs))}-Leg Parlay",
+                'engine': 'ultra',
+            }
+            webapp_signals.append(signal)
+
+    # Build aggregated stats
+    singles_list = [s for s in webapp_signals if s['betType'] == 'single']
+    parlays_list = [s for s in webapp_signals if s['betType'] == 'parlay']
+
+    resolved_singles = [s for s in singles_list if s.get('hit') is not None]
+    resolved_parlays = [s for s in parlays_list if s.get('hit') is not None]
+
+    singles_wins = sum(1 for s in resolved_singles if s['hit'])
+    parlays_wins = sum(1 for p in resolved_parlays if p['hit'])
+
+    singles_pnl = sum(s.get('pnl', 0) for s in resolved_singles)
+    parlays_pnl = sum(p.get('pnl', 0) for p in resolved_parlays)
+
+    total_resolved = len(resolved_singles) + len(resolved_parlays)
+    total_wins = singles_wins + parlays_wins
+    total_pnl = singles_pnl + parlays_pnl
+
+    # Parlay leg stats
+    all_legs = []
+    for p in resolved_parlays:
+        all_legs.extend(p.get('legs', []))
+    leg_hits = sum(1 for l in all_legs if l.get('hit'))
+
+    unit = config.get('UNIT_SIZE', 100)
+
+    stats = {
+        'singles': {
+            'total': len(resolved_singles),
+            'wins': singles_wins,
+            'accuracy': singles_wins / len(resolved_singles) if resolved_singles else 0,
+            'pnl': singles_pnl,
+            'roi': singles_pnl / (len(resolved_singles) * unit) if resolved_singles else 0,
+        },
+        'parlays': {
+            'total': len(resolved_parlays),
+            'wins': parlays_wins,
+            'accuracy': parlays_wins / len(resolved_parlays) if resolved_parlays else 0,
+            'pnl': parlays_pnl,
+            'roi': parlays_pnl / (len(resolved_parlays) * unit) if resolved_parlays else 0,
+            'totalLegs': len(all_legs),
+            'hitLegs': leg_hits,
+            'legAccuracy': leg_hits / len(all_legs) if all_legs else 0,
+        },
+        'overall': {
+            'total': total_resolved,
+            'wins': total_wins,
+            'accuracy': total_wins / total_resolved if total_resolved else 0,
+            'pnl': total_pnl,
+            'roi': total_pnl / (total_resolved * unit) if total_resolved else 0,
+        },
+    }
+
+    # Save signals
+    signals_path = os.path.join(DATA_DIR, 'ultra_signals.json')
+    with open(signals_path, 'w') as f:
+        json.dump(webapp_signals, f, indent=2)
+
+    # Save stats
+    stats_path = os.path.join(DATA_DIR, 'ultra_backtest_stats.json')
+    with open(stats_path, 'w') as f:
+        json.dump(stats, f, indent=2)
+
+    print(f"Exported {len(webapp_signals)} signals to {signals_path}")
+    print(f"Exported stats to {stats_path}")
+    print(f"  Singles: {stats['singles']['total']} ({stats['singles']['accuracy']*100:.1f}% acc)")
+    print(f"  Parlays: {stats['parlays']['total']} ({stats['parlays']['accuracy']*100:.1f}% acc)")
+    print(f"  Overall: {stats['overall']['total']} picks, {stats['overall']['accuracy']*100:.1f}% acc, "
+          f"${stats['overall']['pnl']:+.0f} P&L, {stats['overall']['roi']*100:.1f}% ROI")
+
+    return webapp_signals, stats
+
+
+# =========================================================================
 # DATA LOADER
 # =========================================================================
 
@@ -1712,10 +1900,11 @@ if __name__ == '__main__':
     parser.add_argument('--nightly', action='store_true', help='Generate nightly picks')
     parser.add_argument('--iterations', type=int, default=50, help='Optimizer iterations')
     parser.add_argument('--verbose', '-v', action='store_true', help='Verbose output')
+    parser.add_argument('--export-webapp', action='store_true', help='Export signals for webapp')
     parser.add_argument('--all', action='store_true', help='Run everything')
     args = parser.parse_args()
 
-    if not any([args.backtest, args.optimize, args.validate, args.nightly, args.all]):
+    if not any([args.backtest, args.optimize, args.validate, args.nightly, args.export_webapp, args.all]):
         args.all = True
 
     box_scores, odds_data = load_all_data()
@@ -1742,6 +1931,9 @@ if __name__ == '__main__':
         else:
             config = ULTRA_CONFIG
         run_adversarial_validation(box_scores, odds_data, config)
+
+    if args.export_webapp or args.all:
+        export_webapp_signals()
 
     if args.nightly or args.all:
         generate_nightly_picks()
