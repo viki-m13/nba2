@@ -38,7 +38,6 @@
   let ultraStats = null;
   let allSignals = [];
   let activeFilter = 'all';
-  let useUltraEngine = true;
 
   // ========================================================================
   // INITIALIZATION
@@ -50,6 +49,9 @@
     await loadData();
     runBacktestAndDisplay();
     await generateTonightPicks();
+    // Auto-resolve pending picks every 5 minutes
+    autoResolveResults();
+    setInterval(autoResolveResults, 5 * 60 * 1000);
   }
 
   // ========================================================================
@@ -58,20 +60,16 @@
 
   async function loadData() {
     try {
-      const [boxRes, oddsRes, signalsRes] = await Promise.all([
+      // Load box scores (both seasons)
+      const [boxRes, oddsRes] = await Promise.all([
         fetch('data/player_boxscores.json'),
         fetch('data/historical_odds.json'),
-        fetch('data/recommendation_signals.json').catch(() => null),
       ]);
 
       playerBoxScores = await boxRes.json();
       historicalOdds = await oddsRes.json();
 
-      if (signalsRes && signalsRes.ok) {
-        allSignals = await signalsRes.json();
-      }
-
-      // Also try loading 2026 data
+      // Load 2026 season data
       try {
         const [box2026Res, odds2026Res] = await Promise.all([
           fetch('data/player_boxscores_2026.json').catch(() => null),
@@ -87,38 +85,32 @@
         }
       } catch (e) { /* optional data */ }
 
-      // Load Ultra Engine signals and stats (preferred over legacy engine)
-      try {
-        const [ultraSignalsRes, ultraStatsRes, ultraConfigRes] = await Promise.all([
-          fetch('data/ultra_signals.json').catch(() => null),
-          fetch('data/ultra_backtest_stats.json').catch(() => null),
-          fetch('../output/ultra_engine_config.json').catch(() => null),
-        ]);
-        if (ultraSignalsRes && ultraSignalsRes.ok) {
-          const ultraSignals = await ultraSignalsRes.json();
-          if (ultraSignals.length > 0) {
-            allSignals = ultraSignals;
-            useUltraEngine = true;
-            console.log(`[REC-APP] Ultra Engine: ${ultraSignals.length} signals loaded`);
-          }
+      // Load Ultra Engine signals, stats, and config
+      const [ultraSignalsRes, ultraStatsRes, ultraConfigRes] = await Promise.all([
+        fetch('data/ultra_signals.json').catch(() => null),
+        fetch('data/ultra_backtest_stats.json').catch(() => null),
+        fetch('../output/ultra_engine_config.json').catch(() => null),
+      ]);
+
+      if (ultraSignalsRes && ultraSignalsRes.ok) {
+        const ultraSignals = await ultraSignalsRes.json();
+        if (ultraSignals.length > 0) {
+          allSignals = ultraSignals;
+          console.log(`[ULTRA] ${ultraSignals.length} signals loaded`);
         }
-        if (ultraStatsRes && ultraStatsRes.ok) {
-          ultraStats = await ultraStatsRes.json();
-          console.log('[REC-APP] Ultra Engine stats loaded');
-        }
-        // Load optimized config into the JS engine
-        if (ultraConfigRes && ultraConfigRes.ok) {
-          const ultraConfig = await ultraConfigRes.json();
-          ENGINE.loadConfig(ultraConfig);
-        }
-      } catch (e) {
-        console.warn('[REC-APP] Ultra Engine data not available, using defaults');
-        useUltraEngine = false;
+      }
+      if (ultraStatsRes && ultraStatsRes.ok) {
+        ultraStats = await ultraStatsRes.json();
+        console.log('[ULTRA] Backtest stats loaded');
+      }
+      if (ultraConfigRes && ultraConfigRes.ok) {
+        const ultraConfig = await ultraConfigRes.json();
+        ENGINE.loadConfig(ultraConfig);
       }
 
-      console.log(`[REC-APP] Loaded: ${playerBoxScores.length} box scores, ${historicalOdds.length} odds records`);
+      console.log(`[ULTRA] Loaded: ${playerBoxScores.length} box scores, ${historicalOdds.length} odds records`);
     } catch (e) {
-      console.error('[REC-APP] Error loading data:', e);
+      console.error('[ULTRA] Error loading data:', e);
     }
   }
 
@@ -148,11 +140,10 @@
   }
 
   function runBacktestAndDisplay() {
-    if (useUltraEngine && ultraStats && allSignals.length > 0) {
+    if (ultraStats && allSignals.length > 0) {
       // Use pre-computed Ultra Engine results for dashboard/history
-      console.log('[REC-APP] Using Ultra Engine backtest results');
+      console.log('[ULTRA] Using pre-computed backtest results');
       backtestResults = { stats: ultraStats, signals: allSignals };
-      // Still populate PlayerModel so live picks can be generated
       populatePlayerModel();
       renderDashboard();
       renderTierCards();
@@ -162,11 +153,12 @@
 
     if (!playerBoxScores.length || !historicalOdds.length) return;
 
-    console.log('[REC-APP] Running walk-forward backtest...');
+    // Run live backtest if no pre-computed results available
+    console.log('[ULTRA] Running walk-forward backtest...');
     backtestResults = ENGINE.runBacktest(playerBoxScores, historicalOdds);
 
     if (backtestResults) {
-      console.log('[REC-APP] Backtest results:', backtestResults.stats);
+      console.log('[ULTRA] Backtest results:', backtestResults.stats);
       allSignals = backtestResults.signals;
     }
 
@@ -256,31 +248,178 @@
         }
       }
 
-      // Generate recommendations
+      // Generate recommendations from live props
+      let recommendation = null;
+      if (Object.keys(liveOdds.playerProps).length > 0) {
+        recommendation = ENGINE.generateTodayPicks(liveOdds);
+      }
+
+      if (recommendation && (recommendation.singles.length > 0 || recommendation.parlays.length > 0)) {
+        picksStatus.style.display = 'none';
+        renderTonightPicks(recommendation);
+
+        // Save signals for history
+        const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        const newSignals = ENGINE.formatSignalForStorage(recommendation, today);
+        allSignals = allSignals.filter(s => s.date !== today);
+        allSignals.push(...newSignals);
+        return;
+      }
+
       if (Object.keys(liveOdds.playerProps).length === 0) {
-        picksStatus.textContent = 'No FanDuel player props available yet. Props typically open 1-2 hours before game time.';
-        return;
-      }
-
-      const recommendation = ENGINE.generateTodayPicks(liveOdds);
-      if (!recommendation || (recommendation.singles.length === 0 && recommendation.parlays.length === 0)) {
+        picksStatus.textContent = 'No FanDuel player props available yet. Props are available after 10 AM EST.';
+      } else {
         picksStatus.textContent = 'No bets meet our strict quality thresholds tonight. The engine only recommends when all 6 gates pass.';
-        return;
       }
-
-      picksStatus.style.display = 'none';
-      renderTonightPicks(recommendation);
-
-      // Save signals for history
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const newSignals = ENGINE.formatSignalForStorage(recommendation, today);
-      // Merge with existing (avoid duplicates for today)
-      allSignals = allSignals.filter(s => s.date !== today);
-      allSignals.push(...newSignals);
 
     } catch (e) {
-      console.error('[REC-APP] Error generating tonight picks:', e);
+      console.error('[ULTRA] Error generating tonight picks:', e);
       picksStatus.textContent = 'Error loading picks. See console for details.';
+    }
+  }
+
+  // ========================================================================
+  // AUTO-RESOLVE: Check ESPN for completed games and update results
+  // ========================================================================
+
+  async function autoResolveResults() {
+    // Find pending signals (today and yesterday)
+    const pending = allSignals.filter(s => s.hit === null || s.hit === undefined);
+    if (pending.length === 0) return;
+
+    const pendingDates = [...new Set(pending.map(s => s.date))];
+    console.log(`[ULTRA] Auto-resolving ${pending.length} pending picks for dates: ${pendingDates.join(', ')}`);
+
+    let resolvedCount = 0;
+
+    for (const date of pendingDates) {
+      try {
+        // Format date for ESPN API (YYYYMMDD)
+        const espnDate = date;
+        const espnUrl = `/api/nba?source=espn-scoreboard&date=${espnDate}`;
+        let scoreboardData;
+
+        try {
+          const res = await fetch(espnUrl);
+          if (!res.ok) continue;
+          scoreboardData = await res.json();
+        } catch (e) {
+          // Try direct ESPN URL as fallback
+          try {
+            const directUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${espnDate}`;
+            const res = await fetch(directUrl);
+            if (!res.ok) continue;
+            scoreboardData = await res.json();
+          } catch (e2) { continue; }
+        }
+
+        const events = scoreboardData.events || [];
+        const playerStats = {};
+
+        for (const event of events) {
+          // Only resolve if game is final
+          const status = event.status?.type?.name || event.status?.type?.description || '';
+          if (!status.toLowerCase().includes('final')) continue;
+
+          // Get box score for each team
+          for (const comp of (event.competitions || [])) {
+            for (const team of (comp.competitors || [])) {
+              for (const stat of (team.statistics || [])) {
+                // ESPN summary doesn't have individual player stats
+                // We need the event summary endpoint
+              }
+            }
+          }
+
+          // Fetch detailed box score
+          const eventId = event.id;
+          try {
+            let boxUrl = `/api/nba?source=espn-summary&eventId=${eventId}`;
+            let boxRes;
+            try {
+              boxRes = await fetch(boxUrl);
+            } catch (e) {
+              boxUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${eventId}`;
+              boxRes = await fetch(boxUrl);
+            }
+
+            if (!boxRes || !boxRes.ok) continue;
+            const boxData = await boxRes.json();
+
+            // Extract player stats from box score
+            for (const team of (boxData.boxscore?.players || [])) {
+              for (const statGroup of (team.statistics || [])) {
+                const headers = statGroup.labels || [];
+                const ptsIdx = headers.indexOf('PTS');
+                const rebIdx = headers.indexOf('REB');
+                const astIdx = headers.indexOf('AST');
+                const minIdx = headers.indexOf('MIN');
+
+                for (const athlete of (statGroup.athletes || [])) {
+                  const name = athlete.athlete?.displayName || '';
+                  const stats = (athlete.stats || []);
+                  if (!name || stats.length === 0) continue;
+
+                  playerStats[name] = {
+                    pts: parseInt(stats[ptsIdx]) || 0,
+                    reb: parseInt(stats[rebIdx]) || 0,
+                    ast: parseInt(stats[astIdx]) || 0,
+                    min: parseInt(stats[minIdx]) || 0,
+                  };
+                  playerStats[name].pra = playerStats[name].pts + playerStats[name].reb + playerStats[name].ast;
+                }
+              }
+            }
+          } catch (e) {
+            console.warn(`[ULTRA] Could not fetch box score for event ${eventId}:`, e);
+          }
+        }
+
+        if (Object.keys(playerStats).length === 0) continue;
+
+        // Resolve pending picks for this date
+        const datePending = pending.filter(s => s.date === date);
+        for (const signal of datePending) {
+          if (signal.betType === 'single') {
+            const pData = playerStats[signal.player];
+            if (!pData) continue;
+            const statKey = signal.stat || 'pts';
+            const actual = statKey === 'pra' ? pData.pra : (pData[statKey] || 0);
+            signal.actual = actual;
+            signal.hit = actual > (signal.line || 0);
+            const decimal = ENGINE.americanToDecimal(signal.odds || -110);
+            signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
+            resolvedCount++;
+          } else if (signal.betType === 'parlay') {
+            let allLegsResolved = true;
+            for (const leg of (signal.legs || [])) {
+              if (leg.hit !== null && leg.hit !== undefined) continue;
+              const pData = playerStats[leg.player];
+              if (!pData) { allLegsResolved = false; continue; }
+              const statKey = leg.stat || 'pts';
+              const actual = statKey === 'pra' ? pData.pra : (pData[statKey] || 0);
+              leg.actual = actual;
+              leg.hit = actual > (leg.line || 0);
+            }
+            if (allLegsResolved && signal.legs.every(l => l.hit !== null && l.hit !== undefined)) {
+              signal.hit = signal.legs.every(l => l.hit);
+              const decimal = signal.parlay_decimal || 1;
+              signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
+              resolvedCount++;
+            }
+          }
+        }
+
+      } catch (e) {
+        console.warn(`[ULTRA] Error resolving date ${date}:`, e);
+      }
+    }
+
+    if (resolvedCount > 0) {
+      console.log(`[ULTRA] Auto-resolved ${resolvedCount} picks`);
+      // Re-render history with updated results
+      renderHistory();
+      renderDashboard();
     }
   }
 
@@ -375,18 +514,11 @@
     const resultClass = pick.hit === true ? 'result-win' : pick.hit === false ? 'result-loss' : 'result-pending';
     const resultText = pick.hit === true ? 'WIN' : pick.hit === false ? 'LOSS' : 'PENDING';
 
-    // Support both Ultra Engine (gft/beq/esi/imad) and legacy (tczd/vacs/msds/raf) signal names
-    const isUltra = pick.gft !== undefined || pick.engine === 'ultra';
-    const chipData = isUltra ? [
+    const chipData = [
       { label: 'GFT', title: 'Gravitational Floor Theory', value: pick.gft },
       { label: 'BEQ', title: 'Bayesian Edge Quantification', value: pick.beq },
       { label: 'ESI', title: 'Entropic Stability Index', value: pick.esi },
       { label: 'IMAD', title: 'Inverse Market Asymmetry', value: pick.imad },
-    ] : [
-      { label: 'TCZD', title: 'Temporal Convergence Zone Detection', value: pick.tczd },
-      { label: 'VACS', title: 'Volatility-Adjusted Confidence', value: pick.vacs },
-      { label: 'MSDS', title: 'Margin-of-Safety Depth', value: pick.msds },
-      { label: 'RAF', title: 'Regime-Aware Filter', value: pick.raf },
     ];
 
     const chipsHtml = chipData.map(c => {
@@ -395,7 +527,7 @@
       return `<span class="innovation-chip" title="${c.title}">${c.label}: ${pct}</span>`;
     }).join('');
 
-    const scoreLabel = isUltra ? 'Score' : 'CCS';
+    const scoreLabel = 'Score';
     const avgVal = pick.avg != null ? pick.avg.toFixed(1) : '--';
     const floorVal = pick.floor != null ? (typeof pick.floor === 'number' ? pick.floor.toFixed(1) : pick.floor) : '--';
 
@@ -502,7 +634,7 @@
     const parlays = s.parlays;
     const overall = s.overall;
 
-    const engineLabel = useUltraEngine ? 'Ultra Engine v1.0' : 'Legacy Engine';
+    const engineLabel = 'Ultra Engine v1.0';
     const legAcc = parlays.legAccuracy != null ? (parlays.legAccuracy * 100).toFixed(1) : '--';
 
     container.innerHTML = `
@@ -555,7 +687,7 @@
           <span class="tier-icon">&#9889;</span>
           <span class="tier-name" style="color: #22c55e;">SINGLES</span>
         </div>
-        <div class="tier-desc">${useUltraEngine ? 'Ultra Engine — GFT + BEQ + ESI + IMAD confluence' : 'Ultra-selective single bets — CCS threshold'}</div>
+        <div class="tier-desc">Ultra Engine — GFT + BEQ + ESI + IMAD confluence</div>
         <div class="tier-stats">
           <span>Record: <strong>${s.singles.wins}/${s.singles.total}</strong> (${(s.singles.accuracy * 100).toFixed(1)}%)</span>
           <span>ROI: <strong style="color: ${s.singles.roi >= 0 ? '#22c55e' : '#ef4444'};">${s.singles.roi >= 0 ? '+' : ''}${(s.singles.roi * 100).toFixed(1)}%</strong></span>
@@ -568,7 +700,7 @@
           <span class="tier-icon">&#9883;</span>
           <span class="tier-name" style="color: #a78bfa;">PARLAYS</span>
         </div>
-        <div class="tier-desc">${useUltraEngine ? 'Edge-Maximized Parlay Construction (EMPC) — correlation-verified' : 'Multi-leg parlays — independence-verified'}</div>
+        <div class="tier-desc">Edge-Maximized Parlay Construction (EMPC) — correlation-verified</div>
         <div class="tier-stats">
           <span>Record: <strong>${s.parlays.wins}/${s.parlays.total}</strong> (${(s.parlays.accuracy * 100).toFixed(1)}%)</span>
           <span>Leg Rate: <strong>${legAccStr}</strong> ${legCountStr}</span>
@@ -581,7 +713,7 @@
           <span class="tier-icon">&#10022;</span>
           <span class="tier-name" style="color: #3b82f6;">OVERALL</span>
         </div>
-        <div class="tier-desc">${useUltraEngine ? 'Ultra Engine v1.0 — 5 patent-pending innovations' : 'Combined performance across all bet types'}</div>
+        <div class="tier-desc">Ultra Engine v1.0 — 5 patent-pending innovations</div>
         <div class="tier-stats">
           <span>Record: <strong>${s.overall.wins}/${s.overall.total}</strong> (${(s.overall.accuracy * 100).toFixed(1)}%)</span>
           <span>ROI: <strong style="color: ${s.overall.roi >= 0 ? '#22c55e' : '#ef4444'};">${s.overall.roi >= 0 ? '+' : ''}${(s.overall.roi * 100).toFixed(1)}%</strong></span>
@@ -612,7 +744,7 @@
 
     let pnl = 0;
     resolved.forEach(s => { pnl += s.pnl || 0; });
-    const unitSize = (useUltraEngine ? 100 : ENGINE.CONFIG.UNIT_SIZE) || 100;
+    const unitSize = ENGINE.CONFIG.UNIT_SIZE || 100;
     const roi = total > 0 ? (pnl / (total * unitSize) * 100).toFixed(1) : '--';
 
     const activeDays = new Set(allSignals.map(s => s.date)).size;
@@ -727,7 +859,7 @@
     const pnlText = s.pnl != null ? `${s.pnl >= 0 ? '+' : ''}$${s.pnl}` : '--';
     const pnlClass = s.pnl != null ? (s.pnl >= 0 ? 'pnl-pos' : 'pnl-neg') : '';
     const actualStr = s.actual != null ? ` (${s.actual})` : '';
-    const scoreLabel = s.engine === 'ultra' ? 'Score' : 'CCS';
+    const scoreLabel = 'Score';
     const scoreVal = s.cascadeScore ? (s.cascadeScore * 100).toFixed(0) + '%' : '--';
     const typeBadge = s.betSubType === 'multi_single' ? 'MULTI' : 'SINGLE';
 
