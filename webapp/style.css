@@ -348,6 +348,57 @@ h2 {
   font-weight: 600;
 }
 
+/* Edge Strategy Tier Cards */
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tier-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.tier-icon { font-size: 1.2rem; }
+.tier-name { font-weight: 700; font-size: 0.9rem; }
+.tier-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+
+.tier-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.legs-row td { padding: 0.25rem 0.5rem !important; }
+.legs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.leg-chip {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+.leg-chip.hit { border-color: #22c55e40; }
+.leg-chip.miss { border-color: #ef444440; }
+.leg-chip em { color: var(--text-dim); font-style: normal; }
+
 /* History */
 .history-filters {
   display: flex;

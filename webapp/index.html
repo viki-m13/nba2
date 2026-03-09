@@ -72,6 +72,13 @@
           <div class="picks-grid"></div>
         </div>
 
+        <!-- AFCE Edge Strategy — AutoResearch Validated -->
+        <div id="edge-strategy-section" style="margin-top: 1.5rem; border-top: 2px solid #00ff88; padding-top: 1rem;">
+          <h2 style="color: #00ff88; font-size: 1.1rem; margin-bottom: 0.75rem;">EDGE STRATEGY v1.0 <span style="font-size: 0.75rem; opacity: 0.7;">AutoResearch-Validated | Real Odds Backtested | +9.7% ROI</span></h2>
+          <div id="edge-dashboard" class="dashboard" style="margin-bottom: 1rem;"></div>
+          <div id="edge-tier-breakdown" style="margin-bottom: 1rem;"></div>
+        </div>
+
         <!-- Super Parlay Builders v6 — Autoresearch-Optimized -->
         <div id="super-parlay-section" style="margin-top: 1.5rem; border-top: 2px solid #ffd700; padding-top: 1rem;">
           <h2 style="color: #ffd700; font-size: 1.1rem; margin-bottom: 0.75rem;">SUPER PARLAY v6.1 <span style="font-size: 0.75rem; opacity: 0.7;">BASELINE Config — Best on 2025-26</span></h2>
@@ -127,6 +134,24 @@
       <div id="alt-backtest-stats" class="history-stats"></div>
       <div id="alt-backtest-breakdown" style="margin: 0.75rem 0;"></div>
 
+      <!-- Edge Strategy History -->
+      <div class="history-section" id="edge-history-section" style="margin-bottom: 1.5rem;">
+        <h3 style="color: #00ff88;">Edge Strategy History <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">DIAMOND / RUBY / EMERALD / SAPPHIRE</span></h3>
+        <table class="history-table" id="edge-history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Tier</th>
+              <th>Legs</th>
+              <th>Parlay Odds</th>
+              <th>Result</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody id="edge-history-body"></tbody>
+        </table>
+      </div>
+
       <div class="history-section" id="alt-backtest-section">
         <h3>Parlays <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">CORE / SCREENSHOT / NUKE</span></h3>
         <table class="history-table" id="alt-parlays-history">
@@ -149,6 +174,9 @@
     <div id="view-method" class="view">
       <h2>Strategy Details</h2>
       <div class="method-content">
+        <!-- Edge Strategy Method -->
+        <div id="edge-method" style="margin-bottom: 1.5rem;"></div>
+
         <div class="method-card">
           <h3>Alt-Line Parlay Engine</h3>
           <p>Multi-market alternate prop engine supporting <strong>PTS, AST, REB, PTS+AST, PTS+REB, PTS+REB+AST</strong> alternate lines from FanDuel.</p>
@@ -181,6 +209,7 @@
     </div>
   </main>
 
+  <script src="js/edge-strategy-engine.js"></script>
   <script src="js/nba-api.js"></script>
   <script src="js/nba-role-engine.js"></script>
   <script src="js/nba-alt-rung-evaluator.js"></script>
