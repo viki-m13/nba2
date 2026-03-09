@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // =============================================================================
-// Seed Live Picks — Fetches historical odds, generates picks, resolves via ESPN
-// Outputs to webapp/data/live_picks_2026.json
+// Seed Live Picks — ULTRA BETTING ENGINE v1.0
+// Fetches historical odds, generates picks using the Ultra Engine,
+// resolves results via ESPN, outputs to webapp/data/live_picks_2026.json
 // =============================================================================
 
 const fs = require('fs');
@@ -26,29 +27,50 @@ global.fetch = async (url) => {
   return { ok: true, status: 200, headers: { get: () => null }, json: async () => data };
 };
 
-// --- Shim browser globals ---
+// --- Shim browser globals for the Ultra Engine JS ---
 global.window = global;
+global.document = { readyState: 'complete', addEventListener: () => {}, querySelectorAll: () => [] };
 global.localStorage = {
   _data: {},
   getItem(k) { return this._data[k] || null; },
   setItem(k, v) { this._data[k] = v; },
 };
 
-// Load engine files
-eval(fs.readFileSync(path.join(__dirname, '../webapp/js/engine.js'), 'utf8'));
-eval(fs.readFileSync(path.join(__dirname, '../webapp/js/nba-api.js'), 'utf8'));
+// Load Ultra Engine (recommendation-engine.js)
+eval(fs.readFileSync(path.join(__dirname, '../webapp/js/recommendation-engine.js'), 'utf8'));
 
+const ENGINE = global.window.RecommendationEngine;
 const DATA_DIR = path.join(__dirname, '../webapp/data');
-const OUTPUT_FILE = path.join(DATA_DIR, 'live_picks_2026.json');
+const OUTPUT_DIR = path.join(__dirname, '../output');
+const SIGNALS_FILE = path.join(DATA_DIR, 'ultra_signals.json');
+const STATS_FILE = path.join(DATA_DIR, 'ultra_backtest_stats.json');
+const RECS_FILE = path.join(DATA_DIR, 'ultra_recommendations.json');
+
+const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
+const ODDS_API_BASE = 'https://api.the-odds-api.com/v4';
+
+const TEAM_MAP = {
+  'Atlanta Hawks': 'ATL', 'Boston Celtics': 'BOS', 'Brooklyn Nets': 'BKN',
+  'Charlotte Hornets': 'CHA', 'Chicago Bulls': 'CHI', 'Cleveland Cavaliers': 'CLE',
+  'Dallas Mavericks': 'DAL', 'Denver Nuggets': 'DEN', 'Detroit Pistons': 'DET',
+  'Golden State Warriors': 'GS', 'Houston Rockets': 'HOU', 'Indiana Pacers': 'IND',
+  'LA Clippers': 'LAC', 'Los Angeles Clippers': 'LAC',
+  'Los Angeles Lakers': 'LAL', 'Memphis Grizzlies': 'MEM',
+  'Miami Heat': 'MIA', 'Milwaukee Bucks': 'MIL',
+  'Minnesota Timberwolves': 'MIN', 'New Orleans Pelicans': 'NO',
+  'New York Knicks': 'NY', 'Oklahoma City Thunder': 'OKC',
+  'Orlando Magic': 'ORL', 'Philadelphia 76ers': 'PHI',
+  'Phoenix Suns': 'PHX', 'Portland Trail Blazers': 'POR',
+  'Sacramento Kings': 'SAC', 'San Antonio Spurs': 'SA',
+  'Toronto Raptors': 'TOR', 'Utah Jazz': 'UTAH',
+  'Washington Wizards': 'WSH',
+};
+
+function teamAbbr(name) { return TEAM_MAP[name] || name; }
 
 function loadJSON(filename) {
   try { return JSON.parse(fs.readFileSync(path.join(DATA_DIR, filename), 'utf8')); }
   catch (e) { return []; }
-}
-
-function loadExistingPicks() {
-  try { return JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8')); }
-  catch (e) { return { parlays: [] }; }
 }
 
 function getDateStr(daysAgo) {
@@ -57,193 +79,202 @@ function getDateStr(daysAgo) {
   return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
 }
 
+function sleep(ms) { execSync(`sleep ${ms / 1000}`); }
+
 async function main() {
-  const numDays = parseInt(process.argv[2]) || 5;
-  console.log(`\n=== Seeding live picks for last ${numDays} days ===\n`);
+  console.log('\n' + '='.repeat(60));
+  console.log('ULTRA BETTING ENGINE v1.0 — Seed Live Picks');
+  console.log('='.repeat(60));
 
-  // Build model from box scores
-  const playerBoxScores = loadJSON('player_boxscores.json');
-  console.log(`Loaded ${playerBoxScores.length} box score records`);
+  // Load optimized config if available
+  try {
+    const configPath = path.join(OUTPUT_DIR, 'ultra_engine_config.json');
+    if (fs.existsSync(configPath)) {
+      const configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      ENGINE.loadConfig(configData);
+    }
+  } catch (e) { /* use defaults */ }
 
-  const sorted = [...playerBoxScores].sort((a, b) => a.date.localeCompare(b.date));
-  const model = Object.create(window.BettingEngine.PlayerModel);
-  model.history = {};
-  for (const g of sorted) {
-    for (const p of (g.players || [])) {
+  // Build player model from all box scores
+  const boxScores = [...loadJSON('player_boxscores.json'), ...loadJSON('player_boxscores_2026.json')];
+  console.log(`Loaded ${boxScores.length} box score records`);
+
+  ENGINE.PlayerModel.reset();
+  const sortedGames = [...boxScores].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+  for (const game of sortedGames) {
+    for (const p of (game.players || [])) {
       const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
-      if (mins < 10) continue;
-      model.update(p.name, {
-        pts: p.pts,
+      if (mins < 5) continue;
+      ENGINE.PlayerModel.update(p.name, {
+        pts: p.pts || 0,
         reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
         ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
         min: mins,
-      }, g.date, p.team);
+      }, game.date, p.team, game.home === p.team ? game.away : game.home);
     }
   }
-  console.log(`Model built with ${Object.keys(model.history).length} players`);
+  console.log(`Player model built with ${Object.keys(ENGINE.PlayerModel.profiles).length} players`);
 
-  // Load existing picks
-  const existing = loadExistingPicks();
-  const existingDates = new Set((existing.parlays || []).map(p => p.date));
-
-  // Determine dates to seed
-  const datesToSeed = [];
-  for (let i = 1; i <= numDays; i++) {
-    const ds = getDateStr(i);
-    if (!existingDates.has(ds)) datesToSeed.push(ds);
-  }
-
-  if (datesToSeed.length === 0) {
-    console.log('All dates already seeded.\n');
-  } else {
-    console.log(`Dates to seed: ${datesToSeed.join(', ')}\n`);
-  }
-
-  for (const date of datesToSeed) {
-    try {
-      console.log(`[${date}] Fetching historical odds...`);
-      const dayOdds = await window.BettingEngine.fetchHistoricalOddsForDate(date);
-      if (!dayOdds || dayOdds.length === 0) { console.log(`[${date}] No odds, skipping`); continue; }
-
-      console.log(`[${date}] ${dayOdds.length} games with odds`);
-
-      const daySingles = [];
-      for (const record of dayOdds) {
-        const gameKey = record.gameKey;
-        const gameDisplay = `${record.awayTeam} @ ${record.homeTeam}`;
-
-        const addPick = (prop) => {
-          if (!prop) return;
-          if (!daySingles.find(s => s.player === prop.player && s.statType === prop.statType && s.line === prop.line)) {
-            daySingles.push({ ...prop, gameKey, gameDisplay });
-          }
-        };
-
-        for (const [name, lines] of Object.entries(record.playerProps || {})) addPick(model.findBestProp(name, 'points', lines));
-        for (const [name, lines] of Object.entries(record.playerRebProps || {})) addPick(model.findBestProp(name, 'rebounds', lines));
-        for (const [name, lines] of Object.entries(record.playerAstProps || {})) addPick(model.findBestProp(name, 'assists', lines));
-      }
-
-      console.log(`[${date}] ${daySingles.length} qualifying singles`);
-
-      const dayParlays = window.BettingEngine.buildParlays(daySingles);
-      for (const parlay of dayParlays) {
-        parlay.legs = parlay.legs.map(leg => {
-          const match = daySingles.find(s => s.player === leg.player && s.line === leg.line && s.statType === leg.statType);
-          return { ...leg, gameKey: match ? match.gameKey : '', gameDisplay: match ? match.gameDisplay : '' };
-        });
-      }
-
-      for (const p of dayParlays) {
-        existing.parlays.push({
-          date, numLegs: p.numLegs || p.legs.length,
-          odds: p.odds, decimalOdds: p.decimalOdds,
-          combinedHitRate: p.combinedHitRate, ev: p.ev,
-          legs: p.legs.map(l => ({
-            player: l.player, team: l.team,
-            statType: l.statType || 'points',
-            statLabel: l.statLabel || window.BettingEngine.statLabel(l.statType || 'points'),
-            line: l.line, odds: l.odds,
-            gameKey: l.gameKey || '', gameDisplay: l.gameDisplay || '',
-            actual: null, won: null,
-          })),
-          resolved: false, won: null, pnl: null,
-          savedAt: new Date().toISOString(),
-        });
-      }
-
-      console.log(`[${date}] Generated ${dayParlays.length} parlays`);
-      await new Promise(r => setTimeout(r, 300));
-    } catch (e) {
-      console.error(`[${date}] Error:`, e.message);
+  // Fetch tonight's games and props from Odds API
+  console.log('\nFetching tonight\'s games from Odds API...');
+  let events = [];
+  try {
+    const eventsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events?apiKey=${ODDS_API_KEY}`;
+    const eventsRes = await fetch(eventsUrl);
+    if (eventsRes.ok) {
+      events = await eventsRes.json();
     }
+  } catch (e) {
+    console.warn('Could not fetch events:', e.message);
   }
 
-  // --- Resolve all unresolved picks ---
-  console.log('\n=== Resolving picks via ESPN box scores ===\n');
-  const today = getDateStr(0);
-  const unresolvedDates = [...new Set(
-    existing.parlays.filter(p => !p.resolved).map(p => p.date)
-  )].filter(d => d < today).sort();
+  if (!events || events.length === 0) {
+    console.log('No games scheduled tonight.');
+    return;
+  }
 
-  for (const date of unresolvedDates) {
+  console.log(`Found ${events.length} games tonight`);
+
+  // Fetch player props for each game
+  const liveOdds = { events, playerProps: {} };
+
+  for (const event of events) {
     try {
-      console.log(`[${date}] Fetching ESPN scoreboard...`);
-      const { games, eventIds } = await window.NbaApi.fetchESPNScoreboardForDate(date);
-      if (!games.length) { console.log(`[${date}] No games`); continue; }
+      const markets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate';
+      const propsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
+      const propsRes = await fetch(propsUrl);
+      if (!propsRes.ok) continue;
 
-      const playerStats = {};
-      let finalCount = 0;
-      for (const [teamKey, eventId] of Object.entries(eventIds)) {
-        const game = games.find(g => g.id === eventId || g.espnId === eventId);
-        if (game && game.status !== 'final') continue;
-        finalCount++;
-        const boxScore = await window.NbaApi.fetchESPNBoxScore(eventId);
-        if (!boxScore) continue;
-        for (const p of boxScore) playerStats[p.name.toLowerCase()] = p;
-        await new Promise(r => setTimeout(r, 200));
-      }
+      const propsData = await propsRes.json();
+      const homeAbbr = teamAbbr(event.home_team);
+      const awayAbbr = teamAbbr(event.away_team);
+      const gameKey = `${awayAbbr}@${homeAbbr}`;
 
-      const allFinal = finalCount === Object.keys(eventIds).length;
-      console.log(`[${date}] ${Object.keys(playerStats).length} players (${finalCount}/${Object.keys(eventIds).length} games final)`);
+      const fd = propsData.bookmakers && propsData.bookmakers.find(b => b.key === 'fanduel');
+      if (!fd) continue;
 
-      const findPlayer = (name) => {
-        const lower = name.toLowerCase();
-        if (playerStats[lower]) return playerStats[lower];
-        const parts = lower.split(' ');
-        if (parts.length >= 2) {
-          const found = Object.entries(playerStats).find(([n]) => n.includes(parts[0]) && n.includes(parts[parts.length - 1]));
-          if (found) return found[1];
-        }
-        return null;
+      const gameProps = { lines: {}, rebLines: {}, astLines: {}, praLines: {} };
+      const marketMap = {
+        'player_points_alternate': 'lines',
+        'player_rebounds_alternate': 'rebLines',
+        'player_assists_alternate': 'astLines',
+        'player_points_rebounds_assists_alternate': 'praLines',
       };
 
-      let resolved = 0;
-      let wins = 0;
-      for (const parlay of existing.parlays) {
-        if (parlay.date !== date || parlay.resolved) continue;
-        for (const leg of parlay.legs) {
-          if (leg.actual !== null && leg.actual !== undefined) continue;
-          const pStats = findPlayer(leg.player);
-          if (pStats) {
-            const key = leg.statType === 'rebounds' ? 'reb' : leg.statType === 'assists' ? 'ast' : 'pts';
-            leg.actual = pStats[key];
-            leg.won = leg.actual > leg.line;
-          } else if (allFinal) {
-            leg.actual = 0;
-            leg.won = false;
+      for (const mkt of (fd.markets || [])) {
+        const st = marketMap[mkt.key];
+        if (!st) continue;
+        for (const outcome of (mkt.outcomes || [])) {
+          const player = outcome.description;
+          const threshold = outcome.point;
+          if (!gameProps[st][player]) gameProps[st][player] = {};
+          if (!gameProps[st][player][threshold]) gameProps[st][player][threshold] = {};
+          if (outcome.name === 'Over') {
+            gameProps[st][player][threshold].overOdds = outcome.price;
           }
-        }
-        if (parlay.legs.every(l => l.actual !== null && l.actual !== undefined)) {
-          parlay.resolved = true;
-          parlay.won = parlay.legs.every(l => l.won);
-          parlay.pnl = parlay.won ? Math.round((parlay.decimalOdds - 1) * 100) : -100;
-          resolved++;
-          if (parlay.won) wins++;
         }
       }
 
-      console.log(`[${date}] Resolved: ${wins}/${resolved} won`);
+      liveOdds.playerProps[gameKey] = gameProps;
+      console.log(`  ${gameKey}: ${Object.keys(gameProps.lines).length} PTS, ${Object.keys(gameProps.rebLines).length} REB, ${Object.keys(gameProps.astLines).length} AST, ${Object.keys(gameProps.praLines).length} PRA props`);
     } catch (e) {
-      console.error(`[${date}] Error:`, e.message);
+      console.warn(`  Error fetching props for ${event.id}:`, e.message);
+    }
+    sleep(200); // Rate limit
+  }
+
+  if (Object.keys(liveOdds.playerProps).length === 0) {
+    console.log('\nNo FanDuel player props available. Props typically open 1-2 hours before game time.');
+    return;
+  }
+
+  // Generate recommendations using Ultra Engine
+  console.log('\nRunning Ultra Engine signal analysis...');
+  const recommendation = ENGINE.generateTodayPicks(liveOdds);
+
+  if (!recommendation || (recommendation.singles.length === 0 && recommendation.parlays.length === 0)) {
+    console.log('No bets meet Ultra Engine quality thresholds tonight.');
+    return;
+  }
+
+  // Format and save signals
+  const today = getDateStr(0);
+  const newSignals = ENGINE.formatSignalForStorage(recommendation, today);
+
+  // Load existing signals and merge
+  let existingSignals = [];
+  try {
+    existingSignals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
+  } catch (e) { /* no existing signals */ }
+
+  // Remove today's existing signals (avoid duplicates)
+  existingSignals = existingSignals.filter(s => s.date !== today);
+  existingSignals.push(...newSignals);
+
+  fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));
+
+  // Save recommendations
+  const recsOutput = {
+    generated: new Date().toISOString(),
+    engine: 'Ultra Engine v1.0',
+    config_version: 'optimized',
+    tonight_picks: [],
+  };
+
+  for (const s of recommendation.singles) {
+    recsOutput.tonight_picks.push({
+      bet_type: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
+      player: s.player,
+      stat: s.statType,
+      line: s.line,
+      odds: s.odds,
+      combined_score: s.cascadeScore,
+      edge: s.edge,
+      hit_rate: s.hitRate,
+      bayesian_prob: s.impliedProb + s.edge,
+      suggested_wager: 50,
+    });
+  }
+
+  for (const p of recommendation.parlays) {
+    recsOutput.tonight_picks.push({
+      bet_type: 'parlay',
+      player: null, stat: null, line: null, odds: null,
+      combined_score: null, edge: null, hit_rate: null,
+      bayesian_prob: null, suggested_wager: 100,
+      legs: p.legs.map(l => ({
+        player: l.player, stat: l.statType,
+        line: l.line, odds: l.odds,
+        combined_score: l.cascadeScore, edge: l.edge,
+      })),
+      parlay_odds: p.odds,
+      parlay_ev: p.ev,
+    });
+  }
+
+  fs.writeFileSync(RECS_FILE, JSON.stringify(recsOutput, null, 2));
+
+  // Print summary
+  console.log('\n' + '='.repeat(60));
+  console.log('TONIGHT\'S ULTRA ENGINE PICKS:');
+  console.log('='.repeat(60));
+
+  for (const pick of recsOutput.tonight_picks) {
+    if (pick.bet_type === 'parlay') {
+      const legs = pick.legs.map(l => `${l.player} O${l.line} ${(l.stat || 'pts').toUpperCase()}`).join(' + ');
+      console.log(`  PARLAY: ${legs} | Odds: ${ENGINE.formatOdds(pick.parlay_odds)}`);
+    } else {
+      console.log(`  ${pick.bet_type.toUpperCase()}: ${pick.player} O${pick.line} ${(pick.stat || 'pts').toUpperCase()} | Odds: ${ENGINE.formatOdds(pick.odds)} | Score: ${(pick.combined_score * 100).toFixed(0)}%`);
     }
   }
 
-  // Write output
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(existing, null, 2));
-  console.log(`\n=== Saved to ${OUTPUT_FILE} ===`);
+  console.log(`\nSingles: ${recommendation.singles.length}`);
+  console.log(`Parlays: ${recommendation.parlays.length}`);
+  console.log(`\nSaved to ${SIGNALS_FILE}`);
 
-  const resolvedParlays = existing.parlays.filter(p => p.resolved);
-  const totalWins = resolvedParlays.filter(p => p.won).length;
-  const pnl = resolvedParlays.reduce((s, p) => s + (p.pnl || 0), 0);
-  console.log(`\nSummary:`);
-  console.log(`  Parlays: ${existing.parlays.length} (${resolvedParlays.length} resolved)`);
-  console.log(`  Record: ${totalWins}-${resolvedParlays.length - totalWins}`);
-  console.log(`  P&L: $${pnl >= 0 ? '+' : ''}${pnl}`);
-  if (resolvedParlays.length > 0) console.log(`  Accuracy: ${(totalWins / resolvedParlays.length * 100).toFixed(1)}%`);
-
+  // Check API quota
   try {
-    const quotaResult = execSync('curl -s -I "https://api.the-odds-api.com/v4/sports/basketball_nba/events?apiKey=3879c3373a31421d8ef7d428b8758cd8" 2>/dev/null | grep -i x-requests-remaining', { timeout: 10000 });
+    const quotaResult = execSync(`curl -s -I "${ODDS_API_BASE}/sports/basketball_nba/events?apiKey=${ODDS_API_KEY}" 2>/dev/null | grep -i x-requests-remaining`, { timeout: 10000 });
     console.log(`\nOdds API: ${quotaResult.toString().trim()}`);
   } catch (e) { /* skip */ }
 }
