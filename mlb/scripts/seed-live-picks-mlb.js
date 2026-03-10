@@ -451,13 +451,13 @@ async function main() {
   console.log('TONIGHT\'S MLB ULTRA ENGINE PICKS:');
   console.log('='.repeat(60));
 
-  for (const pick of recsOutput.tonight_picks) {
-    if (pick.bet_type === 'parlay') {
-      const legs = pick.legs.map(l => `${l.player} O${l.line} ${(l.stat || 'h').toUpperCase()}`).join(' + ');
-      console.log(`  PARLAY: ${legs} | Odds: ${ENGINE.formatOdds(pick.parlay_odds)}`);
-    } else {
-      console.log(`  ${pick.bet_type.toUpperCase()}: ${pick.player} O${pick.line} ${(pick.stat || 'h').toUpperCase()} | Odds: ${ENGINE.formatOdds(pick.odds)} | Score: ${(pick.combined_score * 100).toFixed(0)}%`);
-    }
+  for (const s of recommendation.singles) {
+    const typeLabel = s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'SINGLE' : 'MULTI_SINGLE';
+    console.log(`  ${typeLabel}: ${s.player} O${s.line} ${(s.statLabel || 'H').toUpperCase()} | Odds: ${ENGINE.formatOdds(s.odds)} | Score: ${(s.cascadeScore * 100).toFixed(0)}%`);
+  }
+  for (const p of recommendation.parlays) {
+    const legs = p.legs.map(l => `${l.player} O${l.line} ${(l.statLabel || 'H').toUpperCase()}`).join(' + ');
+    console.log(`  PARLAY: ${legs} | Odds: ${ENGINE.formatOdds(p.odds)}`);
   }
 
   console.log(`\nSingles: ${recommendation.singles.length}`);
