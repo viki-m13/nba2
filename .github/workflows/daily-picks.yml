@@ -1,0 +1,50 @@
+name: Daily Picks Generation
+
+on:
+  schedule:
+    # Noon EST = 5 PM UTC (17:00)
+    # Matches The Odds API historical snapshot time (T17:00:00Z)
+    # used in fetch-current-season.js for backtest consistency
+    - cron: '0 17 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  nba-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run NBA daily picks
+        run: bash scripts/daily-picks.sh
+        env:
+          TZ: America/New_York
+
+      - name: Run MLB daily picks
+        run: bash mlb/scripts/daily-picks-mlb.sh
+        env:
+          TZ: America/New_York
+
+      - name: Commit and push updated picks
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add webapp/data/ultra_signals.json \
+                  webapp/data/ultra_recommendations.json \
+                  webapp/data/ultra_backtest_stats.json \
+                  webapp/mlb/data/mlb_ultra_signals_v3.json \
+                  webapp/mlb/data/mlb_ultra_recommendations.json \
+                  webapp/mlb/data/mlb_ultra_backtest_stats_v3.json \
+                  mlb/webapp/data/mlb_ultra_signals_v3.json \
+                  mlb/webapp/data/mlb_ultra_recommendations.json \
+                  mlb/webapp/data/mlb_ultra_backtest_stats_v3.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Daily picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
+          git push
