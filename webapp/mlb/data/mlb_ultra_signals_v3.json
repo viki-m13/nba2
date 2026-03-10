@@ -37,13 +37,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18629321476049587,
     "campdBonus": 0.02,
     "actual": 1,
     "hit": true,
     "gameKey": "CIN@MIA",
     "date": "20250421",
     "betType": "single",
-    "pnl": 59
+    "unitMultiplier": 1.5588796442814876,
+    "betSize": 156,
+    "pnl": 92,
+    "wagered": 156
   },
   {
     "player": "Sal Frelick",
@@ -83,13 +87,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18039443834943064,
     "campdBonus": 0.02,
     "actual": 1,
     "hit": true,
     "gameKey": "MIL@SF",
     "date": "20250421",
     "betType": "single",
-    "pnl": 51
+    "unitMultiplier": 1.5411833150482919,
+    "betSize": 154,
+    "pnl": 79,
+    "wagered": 154
   },
   {
     "player": "Fernando Tatis Jr.",
@@ -129,13 +137,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.19101223588934807,
     "campdBonus": 0.02,
     "actual": 1,
     "hit": true,
     "gameKey": "SD@DET",
     "date": "20250421",
     "betType": "single",
-    "pnl": 67
+    "unitMultiplier": 1.5730367076680443,
+    "betSize": 157,
+    "pnl": 105,
+    "wagered": 157
   },
   {
     "betType": "parlay",
@@ -150,6 +162,8 @@
     "ev": 3.005,
     "crossStatBonus": 0.02,
     "uniqueStats": 2,
+    "unitMultiplier": 2.0576998889992746,
+    "betSize": 206,
     "legs": [
       {
         "player": "Fernando Tatis Jr.",
@@ -166,6 +180,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.19101223588934807,
         "bet": "Fernando Tatis Jr. O0.5 R"
       },
       {
@@ -183,6 +198,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.18629321476049587,
         "bet": "Javier Sanoja O0.5 H"
       },
       {
@@ -200,10 +216,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.18039443834943064,
         "bet": "Sal Frelick O0.5 H"
       }
     ],
-    "pnl": 300
+    "pnl": 618,
+    "wagered": 206
   },
   {
     "player": "Tommy Pham",
@@ -243,13 +261,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.18157419363164373,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "PIT@LAA",
     "date": "20250423",
     "betType": "single",
-    "pnl": 53
+    "unitMultiplier": 1.5447225808949312,
+    "betSize": 154,
+    "pnl": 81,
+    "wagered": 154
   },
   {
     "player": "Andy Pages",
@@ -289,13 +311,17 @@
     "floor": 4,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.19101223588934807,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "MIA@LAD",
     "date": "20250428",
     "betType": "single",
-    "pnl": 67
+    "unitMultiplier": 1.5730367076680443,
+    "betSize": 157,
+    "pnl": 105,
+    "wagered": 157
   },
   {
     "player": "Carlos Correa",
@@ -335,13 +361,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "MIN@CLE",
     "date": "20250428",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "betType": "parlay",
@@ -356,6 +386,8 @@
     "ev": 1.308,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.034104783355014,
+    "betSize": 203,
     "legs": [
       {
         "player": "Andy Pages",
@@ -372,6 +404,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.19101223588934807,
         "bet": "Andy Pages O0.5 H"
       },
       {
@@ -389,10 +422,12 @@
         "hitRate": 1,
         "actual": 2,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "Carlos Correa O0.5 H"
       }
     ],
-    "pnl": 131
+    "pnl": 266,
+    "wagered": 203
   },
   {
     "player": "Jon Berti",
@@ -432,13 +467,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18157419363164373,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "CHC@PIT",
     "date": "20250429",
     "betType": "single",
-    "pnl": 53
+    "unitMultiplier": 1.5447225808949312,
+    "betSize": 154,
+    "pnl": 81,
+    "wagered": 154
   },
   {
     "player": "Shohei Ohtani",
@@ -478,13 +517,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17449566193836544,
     "campdBonus": 0,
     "actual": 0,
     "hit": false,
     "gameKey": "LAD@ATL",
     "date": "20250502",
     "betType": "single",
-    "pnl": -100
+    "unitMultiplier": 1.5234869858150963,
+    "betSize": 152,
+    "pnl": -152,
+    "wagered": 152
   },
   {
     "player": "Rafael Devers",
@@ -524,13 +567,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1768551725027915,
     "campdBonus": 0,
     "actual": 3,
     "hit": true,
     "gameKey": "MIN@BOS",
     "date": "20250503",
     "betType": "single",
-    "pnl": 48
+    "unitMultiplier": 1.5305655175083746,
+    "betSize": 153,
+    "pnl": 73,
+    "wagered": 153
   },
   {
     "player": "Abraham Toro",
@@ -570,13 +617,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1827539489138568,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "TB@BOS",
     "date": "20250609",
     "betType": "single",
-    "pnl": 54
+    "unitMultiplier": 1.5482618467415703,
+    "betSize": 155,
+    "pnl": 84,
+    "wagered": 155
   },
   {
     "player": "Julio Rodriguez",
@@ -616,13 +667,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17213615137393945,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "CLE@SEA",
     "date": "20250613",
     "betType": "single",
-    "pnl": 43
+    "unitMultiplier": 1.5164084541218183,
+    "betSize": 152,
+    "pnl": 66,
+    "wagered": 152
   },
   {
     "player": "Dane Myers",
@@ -662,13 +717,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.18511345947828287,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "MIA@WSH",
     "date": "20250614",
     "betType": "single",
-    "pnl": 57
+    "unitMultiplier": 1.5553403784348485,
+    "betSize": 156,
+    "pnl": 89,
+    "wagered": 156
   },
   {
     "player": "Ernie Clement",
@@ -708,13 +767,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17449566193836544,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "ARI@TOR",
     "date": "20250617",
     "betType": "single",
-    "pnl": 45
+    "unitMultiplier": 1.5234869858150963,
+    "betSize": 152,
+    "pnl": 69,
+    "wagered": 152
   },
   {
     "player": "Kyle Tucker",
@@ -754,13 +817,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18039443834943064,
     "campdBonus": 0,
     "actual": 0,
     "hit": false,
     "gameKey": "MIL@CHC",
     "date": "20250619",
     "betType": "single",
-    "pnl": -100
+    "unitMultiplier": 1.5411833150482919,
+    "betSize": 154,
+    "pnl": -154,
+    "wagered": 154
   },
   {
     "player": "Joey Ortiz",
@@ -800,13 +867,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.18511345947828287,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "MIL@MIN",
     "date": "20250621",
     "betType": "single",
-    "pnl": 57
+    "unitMultiplier": 1.5553403784348485,
+    "betSize": 156,
+    "pnl": 89,
+    "wagered": 156
   },
   {
     "player": "Donovan Solano",
@@ -846,13 +917,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 3,
     "hit": true,
     "gameKey": "SEA@CHC",
     "date": "20250621",
     "betType": "single",
-    "pnl": 42
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": 63,
+    "wagered": 151
   },
   {
     "betType": "parlay",
@@ -867,6 +942,8 @@
     "ev": 1.226,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.0323351504316944,
+    "betSize": 203,
     "legs": [
       {
         "player": "Joey Ortiz",
@@ -883,6 +960,7 @@
         "hitRate": 1,
         "actual": 2,
         "hit": true,
+        "kelly": 0.18511345947828287,
         "bet": "Joey Ortiz O0.5 H"
       },
       {
@@ -900,10 +978,12 @@
         "hitRate": 1,
         "actual": 3,
         "hit": true,
+        "kelly": 0.16977664080951335,
         "bet": "Donovan Solano O0.5 H"
       }
     ],
-    "pnl": 123
+    "pnl": 250,
+    "wagered": 203
   },
   {
     "player": "Carlos Correa",
@@ -943,13 +1023,17 @@
     "floor": 4,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.18157419363164373,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "SEA@MIN",
     "date": "20250623",
     "betType": "single",
-    "pnl": 53
+    "unitMultiplier": 1.5447225808949312,
+    "betSize": 154,
+    "pnl": 81,
+    "wagered": 154
   },
   {
     "player": "Brice Turang",
@@ -989,13 +1073,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "COL@MIL",
     "date": "20250629",
     "betType": "single",
-    "pnl": 42
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": 63,
+    "wagered": 151
   },
   {
     "player": "Ke'Bryan Hayes",
@@ -1035,13 +1123,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "STL@PIT",
     "date": "20250630",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "player": "Cody Bellinger",
@@ -1081,13 +1173,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "NYY@TOR",
     "date": "20250630",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   },
   {
     "betType": "parlay",
@@ -1102,6 +1198,8 @@
     "ev": 0.938,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 1.9987121248886224,
+    "betSize": 200,
     "legs": [
       {
         "player": "Cody Bellinger",
@@ -1118,6 +1216,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.16741713024508723,
         "bet": "Cody Bellinger O0.5 H"
       },
       {
@@ -1135,10 +1234,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "Ke'Bryan Hayes O0.5 H"
       }
     ],
-    "pnl": 94
+    "pnl": 188,
+    "wagered": 200
   },
   {
     "player": "Ceddanne Rafaela",
@@ -1178,13 +1279,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "COL@BOS",
     "date": "20250707",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "player": "Mickey Moniak",
@@ -1224,13 +1329,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "MIN@COL",
     "date": "20250720",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "player": "Geraldo Perdomo",
@@ -1270,13 +1379,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "STL@ARI",
     "date": "20250720",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   },
   {
     "betType": "parlay",
@@ -1291,6 +1404,8 @@
     "ev": 0.938,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 1.9987121248886224,
+    "betSize": 200,
     "legs": [
       {
         "player": "Geraldo Perdomo",
@@ -1307,6 +1422,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.16741713024508723,
         "bet": "Geraldo Perdomo O0.5 H"
       },
       {
@@ -1324,10 +1440,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "Mickey Moniak O0.5 H"
       }
     ],
-    "pnl": 94
+    "pnl": 188,
+    "wagered": 200
   },
   {
     "player": "Dillon Dingler",
@@ -1367,13 +1485,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18629321476049587,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "ARI@DET",
     "date": "20250729",
     "betType": "single",
-    "pnl": 59
+    "unitMultiplier": 1.5588796442814876,
+    "betSize": 156,
+    "pnl": 92,
+    "wagered": 156
   },
   {
     "player": "Andrew Vaughn",
@@ -1413,13 +1535,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17921468306721766,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "CHC@MIL",
     "date": "20250730",
     "betType": "single",
-    "pnl": 50
+    "unitMultiplier": 1.537644049201653,
+    "betSize": 154,
+    "pnl": 77,
+    "wagered": 154
   },
   {
     "player": "William Contreras",
@@ -1459,13 +1585,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17213615137393945,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "CHC@MIL",
     "date": "20250730",
     "betType": "single",
-    "pnl": 43
+    "unitMultiplier": 1.5164084541218183,
+    "betSize": 152,
+    "pnl": 66,
+    "wagered": 152
   },
   {
     "player": "Jarren Duran",
@@ -1505,13 +1635,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.17213615137393945,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "HOU@BOS",
     "date": "20250801",
     "betType": "single",
-    "pnl": 43
+    "unitMultiplier": 1.5164084541218183,
+    "betSize": 152,
+    "pnl": 66,
+    "wagered": 152
   },
   {
     "player": "William Contreras",
@@ -1551,13 +1685,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 7,
+    "kelly": 0.188652725324922,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "MIL@WSH",
     "date": "20250802",
     "betType": "single",
-    "pnl": 63
+    "unitMultiplier": 1.565958175974766,
+    "betSize": 157,
+    "pnl": 98,
+    "wagered": 157
   },
   {
     "player": "Freddie Freeman",
@@ -1597,13 +1735,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "STL@LAD",
     "date": "20250804",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "player": "Alek Thomas",
@@ -1643,13 +1785,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.1839337041960698,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "SD@ARI",
     "date": "20250804",
     "betType": "single",
-    "pnl": 56
+    "unitMultiplier": 1.5518011125882094,
+    "betSize": 155,
+    "pnl": 86,
+    "wagered": 155
   },
   {
     "betType": "parlay",
@@ -1664,6 +1810,8 @@
     "ev": 1.154,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.0234869858150963,
+    "betSize": 202,
     "legs": [
       {
         "player": "Alek Thomas",
@@ -1680,6 +1828,7 @@
         "hitRate": 1,
         "actual": 2,
         "hit": true,
+        "kelly": 0.1839337041960698,
         "bet": "Alek Thomas O0.5 H"
       },
       {
@@ -1697,10 +1846,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "Freddie Freeman O0.5 H"
       }
     ],
-    "pnl": 115
+    "pnl": 232,
+    "wagered": 202
   },
   {
     "player": "Ryan Jeffers",
@@ -1740,13 +1891,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 3,
     "hit": true,
     "gameKey": "KC@MIN",
     "date": "20250809",
     "betType": "single",
-    "pnl": 42
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": 63,
+    "wagered": 151
   },
   {
     "player": "Pete Alonso",
@@ -1786,13 +1941,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 3,
     "hit": true,
     "gameKey": "ATL@NYM",
     "date": "20250813",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   },
   {
     "player": "Alec Burleson",
@@ -1832,13 +1991,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "NYY@STL",
     "date": "20250817",
     "betType": "single",
-    "pnl": 42
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": 63,
+    "wagered": 151
   },
   {
     "player": "Jeff McNeil",
@@ -1878,13 +2041,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "NYM@WSH",
     "date": "20250820",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   },
   {
     "player": "Miguel Andujar",
@@ -1924,13 +2091,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "CIN@LAA",
     "date": "20250820",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   },
   {
     "betType": "parlay",
@@ -1945,6 +2116,8 @@
     "ev": 0.96,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.0022513907352617,
+    "betSize": 200,
     "legs": [
       {
         "player": "Jeff McNeil",
@@ -1961,6 +2134,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.16741713024508723,
         "bet": "Jeff McNeil O0.5 H"
       },
       {
@@ -1978,10 +2152,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.16741713024508723,
         "bet": "Miguel Andujar O0.5 H"
       }
     ],
-    "pnl": 96
+    "pnl": 192,
+    "wagered": 200
   },
   {
     "player": "Kyle Teel",
@@ -2021,13 +2197,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.17449566193836544,
     "campdBonus": 0,
     "actual": 3,
     "hit": true,
     "gameKey": "KC@CWS",
     "date": "20250826",
     "betType": "single",
-    "pnl": 45
+    "unitMultiplier": 1.5234869858150963,
+    "betSize": 152,
+    "pnl": 69,
+    "wagered": 152
   },
   {
     "player": "Ben Rice",
@@ -2067,13 +2247,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1593728950901706,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "NYY@CWS",
     "date": "20250828",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.4781186852705117,
+    "betSize": 148,
+    "pnl": 59,
+    "wagered": 148
   },
   {
     "player": "Adam Frazier",
@@ -2113,13 +2297,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1768551725027915,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "DET@KC",
     "date": "20250829",
     "betType": "single",
-    "pnl": 48
+    "unitMultiplier": 1.5305655175083746,
+    "betSize": 153,
+    "pnl": 73,
+    "wagered": 153
   },
   {
     "player": "Ozzie Albies",
@@ -2159,13 +2347,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 0,
     "hit": false,
     "gameKey": "SEA@ATL",
     "date": "20250906",
     "betType": "single",
-    "pnl": -100
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": -151,
+    "wagered": 151
   },
   {
     "player": "Jung Hoo Lee",
@@ -2205,13 +2397,17 @@
     "floor": 4,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1593728950901706,
     "campdBonus": 0,
     "actual": 2,
     "hit": true,
     "gameKey": "SF@STL",
     "date": "20250906",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.4781186852705117,
+    "betSize": 148,
+    "pnl": 59,
+    "wagered": 148
   },
   {
     "betType": "parlay",
@@ -2226,6 +2422,8 @@
     "ev": 0.983,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 1.993724303849526,
+    "betSize": 199,
     "legs": [
       {
         "player": "Ozzie Albies",
@@ -2242,6 +2440,7 @@
         "hitRate": 1,
         "actual": 0,
         "hit": false,
+        "kelly": 0.16977664080951335,
         "bet": "Ozzie Albies O0.5 H"
       },
       {
@@ -2259,10 +2458,12 @@
         "hitRate": 1,
         "actual": 2,
         "hit": true,
+        "kelly": 0.1593728950901706,
         "bet": "Jung Hoo Lee O0.5 H"
       }
     ],
-    "pnl": -100
+    "pnl": -199,
+    "wagered": 199
   },
   {
     "player": "Bryson Stott",
@@ -2302,13 +2503,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.18333452608908204,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "NYM@PHI",
     "date": "20250910",
     "betType": "single",
-    "pnl": 59
+    "unitMultiplier": 1.550003578267246,
+    "betSize": 155,
+    "pnl": 91,
+    "wagered": 155
   },
   {
     "player": "Harrison Bader",
@@ -2348,13 +2553,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "KC@PHI",
     "date": "20250914",
     "betType": "single",
-    "pnl": 42
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": 63,
+    "wagered": 151
   },
   {
     "player": "Yainer Diaz",
@@ -2394,13 +2603,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "HOU@ATL",
     "date": "20250914",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "betType": "parlay",
@@ -2415,6 +2628,8 @@
     "ev": 0.962,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.0022513907352617,
+    "betSize": 200,
     "legs": [
       {
         "player": "Harrison Bader",
@@ -2431,6 +2646,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.16977664080951335,
         "bet": "Harrison Bader O0.5 H"
       },
       {
@@ -2448,10 +2664,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "Yainer Diaz O0.5 H"
       }
     ],
-    "pnl": 96
+    "pnl": 192,
+    "wagered": 200
   },
   {
     "player": "Teoscar Hernandez",
@@ -2491,13 +2709,17 @@
     "floor": 4,
     "streak": 8,
     "avgAB": 6,
+    "kelly": 0.16977664080951335,
     "campdBonus": 0,
     "actual": 0,
     "hit": false,
     "gameKey": "PHI@LAD",
     "date": "20250915",
     "betType": "single",
-    "pnl": -100
+    "unitMultiplier": 1.50932992242854,
+    "betSize": 151,
+    "pnl": -151,
+    "wagered": 151
   },
   {
     "player": "George Springer",
@@ -2537,13 +2759,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.1650576196806611,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "TOR@TB",
     "date": "20250917",
     "betType": "single",
-    "pnl": 38
+    "unitMultiplier": 1.4951728590419833,
+    "betSize": 150,
+    "pnl": 58,
+    "wagered": 150
   },
   {
     "player": "Cal Raleigh",
@@ -2583,13 +2809,17 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 5,
+    "kelly": 0.17921468306721766,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "SEA@KC",
     "date": "20250917",
     "betType": "single",
-    "pnl": 50
+    "unitMultiplier": 1.537644049201653,
+    "betSize": 154,
+    "pnl": 77,
+    "wagered": 154
   },
   {
     "betType": "parlay",
@@ -2604,6 +2834,8 @@
     "ev": 1.077,
     "crossStatBonus": 0,
     "uniqueStats": 1,
+    "unitMultiplier": 2.016408454121818,
+    "betSize": 202,
     "legs": [
       {
         "player": "Cal Raleigh",
@@ -2620,6 +2852,7 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.17921468306721766,
         "bet": "Cal Raleigh O0.5 H"
       },
       {
@@ -2637,10 +2870,12 @@
         "hitRate": 1,
         "actual": 1,
         "hit": true,
+        "kelly": 0.1650576196806611,
         "bet": "George Springer O0.5 H"
       }
     ],
-    "pnl": 108
+    "pnl": 218,
+    "wagered": 202
   },
   {
     "player": "Alec Burleson",
@@ -2680,12 +2915,16 @@
     "floor": 3,
     "streak": 8,
     "avgAB": 4,
+    "kelly": 0.16741713024508723,
     "campdBonus": 0,
     "actual": 1,
     "hit": true,
     "gameKey": "MIL@STL",
     "date": "20250920",
     "betType": "single",
-    "pnl": 40
+    "unitMultiplier": 1.5022513907352617,
+    "betSize": 150,
+    "pnl": 60,
+    "wagered": 150
   }
 ]

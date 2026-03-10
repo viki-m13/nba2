@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // =============================================================================
-// Seed Live Picks — MLB ULTRA BETTING ENGINE v1.0
-// Fetches live odds, generates picks using the Ultra Engine,
+// Seed Live Picks — MLB ULTRA BETTING ENGINE v3.0
+// Fetches live odds, generates picks using the Ultra Engine v3,
 // resolves results via ESPN, outputs to mlb/webapp/data/
 // =============================================================================
 
@@ -35,14 +35,14 @@ global.localStorage = {
   setItem(k, v) { this._data[k] = v; },
 };
 
-// Load MLB Ultra Engine
-eval(fs.readFileSync(path.join(__dirname, '../webapp/js/recommendation-engine-mlb.js'), 'utf8'));
+// Load MLB Ultra Engine v3
+eval(fs.readFileSync(path.join(__dirname, '../webapp/js/recommendation-engine-mlb-v3.js'), 'utf8'));
 
-const ENGINE = global.window.MLBRecommendationEngine;
+const ENGINE = global.window.MLBRecommendationEngineV3;
 const DATA_DIR = path.join(__dirname, '../webapp/data');
 const OUTPUT_DIR = path.join(__dirname, '../output');
-const SIGNALS_FILE = path.join(DATA_DIR, 'mlb_ultra_signals.json');
-const STATS_FILE = path.join(DATA_DIR, 'mlb_ultra_backtest_stats.json');
+const SIGNALS_FILE = path.join(DATA_DIR, 'mlb_ultra_signals_v3.json');
+const STATS_FILE = path.join(DATA_DIR, 'mlb_ultra_backtest_stats_v3.json');
 const RECS_FILE = path.join(DATA_DIR, 'mlb_ultra_recommendations.json');
 
 const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
@@ -81,14 +81,183 @@ function getDateStr(daysAgo) {
 
 function sleep(ms) { execSync(`sleep ${ms / 1000}`); }
 
+// =============================================================================
+// Resolve pending signals against ESPN box scores
+// =============================================================================
+async function resolveResults() {
+  let signals = [];
+  try {
+    signals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
+  } catch (e) { return; }
+
+  const pending = signals.filter(s => s.hit === null || s.hit === undefined);
+  if (pending.length === 0) {
+    console.log('No pending signals to resolve.');
+    return;
+  }
+
+  const pendingDates = [...new Set(pending.map(s => s.date))].sort();
+  console.log(`Resolving ${pending.length} pending signals from ${pendingDates.length} dates...`);
+
+  let resolved = 0;
+
+  for (const date of pendingDates) {
+    try {
+      const scoreboardUrl = `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=${date}`;
+      const scoreboardRes = await fetch(scoreboardUrl);
+      if (!scoreboardRes.ok) continue;
+      const scoreboardData = await scoreboardRes.json();
+
+      if (!scoreboardData.events || scoreboardData.events.length === 0) continue;
+
+      // Fetch box scores for each completed game
+      const playerStats = {}; // player -> { h, tb, rbi, r, hr, ... }
+
+      for (const event of scoreboardData.events) {
+        if (event.status && event.status.type && event.status.type.completed !== true) continue;
+
+        try {
+          const boxUrl = `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${event.id}`;
+          const boxRes = await fetch(boxUrl);
+          if (!boxRes.ok) continue;
+          const boxData = await boxRes.json();
+
+          // Extract batter stats from box score
+          const rosters = boxData.rosters || boxData.boxscore?.players || [];
+          for (const team of rosters) {
+            for (const category of (team.statistics || [])) {
+              if (category.type !== 'batting' && category.name !== 'batting') continue;
+              const labels = (category.labels || []).map(l => l.toLowerCase());
+              for (const athlete of (category.athletes || [])) {
+                const name = athlete.athlete?.displayName;
+                if (!name) continue;
+                const stats = athlete.stats || [];
+                const statObj = {};
+                labels.forEach((label, i) => {
+                  statObj[label] = stats[i];
+                });
+                const h = parseInt(statObj.h) || 0;
+                const doubles = parseInt(statObj['2b']) || 0;
+                const triples = parseInt(statObj['3b']) || 0;
+                const hr = parseInt(statObj.hr) || 0;
+                const rbi = parseInt(statObj.rbi) || 0;
+                const r = parseInt(statObj.r) || 0;
+                const tb = h + doubles + triples * 2 + hr * 3;
+
+                playerStats[name] = { h, tb, rbi, r, hr };
+              }
+            }
+          }
+        } catch (e) { /* skip game */ }
+        sleep(100);
+      }
+
+      // Resolve signals for this date
+      for (const signal of signals) {
+        if (signal.date !== date) continue;
+        if (signal.hit !== null && signal.hit !== undefined) continue;
+
+        if (signal.betType === 'single') {
+          const ps = playerStats[signal.player];
+          if (!ps) continue;
+          const statKey = signal.stat || 'h';
+          const actual = ps[statKey] || 0;
+          signal.actual = actual;
+          signal.hit = actual > signal.line;
+          const decimal = signal.odds > 0 ? (signal.odds / 100) + 1 : (100 / Math.abs(signal.odds)) + 1;
+          signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
+          resolved++;
+        } else if (signal.betType === 'parlay' && signal.legs) {
+          let allHit = true;
+          let anyResolved = false;
+          for (const leg of signal.legs) {
+            if (leg.hit !== null && leg.hit !== undefined) { if (!leg.hit) allHit = false; continue; }
+            const ps = playerStats[leg.player];
+            if (!ps) { allHit = false; continue; }
+            const statKey = leg.stat || 'h';
+            const actual = ps[statKey] || 0;
+            leg.actual = actual;
+            leg.hit = actual > leg.line;
+            if (!leg.hit) allHit = false;
+            anyResolved = true;
+          }
+          if (anyResolved && signal.legs.every(l => l.hit !== null && l.hit !== undefined)) {
+            signal.hit = allHit;
+            const parlayDecimal = signal.parlay_decimal || signal.legs.reduce((d, l) => {
+              const ld = l.odds > 0 ? (l.odds / 100) + 1 : (100 / Math.abs(l.odds)) + 1;
+              return d * ld;
+            }, 1);
+            signal.pnl = allHit ? Math.round((parlayDecimal - 1) * 100) : -100;
+            resolved++;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`Error resolving date ${date}:`, e.message);
+    }
+    sleep(200);
+  }
+
+  if (resolved > 0) {
+    fs.writeFileSync(SIGNALS_FILE, JSON.stringify(signals, null, 2));
+    console.log(`Resolved ${resolved} signals.`);
+
+    // Update backtest stats
+    const singles = signals.filter(s => s.betType === 'single' && s.hit !== null && s.hit !== undefined);
+    const parlays = signals.filter(s => s.betType === 'parlay' && s.hit !== null && s.hit !== undefined);
+    const singleWins = singles.filter(s => s.hit).length;
+    const parlayWins = parlays.filter(s => s.hit).length;
+    const singlePnl = singles.reduce((s, p) => s + (p.pnl || 0), 0);
+    const parlayPnl = parlays.reduce((s, p) => s + (p.pnl || 0), 0);
+    const singleWagered = singles.length * 100;
+    const parlayWagered = parlays.length * 100;
+    const totalLegs = parlays.reduce((s, p) => s + (p.legs ? p.legs.length : 0), 0);
+    const hitLegs = parlays.reduce((s, p) => s + (p.legs ? p.legs.filter(l => l.hit).length : 0), 0);
+
+    const stats = {
+      singles: {
+        total: singles.length, wins: singleWins,
+        accuracy: singles.length > 0 ? singleWins / singles.length : 0,
+        pnl: singlePnl, wagered: singleWagered,
+        roi: singleWagered > 0 ? singlePnl / singleWagered : 0,
+      },
+      parlays: {
+        total: parlays.length, wins: parlayWins,
+        accuracy: parlays.length > 0 ? parlayWins / parlays.length : 0,
+        pnl: parlayPnl, wagered: parlayWagered,
+        roi: parlayWagered > 0 ? parlayPnl / parlayWagered : 0,
+        totalLegs, hitLegs,
+        legAccuracy: totalLegs > 0 ? hitLegs / totalLegs : 0,
+      },
+      overall: {
+        total: singles.length + parlays.length,
+        wins: singleWins + parlayWins,
+        accuracy: (singles.length + parlays.length) > 0 ? (singleWins + parlayWins) / (singles.length + parlays.length) : 0,
+        pnl: singlePnl + parlayPnl,
+        wagered: singleWagered + parlayWagered,
+        roi: (singleWagered + parlayWagered) > 0 ? (singlePnl + parlayPnl) / (singleWagered + parlayWagered) : 0,
+      },
+    };
+    fs.writeFileSync(STATS_FILE, JSON.stringify(stats, null, 2));
+    console.log('Updated backtest stats.');
+  } else {
+    console.log('No signals could be resolved (games may not be complete yet).');
+  }
+}
+
 async function main() {
   console.log('\n' + '='.repeat(60));
-  console.log('MLB ULTRA BETTING ENGINE v1.0 — Seed Live Picks');
+  console.log('MLB ULTRA BETTING ENGINE v3.0 — Seed Live Picks');
   console.log('='.repeat(60));
+
+  // =========================================================================
+  // STEP 0: Resolve pending picks from previous days
+  // =========================================================================
+  await resolveResults();
 
   // Load optimized config if available
   try {
-    const configPath = path.join(OUTPUT_DIR, 'mlb_ultra_engine_config.json');
+    const configPath = path.join(OUTPUT_DIR, 'mlb_ultra_engine_v3_config.json');
     if (fs.existsSync(configPath)) {
       const configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
       ENGINE.loadConfig(configData);
@@ -219,7 +388,7 @@ async function main() {
   // Save recommendations
   const recsOutput = {
     generated: new Date().toISOString(),
-    engine: 'MLB Ultra Engine v1.0',
+    engine: 'MLB Ultra Engine v3.0',
     config_version: 'optimized',
     tonight_picks: [],
   };

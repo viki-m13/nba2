@@ -55,6 +55,7 @@ console.log(`Total signals: ${results.signals.length}`);
 console.log(`\nSingles: ${results.stats.singles.total}`);
 console.log(`  Wins: ${results.stats.singles.wins}`);
 console.log(`  Accuracy: ${(results.stats.singles.accuracy * 100).toFixed(1)}%`);
+console.log(`  Wagered: $${results.stats.singles.wagered || results.stats.singles.total * 100}`);
 console.log(`  P&L: $${results.stats.singles.pnl}`);
 console.log(`  ROI: ${(results.stats.singles.roi * 100).toFixed(1)}%`);
 
@@ -62,12 +63,14 @@ console.log(`\nParlays: ${results.stats.parlays.total}`);
 console.log(`  Wins: ${results.stats.parlays.wins}`);
 console.log(`  Accuracy: ${(results.stats.parlays.accuracy * 100).toFixed(1)}%`);
 console.log(`  Leg accuracy: ${(results.stats.parlays.legAccuracy * 100).toFixed(1)}% (${results.stats.parlays.hitLegs}/${results.stats.parlays.totalLegs})`);
+console.log(`  Wagered: $${results.stats.parlays.wagered || results.stats.parlays.total * 100}`);
 console.log(`  P&L: $${results.stats.parlays.pnl}`);
 console.log(`  ROI: ${(results.stats.parlays.roi * 100).toFixed(1)}%`);
 
 console.log(`\nOverall: ${results.stats.overall.total}`);
 console.log(`  Wins: ${results.stats.overall.wins}`);
 console.log(`  Accuracy: ${(results.stats.overall.accuracy * 100).toFixed(1)}%`);
+console.log(`  Wagered: $${results.stats.overall.wagered || results.stats.overall.total * 100}`);
 console.log(`  P&L: $${results.stats.overall.pnl}`);
 console.log(`  ROI: ${(results.stats.overall.roi * 100).toFixed(1)}%`);
 
