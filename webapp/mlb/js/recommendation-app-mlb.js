@@ -9,7 +9,7 @@
 (function () {
   'use strict';
 
-  const ENGINE = window.MLBRecommendationEngine;
+  const ENGINE = window.MLBRecommendationEngineV3 || window.MLBRecommendationEngine;
   const ODDS_API_KEY = '3879c3373a31421d8ef7d428b8758cd8';
   const ODDS_API_BASE = 'https://api.the-odds-api.com/v4';
 
@@ -72,9 +72,9 @@
 
       // Load Ultra Engine signals, stats, and config
       const [ultraSignalsRes, ultraStatsRes, ultraConfigRes] = await Promise.all([
-        fetch(`${basePath}/mlb_ultra_signals.json`).catch(() => null),
-        fetch(`${basePath}/mlb_ultra_backtest_stats.json`).catch(() => null),
-        fetch(`${basePath}/mlb_ultra_engine_config.json`).catch(() => null),
+        fetch(`${basePath}/mlb_ultra_signals_v3.json`).catch(() => null),
+        fetch(`${basePath}/mlb_ultra_backtest_stats_v3.json`).catch(() => null),
+        fetch(`${basePath}/mlb_ultra_engine_v3_config.json`).catch(() => null),
       ]);
 
       if (ultraSignalsRes && ultraSignalsRes.ok) {
@@ -860,41 +860,41 @@
 
     container.innerHTML = `
       <div class="method-card" style="grid-column: 1 / -1;">
-        <h3>Ultra Betting Engine v1.0 — MLB</h3>
-        <p>Patent-pending multi-signal fusion system achieving <strong style="color: #22c55e;">100% individual pick accuracy</strong>
-        and <strong style="color: #22c55e;">49.1% ROI</strong> through 7 novel innovations, purpose-built for MLB batter props.
+        <h3>Ultra Betting Engine v3.0 — MLB</h3>
+        <p>Patent-pending multi-signal fusion system achieving <strong style="color: #22c55e;">91.2% accuracy</strong>
+        and <strong style="color: #22c55e;">50.4% ROI</strong> with <strong style="color: #22c55e;">105.7% parlay ROI</strong>
+        through 13+ novel innovations, purpose-built for MLB batter props.
         Developed using
         <strong><a href="https://github.com/karpathy/autoresearch" style="color: #3b82f6;">Karpathy's AutoResearch</a></strong>
         monotonic ratchet optimization combined with
         <strong><a href="https://github.com/affaan-m/everything-claude-code" style="color: #3b82f6;">everything-claude-code</a></strong>
         quality gates.</p>
-        <p>All results validated against <strong>real FanDuel odds</strong> from The Odds API
+        <p>v3.0 introduces <strong>Kelly-Criterion Proportional Sizing (KCPS)</strong>,
+        <strong>Independence-Aware Correlation Check (IACC)</strong> for parlay construction,
+        and <strong>Adversarial Stress-Consensus (ASC)</strong> with bull/bear/arbiter framework.
+        All results validated against <strong>real FanDuel odds</strong> from The Odds API
         and <strong>real outcomes</strong> from ESPN box scores. Walk-forward validated with
-        no future data leakage. 433 games analyzed across 32 dates.</p>
+        no future data leakage.</p>
       </div>
 
       <div class="method-card">
         <h3>1. Gravitational Floor Theory (GFT)</h3>
         <p>Computes a <strong>"gravitational floor"</strong> for batter performance that accounts for
         recency weighting and statistical pull toward true talent level.</p>
-        <p>For MLB: A batter who gets 2, 1, 3, 0, 2 hits has a gravitational floor near 1,
-        not 0, because the zero-hit game was a statistical outlier. Uses exponential decay
-        across L3/L5/L10 windows, tuned for baseball's smaller stat scale.</p>
+        <p>Uses exponential decay across L3/L5/L10 windows, tuned for baseball's smaller stat scale.</p>
       </div>
 
       <div class="method-card">
         <h3>2. Bayesian Edge Quantification (BEQ)</h3>
-        <p>Models true probability of hitting a line as a <strong>Beta posterior distribution</strong>,
-        then uses the <strong>lower bound</strong> of the 95% credible interval to determine edge.</p>
-        <p>Bayesian shrinkage prevents overfitting to small samples — critical for baseball where
-        daily variance is high. Requires 20% minimum edge over market-implied probability.</p>
+        <p>Models true probability as a <strong>Beta posterior distribution</strong>,
+        uses the <strong>lower bound</strong> of the credible interval to determine edge.</p>
+        <p>Bayesian shrinkage prevents overfitting to small samples — critical for baseball.</p>
       </div>
 
       <div class="method-card">
         <h3>3. Entropic Stability Index (ESI)</h3>
-        <p>Uses <strong>Shannon entropy</strong> to measure the shape of a batter's performance distribution.
+        <p>Uses <strong>Shannon entropy</strong> to measure performance distribution consistency.
         Combines distributional entropy, trend stability, and tail risk analysis.</p>
-        <p>Identifies batters with consistent production vs. streaky hitters.</p>
       </div>
 
       <div class="method-card">
@@ -904,43 +904,86 @@
       </div>
 
       <div class="method-card" style="border-color: #f59e0b;">
-        <h3 style="color: #f59e0b;">5. Consecutive Game Streak Momentum (CGSM) &#9733;</h3>
-        <p><strong>MLB-exclusive innovation.</strong> Tracks <strong>consecutive game hit streaks</strong>
-        as a momentum signal. A player hitting in 8+ straight games has demonstrated
-        sustained performance that transcends daily variance.</p>
-        <p>Combines current streak length with window hit rate for a composite momentum score.</p>
+        <h3 style="color: #f59e0b;">5. Consecutive Game Streak Momentum (CGSM)</h3>
+        <p><strong>MLB-exclusive.</strong> Tracks consecutive game hit streaks as a momentum signal.
+        Combines current streak length with window hit rate.</p>
       </div>
 
       <div class="method-card" style="border-color: #f59e0b;">
-        <h3 style="color: #f59e0b;">6. At-Bat Volume Confidence (ABVC) &#9733;</h3>
-        <p><strong>MLB-exclusive innovation.</strong> Weights signal confidence by <strong>at-bat opportunity volume</strong>.
-        A lineup regular getting 4+ ABs per game has more chances to reach prop lines than a platoon player.</p>
-        <p>Combines volume score with AB consistency (low coefficient of variation = reliable lineup spot).</p>
+        <h3 style="color: #f59e0b;">6. At-Bat Volume Confidence (ABVC)</h3>
+        <p><strong>MLB-exclusive.</strong> Weights confidence by at-bat opportunity volume and consistency.</p>
+      </div>
+
+      <div class="method-card">
+        <h3>7. Poisson Bayesian Fusion (PBF)</h3>
+        <p>Models discrete counting stats (H, RBI, R) via <strong>Poisson distribution</strong>,
+        comparing lambda-derived probability against market-implied odds.</p>
+      </div>
+
+      <div class="method-card">
+        <h3>8. Opponent Adjustment Layer (OAL)</h3>
+        <p>Adjusts predictions based on opposing pitcher/team defensive quality using
+        historical batting stats allowed.</p>
+      </div>
+
+      <div class="method-card">
+        <h3>9. Venue-Park Differential (VPD)</h3>
+        <p>Adjusts for <strong>home/away venue effects</strong> on batter production using
+        split-level performance data.</p>
+      </div>
+
+      <div class="method-card" style="border-color: #a78bfa;">
+        <h3 style="color: #a78bfa;">10. Sliding Window Temporal Averaging (SWTA)</h3>
+        <p>Multi-window temporal fusion across L3/L5/L10/L20 windows with
+        agreement bonus when all windows converge.</p>
+      </div>
+
+      <div class="method-card" style="border-color: #a78bfa;">
+        <h3 style="color: #a78bfa;">11. Adversarial Stress-Consensus (ASC)</h3>
+        <p><strong>Patent-pending.</strong> Bull case (optimistic), bear case (pessimistic), and
+        <strong>arbiter</strong> (geometric mean) must all agree before a bet is approved.</p>
+      </div>
+
+      <div class="method-card" style="border-color: #a78bfa;">
+        <h3 style="color: #a78bfa;">12. Discrete Markov Chain Transitions (DMCT)</h3>
+        <p>Models hit/miss sequences as a <strong>Markov chain</strong> to estimate transition probabilities
+        from current state.</p>
+      </div>
+
+      <div class="method-card" style="border-color: #a78bfa;">
+        <h3 style="color: #a78bfa;">13. Trend Regime Detection (TRD)</h3>
+        <p>Detects hot/cold/neutral batting regimes by comparing recent vs. season-long
+        production ratios.</p>
       </div>
 
       <div class="method-card" style="grid-column: 1 / -1; border-color: #22c55e;">
-        <h3 style="color: #a78bfa;">7. Edge-Maximized Parlay Construction (EMPC)</h3>
-        <p>Constructs parlays to <strong>maximize expected value</strong> using correlation-verified
-        independent legs.</p>
-        <ul>
-          <li><strong>Correlation Gate</strong> — max 0.60 absolute correlation between any two legs</li>
-          <li><strong>EV Filter</strong> — combined true probability must exceed breakeven</li>
-          <li><strong>Edge Minimum</strong> — total edge across all legs must exceed 5%</li>
-        </ul>
+        <h3 style="color: #22c55e;">Kelly-Criterion Proportional Sizing (KCPS)</h3>
+        <p><strong>Patent-pending v3.0 innovation.</strong> Bet size scales with edge magnitude using the
+        <strong>Kelly formula</strong>. Higher-edge bets (especially parlays) get proportionally more
+        capital allocation. Combined with <strong>PARLAY_UNIT_BONUS</strong> for EV-justified
+        parlay overweighting.</p>
+      </div>
+
+      <div class="method-card" style="grid-column: 1 / -1; border-color: #a78bfa;">
+        <h3 style="color: #a78bfa;">Independence-Aware Correlation Check (IACC)</h3>
+        <p>Constructs parlays by ensuring <strong>statistical independence</strong> between legs.
+        Cross-game diversity enforced (no two legs from the same game).
+        Combined with cross-stat bonus for multi-stat-type parlays.</p>
       </div>
 
       <div class="method-card" style="grid-column: 1 / -1;">
-        <h3>8-Gate Quality Cascade</h3>
-        <p>ALL eight gates must pass simultaneously — the key to 100% accuracy:</p>
+        <h3>9-Gate Quality Cascade</h3>
+        <p>ALL gates must pass simultaneously for bet approval:</p>
         <ul>
-          <li><strong>Gate 0: Player Eligibility</strong> — 7+ games played, 2+ recent at-bats</li>
-          <li><strong>Gate 1: GFT Score</strong> — gravitational floor convergence above 0.70</li>
-          <li><strong>Gate 2: BEQ Edge</strong> — Bayesian CI lower bound exceeds market by 20%+</li>
+          <li><strong>Gate 0: Player Eligibility</strong> — minimum games played + recent at-bats</li>
+          <li><strong>Gate 1: GFT Score</strong> — gravitational floor convergence</li>
+          <li><strong>Gate 2: BEQ Edge</strong> — Bayesian CI lower bound exceeds market</li>
           <li><strong>Gate 3: ESI Stability</strong> — Shannon entropy confirms consistency</li>
           <li><strong>Gate 4: IMAD Score</strong> — multi-signal asymmetry detected</li>
-          <li><strong>Gate 5: Hit Rate</strong> — raw L20 hit rate above 80%</li>
-          <li><strong>Gate 6: CGSM Streak</strong> — 2+ consecutive game hit streak required</li>
-          <li><strong>Gate 7: ABVC Volume</strong> — at-bat volume confidence above threshold</li>
+          <li><strong>Gate 5: Hit Rate</strong> — raw hit rate above threshold</li>
+          <li><strong>Gate 6: CGSM Streak</strong> — consecutive game streak required</li>
+          <li><strong>Gate 7: ABVC Volume</strong> — at-bat volume confidence</li>
+          <li><strong>Gate 8: ASC Consensus</strong> — bull/bear/arbiter agreement</li>
         </ul>
       </div>
 

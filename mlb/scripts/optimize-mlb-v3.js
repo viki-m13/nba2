@@ -40,84 +40,109 @@ function objective(results) {
   const p = results.stats.parlays;
   const sg = results.stats.singles;
 
-  // HARD FLOORS: Must have enough volume for parlays
+  // HARD FLOORS
   if (s.total < 8) return -Infinity;
-  if (sg.total < 5) return -Infinity;
   if (s.accuracy < 0.80) return s.accuracy * 20;
   if (s.roi < -0.20) return s.accuracy * 20 + s.roi * 10;
 
   let score = 0;
 
-  // === COMPOSITE: accuracy * sqrt(volume) * (1 + roi) ===
-  // This rewards accuracy AND volume together, preventing convergence to tiny bet counts
+  // === PRIMARY: ROI * accuracy * sqrt(volume) ===
+  // ROI is now the DOMINANT factor — Kelly sizing makes this the true measure of edge
   const volumeFactor = Math.sqrt(Math.min(s.total, 120));
-  const roiFactor = Math.max(0.5, 1 + Math.min(s.roi, 5));
-  score = s.accuracy * volumeFactor * roiFactor * 50;
+  const roiFactor = Math.max(0.1, 1 + Math.min(s.roi, 10));
+  score = s.accuracy * volumeFactor * roiFactor * 60;
 
-  // === ACCURACY TIERS (additive bonuses) ===
-  if (s.accuracy >= 0.97) score += 100;
-  else if (s.accuracy >= 0.95) score += 75;
-  else if (s.accuracy >= 0.93) score += 55;
-  else if (s.accuracy >= 0.90) score += 40;
-  else if (s.accuracy >= 0.87) score += 25;
+  // === ACCURACY TIERS ===
+  if (s.accuracy >= 0.97) score += 120;
+  else if (s.accuracy >= 0.95) score += 90;
+  else if (s.accuracy >= 0.93) score += 65;
+  else if (s.accuracy >= 0.90) score += 45;
+  else if (s.accuracy >= 0.87) score += 28;
   else if (s.accuracy >= 0.85) score += 15;
 
-  // === PARLAYS: Critical for 100%+ ROI (NBA key insight) ===
-  // MASSIVE reward for generating parlays — this is THE differentiator
-  if (p.total >= 5) {
-    score += 200;
-    score += Math.min(p.total * 15, 100);
+  // === PARLAY-FIRST STRATEGY ===
+  // Parlays are THE path to 100%+ ROI. Singles at heavy-fav odds max out at ~50% ROI.
+  // Parlay count and parlay ROI are the most important factors.
+  const parlayRatio = s.total > 0 ? p.total / s.total : 0;
+
+  if (p.total >= 10) {
+    score += 350;  // Massive reward for 10+ parlays
+    score += Math.min(p.total * 20, 200);
+    if (p.accuracy >= 0.90) score += 150;
+    else if (p.accuracy >= 0.80) score += 90;
+    else if (p.accuracy >= 0.70) score += 45;
+    if (p.legAccuracy >= 0.95) score += 100;
+    else if (p.legAccuracy >= 0.90) score += 65;
+    else if (p.legAccuracy >= 0.85) score += 35;
+    if (p.roi > 3.0) score += 200;
+    else if (p.roi > 2.0) score += 150;
+    else if (p.roi > 1.0) score += 100;
+    else if (p.roi > 0.5) score += 60;
+    else if (p.roi > 0) score += 30;
+  } else if (p.total >= 5) {
+    score += 220;
+    score += Math.min(p.total * 18, 120);
     if (p.accuracy >= 0.90) score += 100;
     else if (p.accuracy >= 0.80) score += 60;
     else if (p.accuracy >= 0.70) score += 30;
     if (p.legAccuracy >= 0.95) score += 80;
     else if (p.legAccuracy >= 0.90) score += 50;
-    else if (p.legAccuracy >= 0.85) score += 25;
-    if (p.roi > 2.0) score += 120;
-    else if (p.roi > 1.0) score += 80;
+    if (p.roi > 2.0) score += 130;
+    else if (p.roi > 1.0) score += 90;
     else if (p.roi > 0.5) score += 50;
     else if (p.roi > 0) score += 25;
   } else if (p.total >= 3) {
     score += 120;
-    score += p.total * 10;
+    score += p.total * 12;
     if (p.accuracy >= 0.80) score += 40;
     if (p.roi > 0) score += 30;
   } else if (p.total >= 1) {
     score += 40;
   } else {
-    // HEAVY penalty for no parlays — force the optimizer to keep enough volume
-    score -= 120;
+    score -= 200;  // Even heavier penalty for no parlays
   }
 
-  // === VOLUME SWEET SPOT: 25-100 bets ===
+  // Parlay ratio bonus — reward higher proportion of parlays
+  if (parlayRatio >= 0.40) score += 80;
+  else if (parlayRatio >= 0.30) score += 50;
+  else if (parlayRatio >= 0.20) score += 30;
+  else if (parlayRatio >= 0.15) score += 15;
+
+  // === VOLUME ===
   if (s.total >= 60 && s.total <= 120) score += 60;
   else if (s.total >= 40) score += 45;
   else if (s.total >= 25) score += 30;
   else if (s.total >= 15) score += 10;
-  else score -= 30; // Too few bets
+  else score -= 30;
 
-  // Penalize extreme counts
   if (s.total > 200) score -= 40;
   if (s.total < 12) score -= 50;
 
-  // === ROI ===
-  if (s.roi > 2.0) score += 80;
-  else if (s.roi > 1.0) score += 60;
-  else if (s.roi > 0.5) score += 40;
-  else if (s.roi > 0.2) score += 20;
-  else if (s.roi > 0) score += 10;
-  else score += Math.max(-60, s.roi * 80);
+  // === ROI — THE KEY METRIC ===
+  if (s.roi > 3.0) score += 200;
+  else if (s.roi > 2.0) score += 150;
+  else if (s.roi > 1.0) score += 120;
+  else if (s.roi > 0.7) score += 80;
+  else if (s.roi > 0.5) score += 50;
+  else if (s.roi > 0.3) score += 30;
+  else if (s.roi > 0.1) score += 15;
+  else if (s.roi > 0) score += 5;
+  else score += Math.max(-80, s.roi * 100);
 
   // === PnL absolute ===
-  if (s.pnl > 5000) score += 40;
+  if (s.pnl > 10000) score += 80;
+  else if (s.pnl > 5000) score += 50;
+  else if (s.pnl > 3000) score += 35;
   else if (s.pnl > 2000) score += 25;
   else if (s.pnl > 1000) score += 15;
-  else if (s.pnl > 500) score += 5;
 
   // === Singles accuracy ===
-  if (sg.accuracy >= 0.95) score += 20;
-  else if (sg.accuracy >= 0.92) score += 12;
-  else if (sg.accuracy >= 0.90) score += 6;
+  if (sg.total > 0) {
+    if (sg.accuracy >= 0.95) score += 25;
+    else if (sg.accuracy >= 0.92) score += 15;
+    else if (sg.accuracy >= 0.90) score += 8;
+  }
 
   return score;
 }
@@ -265,6 +290,13 @@ function ratchetOptimize(startConfig, maxRounds) {
     HOME_BOOST: [0.0, 0.01, 0.015, 0.02, 0.025, 0.03],
     CAMPD_MAX_SAME_STAT: [1, 2, 3, 4, 5],
     CAMPD_CROSS_STAT_BONUS: [0.0, 0.01, 0.02, 0.03],
+
+    // Kelly-Criterion Proportional Sizing
+    KELLY_SIZING: [true, false],
+    KELLY_MIN_UNITS: [0.3, 0.5, 0.7, 1.0],
+    KELLY_MAX_UNITS: [2.0, 3.0, 4.0, 5.0, 7.0, 10.0],
+    KELLY_SIZING_MULTIPLIER: [1.5, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0],
+    PARLAY_UNIT_BONUS: [1.0, 1.5, 2.0, 2.5, 3.0, 4.0],
   };
 
   // Optimization order: most impactful parameters first
@@ -299,6 +331,9 @@ function ratchetOptimize(startConfig, maxRounds) {
     'OAL_ENABLED', 'OAL_WEIGHT', 'OAL_MAX_ADJUSTMENT',
     'VPD_ENABLED', 'VPD_MIN_GAMES', 'VPD_WEIGHT', 'VPD_MAX_BOOST',
     'HOME_BOOST', 'CAMPD_MAX_SAME_STAT', 'CAMPD_CROSS_STAT_BONUS',
+    // Kelly-Criterion sizing (ROI amplifier)
+    'KELLY_SIZING', 'KELLY_SIZING_MULTIPLIER', 'KELLY_MAX_UNITS',
+    'KELLY_MIN_UNITS', 'PARLAY_UNIT_BONUS',
   ];
 
   for (let round = 0; round < maxRounds; round++) {
@@ -378,6 +413,8 @@ const starts = [
     MIN_ODDS: -500, MAX_ODDS: -110,
     HOME_BOOST: 0.02,
     CAMPD_MAX_SAME_STAT: 2, CAMPD_CROSS_STAT_BONUS: 0.02,
+    KELLY_SIZING: true, KELLY_MIN_UNITS: 0.5, KELLY_MAX_UNITS: 5.0,
+    KELLY_SIZING_MULTIPLIER: 3.0, PARLAY_UNIT_BONUS: 1.5,
   },
 
   // Start B: Tight gates (high accuracy target, v2.0-like)
@@ -414,6 +451,8 @@ const starts = [
     MIN_ODDS: -350, MAX_ODDS: -150,
     HOME_BOOST: 0.02,
     CAMPD_MAX_SAME_STAT: 2, CAMPD_CROSS_STAT_BONUS: 0.02,
+    KELLY_SIZING: true, KELLY_MIN_UNITS: 0.5, KELLY_MAX_UNITS: 5.0,
+    KELLY_SIZING_MULTIPLIER: 3.0, PARLAY_UNIT_BONUS: 1.5,
   },
 
   // Start C: Heavy favorites focus (exploit high-odds accuracy)
@@ -450,6 +489,88 @@ const starts = [
     MIN_ODDS: -400, MAX_ODDS: -180,
     HOME_BOOST: 0.02,
     CAMPD_MAX_SAME_STAT: 2, CAMPD_CROSS_STAT_BONUS: 0.02,
+    KELLY_SIZING: true, KELLY_MIN_UNITS: 0.5, KELLY_MAX_UNITS: 5.0,
+    KELLY_SIZING_MULTIPLIER: 3.0, PARLAY_UNIT_BONUS: 1.5,
+  },
+
+  // Start D: Parlay-Heavy ROI Maximizer with Kelly Sizing
+  // Focuses on generating maximum parlays with Kelly-proportional sizing
+  {
+    MIN_GAMES: 8, MIN_AB: 2, WARM_UP_GAMES: 10,
+    GFT_WINDOWS: [3, 5, 10], GFT_DECAY_RATE: 0.91, GFT_GRAVITY_STRENGTH: 0.36,
+    GFT_MIN_CLEARANCE: 0.05, GFT_CONVERGENCE_MAX_SPREAD: 4.0,
+    BEQ_CREDIBLE_LEVEL: 0.87, BEQ_MIN_EDGE: 0.03,
+    ESI_BINS: 6, ESI_MAX_ENTROPY: 0.83, ESI_TREND_WEIGHT: 0.30,
+    IMAD_MIN_ASYMMETRY: 0.05, IMAD_VOLUME_DISCOUNT: 0.02,
+    CGSM_MIN_STREAK: 1, CGSM_LOOKBACK: 8, CGSM_WEIGHT: 0.06,
+    ABVC_MIN_AVG_AB: 2.5, ABVC_ELITE_AB: 4.0, ABVC_WEIGHT: 0.05,
+    PBF_DECAY_RATE: 0.94, PBF_MIN_LAMBDA: 0.3, PBF_WEIGHT: 0.10,
+    PBF_MIN_PROB_MARGIN: 0.03,
+    OAL_ENABLED: true, OAL_WEIGHT: 0.03, OAL_MAX_ADJUSTMENT: 0.20,
+    VPD_ENABLED: false, VPD_MIN_GAMES: 3, VPD_WEIGHT: 0.04, VPD_MAX_BOOST: 0.12,
+    SWTA_ENABLED: true, SWTA_WEIGHT: 0.06,
+    SWTA_SHORT_WEIGHT: 0.50, SWTA_MED_WEIGHT: 0.30,
+    SWTA_SHORT_DECAY: 0.95, SWTA_MED_DECAY: 0.90, SWTA_LONG_DECAY: 0.85,
+    ASC_ENABLED: true, ASC_ARBITER_MIN_CONSENSUS: 0.65, ASC_WEIGHT: 0.04,
+    DMCT_ENABLED: true, DMCT_WEIGHT: 0.05, DMCT_MIN_PROB: 0.60, DMCT_ORDER: 2,
+    TRD_ENABLED: true, TRD_HOT_THRESHOLD: 1.08, TRD_COLD_THRESHOLD: 0.85,
+    TRD_BOOST: 0.05, TRD_PENALTY: 0.05,
+    PSI_ENABLED: true, PSI_WEIGHT: 0.03,
+    // Looser gates to generate more parlay candidates
+    GATE_MIN_GFT_SCORE: 0.30, GATE_MIN_BEQ_EDGE: 0.03,
+    GATE_MIN_ESI_STABILITY: 0.10, GATE_MIN_IMAD_SCORE: 0.01,
+    GATE_MIN_HIT_RATE: 0.85, GATE_MIN_COMBINED: 0.55,
+    GATE_MIN_STREAK: 1, GATE_MIN_ABVC: 0.20,
+    GATE_MIN_PBF_MARGIN: 0.02,
+    // Higher single threshold, lower parlay threshold = more parlays, fewer singles
+    SINGLE_MIN_SCORE: 0.82, MULTI_SINGLE_MIN_SCORE: 0.70,
+    PARLAY_LEG_MIN_SCORE: 0.48,
+    PARLAY_MAX_CORRELATION: 0.40, PARLAY_SAME_GAME_ALLOWED: false,
+    PARLAY_MIN_COMBINED_EDGE: 0.03, PARLAY_MAX_PER_DAY: 4, PARLAY_MAX_LEGS: 4,
+    MIN_ODDS: -260, MAX_ODDS: -150,
+    HOME_BOOST: 0.01,
+    CAMPD_MAX_SAME_STAT: 3, CAMPD_CROSS_STAT_BONUS: 0.02,
+    // Kelly sizing for ROI amplification
+    KELLY_SIZING: true, KELLY_MIN_UNITS: 0.5, KELLY_MAX_UNITS: 5.0,
+    KELLY_SIZING_MULTIPLIER: 5.0, PARLAY_UNIT_BONUS: 2.5,
+  },
+
+  // Start E: Previous best config as starting point (warm start)
+  {
+    MIN_GAMES: 8, MIN_AB: 4, WARM_UP_GAMES: 10,
+    GFT_WINDOWS: [3, 5, 10], GFT_DECAY_RATE: 0.91, GFT_GRAVITY_STRENGTH: 0.36,
+    GFT_MIN_CLEARANCE: 0.05, GFT_CONVERGENCE_MAX_SPREAD: 4.0,
+    BEQ_CREDIBLE_LEVEL: 0.87, BEQ_MIN_EDGE: 0.03,
+    ESI_BINS: 6, ESI_MAX_ENTROPY: 0.83, ESI_TREND_WEIGHT: 0.30,
+    IMAD_MIN_ASYMMETRY: 0.05, IMAD_VOLUME_DISCOUNT: 0.02,
+    CGSM_MIN_STREAK: 1, CGSM_LOOKBACK: 8, CGSM_WEIGHT: 0.06,
+    ABVC_MIN_AVG_AB: 2.5, ABVC_ELITE_AB: 4.0, ABVC_WEIGHT: 0.05,
+    PBF_DECAY_RATE: 0.94, PBF_MIN_LAMBDA: 0.3, PBF_WEIGHT: 0.10,
+    PBF_MIN_PROB_MARGIN: 0.03,
+    OAL_ENABLED: true, OAL_WEIGHT: 0.03, OAL_MAX_ADJUSTMENT: 0.20,
+    VPD_ENABLED: false, VPD_MIN_GAMES: 3, VPD_WEIGHT: 0.04, VPD_MAX_BOOST: 0.12,
+    SWTA_ENABLED: true, SWTA_WEIGHT: 0.06,
+    SWTA_SHORT_WEIGHT: 0.50, SWTA_MED_WEIGHT: 0.30,
+    SWTA_SHORT_DECAY: 0.95, SWTA_MED_DECAY: 0.90, SWTA_LONG_DECAY: 0.85,
+    ASC_ENABLED: true, ASC_ARBITER_MIN_CONSENSUS: 0.65, ASC_WEIGHT: 0.04,
+    DMCT_ENABLED: true, DMCT_WEIGHT: 0.05, DMCT_MIN_PROB: 0.60, DMCT_ORDER: 2,
+    TRD_ENABLED: true, TRD_HOT_THRESHOLD: 1.08, TRD_COLD_THRESHOLD: 0.85,
+    TRD_BOOST: 0.05, TRD_PENALTY: 0.05,
+    PSI_ENABLED: true, PSI_WEIGHT: 0.03,
+    GATE_MIN_GFT_SCORE: 0.35, GATE_MIN_BEQ_EDGE: 0.04,
+    GATE_MIN_ESI_STABILITY: 0.50, GATE_MIN_IMAD_SCORE: 0.015,
+    GATE_MIN_HIT_RATE: 1.0, GATE_MIN_COMBINED: 0.80,
+    GATE_MIN_STREAK: 1, GATE_MIN_ABVC: 0.25,
+    GATE_MIN_PBF_MARGIN: 0.02,
+    SINGLE_MIN_SCORE: 0.70, MULTI_SINGLE_MIN_SCORE: 0.60,
+    PARLAY_LEG_MIN_SCORE: 0.52,
+    PARLAY_MAX_CORRELATION: 0.35, PARLAY_SAME_GAME_ALLOWED: false,
+    PARLAY_MIN_COMBINED_EDGE: 0.05, PARLAY_MAX_PER_DAY: 2, PARLAY_MAX_LEGS: 4,
+    MIN_ODDS: -260, MAX_ODDS: -150,
+    HOME_BOOST: 0.01,
+    CAMPD_MAX_SAME_STAT: 2, CAMPD_CROSS_STAT_BONUS: 0.02,
+    KELLY_SIZING: true, KELLY_MIN_UNITS: 0.5, KELLY_MAX_UNITS: 5.0,
+    KELLY_SIZING_MULTIPLIER: 3.0, PARLAY_UNIT_BONUS: 1.5,
   },
 ];
 
