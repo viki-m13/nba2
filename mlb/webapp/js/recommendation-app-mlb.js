@@ -163,16 +163,19 @@
     const picksStatus = document.getElementById('mlb-tonight-picks-status');
 
     try {
-      gamesStatus.textContent = 'Fetching tonight\'s games...';
-      let events = [];
-      let liveOdds = { events: [], playerProps: {} };
+      // Load pre-generated recommendations from the daily pipeline
+      // This ensures consistency: picks don't change on every page refresh
+      // because odds move throughout the day. The seed-live-picks-mlb.js script
+      // runs once daily and captures the picks at a fixed point in time.
+      gamesStatus.textContent = 'Loading tonight\'s picks...';
 
+      // Fetch tonight's games for the schedule display
+      let events = [];
       try {
         const eventsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`;
         const eventsRes = await fetch(eventsUrl);
         if (eventsRes.ok) {
           events = await eventsRes.json();
-          liveOdds.events = events;
         }
       } catch (e) {
         console.warn('[ULTRA-MLB] Could not fetch events:', e);
@@ -187,75 +190,45 @@
       }
       gamesStatus.style.display = 'none';
 
-      picksStatus.textContent = `Analyzing ${events.length} games...`;
-
-      for (const event of events) {
-        try {
-          const markets = 'batter_hits,batter_total_bases,batter_rbis,batter_runs_scored';
-          const propsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
-          const propsRes = await fetch(propsUrl);
-          if (!propsRes.ok) continue;
-
-          const propsData = await propsRes.json();
-          const homeAbbr = teamAbbr(event.home_team);
-          const awayAbbr = teamAbbr(event.away_team);
-          const gameKey = `${awayAbbr}@${homeAbbr}`;
-
-          const fd = propsData.bookmakers && propsData.bookmakers.find(b => b.key === 'fanduel');
-          if (!fd) continue;
-
-          const gameProps = { hitsLines: {}, tbLines: {}, rbiLines: {}, runsLines: {} };
-          const marketMap = {
-            'batter_hits': 'hitsLines',
-            'batter_total_bases': 'tbLines',
-            'batter_rbis': 'rbiLines',
-            'batter_runs_scored': 'runsLines',
-          };
-
-          for (const mkt of (fd.markets || [])) {
-            const st = marketMap[mkt.key];
-            if (!st) continue;
-            for (const outcome of (mkt.outcomes || [])) {
-              const player = outcome.description;
-              const threshold = outcome.point;
-              if (!gameProps[st][player]) gameProps[st][player] = {};
-              if (!gameProps[st][player][threshold]) gameProps[st][player][threshold] = {};
-              if (outcome.name === 'Over') {
-                gameProps[st][player][threshold].overOdds = outcome.price;
-              }
-            }
-          }
-
-          liveOdds.playerProps[gameKey] = gameProps;
-        } catch (e) {
-          console.warn('[ULTRA-MLB] Error fetching props:', e);
+      // Load pre-generated picks from mlb_ultra_recommendations.json
+      picksStatus.textContent = 'Loading recommendations...';
+      let recsData = null;
+      try {
+        const recsRes = await fetch('data/mlb_ultra_recommendations.json');
+        if (recsRes.ok) {
+          recsData = await recsRes.json();
         }
+      } catch (e) {
+        console.warn('[ULTRA-MLB] Could not load pre-generated recommendations:', e);
       }
 
-      let recommendation = null;
-      if (Object.keys(liveOdds.playerProps).length > 0) {
-        recommendation = ENGINE.generateTodayPicks(liveOdds);
-      }
+      // Check if we have pre-generated picks for today
+      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const recommendation = recsData && recsData.recommendation;
+      const recsDate = recsData && recsData.date;
 
-      if (recommendation && (recommendation.singles.length > 0 || recommendation.parlays.length > 0)) {
+      if (recommendation && recsDate === today &&
+          (recommendation.singles.length > 0 || recommendation.parlays.length > 0)) {
         picksStatus.style.display = 'none';
         renderTonightPicks(recommendation);
+        console.log(`[ULTRA-MLB] Loaded pre-generated picks from ${recsData.generated}`);
 
-        const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        // Merge into allSignals for history consistency
         const newSignals = ENGINE.formatSignalForStorage(recommendation, today);
         allSignals = allSignals.filter(s => s.date !== today);
         allSignals.push(...newSignals);
         return;
       }
 
-      if (Object.keys(liveOdds.playerProps).length === 0) {
-        picksStatus.textContent = 'No FanDuel batter props available yet. Props are available closer to game time.';
+      // No pre-generated picks available for today
+      if (!recsData || !recommendation || recsDate !== today) {
+        picksStatus.textContent = 'Today\'s picks have not been generated yet. Picks are generated daily by the engine pipeline.';
       } else {
         picksStatus.textContent = 'No bets meet our strict quality thresholds tonight. The engine only recommends when all 8 gates pass.';
       }
 
     } catch (e) {
-      console.error('[ULTRA-MLB] Error generating tonight picks:', e);
+      console.error('[ULTRA-MLB] Error loading tonight picks:', e);
       picksStatus.textContent = 'Error loading picks. See console for details.';
     }
   }
