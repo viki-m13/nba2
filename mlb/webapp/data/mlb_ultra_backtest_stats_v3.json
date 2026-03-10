@@ -1,0 +1,26 @@
+{
+  "singles": {
+    "total": 47,
+    "wins": 43,
+    "accuracy": 0.9148936170212766,
+    "pnl": 1619,
+    "roi": 0.344468085106383
+  },
+  "parlays": {
+    "total": 10,
+    "wins": 9,
+    "accuracy": 0.9,
+    "pnl": 1057,
+    "roi": 1.057,
+    "totalLegs": 21,
+    "hitLegs": 20,
+    "legAccuracy": 0.9523809523809523
+  },
+  "overall": {
+    "total": 57,
+    "wins": 52,
+    "accuracy": 0.9122807017543859,
+    "pnl": 2676,
+    "roi": 0.4694736842105263
+  }
+}
