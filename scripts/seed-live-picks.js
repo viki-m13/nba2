@@ -213,44 +213,64 @@ async function main() {
 
   fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));
 
-  // Save recommendations
+  // Save recommendations — store the full recommendation object so the webapp
+  // can render directly without re-fetching live odds (ensures consistency)
   const recsOutput = {
     generated: new Date().toISOString(),
+    date: today,
     engine: 'Ultra Engine v1.0',
     config_version: 'optimized',
-    tonight_picks: [],
-  };
-
-  for (const s of recommendation.singles) {
-    recsOutput.tonight_picks.push({
-      bet_type: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
-      player: s.player,
-      stat: s.statType,
-      line: s.line,
-      odds: s.odds,
-      combined_score: s.cascadeScore,
-      edge: s.edge,
-      hit_rate: s.hitRate,
-      bayesian_prob: s.impliedProb + s.edge,
-      suggested_wager: 50,
-    });
-  }
-
-  for (const p of recommendation.parlays) {
-    recsOutput.tonight_picks.push({
-      bet_type: 'parlay',
-      player: null, stat: null, line: null, odds: null,
-      combined_score: null, edge: null, hit_rate: null,
-      bayesian_prob: null, suggested_wager: 100,
-      legs: p.legs.map(l => ({
-        player: l.player, stat: l.statType,
-        line: l.line, odds: l.odds,
-        combined_score: l.cascadeScore, edge: l.edge,
+    recommendation: {
+      betType: recommendation.betType,
+      reasoning: recommendation.reasoning,
+      singles: recommendation.singles.map(s => ({
+        player: s.player,
+        team: s.team,
+        statType: s.statType,
+        statLabel: s.statLabel,
+        line: s.line,
+        odds: s.odds,
+        cascadeScore: s.cascadeScore,
+        gft: s.gft,
+        beq: s.beq,
+        esi: s.esi,
+        imad: s.imad,
+        hitRate: s.hitRate,
+        edge: s.edge,
+        ev: s.ev,
+        avg: s.avg,
+        floor: s.floor,
+        betSubType: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
+        hit: null,
+        actual: null,
       })),
-      parlay_odds: p.odds,
-      parlay_ev: p.ev,
-    });
-  }
+      parlays: recommendation.parlays.map(p => ({
+        numLegs: p.numLegs,
+        odds: p.odds,
+        decimalOdds: p.decimalOdds,
+        avgCascade: p.avgCascade,
+        combinedHitRate: p.combinedHitRate,
+        ev: p.ev,
+        legs: p.legs.map(l => ({
+          player: l.player,
+          team: l.team,
+          statType: l.statType,
+          statLabel: l.statLabel,
+          line: l.line,
+          odds: l.odds,
+          cascadeScore: l.cascadeScore,
+          gft: l.gft,
+          beq: l.beq,
+          esi: l.esi,
+          imad: l.imad,
+          hitRate: l.hitRate,
+          edge: l.edge,
+          hit: null,
+          actual: null,
+        })),
+      })),
+    },
+  };
 
   fs.writeFileSync(RECS_FILE, JSON.stringify(recsOutput, null, 2));
 
