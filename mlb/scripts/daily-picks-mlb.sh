@@ -2,8 +2,8 @@
 # =============================================================================
 # MLB ULTRA BETTING ENGINE v3.0 — Daily Pick Generation
 # =============================================================================
-# Schedule this to run daily at 10:00 AM EST via cron:
-#   0 10 * * * cd /path/to/nba2 && TZ=America/New_York bash mlb/scripts/daily-picks-mlb.sh >> logs/mlb-daily.log 2>&1
+# Schedule this to run daily at 9:00 AM EST via cron:
+#   0 9 * * * cd /path/to/nba2 && TZ=America/New_York bash mlb/scripts/daily-picks-mlb.sh >> logs/mlb-daily.log 2>&1
 #
 # This script:
 # 1. Fetches latest box scores and odds data
