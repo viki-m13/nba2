@@ -2,8 +2,11 @@
 # =============================================================================
 # ULTRA BETTING ENGINE v1.0 — Daily Pick Generation
 # =============================================================================
-# Schedule this to run daily at 9:00 AM EST via cron:
-#   0 9 * * * cd /path/to/nba2 && TZ=America/New_York bash scripts/daily-picks.sh >> logs/daily.log 2>&1
+# Schedule this to run daily at 12:00 PM (noon) EST via cron:
+#   0 12 * * * cd /path/to/nba2 && TZ=America/New_York bash scripts/daily-picks.sh >> logs/daily.log 2>&1
+# NOTE: Noon EST = 5 PM UTC matches the timestamp used by The Odds API historical
+# endpoint (T17:00:00Z) when collecting odds for backtesting, ensuring consistency
+# between live picks and backtest results.
 #
 # This script:
 # 1. Resolves any pending picks from previous days (via ESPN box scores)
