@@ -30,6 +30,16 @@ console.log('=== AutoResearch v3.0 — MLB Ultra Engine v3.0 Optimizer ===');
 console.log(`Box scores: ${boxScores.length} games`);
 console.log(`Historical odds: ${historicalOdds.length} records`);
 
+// Temporal train/test split — optimizer only sees train data
+const TEST_SPLIT = 0.25;
+const allDates = [...new Set(boxScores.map(g => g.date))].sort();
+const splitIdx = Math.floor(allDates.length * (1 - TEST_SPLIT));
+const trainCutoff = allDates[splitIdx];
+const trainBoxScores = boxScores.filter(g => g.date < trainCutoff);
+const trainOdds = historicalOdds.filter(o => (o.date || '') < trainCutoff);
+console.log(`Train dates: ${allDates[0]} to ${allDates[splitIdx - 1]} (${splitIdx} dates)`);
+console.log(`Test dates:  ${trainCutoff} to ${allDates[allDates.length - 1]} (${allDates.length - splitIdx} dates)`);
+
 // =============================================================================
 // OBJECTIVE FUNCTION — Balances accuracy, ROI, volume, and parlay performance
 // =============================================================================
@@ -151,7 +161,7 @@ function objective(results) {
 // RUNNER
 // =============================================================================
 
-function runWithConfig(configOverrides) {
+function runWithConfig(configOverrides, useFullData = false) {
   const origConfig = {};
   for (const k of Object.keys(configOverrides)) {
     if (ENGINE.CONFIG.hasOwnProperty(k)) {
@@ -161,7 +171,10 @@ function runWithConfig(configOverrides) {
   }
   let results;
   try {
-    results = ENGINE.runBacktest(boxScores, historicalOdds);
+    // During optimization, use only train data. For final eval, use full data.
+    const bs = useFullData ? boxScores : trainBoxScores;
+    const od = useFullData ? historicalOdds : trainOdds;
+    results = ENGINE.runBacktest(bs, od);
   } catch (e) {
     results = null;
   }
@@ -597,13 +610,37 @@ const best = overallBest;
 const f = best.results.stats;
 
 console.log('\n' + '='.repeat(60));
-console.log('FINAL RESULTS — MLB Ultra Engine v3.0');
+console.log('TRAIN RESULTS — MLB Ultra Engine v3.0');
 console.log('='.repeat(60));
 console.log(`Singles: ${f.singles.total} (${(f.singles.accuracy * 100).toFixed(1)}% acc, $${f.singles.pnl}, ${(f.singles.roi * 100).toFixed(1)}% ROI)`);
 console.log(`Parlays: ${f.parlays.total} (${(f.parlays.accuracy * 100).toFixed(1)}% acc, $${f.parlays.pnl}, ${(f.parlays.roi * 100).toFixed(1)}% ROI)`);
 if (f.parlays.totalLegs > 0) console.log(`  Legs: ${f.parlays.hitLegs}/${f.parlays.totalLegs} (${(f.parlays.legAccuracy * 100).toFixed(1)}%)`);
 console.log(`Overall: ${f.overall.total} (${(f.overall.accuracy * 100).toFixed(1)}% acc, $${f.overall.pnl}, ${(f.overall.roi * 100).toFixed(1)}% ROI)`);
 console.log(`Improvements: ${best.improvements}`);
+
+// Run on FULL data to get out-of-sample test period results
+const fullResults = runWithConfig(best.config, true);
+const ff = fullResults ? fullResults.stats : null;
+if (ff) {
+  console.log('\n' + '='.repeat(60));
+  console.log('FULL RESULTS (includes out-of-sample test period)');
+  console.log('='.repeat(60));
+  console.log(`Singles: ${ff.singles.total} (${(ff.singles.accuracy * 100).toFixed(1)}% acc, $${ff.singles.pnl}, ${(ff.singles.roi * 100).toFixed(1)}% ROI)`);
+  console.log(`Parlays: ${ff.parlays.total} (${(ff.parlays.accuracy * 100).toFixed(1)}% acc, $${ff.parlays.pnl}, ${(ff.parlays.roi * 100).toFixed(1)}% ROI)`);
+  console.log(`Overall: ${ff.overall.total} (${(ff.overall.accuracy * 100).toFixed(1)}% acc, $${ff.overall.pnl}, ${(ff.overall.roi * 100).toFixed(1)}% ROI)`);
+
+  // Report test-only performance
+  const trainSignalKeys = new Set((best.results.signals || []).map(s => s.date + '|' + (s.player || '') + '|' + (s.line || '')));
+  const testOnlySignals = (fullResults.signals || []).filter(s => !trainSignalKeys.has(s.date + '|' + (s.player || '') + '|' + (s.line || '')));
+  if (testOnlySignals.length > 0) {
+    const testHits = testOnlySignals.filter(s => s.hit).length;
+    const testPnl = testOnlySignals.reduce((sum, s) => sum + (s.pnl || 0), 0);
+    console.log(`\nOUT-OF-SAMPLE TEST PERIOD:`);
+    console.log(`  Picks: ${testOnlySignals.length}, Wins: ${testHits}, Accuracy: ${(testHits / testOnlySignals.length * 100).toFixed(1)}%, P&L: $${testPnl}`);
+  } else {
+    console.log('\nNo out-of-sample picks in test period.');
+  }
+}
 
 // =============================================================================
 // SAVE RESULTS
@@ -613,6 +650,7 @@ const configOutput = {
   config: best.config,
   score: best.score,
   improvements: best.improvements,
+  train_cutoff: trainCutoff,
   results: {
     total: f.overall.total, accuracy: f.overall.accuracy,
     roi: f.overall.roi, pnl: f.overall.pnl,
@@ -623,8 +661,11 @@ const configOutput = {
 };
 
 fs.writeFileSync(path.join(OUTPUT_DIR, 'mlb_ultra_engine_v3_config.json'), JSON.stringify(configOutput, null, 2));
-fs.writeFileSync(path.join(DATA_DIR, 'mlb_ultra_signals_v3.json'), JSON.stringify(best.results.signals, null, 2));
-fs.writeFileSync(path.join(DATA_DIR, 'mlb_ultra_backtest_stats_v3.json'), JSON.stringify(best.results.stats, null, 2));
+// Save full results (train + test) for the webapp — walk-forward ensures test
+// dates only use model state from train dates, so this is the honest full picture
+const saveResults = fullResults || best.results;
+fs.writeFileSync(path.join(DATA_DIR, 'mlb_ultra_signals_v3.json'), JSON.stringify(saveResults.signals, null, 2));
+fs.writeFileSync(path.join(DATA_DIR, 'mlb_ultra_backtest_stats_v3.json'), JSON.stringify(saveResults.stats, null, 2));
 
 console.log('\nConfig saved to', path.join(OUTPUT_DIR, 'mlb_ultra_engine_v3_config.json'));
 
@@ -654,7 +695,7 @@ console.log('\n=== PURGED WALK-FORWARD CROSS-VALIDATION ===');
 for (const k of Object.keys(best.config)) {
   if (ENGINE.CONFIG.hasOwnProperty(k)) ENGINE.CONFIG[k] = best.config[k];
 }
-const cvResults = ENGINE.runCrossValidation(boxScores, historicalOdds, 5);
+const cvResults = ENGINE.runCrossValidation(trainBoxScores, trainOdds, 5);
 if (cvResults && cvResults.folds) {
   for (let i = 0; i < cvResults.folds.length; i++) {
     const fold = cvResults.folds[i];
@@ -668,7 +709,7 @@ if (cvResults && cvResults.folds) {
 
 // Sensitivity analysis
 console.log('\n=== PARAMETER SENSITIVITY ANALYSIS ===');
-const sensitivity = ENGINE.runSensitivityAnalysis(boxScores, historicalOdds);
+const sensitivity = ENGINE.runSensitivityAnalysis(trainBoxScores, trainOdds);
 if (sensitivity && sensitivity.sensitivities) {
   const sorted = Object.entries(sensitivity.sensitivities).sort((a, b) => b[1] - a[1]);
   for (const [param, sens] of sorted.slice(0, 15)) {

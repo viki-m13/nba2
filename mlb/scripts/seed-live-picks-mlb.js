@@ -380,7 +380,10 @@ async function main() {
     existingSignals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
   } catch (e) { /* no existing signals */ }
 
-  existingSignals = existingSignals.filter(s => s.date !== today);
+  // Remove today's existing live signals (avoid duplicates), preserve backtest signals
+  existingSignals = existingSignals.filter(s => !(s.date === today && s.source === 'live'));
+  // Tag live signals so they're never overwritten by backtest exports
+  for (const sig of newSignals) sig.source = 'live';
   existingSignals.push(...newSignals);
 
   fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));

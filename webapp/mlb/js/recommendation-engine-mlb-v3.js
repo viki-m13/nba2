@@ -1771,6 +1771,7 @@ window.MLBRecommendationEngineV3 = (function () {
 
     const allSignals = [];
     const processedDates = new Set();
+    const updatedDates = new Set();
 
     for (const game of sortedGames) {
       const date = game.date;
@@ -1788,9 +1789,11 @@ window.MLBRecommendationEngineV3 = (function () {
           if (!og) continue;
 
           for (const player of (bg.players || [])) {
-            const ab = player.ab || 0;
-            if (ab < CONFIG.MIN_AB) continue;
-
+            // Note: we do NOT filter on actual at-bats here to avoid
+            // survivorship bias. The player model's gate checks handle
+            // eligibility using only pre-game data. Filtering on actual ABs
+            // would exclude players who were scratched or pulled early —
+            // bets a real bettor would have lost.
             const isHome = player.team === bg.home;
             const opponent = isHome ? bg.away : bg.home;
 
@@ -1938,7 +1941,9 @@ window.MLBRecommendationEngineV3 = (function () {
         }
       }
 
-      // Walk-forward: update models AFTER generating signals
+      // Walk-forward: update models AFTER generating signals (once per date)
+      if (updatedDates.has(game.date)) continue;
+      updatedDates.add(game.date);
       const dateBoxes = boxByDate[game.date] || [];
       for (const bg of dateBoxes) {
         const homePlayerStats = { h: 0, tb: 0, rbi: 0, r: 0, hr: 0, count: 0 };
