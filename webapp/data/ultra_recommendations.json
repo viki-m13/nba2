@@ -1,83 +1,57 @@
 {
-  "generated": "2026-03-11T13:51:59.790719",
+  "generated": "2026-03-12T18:12:36.899Z",
+  "date": "20260312",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
-  "backtest_summary": {
-    "individual_accuracy": 0.9724770642201835,
-    "total_roi": 2.8621739130434785,
-    "total_picks": 168,
-    "total_pnl": 32915
-  },
-  "tonight_picks": [
-    {
-      "bet_type": "multi_single",
-      "player": "Jalen Johnson",
-      "stat": "pra",
-      "line": 19.5,
-      "odds": -240,
-      "combined_score": 0.6938320024859385,
-      "edge": 0.19955185694261834,
-      "hit_rate": 1.0,
-      "bayesian_prob": 0.9545454545454546,
-      "suggested_wager": 50
-    },
-    {
-      "bet_type": "multi_single",
-      "player": "Desmond Bane",
-      "stat": "pra",
-      "line": 16.5,
-      "odds": -275,
-      "combined_score": 0.6765950009477382,
-      "edge": 0.17210087655046147,
-      "hit_rate": 1.0,
-      "bayesian_prob": 0.9545454545454546,
-      "suggested_wager": 50
-    },
-    {
-      "bet_type": "parlay",
-      "player": null,
-      "stat": null,
-      "line": null,
-      "odds": null,
-      "combined_score": null,
-      "edge": null,
-      "hit_rate": null,
-      "bayesian_prob": null,
-      "suggested_wager": 100,
-      "legs": [
-        {
-          "player": "Jalen Johnson",
-          "stat": "pra",
-          "line": 19.5,
-          "odds": -240,
-          "hit": true,
-          "actual": 52,
-          "combined_score": 0.6938320024859385,
-          "edge": 0.19955185694261834
-        },
-        {
-          "player": "Ty Jerome",
-          "stat": "pra",
-          "line": 14.5,
-          "odds": -174,
-          "hit": true,
-          "actual": 32,
-          "combined_score": 0.6166753196958042,
-          "edge": 0.20627445570564917
-        },
-        {
-          "player": "Desmond Bane",
-          "stat": "pra",
-          "line": 16.5,
-          "odds": -275,
-          "hit": true,
-          "actual": 37,
-          "combined_score": 0.6765950009477382,
-          "edge": 0.17210087655046147
-        }
-      ],
-      "parlay_odds": 204,
-      "parlay_ev": 1.5198118062408592
-    }
-  ]
+  "recommendation": {
+    "betType": "parlay",
+    "reasoning": "2 strong candidates for EMPC parlay construction",
+    "singles": [],
+    "parlays": [
+      {
+        "numLegs": 2,
+        "odds": -128,
+        "decimalOdds": 1.78,
+        "avgCascade": 0.624818157009214,
+        "combinedHitRate": 0.95,
+        "ev": 0.692,
+        "legs": [
+          {
+            "player": "Trae Young",
+            "team": "WSH",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 16.5,
+            "odds": -280,
+            "cascadeScore": 0.6401602985456649,
+            "gft": 0.930963593825515,
+            "beq": 0.1685921046206369,
+            "esi": 0.1803940664079345,
+            "imad": 0.22761180794103364,
+            "hitRate": 1,
+            "edge": 0.1685921046206369,
+            "hit": null,
+            "actual": null
+          },
+          {
+            "player": "Jalen Duren",
+            "team": "DET",
+            "statType": "rebounds",
+            "statLabel": "REB",
+            "line": 8.5,
+            "odds": -320,
+            "cascadeScore": 0.6094760154727629,
+            "gft": 0.6249147034791335,
+            "beq": 0.07940619015125228,
+            "esi": 0.2461491312385391,
+            "imad": 0.10792409796221678,
+            "hitRate": 0.95,
+            "edge": 0.07940619015125228,
+            "hit": null,
+            "actual": null
+          }
+        ]
+      }
+    ]
+  }
 }
