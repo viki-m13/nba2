@@ -1791,7 +1791,21 @@ def export_webapp_signals(config=None):
             }
             webapp_signals.append(signal)
 
-    # Build aggregated stats
+    # Preserve live signals (added by seed-live-picks.js) that aren't in the backtest
+    signals_path = os.path.join(DATA_DIR, 'ultra_signals.json')
+    backtest_dates = set(s['date'] for s in webapp_signals)
+    if os.path.exists(signals_path):
+        try:
+            with open(signals_path) as f:
+                existing_signals = json.load(f)
+            live_signals = [s for s in existing_signals if s.get('date', '') not in backtest_dates]
+            if live_signals:
+                webapp_signals.extend(live_signals)
+                print(f"Preserved {len(live_signals)} live signals from dates not in backtest")
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Build aggregated stats (after merging live signals)
     singles_list = [s for s in webapp_signals if s['betType'] == 'single']
     parlays_list = [s for s in webapp_signals if s['betType'] == 'parlay']
 
@@ -1844,7 +1858,6 @@ def export_webapp_signals(config=None):
     }
 
     # Save signals
-    signals_path = os.path.join(DATA_DIR, 'ultra_signals.json')
     with open(signals_path, 'w') as f:
         json.dump(webapp_signals, f, indent=2)
 

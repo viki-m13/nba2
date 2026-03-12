@@ -81,10 +81,174 @@ function getDateStr(daysAgo) {
 
 function sleep(ms) { execSync(`sleep ${ms / 1000}`); }
 
+// =============================================================================
+// Resolve pending signals against ESPN box scores
+// =============================================================================
+async function resolveResults() {
+  let signals = [];
+  try {
+    signals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
+  } catch (e) { return; }
+
+  const pending = signals.filter(s => s.hit === null || s.hit === undefined);
+  if (pending.length === 0) {
+    console.log('No pending signals to resolve.');
+    return;
+  }
+
+  const pendingDates = [...new Set(pending.map(s => s.date))].sort();
+  console.log(`Resolving ${pending.length} pending signals from ${pendingDates.length} dates...`);
+
+  let resolved = 0;
+
+  for (const date of pendingDates) {
+    try {
+      const scoreboardUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${date}`;
+      const scoreboardRes = await fetch(scoreboardUrl);
+      if (!scoreboardRes.ok) continue;
+      const scoreboardData = await scoreboardRes.json();
+
+      if (!scoreboardData.events || scoreboardData.events.length === 0) continue;
+
+      // Fetch box scores for each completed game
+      const playerStats = {}; // player -> { pts, reb, ast, pra }
+
+      for (const event of scoreboardData.events) {
+        if (event.status && event.status.type && event.status.type.completed !== true) continue;
+
+        try {
+          const boxUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${event.id}`;
+          const boxRes = await fetch(boxUrl);
+          if (!boxRes.ok) continue;
+          const boxData = await boxRes.json();
+
+          // Extract player stats from box score
+          const players = boxData.boxscore?.players || [];
+          for (const team of players) {
+            for (const statGroup of (team.statistics || [])) {
+              const headers = (statGroup.labels || []).map(l => l.toLowerCase());
+              const ptsIdx = headers.indexOf('pts');
+              const rebIdx = headers.indexOf('reb');
+              const astIdx = headers.indexOf('ast');
+
+              for (const athlete of (statGroup.athletes || [])) {
+                const name = athlete.athlete?.displayName;
+                if (!name) continue;
+                const stats = athlete.stats || [];
+                const pts = parseInt(stats[ptsIdx]) || 0;
+                const reb = parseInt(stats[rebIdx]) || 0;
+                const ast = parseInt(stats[astIdx]) || 0;
+
+                playerStats[name] = { pts, reb, ast, pra: pts + reb + ast };
+              }
+            }
+          }
+        } catch (e) { /* skip game */ }
+        sleep(100);
+      }
+
+      // Resolve signals for this date
+      for (const signal of signals) {
+        if (signal.date !== date) continue;
+        if (signal.hit !== null && signal.hit !== undefined) continue;
+
+        if (signal.betType === 'single') {
+          const ps = playerStats[signal.player];
+          if (!ps) continue;
+          const statKey = signal.stat || 'pts';
+          const actual = ps[statKey] || 0;
+          signal.actual = actual;
+          signal.hit = actual > signal.line;
+          const decimal = signal.odds > 0 ? (signal.odds / 100) + 1 : (100 / Math.abs(signal.odds)) + 1;
+          signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
+          resolved++;
+        } else if (signal.betType === 'parlay' && signal.legs) {
+          let allHit = true;
+          let anyResolved = false;
+          for (const leg of signal.legs) {
+            if (leg.hit !== null && leg.hit !== undefined) { if (!leg.hit) allHit = false; continue; }
+            const ps = playerStats[leg.player];
+            if (!ps) { allHit = false; continue; }
+            const statKey = leg.stat || 'pts';
+            const actual = ps[statKey] || 0;
+            leg.actual = actual;
+            leg.hit = actual > leg.line;
+            if (!leg.hit) allHit = false;
+            anyResolved = true;
+          }
+          if (anyResolved && signal.legs.every(l => l.hit !== null && l.hit !== undefined)) {
+            signal.hit = allHit;
+            const parlayDecimal = signal.parlay_decimal || signal.legs.reduce((d, l) => {
+              const ld = l.odds > 0 ? (l.odds / 100) + 1 : (100 / Math.abs(l.odds)) + 1;
+              return d * ld;
+            }, 1);
+            signal.pnl = allHit ? Math.round((parlayDecimal - 1) * 100) : -100;
+            resolved++;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`Error resolving date ${date}:`, e.message);
+    }
+    sleep(200);
+  }
+
+  if (resolved > 0) {
+    fs.writeFileSync(SIGNALS_FILE, JSON.stringify(signals, null, 2));
+    console.log(`Resolved ${resolved} signals.`);
+
+    // Update backtest stats
+    const singles = signals.filter(s => s.betType === 'single' && s.hit !== null && s.hit !== undefined);
+    const parlays = signals.filter(s => s.betType === 'parlay' && s.hit !== null && s.hit !== undefined);
+    const singleWins = singles.filter(s => s.hit).length;
+    const parlayWins = parlays.filter(s => s.hit).length;
+    const singlePnl = singles.reduce((s, p) => s + (p.pnl || 0), 0);
+    const parlayPnl = parlays.reduce((s, p) => s + (p.pnl || 0), 0);
+    const singleWagered = singles.length * 100;
+    const parlayWagered = parlays.length * 100;
+    const totalLegs = parlays.reduce((s, p) => s + (p.legs ? p.legs.length : 0), 0);
+    const hitLegs = parlays.reduce((s, p) => s + (p.legs ? p.legs.filter(l => l.hit).length : 0), 0);
+
+    const stats = {
+      singles: {
+        total: singles.length, wins: singleWins,
+        accuracy: singles.length > 0 ? singleWins / singles.length : 0,
+        pnl: singlePnl, wagered: singleWagered,
+        roi: singleWagered > 0 ? singlePnl / singleWagered : 0,
+      },
+      parlays: {
+        total: parlays.length, wins: parlayWins,
+        accuracy: parlays.length > 0 ? parlayWins / parlays.length : 0,
+        pnl: parlayPnl, wagered: parlayWagered,
+        roi: parlayWagered > 0 ? parlayPnl / parlayWagered : 0,
+        totalLegs, hitLegs,
+        legAccuracy: totalLegs > 0 ? hitLegs / totalLegs : 0,
+      },
+      overall: {
+        total: singles.length + parlays.length,
+        wins: singleWins + parlayWins,
+        accuracy: (singles.length + parlays.length) > 0 ? (singleWins + parlayWins) / (singles.length + parlays.length) : 0,
+        pnl: singlePnl + parlayPnl,
+        wagered: singleWagered + parlayWagered,
+        roi: (singleWagered + parlayWagered) > 0 ? (singlePnl + parlayPnl) / (singleWagered + parlayWagered) : 0,
+      },
+    };
+    fs.writeFileSync(STATS_FILE, JSON.stringify(stats, null, 2));
+    console.log('Updated backtest stats.');
+  } else {
+    console.log('No signals could be resolved (games may not be complete yet).');
+  }
+}
+
 async function main() {
   console.log('\n' + '='.repeat(60));
   console.log('ULTRA BETTING ENGINE v1.0 — Seed Live Picks');
   console.log('='.repeat(60));
+
+  // =========================================================================
+  // STEP 0: Resolve pending picks from previous days
+  // =========================================================================
+  await resolveResults();
 
   // Load optimized config if available
   try {
