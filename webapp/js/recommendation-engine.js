@@ -739,6 +739,7 @@ window.RecommendationEngine = (function () {
 
     const allSignals = [];
     const processedDates = new Set();
+    const updatedDates = new Set();
 
     for (const game of sortedGames) {
       const date = game.date;
@@ -756,9 +757,11 @@ window.RecommendationEngine = (function () {
           if (!og || !og.playerProps) continue;
 
           for (const player of (bg.players || [])) {
-            const mins = typeof player.min === 'number' ? player.min : parseInt(player.min) || 0;
-            if (mins < CONFIG.MIN_MINUTES) continue;
-
+            // Note: we do NOT filter on actual minutes played here to avoid
+            // survivorship bias. The player model's gate checks (MIN_GAMES,
+            // MIN_MINUTES on historical avg) handle eligibility using only
+            // pre-game data. Filtering on actual minutes would exclude players
+            // who got injured mid-game — bets a real bettor would have lost.
             const ptsLines = og.playerProps[player.name];
             if (ptsLines) {
               const prop = findBestProp(player.name, 'points', ptsLines);
@@ -825,18 +828,21 @@ window.RecommendationEngine = (function () {
         }
       }
 
-      // Walk-forward: update model AFTER generating signals
-      const dateBoxes = boxByDate[game.date] || [];
-      for (const bg of dateBoxes) {
-        for (const p of (bg.players || [])) {
-          const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
-          if (mins < 5) continue;
-          PlayerModel.update(p.name, {
-            pts: p.pts,
-            reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
-            ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
-            min: mins,
-          }, game.date, p.team, bg.home === p.team ? bg.away : bg.home);
+      // Walk-forward: update model AFTER generating signals (once per date)
+      if (!updatedDates.has(game.date)) {
+        updatedDates.add(game.date);
+        const dateBoxes = boxByDate[game.date] || [];
+        for (const bg of dateBoxes) {
+          for (const p of (bg.players || [])) {
+            const mins = typeof p.min === 'number' ? p.min : parseInt(p.min) || 0;
+            if (mins < 5) continue;
+            PlayerModel.update(p.name, {
+              pts: p.pts,
+              reb: typeof p.reb === 'number' ? p.reb : parseInt(p.reb) || 0,
+              ast: typeof p.ast === 'number' ? p.ast : parseInt(p.ast) || 0,
+              min: mins,
+            }, game.date, p.team, bg.home === p.team ? bg.away : bg.home);
+          }
         }
       }
     }

@@ -944,9 +944,9 @@ def run_ultra_backtest(box_scores, odds_data, config, verbose=False):
                 team = player.get('team', '')
                 home_away = 'home' if team == home_team else 'away'
 
-                mins = model._safe_int(player.get('min', 0))
-                if mins < config['MIN_MINUTES']:
-                    continue
+                # Note: we do NOT filter on actual minutes played here to
+                # avoid survivorship bias. The signal's gate checks handle
+                # eligibility using only pre-game historical data.
 
                 # Check player props
                 player_props = og.get('playerProps', {}).get(name)
@@ -1330,9 +1330,15 @@ def compute_ultra_score(results):
     return score
 
 
-def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
+def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False,
+                           test_split=0.25):
     """
     AutoResearch-style optimization loop for Ultra Engine parameters.
+
+    Uses a temporal train/test split to prevent overfitting:
+    - Parameters are optimized on the TRAIN set (earlier dates)
+    - Final performance is evaluated on the TEST set (later dates)
+    - The optimizer never sees the test data
 
     Follows the monotonic ratchet: only keeps improvements.
     """
@@ -1340,13 +1346,28 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
     print("ULTRA ENGINE - AutoResearch Optimizer")
     print("=" * 70)
 
-    # Baseline
+    # Temporal train/test split
+    all_dates = sorted(set(g['date'] for g in box_scores))
+    split_idx = int(len(all_dates) * (1 - test_split))
+    train_cutoff = all_dates[split_idx]
+
+    train_boxes = [g for g in box_scores if g['date'] < train_cutoff]
+    test_boxes = box_scores  # Full data — backtest is walk-forward so test
+                             # dates only use model state from prior dates
+
+    train_odds = [o for o in odds_data if o.get('date', '') < train_cutoff]
+    test_odds = odds_data  # Full odds — only test-date signals are new
+
+    print(f"\nTrain dates: {all_dates[0]} to {all_dates[split_idx-1]} ({split_idx} dates)")
+    print(f"Test dates:  {train_cutoff} to {all_dates[-1]} ({len(all_dates) - split_idx} dates)")
+
+    # Baseline on TRAIN set
     config = dict(ULTRA_CONFIG)
-    print("\nRunning baseline...")
-    baseline = run_ultra_backtest(box_scores, odds_data, config, verbose=verbose)
+    print("\nRunning baseline on train set...")
+    baseline = run_ultra_backtest(train_boxes, train_odds, config, verbose=verbose)
     best_score = compute_ultra_score(baseline)
 
-    _print_results("BASELINE", baseline)
+    _print_results("BASELINE (TRAIN)", baseline)
     print(f"  Score: {best_score:.4f}")
 
     best_config = dict(config)
@@ -1367,12 +1388,12 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
             new_val = current_f + random.uniform(-delta, delta)
             new_val = max(low, min(high, round(new_val, 4)))
 
-        # Test
+        # Test on TRAIN set only
         test_config = dict(best_config)
         test_config[param] = new_val
 
         start = time.time()
-        results = run_ultra_backtest(box_scores, odds_data, test_config)
+        results = run_ultra_backtest(train_boxes, train_odds, test_config)
         elapsed = time.time() - start
 
         score = compute_ultra_score(results)
@@ -1402,13 +1423,35 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
             improvements += 1
             print(f"  ** IMPROVEMENT #{improvements} **")
 
-    # Final results
+    # Final results — evaluate on FULL dataset (walk-forward ensures test
+    # dates only use model state built from train dates)
     print("\n" + "=" * 70)
     print("OPTIMIZATION COMPLETE")
     print("=" * 70)
 
-    final = run_ultra_backtest(box_scores, odds_data, best_config, verbose=True)
-    _print_results("FINAL OPTIMIZED", final)
+    train_final = run_ultra_backtest(train_boxes, train_odds, best_config, verbose=verbose)
+    _print_results("FINAL (TRAIN)", train_final)
+
+    test_final = run_ultra_backtest(test_boxes, test_odds, best_config, verbose=True)
+    _print_results("FINAL (FULL — includes out-of-sample test period)", test_final)
+
+    # Report out-of-sample performance specifically
+    # The test period picks are those in test_final but not in train_final
+    train_pick_keys = set()
+    for p in train_final.get('picks', []):
+        train_pick_keys.add((p.get('date', ''), p.get('player', ''), p.get('line', 0)))
+    test_only_picks = [p for p in test_final.get('picks', [])
+                       if (p.get('date', ''), p.get('player', ''), p.get('line', 0)) not in train_pick_keys]
+    if test_only_picks:
+        test_hits = sum(1 for p in test_only_picks if p.get('hit'))
+        test_acc = test_hits / len(test_only_picks) if test_only_picks else 0
+        test_pnl = sum(p.get('pnl', 0) for p in test_only_picks)
+        print(f"\n  OUT-OF-SAMPLE TEST PERIOD:")
+        print(f"  Picks: {len(test_only_picks)}, Wins: {test_hits}, "
+              f"Accuracy: {test_acc*100:.1f}%, P&L: ${test_pnl:+.0f}")
+    else:
+        print(f"\n  No out-of-sample picks found in test period.")
+
     print(f"\nImprovements: {improvements}/{iterations}")
 
     # Save results
@@ -1421,11 +1464,18 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
             'score': best_score,
             'improvements': improvements,
             'iterations': iterations,
+            'train_cutoff': train_cutoff,
             'results': {
-                'individual_accuracy': final['individual_accuracy'],
-                'total_roi': final['total_roi'],
-                'total_picks': final['total_picks'],
-                'total_pnl': final['total_pnl'],
+                'individual_accuracy': train_final['individual_accuracy'],
+                'total_roi': train_final['total_roi'],
+                'total_picks': train_final['total_picks'],
+                'total_pnl': train_final['total_pnl'],
+            },
+            'test_results': {
+                'individual_accuracy': test_final['individual_accuracy'],
+                'total_roi': test_final['total_roi'],
+                'total_picks': test_final['total_picks'],
+                'total_pnl': test_final['total_pnl'],
             },
             'generated': datetime.now().isoformat(),
         }, f, indent=2)
@@ -1434,7 +1484,7 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False):
     with open(log_path, 'w') as f:
         json.dump(results_log, f, indent=2)
 
-    return best_config, best_score, final
+    return best_config, best_score, test_final
 
 
 def _print_results(label, r):
@@ -1791,17 +1841,25 @@ def export_webapp_signals(config=None):
             }
             webapp_signals.append(signal)
 
-    # Preserve live signals (added by seed-live-picks.js) that aren't in the backtest
+    # Preserve live signals (added by seed-live-picks.js)
+    # Live signals are tagged with source='live' and are NEVER overwritten
+    # by backtest signals, even for overlapping dates. This prevents the
+    # live track record from being contaminated with hindsight-biased
+    # backtest results.
     signals_path = os.path.join(DATA_DIR, 'ultra_signals.json')
     backtest_dates = set(s['date'] for s in webapp_signals)
     if os.path.exists(signals_path):
         try:
             with open(signals_path) as f:
                 existing_signals = json.load(f)
-            live_signals = [s for s in existing_signals if s.get('date', '') not in backtest_dates]
-            if live_signals:
-                webapp_signals.extend(live_signals)
-                print(f"Preserved {len(live_signals)} live signals from dates not in backtest")
+            live_signals = [s for s in existing_signals if s.get('source') == 'live']
+            non_overlap = [s for s in existing_signals
+                           if s.get('date', '') not in backtest_dates
+                           and s.get('source') != 'live']
+            preserved = live_signals + non_overlap
+            if preserved:
+                webapp_signals.extend(preserved)
+                print(f"Preserved {len(live_signals)} live signals + {len(non_overlap)} non-overlapping signals")
         except (json.JSONDecodeError, IOError):
             pass
 
