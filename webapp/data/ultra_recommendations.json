@@ -1,57 +1,12 @@
 {
-  "generated": "2026-03-12T18:12:36.899Z",
-  "date": "20260312",
+  "generated": "2026-03-13T17:39:30.000Z",
+  "date": "20260313",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "parlay",
-    "reasoning": "2 strong candidates for EMPC parlay construction",
+    "betType": "none",
+    "reasoning": "No bets meet quality thresholds tonight",
     "singles": [],
-    "parlays": [
-      {
-        "numLegs": 2,
-        "odds": -128,
-        "decimalOdds": 1.78,
-        "avgCascade": 0.624818157009214,
-        "combinedHitRate": 0.95,
-        "ev": 0.692,
-        "legs": [
-          {
-            "player": "Trae Young",
-            "team": "WSH",
-            "statType": "pra",
-            "statLabel": "PRA",
-            "line": 16.5,
-            "odds": -280,
-            "cascadeScore": 0.6401602985456649,
-            "gft": 0.930963593825515,
-            "beq": 0.1685921046206369,
-            "esi": 0.1803940664079345,
-            "imad": 0.22761180794103364,
-            "hitRate": 1,
-            "edge": 0.1685921046206369,
-            "hit": null,
-            "actual": null
-          },
-          {
-            "player": "Jalen Duren",
-            "team": "DET",
-            "statType": "rebounds",
-            "statLabel": "REB",
-            "line": 8.5,
-            "odds": -320,
-            "cascadeScore": 0.6094760154727629,
-            "gft": 0.6249147034791335,
-            "beq": 0.07940619015125228,
-            "esi": 0.2461491312385391,
-            "imad": 0.10792409796221678,
-            "hitRate": 0.95,
-            "edge": 0.07940619015125228,
-            "hit": null,
-            "actual": null
-          }
-        ]
-      }
-    ]
+    "parlays": []
   }
 }

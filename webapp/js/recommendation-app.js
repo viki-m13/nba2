@@ -139,11 +139,50 @@
     console.log(`[REC-APP] PlayerModel populated with ${Object.keys(ENGINE.PlayerModel.profiles).length} players`);
   }
 
+  function computeStatsFromSignals(signals) {
+    const resolved = signals.filter(s => s.hit !== null && s.hit !== undefined);
+    const singles = resolved.filter(s => s.betType === 'single' || s.betSubType === 'multi_single');
+    const parlays = resolved.filter(s => s.betType === 'parlay');
+
+    const sWins = singles.filter(s => s.hit === true).length;
+    const pWins = parlays.filter(s => s.hit === true).length;
+    const sPnl = singles.reduce((sum, s) => sum + (s.pnl || 0), 0);
+    const pPnl = parlays.reduce((sum, s) => sum + (s.pnl || 0), 0);
+    const unitSize = ENGINE.CONFIG.UNIT_SIZE || 100;
+
+    let totalLegs = 0, hitLegs = 0;
+    parlays.forEach(p => {
+      (p.legs || []).forEach(l => { totalLegs++; if (l.hit === true) hitLegs++; });
+    });
+
+    return {
+      singles: {
+        total: singles.length, wins: sWins,
+        accuracy: singles.length > 0 ? sWins / singles.length : 0,
+        pnl: sPnl, roi: singles.length > 0 ? sPnl / (singles.length * unitSize) : 0,
+      },
+      parlays: {
+        total: parlays.length, wins: pWins,
+        accuracy: parlays.length > 0 ? pWins / parlays.length : 0,
+        pnl: pPnl, roi: parlays.length > 0 ? pPnl / (parlays.length * unitSize) : 0,
+        totalLegs, hitLegs,
+        legAccuracy: totalLegs > 0 ? hitLegs / totalLegs : 0,
+      },
+      overall: {
+        total: resolved.length, wins: sWins + pWins,
+        accuracy: resolved.length > 0 ? (sWins + pWins) / resolved.length : 0,
+        pnl: sPnl + pPnl,
+        roi: resolved.length > 0 ? (sPnl + pPnl) / (resolved.length * unitSize) : 0,
+      },
+    };
+  }
+
   function runBacktestAndDisplay() {
-    if (ultraStats && allSignals.length > 0) {
-      // Use pre-computed Ultra Engine results for dashboard/history
-      console.log('[ULTRA] Using pre-computed backtest results');
-      backtestResults = { stats: ultraStats, signals: allSignals };
+    if (allSignals.length > 0) {
+      // Compute stats directly from signals (source of truth)
+      console.log('[ULTRA] Computing stats from signals');
+      const stats = computeStatsFromSignals(allSignals);
+      backtestResults = { stats, signals: allSignals };
       populatePlayerModel();
       renderDashboard();
       renderTierCards();
@@ -215,8 +254,9 @@
         console.warn('[REC-APP] Could not load pre-generated recommendations:', e);
       }
 
-      // Check if we have pre-generated picks for today
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      // Check if we have pre-generated picks for today (use local date to match cron's EST-based date)
+      const now = new Date();
+      const today = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
       const recommendation = recsData && recsData.recommendation;
       const recsDate = recsData && recsData.date;
 
