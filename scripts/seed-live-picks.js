@@ -294,6 +294,13 @@ async function main() {
 
   if (!events || events.length === 0) {
     console.log('No games scheduled tonight.');
+    // Write empty recommendations so the webapp knows the cron ran today
+    const today = getDateStr(0);
+    fs.writeFileSync(RECS_FILE, JSON.stringify({
+      generated: new Date().toISOString(), date: today,
+      engine: 'Ultra Engine v1.0', config_version: 'optimized',
+      recommendation: { betType: 'none', reasoning: 'No games scheduled tonight', singles: [], parlays: [] },
+    }, null, 2));
     return;
   }
 
@@ -349,6 +356,12 @@ async function main() {
 
   if (Object.keys(liveOdds.playerProps).length === 0) {
     console.log('\nNo FanDuel player props available. Props typically open 1-2 hours before game time.');
+    const today = getDateStr(0);
+    fs.writeFileSync(RECS_FILE, JSON.stringify({
+      generated: new Date().toISOString(), date: today,
+      engine: 'Ultra Engine v1.0', config_version: 'optimized',
+      recommendation: { betType: 'none', reasoning: 'No FanDuel player props available yet', singles: [], parlays: [] },
+    }, null, 2));
     return;
   }
 
@@ -358,6 +371,12 @@ async function main() {
 
   if (!recommendation || (recommendation.singles.length === 0 && recommendation.parlays.length === 0)) {
     console.log('No bets meet Ultra Engine quality thresholds tonight.');
+    const today = getDateStr(0);
+    fs.writeFileSync(RECS_FILE, JSON.stringify({
+      generated: new Date().toISOString(), date: today,
+      engine: 'Ultra Engine v1.0', config_version: 'optimized',
+      recommendation: { betType: 'none', reasoning: 'No bets meet quality thresholds tonight', singles: [], parlays: [] },
+    }, null, 2));
     return;
   }
 
