@@ -311,7 +311,8 @@ async function main() {
 
   for (const event of events) {
     try {
-      const markets = 'player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate';
+      // Fetch both primary and alternate markets to get the full range of lines
+      const markets = 'player_points,player_rebounds,player_assists,player_points_rebounds_assists,player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate';
       const propsUrl = `${ODDS_API_BASE}/sports/basketball_nba/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
       const propsRes = await fetch(propsUrl);
       if (!propsRes.ok) continue;
@@ -326,9 +327,13 @@ async function main() {
 
       const gameProps = { lines: {}, rebLines: {}, astLines: {}, praLines: {} };
       const marketMap = {
+        'player_points': 'lines',
         'player_points_alternate': 'lines',
+        'player_rebounds': 'rebLines',
         'player_rebounds_alternate': 'rebLines',
+        'player_assists': 'astLines',
         'player_assists_alternate': 'astLines',
+        'player_points_rebounds_assists': 'praLines',
         'player_points_rebounds_assists_alternate': 'praLines',
       };
 

@@ -647,32 +647,28 @@
 
     container.innerHTML = `
       <div class="stat-card highlight">
-        <div class="stat-value">${(singles.accuracy * 100).toFixed(1)}%</div>
-        <div class="stat-label">Singles Accuracy</div>
+        <div class="stat-value">${(overall.accuracy * 100).toFixed(1)}%</div>
+        <div class="stat-label">Overall Accuracy</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${singles.wins}-${singles.total - singles.wins}</div>
-        <div class="stat-label">Singles Record</div>
-      </div>
-      <div class="stat-card" style="border-color: ${singles.roi >= 0 ? '#22c55e' : '#ef4444'};">
-        <div class="stat-value" style="color: ${singles.roi >= 0 ? '#22c55e' : '#ef4444'};">${singles.roi >= 0 ? '+' : ''}${(singles.roi * 100).toFixed(1)}%</div>
-        <div class="stat-label">Singles ROI</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">${(parlays.accuracy * 100).toFixed(1)}%</div>
-        <div class="stat-label">Parlay Win Rate</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">${parlays.wins}-${parlays.total - parlays.wins}</div>
-        <div class="stat-label">Parlay Record</div>
+        <div class="stat-value">${overall.wins}-${overall.total - overall.wins}</div>
+        <div class="stat-label">Overall Record</div>
       </div>
       <div class="stat-card" style="border-color: ${overall.pnl >= 0 ? '#22c55e' : '#ef4444'};">
         <div class="stat-value" style="color: ${overall.pnl >= 0 ? '#22c55e' : '#ef4444'};">$${overall.pnl >= 0 ? '+' : ''}${Math.round(overall.pnl)}</div>
         <div class="stat-label">Total P&L ($100/bet)</div>
       </div>
       <div class="stat-card" style="border-color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">
-        <div class="stat-value" style="color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">${overall.roi >= 0 ? '+' : ''}${(overall.roi * 100).toFixed(0)}%</div>
+        <div class="stat-value" style="color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">${overall.roi >= 0 ? '+' : ''}${(overall.roi * 100).toFixed(1)}%</div>
         <div class="stat-label">Overall ROI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${singles.wins}-${singles.total - singles.wins}</div>
+        <div class="stat-label">Singles Record</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${parlays.wins}-${parlays.total - parlays.wins}</div>
+        <div class="stat-label">Parlay Record</div>
       </div>
     `;
   }

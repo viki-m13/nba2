@@ -772,12 +772,59 @@ window.RecommendationEngine = (function () {
                 prop.date = date;
                 candidates.push(prop);
               }
+
+              // Synthetic PRA: evaluate points lines as PRA thresholds
+              // (matches Python backtest — ultra_engine.py lines 993-1022)
+              const praProp = findBestProp(player.name, 'pra', ptsLines);
+              if (praProp) {
+                const actualPra = (parseInt(player.pts) || 0) + (parseInt(player.reb) || 0) + (parseInt(player.ast) || 0);
+                praProp.actual = actualPra;
+                praProp.hit = actualPra > praProp.line;
+                praProp.gameKey = gameKey;
+                praProp.date = date;
+                candidates.push(praProp);
+              }
+            }
+
+            // Also check reb/ast lines from historical data
+            const rebLines = og.rebProps && og.rebProps[player.name];
+            if (rebLines) {
+              const prop = findBestProp(player.name, 'rebounds', rebLines);
+              if (prop) {
+                prop.actual = parseInt(player.reb) || 0;
+                prop.hit = prop.actual > prop.line;
+                prop.gameKey = gameKey;
+                prop.date = date;
+                candidates.push(prop);
+              }
+            }
+            const astLines = og.astProps && og.astProps[player.name];
+            if (astLines) {
+              const prop = findBestProp(player.name, 'assists', astLines);
+              if (prop) {
+                prop.actual = parseInt(player.ast) || 0;
+                prop.hit = prop.actual > prop.line;
+                prop.gameKey = gameKey;
+                prop.date = date;
+                candidates.push(prop);
+              }
             }
           }
         }
 
-        if (candidates.length > 0) {
-          const recommendation = selectBetType(candidates);
+        // Deduplicate: keep best cascade score per player per day
+        candidates.sort((a, b) => b.cascadeScore - a.cascadeScore);
+        const seenPlayers = new Set();
+        const dedupedCandidates = [];
+        for (const c of candidates) {
+          if (!seenPlayers.has(c.player)) {
+            seenPlayers.add(c.player);
+            dedupedCandidates.push(c);
+          }
+        }
+
+        if (dedupedCandidates.length > 0) {
+          const recommendation = selectBetType(dedupedCandidates);
 
           for (const single of recommendation.singles) {
             allSignals.push({
@@ -917,6 +964,16 @@ window.RecommendationEngine = (function () {
             prop.gameDisplay = gameKey.replace('@', ' @ ');
             candidates.push(prop);
           }
+
+          // Synthetic PRA: evaluate POINTS lines as PRA thresholds (matches
+          // Python backtest behaviour — points alternate lines at moderate odds
+          // become high-hit-rate PRA bets since PRA >> points alone)
+          const praProp = findBestProp(playerName, 'pra', lines);
+          if (praProp) {
+            praProp.gameKey = gameKey;
+            praProp.gameDisplay = gameKey.replace('@', ' @ ');
+            candidates.push(praProp);
+          }
         }
       }
 
@@ -944,7 +1001,7 @@ window.RecommendationEngine = (function () {
         }
       }
 
-      // PRA (Points + Rebounds + Assists)
+      // PRA (Points + Rebounds + Assists) — from dedicated PRA market
       if (gameData.praLines) {
         for (const [playerName, lines] of Object.entries(gameData.praLines)) {
           const prop = findBestProp(playerName, 'pra', lines);
@@ -957,9 +1014,20 @@ window.RecommendationEngine = (function () {
       }
     }
 
-    console.log(`[ULTRA-JS] Evaluated ${Object.keys(liveOdds.playerProps).length} games, found ${candidates.length} candidates passing all 6 gates`);
+    // Deduplicate: keep best cascade score per player (matches Python backtest)
+    candidates.sort((a, b) => b.cascadeScore - a.cascadeScore);
+    const seen = new Set();
+    const deduped = [];
+    for (const c of candidates) {
+      if (!seen.has(c.player)) {
+        seen.add(c.player);
+        deduped.push(c);
+      }
+    }
 
-    return selectBetType(candidates);
+    console.log(`[ULTRA-JS] Evaluated ${Object.keys(liveOdds.playerProps).length} games, found ${deduped.length} candidates passing all 6 gates (${candidates.length} before dedup)`);
+
+    return selectBetType(deduped);
   }
 
   // =========================================================================
