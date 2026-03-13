@@ -1,12 +1,113 @@
 {
-  "generated": "2026-03-13T17:39:30.000Z",
+  "generated": "2026-03-13T18:54:56.572Z",
   "date": "20260313",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "none",
-    "reasoning": "No bets meet quality thresholds tonight",
-    "singles": [],
-    "parlays": []
+    "betType": "parlay",
+    "reasoning": "18 strong candidates for EMPC parlay construction",
+    "singles": [
+      {
+        "player": "Olivier-Maxence Prosper",
+        "team": "MEM",
+        "statType": "pra",
+        "statLabel": "PRA",
+        "line": 9.5,
+        "odds": -140,
+        "cascadeScore": 0.6713384919895873,
+        "gft": 0.7885211823275939,
+        "beq": 0.2338093994957232,
+        "esi": 0.25760413523091,
+        "imad": 0.2876837452796262,
+        "hitRate": 0.9411764705882353,
+        "edge": 0.2338093994957232,
+        "ev": 0.4008161134212398,
+        "avg": 19.058823529411764,
+        "floor": 15.193713338702041,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null
+      }
+    ],
+    "parlays": [
+      {
+        "numLegs": 4,
+        "odds": 887,
+        "decimalOdds": 9.87,
+        "avgCascade": 0.6294276715315202,
+        "combinedHitRate": 0.9,
+        "ev": 7.881,
+        "legs": [
+          {
+            "player": "Dejounte Murray",
+            "team": "NO",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 16.5,
+            "odds": -118,
+            "cascadeScore": 0.6309440797458393,
+            "gft": 0.5702982483469996,
+            "beq": 0.36414980621407,
+            "esi": 0.2778826558265582,
+            "imad": 0.4280439390053979,
+            "hitRate": 1,
+            "edge": 0.36414980621407,
+            "hit": null,
+            "actual": null
+          },
+          {
+            "player": "Oso Ighodaro",
+            "team": "PHX",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 6.5,
+            "odds": -130,
+            "cascadeScore": 0.6574181839703683,
+            "gft": 0.8717854324954672,
+            "beq": 0.29760270375406583,
+            "esi": 0.21426796341135326,
+            "imad": 0.35051956496976544,
+            "hitRate": 1,
+            "edge": 0.29760270375406583,
+            "hit": null,
+            "actual": null
+          },
+          {
+            "player": "James Harden",
+            "team": "CLE",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 19.5,
+            "odds": -172,
+            "cascadeScore": 0.627504706429873,
+            "gft": 0.7466070382075203,
+            "beq": 0.2730812687073242,
+            "esi": 0.20767100767754093,
+            "imad": 0.33346481909120124,
+            "hitRate": 1,
+            "edge": 0.2730812687073242,
+            "hit": null,
+            "actual": null
+          },
+          {
+            "player": "Karl-Anthony Towns",
+            "team": "NY",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 20.5,
+            "odds": -110,
+            "cascadeScore": 0.6018437159800002,
+            "gft": 0.5974886241335822,
+            "beq": 0.25891562508929933,
+            "esi": 0.2195863198458575,
+            "imad": 0.31989494108159217,
+            "hitRate": 0.9,
+            "edge": 0.25891562508929933,
+            "hit": null,
+            "actual": null
+          }
+        ]
+      }
+    ]
   }
 }

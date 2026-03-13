@@ -28,15 +28,20 @@ echo "ULTRA BETTING ENGINE v1.0 — Daily Run"
 echo "Date: $(TZ=America/New_York date '+%Y-%m-%d %H:%M:%S %Z')"
 echo "============================================================"
 
-# Step 1: Resolve pending picks and export updated backtest signals (Python)
+# Step 1: Fetch latest box scores and odds from ESPN + The Odds API
 echo ""
-echo "--- Step 1: Resolve pending picks + export backtest ---"
+echo "--- Step 1: Fetch latest box scores + odds ---"
 cd "$PROJECT_DIR"
+node scripts/fetch-current-season.js 2>&1
+
+# Step 2: Resolve pending picks and export updated backtest signals (Python)
+echo ""
+echo "--- Step 2: Resolve pending picks + export backtest ---"
 python3 src/generate_nightly_picks.py 2>&1
 
-# Step 2: Generate tonight's live picks using Odds API (Node.js)
+# Step 3: Generate tonight's live picks using Odds API (Node.js)
 echo ""
-echo "--- Step 2: Generate tonight's picks from live odds ---"
+echo "--- Step 3: Generate tonight's picks from live odds ---"
 node scripts/seed-live-picks.js 2>&1
 
 echo ""

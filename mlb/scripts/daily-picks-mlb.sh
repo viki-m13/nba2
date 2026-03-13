@@ -27,18 +27,23 @@ echo "MLB ULTRA BETTING ENGINE v3.0 — Daily Run"
 echo "Date: $(TZ=America/New_York date '+%Y-%m-%d %H:%M:%S %Z')"
 echo "============================================================"
 
-# Step 1: Copy latest v3 config to webapp data dir
+# Step 1: Fetch latest MLB box scores from ESPN
 echo ""
-echo "--- Step 1: Sync v3 config to webapp ---"
+echo "--- Step 1: Fetch latest MLB box scores ---"
 cd "$PROJECT_DIR"
+node mlb/scripts/fetch-mlb-season.js 2>&1
+
+# Step 2: Copy latest v3 config to webapp data dir
+echo ""
+echo "--- Step 2: Sync v3 config to webapp ---"
 if [ -f "mlb/output/mlb_ultra_engine_v3_config.json" ]; then
   cp mlb/output/mlb_ultra_engine_v3_config.json mlb/webapp/data/mlb_ultra_engine_v3_config.json
   echo "Config synced."
 fi
 
-# Step 2: Generate tonight's live picks using Odds API (Node.js)
+# Step 3: Generate tonight's live picks using Odds API (Node.js)
 echo ""
-echo "--- Step 2: Resolve results + generate tonight's MLB picks ---"
+echo "--- Step 3: Resolve results + generate tonight's MLB picks ---"
 node mlb/scripts/seed-live-picks-mlb.js 2>&1
 
 # Step 3: Sync data files to webapp serving directory
