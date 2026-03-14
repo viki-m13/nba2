@@ -289,14 +289,23 @@ async function main() {
   }
   console.log(`Player model built with ${Object.keys(ENGINE.PlayerModel.profiles).length} players`);
 
-  // Fetch tonight's games
+  // Fetch tonight's games (regular season + preseason/spring training)
   console.log('\nFetching tonight\'s games from Odds API...');
   let events = [];
   try {
-    const eventsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`;
-    const eventsRes = await fetch(eventsUrl);
-    if (eventsRes.ok) {
-      events = await eventsRes.json();
+    const [regRes, preRes] = await Promise.all([
+      fetch(`${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+      fetch(`${ODDS_API_BASE}/sports/baseball_mlb_preseason/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+    ]);
+    if (regRes && regRes.ok) {
+      const regEvents = await regRes.json();
+      events.push(...regEvents);
+    }
+    if (preRes && preRes.ok) {
+      const preEvents = await preRes.json();
+      // Tag preseason events so we use the right sport key for odds
+      for (const e of preEvents) e._sportKey = 'baseball_mlb_preseason';
+      events.push(...preEvents);
     }
   } catch (e) {
     console.warn('Could not fetch events:', e.message);
@@ -321,7 +330,8 @@ async function main() {
   for (const event of events) {
     try {
       const markets = 'batter_hits,batter_total_bases,batter_rbis,batter_runs_scored';
-      const propsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
+      const sportKey = event._sportKey || 'baseball_mlb';
+      const propsUrl = `${ODDS_API_BASE}/sports/${sportKey}/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
       const propsRes = await fetch(propsUrl);
       if (!propsRes.ok) continue;
 
@@ -398,11 +408,16 @@ async function main() {
     existingSignals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
   } catch (e) { /* no existing signals */ }
 
-  // Remove today's existing live signals (avoid duplicates), preserve backtest signals
+  // Remove today's existing live signals (avoid duplicates)
   existingSignals = existingSignals.filter(s => !(s.date === today && s.source === 'live'));
   // Tag live signals so they're never overwritten by backtest exports
   for (const sig of newSignals) sig.source = 'live';
   existingSignals.push(...newSignals);
+
+  // Remove backtest signals for any date that has live picks (backtest signals
+  // for live dates are retroactive and were never shown to the user)
+  const liveDates = new Set(existingSignals.filter(s => s.source === 'live').map(s => s.date));
+  existingSignals = existingSignals.filter(s => s.source === 'live' || !liveDates.has(s.date));
 
   fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));
 

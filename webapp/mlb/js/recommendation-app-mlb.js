@@ -209,17 +209,33 @@
       // runs once daily and captures the picks at a fixed point in time.
       gamesStatus.textContent = 'Loading tonight\'s picks...';
 
-      // Fetch tonight's games for the schedule display
+      // Fetch tonight's games from The Odds API (regular season + preseason/spring training)
       let events = [];
       try {
-        const eventsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`;
-        const eventsRes = await fetch(eventsUrl);
-        if (eventsRes.ok) {
-          events = await eventsRes.json();
+        const [regRes, preRes] = await Promise.all([
+          fetch(`${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+          fetch(`${ODDS_API_BASE}/sports/baseball_mlb_preseason/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+        ]);
+        if (regRes && regRes.ok) {
+          const regEvents = await regRes.json();
+          events.push(...regEvents);
+        }
+        if (preRes && preRes.ok) {
+          const preEvents = await preRes.json();
+          events.push(...preEvents);
         }
       } catch (e) {
         console.warn('[ULTRA-MLB] Could not fetch events:', e);
       }
+
+      // Filter to today's games only
+      const now = new Date();
+      const todayStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+      events = events.filter(e => {
+        if (!e.commence_time) return false;
+        const gameDate = new Date(e.commence_time).toLocaleDateString('en-CA');
+        return gameDate === todayStr;
+      });
 
       renderTonightGames(events);
 

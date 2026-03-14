@@ -304,7 +304,7 @@
       try {
         // Format date for ESPN API (YYYYMMDD)
         const espnDate = date;
-        const espnUrl = `/api/nba?source=espn-scoreboard&date=${espnDate}`;
+        const espnUrl = `/api/nba?endpoint=espn_scoreboard&dates=${espnDate}`;
         let scoreboardData;
 
         try {
@@ -342,7 +342,7 @@
           // Fetch detailed box score
           const eventId = event.id;
           try {
-            let boxUrl = `/api/nba?source=espn-summary&eventId=${eventId}`;
+            let boxUrl = `/api/nba?endpoint=espn_summary&eventId=${eventId}`;
             let boxRes;
             try {
               boxRes = await fetch(boxUrl);
@@ -385,12 +385,29 @@
 
         if (Object.keys(playerStats).length === 0) continue;
 
+        // Check if all games are final (used to detect DNP players)
+        const allGamesFinal = events.length > 0 && events.every(e => {
+          const status = e.status?.type?.name || e.status?.type?.description || '';
+          return status.toLowerCase().includes('final');
+        });
+
         // Resolve pending picks for this date
         const datePending = pending.filter(s => s.date === date);
         for (const signal of datePending) {
           if (signal.betType === 'single') {
             const pData = playerStats[signal.player];
-            if (!pData) continue;
+            if (!pData) {
+              // Player DNP — if all games final, mark as loss (0 stats)
+              if (allGamesFinal) {
+                signal.actual = 0;
+                signal.hit = false;
+                signal.dnp = true;
+                const decimal = ENGINE.americanToDecimal(signal.odds || -110);
+                signal.pnl = -100;
+                resolvedCount++;
+              }
+              continue;
+            }
             const statKey = signal.stat || 'pts';
             const actual = statKey === 'pra' ? pData.pra : (pData[statKey] || 0);
             signal.actual = actual;
@@ -400,20 +417,44 @@
             resolvedCount++;
           } else if (signal.betType === 'parlay') {
             let allLegsResolved = true;
+            let hasVoidedLeg = false;
             for (const leg of (signal.legs || [])) {
               if (leg.hit !== null && leg.hit !== undefined) continue;
               const pData = playerStats[leg.player];
-              if (!pData) { allLegsResolved = false; continue; }
+              if (!pData) {
+                // Player DNP — if all games final, void the leg
+                if (allGamesFinal) {
+                  leg.actual = 0;
+                  leg.hit = null;
+                  leg.dnp = true;
+                  hasVoidedLeg = true;
+                } else {
+                  allLegsResolved = false;
+                }
+                continue;
+              }
               const statKey = leg.stat || 'pts';
               const actual = statKey === 'pra' ? pData.pra : (pData[statKey] || 0);
               leg.actual = actual;
               leg.hit = actual > (leg.line || 0);
             }
-            if (allLegsResolved && signal.legs.every(l => l.hit !== null && l.hit !== undefined)) {
-              signal.hit = signal.legs.every(l => l.hit);
-              const decimal = signal.parlay_decimal || 1;
-              signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
-              resolvedCount++;
+            if (allLegsResolved) {
+              const activeLegs = signal.legs.filter(l => !l.dnp);
+              const voidedLegs = signal.legs.filter(l => l.dnp);
+              if (activeLegs.length > 0 && activeLegs.every(l => l.hit !== null && l.hit !== undefined)) {
+                signal.hit = activeLegs.every(l => l.hit);
+                if (hasVoidedLeg && activeLegs.length > 0) {
+                  // Recalculate odds for reduced parlay (voided legs removed)
+                  const reducedDecimal = activeLegs.reduce((prod, l) => {
+                    return prod * ENGINE.americanToDecimal(l.odds || -110);
+                  }, 1);
+                  signal.pnl = signal.hit ? Math.round((reducedDecimal - 1) * 100) : -100;
+                } else {
+                  const decimal = signal.parlay_decimal || 1;
+                  signal.pnl = signal.hit ? Math.round((decimal - 1) * 100) : -100;
+                }
+                resolvedCount++;
+              }
             }
           }
         }
