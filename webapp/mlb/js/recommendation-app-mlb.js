@@ -425,10 +425,6 @@
     const container = document.getElementById('mlb-tonight-games');
     if (!container) return;
 
-    const dateStr = new Date().toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-
     if (!events || events.length === 0) {
       container.innerHTML = '';
       return;
@@ -438,10 +434,12 @@
       const away = teamAbbr(e.away_team);
       const home = teamAbbr(e.home_team);
       let timeStr = 'TBD';
+      let dateStr = '';
       if (e.commence_time) {
         try {
           const d = new Date(e.commence_time);
           timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+          dateStr = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         } catch (err) { timeStr = 'TBD'; }
       }
 
