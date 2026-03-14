@@ -250,7 +250,8 @@
       picksStatus.textContent = 'Loading recommendations...';
       let recsData = null;
       try {
-        const recsRes = await fetch('data/mlb_ultra_recommendations.json');
+        const basePath = window.MLB_DATA_PATH || 'mlb/data';
+        const recsRes = await fetch(`${basePath}/mlb_ultra_recommendations.json`);
         if (recsRes.ok) {
           recsData = await recsRes.json();
         }
@@ -259,7 +260,6 @@
       }
 
       // Check if we have pre-generated picks for today (use local date to match cron's EST-based date)
-      const now = new Date();
       const today = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
       const recommendation = recsData && recsData.recommendation;
       const recsDate = recsData && recsData.date;

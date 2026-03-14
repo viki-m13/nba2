@@ -128,10 +128,50 @@
     console.log(`[ULTRA-MLB] PlayerModel populated with ${Object.keys(ENGINE.PlayerModel.profiles).length} players`);
   }
 
+  function computeStatsFromSignals(signals) {
+    const resolved = signals.filter(s => s.hit !== null && s.hit !== undefined);
+    const singles = resolved.filter(s => s.betType === 'single' || s.betSubType === 'multi_single');
+    const parlays = resolved.filter(s => s.betType === 'parlay');
+
+    const sWins = singles.filter(s => s.hit === true).length;
+    const pWins = parlays.filter(s => s.hit === true).length;
+    const sPnl = singles.reduce((sum, s) => sum + (s.pnl || 0), 0);
+    const pPnl = parlays.reduce((sum, s) => sum + (s.pnl || 0), 0);
+    const unitSize = ENGINE.CONFIG.UNIT_SIZE || 100;
+
+    let totalLegs = 0, hitLegs = 0;
+    parlays.forEach(p => {
+      (p.legs || []).forEach(l => { totalLegs++; if (l.hit === true) hitLegs++; });
+    });
+
+    return {
+      singles: {
+        total: singles.length, wins: sWins,
+        accuracy: singles.length > 0 ? sWins / singles.length : 0,
+        pnl: sPnl, roi: singles.length > 0 ? sPnl / (singles.length * unitSize) : 0,
+      },
+      parlays: {
+        total: parlays.length, wins: pWins,
+        accuracy: parlays.length > 0 ? pWins / parlays.length : 0,
+        pnl: pPnl, roi: parlays.length > 0 ? pPnl / (parlays.length * unitSize) : 0,
+        totalLegs, hitLegs,
+        legAccuracy: totalLegs > 0 ? hitLegs / totalLegs : 0,
+      },
+      overall: {
+        total: resolved.length, wins: sWins + pWins,
+        accuracy: resolved.length > 0 ? (sWins + pWins) / resolved.length : 0,
+        pnl: sPnl + pPnl,
+        roi: resolved.length > 0 ? (sPnl + pPnl) / (resolved.length * unitSize) : 0,
+      },
+    };
+  }
+
   function runBacktestAndDisplay() {
-    if (ultraStats && allSignals.length > 0) {
-      console.log('[ULTRA-MLB] Using pre-computed backtest results');
-      backtestResults = { stats: ultraStats, signals: allSignals };
+    if (allSignals.length > 0) {
+      // Compute stats directly from signals (source of truth)
+      console.log('[ULTRA-MLB] Computing stats from signals');
+      const stats = computeStatsFromSignals(allSignals);
+      backtestResults = { stats, signals: allSignals };
       populatePlayerModel();
       renderDashboard();
       renderTierCards();
@@ -169,17 +209,33 @@
       // runs once daily and captures the picks at a fixed point in time.
       gamesStatus.textContent = 'Loading tonight\'s picks...';
 
-      // Fetch tonight's games for the schedule display
+      // Fetch tonight's games from The Odds API (regular season + preseason/spring training)
       let events = [];
       try {
-        const eventsUrl = `${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`;
-        const eventsRes = await fetch(eventsUrl);
-        if (eventsRes.ok) {
-          events = await eventsRes.json();
+        const [regRes, preRes] = await Promise.all([
+          fetch(`${ODDS_API_BASE}/sports/baseball_mlb/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+          fetch(`${ODDS_API_BASE}/sports/baseball_mlb_preseason/events?apiKey=${ODDS_API_KEY}`).catch(() => null),
+        ]);
+        if (regRes && regRes.ok) {
+          const regEvents = await regRes.json();
+          events.push(...regEvents);
+        }
+        if (preRes && preRes.ok) {
+          const preEvents = await preRes.json();
+          events.push(...preEvents);
         }
       } catch (e) {
         console.warn('[ULTRA-MLB] Could not fetch events:', e);
       }
+
+      // Filter to today's games only
+      const now = new Date();
+      const todayStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+      events = events.filter(e => {
+        if (!e.commence_time) return false;
+        const gameDate = new Date(e.commence_time).toLocaleDateString('en-CA');
+        return gameDate === todayStr;
+      });
 
       renderTonightGames(events);
 
@@ -194,7 +250,8 @@
       picksStatus.textContent = 'Loading recommendations...';
       let recsData = null;
       try {
-        const recsRes = await fetch('data/mlb_ultra_recommendations.json');
+        const basePath = window.MLB_DATA_PATH || 'mlb/data';
+        const recsRes = await fetch(`${basePath}/mlb_ultra_recommendations.json`);
         if (recsRes.ok) {
           recsData = await recsRes.json();
         }
@@ -202,8 +259,8 @@
         console.warn('[ULTRA-MLB] Could not load pre-generated recommendations:', e);
       }
 
-      // Check if we have pre-generated picks for today
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      // Check if we have pre-generated picks for today (use local date to match cron's EST-based date)
+      const today = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
       const recommendation = recsData && recsData.recommendation;
       const recsDate = recsData && recsData.date;
 
@@ -560,32 +617,28 @@
 
     container.innerHTML = `
       <div class="stat-card highlight">
-        <div class="stat-value">${(singles.accuracy * 100).toFixed(1)}%</div>
-        <div class="stat-label">Singles Accuracy</div>
+        <div class="stat-value">${(overall.accuracy * 100).toFixed(1)}%</div>
+        <div class="stat-label">Overall Accuracy</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${singles.wins}-${singles.total - singles.wins}</div>
-        <div class="stat-label">Singles Record</div>
-      </div>
-      <div class="stat-card" style="border-color: ${singles.roi >= 0 ? '#22c55e' : '#ef4444'};">
-        <div class="stat-value" style="color: ${singles.roi >= 0 ? '#22c55e' : '#ef4444'};">${singles.roi >= 0 ? '+' : ''}${(singles.roi * 100).toFixed(1)}%</div>
-        <div class="stat-label">Singles ROI</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">${(parlays.accuracy * 100).toFixed(1)}%</div>
-        <div class="stat-label">Parlay Win Rate</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">${parlays.wins}-${parlays.total - parlays.wins}</div>
-        <div class="stat-label">Parlay Record</div>
+        <div class="stat-value">${overall.wins}-${overall.total - overall.wins}</div>
+        <div class="stat-label">Overall Record</div>
       </div>
       <div class="stat-card" style="border-color: ${overall.pnl >= 0 ? '#22c55e' : '#ef4444'};">
         <div class="stat-value" style="color: ${overall.pnl >= 0 ? '#22c55e' : '#ef4444'};">$${overall.pnl >= 0 ? '+' : ''}${Math.round(overall.pnl)}</div>
         <div class="stat-label">Total P&L ($100/bet)</div>
       </div>
       <div class="stat-card" style="border-color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">
-        <div class="stat-value" style="color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">${overall.roi >= 0 ? '+' : ''}${(overall.roi * 100).toFixed(0)}%</div>
+        <div class="stat-value" style="color: ${overall.roi >= 0 ? '#22c55e' : '#ef4444'};">${overall.roi >= 0 ? '+' : ''}${(overall.roi * 100).toFixed(1)}%</div>
         <div class="stat-label">Overall ROI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${singles.wins}-${singles.total - singles.wins}</div>
+        <div class="stat-label">Singles Record</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${parlays.wins}-${parlays.total - parlays.wins}</div>
+        <div class="stat-label">Parlay Record</div>
       </div>
     `;
   }
