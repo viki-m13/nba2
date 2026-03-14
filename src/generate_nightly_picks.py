@@ -98,9 +98,17 @@ def resolve_pending_signals():
                 decimal = american_to_decimal(odds)
                 signal['pnl'] = round((decimal - 1) * 100) if signal['hit'] else -100
                 resolved_count += 1
+            else:
+                # Player DNP — games happened but player not in box score
+                signal['actual'] = 0
+                signal['hit'] = False
+                signal['dnp'] = True
+                signal['pnl'] = -100
+                resolved_count += 1
 
         elif signal.get('betType') == 'parlay':
             all_resolved = True
+            has_voided_leg = False
             for leg in signal.get('legs', []):
                 if leg.get('hit') is not None:
                     continue
@@ -116,12 +124,23 @@ def resolve_pending_signals():
                     leg['actual'] = actual
                     leg['hit'] = actual > leg.get('line', 0)
                 else:
-                    all_resolved = False
+                    # Player DNP — void this leg (sportsbooks void DNP legs)
+                    leg['actual'] = 0
+                    leg['dnp'] = True
+                    has_voided_leg = True
 
-            if all_resolved and all(l.get('hit') is not None for l in signal.get('legs', [])):
-                signal['hit'] = all(l['hit'] for l in signal['legs'])
-                decimal = signal.get('parlay_decimal', 1)
-                signal['pnl'] = round((decimal - 1) * 100) if signal['hit'] else -100
+            active_legs = [l for l in signal.get('legs', []) if not l.get('dnp')]
+            if all(l.get('hit') is not None for l in active_legs) and active_legs:
+                signal['hit'] = all(l['hit'] for l in active_legs)
+                if has_voided_leg:
+                    # Recalculate odds for reduced parlay
+                    reduced_decimal = 1.0
+                    for l in active_legs:
+                        reduced_decimal *= american_to_decimal(l.get('odds', -110))
+                    signal['pnl'] = round((reduced_decimal - 1) * 100) if signal['hit'] else -100
+                else:
+                    decimal = signal.get('parlay_decimal', 1)
+                    signal['pnl'] = round((decimal - 1) * 100) if signal['hit'] else -100
                 resolved_count += 1
 
     if resolved_count > 0:

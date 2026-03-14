@@ -1853,6 +1853,7 @@ def export_webapp_signals(config=None):
             with open(signals_path) as f:
                 existing_signals = json.load(f)
             live_signals = [s for s in existing_signals if s.get('source') == 'live']
+            live_dates = set(s['date'] for s in live_signals)
             non_overlap = [s for s in existing_signals
                            if s.get('date', '') not in backtest_dates
                            and s.get('source') != 'live']
@@ -1860,6 +1861,17 @@ def export_webapp_signals(config=None):
             if preserved:
                 webapp_signals.extend(preserved)
                 print(f"Preserved {len(live_signals)} live signals + {len(non_overlap)} non-overlapping signals")
+            # Remove backtest signals for dates that have live picks — only
+            # live picks were actually shown to the user; backtest signals for
+            # the same date are retroactive and would appear as phantom picks
+            if live_dates:
+                before = len(webapp_signals)
+                webapp_signals = [s for s in webapp_signals
+                                  if s.get('source') == 'live'
+                                  or s.get('date', '') not in live_dates]
+                removed = before - len(webapp_signals)
+                if removed:
+                    print(f"Removed {removed} backtest signals that overlap with live dates: {sorted(live_dates)}")
         except (json.JSONDecodeError, IOError):
             pass
 

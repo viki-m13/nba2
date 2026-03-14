@@ -395,11 +395,16 @@ async function main() {
     existingSignals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
   } catch (e) { /* no existing signals */ }
 
-  // Remove today's existing live signals (avoid duplicates), preserve backtest signals
+  // Remove today's existing live signals (avoid duplicates)
   existingSignals = existingSignals.filter(s => !(s.date === today && s.source === 'live'));
   // Tag live signals so they're never overwritten by backtest exports
   for (const sig of newSignals) sig.source = 'live';
   existingSignals.push(...newSignals);
+
+  // Remove backtest signals for any date that has live picks (backtest signals
+  // for live dates are retroactive and were never shown to the user)
+  const liveDates = new Set(existingSignals.filter(s => s.source === 'live').map(s => s.date));
+  existingSignals = existingSignals.filter(s => s.source === 'live' || !liveDates.has(s.date));
 
   fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));
 
