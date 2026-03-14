@@ -270,6 +270,7 @@
         const newSignals = ENGINE.formatSignalForStorage(recommendation, today);
         allSignals = allSignals.filter(s => s.date !== today);
         allSignals.push(...newSignals);
+        renderHistory();
         return;
       }
 
