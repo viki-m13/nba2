@@ -231,20 +231,29 @@
       // Filter to today's games only
       const now = new Date();
       const todayStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD format
-      events = events.filter(e => {
+      const todayEvents = events.filter(e => {
         if (!e.commence_time) return false;
         const gameDate = new Date(e.commence_time).toLocaleDateString('en-CA');
         return gameDate === todayStr;
       });
 
-      renderTonightGames(events);
-
-      if (events.length === 0) {
-        gamesStatus.textContent = 'No games scheduled tonight.';
-        picksStatus.textContent = 'No games available for analysis.';
-        return;
+      if (todayEvents.length > 0) {
+        renderTonightGames(todayEvents);
+        gamesStatus.style.display = 'none';
+      } else {
+        // No games today — show upcoming games if available
+        const upcoming = events
+          .filter(e => e.commence_time && new Date(e.commence_time) > now)
+          .sort((a, b) => new Date(a.commence_time) - new Date(b.commence_time))
+          .slice(0, 8);
+        if (upcoming.length > 0) {
+          const nextDate = new Date(upcoming[0].commence_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          gamesStatus.textContent = `No games tonight. Next games: ${nextDate}`;
+          renderTonightGames(upcoming);
+        } else {
+          gamesStatus.textContent = 'No games scheduled tonight.';
+        }
       }
-      gamesStatus.style.display = 'none';
 
       // Load pre-generated picks from mlb_ultra_recommendations.json
       picksStatus.textContent = 'Loading recommendations...';
