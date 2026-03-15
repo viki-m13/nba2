@@ -274,6 +274,20 @@
         return;
       }
 
+      // Even if recommendations aren't for today, merge them into history
+      // so recent pending picks don't vanish from the history tab
+      if (recommendation && recsDate && recsDate !== today &&
+          (recommendation.singles.length > 0 || recommendation.parlays.length > 0)) {
+        const recsDateSignals = allSignals.filter(s => s.date === recsDate && s.source === 'live');
+        if (recsDateSignals.length === 0) {
+          const oldSignals = ENGINE.formatSignalForStorage(recommendation, recsDate);
+          for (const sig of oldSignals) sig.source = 'live';
+          allSignals.push(...oldSignals);
+          renderHistory();
+          console.log(`[ULTRA] Restored ${oldSignals.length} signals from ${recsDate} into history`);
+        }
+      }
+
       // No pre-generated picks available for today
       if (!recsData || !recommendation || recsDate !== today) {
         picksStatus.textContent = 'Today\'s picks have not been generated yet. Picks are generated daily by the engine pipeline.';
