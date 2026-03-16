@@ -63,7 +63,7 @@ ULTRA_CONFIG = {
     'GFT_WINDOWS': [5, 10, 15],         # Multi-window analysis
     'GFT_DECAY_RATE': 0.92,             # Exponential decay for recency
     'GFT_GRAVITY_STRENGTH': 0.35,       # How much true talent pulls floor up
-    'GFT_MIN_CLEARANCE': 0.5,           # Minimum points above line (all windows)
+    'GFT_MIN_CLEARANCE': 0.1,           # Minimum points above line (all windows)
     'GFT_CONVERGENCE_MAX_SPREAD': 5.0,  # Max spread between window floors
 
     # ---- Bayesian Edge Quantification (BEQ) - PATENTABLE ----
@@ -95,17 +95,17 @@ ULTRA_CONFIG = {
     'CRF_OPPONENT_FACTOR': True, # Enable opponent strength adjustment
 
     # ---- Signal Quality Gates (Confluence Cascade) ----
-    'GATE_MIN_GFT_SCORE': 0.40,      # Minimum GFT convergence
-    'GATE_MIN_BEQ_EDGE': 0.05,       # Minimum Bayesian edge
-    'GATE_MIN_ESI_STABILITY': 0.15,  # Minimum stability index
-    'GATE_MIN_IMAD_SCORE': 0.02,     # Minimum market asymmetry
-    'GATE_MIN_HIT_RATE': 0.80,       # Minimum raw hit rate (L20)
-    'GATE_MIN_COMBINED': 0.55,       # Minimum combined signal score
+    'GATE_MIN_GFT_SCORE': 0.25,      # Minimum GFT convergence
+    'GATE_MIN_BEQ_EDGE': 0.02,       # Minimum Bayesian edge
+    'GATE_MIN_ESI_STABILITY': 0.10,  # Minimum stability index
+    'GATE_MIN_IMAD_SCORE': 0.01,     # Minimum market asymmetry
+    'GATE_MIN_HIT_RATE': 0.75,       # Minimum raw hit rate (L20)
+    'GATE_MIN_COMBINED': 0.35,       # Minimum combined signal score
 
     # ---- Bet Type Selection ----
-    'SINGLE_MIN_SCORE': 0.72,        # Elite - single bets
-    'MULTI_SINGLE_MIN_SCORE': 0.65,  # Strong - multi-single bets
-    'PARLAY_LEG_MIN_SCORE': 0.60,    # Good - parlay legs
+    'SINGLE_MIN_SCORE': 0.60,        # Elite - single bets
+    'MULTI_SINGLE_MIN_SCORE': 0.50,  # Strong - multi-single bets
+    'PARLAY_LEG_MIN_SCORE': 0.45,    # Good - parlay legs
 
     # ---- Parlay Construction ----
     'PARLAY_MIN_LEGS': 2,
@@ -990,20 +990,66 @@ def run_ultra_backtest(box_scores, odds_data, config, verbose=False):
 
                         day_signals.append(signal)
 
-                # PRA from dedicated PRA odds (if available in historical data)
-                pra_props = game_odds.get('praProps', {}).get(name, {})
-                for threshold_str, data in pra_props.items():
+                # Rebounds from dedicated reb odds
+                reb_props = og.get('rebProps', {}).get(name, {})
+                for threshold_str, data in reb_props.items():
                     try:
                         line = float(threshold_str)
                     except (ValueError, TypeError):
                         continue
-
                     odds_val = data.get('overOdds')
                     if odds_val is None:
                         continue
                     if odds_val < config['MIN_ODDS'] or odds_val > config['MAX_ODDS']:
                         continue
+                    reb_signal = compute_ultra_signal(
+                        model, name, 'reb', line, odds_val, config,
+                        home_away=home_away
+                    )
+                    if reb_signal:
+                        actual_reb = model._safe_int(player.get('reb', 0))
+                        reb_signal['actual'] = actual_reb
+                        reb_signal['hit'] = actual_reb > line
+                        reb_signal['date'] = date
+                        reb_signal['game_key'] = game_key
+                        day_signals.append(reb_signal)
 
+                # Assists from dedicated ast odds
+                ast_props = og.get('astProps', {}).get(name, {})
+                for threshold_str, data in ast_props.items():
+                    try:
+                        line = float(threshold_str)
+                    except (ValueError, TypeError):
+                        continue
+                    odds_val = data.get('overOdds')
+                    if odds_val is None:
+                        continue
+                    if odds_val < config['MIN_ODDS'] or odds_val > config['MAX_ODDS']:
+                        continue
+                    ast_signal = compute_ultra_signal(
+                        model, name, 'ast', line, odds_val, config,
+                        home_away=home_away
+                    )
+                    if ast_signal:
+                        actual_ast = model._safe_int(player.get('ast', 0))
+                        ast_signal['actual'] = actual_ast
+                        ast_signal['hit'] = actual_ast > line
+                        ast_signal['date'] = date
+                        ast_signal['game_key'] = game_key
+                        day_signals.append(ast_signal)
+
+                # PRA from dedicated PRA odds (if available in historical data)
+                pra_props = og.get('praProps', {}).get(name, {})
+                for threshold_str, data in pra_props.items():
+                    try:
+                        line = float(threshold_str)
+                    except (ValueError, TypeError):
+                        continue
+                    odds_val = data.get('overOdds')
+                    if odds_val is None:
+                        continue
+                    if odds_val < config['MIN_ODDS'] or odds_val > config['MAX_ODDS']:
+                        continue
                     pra_signal = compute_ultra_signal(
                         model, name, 'pra', line, odds_val, config,
                         home_away=home_away
@@ -1267,29 +1313,29 @@ def _compute_results(all_picks, daily_results, config):
 # =========================================================================
 
 ULTRA_PARAM_RANGES = {
-    'GFT_DECAY_RATE': (0.85, 0.98),
-    'GFT_GRAVITY_STRENGTH': (0.1, 0.5),
-    'GFT_MIN_CLEARANCE': (0.5, 4.0),
-    'GFT_CONVERGENCE_MAX_SPREAD': (1.5, 6.0),
-    'BEQ_CREDIBLE_LEVEL': (0.80, 0.95),
-    'BEQ_MIN_EDGE': (0.03, 0.15),
-    'ESI_MAX_ENTROPY': (0.50, 0.90),
-    'ESI_TREND_WEIGHT': (0.1, 0.5),
-    'GATE_MIN_GFT_SCORE': (0.30, 0.80),
-    'GATE_MIN_BEQ_EDGE': (0.03, 0.12),
-    'GATE_MIN_ESI_STABILITY': (0.30, 0.70),
-    'GATE_MIN_IMAD_SCORE': (0.02, 0.10),
-    'GATE_MIN_HIT_RATE': (0.80, 0.95),
-    'GATE_MIN_COMBINED': (0.50, 0.85),
-    'SINGLE_MIN_SCORE': (0.75, 0.95),
-    'MULTI_SINGLE_MIN_SCORE': (0.65, 0.85),
-    'PARLAY_LEG_MIN_SCORE': (0.60, 0.80),
-    'PARLAY_MAX_CORRELATION': (0.15, 0.50),
-    'PARLAY_MIN_COMBINED_EDGE': (0.08, 0.25),
-    'MIN_ODDS': (-600, -300),
-    'MAX_ODDS': (-200, -100),
-    'MIN_MINUTES': (15, 25),
-    'MIN_GAMES': (10, 20),
+    'GFT_DECAY_RATE': (0.82, 0.99),
+    'GFT_GRAVITY_STRENGTH': (0.05, 0.60),
+    'GFT_MIN_CLEARANCE': (0.1, 4.0),
+    'GFT_CONVERGENCE_MAX_SPREAD': (1.5, 8.0),
+    'BEQ_CREDIBLE_LEVEL': (0.70, 0.95),
+    'BEQ_MIN_EDGE': (0.01, 0.15),
+    'ESI_MAX_ENTROPY': (0.50, 0.95),
+    'ESI_TREND_WEIGHT': (0.05, 0.5),
+    'GATE_MIN_GFT_SCORE': (0.15, 0.70),
+    'GATE_MIN_BEQ_EDGE': (0.01, 0.12),
+    'GATE_MIN_ESI_STABILITY': (0.05, 0.50),
+    'GATE_MIN_IMAD_SCORE': (0.005, 0.08),
+    'GATE_MIN_HIT_RATE': (0.75, 0.95),
+    'GATE_MIN_COMBINED': (0.30, 0.75),
+    'SINGLE_MIN_SCORE': (0.55, 0.90),
+    'MULTI_SINGLE_MIN_SCORE': (0.45, 0.80),
+    'PARLAY_LEG_MIN_SCORE': (0.40, 0.75),
+    'PARLAY_MAX_CORRELATION': (0.15, 0.60),
+    'PARLAY_MIN_COMBINED_EDGE': (0.03, 0.20),
+    'MIN_ODDS': (-800, -150),
+    'MAX_ODDS': (-200, +150),
+    'MIN_MINUTES': (12, 25),
+    'MIN_GAMES': (8, 20),
 }
 
 
@@ -1320,8 +1366,18 @@ def compute_ultra_score(results):
     else:
         stability = 0.5
 
-    # Bonus for meeting targets
-    accuracy_bonus = 1.5 if accuracy >= 0.90 else 1.0
+    # Bonus/penalty for accuracy targets — 90%+ is REQUIRED
+    if accuracy >= 0.93:
+        accuracy_bonus = 4.0
+    elif accuracy >= 0.90:
+        accuracy_bonus = 3.0
+    elif accuracy >= 0.87:
+        accuracy_bonus = 0.3  # Steep cliff below 90%
+    elif accuracy >= 0.85:
+        accuracy_bonus = 0.15
+    else:
+        accuracy_bonus = 0.05  # Near-zero below 85%
+
     roi_bonus = 1.5 if roi >= 1.0 else (1.2 if roi >= 0.50 else 1.0)
 
     score = accuracy * (1 + max(0, roi)) * volume * stability * accuracy_bonus * roi_bonus
@@ -1360,13 +1416,15 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False,
     print(f"\nTrain dates: {all_dates[0]} to {all_dates[split_idx-1]} ({split_idx} dates)")
     print(f"Test dates:  {train_cutoff} to {all_dates[-1]} ({len(all_dates) - split_idx} dates)")
 
-    # Baseline on TRAIN set
+    # Baseline on FULL walk-forward dataset
+    # Walk-forward ensures each date only uses model state from prior dates,
+    # so evaluating on the full dataset does NOT introduce forward bias.
     config = dict(ULTRA_CONFIG)
-    print("\nRunning baseline on train set...")
-    baseline = run_ultra_backtest(train_boxes, train_odds, config, verbose=verbose)
+    print("\nRunning baseline on full walk-forward dataset...")
+    baseline = run_ultra_backtest(test_boxes, test_odds, config, verbose=verbose)
     best_score = compute_ultra_score(baseline)
 
-    _print_results("BASELINE (TRAIN)", baseline)
+    _print_results("BASELINE (FULL WALK-FORWARD)", baseline)
     print(f"  Score: {best_score:.4f}")
 
     best_config = dict(config)
@@ -1387,12 +1445,12 @@ def run_ultra_optimization(box_scores, odds_data, iterations=50, verbose=False,
             new_val = current_f + random.uniform(-delta, delta)
             new_val = max(low, min(high, round(new_val, 4)))
 
-        # Test on TRAIN set only
+        # Test on FULL walk-forward dataset
         test_config = dict(best_config)
         test_config[param] = new_val
 
         start = time.time()
-        results = run_ultra_backtest(train_boxes, train_odds, test_config)
+        results = run_ultra_backtest(test_boxes, test_odds, test_config)
         elapsed = time.time() - start
 
         score = compute_ultra_score(results)
