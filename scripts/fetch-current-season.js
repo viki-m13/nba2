@@ -236,19 +236,21 @@ for (const dateStr of dates) {
 
     // Fetch player props
     sleep(500);
-    const propsUrl = `https://api.the-odds-api.com/v4/historical/sports/basketball_nba/events/${game.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=player_points_alternate,player_rebounds_alternate,player_assists_alternate&oddsFormat=american&bookmakers=fanduel&date=${isoDate}`;
+    const propsUrl = `https://api.the-odds-api.com/v4/historical/sports/basketball_nba/events/${game.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists,player_points_rebounds_assists_alternate&oddsFormat=american&bookmakers=fanduel&date=${isoDate}`;
     const propsData = curlJSON(propsUrl);
 
     if (propsData?.data) {
       const pfb = (propsData.data.bookmakers || []).find(b => b.key === 'fanduel');
       if (pfb) {
-        const playerProps = {}, rebProps = {}, astProps = {};
+        const playerProps = {}, rebProps = {}, astProps = {}, praProps = {};
         for (const mkt of (pfb.markets || [])) {
           for (const o of (mkt.outcomes || [])) {
             if (o.name === 'Over' && o.description && o.point !== undefined) {
               const target = mkt.key === 'player_points_alternate' ? playerProps
                 : mkt.key === 'player_rebounds_alternate' ? rebProps
-                : mkt.key === 'player_assists_alternate' ? astProps : null;
+                : mkt.key === 'player_assists_alternate' ? astProps
+                : (mkt.key === 'player_points_rebounds_assists' || mkt.key === 'player_points_rebounds_assists_alternate') ? praProps
+                : null;
               if (target) {
                 if (!target[o.description]) target[o.description] = {};
                 target[o.description][o.point] = { overOdds: o.price };
@@ -259,6 +261,7 @@ for (const dateStr of dates) {
         if (Object.keys(playerProps).length > 0) record.playerProps = playerProps;
         if (Object.keys(rebProps).length > 0) record.rebProps = rebProps;
         if (Object.keys(astProps).length > 0) record.astProps = astProps;
+        if (Object.keys(praProps).length > 0) record.praProps = praProps;
       }
     }
 

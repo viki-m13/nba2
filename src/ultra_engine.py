@@ -990,9 +990,9 @@ def run_ultra_backtest(box_scores, odds_data, config, verbose=False):
 
                         day_signals.append(signal)
 
-                # Also check PRA (points + rebounds + assists) as a synthetic stat
-                # Look for lower lines that might qualify
-                for threshold_str, data in player_props.items():
+                # PRA from dedicated PRA odds (if available in historical data)
+                pra_props = game_odds.get('praProps', {}).get(name, {})
+                for threshold_str, data in pra_props.items():
                     try:
                         line = float(threshold_str)
                     except (ValueError, TypeError):
@@ -1004,7 +1004,6 @@ def run_ultra_backtest(box_scores, odds_data, config, verbose=False):
                     if odds_val < config['MIN_ODDS'] or odds_val > config['MAX_ODDS']:
                         continue
 
-                    # Try PRA analysis on the same lines
                     pra_signal = compute_ultra_signal(
                         model, name, 'pra', line, odds_val, config,
                         home_away=home_away
