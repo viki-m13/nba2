@@ -772,10 +772,12 @@ window.RecommendationEngine = (function () {
                 prop.date = date;
                 candidates.push(prop);
               }
+            }
 
-              // Synthetic PRA: evaluate points lines as PRA thresholds
-              // (matches Python backtest — ultra_engine.py lines 993-1022)
-              const praProp = findBestProp(player.name, 'pra', ptsLines);
+            // PRA from dedicated PRA odds (if available in historical data)
+            const praLines = og.praProps && og.praProps[player.name];
+            if (praLines) {
+              const praProp = findBestProp(player.name, 'pra', praLines);
               if (praProp) {
                 const actualPra = (parseInt(player.pts) || 0) + (parseInt(player.reb) || 0) + (parseInt(player.ast) || 0);
                 praProp.actual = actualPra;
@@ -963,16 +965,6 @@ window.RecommendationEngine = (function () {
             prop.gameKey = gameKey;
             prop.gameDisplay = gameKey.replace('@', ' @ ');
             candidates.push(prop);
-          }
-
-          // Synthetic PRA: evaluate POINTS lines as PRA thresholds (matches
-          // Python backtest behaviour — points alternate lines at moderate odds
-          // become high-hit-rate PRA bets since PRA >> points alone)
-          const praProp = findBestProp(playerName, 'pra', lines);
-          if (praProp) {
-            praProp.gameKey = gameKey;
-            praProp.gameDisplay = gameKey.replace('@', ' @ ');
-            candidates.push(praProp);
           }
         }
       }
