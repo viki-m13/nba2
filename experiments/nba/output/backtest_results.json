@@ -1,123 +1,269 @@
 {
-  "total_picks": 16,
-  "total_wins": 8,
-  "total_pnl": 2760,
-  "total_wagered": 1680,
-  "total_roi": 1.6428571428571428,
-  "singles_total": 4,
-  "singles_wins": 3,
-  "singles_accuracy": 0.75,
-  "singles_pnl": 377,
-  "parlay_total": 12,
-  "parlay_wins": 5,
-  "parlay_accuracy": 0.4166666666666667,
-  "parlay_pnl": 2383,
-  "parlay_leg_total": 31,
-  "parlay_leg_wins": 18,
-  "parlay_leg_accuracy": 0.5806451612903226,
-  "individual_accuracy": 0.75,
-  "accuracy": 0.5,
-  "max_drawdown": 432,
-  "max_loss_streak": 4,
-  "max_win_streak": 4,
-  "active_days": 10,
-  "avg_daily_pnl": 276.0,
+  "total_picks": 65,
+  "total_wins": 36,
+  "total_pnl": 3961,
+  "total_wagered": 8692,
+  "total_roi": 0.4557063966866084,
+  "singles_total": 45,
+  "singles_wins": 29,
+  "singles_accuracy": 0.6444444444444445,
+  "singles_pnl": 2154,
+  "parlay_total": 20,
+  "parlay_wins": 7,
+  "parlay_accuracy": 0.35,
+  "parlay_pnl": 1807,
+  "parlay_leg_total": 52,
+  "parlay_leg_wins": 28,
+  "parlay_leg_accuracy": 0.5384615384615384,
+  "parlay_by_legs": {
+    "2": {
+      "total": 14,
+      "wins": 7,
+      "pnl": 2151
+    },
+    "5": {
+      "total": 1,
+      "wins": 0,
+      "pnl": -44
+    },
+    "4": {
+      "total": 4,
+      "wins": 0,
+      "pnl": -232
+    },
+    "3": {
+      "total": 1,
+      "wins": 0,
+      "pnl": -68
+    }
+  },
+  "individual_accuracy": 0.6444444444444445,
+  "accuracy": 0.5538461538461539,
+  "max_drawdown": 823,
+  "max_loss_streak": 5,
+  "max_win_streak": 7,
+  "active_days": 23,
+  "avg_daily_pnl": 172.2173913043478,
   "daily": [
     {
-      "date": "20250127",
+      "date": "20241204",
       "n_picks": 1,
       "wins": 1,
-      "pnl": 213
+      "pnl": 138
+    },
+    {
+      "date": "20250108",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 98
+    },
+    {
+      "date": "20250127",
+      "n_picks": 3,
+      "wins": 3,
+      "pnl": 611
     },
     {
       "date": "20260219",
-      "n_picks": 3,
-      "wins": 2,
-      "pnl": 2085
+      "n_picks": 9,
+      "wins": 5,
+      "pnl": 1408
     },
     {
       "date": "20260220",
-      "n_picks": 1,
-      "wins": 0,
-      "pnl": -100
+      "n_picks": 5,
+      "wins": 2,
+      "pnl": -95
     },
     {
       "date": "20260221",
-      "n_picks": 2,
-      "wins": 1,
-      "pnl": 68
+      "n_picks": 5,
+      "wins": 3,
+      "pnl": 239
     },
     {
       "date": "20260222",
-      "n_picks": 2,
-      "wins": 0,
-      "pnl": -200
+      "n_picks": 6,
+      "wins": 1,
+      "pnl": -419
+    },
+    {
+      "date": "20260223",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 129
     },
     {
       "date": "20260224",
-      "n_picks": 1,
-      "wins": 0,
-      "pnl": -100
+      "n_picks": 5,
+      "wins": 3,
+      "pnl": 154
     },
     {
       "date": "20260225",
+      "n_picks": 3,
+      "wins": 3,
+      "pnl": 733
+    },
+    {
+      "date": "20260226",
+      "n_picks": 3,
+      "wins": 1,
+      "pnl": -23
+    },
+    {
+      "date": "20260227",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 97
+    },
+    {
+      "date": "20260228",
+      "n_picks": 3,
+      "wins": 1,
+      "pnl": -173
+    },
+    {
+      "date": "20260301",
       "n_picks": 2,
       "wins": 2,
-      "pnl": 634
+      "pnl": 656
     },
     {
       "date": "20260303",
-      "n_picks": 1,
-      "wins": 1,
-      "pnl": 221
+      "n_picks": 3,
+      "wins": 3,
+      "pnl": 619
+    },
+    {
+      "date": "20260305",
+      "n_picks": 3,
+      "wins": 0,
+      "pnl": -440
     },
     {
       "date": "20260306",
-      "n_picks": 2,
+      "n_picks": 3,
       "wins": 1,
-      "pnl": 57
+      "pnl": 81
+    },
+    {
+      "date": "20260307",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -121
     },
     {
       "date": "20260308",
+      "n_picks": 2,
+      "wins": 0,
+      "pnl": -343
+    },
+    {
+      "date": "20260310",
+      "n_picks": 2,
+      "wins": 2,
+      "pnl": 556
+    },
+    {
+      "date": "20260312",
       "n_picks": 1,
       "wins": 0,
-      "pnl": -118
+      "pnl": -155
+    },
+    {
+      "date": "20260314",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 79
+    },
+    {
+      "date": "20260315",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 132
     }
   ],
   "config": {
     "MIN_GAMES": 12,
-    "MIN_MINUTES": 13,
+    "MIN_MINUTES": 25,
     "GFT_WINDOWS": [
       5,
       10,
       15
     ],
-    "GFT_DECAY": 0.93,
+    "GFT_DECAY": 0.8583,
     "GFT_GRAVITY": 0.4,
-    "GFT_MIN_CLEARANCE": 0.655,
+    "GFT_MIN_CLEARANCE": 0.3,
     "GFT_MAX_SPREAD": 6.0,
     "BEQ_PRIOR_ALPHA": 1.0,
     "BEQ_PRIOR_BETA": 1.0,
-    "BEQ_CI_LEVEL": 0.825,
-    "BEQ_MIN_EDGE": 0.05,
+    "BEQ_CI_LEVEL": 0.92,
+    "BEQ_MIN_EDGE": 0.0613,
     "ESI_BINS": 6,
-    "ESI_MAX_ENTROPY": 0.94,
+    "ESI_MAX_ENTROPY": 0.8851,
     "ESI_TREND_WEIGHT": 0.18,
-    "GATE_MIN_GFT": 0.1,
-    "GATE_MIN_ESI": 0.1,
-    "GATE_MIN_HIT_RATE": 0.3498,
-    "GATE_MIN_COMBINED": 0.2329,
-    "MIN_EV": 0.0601,
-    "SINGLE_MIN_SCORE": 0.5179,
-    "PARLAY_LEG_MIN_SCORE": 0.2012,
+    "PAOV_ENABLED": true,
+    "PAOV_WEIGHT": 0.1,
+    "PAOV_MIN_OPP_GAMES": 5,
+    "PAOV_BOOST_THRESHOLD": 1.05,
+    "PAOV_MAX_BOOST": 0.1729,
+    "MSC_ENABLED": true,
+    "MSC_WEIGHT": 0.08,
+    "MSC_WINDOW": 10,
+    "MSC_MAX_CV": 0.2,
+    "MSC_ELITE_CV": 0.1,
+    "MSC_MIN_AVG_MIN": 28,
+    "RDPD_ENABLED": true,
+    "RDPD_WEIGHT": 0.06,
+    "RDPD_B2B_PENALTY": -0.05,
+    "RDPD_REST_BOOST": 0.08,
+    "RDPD_MAX_BOOST": 0.12,
+    "OSAI_ENABLED": true,
+    "OSAI_WEIGHT": 0.1,
+    "OSAI_MIN_OPP_GAMES": 8,
+    "OSAI_BOOST_MULT": 1.7901,
+    "OSAI_PENALTY_MULT": 0.5,
+    "OSAI_MAX_ADJ": 0.2,
+    "HHM_ENABLED": true,
+    "HHM_WEIGHT": 0.051,
+    "HHM_LOOKBACK": 7,
+    "HHM_MIN_STREAK": 3,
+    "HHM_MAX_BOOST": 0.1,
+    "GATE_MIN_GFT": 0.2187,
+    "GATE_MIN_ESI": 0.0201,
+    "GATE_MIN_HIT_RATE": 0.4409,
+    "GATE_MIN_COMBINED": 0.25,
+    "MIN_EV": 0.0585,
+    "SINGLE_MIN_SCORE": 0.4005,
+    "PARLAY_LEG_MIN_SCORE": 0.2206,
     "PARLAY_MIN_LEGS": 2,
-    "PARLAY_MAX_LEGS": 3,
-    "PARLAY_MAX_CORR": 0.4416,
-    "PARLAY_MIN_EDGE": 0.02,
-    "MIN_ODDS": -130,
-    "MAX_ODDS": 358,
+    "PARLAY_MAX_LEGS": 5,
+    "PARLAY_MAX_CORR": 0.35,
+    "PARLAY_MIN_EDGE": 0.06,
+    "PARLAY_MAX_PER_DAY": 3,
+    "PARLAY_WAGER_2LEG": 193,
+    "PARLAY_WAGER_3LEG": 68,
+    "PARLAY_WAGER_4LEG": 58,
+    "PARLAY_WAGER_5LEG": 44,
+    "MIN_ODDS": -149,
+    "MAX_ODDS": 500,
     "UNIT_SIZE": 100,
-    "KELLY_FRACTION": 0.15,
-    "MAX_DAILY_BETS": 6
+    "KELLY_FRACTION": 0.3936,
+    "MAX_DAILY_BETS": 5,
+    "PLB_ENABLED": true,
+    "PLB_MIN_ODDS": 130,
+    "PLB_MAX_ODDS": 500,
+    "PLB_MIN_TRUE_PROB": 0.553,
+    "PLB_MIN_EDGE": 0.08,
+    "PLB_MIN_HIT_RATE": 0.5,
+    "PLB_MIN_EV": 0.1287,
+    "PLB_PARLAY_MIN_LEGS": 2,
+    "PLB_PARLAY_MAX_LEGS": 5,
+    "PLB_PARLAY_MAX_CORR": 0.2468,
+    "PLB_MAX_PARLAYS": 1,
+    "PLB_WAGER_3LEG": 80,
+    "PLB_WAGER_4LEG": 60,
+    "PLB_WAGER_5LEG": 40
   }
 }
