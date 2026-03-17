@@ -325,7 +325,9 @@ def full_validation_report(results, backtest_fn=None, config=None,
             print(f"  Verdict: {overall.get('verdict', 'N/A')}")
             print(f"  Tests passed: {overall.get('tests_passed', 0)}/{overall.get('tests_total', 0)}")
             for check_name, check_data in data.items():
-                if check_name == 'overall':
+                if check_name == 'overall' or check_name == 'error':
+                    continue
+                if not isinstance(check_data, dict):
                     continue
                 status = 'PASS' if check_data.get('pass') else 'FAIL'
                 print(f"  {check_name}: {status}")

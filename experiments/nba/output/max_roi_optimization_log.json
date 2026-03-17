@@ -1,0 +1,9737 @@
+[
+  {
+    "iteration": 1,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.3,
+        0.0823
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.25,
+        0.2329
+      ]
+    ],
+    "score": 0.09253935660506503,
+    "accuracy": 0.44144144144144143,
+    "roi": -0.07460643394934977,
+    "pnl": -981,
+    "picks": 111,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 2,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ]
+    ],
+    "score": 0.08856918135937603,
+    "accuracy": 0.43410852713178294,
+    "roi": -0.11430818640623976,
+    "pnl": -1744,
+    "picks": 129,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 3,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ]
+    ],
+    "score": 0.09028655583203125,
+    "accuracy": 0.4536082474226804,
+    "roi": -0.06813244112279482,
+    "pnl": -784,
+    "picks": 97,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 4,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ]
+    ],
+    "score": 0.08856918135937603,
+    "accuracy": 0.43410852713178294,
+    "roi": -0.11430818640623976,
+    "pnl": -1744,
+    "picks": 129,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 5,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.0823,
+        0.6928
+      ]
+    ],
+    "score": 0.13002704389775402,
+    "accuracy": 0.5357142857142857,
+    "roi": 0.08370044052863436,
+    "pnl": 855,
+    "picks": 84,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 6,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1263
+      ]
+    ],
+    "score": 0.08310467132132308,
+    "accuracy": 0.5625,
+    "roi": 0.059134925758553905,
+    "pnl": 458,
+    "picks": 64,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 7,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        398
+      ]
+    ],
+    "score": 0.13002704389775402,
+    "accuracy": 0.5357142857142857,
+    "roi": 0.08370044052863436,
+    "pnl": 855,
+    "picks": 84,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 8,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        4,
+        2
+      ]
+    ],
+    "score": 1.3702286518565328,
+    "accuracy": 0.5697674418604651,
+    "roi": 0.2508881421027364,
+    "pnl": 2613,
+    "picks": 86,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 9,
+    "params": [
+      [
+        "MIN_MINUTES",
+        18,
+        20
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        13
+      ]
+    ],
+    "score": 0.3489144026643832,
+    "accuracy": 0.5555555555555556,
+    "roi": 0.175700365408039,
+    "pnl": 1731,
+    "picks": 81,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 10,
+    "params": [
+      [
+        "MIN_EV",
+        0.08,
+        0.1001
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.3,
+        0.2012
+      ]
+    ],
+    "score": 1.544634456686053,
+    "accuracy": 0.5802469135802469,
+    "roi": 0.27917805445895333,
+    "pnl": 2758,
+    "picks": 81,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 11,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ],
+      [
+        "MIN_ODDS",
+        -250,
+        -259
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3651
+      ]
+    ],
+    "score": 0.23778336876296735,
+    "accuracy": 0.5507246376811594,
+    "roi": 0.15501303626451765,
+    "pnl": 1308,
+    "picks": 69,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 12,
+    "params": [
+      [
+        "MIN_ODDS",
+        -250,
+        -292
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4853
+      ]
+    ],
+    "score": 0.09468233977050099,
+    "accuracy": 0.48717948717948717,
+    "roi": -0.0531766022949902,
+    "pnl": -760,
+    "picks": 117,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 13,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2252
+      ]
+    ],
+    "score": 1.544634456686053,
+    "accuracy": 0.5802469135802469,
+    "roi": 0.27917805445895333,
+    "pnl": 2758,
+    "picks": 81,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 14,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1719
+      ]
+    ],
+    "score": 1.2184033586378396,
+    "accuracy": 0.7142857142857143,
+    "roi": 0.2766756032171582,
+    "pnl": 516,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 15,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6928,
+        0.6937
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.9,
+        0.94
+      ]
+    ],
+    "score": 1.635983527871982,
+    "accuracy": 0.5728155339805825,
+    "roi": 0.272366121086922,
+    "pnl": 3428,
+    "picks": 103,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 16,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        656
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.193
+      ]
+    ],
+    "score": 1.1002365980523845,
+    "accuracy": 0.5543478260869565,
+    "roi": 0.22181818181818183,
+    "pnl": 2501,
+    "picks": 92,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 17,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.35,
+        0.3874
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0238
+      ]
+    ],
+    "score": 1.611945483832367,
+    "accuracy": 0.5728155339805825,
+    "roi": 0.26902089179918925,
+    "pnl": 3451,
+    "picks": 103,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 18,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2489
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.084
+      ]
+    ],
+    "score": 0.4485159610024447,
+    "accuracy": 0.5094339622641509,
+    "roi": 0.18701711861839115,
+    "pnl": 2469,
+    "picks": 106,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 19,
+    "params": [
+      [
+        "MIN_ODDS",
+        -250,
+        -343
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3418
+      ]
+    ],
+    "score": 0.5101813795650937,
+    "accuracy": 0.6382978723404256,
+    "roi": 0.1679240969364426,
+    "pnl": 2938,
+    "picks": 141,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 20,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0667
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.916
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1201
+      ]
+    ],
+    "score": 0.026837685600380544,
+    "accuracy": 0.5409836065573771,
+    "roi": 0.020883213620643788,
+    "pnl": 157,
+    "picks": 61,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 21,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        1.069
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.3825
+      ]
+    ],
+    "score": 0.22549200892070054,
+    "accuracy": 0.5529411764705883,
+    "roi": 0.13953046288375628,
+    "pnl": 1468,
+    "picks": 85,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 22,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.1006
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.8551
+      ]
+    ],
+    "score": 0.18352759014867875,
+    "accuracy": 0.5360824742268041,
+    "roi": 0.11078398384925976,
+    "pnl": 1317,
+    "picks": 97,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 23,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2184
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0836
+      ]
+    ],
+    "score": 1.6175168400955064,
+    "accuracy": 0.5648148148148148,
+    "roi": 0.26693889897156686,
+    "pnl": 3530,
+    "picks": 108,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 24,
+    "params": [
+      [
+        "MIN_MINUTES",
+        18,
+        13
+      ]
+    ],
+    "score": 1.6638080432602822,
+    "accuracy": 0.5769230769230769,
+    "roi": 0.27487034417727485,
+    "pnl": 3498,
+    "picks": 104,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 25,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0294
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.35,
+        0.3794
+      ]
+    ],
+    "score": 0.24234058020552263,
+    "accuracy": 0.5363636363636364,
+    "roi": 0.11468061262607396,
+    "pnl": 1535,
+    "picks": 110,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 26,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.35,
+        0.3696
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        17
+      ]
+    ],
+    "score": 1.036511452332443,
+    "accuracy": 0.5531914893617021,
+    "roi": 0.2104766803840878,
+    "pnl": 2455,
+    "picks": 94,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 27,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        2,
+        3
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 28,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.5099
+      ]
+    ],
+    "score": 0.09123389051933138,
+    "accuracy": 0.43410852713178294,
+    "roi": -0.08766109480668623,
+    "pnl": -1374,
+    "picks": 129,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 29,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1215
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 30,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 0.9383935573962366,
+    "accuracy": 0.5257731958762887,
+    "roi": 0.21194330286001845,
+    "pnl": 2527,
+    "picks": 97,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 31,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        16
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3023
+      ]
+    ],
+    "score": 1.3172751828847669,
+    "accuracy": 0.5368421052631579,
+    "roi": 0.2487392084793572,
+    "pnl": 2910,
+    "picks": 95,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 32,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        12
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 33,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        548
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 34,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2181
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 35,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3624
+      ]
+    ],
+    "score": 0.04707362892231984,
+    "accuracy": 0.5319148936170213,
+    "roi": 0.03135498320268757,
+    "pnl": 364,
+    "picks": 94,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 36,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.8999
+      ]
+    ],
+    "score": 1.366088620240698,
+    "accuracy": 0.5625,
+    "roi": 0.26621855586108567,
+    "pnl": 2614,
+    "picks": 80,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 37,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.35,
+        0.3244
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        11
+      ]
+    ],
+    "score": 1.4108678730445785,
+    "accuracy": 0.5327102803738317,
+    "roi": 0.2434391211473909,
+    "pnl": 3191,
+    "picks": 107,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 38,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.98
+      ]
+    ],
+    "score": 0.15074907345988972,
+    "accuracy": 0.5132743362831859,
+    "roi": 0.0877469224162611,
+    "pnl": 1226,
+    "picks": 113,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 39,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.5081
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2081
+      ]
+    ],
+    "score": 1.6900828940590895,
+    "accuracy": 0.5490196078431373,
+    "roi": 0.2857256905636277,
+    "pnl": 3579,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 40,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.1732
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9025
+      ]
+    ],
+    "score": 0.09458817750122811,
+    "accuracy": 0.46078431372549017,
+    "roi": -0.05411822498771901,
+    "pnl": -661,
+    "picks": 102,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 41,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9586
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.3253
+      ]
+    ],
+    "score": 1.5408668039250988,
+    "accuracy": 0.5327102803738317,
+    "roi": 0.2633657351154314,
+    "pnl": 3468,
+    "picks": 107,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 42,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        16
+      ]
+    ],
+    "score": 1.3172751828847669,
+    "accuracy": 0.5368421052631579,
+    "roi": 0.2487392084793572,
+    "pnl": 2910,
+    "picks": 95,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 43,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8363
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.08922316852070541,
+    "accuracy": 0.5,
+    "roi": 0.05695214979195562,
+    "pnl": 657,
+    "picks": 94,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 44,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.35,
+        0.3819
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.4,
+        0.4701
+      ]
+    ],
+    "score": 3.777353494640529,
+    "accuracy": 0.4583333333333333,
+    "roi": 0.5269679300291545,
+    "pnl": 2892,
+    "picks": 48,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 45,
+    "params": [
+      [
+        "MIN_ODDS",
+        -250,
+        -130
+      ]
+    ],
+    "score": 15.477202762482865,
+    "accuracy": 0.45,
+    "roi": 1.096940973718225,
+    "pnl": 2546,
+    "picks": 20,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 46,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0553
+      ]
+    ],
+    "score": 0.017023129288565333,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.04216867469879518,
+    "pnl": 112,
+    "picks": 24,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 47,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.8543
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.08403095444894809,
+    "accuracy": 0.30434782608695654,
+    "roi": -0.09673566878980892,
+    "pnl": -243,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 48,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.4935
+      ]
+    ],
+    "score": 15.477202762482865,
+    "accuracy": 0.45,
+    "roi": 1.096940973718225,
+    "pnl": 2546,
+    "picks": 20,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 49,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.4701,
+        0.5179
+      ]
+    ],
+    "score": 20.939205885738726,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4205558468799162,
+    "pnl": 2709,
+    "picks": 17,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 50,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9284
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0313
+      ]
+    ],
+    "score": 0.7245648101880904,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.3415883859948762,
+    "pnl": 800,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 51,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        14
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3618
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        17
+      ]
+    ],
+    "score": 0.08847133166487355,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.10620601407549585,
+    "pnl": 166,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 52,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4786
+      ]
+    ],
+    "score": 15.477202762482865,
+    "accuracy": 0.45,
+    "roi": 1.096940973718225,
+    "pnl": 2546,
+    "picks": 20,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 53,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9164
+      ]
+    ],
+    "score": 0.45509930706985624,
+    "accuracy": 0.375,
+    "roi": 0.2537313432835821,
+    "pnl": 442,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 54,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.4254
+      ]
+    ],
+    "score": 20.939205885738726,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4205558468799162,
+    "pnl": 2709,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 55,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.35,
+        0.3619
+      ]
+    ],
+    "score": 20.939205885738726,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4205558468799162,
+    "pnl": 2709,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 56,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.35,
+        0.4416
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 57,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5831
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 58,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        10
+      ]
+    ],
+    "score": 23.810878095202295,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2486948267679165,
+    "pnl": 2631,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 59,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2085
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0868
+      ]
+    ],
+    "score": 6.7284693622221505,
+    "accuracy": 0.35,
+    "roi": 0.9808590102707749,
+    "pnl": 2101,
+    "picks": 20,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 60,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2074
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.9191
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2067
+      ]
+    ],
+    "score": 21.339691763038186,
+    "accuracy": 0.4375,
+    "roi": 1.4357060849598162,
+    "pnl": 2501,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 61,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -291
+      ]
+    ],
+    "score": 6.677100703683395,
+    "accuracy": 0.48717948717948717,
+    "roi": 0.8813519262585677,
+    "pnl": 3729,
+    "picks": 39,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 62,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7612
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0533
+      ]
+    ],
+    "score": 35.196347032384935,
+    "accuracy": 0.5,
+    "roi": 1.5518763796909492,
+    "pnl": 2812,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 63,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 21.086074783241834,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.424721734036321,
+    "pnl": 2432,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 64,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        474
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2429
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 65,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2322
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 66,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 23.810878095202295,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2486948267679165,
+    "pnl": 2631,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 67,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3114
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0216
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.6238
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 68,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0578
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4998
+      ]
+    ],
+    "score": 0.03125101382963604,
+    "accuracy": 0.3181818181818182,
+    "roi": 0.07472245943637916,
+    "pnl": 175,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 69,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9423
+      ]
+    ],
+    "score": 16.30308738655905,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3534536403235844,
+    "pnl": 2175,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 70,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1669
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1433
+      ]
+    ],
+    "score": 0.05844528252180981,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.07218419415059116,
+    "pnl": 116,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 71,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        17
+      ]
+    ],
+    "score": 6.447954295601771,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.296615792966158,
+    "pnl": 1954,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 72,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.3819,
+        0.4136
+      ]
+    ],
+    "score": 35.11575245484725,
+    "accuracy": 0.5,
+    "roi": 1.5473972602739725,
+    "pnl": 2824,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 73,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.0941
+      ]
+    ],
+    "score": -1.0,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.021917808219178082,
+    "pnl": 8,
+    "picks": 3,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 74,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0386
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 75,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1922
+      ],
+      [
+        "MIN_EV",
+        0.1001,
+        0.1201
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0365
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 76,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9558
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        9
+      ]
+    ],
+    "score": 16.30308738655905,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3534536403235844,
+    "pnl": 2175,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 77,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 23.810878095202295,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2486948267679165,
+    "pnl": 2631,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 78,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4215
+      ]
+    ],
+    "score": 6.258773883353439,
+    "accuracy": 0.5,
+    "roi": 0.6306207501645098,
+    "pnl": 2875,
+    "picks": 36,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 79,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8349
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        19
+      ]
+    ],
+    "score": 0.3857729396007954,
+    "accuracy": 0.4,
+    "roi": 0.2178508514386377,
+    "pnl": 371,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 80,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        16
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2502
+      ]
+    ],
+    "score": 1.9150641824330745,
+    "accuracy": 0.3,
+    "roi": 0.7292051756007394,
+    "pnl": 1578,
+    "picks": 20,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 81,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.2946
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 82,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        722
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.0699
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -248
+      ]
+    ],
+    "score": 6.75569307550018,
+    "accuracy": 0.3870967741935484,
+    "roi": 0.9080737828847898,
+    "pnl": 3003,
+    "picks": 31,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 83,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.445
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4818
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5873
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 84,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        649
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 85,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.428
+      ],
+      [
+        "MIN_EV",
+        0.1001,
+        0.0643
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9322
+      ]
+    ],
+    "score": 3.037377337886003,
+    "accuracy": 0.4375,
+    "roi": 0.5308580030105369,
+    "pnl": 2116,
+    "picks": 32,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 86,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9518
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1576
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.127
+      ]
+    ],
+    "score": 0.036973250946377774,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.12082444918265814,
+    "pnl": 170,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 87,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 21.086074783241834,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.424721734036321,
+    "pnl": 2432,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 88,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3053
+      ]
+    ],
+    "score": 0.0748462064251538,
+    "accuracy": 0.23076923076923078,
+    "roi": -0.25153793574846206,
+    "pnl": -368,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 89,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        14
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 90,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1175
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        1.2387
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9305
+      ]
+    ],
+    "score": 0.05843230403800475,
+    "accuracy": 0.18181818181818182,
+    "roi": -0.4156769596199525,
+    "pnl": -525,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 91,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.022
+      ]
+    ],
+    "score": 0.49951846241005576,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.404995904995905,
+    "pnl": 989,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 92,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.3819,
+        0.4197
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9447
+      ]
+    ],
+    "score": 23.575995588432743,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.576086956521739,
+    "pnl": 2610,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 93,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -162
+      ],
+      [
+        "MIN_EV",
+        0.1001,
+        0.1306
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4672
+      ]
+    ],
+    "score": 34.10143753128594,
+    "accuracy": 0.5,
+    "roi": 1.4907822620827105,
+    "pnl": 2992,
+    "picks": 18,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 94,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0408
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.4393
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 95,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2781
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 96,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.314
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        6.8759
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 97,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ]
+    ],
+    "score": 1.0379391298675331,
+    "accuracy": 0.4375,
+    "roi": 0.41505257332595463,
+    "pnl": 750,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 98,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.1196
+      ]
+    ],
+    "score": 7.050640389518097,
+    "accuracy": 0.4230769230769231,
+    "roi": 0.9452529452529452,
+    "pnl": 2728,
+    "picks": 26,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 99,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2476
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4353
+      ]
+    ],
+    "score": 24.26854574789679,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.618148599269184,
+    "pnl": 2657,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 100,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0204
+      ]
+    ],
+    "score": 35.25078990330765,
+    "accuracy": 0.5,
+    "roi": 1.5545102379634754,
+    "pnl": 2809,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 101,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 23.810878095202295,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2486948267679165,
+    "pnl": 2631,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 102,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        242
+      ]
+    ],
+    "score": 31.284486090376323,
+    "accuracy": 0.5,
+    "roi": 1.4006640841173215,
+    "pnl": 2531,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 103,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.3819,
+        0.3211
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 104,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0253
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8328
+      ]
+    ],
+    "score": 0.9837509788210317,
+    "accuracy": 0.4375,
+    "roi": 0.40711462450592883,
+    "pnl": 721,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 105,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1564
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -287
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ]
+    ],
+    "score": 7.594204274805398,
+    "accuracy": 0.7222222222222222,
+    "roi": 0.5645390070921986,
+    "pnl": 1194,
+    "picks": 18,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 106,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.1181
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5012
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 107,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.1484
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.2742
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5141
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 108,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3536
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0615
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4893
+      ]
+    ],
+    "score": 0.015113671245182127,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.037815126050420166,
+    "pnl": 99,
+    "picks": 24,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 109,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 110,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -259
+      ]
+    ],
+    "score": 5.9506682696128195,
+    "accuracy": 0.4117647058823529,
+    "roi": 0.8709677419354839,
+    "pnl": 3132,
+    "picks": 34,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 111,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.4083
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.5179
+      ]
+    ],
+    "score": 7.296019127254699,
+    "accuracy": 0.4090909090909091,
+    "roi": 0.9983457402812241,
+    "pnl": 2414,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 112,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.0589
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 113,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5205
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 23.888051500736253,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2549397590361446,
+    "pnl": 2604,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 114,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5211
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0237
+      ]
+    ],
+    "score": 0.48867492287868236,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.40289256198347106,
+    "pnl": 975,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 115,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.961
+      ]
+    ],
+    "score": 16.380952535660604,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3638095238095238,
+    "pnl": 2148,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 116,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1157
+      ]
+    ],
+    "score": 0.31322306896559393,
+    "accuracy": 0.42857142857142855,
+    "roi": 0.21360381861575178,
+    "pnl": 179,
+    "picks": 7,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 117,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.3211,
+        0.3422
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.2109
+      ]
+    ],
+    "score": 35.39928702331322,
+    "accuracy": 0.5,
+    "roi": 1.562395075545607,
+    "pnl": 2792,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 118,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4658
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.1039
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2868
+      ]
+    ],
+    "score": 17.576748528272923,
+    "accuracy": 0.47368421052631576,
+    "roi": 1.2101382488479262,
+    "pnl": 2626,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 119,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.3162
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 120,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1283
+      ]
+    ],
+    "score": 0.03139518880096681,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.104,
+    "pnl": 143,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 121,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.48867492287868236,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.40289256198347106,
+    "pnl": 975,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 122,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        428
+      ],
+      [
+        "KELLY_FRACTION",
+        0.3211,
+        0.331
+      ]
+    ],
+    "score": 35.46441551157514,
+    "accuracy": 0.5,
+    "roi": 1.5660483417650366,
+    "pnl": 2786,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 123,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -279
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        1.0146
+      ]
+    ],
+    "score": 0.1833467426699674,
+    "accuracy": 0.46875,
+    "roi": 0.1981981981981982,
+    "pnl": 682,
+    "picks": 32,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 124,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9287
+      ]
+    ],
+    "score": 0.9869578728476748,
+    "accuracy": 0.4375,
+    "roi": 0.40732394366197183,
+    "pnl": 723,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 125,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5337
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1633
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 126,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3552
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.4437
+      ]
+    ],
+    "score": 17.376729622535397,
+    "accuracy": 0.45,
+    "roi": 1.155495978552279,
+    "pnl": 2586,
+    "picks": 20,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 127,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1561
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0366
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 128,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1541
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 129,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.355
+      ]
+    ],
+    "score": 21.03620571609124,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4304,
+    "pnl": 2682,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 130,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.538
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -334
+      ]
+    ],
+    "score": 5.447063291873587,
+    "accuracy": 0.4146341463414634,
+    "roi": 0.7505838393274171,
+    "pnl": 3214,
+    "picks": 41,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 131,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.6037
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        618
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 23.844124600905065,
+    "accuracy": 0.36363636363636365,
+    "roi": 1.7727272727272727,
+    "pnl": 1950,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 132,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.168
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 133,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2366
+      ],
+      [
+        "MIN_EV",
+        0.1001,
+        0.0461
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 134,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0473
+      ]
+    ],
+    "score": 23.888051500736253,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2549397590361446,
+    "pnl": 2604,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 135,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9299
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.524
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 136,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2948
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0782
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 137,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0285
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        597
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 138,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.5317
+      ]
+    ],
+    "score": 17.52681172076017,
+    "accuracy": 0.42105263157894735,
+    "roi": 1.1747479596735477,
+    "pnl": 2447,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 139,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7864
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1061
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 140,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4187
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.2912
+      ]
+    ],
+    "score": 1.0953912480556558,
+    "accuracy": 0.42857142857142855,
+    "roi": 0.359079283887468,
+    "pnl": 2106,
+    "picks": 49,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 141,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1996
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ]
+    ],
+    "score": 21.459279544978283,
+    "accuracy": 0.4375,
+    "roi": 1.4459302325581396,
+    "pnl": 2487,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 142,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7875
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0425
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 143,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        16
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 144,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        16
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0949
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4683
+      ]
+    ],
+    "score": 13.894166103509157,
+    "accuracy": 0.4117647058823529,
+    "roi": 1.0111675126903554,
+    "pnl": 1992,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 145,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.0971
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.375
+      ]
+    ],
+    "score": 21.03620571609124,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4304,
+    "pnl": 2682,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 146,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2183
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 147,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.0234
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        9
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 148,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4534
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1746
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0695
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 149,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 150,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        13
+      ]
+    ],
+    "score": 35.47233173291232,
+    "accuracy": 0.5,
+    "roi": 1.567323943661972,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 151,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.3211,
+        0.2938
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.06,
+        0.02
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 152,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3181
+      ]
+    ],
+    "score": 0.08313364055299541,
+    "accuracy": 0.3076923076923077,
+    "roi": -0.05119214586255259,
+    "pnl": -73,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 153,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        704
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        13
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 154,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.489
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 155,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.2938,
+        0.3284
+      ]
+    ],
+    "score": 35.46441551157514,
+    "accuracy": 0.5,
+    "roi": 1.5660483417650366,
+    "pnl": 2786,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 156,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.02
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 157,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.1176
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.98
+      ]
+    ],
+    "score": 0.049462480679461455,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.11493212669683257,
+    "pnl": 254,
+    "picks": 21,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 158,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        352
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 159,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.5437
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0904
+      ]
+    ],
+    "score": 17.564182826959286,
+    "accuracy": 0.42105263157894735,
+    "roi": 1.1793136781053648,
+    "pnl": 2440,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 160,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2181
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.3225
+      ]
+    ],
+    "score": 35.55602633788351,
+    "accuracy": 0.5,
+    "roi": 1.5732954545454545,
+    "pnl": 2769,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 161,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        15
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.1858
+      ]
+    ],
+    "score": 16.404522847571716,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3685897435897436,
+    "pnl": 2135,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 162,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.4,
+        0.3498
+      ],
+      [
+        "KELLY_FRACTION",
+        0.2938,
+        0.2622
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 163,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.8947
+      ]
+    ],
+    "score": 0.07195693340204451,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.08790482485128882,
+    "pnl": 133,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 164,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.0768
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 165,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.6446
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 166,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        12
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        19
+      ]
+    ],
+    "score": 21.29307402360457,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.44796104686549,
+    "pnl": 2379,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 167,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1628
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 2.686989756785928,
+    "accuracy": 0.6,
+    "roi": 0.5116640746500778,
+    "pnl": 329,
+    "picks": 5,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 168,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2232
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 169,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.0397
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1205
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 170,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.9426
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        15
+      ]
+    ],
+    "score": 16.441323986838132,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3752430330524952,
+    "pnl": 2122,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 171,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.0815
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 172,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.2622,
+        0.3154
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        21
+      ]
+    ],
+    "score": 21.224711980188218,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.4380610412926391,
+    "pnl": 2403,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 173,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -151
+      ]
+    ],
+    "score": 34.434729453523566,
+    "accuracy": 0.5,
+    "roi": 1.5126093669583118,
+    "pnl": 2939,
+    "picks": 18,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 174,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ],
+      [
+        "MIN_EV",
+        0.1001,
+        0.1008
+      ]
+    ],
+    "score": 6.469896348194498,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.3173943173943174,
+    "pnl": 1901,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 175,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.0956
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4723
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.193
+      ]
+    ],
+    "score": 0.08953940634595701,
+    "accuracy": 0.375,
+    "roi": -0.00511770726714432,
+    "pnl": -5,
+    "picks": 8,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 176,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0679
+      ]
+    ],
+    "score": 35.668141523189256,
+    "accuracy": 0.5,
+    "roi": 1.5811818703384968,
+    "pnl": 2756,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 177,
+    "params": [
+      [
+        "MIN_EV",
+        0.1001,
+        0.0601
+      ],
+      [
+        "KELLY_FRACTION",
+        0.2622,
+        0.188
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 178,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0782
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 179,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.0642
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        547
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3979
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 180,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3594
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 181,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5914
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0735
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 182,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1355
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        207
+      ]
+    ],
+    "score": 0.09648437500000001,
+    "accuracy": 0.3333333333333333,
+    "roi": -0.03515625,
+    "pnl": -45,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 183,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.58
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 184,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1346
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -276
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4548
+      ]
+    ],
+    "score": 1.259209707674056,
+    "accuracy": 0.5925925925925926,
+    "roi": 0.25897566785775056,
+    "pnl": 1522,
+    "picks": 54,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 185,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ],
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2529
+      ]
+    ],
+    "score": 0.929842149783793,
+    "accuracy": 0.4375,
+    "roi": 0.39896373056994816,
+    "pnl": 693,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 186,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.3894
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 187,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0948
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 188,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.5952
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3188
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 189,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9343
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        358
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 190,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        19
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        10
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0346
+      ]
+    ],
+    "score": 21.44226533776728,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.465043695380774,
+    "pnl": 2347,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 191,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4877
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        13
+      ]
+    ],
+    "score": 21.455556610376583,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.441257584114727,
+    "pnl": 2613,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 192,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        293
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.0443
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 193,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.838
+      ],
+      [
+        "MAX_ODDS",
+        500,
+        446
+      ]
+    ],
+    "score": 0.86439065207363,
+    "accuracy": 0.4375,
+    "roi": 0.3888235294117647,
+    "pnl": 661,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 194,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3448
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1666
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 195,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3118
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 196,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        667
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 197,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2059
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4273
+      ]
+    ],
+    "score": 21.70334883720854,
+    "accuracy": 0.4375,
+    "roi": 1.4718562874251497,
+    "pnl": 2458,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 198,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2729
+      ]
+    ],
+    "score": 35.640546968171435,
+    "accuracy": 0.5,
+    "roi": 1.578616352201258,
+    "pnl": 2761,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 199,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.6131
+      ],
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.212
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7483
+      ]
+    ],
+    "score": 27.16232587117774,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9391666666666667,
+    "pnl": 2327,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 200,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8091
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -195
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9489
+      ]
+    ],
+    "score": 15.5861029329371,
+    "accuracy": 0.375,
+    "roi": 1.105668016194332,
+    "pnl": 2731,
+    "picks": 24,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 201,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.295
+      ]
+    ],
+    "score": 0.06942028985507247,
+    "accuracy": 0.23076923076923078,
+    "roi": -0.30579710144927535,
+    "pnl": -422,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 202,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2387
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.8941
+      ]
+    ],
+    "score": 24.62422633707666,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.650314465408805,
+    "pnl": 2624,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 203,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0636
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 204,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3406
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 205,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2635
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -201
+      ]
+    ],
+    "score": 19.559132237368136,
+    "accuracy": 0.43478260869565216,
+    "roi": 1.2893422148209825,
+    "pnl": 3097,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 206,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2135
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.8998
+      ]
+    ],
+    "score": 24.787314156871364,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6649681528662421,
+    "pnl": 2614,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 207,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        248
+      ]
+    ],
+    "score": 31.762233945473927,
+    "accuracy": 0.5,
+    "roi": 1.437132784958872,
+    "pnl": 2446,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 208,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7946
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.2995
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.575
+      ]
+    ],
+    "score": 0.08120634920634921,
+    "accuracy": 0.3076923076923077,
+    "roi": -0.07318840579710145,
+    "pnl": -101,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 209,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.3
+      ],
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.231
+      ]
+    ],
+    "score": 35.78171378250646,
+    "accuracy": 0.5,
+    "roi": 1.5886442641946699,
+    "pnl": 2742,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 210,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -289
+      ]
+    ],
+    "score": 5.209928266530438,
+    "accuracy": 0.4883720930232558,
+    "roi": 0.8003130590339893,
+    "pnl": 3579,
+    "picks": 43,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 211,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3443
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5969
+      ]
+    ],
+    "score": 0.04068,
+    "accuracy": 0.2,
+    "roi": -0.322,
+    "pnl": -322,
+    "picks": 10,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 212,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2296
+      ]
+    ],
+    "score": 35.78171378250646,
+    "accuracy": 0.5,
+    "roi": 1.5886442641946699,
+    "pnl": 2742,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 213,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7879
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1392
+      ]
+    ],
+    "score": 35.92686826697402,
+    "accuracy": 0.5,
+    "roi": 1.5989430416911332,
+    "pnl": 2723,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 214,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2177
+      ]
+    ],
+    "score": 35.83687945503027,
+    "accuracy": 0.5,
+    "roi": 1.5925494761350407,
+    "pnl": 2736,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 215,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0332
+      ]
+    ],
+    "score": 0.8745935803961756,
+    "accuracy": 0.4375,
+    "roi": 0.390716803760282,
+    "pnl": 665,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 216,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -264
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3273
+      ]
+    ],
+    "score": 0.02521071331624453,
+    "accuracy": 0.3793103448275862,
+    "roi": 0.03164556962025317,
+    "pnl": 95,
+    "picks": 29,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 217,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0627
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3496
+      ]
+    ],
+    "score": 35.96314035019196,
+    "accuracy": 0.5,
+    "roi": 1.600470035252644,
+    "pnl": 2724,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 218,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2701
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5901
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4175
+      ]
+    ],
+    "score": 0.03895820880047017,
+    "accuracy": 0.3157894736842105,
+    "roi": 0.09298701298701299,
+    "pnl": 179,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 219,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3799
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.6579
+      ]
+    ],
+    "score": 21.241632721139123,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4561598224195338,
+    "pnl": 2624,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 220,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0752
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2772
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.923
+      ]
+    ],
+    "score": 24.175696306508975,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.629299363057325,
+    "pnl": 2558,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 221,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        1.2877
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 0.05564814814814815,
+    "accuracy": 0.2,
+    "roi": -0.44351851851851853,
+    "pnl": -479,
+    "picks": 10,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 222,
+    "params": [
+      [
+        "MAX_ODDS",
+        500,
+        358
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.6937,
+        0.655
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 223,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.6276
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        6.0473
+      ]
+    ],
+    "score": 27.955765427082,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9858333333333333,
+    "pnl": 2383,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 224,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0725
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        15
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 225,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        12
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2513
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 226,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 227,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0678
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 228,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.02
+      ]
+    ],
+    "score": 22.159538927391633,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4831024930747922,
+    "pnl": 2677,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 229,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        769
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7922
+      ]
+    ],
+    "score": 36.776079177028215,
+    "accuracy": 0.5,
+    "roi": 1.6318261890780974,
+    "pnl": 2779,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 230,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        370
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 231,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.0964
+      ]
+    ],
+    "score": -1.0,
+    "accuracy": 0.25,
+    "roi": -0.3101851851851852,
+    "pnl": -134,
+    "picks": 4,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 232,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        282
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -272
+      ]
+    ],
+    "score": 5.390513220403226,
+    "accuracy": 0.4473684210526316,
+    "roi": 0.8340955284552846,
+    "pnl": 3283,
+    "picks": 38,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 233,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0971
+      ]
+    ],
+    "score": 24.787314156871364,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6649681528662421,
+    "pnl": 2614,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 234,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0477
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 235,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7884
+      ]
+    ],
+    "score": 36.776079177028215,
+    "accuracy": 0.5,
+    "roi": 1.6318261890780974,
+    "pnl": 2779,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 236,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        555
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        17
+      ]
+    ],
+    "score": 6.724468263834696,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.3730385164051355,
+    "pnl": 1925,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 237,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1817
+      ],
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2048
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7818
+      ]
+    ],
+    "score": 36.7185473482216,
+    "accuracy": 0.5,
+    "roi": 1.6275539988324577,
+    "pnl": 2788,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 238,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8541
+      ]
+    ],
+    "score": 0.8654087800501595,
+    "accuracy": 0.4375,
+    "roi": 0.38928150765606595,
+    "pnl": 661,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 239,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.923
+      ]
+    ],
+    "score": 24.787314156871364,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6649681528662421,
+    "pnl": 2614,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 240,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.2513
+      ]
+    ],
+    "score": 0.05093220338983051,
+    "accuracy": 0.18181818181818182,
+    "roi": -0.4906779661016949,
+    "pnl": -579,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 241,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.1055
+      ],
+      [
+        "MAX_ODDS",
+        358,
+        457
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1287
+      ]
+    ],
+    "score": 0.08537037037037037,
+    "accuracy": 0.3,
+    "roi": -0.14629629629629629,
+    "pnl": -158,
+    "picks": 10,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 242,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        18
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 6.724468263834696,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.3730385164051355,
+    "pnl": 1925,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 243,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9658
+      ]
+    ],
+    "score": 16.54305377367382,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3914780292942743,
+    "pnl": 2090,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 244,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.0404
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2214
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.467
+      ]
+    ],
+    "score": 0.09210144927536233,
+    "accuracy": 0.3076923076923077,
+    "roi": -0.07898550724637682,
+    "pnl": -109,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 245,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.9138
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0367
+      ]
+    ],
+    "score": 0.06109923160868855,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.07567567567567568,
+    "pnl": 112,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 246,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9582
+      ]
+    ],
+    "score": 11.308229271674024,
+    "accuracy": 0.47368421052631576,
+    "roi": 1.1817258883248731,
+    "pnl": 2328,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 247,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.647811346146682,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2957042957042957,
+    "pnl": 2594,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 248,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4885
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 249,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0657
+      ]
+    ],
+    "score": 0.023785762959884542,
+    "accuracy": 0.3181818181818182,
+    "roi": 0.05814977973568282,
+    "pnl": 132,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 250,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9063
+      ]
+    ],
+    "score": 0.13142420446289133,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.15379494007989347,
+    "pnl": 231,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 251,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5259
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.0695
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 252,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        12
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 253,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.5034
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 254,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.181
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 255,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 256,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.5105
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 257,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.459
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 258,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.2214
+      ]
+    ],
+    "score": 0.05093220338983051,
+    "accuracy": 0.18181818181818182,
+    "roi": -0.4906779661016949,
+    "pnl": -579,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 259,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1611
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1909
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 260,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2324
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.06
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 261,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        14
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9308
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 262,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.4696
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 263,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0587
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 264,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -196
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2542
+      ]
+    ],
+    "score": 19.963715156488508,
+    "accuracy": 0.43478260869565216,
+    "roi": 1.3126561199000832,
+    "pnl": 3153,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 265,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.4696
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 266,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2744
+      ]
+    ],
+    "score": 0.0006308359414376333,
+    "accuracy": 0.30434782608695654,
+    "roi": 0.0020859407592824365,
+    "pnl": 5,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 267,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 268,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        15
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 269,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.2971
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        11
+      ]
+    ],
+    "score": 22.038299393505135,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5,
+    "pnl": 2403,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 270,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        14
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 271,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2194
+      ]
+    ],
+    "score": 15.881973653796582,
+    "accuracy": 0.3684210526315789,
+    "roi": 1.1238578680203046,
+    "pnl": 2214,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 272,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0276
+      ],
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.1625
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9562
+      ]
+    ],
+    "score": 16.552418687471306,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3955674949630625,
+    "pnl": 2078,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 273,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1348
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9477
+      ]
+    ],
+    "score": 16.54305377367382,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3914780292942743,
+    "pnl": 2090,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 274,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4086
+      ]
+    ],
+    "score": 2.610003289703195,
+    "accuracy": 0.4883720930232558,
+    "roi": 0.5156026922292474,
+    "pnl": 2528,
+    "picks": 43,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 275,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1157
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2117
+      ]
+    ],
+    "score": 0.13107471028005027,
+    "accuracy": 0.42857142857142855,
+    "roi": 0.18205128205128204,
+    "pnl": 142,
+    "picks": 7,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 276,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0507
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.6015
+      ]
+    ],
+    "score": 0.033431765852966894,
+    "accuracy": 0.2631578947368421,
+    "roi": 0.0968421052631579,
+    "pnl": 184,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 277,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4047
+      ]
+    ],
+    "score": 20.658454066269474,
+    "accuracy": 0.5,
+    "roi": 1.2983957219251336,
+    "pnl": 2428,
+    "picks": 18,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 278,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0471
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 279,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.241
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 280,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7828
+      ]
+    ],
+    "score": 36.776079177028215,
+    "accuracy": 0.5,
+    "roi": 1.6318261890780974,
+    "pnl": 2779,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 281,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9042
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8537
+      ]
+    ],
+    "score": 0.5724873474548445,
+    "accuracy": 0.4,
+    "roi": 0.31652839821314616,
+    "pnl": 496,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 282,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8192
+      ]
+    ],
+    "score": 36.78978454856105,
+    "accuracy": 0.5,
+    "roi": 1.6331569664902998,
+    "pnl": 2778,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 283,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 284,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        15
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.8509
+      ]
+    ],
+    "score": 0.06971428571428571,
+    "accuracy": 0.14285714285714285,
+    "roi": -0.3028571428571429,
+    "pnl": -212,
+    "picks": 7,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 285,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        15
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 286,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0367
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 287,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ]
+    ],
+    "score": 22.038299393505135,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5,
+    "pnl": 2403,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 288,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -311
+      ]
+    ],
+    "score": 4.813272600065922,
+    "accuracy": 0.4888888888888889,
+    "roi": 0.8037243150684932,
+    "pnl": 3755,
+    "picks": 45,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 289,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 290,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.2711
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        17
+      ]
+    ],
+    "score": 6.697307207269552,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.354526606772633,
+    "pnl": 1960,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 291,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2111
+      ]
+    ],
+    "score": 22.276849139044156,
+    "accuracy": 0.4375,
+    "roi": 1.5053892215568863,
+    "pnl": 2514,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 292,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.4711
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4062
+      ]
+    ],
+    "score": 24.787314156871364,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6649681528662421,
+    "pnl": 2614,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 293,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0265
+      ]
+    ],
+    "score": 22.159538927391633,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4831024930747922,
+    "pnl": 2677,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 294,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -246
+      ]
+    ],
+    "score": 5.971852434462823,
+    "accuracy": 0.4117647058823529,
+    "roi": 0.8648264086511098,
+    "pnl": 3039,
+    "picks": 34,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 295,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        740
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0572
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1629
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 296,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        6.4476
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 297,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.1105
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 298,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        403
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.199
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ]
+    ],
+    "score": 0.8745935803961756,
+    "accuracy": 0.4375,
+    "roi": 0.390716803760282,
+    "pnl": 665,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 299,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.756
+      ]
+    ],
+    "score": 36.77841180443963,
+    "accuracy": 0.5,
+    "roi": 1.6316715542521993,
+    "pnl": 2782,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 300,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9542
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ]
+    ],
+    "score": 0.4253511710261699,
+    "accuracy": 0.375,
+    "roi": 0.23892215568862277,
+    "pnl": 399,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 301,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8079
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 302,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8543
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2428
+      ]
+    ],
+    "score": 0.8654087800501595,
+    "accuracy": 0.4375,
+    "roi": 0.38928150765606595,
+    "pnl": 661,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 303,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1389
+      ]
+    ],
+    "score": 22.038299393505135,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5,
+    "pnl": 2403,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 304,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.4647
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 305,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.647811346146682,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.2957042957042957,
+    "pnl": 2594,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 306,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1433
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.4789
+      ]
+    ],
+    "score": 36.81287034624174,
+    "accuracy": 0.5,
+    "roi": 1.6333725029377204,
+    "pnl": 2780,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 307,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.188,
+        0.1745
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 308,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.25
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.7771
+      ]
+    ],
+    "score": 36.83082096990515,
+    "accuracy": 0.5,
+    "roi": 1.6352386564525634,
+    "pnl": 2775,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 309,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1799
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0927
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.4138
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 310,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0551
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 311,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.03
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9213
+      ]
+    ],
+    "score": 24.796161517931615,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6670926517571885,
+    "pnl": 2609,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 312,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0989
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 313,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.34
+      ]
+    ],
+    "score": 0.08092813852813854,
+    "accuracy": 0.3076923076923077,
+    "roi": -0.07636363636363637,
+    "pnl": -105,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 314,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.98
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5781
+      ]
+    ],
+    "score": 0.03829473074110597,
+    "accuracy": 0.3157894736842105,
+    "roi": 0.09152366094643785,
+    "pnl": 176,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 315,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0923
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 316,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0631
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 317,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4534
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -251
+      ]
+    ],
+    "score": 5.2458815953098625,
+    "accuracy": 0.4166666666666667,
+    "roi": 0.8467350242849433,
+    "pnl": 3138,
+    "picks": 36,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 318,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2784
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 319,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1464
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.8375
+      ]
+    ],
+    "score": 0.07696815007996773,
+    "accuracy": 0.42857142857142855,
+    "roi": 0.1111111111111111,
+    "pnl": 88,
+    "picks": 7,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 320,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.1745,
+        0.2357
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9307
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.2679
+      ]
+    ],
+    "score": 36.613815651717275,
+    "accuracy": 0.5,
+    "roi": 1.620729588882455,
+    "pnl": 2799,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 321,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5373
+      ]
+    ],
+    "score": 23.65120817828502,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6507936507936507,
+    "pnl": 2600,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 322,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.128
+      ]
+    ],
+    "score": 0.08493023255813954,
+    "accuracy": 0.3,
+    "roi": -0.15069767441860465,
+    "pnl": -162,
+    "picks": 10,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 323,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.071
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 324,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 36.83659509632114,
+    "accuracy": 0.5,
+    "roi": 1.6359882005899704,
+    "pnl": 2773,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 325,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.6539
+      ]
+    ],
+    "score": 24.796161517931615,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6670926517571885,
+    "pnl": 2609,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 326,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.1745,
+        0.2199
+      ]
+    ],
+    "score": 36.672672726525015,
+    "accuracy": 0.5,
+    "roi": 1.62478184991274,
+    "pnl": 2793,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 327,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.8,
+        0.825
+      ]
+    ],
+    "score": 36.873593091447916,
+    "accuracy": 0.5,
+    "roi": 1.6375442739079102,
+    "pnl": 2774,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 328,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.873593091447916,
+    "accuracy": 0.5,
+    "roi": 1.6375442739079102,
+    "pnl": 2774,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 329,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3363
+      ]
+    ],
+    "score": 36.873593091447916,
+    "accuracy": 0.5,
+    "roi": 1.6375442739079102,
+    "pnl": 2774,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 330,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.161
+      ]
+    ],
+    "score": 1.265398359180478,
+    "accuracy": 0.6,
+    "roi": 0.4898989898989899,
+    "pnl": 291,
+    "picks": 5,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 331,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -130
+      ],
+      [
+        "KELLY_FRACTION",
+        0.1745,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "KEEP"
+  },
+  {
+    "iteration": 332,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        14
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        4
+      ]
+    ],
+    "score": 0.8314844518500356,
+    "accuracy": 0.4375,
+    "roi": 0.38392857142857145,
+    "pnl": 645,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 333,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5205
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9655
+      ]
+    ],
+    "score": 16.564005942571587,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3986486486486487,
+    "pnl": 2070,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 334,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1388
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 335,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.69672387330209,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.3,
+    "pnl": 2574,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 336,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5928
+      ]
+    ],
+    "score": 27.955765427082,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9858333333333333,
+    "pnl": 2383,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 337,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9538
+      ]
+    ],
+    "score": 16.564005942571587,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3986486486486487,
+    "pnl": 2070,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 338,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2756
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -262
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.2475
+      ]
+    ],
+    "score": 0.4577512719032105,
+    "accuracy": 0.3023255813953488,
+    "roi": 0.4820013583880462,
+    "pnl": 2129,
+    "picks": 43,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 339,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        794
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 340,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.8935
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.1029
+      ]
+    ],
+    "score": 2.95580090316792,
+    "accuracy": 0.4166666666666667,
+    "roi": 0.521285140562249,
+    "pnl": 649,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 341,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3641
+      ]
+    ],
+    "score": 0.5575285551248489,
+    "accuracy": 0.4117647058823529,
+    "roi": 0.3061797752808989,
+    "pnl": 545,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 342,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2504
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 343,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2301
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4151
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 344,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3631
+      ]
+    ],
+    "score": 20.33363061451702,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.4757347915242651,
+    "pnl": 2159,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 345,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1883
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 346,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.4569501239812905,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.3970276008492569,
+    "pnl": 935,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 347,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.9022
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 348,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.7717
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.4724
+      ]
+    ],
+    "score": 36.92400391037562,
+    "accuracy": 0.5,
+    "roi": 1.641711229946524,
+    "pnl": 2763,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 349,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.4571
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.8602
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8512
+      ]
+    ],
+    "score": 0.06619469026548673,
+    "accuracy": 0.18181818181818182,
+    "roi": -0.3380530973451327,
+    "pnl": -382,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 350,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3581
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 351,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        11
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 352,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.255
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.0738
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 353,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2158
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 354,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9661
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1678
+      ]
+    ],
+    "score": 19.621202244842756,
+    "accuracy": 0.4117647058823529,
+    "roi": 1.3692307692307693,
+    "pnl": 2403,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 355,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9486
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        17
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2428
+      ]
+    ],
+    "score": 6.4819299953883585,
+    "accuracy": 0.38461538461538464,
+    "roi": 1.3398550724637681,
+    "pnl": 1849,
+    "picks": 13,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 356,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3368
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1524
+      ]
+    ],
+    "score": 0.8314844518500356,
+    "accuracy": 0.4375,
+    "roi": 0.38392857142857145,
+    "pnl": 645,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 357,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0217
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1306
+      ]
+    ],
+    "score": 0.06209388818951149,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.13983050847457626,
+    "pnl": 165,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 358,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1367
+      ]
+    ],
+    "score": 0.2539330426619468,
+    "accuracy": 0.4444444444444444,
+    "roi": 0.37244897959183676,
+    "pnl": 365,
+    "picks": 9,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 359,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.69672387330209,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.3,
+    "pnl": 2574,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 360,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 361,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.101
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3715
+      ]
+    ],
+    "score": 23.132454594343507,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6225207933461292,
+    "pnl": 2536,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 362,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1978
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 363,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.4569501239812905,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.3970276008492569,
+    "pnl": 935,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 364,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 365,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0854
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 366,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1588
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1762
+      ]
+    ],
+    "score": 1.2211363477267725,
+    "accuracy": 0.6,
+    "roi": 0.47758620689655173,
+    "pnl": 277,
+    "picks": 5,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 367,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.627
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1275
+      ]
+    ],
+    "score": 0.04585714285714285,
+    "accuracy": 0.14285714285714285,
+    "roi": -0.5414285714285715,
+    "pnl": -379,
+    "picks": 7,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 368,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.852
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3478
+      ]
+    ],
+    "score": 0.826802657201181,
+    "accuracy": 0.4375,
+    "roi": 0.3831942789034565,
+    "pnl": 643,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 369,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.0705
+      ]
+    ],
+    "score": 24.69672387330209,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.3,
+    "pnl": 2574,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 370,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8367
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3146
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -187
+      ]
+    ],
+    "score": 0.06835192976038046,
+    "accuracy": 0.3333333333333333,
+    "roi": -0.003201024327784891,
+    "pnl": -5,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 371,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.1933
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.032
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1415
+      ]
+    ],
+    "score": 0.015441968015914595,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.02127659574468085,
+    "pnl": 32,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 372,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2382
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 373,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3074
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.4693
+      ]
+    ],
+    "score": 14.988709107739684,
+    "accuracy": 0.4090909090909091,
+    "roi": 1.0217391304347827,
+    "pnl": 2350,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 374,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1916
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        22
+      ]
+    ],
+    "score": 22.088447290781932,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5082278481012659,
+    "pnl": 2383,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 375,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2495
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 376,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1369
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -346
+      ]
+    ],
+    "score": 0.3425398251176365,
+    "accuracy": 0.5405405405405406,
+    "roi": 0.1905503634475597,
+    "pnl": 734,
+    "picks": 37,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 377,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0446
+      ]
+    ],
+    "score": 0.07981080060436867,
+    "accuracy": 0.3181818181818182,
+    "roi": 0.17915742793791575,
+    "pnl": 404,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 378,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.8967
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 379,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ],
+      [
+        "MAX_ODDS",
+        358,
+        625
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0757
+      ]
+    ],
+    "score": 15.076731471349827,
+    "accuracy": 0.38095238095238093,
+    "roi": 1.0839907192575406,
+    "pnl": 2336,
+    "picks": 21,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 380,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3296
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1161
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1426
+      ]
+    ],
+    "score": -1.0,
+    "accuracy": 0.6666666666666666,
+    "roi": 0.5757575757575758,
+    "pnl": 209,
+    "picks": 3,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 381,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 382,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3867
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.7577
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.9164
+      ]
+    ],
+    "score": 0.4782416177801232,
+    "accuracy": 0.4,
+    "roi": 0.27479469361970943,
+    "pnl": 435,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 383,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.0909
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -301
+      ]
+    ],
+    "score": 0.06369636188011633,
+    "accuracy": 0.45714285714285713,
+    "roi": 0.073745494871084,
+    "pnl": 266,
+    "picks": 35,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 384,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        7.1263
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 385,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        6.0108
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4543
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.6667
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 386,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8702
+      ]
+    ],
+    "score": 0.8295841675354784,
+    "accuracy": 0.4375,
+    "roi": 0.3840190816935003,
+    "pnl": 644,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 387,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3639
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0574
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 388,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.25
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 389,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -256
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1061
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.0818
+      ]
+    ],
+    "score": 0.901386844374794,
+    "accuracy": 0.4444444444444444,
+    "roi": 0.36777777777777776,
+    "pnl": 331,
+    "picks": 9,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 390,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.1624
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.083
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 391,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3624
+      ],
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.4674
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -197
+      ]
+    ],
+    "score": 3.7298682753685504,
+    "accuracy": 0.3939393939393939,
+    "roi": 0.5597269624573379,
+    "pnl": 1968,
+    "picks": 33,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 392,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.0839
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8661
+      ]
+    ],
+    "score": 0.826802657201181,
+    "accuracy": 0.4375,
+    "roi": 0.3831942789034565,
+    "pnl": 643,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 393,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.211
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -226
+      ]
+    ],
+    "score": 18.469122206697914,
+    "accuracy": 0.4444444444444444,
+    "roi": 1.2022032693674485,
+    "pnl": 3383,
+    "picks": 27,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 394,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2471
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2404
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 395,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.218
+      ]
+    ],
+    "score": 15.875706288672372,
+    "accuracy": 0.3684210526315789,
+    "roi": 1.1268542199488492,
+    "pnl": 2203,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 396,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3922
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.2631
+      ]
+    ],
+    "score": 36.06892708127163,
+    "accuracy": 0.5,
+    "roi": 1.6095238095238096,
+    "pnl": 2704,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 397,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1858
+      ],
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 398,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3592
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 399,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        12
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 0.4569501239812905,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.3970276008492569,
+    "pnl": 935,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 400,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9161
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1214
+      ]
+    ],
+    "score": 0.029870129870129873,
+    "accuracy": 0.18181818181818182,
+    "roi": -0.5021645021645021,
+    "pnl": -580,
+    "picks": 11,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 401,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -286
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4203
+      ]
+    ],
+    "score": 4.427705373659365,
+    "accuracy": 0.4,
+    "roi": 0.6645523298365456,
+    "pnl": 2724,
+    "picks": 40,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 402,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 403,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.7853
+      ]
+    ],
+    "score": 36.92400391037562,
+    "accuracy": 0.5,
+    "roi": 1.641711229946524,
+    "pnl": 2763,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 404,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.3468
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        15
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 14.988709107739684,
+    "accuracy": 0.4090909090909091,
+    "roi": 1.0217391304347827,
+    "pnl": 2350,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 405,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.03
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3652
+      ]
+    ],
+    "score": 20.33363061451702,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.4757347915242651,
+    "pnl": 2159,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 406,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1485
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.7602
+      ]
+    ],
+    "score": 36.92400391037562,
+    "accuracy": 0.5,
+    "roi": 1.641711229946524,
+    "pnl": 2763,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 407,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.1371
+      ]
+    ],
+    "score": 0.40524562531647346,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.44418052256532065,
+    "pnl": 561,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 408,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2844
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.036
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 409,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -310
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3358
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4781
+      ]
+    ],
+    "score": 0.09078422809610696,
+    "accuracy": 0.4358974358974359,
+    "roi": 0.10182181182929873,
+    "pnl": 408,
+    "picks": 39,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 410,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0837
+      ],
+      [
+        "MIN_MINUTES",
+        13,
+        14
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4841
+      ]
+    ],
+    "score": 0.00512127144656779,
+    "accuracy": 0.3333333333333333,
+    "roi": 0.014,
+    "pnl": 35,
+    "picks": 24,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 411,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8356
+      ]
+    ],
+    "score": 0.8296934572466975,
+    "accuracy": 0.4375,
+    "roi": 0.3835616438356164,
+    "pnl": 644,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 412,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.4044
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0385
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4115
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 413,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2456
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 414,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0621
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        1.0125
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.03
+      ]
+    ],
+    "score": 0.0782051282051282,
+    "accuracy": 0.25,
+    "roi": -0.21794871794871795,
+    "pnl": -357,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 415,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8271
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 416,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5009
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3964
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.69672387330209,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.3,
+    "pnl": 2574,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 417,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3789
+      ],
+      [
+        "MAX_ODDS",
+        358,
+        709
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9592
+      ]
+    ],
+    "score": 12.98885715335492,
+    "accuracy": 0.4,
+    "roi": 1.2468354430379747,
+    "pnl": 1970,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 418,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3759
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 419,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        5.9361
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.8946
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.0881
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 420,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        16
+      ],
+      [
+        "MIN_EV",
+        0.0601,
+        0.0475
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.49
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 421,
+    "params": [
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.6855
+      ],
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 422,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0502
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        12
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 423,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.0536
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.482
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 424,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.414
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 425,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5666
+      ]
+    ],
+    "score": 27.955765427082,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9858333333333333,
+    "pnl": 2383,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 426,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 427,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.41
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.2907
+      ]
+    ],
+    "score": 4.156431910730991,
+    "accuracy": 0.5,
+    "roi": 0.5663583566358357,
+    "pnl": 2633,
+    "picks": 42,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 428,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3395
+      ],
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8531
+      ]
+    ],
+    "score": 0.826802657201181,
+    "accuracy": 0.4375,
+    "roi": 0.3831942789034565,
+    "pnl": 643,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 429,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4075
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 430,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2909
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 431,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0694
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 432,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2871
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 433,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.1317
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        8
+      ]
+    ],
+    "score": 0.25808663445927804,
+    "accuracy": 0.4,
+    "roi": 0.24537037037037038,
+    "pnl": 265,
+    "picks": 10,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 434,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0886
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 435,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.0958
+      ]
+    ],
+    "score": -1.0,
+    "accuracy": 0.25,
+    "roi": -0.33647058823529413,
+    "pnl": -143,
+    "picks": 4,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 436,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2935
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 437,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0666
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 438,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.1137
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 439,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0748
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9478
+      ]
+    ],
+    "score": 16.564005942571587,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3986486486486487,
+    "pnl": 2070,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 440,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.277
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2996
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 441,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.8696
+      ]
+    ],
+    "score": 0.03795121951219513,
+    "accuracy": 0.25,
+    "roi": -0.05121951219512195,
+    "pnl": -42,
+    "picks": 8,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 442,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9231
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 443,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.2026
+      ],
+      [
+        "MIN_GAMES",
+        12,
+        13
+      ],
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9571
+      ]
+    ],
+    "score": 16.509486553563832,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.3879310344827587,
+    "pnl": 2093,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 444,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.165
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.305
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 445,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.802
+      ]
+    ],
+    "score": 36.90074341119436,
+    "accuracy": 0.5,
+    "roi": 1.6414982164090368,
+    "pnl": 2761,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 446,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.7717
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0696
+      ]
+    ],
+    "score": 36.92400391037562,
+    "accuracy": 0.5,
+    "roi": 1.641711229946524,
+    "pnl": 2763,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 447,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3845
+      ]
+    ],
+    "score": 21.814606703049137,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4943820224719102,
+    "pnl": 2660,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 448,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        20
+      ],
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0904
+      ]
+    ],
+    "score": 22.088447290781932,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5082278481012659,
+    "pnl": 2383,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 449,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0561
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 450,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 451,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3541
+      ]
+    ],
+    "score": 0.5575285551248489,
+    "accuracy": 0.4117647058823529,
+    "roi": 0.3061797752808989,
+    "pnl": 545,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 452,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5836
+      ]
+    ],
+    "score": 27.955765427082,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.9858333333333333,
+    "pnl": 2383,
+    "picks": 12,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 453,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.03
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 454,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 455,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8439
+      ],
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.2084
+      ]
+    ],
+    "score": 0.8828484994982295,
+    "accuracy": 0.4375,
+    "roi": 0.391812865497076,
+    "pnl": 670,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 456,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3256
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 457,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -234
+      ]
+    ],
+    "score": 17.248439826273312,
+    "accuracy": 0.42857142857142855,
+    "roi": 1.1298611111111112,
+    "pnl": 3254,
+    "picks": 28,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 458,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0391
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 459,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1992
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.98
+      ]
+    ],
+    "score": 15.449917893907992,
+    "accuracy": 0.38095238095238093,
+    "roi": 1.0839907192575406,
+    "pnl": 2336,
+    "picks": 21,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 460,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        9
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.1908
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 461,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.186
+      ],
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.901
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.2036
+      ]
+    ],
+    "score": 0.12862193201273975,
+    "accuracy": 0.35714285714285715,
+    "roi": 0.15076717811874582,
+    "pnl": 226,
+    "picks": 14,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 462,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 463,
+    "params": [
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        2
+      ]
+    ],
+    "score": 24.69672387330209,
+    "accuracy": 0.5263157894736842,
+    "roi": 1.3,
+    "pnl": 2574,
+    "picks": 19,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 464,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        16
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4575
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 465,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.2076
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.402
+      ]
+    ],
+    "score": 36.72334944057194,
+    "accuracy": 0.5,
+    "roi": 1.628654970760234,
+    "pnl": 2785,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 466,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.03
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -265
+      ],
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.2023
+      ]
+    ],
+    "score": 5.451799500784299,
+    "accuracy": 0.4,
+    "roi": 0.835696413678065,
+    "pnl": 3006,
+    "picks": 35,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 467,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.3906
+      ]
+    ],
+    "score": 21.814606703049137,
+    "accuracy": 0.47058823529411764,
+    "roi": 1.4943820224719102,
+    "pnl": 2660,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 468,
+    "params": [
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.15
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 469,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.907
+      ],
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.49
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 470,
+    "params": [
+      [
+        "SINGLE_MIN_SCORE",
+        0.5179,
+        0.5673
+      ],
+      [
+        "MIN_ODDS",
+        -130,
+        -178
+      ]
+    ],
+    "score": 26.473310223504946,
+    "accuracy": 0.4117647058823529,
+    "roi": 1.7388235294117647,
+    "pnl": 2956,
+    "picks": 17,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 471,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.02
+      ],
+      [
+        "PARLAY_MAX_LEGS",
+        3,
+        3
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 472,
+    "params": [
+      [
+        "MIN_MINUTES",
+        13,
+        21
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.3383
+      ]
+    ],
+    "score": 22.088447290781932,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.5082278481012659,
+    "pnl": 2383,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 473,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2405
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 474,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -199
+      ]
+    ],
+    "score": 19.988596685187378,
+    "accuracy": 0.43478260869565216,
+    "roi": 1.3163865546218487,
+    "pnl": 3133,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 475,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3325
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 476,
+    "params": [
+      [
+        "ESI_MAX_ENTROPY",
+        0.94,
+        0.98
+      ],
+      [
+        "PARLAY_LEG_MIN_SCORE",
+        0.2012,
+        0.2987
+      ]
+    ],
+    "score": 15.449917893907992,
+    "accuracy": 0.38095238095238093,
+    "roi": 1.0839907192575406,
+    "pnl": 2336,
+    "picks": 21,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 477,
+    "params": [
+      [
+        "GFT_DECAY",
+        0.93,
+        0.9126
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 478,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0802
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.0974
+      ],
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4808
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 479,
+    "params": [
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2506
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 480,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3764
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 481,
+    "params": [
+      [
+        "MIN_GAMES",
+        12,
+        10
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 482,
+    "params": [
+      [
+        "MIN_ODDS",
+        -130,
+        -249
+      ]
+    ],
+    "score": 5.752627942604861,
+    "accuracy": 0.375,
+    "roi": 0.8701219512195122,
+    "pnl": 2854,
+    "picks": 32,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 483,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4357
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 484,
+    "params": [
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.4023
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 485,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.1949
+      ]
+    ],
+    "score": 15.66856144911185,
+    "accuracy": 0.44,
+    "roi": 1.044078190877731,
+    "pnl": 2724,
+    "picks": 25,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 486,
+    "params": [
+      [
+        "BEQ_CI_LEVEL",
+        0.825,
+        0.8369
+      ]
+    ],
+    "score": 0.8296934572466975,
+    "accuracy": 0.4375,
+    "roi": 0.3835616438356164,
+    "pnl": 644,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 487,
+    "params": [
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.3307
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1337
+      ]
+    ],
+    "score": 0.09449735449735451,
+    "accuracy": 0.3333333333333333,
+    "roi": -0.05502645502645503,
+    "pnl": -52,
+    "picks": 9,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 488,
+    "params": [
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.02
+      ],
+      [
+        "GFT_MAX_SPREAD",
+        6.0,
+        4.66
+      ]
+    ],
+    "score": 0.4569501239812905,
+    "accuracy": 0.34782608695652173,
+    "roi": 0.3970276008492569,
+    "pnl": 935,
+    "picks": 23,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 489,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.15
+      ],
+      [
+        "MAX_ODDS",
+        358,
+        398
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 490,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1798
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.2471
+      ]
+    ],
+    "score": 6.773953426385099,
+    "accuracy": 0.36363636363636365,
+    "roi": 0.9845338046840477,
+    "pnl": 2228,
+    "picks": 22,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 491,
+    "params": [
+      [
+        "PARLAY_MIN_EDGE",
+        0.02,
+        0.02
+      ],
+      [
+        "MAX_ODDS",
+        358,
+        228
+      ]
+    ],
+    "score": 31.81558998642684,
+    "accuracy": 0.5,
+    "roi": 1.444047619047619,
+    "pnl": 2426,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 492,
+    "params": [
+      [
+        "MAX_ODDS",
+        358,
+        242
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1651
+      ]
+    ],
+    "score": 0.8314844518500356,
+    "accuracy": 0.4375,
+    "roi": 0.38392857142857145,
+    "pnl": 645,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 493,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0214
+      ],
+      [
+        "GFT_GRAVITY",
+        0.4,
+        0.4011
+      ],
+      [
+        "GATE_MIN_HIT_RATE",
+        0.3498,
+        0.3839
+      ]
+    ],
+    "score": 24.86338804775832,
+    "accuracy": 0.4666666666666667,
+    "roi": 1.6739549839228296,
+    "pnl": 2603,
+    "picks": 15,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 494,
+    "params": [
+      [
+        "GATE_MIN_GFT",
+        0.1,
+        0.02
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 495,
+    "params": [
+      [
+        "BEQ_MIN_EDGE",
+        0.05,
+        0.0867
+      ],
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1511
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 496,
+    "params": [
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.275
+      ]
+    ],
+    "score": 15.657382980084154,
+    "accuracy": 0.4166666666666667,
+    "roi": 1.0492,
+    "pnl": 2623,
+    "picks": 24,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 497,
+    "params": [
+      [
+        "KELLY_FRACTION",
+        0.15,
+        0.1595
+      ],
+      [
+        "GATE_MIN_ESI",
+        0.1,
+        0.074
+      ]
+    ],
+    "score": 15.08684022495836,
+    "accuracy": 0.38095238095238093,
+    "roi": 1.0838739573679332,
+    "pnl": 2339,
+    "picks": 21,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 498,
+    "params": [
+      [
+        "PARLAY_MAX_CORR",
+        0.4416,
+        0.4892
+      ],
+      [
+        "ESI_TREND_WEIGHT",
+        0.18,
+        0.1948
+      ]
+    ],
+    "score": 22.325964901105507,
+    "accuracy": 0.4375,
+    "roi": 1.5123867069486405,
+    "pnl": 2503,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 499,
+    "params": [
+      [
+        "MIN_EV",
+        0.0601,
+        0.0423
+      ]
+    ],
+    "score": 36.92929865308695,
+    "accuracy": 0.5,
+    "roi": 1.6428571428571428,
+    "pnl": 2760,
+    "picks": 16,
+    "status": "DISCARD"
+  },
+  {
+    "iteration": 500,
+    "params": [
+      [
+        "GATE_MIN_COMBINED",
+        0.2329,
+        0.1903
+      ],
+      [
+        "GFT_MIN_CLEARANCE",
+        0.655,
+        0.3932
+      ]
+    ],
+    "score": 14.988709107739684,
+    "accuracy": 0.4090909090909091,
+    "roi": 1.0217391304347827,
+    "pnl": 2350,
+    "picks": 22,
+    "status": "DISCARD"
+  }
+]

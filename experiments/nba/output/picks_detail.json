@@ -1,0 +1,453 @@
+[
+  {
+    "bet_type": "parlay",
+    "hit": true,
+    "pnl": 213,
+    "wager": 100,
+    "date": "20250127",
+    "legs": [
+      {
+        "player": "Tyler Herro",
+        "stat": "pts",
+        "line": 19.5,
+        "odds": -130,
+        "hit": true,
+        "actual": 30,
+        "edge": 0.23154891236521813
+      },
+      {
+        "player": "Franz Wagner",
+        "stat": "pts",
+        "line": 19.5,
+        "odds": -130,
+        "hit": true,
+        "actual": 29,
+        "edge": 0.16607076646682817
+      }
+    ]
+  },
+  {
+    "player": "John Collins",
+    "stat": "pra",
+    "line": 24.5,
+    "odds": 142,
+    "combined_score": 0.5640890204396865,
+    "ev": 0.9281744548803497,
+    "hit_rate": 0.9,
+    "edge": 0.38354316317369824,
+    "actual": 27,
+    "hit": true,
+    "date": "20260219",
+    "bet_type": "single",
+    "pnl": 170,
+    "wager": 120
+  },
+  {
+    "bet_type": "parlay",
+    "hit": true,
+    "pnl": 2015,
+    "wager": 100,
+    "date": "20260219",
+    "legs": [
+      {
+        "player": "Cameron Johnson",
+        "stat": "pra",
+        "line": 19.5,
+        "odds": 280,
+        "hit": true,
+        "actual": 25,
+        "edge": 0.5899154424244806
+      },
+      {
+        "player": "John Collins",
+        "stat": "pra",
+        "line": 24.5,
+        "odds": 142,
+        "hit": true,
+        "actual": 27,
+        "edge": 0.38354316317369824
+      },
+      {
+        "player": "Evan Mobley",
+        "stat": "reb",
+        "line": 7.5,
+        "odds": 130,
+        "hit": true,
+        "actual": 9,
+        "edge": 0.20570806930576935
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260219",
+    "legs": [
+      {
+        "player": "Anfernee Simons",
+        "stat": "pra",
+        "line": 23.5,
+        "odds": -112,
+        "hit": false,
+        "actual": 22,
+        "edge": 0.21472447212794188
+      },
+      {
+        "player": "Cameron Johnson",
+        "stat": "pra",
+        "line": 19.5,
+        "odds": 280,
+        "hit": true,
+        "actual": 25,
+        "edge": 0.5899154424244806
+      },
+      {
+        "player": "John Collins",
+        "stat": "pra",
+        "line": 24.5,
+        "odds": 142,
+        "hit": true,
+        "actual": 27,
+        "edge": 0.38354316317369824
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260220",
+    "legs": [
+      {
+        "player": "LeBron James",
+        "stat": "pra",
+        "line": 33.5,
+        "odds": -110,
+        "hit": false,
+        "actual": 27,
+        "edge": 0.21921683511087087
+      },
+      {
+        "player": "Cam Thomas",
+        "stat": "pra",
+        "line": 21.5,
+        "odds": -106,
+        "hit": true,
+        "actual": 31,
+        "edge": 0.20947245093238132
+      },
+      {
+        "player": "Jaden McDaniels",
+        "stat": "pra",
+        "line": 21.5,
+        "odds": -102,
+        "hit": false,
+        "actual": 20,
+        "edge": 0.08610884721116174
+      }
+    ]
+  },
+  {
+    "player": "Tyler Herro",
+    "stat": "ast",
+    "line": 3.5,
+    "odds": 144,
+    "combined_score": 0.536307383003811,
+    "ev": 0.812984315765763,
+    "hit_rate": 0.85,
+    "edge": 0.3331902933466242,
+    "actual": 6,
+    "hit": true,
+    "date": "20260221",
+    "bet_type": "single",
+    "pnl": 168,
+    "wager": 117
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260221",
+    "legs": [
+      {
+        "player": "Tyler Herro",
+        "stat": "ast",
+        "line": 3.5,
+        "odds": 144,
+        "hit": true,
+        "actual": 6,
+        "edge": 0.3331902933466242
+      },
+      {
+        "player": "DeMar DeRozan",
+        "stat": "pra",
+        "line": 19.5,
+        "odds": -128,
+        "hit": true,
+        "actual": 26,
+        "edge": 0.35255335881160466
+      },
+      {
+        "player": "Anfernee Simons",
+        "stat": "pra",
+        "line": 22.5,
+        "odds": -125,
+        "hit": false,
+        "actual": 6,
+        "edge": 0.18747080336483912
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260222",
+    "legs": [
+      {
+        "player": "Jonas Valanciunas",
+        "stat": "reb",
+        "line": 5.5,
+        "odds": 154,
+        "hit": false,
+        "actual": 3,
+        "edge": 0.34932557151881993
+      },
+      {
+        "player": "Evan Mobley",
+        "stat": "pra",
+        "line": 22.5,
+        "odds": -108,
+        "hit": false,
+        "actual": 18,
+        "edge": 0.27753553443879686
+      },
+      {
+        "player": "Cam Thomas",
+        "stat": "pra",
+        "line": 19.5,
+        "odds": -118,
+        "hit": false,
+        "actual": 19,
+        "edge": 0.2701015554043692
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260222",
+    "legs": [
+      {
+        "player": "Cameron Johnson",
+        "stat": "pra",
+        "line": 17.5,
+        "odds": -118,
+        "hit": false,
+        "actual": 14,
+        "edge": 0.31178893349159786
+      },
+      {
+        "player": "Evan Mobley",
+        "stat": "pra",
+        "line": 22.5,
+        "odds": -108,
+        "hit": false,
+        "actual": 18,
+        "edge": 0.27753553443879686
+      },
+      {
+        "player": "Cam Thomas",
+        "stat": "pra",
+        "line": 19.5,
+        "odds": -118,
+        "hit": false,
+        "actual": 19,
+        "edge": 0.2701015554043692
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260224",
+    "legs": [
+      {
+        "player": "Coby White",
+        "stat": "pts",
+        "line": 14.5,
+        "odds": 134,
+        "hit": false,
+        "actual": 10,
+        "edge": 0.36941587631913864
+      },
+      {
+        "player": "Daniel Gafford",
+        "stat": "pts",
+        "line": 9.5,
+        "odds": 126,
+        "hit": false,
+        "actual": 9,
+        "edge": 0.24859045482421427
+      },
+      {
+        "player": "Miles Bridges",
+        "stat": "reb",
+        "line": 5.5,
+        "odds": -113,
+        "hit": true,
+        "actual": 7,
+        "edge": 0.21250992699551208
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": true,
+    "pnl": 377,
+    "wager": 100,
+    "date": "20260225",
+    "legs": [
+      {
+        "player": "Jonas Valanciunas",
+        "stat": "reb",
+        "line": 5.5,
+        "odds": 162,
+        "hit": true,
+        "actual": 6,
+        "edge": 0.36134696960741763
+      },
+      {
+        "player": "Brandon Ingram",
+        "stat": "ast",
+        "line": 3.5,
+        "odds": -122,
+        "hit": true,
+        "actual": 4,
+        "edge": 0.17448600817894833
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": true,
+    "pnl": 257,
+    "wager": 100,
+    "date": "20260225",
+    "legs": [
+      {
+        "player": "DeMar DeRozan",
+        "stat": "pra",
+        "line": 21.5,
+        "odds": -104,
+        "hit": true,
+        "actual": 23,
+        "edge": 0.2869623821009386
+      },
+      {
+        "player": "Brandon Ingram",
+        "stat": "ast",
+        "line": 3.5,
+        "odds": -122,
+        "hit": true,
+        "actual": 4,
+        "edge": 0.17448600817894833
+      }
+    ]
+  },
+  {
+    "bet_type": "parlay",
+    "hit": true,
+    "pnl": 221,
+    "wager": 100,
+    "date": "20260303",
+    "legs": [
+      {
+        "player": "Brandon Ingram",
+        "stat": "ast",
+        "line": 3.5,
+        "odds": -128,
+        "hit": true,
+        "actual": 4,
+        "edge": 0.19203147009522792
+      },
+      {
+        "player": "Zion Williamson",
+        "stat": "pts",
+        "line": 19.5,
+        "odds": -125,
+        "hit": true,
+        "actual": 24,
+        "edge": 0.1355127753748534
+      }
+    ]
+  },
+  {
+    "player": "Jayson Tatum",
+    "stat": "pts",
+    "line": 14.5,
+    "odds": 126,
+    "combined_score": 0.5591280779501251,
+    "ev": 1.0655425207387879,
+    "hit_rate": 1.0,
+    "edge": 0.47147899147733974,
+    "actual": 15,
+    "hit": true,
+    "date": "20260306",
+    "bet_type": "single",
+    "pnl": 157,
+    "wager": 125
+  },
+  {
+    "bet_type": "parlay",
+    "hit": false,
+    "pnl": -100,
+    "wager": 100,
+    "date": "20260306",
+    "legs": [
+      {
+        "player": "Jayson Tatum",
+        "stat": "pts",
+        "line": 14.5,
+        "odds": 126,
+        "hit": true,
+        "actual": 15,
+        "edge": 0.47147899147733974
+      },
+      {
+        "player": "Zion Williamson",
+        "stat": "pts",
+        "line": 19.5,
+        "odds": -122,
+        "hit": false,
+        "actual": 19,
+        "edge": 0.19347680937084522
+      }
+    ]
+  },
+  {
+    "player": "Jayson Tatum",
+    "stat": "pra",
+    "line": 31.5,
+    "odds": 108,
+    "combined_score": 0.5459868989782941,
+    "ev": 0.6572739116326973,
+    "hit_rate": 0.9,
+    "edge": 0.3159970729003353,
+    "actual": 25,
+    "hit": false,
+    "date": "20260308",
+    "bet_type": "single",
+    "pnl": -118,
+    "wager": 118
+  }
+]
