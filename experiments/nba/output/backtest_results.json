@@ -1,0 +1,123 @@
+{
+  "total_picks": 16,
+  "total_wins": 8,
+  "total_pnl": 2760,
+  "total_wagered": 1680,
+  "total_roi": 1.6428571428571428,
+  "singles_total": 4,
+  "singles_wins": 3,
+  "singles_accuracy": 0.75,
+  "singles_pnl": 377,
+  "parlay_total": 12,
+  "parlay_wins": 5,
+  "parlay_accuracy": 0.4166666666666667,
+  "parlay_pnl": 2383,
+  "parlay_leg_total": 31,
+  "parlay_leg_wins": 18,
+  "parlay_leg_accuracy": 0.5806451612903226,
+  "individual_accuracy": 0.75,
+  "accuracy": 0.5,
+  "max_drawdown": 432,
+  "max_loss_streak": 4,
+  "max_win_streak": 4,
+  "active_days": 10,
+  "avg_daily_pnl": 276.0,
+  "daily": [
+    {
+      "date": "20250127",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 213
+    },
+    {
+      "date": "20260219",
+      "n_picks": 3,
+      "wins": 2,
+      "pnl": 2085
+    },
+    {
+      "date": "20260220",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -100
+    },
+    {
+      "date": "20260221",
+      "n_picks": 2,
+      "wins": 1,
+      "pnl": 68
+    },
+    {
+      "date": "20260222",
+      "n_picks": 2,
+      "wins": 0,
+      "pnl": -200
+    },
+    {
+      "date": "20260224",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -100
+    },
+    {
+      "date": "20260225",
+      "n_picks": 2,
+      "wins": 2,
+      "pnl": 634
+    },
+    {
+      "date": "20260303",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 221
+    },
+    {
+      "date": "20260306",
+      "n_picks": 2,
+      "wins": 1,
+      "pnl": 57
+    },
+    {
+      "date": "20260308",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -118
+    }
+  ],
+  "config": {
+    "MIN_GAMES": 12,
+    "MIN_MINUTES": 13,
+    "GFT_WINDOWS": [
+      5,
+      10,
+      15
+    ],
+    "GFT_DECAY": 0.93,
+    "GFT_GRAVITY": 0.4,
+    "GFT_MIN_CLEARANCE": 0.655,
+    "GFT_MAX_SPREAD": 6.0,
+    "BEQ_PRIOR_ALPHA": 1.0,
+    "BEQ_PRIOR_BETA": 1.0,
+    "BEQ_CI_LEVEL": 0.825,
+    "BEQ_MIN_EDGE": 0.05,
+    "ESI_BINS": 6,
+    "ESI_MAX_ENTROPY": 0.94,
+    "ESI_TREND_WEIGHT": 0.18,
+    "GATE_MIN_GFT": 0.1,
+    "GATE_MIN_ESI": 0.1,
+    "GATE_MIN_HIT_RATE": 0.3498,
+    "GATE_MIN_COMBINED": 0.2329,
+    "MIN_EV": 0.0601,
+    "SINGLE_MIN_SCORE": 0.5179,
+    "PARLAY_LEG_MIN_SCORE": 0.2012,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 3,
+    "PARLAY_MAX_CORR": 0.4416,
+    "PARLAY_MIN_EDGE": 0.02,
+    "MIN_ODDS": -130,
+    "MAX_ODDS": 358,
+    "UNIT_SIZE": 100,
+    "KELLY_FRACTION": 0.15,
+    "MAX_DAILY_BETS": 6
+  }
+}

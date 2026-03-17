@@ -1,0 +1,47 @@
+{
+  "config": {
+    "MIN_GAMES": 15,
+    "MIN_MINUTES": 18,
+    "GFT_WINDOWS": [
+      5,
+      10,
+      15
+    ],
+    "GFT_DECAY": 0.93,
+    "GFT_GRAVITY": 0.44,
+    "GFT_MIN_CLEARANCE": 0.6792,
+    "GFT_MAX_SPREAD": 5.5,
+    "BEQ_PRIOR_ALPHA": 1.0,
+    "BEQ_PRIOR_BETA": 1.0,
+    "BEQ_CI_LEVEL": 0.7942,
+    "BEQ_MIN_EDGE": 0.01,
+    "ESI_BINS": 6,
+    "ESI_MAX_ENTROPY": 0.88,
+    "ESI_TREND_WEIGHT": 0.18,
+    "GATE_MIN_GFT": 0.3762,
+    "GATE_MIN_ESI": 0.0986,
+    "GATE_MIN_HIT_RATE": 0.751,
+    "GATE_MIN_COMBINED": 0.4254,
+    "MIN_EV": 0.01,
+    "SINGLE_MIN_SCORE": 0.4866,
+    "PARLAY_LEG_MIN_SCORE": 0.45,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 3,
+    "PARLAY_MAX_CORR": 0.35,
+    "PARLAY_MIN_EDGE": 0.08,
+    "MIN_ODDS": -607,
+    "MAX_ODDS": 231,
+    "UNIT_SIZE": 100,
+    "KELLY_FRACTION": 0.25,
+    "MAX_DAILY_BETS": 5
+  },
+  "score": 5.639789647383886,
+  "results_summary": {
+    "accuracy": 0.8928571428571429,
+    "roi": 0.590066225165563,
+    "total_picks": 28,
+    "total_pnl": 1782
+  },
+  "improvements": 11,
+  "iterations": 200
+}
