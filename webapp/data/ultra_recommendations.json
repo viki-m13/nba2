@@ -1,79 +1,12 @@
 {
-  "generated": "2026-03-16T18:55:07.258Z",
-  "date": "20260316",
+  "generated": "2026-03-17T17:07:14.585Z",
+  "date": "20260317",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "single",
-    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
-    "singles": [
-      {
-        "player": "Deandre Ayton",
-        "team": "LAL",
-        "statType": "rebounds",
-        "statLabel": "REB",
-        "line": 5.5,
-        "odds": -265,
-        "cascadeScore": 0.5887463058076858,
-        "gft": 0.5548438809002383,
-        "beq": 0.12342954752100355,
-        "esi": 0.21654191819562552,
-        "imad": 0.15002495556381565,
-        "hitRate": 0.95,
-        "edge": 0.12342954752100355,
-        "ev": 0.1700067352647785,
-        "avg": 9.5,
-        "floor": 7.567929093972195,
-        "betSubType": "single",
-        "hit": null,
-        "actual": null
-      }
-    ],
-    "parlays": [
-      {
-        "numLegs": 2,
-        "odds": -153,
-        "decimalOdds": 1.65,
-        "avgCascade": 0.5749325750251307,
-        "combinedHitRate": 0.95,
-        "ev": 0.57,
-        "legs": [
-          {
-            "player": "Deandre Ayton",
-            "team": "LAL",
-            "statType": "rebounds",
-            "statLabel": "REB",
-            "line": 5.5,
-            "odds": -265,
-            "cascadeScore": 0.5887463058076858,
-            "gft": 0.5548438809002383,
-            "beq": 0.12342954752100355,
-            "esi": 0.21654191819562552,
-            "imad": 0.15002495556381565,
-            "hitRate": 0.95,
-            "edge": 0.12342954752100355,
-            "hit": null,
-            "actual": null
-          },
-          {
-            "player": "Jayson Tatum",
-            "team": "BOS",
-            "statType": "points",
-            "statLabel": "PTS",
-            "line": 14.5,
-            "odds": -500,
-            "cascadeScore": 0.5611188442425756,
-            "gft": 0.6457325651626012,
-            "beq": 0.07800320902813696,
-            "esi": 0.17249197343590797,
-            "imad": 0.11540574387650179,
-            "hitRate": 1,
-            "edge": 0.07800320902813696,
-            "hit": null,
-            "actual": null
-          }
-        ]
-      }
-    ]
+    "betType": "none",
+    "reasoning": "No bets meet quality thresholds tonight",
+    "singles": [],
+    "parlays": []
   }
 }
