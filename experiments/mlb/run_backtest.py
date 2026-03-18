@@ -30,7 +30,8 @@ def main():
     parser.add_argument('--validate', action='store_true',
                         help='Run full validation suite')
     parser.add_argument('--objective', default='roi',
-                        choices=['roi', 'accuracy', 'balanced', 'max_roi'],
+                        choices=['roi', 'accuracy', 'balanced', 'max_roi',
+                                 'parlay_roi', 'plus_money_accuracy'],
                         help='Optimization objective')
     parser.add_argument('--verbose', action='store_true', default=True)
     parser.add_argument('--config', type=str, default=None,

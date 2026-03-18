@@ -30,7 +30,8 @@ def main():
     parser.add_argument('--validate', action='store_true',
                         help='Run full validation suite')
     parser.add_argument('--objective', default='roi',
-                        choices=['roi', 'accuracy', 'balanced', 'max_roi'],
+                        choices=['roi', 'accuracy', 'balanced', 'max_roi', 'parlay_roi',
+                                 'plus_money_accuracy'],
                         help='Optimization objective')
     parser.add_argument('--verbose', action='store_true', default=True)
     parser.add_argument('--config', type=str, default=None,
@@ -155,6 +156,14 @@ def _print_full_results(results):
         if results.get('parlay_leg_total', 0) > 0:
             print(f"    Leg Accuracy: {results['parlay_leg_accuracy']*100:.1f}% "
                   f"({results['parlay_leg_wins']}/{results['parlay_leg_total']})")
+        # Breakdown by leg count
+        parlay_by_legs = results.get('parlay_by_legs', {})
+        if parlay_by_legs:
+            for n_legs in sorted(parlay_by_legs.keys()):
+                info = parlay_by_legs[n_legs]
+                acc = info['wins'] / info['total'] * 100 if info['total'] > 0 else 0
+                print(f"    {n_legs}-leg: {info['total']} total, {info['wins']} wins "
+                      f"({acc:.0f}%), ${info['pnl']:+,.0f}")
 
     # Top picks by edge
     picks = results.get('picks', [])

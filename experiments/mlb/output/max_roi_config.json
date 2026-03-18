@@ -1,6 +1,6 @@
 {
   "config": {
-    "MIN_GAMES": 14,
+    "MIN_GAMES": 16,
     "MIN_AB": 2,
     "WARM_UP_GAMES": 10,
     "GFT_WINDOWS": [
@@ -20,13 +20,13 @@
     "ESI_MAX_ENTROPY": 0.8913,
     "ESI_TREND_WEIGHT": 0.2925,
     "PBF_DECAY": 0.92,
-    "PBF_MIN_LAMBDA": 0.4195,
-    "PBF_WEIGHT": 0.12,
+    "PBF_MIN_LAMBDA": 0.2972,
+    "PBF_WEIGHT": 0.1312,
     "PBF_MIN_MARGIN": 0.03,
     "ABVC_MIN_AVG": 3.7101,
-    "ABVC_ELITE_AVG": 5.0,
+    "ABVC_ELITE_AVG": 4.6351,
     "ABVC_WEIGHT": 0.0921,
-    "ABVC_MIN_SCORE": 0.3925,
+    "ABVC_MIN_SCORE": 0.468,
     "CGSM_MIN_STREAK": 2,
     "CGSM_LOOKBACK": 7,
     "CGSM_WEIGHT": 0.02,
@@ -41,8 +41,8 @@
     "GATE_MIN_ESI": 0.0992,
     "GATE_MIN_HIT_RATE": 0.35,
     "GATE_MIN_COMBINED": 0.1723,
-    "MIN_EV": 0.0475,
-    "SINGLE_MIN_SCORE": 0.35,
+    "MIN_EV": 0.0969,
+    "SINGLE_MIN_SCORE": 0.2763,
     "PARLAY_LEG_MIN_SCORE": 0.28,
     "PARLAY_MIN_LEGS": 2,
     "PARLAY_MAX_LEGS": 4,
@@ -54,13 +54,13 @@
     "KELLY_FRACTION": 0.3,
     "MAX_DAILY_BETS": 8
   },
-  "score": 2.7748100974340586,
+  "score": 34.79454475567127,
   "results_summary": {
-    "accuracy": 0.5818181818181818,
-    "roi": 0.34354247767346,
-    "total_picks": 165,
-    "total_pnl": 6001
+    "accuracy": 0.59375,
+    "roi": 0.37520670918969995,
+    "total_picks": 160,
+    "total_pnl": 6353
   },
-  "improvements": 17,
+  "improvements": 3,
   "iterations": 500
 }
