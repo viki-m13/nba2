@@ -1,0 +1,57 @@
+{
+  "config": {
+    "MIN_GAMES": 15,
+    "MIN_MINUTES": 19,
+    "MIN_ODDS": 100,
+    "MAX_ODDS": 282,
+    "MRFC_WINDOWS": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "MRFC_PERCENTILE": 0.1421,
+    "MRFC_MIN_CLEARANCE": -0.1274,
+    "MRFC_MIN_CONVERGENCE": 0.29,
+    "MRFC_WEIGHT": 0.3365,
+    "CFD_ENABLED": true,
+    "CFD_MIN_COMPONENT_GAMES": 10,
+    "CFD_FLOOR_PERCENTILE": 0.1266,
+    "CFD_MIN_SURPLUS": 0.6344,
+    "CFD_WEIGHT": 0.1939,
+    "OLS_PREFER_LOWEST": true,
+    "OLS_MAX_LINE_RATIO": 0.8789,
+    "CSC_MIN_STREAK": 4,
+    "CSC_WINDOWS": [
+      5,
+      10
+    ],
+    "CSC_MIN_WINDOW_HR": 0.929,
+    "CSC_WEIGHT": 0.1947,
+    "ADC_MAX_DAILY_BETS": 5,
+    "ADC_MIN_COMPOSITE": 0.363,
+    "MIN_HIT_RATE_20": 0.8179,
+    "MIN_HIT_RATE_10": 0.6834,
+    "MIN_HIT_RATE_5": 0.9991,
+    "MIN_EV": 0.021,
+    "UNIT_SIZE": 100,
+    "KELLY_FRACTION": 0.2309,
+    "MAX_WAGER": 250,
+    "MIN_WAGER": 50
+  },
+  "results": {
+    "total_picks": 5,
+    "total_wins": 4,
+    "accuracy": 0.8,
+    "total_pnl": 5,
+    "total_wagered": 285,
+    "total_roi": 0.017543859649122806,
+    "active_days": 3,
+    "total_days": 95,
+    "day_coverage": 0.031578947368421054,
+    "max_drawdown": 0
+  },
+  "score": 53.37719298245614,
+  "strategy": "AFCE_v4",
+  "description": "Adaptive Floor Convergence Engine \u2014 optimized for 90%+ accuracy with high volume on plus-money"
+}
