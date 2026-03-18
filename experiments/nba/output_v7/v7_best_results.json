@@ -1,0 +1,174 @@
+{
+  "total_picks": 5,
+  "total_wins": 4,
+  "accuracy": 0.8,
+  "total_pnl": 297,
+  "total_wagered": 875,
+  "total_roi": 0.3394285714285714,
+  "active_days": 5,
+  "total_days": 95,
+  "day_coverage": 0.05263157894736842,
+  "max_drawdown": 150,
+  "singles_total": 3,
+  "singles_wins": 3,
+  "singles_accuracy": 1.0,
+  "singles_pnl": 337,
+  "parlay_total": 2,
+  "parlay_wins": 1,
+  "parlay_accuracy": 0.5,
+  "parlay_pnl": -40,
+  "parlay_by_legs": {
+    "2": {
+      "total": 2,
+      "wins": 1,
+      "pnl": -40
+    }
+  },
+  "parlay_leg_total": 4,
+  "parlay_leg_wins": 3,
+  "parlay_leg_accuracy": 0.75,
+  "plus_money_parlays": 0,
+  "plus_money_wins": 0,
+  "plus_money_accuracy": 0,
+  "plus_money_pnl": 0,
+  "daily": [
+    {
+      "date": "20260219",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 167
+    },
+    {
+      "date": "20260220",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 106
+    },
+    {
+      "date": "20260224",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 110
+    },
+    {
+      "date": "20260228",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 64
+    },
+    {
+      "date": "20260311",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -150
+    }
+  ],
+  "picks_summary": [
+    {
+      "date": "20260219",
+      "bet_type": "single",
+      "hit": true,
+      "pnl": 167,
+      "wager": 200,
+      "player": "Cameron Johnson",
+      "stat": "pts",
+      "line": 9.5,
+      "odds": -120,
+      "actual": 18
+    },
+    {
+      "date": "20260220",
+      "bet_type": "single",
+      "hit": true,
+      "pnl": 106,
+      "wager": 200,
+      "player": "Cameron Johnson",
+      "stat": "pts",
+      "line": 9.5,
+      "odds": -188,
+      "actual": 15
+    },
+    {
+      "date": "20260224",
+      "bet_type": "parlay",
+      "hit": true,
+      "pnl": 110,
+      "wager": 150,
+      "n_legs": 2,
+      "parlay_american": -136,
+      "legs": [
+        {
+          "player": "Coby White",
+          "stat": "pts",
+          "line": 9.5,
+          "odds": -295,
+          "hit": true,
+          "actual": 10,
+          "true_prob": 0.8586508973971397,
+          "hit_rate": 0.95,
+          "edge": 0.11181545435916507,
+          "clearance": 6.5
+        },
+        {
+          "player": "James Harden",
+          "stat": "pts",
+          "line": 14.5,
+          "odds": -340,
+          "hit": true,
+          "actual": 20,
+          "true_prob": 0.8034244249445535,
+          "hit_rate": 0.9,
+          "edge": 0.030697152217280754,
+          "clearance": 1.0
+        }
+      ]
+    },
+    {
+      "date": "20260228",
+      "bet_type": "single",
+      "hit": true,
+      "pnl": 64,
+      "wager": 175,
+      "player": "Tyler Herro",
+      "stat": "ast",
+      "line": 2.5,
+      "odds": -275,
+      "actual": 3
+    },
+    {
+      "date": "20260311",
+      "bet_type": "parlay",
+      "hit": false,
+      "pnl": -150,
+      "wager": 150,
+      "n_legs": 2,
+      "parlay_american": -123,
+      "legs": [
+        {
+          "player": "Donovan Mitchell",
+          "stat": "ast",
+          "line": 3.5,
+          "odds": -340,
+          "hit": true,
+          "actual": 5,
+          "true_prob": 0.8586508973971397,
+          "hit_rate": 0.95,
+          "edge": 0.08592362466986703,
+          "clearance": 0.5
+        },
+        {
+          "player": "Aaron Gordon",
+          "stat": "ast",
+          "line": 1.5,
+          "odds": -250,
+          "hit": false,
+          "actual": 1,
+          "true_prob": 0.8034244249445535,
+          "hit_rate": 0.9,
+          "edge": 0.08913871065883916,
+          "clearance": 0.25
+        }
+      ]
+    }
+  ]
+}
