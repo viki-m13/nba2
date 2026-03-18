@@ -19,7 +19,8 @@
     "wager": 146,
     "bet": "Cade Cunningham O5.5 REB",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260219",
@@ -41,7 +42,8 @@
     "wager": 171,
     "bet": "Cameron Johnson O13.5 PTS",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260219",
@@ -63,7 +65,8 @@
     "wager": 172,
     "bet": "John Collins O24.5 PRA",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260219",
@@ -100,7 +103,8 @@
     "pnl": 1989,
     "wager": 250,
     "bet": "2-Leg Parlay",
-    "engine": "positive_odds_nba"
+    "engine": "positive_odds_nba",
+    "source": "backtest"
   },
   {
     "date": "20260221",
@@ -122,7 +126,8 @@
     "wager": 164,
     "bet": "Tyler Herro O3.5 AST",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260221",
@@ -144,7 +149,8 @@
     "wager": 167,
     "bet": "DeMar DeRozan O14.5 PTS",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260221",
@@ -181,7 +187,8 @@
     "pnl": 970,
     "wager": 250,
     "bet": "2-Leg Parlay",
-    "engine": "positive_odds_nba"
+    "engine": "positive_odds_nba",
+    "source": "backtest"
   },
   {
     "date": "20260224",
@@ -203,7 +210,8 @@
     "wager": 158,
     "bet": "Tyler Herro O3.5 AST",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260226",
@@ -225,7 +233,8 @@
     "wager": 161,
     "bet": "Tyler Herro O3.5 AST",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260306",
@@ -247,7 +256,8 @@
     "wager": 189,
     "bet": "Jayson Tatum O14.5 PTS",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20260308",
@@ -269,6 +279,7 @@
     "wager": 168,
     "bet": "Jayson Tatum O31.5 PRA",
     "engine": "positive_odds_nba",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   }
 ]
