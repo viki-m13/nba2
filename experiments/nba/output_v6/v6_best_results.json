@@ -1,0 +1,56 @@
+{
+  "total_picks": 2,
+  "total_wins": 2,
+  "accuracy": 1.0,
+  "total_pnl": 512,
+  "total_wagered": 422,
+  "total_roi": 1.2132701421800949,
+  "active_days": 2,
+  "total_days": 95,
+  "day_coverage": 0.021052631578947368,
+  "max_drawdown": 0,
+  "over_picks": 2,
+  "over_wins": 2,
+  "over_accuracy": 1.0,
+  "under_picks": 0,
+  "under_wins": 0,
+  "under_accuracy": 0,
+  "daily": [
+    {
+      "date": "20260219",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 226
+    },
+    {
+      "date": "20260306",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 286
+    }
+  ],
+  "picks_summary": [
+    {
+      "date": "20260219",
+      "player": "John Collins",
+      "stat": "pra",
+      "direction": "over",
+      "line": 23.5,
+      "odds": 116,
+      "actual": 27,
+      "hit": true,
+      "pnl": 226
+    },
+    {
+      "date": "20260306",
+      "player": "Jayson Tatum",
+      "stat": "pts",
+      "direction": "over",
+      "line": 14.5,
+      "odds": 126,
+      "actual": 15,
+      "hit": true,
+      "pnl": 286
+    }
+  ]
+}
