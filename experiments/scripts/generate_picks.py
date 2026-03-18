@@ -65,8 +65,8 @@ def generate_nba_picks():
     print(f"  Results: {results['total_picks']} picks, {results['total_wins']} wins, "
           f"{acc*100:.1f}% accuracy, {results['total_roi']*100:.1f}% ROI")
 
-    # Convert to webapp signal format
-    signals = []
+    # Convert to webapp signal format (tag as backtest source)
+    backtest_signals = []
     for pick in results.get('picks', []):
         if pick.get('bet_type') == 'single':
             signal = {
@@ -90,8 +90,9 @@ def generate_nba_picks():
                 'bet': f"{pick.get('player', '')} O{pick.get('line', '')} {pick.get('stat', '').upper()}",
                 'engine': 'positive_odds_nba',
                 'betSubType': 'single',
+                'source': 'backtest',
             }
-            signals.append(signal)
+            backtest_signals.append(signal)
         elif pick.get('bet_type') in ('parlay', 'parlay_plb'):
             legs = []
             for leg in pick.get('legs', []):
@@ -118,32 +119,58 @@ def generate_nba_picks():
                 'wager': pick.get('wager', 100),
                 'bet': f"{pick.get('n_legs', 2)}-Leg Parlay",
                 'engine': 'positive_odds_nba',
+                'source': 'backtest',
             }
-            signals.append(signal)
+            backtest_signals.append(signal)
 
-    # Compute stats
-    singles = [s for s in signals if s['betType'] == 'single']
-    parlays = [s for s in signals if s['betType'] == 'parlay']
+    # Merge with existing live signals (preserve live picks, replace backtest)
+    os.makedirs(WEBAPP_DATA, exist_ok=True)
+    existing_signals = []
+    signals_path = os.path.join(WEBAPP_DATA, 'nba_signals.json')
+    try:
+        with open(signals_path) as f:
+            existing_signals = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    # Keep live signals, remove old backtest signals
+    live_signals = [s for s in existing_signals if s.get('source') == 'live']
+    live_dates = set(s['date'] for s in live_signals)
+
+    # Don't include backtest signals for dates that have live picks
+    merged = [s for s in backtest_signals if s['date'] not in live_dates]
+    merged.extend(live_signals)
+
+    # Compute stats from all signals (both live and backtest)
+    all_signals = merged
+    singles = [s for s in all_signals if s.get('betType') == 'single' and s.get('hit') is not None]
+    parlays = [s for s in all_signals if s.get('betType') == 'parlay' and s.get('hit') is not None]
+    s_wins = sum(1 for s in singles if s['hit'])
+    p_wins = sum(1 for p in parlays if p['hit'])
+    total = len(singles) + len(parlays)
+    total_wins = s_wins + p_wins
+    total_pnl = sum(s.get('pnl', 0) for s in singles) + sum(p.get('pnl', 0) for p in parlays)
+    total_wagered = sum(s.get('wager', 100) for s in singles) + sum(p.get('wager', 100) for p in parlays)
+
     stats = {
         'singles': {
             'total': len(singles),
-            'wins': sum(1 for s in singles if s.get('hit')),
-            'accuracy': sum(1 for s in singles if s.get('hit')) / len(singles) if singles else 0,
+            'wins': s_wins,
+            'accuracy': s_wins / len(singles) if singles else 0,
             'pnl': sum(s.get('pnl', 0) for s in singles),
-            'roi': sum(s.get('pnl', 0) for s in singles) / max(1, sum(s.get('wager', 100) for s in singles)),
         },
         'parlays': {
             'total': len(parlays),
-            'wins': sum(1 for p in parlays if p.get('hit')),
-            'accuracy': sum(1 for p in parlays if p.get('hit')) / len(parlays) if parlays else 0,
+            'wins': p_wins,
+            'accuracy': p_wins / len(parlays) if parlays else 0,
             'pnl': sum(p.get('pnl', 0) for p in parlays),
         },
         'overall': {
-            'total': len(signals),
-            'wins': sum(1 for s in signals if s.get('hit')),
-            'accuracy': acc,
-            'pnl': results['total_pnl'],
-            'roi': results['total_roi'],
+            'total': total,
+            'wins': total_wins,
+            'accuracy': total_wins / total if total > 0 else 0,
+            'pnl': total_pnl,
+            'roi': total_pnl / total_wagered if total_wagered > 0 else 0,
         },
         'model': 'NBA Positive Odds v1 (HECE Champion)',
         'config_version': 'optimized',
@@ -151,27 +178,13 @@ def generate_nba_picks():
         'generated': datetime.now().isoformat(),
     }
 
-    # Save
-    os.makedirs(WEBAPP_DATA, exist_ok=True)
-    with open(os.path.join(WEBAPP_DATA, 'nba_signals.json'), 'w') as f:
-        json.dump(signals, f, indent=2)
+    # Save signals and stats (recommendations left for seed_live_picks.py)
+    with open(signals_path, 'w') as f:
+        json.dump(merged, f, indent=2)
     with open(os.path.join(WEBAPP_DATA, 'nba_stats.json'), 'w') as f:
         json.dump(stats, f, indent=2)
 
-    # Today's picks (last date)
-    if signals:
-        today = max(s['date'] for s in signals)
-        today_picks = [s for s in signals if s['date'] == today]
-        recommendations = {
-            'generated': datetime.now().isoformat(),
-            'date': today,
-            'engine': 'NBA Positive Odds HECE v1',
-            'picks': today_picks,
-        }
-        with open(os.path.join(WEBAPP_DATA, 'nba_recommendations.json'), 'w') as f:
-            json.dump(recommendations, f, indent=2)
-
-    print(f"  Saved {len(signals)} signals to {WEBAPP_DATA}/")
+    print(f"  Saved {len(merged)} signals ({len(live_signals)} live + {len(merged) - len(live_signals)} backtest) to {WEBAPP_DATA}/")
     return results
 
 
@@ -210,8 +223,8 @@ def generate_mlb_picks():
     print(f"  Results: {results['total_picks']} picks, {results['total_wins']} wins, "
           f"{acc*100:.1f}% accuracy, {results['total_roi']*100:.1f}% ROI")
 
-    # Convert to webapp signal format
-    signals = []
+    # Convert to webapp signal format (tag as backtest source)
+    backtest_signals = []
     for pick in results.get('picks', []):
         if pick.get('bet_type') == 'single':
             signal = {
@@ -235,23 +248,49 @@ def generate_mlb_picks():
                 'bet': f"{pick.get('player', '')} O{pick.get('line', '')} {pick.get('stat', '').upper()}",
                 'engine': 'positive_odds_mlb',
                 'betSubType': 'single',
+                'source': 'backtest',
             }
-            signals.append(signal)
+            backtest_signals.append(signal)
 
-    # Compute stats
+    # Merge with existing live signals (preserve live picks, replace backtest)
+    os.makedirs(WEBAPP_DATA, exist_ok=True)
+    existing_signals = []
+    signals_path = os.path.join(WEBAPP_DATA, 'mlb_signals.json')
+    try:
+        with open(signals_path) as f:
+            existing_signals = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    live_signals = [s for s in existing_signals if s.get('source') == 'live']
+    live_dates = set(s['date'] for s in live_signals)
+    merged = [s for s in backtest_signals if s['date'] not in live_dates]
+    merged.extend(live_signals)
+
+    # Compute stats from all signals
+    all_signals = merged
+    singles = [s for s in all_signals if s.get('betType') == 'single' and s.get('hit') is not None]
+    parlays = [s for s in all_signals if s.get('betType') == 'parlay' and s.get('hit') is not None]
+    s_wins = sum(1 for s in singles if s['hit'])
+    p_wins = sum(1 for p in parlays if p['hit'])
+    total = len(singles) + len(parlays)
+    total_wins = s_wins + p_wins
+    total_pnl = sum(s.get('pnl', 0) for s in singles) + sum(p.get('pnl', 0) for p in parlays)
+    total_wagered = sum(s.get('wager', 100) for s in singles) + sum(p.get('wager', 100) for p in parlays)
+
     stats = {
         'singles': {
-            'total': len(signals),
-            'wins': sum(1 for s in signals if s.get('hit')),
-            'accuracy': sum(1 for s in signals if s.get('hit')) / len(signals) if signals else 0,
-            'pnl': sum(s.get('pnl', 0) for s in signals),
+            'total': len(singles),
+            'wins': s_wins,
+            'accuracy': s_wins / len(singles) if singles else 0,
+            'pnl': sum(s.get('pnl', 0) for s in singles),
         },
         'overall': {
-            'total': len(signals),
-            'wins': sum(1 for s in signals if s.get('hit')),
-            'accuracy': acc,
-            'pnl': results['total_pnl'],
-            'roi': results['total_roi'],
+            'total': total,
+            'wins': total_wins,
+            'accuracy': total_wins / total if total > 0 else 0,
+            'pnl': total_pnl,
+            'roi': total_pnl / total_wagered if total_wagered > 0 else 0,
         },
         'model': 'MLB Positive Odds v1 (HECE Champion)',
         'config_version': 'optimized',
@@ -259,26 +298,13 @@ def generate_mlb_picks():
         'generated': datetime.now().isoformat(),
     }
 
-    # Save
-    os.makedirs(WEBAPP_DATA, exist_ok=True)
-    with open(os.path.join(WEBAPP_DATA, 'mlb_signals.json'), 'w') as f:
-        json.dump(signals, f, indent=2)
+    # Save signals and stats (recommendations left for seed_live_picks_mlb.py)
+    with open(signals_path, 'w') as f:
+        json.dump(merged, f, indent=2)
     with open(os.path.join(WEBAPP_DATA, 'mlb_stats.json'), 'w') as f:
         json.dump(stats, f, indent=2)
 
-    if signals:
-        today = max(s['date'] for s in signals)
-        today_picks = [s for s in signals if s['date'] == today]
-        recommendations = {
-            'generated': datetime.now().isoformat(),
-            'date': today,
-            'engine': 'MLB Positive Odds HECE v1',
-            'picks': today_picks,
-        }
-        with open(os.path.join(WEBAPP_DATA, 'mlb_recommendations.json'), 'w') as f:
-            json.dump(recommendations, f, indent=2)
-
-    print(f"  Saved {len(signals)} signals to {WEBAPP_DATA}/")
+    print(f"  Saved {len(merged)} signals ({len(live_signals)} live + {len(merged) - len(live_signals)} backtest) to {WEBAPP_DATA}/")
     return results
 
 
@@ -301,7 +327,7 @@ def main():
         generate_mlb_picks()
 
     print("\n" + "=" * 60)
-    print("DONE — Picks saved to experiments/webapp/data/")
+    print("DONE — Backtest history saved to webapp/positive-odds/data/")
     print("=" * 60)
 
 
