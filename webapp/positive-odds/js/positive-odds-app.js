@@ -105,7 +105,7 @@
       const dateStr = recs && recs.date ? fmtDate(recs.date) : 'today';
       return `<div style="text-align:center;color:var(--text-dim);padding:3rem;font-size:1rem">
         <div style="margin-bottom:0.5rem;font-size:1.1rem;color:var(--text)">${poSport.toUpperCase()} Positive Odds Picks — ${dateStr}</div>
-        No picks for today. Props typically open 1-2 hours before game time.
+        No picks for today. Check back after the daily cron runs.
       </div>`;
     }
 
