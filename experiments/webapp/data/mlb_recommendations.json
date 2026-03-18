@@ -1,0 +1,29 @@
+{
+  "generated": "2026-03-18T07:47:50.377987",
+  "date": "20250824",
+  "engine": "MLB Positive Odds HECE v1",
+  "picks": [
+    {
+      "date": "20250824",
+      "betType": "single",
+      "player": "Brenton Doyle",
+      "team": "",
+      "opponent": "",
+      "line": 0.5,
+      "odds": 108,
+      "stat": "h",
+      "statLabel": "H",
+      "cascadeScore": 0.5127068888407532,
+      "hitRate": 0.85,
+      "edge": 0.30645966179927087,
+      "ev": 0.6374360965424835,
+      "actual": 1,
+      "hit": true,
+      "pnl": 140,
+      "wager": 130,
+      "bet": "Brenton Doyle O0.5 H",
+      "engine": "positive_odds_mlb",
+      "betSubType": "single"
+    }
+  ]
+}

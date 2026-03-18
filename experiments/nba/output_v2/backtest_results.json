@@ -1,0 +1,93 @@
+{
+  "total_picks": 6,
+  "total_wins": 3,
+  "total_pnl": 352,
+  "total_wagered": 776,
+  "total_roi": 0.4536082474226804,
+  "singles_total": 6,
+  "singles_wins": 3,
+  "singles_accuracy": 0.5,
+  "singles_pnl": 352,
+  "parlay_total": 0,
+  "parlay_wins": 0,
+  "parlay_accuracy": 0,
+  "parlay_pnl": 0,
+  "parlay_leg_total": 0,
+  "parlay_leg_wins": 0,
+  "parlay_leg_accuracy": 0,
+  "parlay_by_legs": {},
+  "individual_accuracy": 0.5,
+  "accuracy": 0.5,
+  "max_drawdown": 267,
+  "max_loss_streak": 2,
+  "max_win_streak": 2,
+  "active_days": 5,
+  "avg_daily_pnl": 70.4,
+  "daily": [
+    {
+      "date": "20260219",
+      "n_picks": 2,
+      "wins": 2,
+      "pnl": 433
+    },
+    {
+      "date": "20260222",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -126
+    },
+    {
+      "date": "20260306",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 312
+    },
+    {
+      "date": "20260308",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -127
+    },
+    {
+      "date": "20260312",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -140
+    }
+  ],
+  "over_total": 6,
+  "over_wins": 3,
+  "under_total": 0,
+  "under_wins": 0,
+  "config": {
+    "MIN_GAMES": 15,
+    "MIN_MINUTES": 20,
+    "MWU_WINDOWS": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "MWU_MIN_HR": 0.85,
+    "BOOT_N": 500,
+    "BOOT_CI": 0.05,
+    "BOOT_MIN_PROB": 0.78,
+    "TSV_MIN_HR": 0.72,
+    "PG_PERCENTILE": 0.12,
+    "VND_MIN_STDS": 0.6,
+    "CHS_MIN_STREAK": 3,
+    "MIN_EDGE": 0.2,
+    "MIN_EV": 0.08,
+    "MIN_ODDS": 100,
+    "MAX_ODDS": 400,
+    "UNIT_SIZE": 100,
+    "KELLY_FRACTION": 0.2,
+    "MAX_DAILY_BETS": 12,
+    "PARLAY_ENABLED": true,
+    "PARLAY_MIN_LEGS": 2,
+    "PARLAY_MAX_LEGS": 3,
+    "PARLAY_MIN_LEG_PROB": 0.88,
+    "PARLAY_WAGER_2LEG": 80,
+    "PARLAY_WAGER_3LEG": 50
+  }
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positive Odds Models — HECE</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        h1 { text-align: center; color: #00ff88; margin-bottom: 10px; font-size: 1.8em; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 30px; font-size: 0.9em; }
+        .sport-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .sport-tab { padding: 10px 30px; border: 2px solid #333; border-radius: 8px; background: #111; cursor: pointer; color: #aaa; font-weight: 600; transition: all 0.2s; }
+        .sport-tab.active { border-color: #00ff88; color: #00ff88; background: #0a2a1a; }
+        .sport-tab:hover { border-color: #00ff88; }
+        .view-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+        .view-tab { padding: 8px 20px; border: 1px solid #333; border-radius: 6px; background: #111; cursor: pointer; color: #aaa; font-size: 0.9em; transition: all 0.2s; }
+        .view-tab.active { border-color: #00aaff; color: #00aaff; background: #0a1a2a; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: #151525; border: 1px solid #2a2a3a; border-radius: 10px; padding: 20px; text-align: center; }
+        .stat-value { font-size: 2.2em; font-weight: 700; }
+        .stat-value.green { color: #00ff88; }
+        .stat-value.blue { color: #00aaff; }
+        .stat-value.gold { color: #ffd700; }
+        .stat-label { color: #888; font-size: 0.85em; margin-top: 5px; }
+        .picks-section { margin-bottom: 30px; }
+        .picks-section h2 { color: #00aaff; margin-bottom: 15px; font-size: 1.3em; }
+        .pick-card { background: #151525; border: 1px solid #2a2a3a; border-radius: 10px; padding: 15px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .pick-info { flex: 1; }
+        .pick-player { font-weight: 600; font-size: 1.1em; color: #fff; }
+        .pick-detail { color: #888; font-size: 0.85em; margin-top: 3px; }
+        .pick-odds { font-size: 1.1em; font-weight: 600; color: #ffd700; min-width: 70px; text-align: center; }
+        .pick-result { min-width: 80px; text-align: right; }
+        .pick-result.hit { color: #00ff88; }
+        .pick-result.miss { color: #ff4444; }
+        .pick-result.pending { color: #ffd700; }
+        .pnl-value { font-weight: 700; font-size: 1.1em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #222; }
+        th { color: #888; font-weight: 600; font-size: 0.85em; text-transform: uppercase; }
+        td { font-size: 0.9em; }
+        tr:hover { background: #1a1a2a; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: 600; }
+        .badge-hit { background: #0a2a1a; color: #00ff88; border: 1px solid #00ff88; }
+        .badge-miss { background: #2a0a0a; color: #ff4444; border: 1px solid #ff4444; }
+        .badge-pending { background: #2a2a0a; color: #ffd700; border: 1px solid #ffd700; }
+        .disclaimer { text-align: center; color: #555; font-size: 0.8em; margin-top: 40px; padding: 20px; border-top: 1px solid #222; }
+        .parlay-legs { margin-top: 5px; padding-left: 15px; font-size: 0.85em; color: #aaa; }
+        .parlay-legs .leg { padding: 2px 0; }
+        .model-info { background: #0a1a2a; border: 1px solid #1a3a5a; border-radius: 10px; padding: 20px; margin-bottom: 25px; }
+        .model-info h3 { color: #00aaff; margin-bottom: 10px; }
+        .model-info p { color: #aaa; font-size: 0.9em; line-height: 1.6; }
+        .empty-msg { text-align: center; color: #666; padding: 40px; font-size: 1.1em; }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pick-card { flex-direction: column; gap: 10px; }
+            .pick-odds, .pick-result { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Positive Odds Models</h1>
+        <p class="subtitle">HECE — Hybrid Ensemble Certainty Engine | Plus-Money Only (+100 and up)</p>
+
+        <div class="sport-tabs">
+            <div class="sport-tab active" onclick="switchSport('nba')">NBA</div>
+            <div class="sport-tab" onclick="switchSport('mlb')">MLB</div>
+        </div>
+
+        <div class="view-tabs">
+            <div class="view-tab active" onclick="switchView('today')">Today's Picks</div>
+            <div class="view-tab" onclick="switchView('history')">History</div>
+            <div class="view-tab" onclick="switchView('strategy')">Strategy</div>
+        </div>
+
+        <div id="stats-dashboard"></div>
+        <div id="content-area"></div>
+
+        <div class="disclaimer">
+            Experimental positive-odds models. All bets use plus-money odds (+100 and above).<br>
+            Walk-forward backtested. Not financial advice.
+        </div>
+    </div>
+
+    <script>
+    let currentSport = 'nba';
+    let currentView = 'today';
+    let data = { nba: {}, mlb: {} };
+
+    async function loadData() {
+        const basePath = window.location.pathname.replace(/\/[^/]*$/, '') + '/data';
+
+        for (const sport of ['nba', 'mlb']) {
+            try {
+                const [signalsRes, statsRes, recsRes] = await Promise.all([
+                    fetch(`${basePath}/${sport}_signals.json`).then(r => r.ok ? r.json() : []),
+                    fetch(`${basePath}/${sport}_stats.json`).then(r => r.ok ? r.json() : {}),
+                    fetch(`${basePath}/${sport}_recommendations.json`).then(r => r.ok ? r.json() : {}),
+                ]);
+                data[sport] = { signals: signalsRes, stats: statsRes, recommendations: recsRes };
+            } catch (e) {
+                console.warn(`Failed to load ${sport} data:`, e);
+                data[sport] = { signals: [], stats: {}, recommendations: {} };
+            }
+        }
+        render();
+    }
+
+    function switchSport(sport) {
+        currentSport = sport;
+        document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        render();
+    }
+
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        render();
+    }
+
+    function render() {
+        renderDashboard();
+        if (currentView === 'today') renderToday();
+        else if (currentView === 'history') renderHistory();
+        else if (currentView === 'strategy') renderStrategy();
+    }
+
+    function renderDashboard() {
+        const stats = data[currentSport].stats;
+        const overall = stats.overall || {};
+        const el = document.getElementById('stats-dashboard');
+
+        const wins = overall.wins || 0;
+        const total = overall.total || 0;
+        const acc = total > 0 ? (wins / total * 100).toFixed(1) : '0.0';
+        const roi = ((overall.roi || 0) * 100).toFixed(1);
+        const pnl = overall.pnl || 0;
+
+        el.innerHTML = `
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value green">${acc}%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">${roi}%</div>
+                    <div class="stat-label">ROI</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value ${pnl >= 0 ? 'green' : 'miss'}">$${pnl >= 0 ? '+' : ''}${pnl.toLocaleString()}</div>
+                    <div class="stat-label">Total P&L</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value gold">${total}</div>
+                    <div class="stat-label">Total Picks (${wins}W)</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderToday() {
+        const recs = data[currentSport].recommendations;
+        const el = document.getElementById('content-area');
+
+        if (!recs || !recs.picks || recs.picks.length === 0) {
+            el.innerHTML = '<div class="empty-msg">No picks generated yet for today. Run the cron to generate fresh picks.</div>';
+            return;
+        }
+
+        let html = `<div class="picks-section"><h2>${currentSport.toUpperCase()} Picks — ${formatDate(recs.date)}</h2>`;
+
+        for (const pick of recs.picks) {
+            html += renderPickCard(pick);
+        }
+
+        html += '</div>';
+        el.innerHTML = html;
+    }
+
+    function renderPickCard(pick) {
+        const isParlay = pick.betType === 'parlay';
+        const hitClass = pick.hit === true ? 'hit' : (pick.hit === false ? 'miss' : 'pending');
+        const hitBadge = pick.hit === true ? 'HIT' : (pick.hit === false ? 'MISS' : 'PENDING');
+        const pnlStr = pick.pnl !== undefined ? `$${pick.pnl >= 0 ? '+' : ''}${pick.pnl}` : '';
+
+        let html = `<div class="pick-card">
+            <div class="pick-info">
+                <div class="pick-player">${isParlay ? pick.bet : pick.player}</div>
+                <div class="pick-detail">
+                    ${isParlay ? '' : `O${pick.line} ${(pick.statLabel || pick.stat || '').toUpperCase()}`}
+                    ${pick.edge ? `| Edge: ${(pick.edge * 100).toFixed(1)}%` : ''}
+                    ${pick.hitRate ? `| HR: ${(pick.hitRate * 100).toFixed(0)}%` : ''}
+                </div>`;
+
+        if (isParlay && pick.legs) {
+            html += '<div class="parlay-legs">';
+            for (const leg of pick.legs) {
+                const legHit = leg.hit === true ? '&check;' : (leg.hit === false ? '&cross;' : '?');
+                html += `<div class="leg">${legHit} ${leg.player} O${leg.line} ${(leg.statLabel || leg.stat || '').toUpperCase()} (${leg.odds >= 0 ? '+' : ''}${leg.odds})</div>`;
+            }
+            html += '</div>';
+        }
+
+        html += `</div>
+            <div class="pick-odds">${pick.odds >= 0 ? '+' : ''}${pick.odds}</div>
+            <div class="pick-result ${hitClass}">
+                <span class="badge badge-${hitClass}">${hitBadge}</span>
+                <div class="pnl-value">${pnlStr}</div>
+            </div>
+        </div>`;
+
+        return html;
+    }
+
+    function renderHistory() {
+        const signals = data[currentSport].signals || [];
+        const el = document.getElementById('content-area');
+
+        if (signals.length === 0) {
+            el.innerHTML = '<div class="empty-msg">No historical picks available.</div>';
+            return;
+        }
+
+        // Sort by date descending
+        const sorted = [...signals].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+        let html = `<table>
+            <thead><tr>
+                <th>Date</th><th>Type</th><th>Pick</th><th>Odds</th>
+                <th>Edge</th><th>Result</th><th>P&L</th>
+            </tr></thead><tbody>`;
+
+        for (const s of sorted) {
+            const hitClass = s.hit === true ? 'hit' : (s.hit === false ? 'miss' : 'pending');
+            const hitBadge = s.hit === true ? 'HIT' : (s.hit === false ? 'MISS' : '?');
+            const pnl = s.pnl !== undefined ? `$${s.pnl >= 0 ? '+' : ''}${s.pnl}` : '';
+            const edge = s.edge ? `${(s.edge * 100).toFixed(1)}%` : (s.betType === 'parlay' ? '-' : '');
+            const bet = s.betType === 'parlay'
+                ? `${s.n_legs || s.legs?.length || '?'}-Leg Parlay`
+                : `${s.player} O${s.line} ${(s.statLabel || s.stat || '').toUpperCase()}`;
+            const actual = s.betType === 'parlay' ? '' : (s.actual !== undefined ? ` (${s.actual})` : '');
+
+            html += `<tr>
+                <td>${formatDate(s.date)}</td>
+                <td>${s.betType === 'parlay' ? 'Parlay' : 'Single'}</td>
+                <td>${bet}${actual}</td>
+                <td style="color:#ffd700">${s.odds >= 0 ? '+' : ''}${s.odds}</td>
+                <td>${edge}</td>
+                <td><span class="badge badge-${hitClass}">${hitBadge}</span></td>
+                <td style="color:${s.pnl >= 0 ? '#00ff88' : '#ff4444'};font-weight:600">${pnl}</td>
+            </tr>`;
+        }
+
+        html += '</tbody></table>';
+        el.innerHTML = html;
+    }
+
+    function renderStrategy() {
+        const el = document.getElementById('content-area');
+        const sportName = currentSport.toUpperCase();
+
+        el.innerHTML = `
+            <div class="model-info">
+                <h3>${sportName} Positive Odds Strategy — HECE</h3>
+                <p><strong>Objective:</strong> Maximize ROI with 90%+ accuracy using only plus-money odds (+100 and above).</p>
+                <p><strong>Architecture:</strong> Hybrid Ensemble Certainty Engine combining:</p>
+                <p>
+                    &bull; <strong>Gravitational Floor Theory (GFT)</strong> — Multi-window weighted floor detection<br>
+                    &bull; <strong>Bayesian Edge Quantification (BEQ)</strong> — Credible interval edge vs market<br>
+                    &bull; <strong>Entropy Stability Index (ESI)</strong> — Distribution predictability scoring<br>
+                    &bull; <strong>5 Proprietary Signals</strong> — Pace, minutes stability, rest, opponent defense, momentum<br>
+                    &bull; <strong>High Hit-Rate Gate</strong> — Only bets with proven 77%+ historical hit rate<br>
+                    &bull; <strong>Positive EV Filter</strong> — Minimum 10%+ expected value
+                </p>
+                <p><strong>Key Innovation:</strong> Multi-signal unanimity — ALL signals must independently agree. The minimum across all certainty measures determines the final probability. This prevents any single overfit measure from driving decisions.</p>
+                <p><strong>Validation:</strong> Walk-forward only (no future data), real historical odds from The Odds API, comprehensive overfitting detection suite, parameter sensitivity analysis.</p>
+                <p><strong>Odds Range:</strong> +100 to +400 (plus-money only)</p>
+            </div>
+        `;
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr || dateStr.length < 8) return dateStr || '';
+        return `${dateStr.slice(4,6)}/${dateStr.slice(6,8)}/${dateStr.slice(0,4)}`;
+    }
+
+    // Initialize
+    loadData();
+    </script>
+</body>
+</html>

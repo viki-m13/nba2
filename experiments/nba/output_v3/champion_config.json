@@ -1,84 +1,4 @@
 {
-  "total_picks": 12,
-  "total_wins": 10,
-  "total_pnl": 4500,
-  "total_wagered": 2089,
-  "total_roi": 2.15414073719483,
-  "singles_total": 10,
-  "singles_wins": 8,
-  "singles_accuracy": 0.8,
-  "singles_pnl": 1541,
-  "parlay_total": 2,
-  "parlay_wins": 2,
-  "parlay_accuracy": 1.0,
-  "parlay_pnl": 2959,
-  "parlay_leg_total": 4,
-  "parlay_leg_wins": 4,
-  "parlay_leg_accuracy": 1.0,
-  "parlay_by_legs": {
-    "2": {
-      "total": 2,
-      "wins": 2,
-      "pnl": 2959
-    }
-  },
-  "individual_accuracy": 0.8,
-  "accuracy": 0.8333333333333334,
-  "max_drawdown": 164,
-  "max_loss_streak": 1,
-  "max_win_streak": 7,
-  "active_days": 8,
-  "avg_daily_pnl": 562.5,
-  "daily": [
-    {
-      "date": "20241204",
-      "n_picks": 1,
-      "wins": 1,
-      "pnl": 161
-    },
-    {
-      "date": "20260219",
-      "n_picks": 3,
-      "wins": 3,
-      "pnl": 2682
-    },
-    {
-      "date": "20260221",
-      "n_picks": 3,
-      "wins": 3,
-      "pnl": 1363
-    },
-    {
-      "date": "20260222",
-      "n_picks": 1,
-      "wins": 0,
-      "pnl": -129
-    },
-    {
-      "date": "20260224",
-      "n_picks": 1,
-      "wins": 1,
-      "pnl": 156
-    },
-    {
-      "date": "20260226",
-      "n_picks": 1,
-      "wins": 1,
-      "pnl": 195
-    },
-    {
-      "date": "20260306",
-      "n_picks": 1,
-      "wins": 1,
-      "pnl": 236
-    },
-    {
-      "date": "20260308",
-      "n_picks": 1,
-      "wins": 0,
-      "pnl": -164
-    }
-  ],
   "config": {
     "MIN_GAMES": 12,
     "MIN_MINUTES": 18,
@@ -93,7 +13,7 @@
     "GFT_MAX_SPREAD": 4.2784,
     "BEQ_PRIOR_ALPHA": 1.0,
     "BEQ_PRIOR_BETA": 1.0,
-    "BEQ_CI_LEVEL": 0.7513,
+    "BEQ_CI_LEVEL": 0.6518,
     "BEQ_MIN_EDGE": 0.15,
     "ESI_BINS": 6,
     "ESI_MAX_ENTROPY": 0.9,
@@ -101,7 +21,7 @@
     "PAOV_ENABLED": true,
     "PAOV_WEIGHT": 0.1,
     "PAOV_MIN_OPP_GAMES": 5,
-    "PAOV_BOOST_THRESHOLD": 1.05,
+    "PAOV_BOOST_THRESHOLD": 1.0643,
     "PAOV_MAX_BOOST": 0.15,
     "MSC_ENABLED": true,
     "MSC_WEIGHT": 0.08,
@@ -124,10 +44,10 @@
     "HHM_WEIGHT": 0.0672,
     "HHM_LOOKBACK": 7,
     "HHM_MIN_STREAK": 2,
-    "HHM_MAX_BOOST": 0.1,
+    "HHM_MAX_BOOST": 0.1159,
     "GATE_MIN_GFT": 0.02,
     "GATE_MIN_ESI": 0.0965,
-    "GATE_MIN_HIT_RATE": 0.5684,
+    "GATE_MIN_HIT_RATE": 0.772,
     "GATE_MIN_COMBINED": 0.25,
     "MIN_EV": 0.12,
     "SINGLE_MIN_SCORE": 0.3934,
@@ -138,7 +58,7 @@
     "PARLAY_MIN_EDGE": 0.06,
     "PARLAY_MAX_PER_DAY": 1,
     "PARLAY_WAGER_2LEG": 250,
-    "PARLAY_WAGER_3LEG": 118,
+    "PARLAY_WAGER_3LEG": 193,
     "PARLAY_WAGER_4LEG": 75,
     "PARLAY_WAGER_5LEG": 27,
     "MIN_ODDS": 100,
@@ -160,5 +80,15 @@
     "PLB_WAGER_3LEG": 80,
     "PLB_WAGER_4LEG": 99,
     "PLB_WAGER_5LEG": 40
-  }
+  },
+  "results_summary": {
+    "accuracy": 0.9090909090909091,
+    "roi": 2.338176352705411,
+    "total_picks": 11,
+    "total_pnl": 4667
+  },
+  "strategy": "HECE_CHAMPION_v2",
+  "description": "V1 signal stack optimized for 90%+ accuracy on plus-money. Score: 299.5",
+  "improvements": 4,
+  "iterations": 500
 }
