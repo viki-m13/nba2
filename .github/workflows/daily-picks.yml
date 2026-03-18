@@ -50,12 +50,6 @@ jobs:
         env:
           TZ: America/New_York
 
-      - name: Run Positive Odds models (experiments)
-        if: steps.check.outputs.already_ran == 'false'
-        run: python3 experiments/scripts/generate_picks.py
-        env:
-          TZ: America/New_York
-
       - name: Commit and push updated picks
         if: steps.check.outputs.already_ran == 'false'
         run: |
@@ -72,13 +66,7 @@ jobs:
                   mlb/webapp/data/mlb_ultra_signals_v3.json \
                   mlb/webapp/data/mlb_ultra_recommendations.json \
                   mlb/webapp/data/mlb_ultra_backtest_stats_v3.json \
-                  mlb/webapp/data/mlb_player_boxscores.json \
-                  webapp/positive-odds/data/nba_signals.json \
-                  webapp/positive-odds/data/nba_stats.json \
-                  webapp/positive-odds/data/nba_recommendations.json \
-                  webapp/positive-odds/data/mlb_signals.json \
-                  webapp/positive-odds/data/mlb_stats.json \
-                  webapp/positive-odds/data/mlb_recommendations.json
+                  mlb/webapp/data/mlb_player_boxscores.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "Daily picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
           git push
