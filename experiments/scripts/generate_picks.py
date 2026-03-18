@@ -25,7 +25,7 @@ sys.path.insert(0, EXPERIMENTS_DIR)
 
 from shared.data_loader import load_nba_boxscores, load_nba_odds, load_mlb_boxscores, load_mlb_odds
 
-WEBAPP_DATA = os.path.join(EXPERIMENTS_DIR, 'webapp', 'data')
+WEBAPP_DATA = os.path.join(EXPERIMENTS_DIR, '..', 'webapp', 'positive-odds', 'data')
 
 
 def generate_nba_picks():
