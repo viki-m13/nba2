@@ -1,12 +1,34 @@
 {
-  "generated": "2026-03-17T17:07:14.585Z",
-  "date": "20260317",
+  "generated": "2026-03-18T17:03:28.435Z",
+  "date": "20260318",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "none",
-    "reasoning": "No bets meet quality thresholds tonight",
-    "singles": [],
+    "betType": "single",
+    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
+    "singles": [
+      {
+        "player": "Deandre Ayton",
+        "team": "LAL",
+        "statType": "rebounds",
+        "statLabel": "REB",
+        "line": 5.5,
+        "odds": -330,
+        "cascadeScore": 0.5908258244563744,
+        "gft": 0.5987232828412004,
+        "beq": 0.08201508431616122,
+        "esi": 0.2236322050621692,
+        "imad": 0.11129565168512942,
+        "hitRate": 0.95,
+        "edge": 0.08201508431616122,
+        "ev": 0.10686814016954349,
+        "avg": 9.65,
+        "floor": 8.250414758362803,
+        "betSubType": "single",
+        "hit": null,
+        "actual": null
+      }
+    ],
     "parlays": []
   }
 }
