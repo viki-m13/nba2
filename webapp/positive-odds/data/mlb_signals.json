@@ -19,7 +19,8 @@
     "wager": 123,
     "bet": "Brice Turang O0.5 R",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250507",
@@ -41,7 +42,8 @@
     "wager": 124,
     "bet": "Steven Kwan O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250605",
@@ -63,7 +65,8 @@
     "wager": 124,
     "bet": "Lourdes Gurriel Jr. O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250621",
@@ -85,7 +88,8 @@
     "wager": 130,
     "bet": "Colt Keith O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250622",
@@ -107,7 +111,8 @@
     "wager": 127,
     "bet": "Brandon Lowe O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250817",
@@ -129,7 +134,8 @@
     "wager": 124,
     "bet": "Paul DeJong O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250818",
@@ -151,7 +157,8 @@
     "wager": 121,
     "bet": "George Springer O0.5 R",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   },
   {
     "date": "20250824",
@@ -173,6 +180,7 @@
     "wager": 130,
     "bet": "Brenton Doyle O0.5 H",
     "engine": "positive_odds_mlb",
-    "betSubType": "single"
+    "betSubType": "single",
+    "source": "backtest"
   }
 ]
