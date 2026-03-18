@@ -102,8 +102,10 @@
   function renderTonight(d) {
     const recs = d.recommendations;
     if (!recs || !recs.picks || recs.picks.length === 0) {
+      const dateStr = recs && recs.date ? fmtDate(recs.date) : 'today';
       return `<div style="text-align:center;color:var(--text-dim);padding:3rem;font-size:1rem">
-        No picks generated yet. Run <code>experiments/scripts/daily-picks.sh</code> to generate fresh picks.
+        <div style="margin-bottom:0.5rem;font-size:1.1rem;color:var(--text)">${poSport.toUpperCase()} Positive Odds Picks — ${dateStr}</div>
+        No picks for today. Props typically open 1-2 hours before game time.
       </div>`;
     }
 
