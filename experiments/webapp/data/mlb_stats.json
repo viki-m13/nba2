@@ -1,0 +1,19 @@
+{
+  "singles": {
+    "total": 8,
+    "wins": 8,
+    "accuracy": 1.0,
+    "pnl": 1149
+  },
+  "overall": {
+    "total": 8,
+    "wins": 8,
+    "accuracy": 1.0,
+    "pnl": 1149,
+    "roi": 1.1455633100697906
+  },
+  "model": "MLB Positive Odds v1 (HECE Champion)",
+  "config_version": "optimized",
+  "min_odds": "+100",
+  "generated": "2026-03-18T07:47:50.376774"
+}
