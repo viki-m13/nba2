@@ -1,19 +1,5 @@
 [
   {
-    "date": "20260215",
-    "gameKey": "DAL@LAL",
-    "eventId": "fdb123a858af8d533d901707df45960f",
-    "homeTeam": "LAL",
-    "awayTeam": "DAL",
-    "commenceTime": "2026-02-13T03:13:00Z",
-    "spread_away": -146,
-    "spread_home": 110,
-    "spread_point": -20.5,
-    "total": 230.5,
-    "total_over": -146,
-    "total_under": 110
-  },
-  {
     "date": "20260219",
     "gameKey": "IND@WAS",
     "eventId": "c93f72cb146ef69c7bd4a79f03481123",
@@ -150353,6 +150339,4704 @@
       "Devin Vassell": {
         "20.5": {
           "overOdds": -108
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "MIA@CHA",
+    "eventId": "97559ed79c99e86d90fc2f9d2059e761",
+    "homeTeam": "CHA",
+    "awayTeam": "MIA",
+    "commenceTime": "2026-03-17T23:10:00Z",
+    "home_ml": -205,
+    "away_ml": 172,
+    "spread_home": -108,
+    "spread_point": -5.5,
+    "spread_away": -112,
+    "total": 234.5,
+    "total_over": -110,
+    "total_under": -110,
+    "playerProps": {
+      "Tyler Herro": {
+        "34.5": {
+          "overOdds": 1100
+        },
+        "24.5": {
+          "overOdds": 180
+        },
+        "14.5": {
+          "overOdds": -530
+        },
+        "19.5": {
+          "overOdds": -162
+        },
+        "39.5": {
+          "overOdds": 2500
+        },
+        "9.5": {
+          "overOdds": -4500
+        },
+        "29.5": {
+          "overOdds": 450
+        }
+      },
+      "Norman Powell": {
+        "34.5": {
+          "overOdds": 1060
+        },
+        "24.5": {
+          "overOdds": 186
+        },
+        "14.5": {
+          "overOdds": -520
+        },
+        "19.5": {
+          "overOdds": -154
+        },
+        "39.5": {
+          "overOdds": 2500
+        },
+        "9.5": {
+          "overOdds": -4000
+        },
+        "29.5": {
+          "overOdds": 470
+        }
+      },
+      "Brandon Miller": {
+        "34.5": {
+          "overOdds": 1200
+        },
+        "24.5": {
+          "overOdds": 180
+        },
+        "14.5": {
+          "overOdds": -530
+        },
+        "19.5": {
+          "overOdds": -156
+        },
+        "39.5": {
+          "overOdds": 3000
+        },
+        "9.5": {
+          "overOdds": -4500
+        },
+        "29.5": {
+          "overOdds": 480
+        }
+      },
+      "LaMelo Ball": {
+        "34.5": {
+          "overOdds": 1300
+        },
+        "24.5": {
+          "overOdds": 215
+        },
+        "14.5": {
+          "overOdds": -430
+        },
+        "19.5": {
+          "overOdds": -130
+        },
+        "39.5": {
+          "overOdds": 3000
+        },
+        "9.5": {
+          "overOdds": -3500
+        },
+        "29.5": {
+          "overOdds": 540
+        }
+      },
+      "Kon Knueppel": {
+        "34.5": {
+          "overOdds": 1700
+        },
+        "24.5": {
+          "overOdds": 300
+        },
+        "14.5": {
+          "overOdds": -310
+        },
+        "19.5": {
+          "overOdds": 104
+        },
+        "39.5": {
+          "overOdds": 5000
+        },
+        "9.5": {
+          "overOdds": -2000
+        },
+        "29.5": {
+          "overOdds": 800
+        }
+      },
+      "Miles Bridges": {
+        "24.5": {
+          "overOdds": 750
+        },
+        "14.5": {
+          "overOdds": -142
+        },
+        "19.5": {
+          "overOdds": 240
+        },
+        "9.5": {
+          "overOdds": -670
+        },
+        "29.5": {
+          "overOdds": 1700
+        }
+      },
+      "Jaime Jaquez Jr": {
+        "24.5": {
+          "overOdds": 870
+        },
+        "14.5": {
+          "overOdds": -113
+        },
+        "19.5": {
+          "overOdds": 300
+        },
+        "9.5": {
+          "overOdds": -480
+        },
+        "29.5": {
+          "overOdds": 2000
+        }
+      },
+      "Coby White": {
+        "24.5": {
+          "overOdds": 1060
+        },
+        "14.5": {
+          "overOdds": 134
+        },
+        "19.5": {
+          "overOdds": 400
+        },
+        "9.5": {
+          "overOdds": -280
+        },
+        "29.5": {
+          "overOdds": 2500
+        }
+      },
+      "Kel'el Ware": {
+        "24.5": {
+          "overOdds": 1060
+        },
+        "14.5": {
+          "overOdds": 108
+        },
+        "19.5": {
+          "overOdds": 350
+        },
+        "9.5": {
+          "overOdds": -400
+        },
+        "29.5": {
+          "overOdds": 3000
+        }
+      },
+      "Pelle Larsson": {
+        "14.5": {
+          "overOdds": 280
+        },
+        "19.5": {
+          "overOdds": 1000
+        },
+        "9.5": {
+          "overOdds": -170
+        }
+      },
+      "Moussa Diabate": {
+        "14.5": {
+          "overOdds": 630
+        },
+        "9.5": {
+          "overOdds": 134
+        }
+      },
+      "Davion Mitchell": {
+        "14.5": {
+          "overOdds": 750
+        },
+        "9.5": {
+          "overOdds": 164
+        }
+      },
+      "Grant Williams": {
+        "14.5": {
+          "overOdds": 1100
+        },
+        "9.5": {
+          "overOdds": 310
+        }
+      },
+      "Ryan Kalkbrenner": {
+        "9.5": {
+          "overOdds": 440
+        }
+      }
+    },
+    "rebProps": {
+      "Kel'el Ware": {
+        "11.5": {
+          "overOdds": -102
+        },
+        "13.5": {
+          "overOdds": 230
+        },
+        "9.5": {
+          "overOdds": -260
+        },
+        "7.5": {
+          "overOdds": -620
+        },
+        "5.5": {
+          "overOdds": -3000
+        },
+        "15.5": {
+          "overOdds": 480
+        }
+      },
+      "Moussa Diabate": {
+        "11.5": {
+          "overOdds": 180
+        },
+        "13.5": {
+          "overOdds": 420
+        },
+        "9.5": {
+          "overOdds": -146
+        },
+        "7.5": {
+          "overOdds": -350
+        },
+        "5.5": {
+          "overOdds": -1800
+        },
+        "15.5": {
+          "overOdds": 900
+        }
+      },
+      "Jaime Jaquez Jr": {
+        "11.5": {
+          "overOdds": 1700
+        },
+        "9.5": {
+          "overOdds": 900
+        },
+        "7.5": {
+          "overOdds": 420
+        },
+        "5.5": {
+          "overOdds": 142
+        },
+        "3.5": {
+          "overOdds": -265
+        }
+      },
+      "Miles Bridges": {
+        "11.5": {
+          "overOdds": 1800
+        },
+        "9.5": {
+          "overOdds": 800
+        },
+        "7.5": {
+          "overOdds": 300
+        },
+        "5.5": {
+          "overOdds": -113
+        },
+        "3.5": {
+          "overOdds": -530
+        }
+      },
+      "Ryan Kalkbrenner": {
+        "11.5": {
+          "overOdds": 2200
+        },
+        "9.5": {
+          "overOdds": 1060
+        },
+        "7.5": {
+          "overOdds": 450
+        },
+        "5.5": {
+          "overOdds": 150
+        },
+        "3.5": {
+          "overOdds": -245
+        }
+      },
+      "Brandon Miller": {
+        "9.5": {
+          "overOdds": 1000
+        },
+        "7.5": {
+          "overOdds": 360
+        },
+        "5.5": {
+          "overOdds": 106
+        },
+        "3.5": {
+          "overOdds": -430
+        }
+      },
+      "Kon Knueppel": {
+        "9.5": {
+          "overOdds": 1000
+        },
+        "7.5": {
+          "overOdds": 390
+        },
+        "5.5": {
+          "overOdds": 112
+        },
+        "3.5": {
+          "overOdds": -430
+        }
+      },
+      "LaMelo Ball": {
+        "9.5": {
+          "overOdds": 1300
+        },
+        "7.5": {
+          "overOdds": 560
+        },
+        "5.5": {
+          "overOdds": 164
+        },
+        "3.5": {
+          "overOdds": -265
+        }
+      },
+      "Tyler Herro": {
+        "9.5": {
+          "overOdds": 1500
+        },
+        "7.5": {
+          "overOdds": 600
+        },
+        "5.5": {
+          "overOdds": 168
+        },
+        "3.5": {
+          "overOdds": -265
+        }
+      },
+      "Pelle Larsson": {
+        "7.5": {
+          "overOdds": 1200
+        },
+        "5.5": {
+          "overOdds": 340
+        },
+        "3.5": {
+          "overOdds": -132
+        }
+      },
+      "Grant Williams": {
+        "7.5": {
+          "overOdds": 1500
+        },
+        "5.5": {
+          "overOdds": 520
+        },
+        "3.5": {
+          "overOdds": 130
+        }
+      },
+      "Norman Powell": {
+        "7.5": {
+          "overOdds": 1300
+        },
+        "5.5": {
+          "overOdds": 390
+        },
+        "3.5": {
+          "overOdds": -113
+        }
+      },
+      "Coby White": {
+        "3.5": {
+          "overOdds": 250
+        }
+      },
+      "Davion Mitchell": {
+        "3.5": {
+          "overOdds": 265
+        }
+      }
+    },
+    "astProps": {
+      "LaMelo Ball": {
+        "5.5": {
+          "overOdds": -290
+        },
+        "11.5": {
+          "overOdds": 900
+        },
+        "3.5": {
+          "overOdds": -2200
+        },
+        "7.5": {
+          "overOdds": 124
+        },
+        "9.5": {
+          "overOdds": 320
+        },
+        "13.5": {
+          "overOdds": 2000
+        }
+      },
+      "Davion Mitchell": {
+        "5.5": {
+          "overOdds": 122
+        },
+        "11.5": {
+          "overOdds": 3000
+        },
+        "3.5": {
+          "overOdds": -390
+        },
+        "7.5": {
+          "overOdds": 420
+        },
+        "9.5": {
+          "overOdds": 1060
+        }
+      },
+      "Jaime Jaquez Jr": {
+        "5.5": {
+          "overOdds": 164
+        },
+        "1.5": {
+          "overOdds": -3500
+        },
+        "3.5": {
+          "overOdds": -265
+        },
+        "7.5": {
+          "overOdds": 560
+        },
+        "9.5": {
+          "overOdds": 1300
+        }
+      },
+      "Tyler Herro": {
+        "5.5": {
+          "overOdds": 215
+        },
+        "1.5": {
+          "overOdds": -3000
+        },
+        "3.5": {
+          "overOdds": -215
+        },
+        "7.5": {
+          "overOdds": 830
+        },
+        "9.5": {
+          "overOdds": 2000
+        }
+      },
+      "Pelle Larsson": {
+        "5.5": {
+          "overOdds": 400
+        },
+        "1.5": {
+          "overOdds": -1000
+        },
+        "3.5": {
+          "overOdds": -115
+        },
+        "7.5": {
+          "overOdds": 1400
+        }
+      },
+      "Coby White": {
+        "5.5": {
+          "overOdds": 540
+        },
+        "1.5": {
+          "overOdds": -520
+        },
+        "3.5": {
+          "overOdds": 138
+        },
+        "7.5": {
+          "overOdds": 1700
+        }
+      },
+      "Brandon Miller": {
+        "5.5": {
+          "overOdds": 600
+        },
+        "1.5": {
+          "overOdds": -700
+        },
+        "3.5": {
+          "overOdds": 124
+        },
+        "7.5": {
+          "overOdds": 2000
+        }
+      },
+      "Kon Knueppel": {
+        "5.5": {
+          "overOdds": 750
+        },
+        "1.5": {
+          "overOdds": -620
+        },
+        "3.5": {
+          "overOdds": 144
+        }
+      },
+      "Miles Bridges": {
+        "5.5": {
+          "overOdds": 1060
+        },
+        "1.5": {
+          "overOdds": -400
+        },
+        "3.5": {
+          "overOdds": 210
+        }
+      },
+      "Norman Powell": {
+        "5.5": {
+          "overOdds": 1300
+        },
+        "1.5": {
+          "overOdds": -280
+        },
+        "3.5": {
+          "overOdds": 280
+        }
+      }
+    },
+    "praProps": {
+      "Tyler Herro": {
+        "30.5": {
+          "overOdds": -114
+        },
+        "49.5": {
+          "overOdds": 1700
+        },
+        "44.5": {
+          "overOdds": 900
+        },
+        "39.5": {
+          "overOdds": 420
+        }
+      },
+      "Jaime Jaquez Jr": {
+        "24.5": {
+          "overOdds": -114
+        },
+        "44.5": {
+          "overOdds": 3000
+        },
+        "39.5": {
+          "overOdds": 1200
+        }
+      },
+      "Brandon Miller": {
+        "29.5": {
+          "overOdds": -118
+        },
+        "49.5": {
+          "overOdds": 2000
+        },
+        "44.5": {
+          "overOdds": 1100
+        },
+        "39.5": {
+          "overOdds": 520
+        }
+      },
+      "LaMelo Ball": {
+        "32.5": {
+          "overOdds": -110
+        },
+        "49.5": {
+          "overOdds": 1300
+        },
+        "44.5": {
+          "overOdds": 630
+        },
+        "54.5": {
+          "overOdds": 3000
+        },
+        "39.5": {
+          "overOdds": 300
+        },
+        "59.5": {
+          "overOdds": 7000
+        }
+      },
+      "Coby White": {
+        "18.5": {
+          "overOdds": -118
+        },
+        "39.5": {
+          "overOdds": 3500
+        }
+      },
+      "Norman Powell": {
+        "27.5": {
+          "overOdds": -104
+        },
+        "49.5": {
+          "overOdds": 4000
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "39.5": {
+          "overOdds": 800
+        }
+      },
+      "Kon Knueppel": {
+        "27.5": {
+          "overOdds": -112
+        },
+        "49.5": {
+          "overOdds": 4000
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "39.5": {
+          "overOdds": 750
+        }
+      },
+      "Pelle Larsson": {
+        "18.5": {
+          "overOdds": -110
+        }
+      },
+      "Miles Bridges": {
+        "23.5": {
+          "overOdds": -128
+        },
+        "39.5": {
+          "overOdds": 1500
+        }
+      },
+      "Davion Mitchell": {
+        "15.5": {
+          "overOdds": -112
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "DET@WAS",
+    "eventId": "ef96df74a063b75de7971612d1c1b18a",
+    "homeTeam": "WAS",
+    "awayTeam": "DET",
+    "commenceTime": "2026-03-17T23:10:00Z",
+    "away_ml": -3000,
+    "home_ml": 1300,
+    "spread_away": -106,
+    "spread_home": -114,
+    "spread_point": 19.5,
+    "total": 232.5,
+    "total_over": -114,
+    "total_under": -106,
+    "playerProps": {
+      "Cade Cunningham": {
+        "34.5": {
+          "overOdds": 630
+        },
+        "19.5": {
+          "overOdds": -400
+        },
+        "39.5": {
+          "overOdds": 1400
+        },
+        "44.5": {
+          "overOdds": 4000
+        },
+        "24.5": {
+          "overOdds": -113
+        },
+        "14.5": {
+          "overOdds": -2500
+        },
+        "29.5": {
+          "overOdds": 255
+        }
+      },
+      "Jalen Duren": {
+        "34.5": {
+          "overOdds": 1200
+        },
+        "19.5": {
+          "overOdds": -160
+        },
+        "39.5": {
+          "overOdds": 3000
+        },
+        "24.5": {
+          "overOdds": 190
+        },
+        "9.5": {
+          "overOdds": -6000
+        },
+        "14.5": {
+          "overOdds": -620
+        },
+        "29.5": {
+          "overOdds": 500
+        }
+      },
+      "Tobias Harris": {
+        "19.5": {
+          "overOdds": 540
+        },
+        "24.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": -320
+        },
+        "14.5": {
+          "overOdds": 146
+        }
+      },
+      "Duncan Robinson": {
+        "19.5": {
+          "overOdds": 1060
+        },
+        "9.5": {
+          "overOdds": -120
+        },
+        "14.5": {
+          "overOdds": 300
+        }
+      },
+      "Ausar Thompson": {
+        "19.5": {
+          "overOdds": 1300
+        },
+        "9.5": {
+          "overOdds": -125
+        },
+        "14.5": {
+          "overOdds": 360
+        }
+      },
+      "Caris LeVert": {
+        "19.5": {
+          "overOdds": 1700
+        },
+        "9.5": {
+          "overOdds": 186
+        },
+        "14.5": {
+          "overOdds": 630
+        }
+      },
+      "Javonte Green": {
+        "9.5": {
+          "overOdds": 220
+        },
+        "14.5": {
+          "overOdds": 870
+        }
+      }
+    },
+    "rebProps": {
+      "Jalen Duren": {
+        "7.5": {
+          "overOdds": -850
+        },
+        "9.5": {
+          "overOdds": -295
+        },
+        "13.5": {
+          "overOdds": 220
+        },
+        "11.5": {
+          "overOdds": -111
+        },
+        "15.5": {
+          "overOdds": 480
+        }
+      },
+      "Ausar Thompson": {
+        "7.5": {
+          "overOdds": 390
+        },
+        "9.5": {
+          "overOdds": 900
+        },
+        "11.5": {
+          "overOdds": 2500
+        },
+        "5.5": {
+          "overOdds": 116
+        },
+        "3.5": {
+          "overOdds": -400
+        }
+      },
+      "Cade Cunningham": {
+        "7.5": {
+          "overOdds": 400
+        },
+        "9.5": {
+          "overOdds": 830
+        },
+        "11.5": {
+          "overOdds": 2500
+        },
+        "5.5": {
+          "overOdds": 112
+        },
+        "3.5": {
+          "overOdds": -440
+        }
+      },
+      "Tobias Harris": {
+        "7.5": {
+          "overOdds": 440
+        },
+        "9.5": {
+          "overOdds": 1100
+        },
+        "5.5": {
+          "overOdds": 124
+        },
+        "3.5": {
+          "overOdds": -370
+        }
+      },
+      "Javonte Green": {
+        "7.5": {
+          "overOdds": 1400
+        },
+        "5.5": {
+          "overOdds": 450
+        },
+        "3.5": {
+          "overOdds": 118
+        }
+      },
+      "Duncan Robinson": {
+        "3.5": {
+          "overOdds": 255
+        }
+      },
+      "Caris LeVert": {
+        "3.5": {
+          "overOdds": 450
+        }
+      }
+    },
+    "astProps": {
+      "Cade Cunningham": {
+        "11.5": {
+          "overOdds": 158
+        },
+        "9.5": {
+          "overOdds": -172
+        },
+        "5.5": {
+          "overOdds": -3500
+        },
+        "13.5": {
+          "overOdds": 400
+        },
+        "7.5": {
+          "overOdds": -520
+        }
+      },
+      "Ausar Thompson": {
+        "5.5": {
+          "overOdds": 750
+        },
+        "3.5": {
+          "overOdds": 162
+        },
+        "1.5": {
+          "overOdds": -460
+        }
+      },
+      "Caris LeVert": {
+        "5.5": {
+          "overOdds": 1300
+        },
+        "3.5": {
+          "overOdds": 360
+        },
+        "1.5": {
+          "overOdds": -172
+        }
+      },
+      "Duncan Robinson": {
+        "3.5": {
+          "overOdds": 400
+        },
+        "1.5": {
+          "overOdds": -184
+        }
+      },
+      "Tobias Harris": {
+        "3.5": {
+          "overOdds": 420
+        },
+        "1.5": {
+          "overOdds": -184
+        }
+      },
+      "Jalen Duren": {
+        "3.5": {
+          "overOdds": 680
+        },
+        "1.5": {
+          "overOdds": -128
+        }
+      }
+    },
+    "praProps": {
+      "Caris LeVert": {
+        "11.5": {
+          "overOdds": -114
+        }
+      },
+      "Cade Cunningham": {
+        "40.5": {
+          "overOdds": -114
+        },
+        "39.5": {
+          "overOdds": -138
+        },
+        "59.5": {
+          "overOdds": 1800
+        },
+        "54.5": {
+          "overOdds": 900
+        },
+        "49.5": {
+          "overOdds": 430
+        },
+        "44.5": {
+          "overOdds": 186
+        }
+      },
+      "Duncan Robinson": {
+        "14.5": {
+          "overOdds": -118
+        }
+      },
+      "Ausar Thompson": {
+        "18.5": {
+          "overOdds": -108
+        }
+      },
+      "Tobias Harris": {
+        "20.5": {
+          "overOdds": -102
+        }
+      },
+      "Jalen Duren": {
+        "34.5": {
+          "overOdds": -114
+        },
+        "39.5": {
+          "overOdds": 215
+        },
+        "59.5": {
+          "overOdds": 6500
+        },
+        "54.5": {
+          "overOdds": 2000
+        },
+        "49.5": {
+          "overOdds": 1060
+        },
+        "44.5": {
+          "overOdds": 470
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "OKC@ORL",
+    "eventId": "1071bc9088322a8c42c7cd80db4c8c6f",
+    "homeTeam": "ORL",
+    "awayTeam": "OKC",
+    "commenceTime": "2026-03-17T23:10:00Z",
+    "away_ml": -450,
+    "home_ml": 350,
+    "spread_away": -108,
+    "spread_home": -112,
+    "spread_point": 10,
+    "total": 223.5,
+    "total_over": -110,
+    "total_under": -110,
+    "playerProps": {
+      "Shai Gilgeous-Alexander": {
+        "34.5": {
+          "overOdds": 146
+        },
+        "39.5": {
+          "overOdds": 420
+        },
+        "49.5": {
+          "overOdds": 2500
+        },
+        "19.5": {
+          "overOdds": -6000
+        },
+        "24.5": {
+          "overOdds": -720
+        },
+        "44.5": {
+          "overOdds": 1100
+        },
+        "29.5": {
+          "overOdds": -200
+        }
+      },
+      "Paolo Banchero": {
+        "34.5": {
+          "overOdds": 1300
+        },
+        "9.5": {
+          "overOdds": -6000
+        },
+        "14.5": {
+          "overOdds": -620
+        },
+        "39.5": {
+          "overOdds": 3500
+        },
+        "19.5": {
+          "overOdds": -162
+        },
+        "24.5": {
+          "overOdds": 190
+        },
+        "29.5": {
+          "overOdds": 520
+        }
+      },
+      "Desmond Bane": {
+        "34.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": -3500
+        },
+        "14.5": {
+          "overOdds": -390
+        },
+        "39.5": {
+          "overOdds": 5000
+        },
+        "19.5": {
+          "overOdds": -113
+        },
+        "24.5": {
+          "overOdds": 255
+        },
+        "29.5": {
+          "overOdds": 680
+        }
+      },
+      "Chet Holmgren": {
+        "34.5": {
+          "overOdds": 4000
+        },
+        "9.5": {
+          "overOdds": -1100
+        },
+        "14.5": {
+          "overOdds": -192
+        },
+        "19.5": {
+          "overOdds": 180
+        },
+        "24.5": {
+          "overOdds": 520
+        },
+        "29.5": {
+          "overOdds": 1400
+        }
+      },
+      "Ajay Mitchell": {
+        "9.5": {
+          "overOdds": -460
+        },
+        "14.5": {
+          "overOdds": 100
+        },
+        "19.5": {
+          "overOdds": 340
+        },
+        "24.5": {
+          "overOdds": 1060
+        },
+        "29.5": {
+          "overOdds": 3000
+        }
+      },
+      "Jalen Suggs": {
+        "9.5": {
+          "overOdds": -430
+        },
+        "14.5": {
+          "overOdds": 102
+        },
+        "19.5": {
+          "overOdds": 320
+        },
+        "24.5": {
+          "overOdds": 900
+        },
+        "29.5": {
+          "overOdds": 2500
+        }
+      },
+      "Wendell Carter Jr": {
+        "9.5": {
+          "overOdds": -164
+        },
+        "14.5": {
+          "overOdds": 265
+        },
+        "19.5": {
+          "overOdds": 1000
+        }
+      },
+      "Tristan da Silva": {
+        "9.5": {
+          "overOdds": -162
+        },
+        "14.5": {
+          "overOdds": 250
+        },
+        "19.5": {
+          "overOdds": 870
+        }
+      },
+      "Jared McCain": {
+        "9.5": {
+          "overOdds": 164
+        },
+        "14.5": {
+          "overOdds": 520
+        },
+        "19.5": {
+          "overOdds": 1300
+        }
+      },
+      "Isaiah Hartenstein": {
+        "9.5": {
+          "overOdds": 176
+        },
+        "14.5": {
+          "overOdds": 800
+        }
+      },
+      "Luguentz Dort": {
+        "9.5": {
+          "overOdds": 196
+        },
+        "14.5": {
+          "overOdds": 800
+        }
+      },
+      "Cason Wallace": {
+        "9.5": {
+          "overOdds": 235
+        },
+        "14.5": {
+          "overOdds": 1060
+        }
+      },
+      "Jevon Carter": {
+        "9.5": {
+          "overOdds": 235
+        },
+        "14.5": {
+          "overOdds": 870
+        }
+      },
+      "Alex Caruso": {
+        "9.5": {
+          "overOdds": 255
+        },
+        "14.5": {
+          "overOdds": 1000
+        }
+      },
+      "Jett Howard": {
+        "9.5": {
+          "overOdds": 340
+        },
+        "14.5": {
+          "overOdds": 1500
+        }
+      }
+    },
+    "rebProps": {
+      "Wendell Carter Jr": {
+        "3.5": {
+          "overOdds": -4000
+        },
+        "13.5": {
+          "overOdds": 900
+        },
+        "5.5": {
+          "overOdds": -500
+        },
+        "7.5": {
+          "overOdds": -156
+        },
+        "11.5": {
+          "overOdds": 390
+        },
+        "9.5": {
+          "overOdds": 154
+        },
+        "15.5": {
+          "overOdds": 1800
+        }
+      },
+      "Isaiah Hartenstein": {
+        "3.5": {
+          "overOdds": -3000
+        },
+        "13.5": {
+          "overOdds": 900
+        },
+        "5.5": {
+          "overOdds": -460
+        },
+        "7.5": {
+          "overOdds": -142
+        },
+        "11.5": {
+          "overOdds": 390
+        },
+        "9.5": {
+          "overOdds": 158
+        },
+        "15.5": {
+          "overOdds": 1700
+        }
+      },
+      "Tristan da Silva": {
+        "3.5": {
+          "overOdds": -390
+        },
+        "5.5": {
+          "overOdds": 122
+        },
+        "7.5": {
+          "overOdds": 400
+        },
+        "9.5": {
+          "overOdds": 1060
+        }
+      },
+      "Shai Gilgeous-Alexander": {
+        "3.5": {
+          "overOdds": -215
+        },
+        "5.5": {
+          "overOdds": 230
+        },
+        "7.5": {
+          "overOdds": 830
+        },
+        "9.5": {
+          "overOdds": 2000
+        }
+      },
+      "Jalen Suggs": {
+        "3.5": {
+          "overOdds": -210
+        },
+        "5.5": {
+          "overOdds": 210
+        },
+        "7.5": {
+          "overOdds": 750
+        },
+        "9.5": {
+          "overOdds": 1700
+        }
+      },
+      "Desmond Bane": {
+        "3.5": {
+          "overOdds": -184
+        },
+        "5.5": {
+          "overOdds": 250
+        },
+        "7.5": {
+          "overOdds": 900
+        }
+      },
+      "Luguentz Dort": {
+        "3.5": {
+          "overOdds": 118
+        },
+        "5.5": {
+          "overOdds": 560
+        }
+      },
+      "Ajay Mitchell": {
+        "3.5": {
+          "overOdds": 112
+        },
+        "5.5": {
+          "overOdds": 500
+        },
+        "7.5": {
+          "overOdds": 1500
+        }
+      },
+      "Cason Wallace": {
+        "3.5": {
+          "overOdds": 154
+        },
+        "5.5": {
+          "overOdds": 700
+        }
+      },
+      "Alex Caruso": {
+        "3.5": {
+          "overOdds": 215
+        },
+        "5.5": {
+          "overOdds": 900
+        }
+      },
+      "Chet Holmgren": {
+        "13.5": {
+          "overOdds": 700
+        },
+        "5.5": {
+          "overOdds": -650
+        },
+        "7.5": {
+          "overOdds": -184
+        },
+        "11.5": {
+          "overOdds": 300
+        },
+        "9.5": {
+          "overOdds": 128
+        },
+        "15.5": {
+          "overOdds": 1400
+        }
+      },
+      "Paolo Banchero": {
+        "13.5": {
+          "overOdds": 830
+        },
+        "5.5": {
+          "overOdds": -800
+        },
+        "7.5": {
+          "overOdds": -210
+        },
+        "11.5": {
+          "overOdds": 310
+        },
+        "9.5": {
+          "overOdds": 120
+        },
+        "15.5": {
+          "overOdds": 1700
+        }
+      }
+    },
+    "astProps": {
+      "Shai Gilgeous-Alexander": {
+        "9.5": {
+          "overOdds": 340
+        },
+        "5.5": {
+          "overOdds": -295
+        },
+        "13.5": {
+          "overOdds": 3000
+        },
+        "11.5": {
+          "overOdds": 1000
+        },
+        "3.5": {
+          "overOdds": -2500
+        },
+        "7.5": {
+          "overOdds": 126
+        }
+      },
+      "Jalen Suggs": {
+        "9.5": {
+          "overOdds": 750
+        },
+        "5.5": {
+          "overOdds": -122
+        },
+        "11.5": {
+          "overOdds": 1700
+        },
+        "3.5": {
+          "overOdds": -530
+        },
+        "7.5": {
+          "overOdds": 265
+        }
+      },
+      "Paolo Banchero": {
+        "9.5": {
+          "overOdds": 1300
+        },
+        "5.5": {
+          "overOdds": 144
+        },
+        "3.5": {
+          "overOdds": -330
+        },
+        "7.5": {
+          "overOdds": 520
+        }
+      },
+      "Desmond Bane": {
+        "9.5": {
+          "overOdds": 2500
+        },
+        "5.5": {
+          "overOdds": 250
+        },
+        "1.5": {
+          "overOdds": -2000
+        },
+        "3.5": {
+          "overOdds": -184
+        },
+        "7.5": {
+          "overOdds": 900
+        }
+      },
+      "Ajay Mitchell": {
+        "5.5": {
+          "overOdds": 480
+        },
+        "1.5": {
+          "overOdds": -770
+        },
+        "3.5": {
+          "overOdds": 106
+        },
+        "7.5": {
+          "overOdds": 1700
+        }
+      },
+      "Cason Wallace": {
+        "5.5": {
+          "overOdds": 870
+        },
+        "1.5": {
+          "overOdds": -320
+        },
+        "3.5": {
+          "overOdds": 230
+        }
+      },
+      "Isaiah Hartenstein": {
+        "5.5": {
+          "overOdds": 870
+        },
+        "1.5": {
+          "overOdds": -410
+        },
+        "3.5": {
+          "overOdds": 182
+        }
+      },
+      "Chet Holmgren": {
+        "1.5": {
+          "overOdds": -142
+        },
+        "3.5": {
+          "overOdds": 560
+        }
+      }
+    },
+    "praProps": {
+      "Isaiah Hartenstein": {
+        "18.5": {
+          "overOdds": -128
+        }
+      },
+      "Desmond Bane": {
+        "28.5": {
+          "overOdds": -106
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "49.5": {
+          "overOdds": 4000
+        },
+        "39.5": {
+          "overOdds": 680
+        }
+      },
+      "Ajay Mitchell": {
+        "21.5": {
+          "overOdds": -102
+        },
+        "39.5": {
+          "overOdds": 3500
+        }
+      },
+      "Paolo Banchero": {
+        "35.5": {
+          "overOdds": -106
+        },
+        "44.5": {
+          "overOdds": 430
+        },
+        "49.5": {
+          "overOdds": 900
+        },
+        "59.5": {
+          "overOdds": 5500
+        },
+        "39.5": {
+          "overOdds": 190
+        },
+        "54.5": {
+          "overOdds": 1700
+        }
+      },
+      "Chet Holmgren": {
+        "27.5": {
+          "overOdds": -110
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "49.5": {
+          "overOdds": 3500
+        },
+        "39.5": {
+          "overOdds": 800
+        }
+      },
+      "Cason Wallace": {
+        "12.5": {
+          "overOdds": -112
+        }
+      },
+      "Jalen Suggs": {
+        "24.5": {
+          "overOdds": -112
+        },
+        "44.5": {
+          "overOdds": 3500
+        },
+        "39.5": {
+          "overOdds": 1300
+        }
+      },
+      "Shai Gilgeous-Alexander": {
+        "43.5": {
+          "overOdds": -118
+        },
+        "44.5": {
+          "overOdds": 104
+        },
+        "49.5": {
+          "overOdds": 250
+        },
+        "59.5": {
+          "overOdds": 1400
+        },
+        "39.5": {
+          "overOdds": -250
+        },
+        "54.5": {
+          "overOdds": 600
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "IND@NY",
+    "eventId": "9eba01d4cfa06caacc9d62a166b5a632",
+    "homeTeam": "NY",
+    "awayTeam": "IND",
+    "commenceTime": "2026-03-17T23:40:00Z",
+    "away_ml": 640,
+    "home_ml": -950,
+    "spread_away": -110,
+    "spread_home": -110,
+    "spread_point": -14.5,
+    "total": 221.5,
+    "total_over": -110,
+    "total_under": -110,
+    "playerProps": {
+      "Karl-Anthony Towns": {
+        "24.5": {
+          "overOdds": 114
+        },
+        "29.5": {
+          "overOdds": 285
+        },
+        "44.5": {
+          "overOdds": 3000
+        },
+        "34.5": {
+          "overOdds": 630
+        },
+        "14.5": {
+          "overOdds": -1000
+        },
+        "19.5": {
+          "overOdds": -250
+        },
+        "39.5": {
+          "overOdds": 1300
+        },
+        "9.5": {
+          "overOdds": -7000
+        }
+      },
+      "OG Anunoby": {
+        "24.5": {
+          "overOdds": 370
+        },
+        "29.5": {
+          "overOdds": 1000
+        },
+        "34.5": {
+          "overOdds": 2200
+        },
+        "14.5": {
+          "overOdds": -280
+        },
+        "19.5": {
+          "overOdds": 128
+        },
+        "9.5": {
+          "overOdds": -1800
+        }
+      },
+      "Mikal Bridges": {
+        "24.5": {
+          "overOdds": 870
+        },
+        "29.5": {
+          "overOdds": 2000
+        },
+        "14.5": {
+          "overOdds": -115
+        },
+        "19.5": {
+          "overOdds": 285
+        },
+        "9.5": {
+          "overOdds": -520
+        }
+      },
+      "Andrew Nembhard": {
+        "24.5": {
+          "overOdds": 870
+        },
+        "29.5": {
+          "overOdds": 1800
+        },
+        "14.5": {
+          "overOdds": -102
+        },
+        "19.5": {
+          "overOdds": 300
+        },
+        "9.5": {
+          "overOdds": -410
+        }
+      },
+      "Jarace Walker": {
+        "24.5": {
+          "overOdds": 900
+        },
+        "29.5": {
+          "overOdds": 2000
+        },
+        "14.5": {
+          "overOdds": -102
+        },
+        "19.5": {
+          "overOdds": 300
+        },
+        "9.5": {
+          "overOdds": -430
+        }
+      },
+      "Landry Shamet": {
+        "24.5": {
+          "overOdds": 1000
+        },
+        "29.5": {
+          "overOdds": 2000
+        },
+        "14.5": {
+          "overOdds": 140
+        },
+        "19.5": {
+          "overOdds": 390
+        },
+        "9.5": {
+          "overOdds": -265
+        }
+      },
+      "Aaron Nesmith": {
+        "24.5": {
+          "overOdds": 1000
+        },
+        "29.5": {
+          "overOdds": 2500
+        },
+        "14.5": {
+          "overOdds": 110
+        },
+        "19.5": {
+          "overOdds": 340
+        },
+        "9.5": {
+          "overOdds": -390
+        }
+      },
+      "Josh Hart": {
+        "24.5": {
+          "overOdds": 1100
+        },
+        "29.5": {
+          "overOdds": 3000
+        },
+        "14.5": {
+          "overOdds": 150
+        },
+        "19.5": {
+          "overOdds": 440
+        },
+        "9.5": {
+          "overOdds": -265
+        }
+      },
+      "Ivica Zubac": {
+        "24.5": {
+          "overOdds": 2500
+        },
+        "14.5": {
+          "overOdds": 350
+        },
+        "19.5": {
+          "overOdds": 1000
+        },
+        "9.5": {
+          "overOdds": -102
+        }
+      },
+      "Kobe Brown": {
+        "14.5": {
+          "overOdds": 750
+        },
+        "19.5": {
+          "overOdds": 2000
+        },
+        "9.5": {
+          "overOdds": 176
+        }
+      }
+    },
+    "rebProps": {
+      "Karl-Anthony Towns": {
+        "7.5": {
+          "overOdds": -950
+        },
+        "13.5": {
+          "overOdds": 196
+        },
+        "15.5": {
+          "overOdds": 440
+        },
+        "9.5": {
+          "overOdds": -340
+        },
+        "11.5": {
+          "overOdds": -128
+        }
+      },
+      "Ivica Zubac": {
+        "7.5": {
+          "overOdds": -106
+        },
+        "13.5": {
+          "overOdds": 800
+        },
+        "3.5": {
+          "overOdds": -1200
+        },
+        "15.5": {
+          "overOdds": 1400
+        },
+        "5.5": {
+          "overOdds": -295
+        },
+        "9.5": {
+          "overOdds": 200
+        },
+        "11.5": {
+          "overOdds": 420
+        }
+      },
+      "Josh Hart": {
+        "7.5": {
+          "overOdds": 100
+        },
+        "13.5": {
+          "overOdds": 1000
+        },
+        "3.5": {
+          "overOdds": -1600
+        },
+        "15.5": {
+          "overOdds": 1700
+        },
+        "5.5": {
+          "overOdds": -295
+        },
+        "9.5": {
+          "overOdds": 210
+        },
+        "11.5": {
+          "overOdds": 470
+        }
+      },
+      "Jarace Walker": {
+        "7.5": {
+          "overOdds": 250
+        },
+        "3.5": {
+          "overOdds": -650
+        },
+        "5.5": {
+          "overOdds": -136
+        },
+        "9.5": {
+          "overOdds": 630
+        },
+        "11.5": {
+          "overOdds": 1500
+        }
+      },
+      "OG Anunoby": {
+        "7.5": {
+          "overOdds": 460
+        },
+        "3.5": {
+          "overOdds": -360
+        },
+        "5.5": {
+          "overOdds": 130
+        },
+        "9.5": {
+          "overOdds": 1100
+        }
+      },
+      "Kobe Brown": {
+        "7.5": {
+          "overOdds": 750
+        },
+        "3.5": {
+          "overOdds": -184
+        },
+        "5.5": {
+          "overOdds": 220
+        },
+        "9.5": {
+          "overOdds": 1500
+        }
+      },
+      "Aaron Nesmith": {
+        "7.5": {
+          "overOdds": 1060
+        },
+        "3.5": {
+          "overOdds": -132
+        },
+        "5.5": {
+          "overOdds": 320
+        }
+      },
+      "Mikal Bridges": {
+        "7.5": {
+          "overOdds": 1500
+        },
+        "3.5": {
+          "overOdds": 102
+        },
+        "5.5": {
+          "overOdds": 470
+        }
+      },
+      "Andrew Nembhard": {
+        "3.5": {
+          "overOdds": 310
+        }
+      }
+    },
+    "astProps": {
+      "Josh Hart": {
+        "7.5": {
+          "overOdds": 172
+        },
+        "3.5": {
+          "overOdds": -1100
+        },
+        "13.5": {
+          "overOdds": 3000
+        },
+        "5.5": {
+          "overOdds": -205
+        },
+        "11.5": {
+          "overOdds": 1100
+        },
+        "9.5": {
+          "overOdds": 390
+        }
+      },
+      "Andrew Nembhard": {
+        "7.5": {
+          "overOdds": 215
+        },
+        "3.5": {
+          "overOdds": -620
+        },
+        "13.5": {
+          "overOdds": 3000
+        },
+        "5.5": {
+          "overOdds": -146
+        },
+        "11.5": {
+          "overOdds": 1200
+        },
+        "9.5": {
+          "overOdds": 520
+        }
+      },
+      "Mikal Bridges": {
+        "7.5": {
+          "overOdds": 1400
+        },
+        "3.5": {
+          "overOdds": -118
+        },
+        "5.5": {
+          "overOdds": 400
+        },
+        "1.5": {
+          "overOdds": -1100
+        }
+      },
+      "Karl-Anthony Towns": {
+        "3.5": {
+          "overOdds": 158
+        },
+        "5.5": {
+          "overOdds": 800
+        },
+        "1.5": {
+          "overOdds": -530
+        }
+      },
+      "Jarace Walker": {
+        "3.5": {
+          "overOdds": 172
+        },
+        "5.5": {
+          "overOdds": 750
+        },
+        "1.5": {
+          "overOdds": -410
+        }
+      },
+      "OG Anunoby": {
+        "3.5": {
+          "overOdds": 330
+        },
+        "5.5": {
+          "overOdds": 1500
+        },
+        "1.5": {
+          "overOdds": -260
+        }
+      }
+    },
+    "praProps": {
+      "OG Anunoby": {
+        "25.5": {
+          "overOdds": -114
+        },
+        "39.5": {
+          "overOdds": 1100
+        },
+        "44.5": {
+          "overOdds": 3000
+        }
+      },
+      "Andrew Nembhard": {
+        "22.5": {
+          "overOdds": -120
+        },
+        "39.5": {
+          "overOdds": 1500
+        },
+        "44.5": {
+          "overOdds": 4000
+        }
+      },
+      "Josh Hart": {
+        "26.5": {
+          "overOdds": -122
+        },
+        "39.5": {
+          "overOdds": 750
+        },
+        "44.5": {
+          "overOdds": 1400
+        },
+        "49.5": {
+          "overOdds": 3000
+        }
+      },
+      "Karl-Anthony Towns": {
+        "38.5": {
+          "overOdds": -110
+        },
+        "39.5": {
+          "overOdds": 108
+        },
+        "44.5": {
+          "overOdds": 235
+        },
+        "49.5": {
+          "overOdds": 470
+        },
+        "59.5": {
+          "overOdds": 1500
+        },
+        "54.5": {
+          "overOdds": 900
+        }
+      },
+      "Jarace Walker": {
+        "23.5": {
+          "overOdds": -106
+        },
+        "39.5": {
+          "overOdds": 1500
+        },
+        "44.5": {
+          "overOdds": 4000
+        }
+      },
+      "Mikal Bridges": {
+        "21.5": {
+          "overOdds": -128
+        },
+        "39.5": {
+          "overOdds": 2500
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "CLE@MIL",
+    "eventId": "8951b3300ad3588888cb2397ea770d5e",
+    "homeTeam": "MIL",
+    "awayTeam": "CLE",
+    "commenceTime": "2026-03-18T00:10:00Z",
+    "away_ml": -480,
+    "home_ml": 370,
+    "spread_away": -112,
+    "spread_home": -108,
+    "spread_point": 10.5,
+    "total": 228.5,
+    "total_over": -110,
+    "total_under": -110,
+    "playerProps": {
+      "Giannis Antetokounmpo": {
+        "19.5": {
+          "overOdds": -670
+        },
+        "44.5": {
+          "overOdds": 1060
+        },
+        "49.5": {
+          "overOdds": 1700
+        },
+        "39.5": {
+          "overOdds": 520
+        },
+        "34.5": {
+          "overOdds": 240
+        },
+        "14.5": {
+          "overOdds": -4000
+        },
+        "29.5": {
+          "overOdds": 108
+        },
+        "24.5": {
+          "overOdds": -230
+        }
+      },
+      "Donovan Mitchell": {
+        "19.5": {
+          "overOdds": -440
+        },
+        "44.5": {
+          "overOdds": 2500
+        },
+        "39.5": {
+          "overOdds": 1100
+        },
+        "34.5": {
+          "overOdds": 460
+        },
+        "14.5": {
+          "overOdds": -2500
+        },
+        "29.5": {
+          "overOdds": 190
+        },
+        "24.5": {
+          "overOdds": -142
+        }
+      },
+      "James Harden": {
+        "19.5": {
+          "overOdds": -120
+        },
+        "39.5": {
+          "overOdds": 5000
+        },
+        "34.5": {
+          "overOdds": 1500
+        },
+        "14.5": {
+          "overOdds": -430
+        },
+        "9.5": {
+          "overOdds": -3500
+        },
+        "29.5": {
+          "overOdds": 630
+        },
+        "24.5": {
+          "overOdds": 240
+        }
+      },
+      "Evan Mobley": {
+        "19.5": {
+          "overOdds": 118
+        },
+        "34.5": {
+          "overOdds": 2000
+        },
+        "14.5": {
+          "overOdds": -310
+        },
+        "9.5": {
+          "overOdds": -2200
+        },
+        "29.5": {
+          "overOdds": 900
+        },
+        "24.5": {
+          "overOdds": 340
+        }
+      },
+      "Kevin Porter Jr.": {
+        "19.5": {
+          "overOdds": 176
+        },
+        "34.5": {
+          "overOdds": 3500
+        },
+        "14.5": {
+          "overOdds": -188
+        },
+        "9.5": {
+          "overOdds": -950
+        },
+        "29.5": {
+          "overOdds": 1200
+        },
+        "24.5": {
+          "overOdds": 470
+        }
+      },
+      "Ryan Rollins": {
+        "19.5": {
+          "overOdds": 220
+        },
+        "14.5": {
+          "overOdds": -150
+        },
+        "9.5": {
+          "overOdds": -670
+        },
+        "29.5": {
+          "overOdds": 1400
+        },
+        "24.5": {
+          "overOdds": 600
+        }
+      },
+      "Kyle Kuzma": {
+        "19.5": {
+          "overOdds": 460
+        },
+        "14.5": {
+          "overOdds": 146
+        },
+        "9.5": {
+          "overOdds": -265
+        },
+        "24.5": {
+          "overOdds": 1200
+        }
+      },
+      "Myles Turner": {
+        "19.5": {
+          "overOdds": 800
+        },
+        "14.5": {
+          "overOdds": 255
+        },
+        "9.5": {
+          "overOdds": -154
+        },
+        "24.5": {
+          "overOdds": 1800
+        }
+      },
+      "Sam Merrill": {
+        "19.5": {
+          "overOdds": 1060
+        },
+        "14.5": {
+          "overOdds": 330
+        },
+        "9.5": {
+          "overOdds": -111
+        }
+      },
+      "Dennis Schroder": {
+        "19.5": {
+          "overOdds": 1300
+        },
+        "14.5": {
+          "overOdds": 440
+        },
+        "9.5": {
+          "overOdds": 116
+        }
+      },
+      "Dean Wade": {
+        "14.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": 420
+        }
+      }
+    },
+    "rebProps": {
+      "Giannis Antetokounmpo": {
+        "5.5": {
+          "overOdds": -900
+        },
+        "9.5": {
+          "overOdds": 100
+        },
+        "13.5": {
+          "overOdds": 560
+        },
+        "15.5": {
+          "overOdds": 1200
+        },
+        "7.5": {
+          "overOdds": -235
+        },
+        "11.5": {
+          "overOdds": 250
+        }
+      },
+      "Evan Mobley": {
+        "5.5": {
+          "overOdds": -850
+        },
+        "9.5": {
+          "overOdds": 106
+        },
+        "13.5": {
+          "overOdds": 630
+        },
+        "15.5": {
+          "overOdds": 1400
+        },
+        "7.5": {
+          "overOdds": -230
+        },
+        "11.5": {
+          "overOdds": 285
+        }
+      },
+      "James Harden": {
+        "5.5": {
+          "overOdds": 106
+        },
+        "9.5": {
+          "overOdds": 830
+        },
+        "3.5": {
+          "overOdds": -440
+        },
+        "7.5": {
+          "overOdds": 360
+        },
+        "11.5": {
+          "overOdds": 2500
+        }
+      },
+      "Kevin Porter Jr.": {
+        "5.5": {
+          "overOdds": 130
+        },
+        "9.5": {
+          "overOdds": 1060
+        },
+        "3.5": {
+          "overOdds": -340
+        },
+        "7.5": {
+          "overOdds": 430
+        }
+      },
+      "Myles Turner": {
+        "5.5": {
+          "overOdds": 144
+        },
+        "9.5": {
+          "overOdds": 1100
+        },
+        "3.5": {
+          "overOdds": -295
+        },
+        "7.5": {
+          "overOdds": 470
+        }
+      },
+      "Ryan Rollins": {
+        "5.5": {
+          "overOdds": 210
+        },
+        "9.5": {
+          "overOdds": 1700
+        },
+        "3.5": {
+          "overOdds": -215
+        },
+        "7.5": {
+          "overOdds": 800
+        }
+      },
+      "Kyle Kuzma": {
+        "5.5": {
+          "overOdds": 210
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "3.5": {
+          "overOdds": -205
+        },
+        "7.5": {
+          "overOdds": 680
+        }
+      },
+      "Donovan Mitchell": {
+        "5.5": {
+          "overOdds": 240
+        },
+        "9.5": {
+          "overOdds": 2000
+        },
+        "3.5": {
+          "overOdds": -192
+        },
+        "7.5": {
+          "overOdds": 870
+        }
+      },
+      "Dean Wade": {
+        "5.5": {
+          "overOdds": 290
+        },
+        "3.5": {
+          "overOdds": -146
+        },
+        "7.5": {
+          "overOdds": 1000
+        }
+      },
+      "Sam Merrill": {
+        "5.5": {
+          "overOdds": 1000
+        },
+        "3.5": {
+          "overOdds": 220
+        }
+      }
+    },
+    "astProps": {
+      "James Harden": {
+        "13.5": {
+          "overOdds": 1100
+        },
+        "5.5": {
+          "overOdds": -590
+        },
+        "11.5": {
+          "overOdds": 450
+        },
+        "9.5": {
+          "overOdds": 164
+        },
+        "7.5": {
+          "overOdds": -158
+        }
+      },
+      "Kevin Porter Jr.": {
+        "13.5": {
+          "overOdds": 3000
+        },
+        "5.5": {
+          "overOdds": -225
+        },
+        "11.5": {
+          "overOdds": 1060
+        },
+        "9.5": {
+          "overOdds": 360
+        },
+        "7.5": {
+          "overOdds": 148
+        },
+        "3.5": {
+          "overOdds": -1400
+        }
+      },
+      "Donovan Mitchell": {
+        "5.5": {
+          "overOdds": -158
+        },
+        "11.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": 600
+        },
+        "7.5": {
+          "overOdds": 230
+        },
+        "3.5": {
+          "overOdds": -800
+        }
+      },
+      "Ryan Rollins": {
+        "5.5": {
+          "overOdds": -130
+        },
+        "11.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": 680
+        },
+        "7.5": {
+          "overOdds": 260
+        },
+        "3.5": {
+          "overOdds": -620
+        }
+      },
+      "Giannis Antetokounmpo": {
+        "5.5": {
+          "overOdds": 154
+        },
+        "1.5": {
+          "overOdds": -4000
+        },
+        "9.5": {
+          "overOdds": 1400
+        },
+        "7.5": {
+          "overOdds": 520
+        },
+        "3.5": {
+          "overOdds": -290
+        }
+      },
+      "Dennis Schroder": {
+        "5.5": {
+          "overOdds": 285
+        },
+        "1.5": {
+          "overOdds": -1000
+        },
+        "9.5": {
+          "overOdds": 1700
+        },
+        "7.5": {
+          "overOdds": 900
+        },
+        "3.5": {
+          "overOdds": -132
+        }
+      },
+      "Evan Mobley": {
+        "5.5": {
+          "overOdds": 1300
+        },
+        "1.5": {
+          "overOdds": -280
+        },
+        "3.5": {
+          "overOdds": 280
+        }
+      },
+      "Sam Merrill": {
+        "1.5": {
+          "overOdds": -154
+        },
+        "3.5": {
+          "overOdds": 520
+        }
+      },
+      "Myles Turner": {
+        "1.5": {
+          "overOdds": 140
+        },
+        "3.5": {
+          "overOdds": 1060
+        }
+      }
+    },
+    "praProps": {
+      "Donovan Mitchell": {
+        "36.5": {
+          "overOdds": -112
+        },
+        "49.5": {
+          "overOdds": 800
+        },
+        "44.5": {
+          "overOdds": 350
+        },
+        "39.5": {
+          "overOdds": 154
+        },
+        "59.5": {
+          "overOdds": 3500
+        },
+        "54.5": {
+          "overOdds": 1500
+        }
+      },
+      "Ryan Rollins": {
+        "26.5": {
+          "overOdds": -108
+        },
+        "44.5": {
+          "overOdds": 1800
+        },
+        "39.5": {
+          "overOdds": 1000
+        }
+      },
+      "Myles Turner": {
+        "16.5": {
+          "overOdds": -130
+        }
+      },
+      "Kevin Porter Jr.": {
+        "28.5": {
+          "overOdds": -114
+        },
+        "49.5": {
+          "overOdds": 2500
+        },
+        "44.5": {
+          "overOdds": 1100
+        },
+        "39.5": {
+          "overOdds": 540
+        }
+      },
+      "Evan Mobley": {
+        "30.5": {
+          "overOdds": -106
+        },
+        "49.5": {
+          "overOdds": 1800
+        },
+        "44.5": {
+          "overOdds": 1000
+        },
+        "39.5": {
+          "overOdds": 450
+        }
+      },
+      "Giannis Antetokounmpo": {
+        "42.5": {
+          "overOdds": -120
+        },
+        "49.5": {
+          "overOdds": 220
+        },
+        "44.5": {
+          "overOdds": 114
+        },
+        "39.5": {
+          "overOdds": -178
+        },
+        "59.5": {
+          "overOdds": 800
+        },
+        "54.5": {
+          "overOdds": 420
+        }
+      },
+      "James Harden": {
+        "33.5": {
+          "overOdds": -118
+        },
+        "49.5": {
+          "overOdds": 1200
+        },
+        "44.5": {
+          "overOdds": 560
+        },
+        "39.5": {
+          "overOdds": 250
+        },
+        "59.5": {
+          "overOdds": 7000
+        },
+        "54.5": {
+          "overOdds": 2500
+        }
+      },
+      "Sam Merrill": {
+        "14.5": {
+          "overOdds": -110
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "PHX@MIN",
+    "eventId": "79806ec6c1db4dc28fa93612d8269dc0",
+    "homeTeam": "MIN",
+    "awayTeam": "PHX",
+    "commenceTime": "2026-03-18T00:10:00Z",
+    "home_ml": -156,
+    "away_ml": 132,
+    "spread_home": -110,
+    "spread_point": -3.5,
+    "spread_away": -110,
+    "total": 221.5,
+    "total_over": -114,
+    "total_under": -106,
+    "playerProps": {
+      "Devin Booker": {
+        "14.5": {
+          "overOdds": -3500
+        },
+        "19.5": {
+          "overOdds": -530
+        },
+        "34.5": {
+          "overOdds": 390
+        },
+        "39.5": {
+          "overOdds": 900
+        },
+        "29.5": {
+          "overOdds": 154
+        },
+        "24.5": {
+          "overOdds": -178
+        },
+        "44.5": {
+          "overOdds": 1800
+        }
+      },
+      "Julius Randle": {
+        "14.5": {
+          "overOdds": -1000
+        },
+        "19.5": {
+          "overOdds": -225
+        },
+        "34.5": {
+          "overOdds": 900
+        },
+        "39.5": {
+          "overOdds": 2000
+        },
+        "29.5": {
+          "overOdds": 360
+        },
+        "24.5": {
+          "overOdds": 136
+        }
+      },
+      "Jalen Green": {
+        "14.5": {
+          "overOdds": -700
+        },
+        "19.5": {
+          "overOdds": -194
+        },
+        "9.5": {
+          "overOdds": -5000
+        },
+        "34.5": {
+          "overOdds": 870
+        },
+        "39.5": {
+          "overOdds": 1700
+        },
+        "29.5": {
+          "overOdds": 360
+        },
+        "24.5": {
+          "overOdds": 144
+        },
+        "44.5": {
+          "overOdds": 5000
+        }
+      },
+      "Ayo Dosunmu": {
+        "14.5": {
+          "overOdds": -154
+        },
+        "19.5": {
+          "overOdds": 220
+        },
+        "9.5": {
+          "overOdds": -720
+        },
+        "34.5": {
+          "overOdds": 4000
+        },
+        "29.5": {
+          "overOdds": 1500
+        },
+        "24.5": {
+          "overOdds": 630
+        }
+      },
+      "Jaden McDaniels": {
+        "14.5": {
+          "overOdds": -130
+        },
+        "19.5": {
+          "overOdds": 280
+        },
+        "9.5": {
+          "overOdds": -670
+        },
+        "29.5": {
+          "overOdds": 2000
+        },
+        "24.5": {
+          "overOdds": 830
+        }
+      },
+      "Naz Reid": {
+        "14.5": {
+          "overOdds": -128
+        },
+        "19.5": {
+          "overOdds": 230
+        },
+        "9.5": {
+          "overOdds": -460
+        },
+        "34.5": {
+          "overOdds": 3000
+        },
+        "29.5": {
+          "overOdds": 1300
+        },
+        "24.5": {
+          "overOdds": 540
+        }
+      },
+      "Grayson Allen": {
+        "14.5": {
+          "overOdds": 110
+        },
+        "19.5": {
+          "overOdds": 340
+        },
+        "9.5": {
+          "overOdds": -350
+        },
+        "29.5": {
+          "overOdds": 2000
+        },
+        "24.5": {
+          "overOdds": 1000
+        }
+      },
+      "Donte DiVincenzo": {
+        "14.5": {
+          "overOdds": 134
+        },
+        "19.5": {
+          "overOdds": 420
+        },
+        "9.5": {
+          "overOdds": -310
+        },
+        "24.5": {
+          "overOdds": 1200
+        }
+      },
+      "Rudy Gobert": {
+        "14.5": {
+          "overOdds": 182
+        },
+        "19.5": {
+          "overOdds": 630
+        },
+        "9.5": {
+          "overOdds": -250
+        },
+        "24.5": {
+          "overOdds": 1800
+        }
+      },
+      "Collin Gillespie": {
+        "14.5": {
+          "overOdds": 215
+        },
+        "19.5": {
+          "overOdds": 680
+        },
+        "9.5": {
+          "overOdds": -184
+        },
+        "24.5": {
+          "overOdds": 1700
+        }
+      },
+      "Royce O'Neale": {
+        "14.5": {
+          "overOdds": 630
+        },
+        "19.5": {
+          "overOdds": 1700
+        },
+        "9.5": {
+          "overOdds": 186
+        }
+      },
+      "Jordan Goodwin": {
+        "14.5": {
+          "overOdds": 1060
+        },
+        "9.5": {
+          "overOdds": 285
+        }
+      },
+      "Oso Ighodaro": {
+        "14.5": {
+          "overOdds": 1200
+        },
+        "9.5": {
+          "overOdds": 280
+        }
+      }
+    },
+    "rebProps": {
+      "Rudy Gobert": {
+        "13.5": {
+          "overOdds": 215
+        },
+        "15.5": {
+          "overOdds": 480
+        },
+        "11.5": {
+          "overOdds": -113
+        },
+        "9.5": {
+          "overOdds": -310
+        },
+        "7.5": {
+          "overOdds": -850
+        }
+      },
+      "Julius Randle": {
+        "13.5": {
+          "overOdds": 1700
+        },
+        "3.5": {
+          "overOdds": -2000
+        },
+        "11.5": {
+          "overOdds": 830
+        },
+        "9.5": {
+          "overOdds": 290
+        },
+        "5.5": {
+          "overOdds": -290
+        },
+        "7.5": {
+          "overOdds": 124
+        }
+      },
+      "Naz Reid": {
+        "13.5": {
+          "overOdds": 1700
+        },
+        "3.5": {
+          "overOdds": -590
+        },
+        "15.5": {
+          "overOdds": 3500
+        },
+        "11.5": {
+          "overOdds": 900
+        },
+        "9.5": {
+          "overOdds": 400
+        },
+        "5.5": {
+          "overOdds": -148
+        },
+        "7.5": {
+          "overOdds": 190
+        }
+      },
+      "Oso Ighodaro": {
+        "3.5": {
+          "overOdds": -530
+        },
+        "11.5": {
+          "overOdds": 1500
+        },
+        "9.5": {
+          "overOdds": 630
+        },
+        "5.5": {
+          "overOdds": -122
+        },
+        "7.5": {
+          "overOdds": 265
+        }
+      },
+      "Donte DiVincenzo": {
+        "3.5": {
+          "overOdds": -260
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "5.5": {
+          "overOdds": 182
+        },
+        "7.5": {
+          "overOdds": 630
+        }
+      },
+      "Royce O'Neale": {
+        "3.5": {
+          "overOdds": -260
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "5.5": {
+          "overOdds": 172
+        },
+        "7.5": {
+          "overOdds": 600
+        }
+      },
+      "Jalen Green": {
+        "3.5": {
+          "overOdds": -188
+        },
+        "9.5": {
+          "overOdds": 2000
+        },
+        "5.5": {
+          "overOdds": 240
+        },
+        "7.5": {
+          "overOdds": 870
+        }
+      },
+      "Devin Booker": {
+        "3.5": {
+          "overOdds": -164
+        },
+        "5.5": {
+          "overOdds": 280
+        },
+        "7.5": {
+          "overOdds": 1000
+        }
+      },
+      "Jaden McDaniels": {
+        "3.5": {
+          "overOdds": -160
+        },
+        "5.5": {
+          "overOdds": 290
+        },
+        "7.5": {
+          "overOdds": 1060
+        }
+      },
+      "Collin Gillespie": {
+        "3.5": {
+          "overOdds": -140
+        },
+        "5.5": {
+          "overOdds": 310
+        },
+        "7.5": {
+          "overOdds": 1100
+        }
+      },
+      "Ayo Dosunmu": {
+        "3.5": {
+          "overOdds": 102
+        },
+        "5.5": {
+          "overOdds": 460
+        },
+        "7.5": {
+          "overOdds": 1500
+        }
+      },
+      "Jordan Goodwin": {
+        "3.5": {
+          "overOdds": 124
+        },
+        "5.5": {
+          "overOdds": 430
+        },
+        "7.5": {
+          "overOdds": 1200
+        }
+      },
+      "Grayson Allen": {
+        "3.5": {
+          "overOdds": 186
+        },
+        "5.5": {
+          "overOdds": 870
+        }
+      }
+    },
+    "astProps": {
+      "Ayo Dosunmu": {
+        "1.5": {
+          "overOdds": -2500
+        },
+        "7.5": {
+          "overOdds": 800
+        },
+        "5.5": {
+          "overOdds": 220
+        },
+        "9.5": {
+          "overOdds": 1800
+        },
+        "3.5": {
+          "overOdds": -210
+        }
+      },
+      "Donte DiVincenzo": {
+        "1.5": {
+          "overOdds": -2500
+        },
+        "7.5": {
+          "overOdds": 830
+        },
+        "5.5": {
+          "overOdds": 230
+        },
+        "9.5": {
+          "overOdds": 1800
+        },
+        "3.5": {
+          "overOdds": -200
+        }
+      },
+      "Collin Gillespie": {
+        "1.5": {
+          "overOdds": -2000
+        },
+        "7.5": {
+          "overOdds": 870
+        },
+        "5.5": {
+          "overOdds": 235
+        },
+        "9.5": {
+          "overOdds": 2000
+        },
+        "3.5": {
+          "overOdds": -186
+        }
+      },
+      "Grayson Allen": {
+        "1.5": {
+          "overOdds": -800
+        },
+        "7.5": {
+          "overOdds": 1400
+        },
+        "5.5": {
+          "overOdds": 420
+        },
+        "3.5": {
+          "overOdds": -102
+        }
+      },
+      "Jalen Green": {
+        "1.5": {
+          "overOdds": -500
+        },
+        "5.5": {
+          "overOdds": 800
+        },
+        "3.5": {
+          "overOdds": 164
+        }
+      },
+      "Jaden McDaniels": {
+        "1.5": {
+          "overOdds": -340
+        },
+        "5.5": {
+          "overOdds": 1100
+        },
+        "3.5": {
+          "overOdds": 235
+        }
+      },
+      "Oso Ighodaro": {
+        "1.5": {
+          "overOdds": -330
+        },
+        "5.5": {
+          "overOdds": 1100
+        },
+        "3.5": {
+          "overOdds": 240
+        }
+      },
+      "Royce O'Neale": {
+        "1.5": {
+          "overOdds": -295
+        },
+        "5.5": {
+          "overOdds": 1100
+        },
+        "3.5": {
+          "overOdds": 255
+        }
+      },
+      "Naz Reid": {
+        "1.5": {
+          "overOdds": -265
+        },
+        "5.5": {
+          "overOdds": 1300
+        },
+        "3.5": {
+          "overOdds": 300
+        }
+      },
+      "Devin Booker": {
+        "7.5": {
+          "overOdds": 480
+        },
+        "5.5": {
+          "overOdds": 134
+        },
+        "9.5": {
+          "overOdds": 1400
+        },
+        "3.5": {
+          "overOdds": -370
+        }
+      },
+      "Julius Randle": {
+        "7.5": {
+          "overOdds": 560
+        },
+        "5.5": {
+          "overOdds": 154
+        },
+        "9.5": {
+          "overOdds": 1400
+        },
+        "3.5": {
+          "overOdds": -320
+        }
+      }
+    },
+    "praProps": {
+      "Grayson Allen": {
+        "20.5": {
+          "overOdds": -108
+        },
+        "39.5": {
+          "overOdds": 3500
+        }
+      },
+      "Naz Reid": {
+        "23.5": {
+          "overOdds": -125
+        },
+        "39.5": {
+          "overOdds": 1060
+        },
+        "44.5": {
+          "overOdds": 1800
+        }
+      },
+      "Devin Booker": {
+        "36.5": {
+          "overOdds": -106
+        },
+        "39.5": {
+          "overOdds": 162
+        },
+        "44.5": {
+          "overOdds": 360
+        },
+        "49.5": {
+          "overOdds": 830
+        },
+        "59.5": {
+          "overOdds": 4000
+        },
+        "54.5": {
+          "overOdds": 1500
+        }
+      },
+      "Jalen Green": {
+        "29.5": {
+          "overOdds": -112
+        },
+        "39.5": {
+          "overOdds": 480
+        },
+        "44.5": {
+          "overOdds": 1060
+        },
+        "49.5": {
+          "overOdds": 1800
+        }
+      },
+      "Oso Ighodaro": {
+        "15.5": {
+          "overOdds": -102
+        }
+      },
+      "Julius Randle": {
+        "34.5": {
+          "overOdds": -118
+        },
+        "39.5": {
+          "overOdds": 200
+        },
+        "44.5": {
+          "overOdds": 450
+        },
+        "49.5": {
+          "overOdds": 1000
+        },
+        "59.5": {
+          "overOdds": 5500
+        },
+        "54.5": {
+          "overOdds": 1800
+        }
+      },
+      "Donte DiVincenzo": {
+        "22.5": {
+          "overOdds": -106
+        },
+        "39.5": {
+          "overOdds": 2500
+        }
+      },
+      "Jaden McDaniels": {
+        "21.5": {
+          "overOdds": -125
+        },
+        "39.5": {
+          "overOdds": 3000
+        }
+      },
+      "Collin Gillespie": {
+        "19.5": {
+          "overOdds": -114
+        },
+        "39.5": {
+          "overOdds": 4000
+        }
+      },
+      "Ayo Dosunmu": {
+        "23.5": {
+          "overOdds": -122
+        },
+        "39.5": {
+          "overOdds": 1500
+        },
+        "44.5": {
+          "overOdds": 4000
+        }
+      },
+      "Royce O'Neale": {
+        "14.5": {
+          "overOdds": -130
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "PHI@DEN",
+    "eventId": "259082f7f5b98968cfaa3245ddc3da0b",
+    "homeTeam": "DEN",
+    "awayTeam": "PHI",
+    "commenceTime": "2026-03-18T01:10:00Z",
+    "home_ml": -1350,
+    "away_ml": 810,
+    "spread_home": -110,
+    "spread_point": -15.5,
+    "spread_away": -110,
+    "total": 235.5,
+    "total_over": -110,
+    "total_under": -110,
+    "playerProps": {
+      "Nikola Jokic": {
+        "39.5": {
+          "overOdds": 900
+        },
+        "29.5": {
+          "overOdds": 132
+        },
+        "24.5": {
+          "overOdds": -240
+        },
+        "14.5": {
+          "overOdds": -7000
+        },
+        "19.5": {
+          "overOdds": -950
+        },
+        "44.5": {
+          "overOdds": 2000
+        },
+        "34.5": {
+          "overOdds": 340
+        }
+      },
+      "Jamal Murray": {
+        "39.5": {
+          "overOdds": 1700
+        },
+        "29.5": {
+          "overOdds": 280
+        },
+        "24.5": {
+          "overOdds": -102
+        },
+        "14.5": {
+          "overOdds": -1800
+        },
+        "19.5": {
+          "overOdds": -330
+        },
+        "34.5": {
+          "overOdds": 750
+        }
+      },
+      "Quentin Grimes": {
+        "39.5": {
+          "overOdds": 3500
+        },
+        "29.5": {
+          "overOdds": 600
+        },
+        "9.5": {
+          "overOdds": -4000
+        },
+        "24.5": {
+          "overOdds": 220
+        },
+        "14.5": {
+          "overOdds": -460
+        },
+        "19.5": {
+          "overOdds": -130
+        },
+        "34.5": {
+          "overOdds": 1400
+        }
+      },
+      "VJ Edgecombe": {
+        "29.5": {
+          "overOdds": 870
+        },
+        "9.5": {
+          "overOdds": -2200
+        },
+        "24.5": {
+          "overOdds": 320
+        },
+        "14.5": {
+          "overOdds": -310
+        },
+        "19.5": {
+          "overOdds": 112
+        },
+        "34.5": {
+          "overOdds": 2000
+        }
+      },
+      "Aaron Gordon": {
+        "29.5": {
+          "overOdds": 1400
+        },
+        "9.5": {
+          "overOdds": -900
+        },
+        "24.5": {
+          "overOdds": 600
+        },
+        "14.5": {
+          "overOdds": -174
+        },
+        "19.5": {
+          "overOdds": 200
+        }
+      },
+      "Justin Edwards": {
+        "9.5": {
+          "overOdds": -250
+        },
+        "24.5": {
+          "overOdds": 1500
+        },
+        "14.5": {
+          "overOdds": 168
+        },
+        "19.5": {
+          "overOdds": 560
+        }
+      },
+      "Tim Hardaway Jr": {
+        "9.5": {
+          "overOdds": -230
+        },
+        "24.5": {
+          "overOdds": 1300
+        },
+        "14.5": {
+          "overOdds": 164
+        },
+        "19.5": {
+          "overOdds": 480
+        }
+      },
+      "Christian Braun": {
+        "9.5": {
+          "overOdds": -184
+        },
+        "14.5": {
+          "overOdds": 250
+        },
+        "19.5": {
+          "overOdds": 900
+        }
+      },
+      "Cameron Johnson": {
+        "9.5": {
+          "overOdds": -148
+        },
+        "14.5": {
+          "overOdds": 285
+        },
+        "19.5": {
+          "overOdds": 1000
+        }
+      },
+      "Dominick Barlow": {
+        "9.5": {
+          "overOdds": -146
+        },
+        "14.5": {
+          "overOdds": 310
+        },
+        "19.5": {
+          "overOdds": 1100
+        }
+      },
+      "Cameron Payne": {
+        "9.5": {
+          "overOdds": -128
+        },
+        "24.5": {
+          "overOdds": 2500
+        },
+        "14.5": {
+          "overOdds": 300
+        },
+        "19.5": {
+          "overOdds": 900
+        }
+      },
+      "Trendon Watford": {
+        "9.5": {
+          "overOdds": 110
+        },
+        "14.5": {
+          "overOdds": 390
+        },
+        "19.5": {
+          "overOdds": 1100
+        }
+      },
+      "Adem Bona": {
+        "9.5": {
+          "overOdds": 250
+        },
+        "14.5": {
+          "overOdds": 1060
+        }
+      },
+      "Bruce Brown": {
+        "9.5": {
+          "overOdds": 280
+        },
+        "14.5": {
+          "overOdds": 1060
+        }
+      }
+    },
+    "rebProps": {
+      "Nikola Jokic": {
+        "13.5": {
+          "overOdds": 100
+        },
+        "15.5": {
+          "overOdds": 240
+        },
+        "11.5": {
+          "overOdds": -280
+        },
+        "9.5": {
+          "overOdds": -1000
+        },
+        "7.5": {
+          "overOdds": -3500
+        }
+      },
+      "Adem Bona": {
+        "13.5": {
+          "overOdds": 3000
+        },
+        "5.5": {
+          "overOdds": -136
+        },
+        "11.5": {
+          "overOdds": 1200
+        },
+        "3.5": {
+          "overOdds": -560
+        },
+        "9.5": {
+          "overOdds": 540
+        },
+        "7.5": {
+          "overOdds": 235
+        }
+      },
+      "Aaron Gordon": {
+        "5.5": {
+          "overOdds": 112
+        },
+        "11.5": {
+          "overOdds": 2500
+        },
+        "3.5": {
+          "overOdds": -410
+        },
+        "9.5": {
+          "overOdds": 900
+        },
+        "7.5": {
+          "overOdds": 390
+        }
+      },
+      "VJ Edgecombe": {
+        "5.5": {
+          "overOdds": 112
+        },
+        "3.5": {
+          "overOdds": -430
+        },
+        "9.5": {
+          "overOdds": 900
+        },
+        "7.5": {
+          "overOdds": 360
+        }
+      },
+      "Christian Braun": {
+        "5.5": {
+          "overOdds": 172
+        },
+        "3.5": {
+          "overOdds": -290
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "7.5": {
+          "overOdds": 600
+        }
+      },
+      "Dominick Barlow": {
+        "5.5": {
+          "overOdds": 200
+        },
+        "3.5": {
+          "overOdds": -215
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "7.5": {
+          "overOdds": 680
+        }
+      },
+      "Trendon Watford": {
+        "5.5": {
+          "overOdds": 280
+        },
+        "3.5": {
+          "overOdds": -128
+        },
+        "9.5": {
+          "overOdds": 1500
+        },
+        "7.5": {
+          "overOdds": 800
+        }
+      },
+      "Quentin Grimes": {
+        "5.5": {
+          "overOdds": 300
+        },
+        "3.5": {
+          "overOdds": -146
+        },
+        "7.5": {
+          "overOdds": 1060
+        }
+      },
+      "Jamal Murray": {
+        "5.5": {
+          "overOdds": 330
+        },
+        "3.5": {
+          "overOdds": -146
+        },
+        "7.5": {
+          "overOdds": 1200
+        }
+      },
+      "Cameron Johnson": {
+        "5.5": {
+          "overOdds": 520
+        },
+        "3.5": {
+          "overOdds": 118
+        }
+      },
+      "Justin Edwards": {
+        "5.5": {
+          "overOdds": 560
+        },
+        "3.5": {
+          "overOdds": 118
+        }
+      },
+      "Bruce Brown": {
+        "5.5": {
+          "overOdds": 600
+        },
+        "3.5": {
+          "overOdds": 154
+        }
+      },
+      "Cameron Payne": {
+        "3.5": {
+          "overOdds": 400
+        }
+      },
+      "Tim Hardaway Jr": {
+        "3.5": {
+          "overOdds": 400
+        }
+      }
+    },
+    "astProps": {
+      "Nikola Jokic": {
+        "7.5": {
+          "overOdds": -520
+        },
+        "11.5": {
+          "overOdds": 146
+        },
+        "9.5": {
+          "overOdds": -200
+        },
+        "13.5": {
+          "overOdds": 400
+        },
+        "5.5": {
+          "overOdds": -3500
+        }
+      },
+      "Jamal Murray": {
+        "7.5": {
+          "overOdds": 146
+        },
+        "11.5": {
+          "overOdds": 1100
+        },
+        "9.5": {
+          "overOdds": 390
+        },
+        "3.5": {
+          "overOdds": -1800
+        },
+        "13.5": {
+          "overOdds": 3500
+        },
+        "5.5": {
+          "overOdds": -260
+        }
+      },
+      "Quentin Grimes": {
+        "7.5": {
+          "overOdds": 1000
+        },
+        "1.5": {
+          "overOdds": -1800
+        },
+        "9.5": {
+          "overOdds": 2200
+        },
+        "3.5": {
+          "overOdds": -166
+        },
+        "5.5": {
+          "overOdds": 280
+        }
+      },
+      "VJ Edgecombe": {
+        "7.5": {
+          "overOdds": 1200
+        },
+        "1.5": {
+          "overOdds": -1200
+        },
+        "3.5": {
+          "overOdds": -136
+        },
+        "5.5": {
+          "overOdds": 340
+        }
+      },
+      "Cameron Payne": {
+        "7.5": {
+          "overOdds": 1700
+        },
+        "1.5": {
+          "overOdds": -520
+        },
+        "3.5": {
+          "overOdds": 136
+        },
+        "5.5": {
+          "overOdds": 560
+        }
+      },
+      "Trendon Watford": {
+        "7.5": {
+          "overOdds": 1800
+        },
+        "1.5": {
+          "overOdds": -480
+        },
+        "3.5": {
+          "overOdds": 142
+        },
+        "5.5": {
+          "overOdds": 560
+        }
+      },
+      "Christian Braun": {
+        "1.5": {
+          "overOdds": -360
+        },
+        "3.5": {
+          "overOdds": 220
+        },
+        "5.5": {
+          "overOdds": 1100
+        }
+      },
+      "Aaron Gordon": {
+        "1.5": {
+          "overOdds": -192
+        },
+        "3.5": {
+          "overOdds": 420
+        }
+      },
+      "Cameron Johnson": {
+        "1.5": {
+          "overOdds": -192
+        },
+        "3.5": {
+          "overOdds": 420
+        }
+      }
+    },
+    "praProps": {
+      "Cameron Payne": {
+        "15.5": {
+          "overOdds": -112
+        }
+      },
+      "Trendon Watford": {
+        "15.5": {
+          "overOdds": -128
+        }
+      },
+      "Aaron Gordon": {
+        "23.5": {
+          "overOdds": -120
+        },
+        "39.5": {
+          "overOdds": 1500
+        }
+      },
+      "Jamal Murray": {
+        "34.5": {
+          "overOdds": -128
+        },
+        "44.5": {
+          "overOdds": 520
+        },
+        "54.5": {
+          "overOdds": 3000
+        },
+        "39.5": {
+          "overOdds": 215
+        },
+        "49.5": {
+          "overOdds": 1200
+        }
+      },
+      "Nikola Jokic": {
+        "51.5": {
+          "overOdds": -120
+        },
+        "44.5": {
+          "overOdds": -430
+        },
+        "59.5": {
+          "overOdds": 310
+        },
+        "54.5": {
+          "overOdds": 140
+        },
+        "39.5": {
+          "overOdds": -1400
+        },
+        "49.5": {
+          "overOdds": -170
+        }
+      },
+      "Cameron Johnson": {
+        "15.5": {
+          "overOdds": -130
+        }
+      },
+      "Christian Braun": {
+        "18.5": {
+          "overOdds": -118
+        }
+      },
+      "VJ Edgecombe": {
+        "27.5": {
+          "overOdds": -125
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "39.5": {
+          "overOdds": 680
+        },
+        "49.5": {
+          "overOdds": 4000
+        }
+      },
+      "Quentin Grimes": {
+        "28.5": {
+          "overOdds": -128
+        },
+        "44.5": {
+          "overOdds": 1300
+        },
+        "39.5": {
+          "overOdds": 560
+        },
+        "49.5": {
+          "overOdds": 2500
+        }
+      }
+    }
+  },
+  {
+    "date": "20260317",
+    "gameKey": "SA@SAC",
+    "eventId": "352d39711b11d736c88876aa668df022",
+    "homeTeam": "SAC",
+    "awayTeam": "SA",
+    "commenceTime": "2026-03-18T03:10:00Z",
+    "home_ml": 660,
+    "away_ml": -1000,
+    "spread_home": -110,
+    "spread_point": 13.5,
+    "spread_away": -110,
+    "total": 235.5,
+    "total_over": -114,
+    "total_under": -106,
+    "playerProps": {
+      "DeMar DeRozan": {
+        "9.5": {
+          "overOdds": -3500
+        },
+        "24.5": {
+          "overOdds": 240
+        },
+        "19.5": {
+          "overOdds": -118
+        },
+        "34.5": {
+          "overOdds": 1400
+        },
+        "39.5": {
+          "overOdds": 3500
+        },
+        "14.5": {
+          "overOdds": -410
+        },
+        "29.5": {
+          "overOdds": 600
+        }
+      },
+      "De'Aaron Fox": {
+        "9.5": {
+          "overOdds": -3000
+        },
+        "24.5": {
+          "overOdds": 310
+        },
+        "19.5": {
+          "overOdds": 102
+        },
+        "34.5": {
+          "overOdds": 2000
+        },
+        "14.5": {
+          "overOdds": -350
+        },
+        "29.5": {
+          "overOdds": 870
+        }
+      },
+      "Stephon Castle": {
+        "9.5": {
+          "overOdds": -1400
+        },
+        "24.5": {
+          "overOdds": 480
+        },
+        "19.5": {
+          "overOdds": 162
+        },
+        "34.5": {
+          "overOdds": 4000
+        },
+        "14.5": {
+          "overOdds": -235
+        },
+        "29.5": {
+          "overOdds": 1400
+        }
+      },
+      "Russell Westbrook": {
+        "9.5": {
+          "overOdds": -530
+        },
+        "24.5": {
+          "overOdds": 750
+        },
+        "19.5": {
+          "overOdds": 265
+        },
+        "14.5": {
+          "overOdds": -125
+        },
+        "29.5": {
+          "overOdds": 1700
+        }
+      },
+      "Devin Vassell": {
+        "9.5": {
+          "overOdds": -500
+        },
+        "24.5": {
+          "overOdds": 900
+        },
+        "19.5": {
+          "overOdds": 320
+        },
+        "14.5": {
+          "overOdds": -111
+        },
+        "29.5": {
+          "overOdds": 2500
+        }
+      },
+      "Maxime Raynaud": {
+        "9.5": {
+          "overOdds": -430
+        },
+        "24.5": {
+          "overOdds": 1100
+        },
+        "19.5": {
+          "overOdds": 390
+        },
+        "14.5": {
+          "overOdds": 114
+        }
+      },
+      "Precious Achiuwa": {
+        "9.5": {
+          "overOdds": -290
+        },
+        "24.5": {
+          "overOdds": 1500
+        },
+        "19.5": {
+          "overOdds": 560
+        },
+        "14.5": {
+          "overOdds": 158
+        }
+      },
+      "Keldon Johnson": {
+        "9.5": {
+          "overOdds": -280
+        },
+        "24.5": {
+          "overOdds": 1400
+        },
+        "19.5": {
+          "overOdds": 500
+        },
+        "14.5": {
+          "overOdds": 152
+        }
+      },
+      "Nique Clifford": {
+        "9.5": {
+          "overOdds": -194
+        },
+        "24.5": {
+          "overOdds": 2000
+        },
+        "19.5": {
+          "overOdds": 750
+        },
+        "14.5": {
+          "overOdds": 230
+        }
+      },
+      "Malik Monk": {
+        "9.5": {
+          "overOdds": -160
+        },
+        "24.5": {
+          "overOdds": 1500
+        },
+        "19.5": {
+          "overOdds": 630
+        },
+        "14.5": {
+          "overOdds": 230
+        }
+      },
+      "Julian Champagnie": {
+        "9.5": {
+          "overOdds": -154
+        },
+        "19.5": {
+          "overOdds": 900
+        },
+        "14.5": {
+          "overOdds": 280
+        }
+      },
+      "Dylan Harper": {
+        "9.5": {
+          "overOdds": -150
+        },
+        "24.5": {
+          "overOdds": 2500
+        },
+        "19.5": {
+          "overOdds": 900
+        },
+        "14.5": {
+          "overOdds": 265
+        }
+      },
+      "Victor Wembanyama": {
+        "24.5": {
+          "overOdds": -140
+        },
+        "44.5": {
+          "overOdds": 3000
+        },
+        "19.5": {
+          "overOdds": -440
+        },
+        "34.5": {
+          "overOdds": 470
+        },
+        "39.5": {
+          "overOdds": 1100
+        },
+        "14.5": {
+          "overOdds": -2500
+        },
+        "29.5": {
+          "overOdds": 200
+        }
+      }
+    },
+    "rebProps": {
+      "Victor Wembanyama": {
+        "13.5": {
+          "overOdds": 240
+        },
+        "11.5": {
+          "overOdds": 100
+        },
+        "15.5": {
+          "overOdds": 520
+        },
+        "5.5": {
+          "overOdds": -4500
+        },
+        "7.5": {
+          "overOdds": -720
+        },
+        "9.5": {
+          "overOdds": -265
+        }
+      },
+      "Maxime Raynaud": {
+        "13.5": {
+          "overOdds": 700
+        },
+        "11.5": {
+          "overOdds": 290
+        },
+        "15.5": {
+          "overOdds": 1500
+        },
+        "5.5": {
+          "overOdds": -770
+        },
+        "7.5": {
+          "overOdds": -215
+        },
+        "9.5": {
+          "overOdds": 114
+        }
+      },
+      "Precious Achiuwa": {
+        "13.5": {
+          "overOdds": 1060
+        },
+        "11.5": {
+          "overOdds": 470
+        },
+        "15.5": {
+          "overOdds": 2200
+        },
+        "5.5": {
+          "overOdds": -460
+        },
+        "3.5": {
+          "overOdds": -4000
+        },
+        "7.5": {
+          "overOdds": -136
+        },
+        "9.5": {
+          "overOdds": 176
+        }
+      },
+      "Russell Westbrook": {
+        "11.5": {
+          "overOdds": 1400
+        },
+        "5.5": {
+          "overOdds": -111
+        },
+        "3.5": {
+          "overOdds": -460
+        },
+        "7.5": {
+          "overOdds": 285
+        },
+        "9.5": {
+          "overOdds": 600
+        }
+      },
+      "Keldon Johnson": {
+        "11.5": {
+          "overOdds": 2500
+        },
+        "5.5": {
+          "overOdds": 134
+        },
+        "3.5": {
+          "overOdds": -310
+        },
+        "7.5": {
+          "overOdds": 430
+        },
+        "9.5": {
+          "overOdds": 1060
+        }
+      },
+      "Stephon Castle": {
+        "5.5": {
+          "overOdds": 116
+        },
+        "3.5": {
+          "overOdds": -400
+        },
+        "7.5": {
+          "overOdds": 420
+        },
+        "9.5": {
+          "overOdds": 1060
+        }
+      },
+      "Julian Champagnie": {
+        "5.5": {
+          "overOdds": 124
+        },
+        "3.5": {
+          "overOdds": -370
+        },
+        "7.5": {
+          "overOdds": 420
+        },
+        "9.5": {
+          "overOdds": 1060
+        }
+      },
+      "Nique Clifford": {
+        "5.5": {
+          "overOdds": 265
+        },
+        "3.5": {
+          "overOdds": -164
+        },
+        "7.5": {
+          "overOdds": 1000
+        }
+      },
+      "Devin Vassell": {
+        "5.5": {
+          "overOdds": 320
+        },
+        "3.5": {
+          "overOdds": -146
+        },
+        "7.5": {
+          "overOdds": 1200
+        }
+      },
+      "De'Aaron Fox": {
+        "5.5": {
+          "overOdds": 360
+        },
+        "3.5": {
+          "overOdds": -132
+        },
+        "7.5": {
+          "overOdds": 1300
+        }
+      },
+      "Dylan Harper": {
+        "5.5": {
+          "overOdds": 420
+        },
+        "3.5": {
+          "overOdds": -104
+        },
+        "7.5": {
+          "overOdds": 1400
+        }
+      },
+      "DeMar DeRozan": {
+        "5.5": {
+          "overOdds": 800
+        },
+        "3.5": {
+          "overOdds": 172
+        }
+      },
+      "Malik Monk": {
+        "3.5": {
+          "overOdds": 265
+        }
+      }
+    },
+    "astProps": {
+      "Stephon Castle": {
+        "11.5": {
+          "overOdds": 680
+        },
+        "13.5": {
+          "overOdds": 1500
+        },
+        "3.5": {
+          "overOdds": -4000
+        },
+        "5.5": {
+          "overOdds": -440
+        },
+        "7.5": {
+          "overOdds": -113
+        },
+        "9.5": {
+          "overOdds": 240
+        }
+      },
+      "Russell Westbrook": {
+        "11.5": {
+          "overOdds": 870
+        },
+        "13.5": {
+          "overOdds": 2000
+        },
+        "3.5": {
+          "overOdds": -1400
+        },
+        "5.5": {
+          "overOdds": -230
+        },
+        "7.5": {
+          "overOdds": 142
+        },
+        "9.5": {
+          "overOdds": 340
+        }
+      },
+      "De'Aaron Fox": {
+        "11.5": {
+          "overOdds": 900
+        },
+        "13.5": {
+          "overOdds": 2000
+        },
+        "3.5": {
+          "overOdds": -2500
+        },
+        "5.5": {
+          "overOdds": -295
+        },
+        "7.5": {
+          "overOdds": 130
+        },
+        "9.5": {
+          "overOdds": 340
+        }
+      },
+      "DeMar DeRozan": {
+        "3.5": {
+          "overOdds": -158
+        },
+        "5.5": {
+          "overOdds": 285
+        },
+        "1.5": {
+          "overOdds": -1400
+        },
+        "7.5": {
+          "overOdds": 1000
+        },
+        "9.5": {
+          "overOdds": 2500
+        }
+      },
+      "Dylan Harper": {
+        "3.5": {
+          "overOdds": -140
+        },
+        "5.5": {
+          "overOdds": 300
+        },
+        "1.5": {
+          "overOdds": -1100
+        },
+        "7.5": {
+          "overOdds": 900
+        },
+        "9.5": {
+          "overOdds": 1800
+        }
+      },
+      "Victor Wembanyama": {
+        "3.5": {
+          "overOdds": 124
+        },
+        "5.5": {
+          "overOdds": 600
+        },
+        "1.5": {
+          "overOdds": -720
+        },
+        "7.5": {
+          "overOdds": 2000
+        }
+      },
+      "Malik Monk": {
+        "3.5": {
+          "overOdds": 138
+        },
+        "5.5": {
+          "overOdds": 600
+        },
+        "1.5": {
+          "overOdds": -530
+        },
+        "7.5": {
+          "overOdds": 1800
+        }
+      },
+      "Devin Vassell": {
+        "3.5": {
+          "overOdds": 180
+        },
+        "5.5": {
+          "overOdds": 870
+        },
+        "1.5": {
+          "overOdds": -480
+        }
+      },
+      "Maxime Raynaud": {
+        "3.5": {
+          "overOdds": 320
+        },
+        "5.5": {
+          "overOdds": 1400
+        },
+        "1.5": {
+          "overOdds": -230
+        }
+      }
+    },
+    "praProps": {
+      "Devin Vassell": {
+        "21.5": {
+          "overOdds": -112
+        },
+        "39.5": {
+          "overOdds": 3500
+        }
+      },
+      "Maxime Raynaud": {
+        "25.5": {
+          "overOdds": -106
+        },
+        "44.5": {
+          "overOdds": 3000
+        },
+        "39.5": {
+          "overOdds": 1200
+        }
+      },
+      "Dylan Harper": {
+        "18.5": {
+          "overOdds": -102
+        }
+      },
+      "Stephon Castle": {
+        "30.5": {
+          "overOdds": -108
+        },
+        "49.5": {
+          "overOdds": 2500
+        },
+        "44.5": {
+          "overOdds": 1200
+        },
+        "39.5": {
+          "overOdds": 520
+        }
+      },
+      "Malik Monk": {
+        "16.5": {
+          "overOdds": -114
+        }
+      },
+      "Victor Wembanyama": {
+        "40.5": {
+          "overOdds": -108
+        },
+        "49.5": {
+          "overOdds": 350
+        },
+        "44.5": {
+          "overOdds": 176
+        },
+        "54.5": {
+          "overOdds": 750
+        },
+        "59.5": {
+          "overOdds": 1500
+        },
+        "39.5": {
+          "overOdds": -128
+        }
+      },
+      "DeMar DeRozan": {
+        "26.5": {
+          "overOdds": -125
+        },
+        "49.5": {
+          "overOdds": 4000
+        },
+        "44.5": {
+          "overOdds": 1500
+        },
+        "39.5": {
+          "overOdds": 830
+        }
+      },
+      "Russell Westbrook": {
+        "27.5": {
+          "overOdds": -114
+        },
+        "49.5": {
+          "overOdds": 3000
+        },
+        "44.5": {
+          "overOdds": 1300
+        },
+        "39.5": {
+          "overOdds": 630
+        }
+      },
+      "De'Aaron Fox": {
+        "29.5": {
+          "overOdds": -128
+        },
+        "49.5": {
+          "overOdds": 3000
+        },
+        "44.5": {
+          "overOdds": 1300
+        },
+        "39.5": {
+          "overOdds": 520
         }
       }
     }
