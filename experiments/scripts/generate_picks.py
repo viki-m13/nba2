@@ -178,11 +178,30 @@ def generate_nba_picks():
         'generated': datetime.now().isoformat(),
     }
 
-    # Save signals and stats (recommendations left for seed_live_picks.py)
+    # Save signals and stats
     with open(signals_path, 'w') as f:
         json.dump(merged, f, indent=2)
     with open(os.path.join(WEBAPP_DATA, 'nba_stats.json'), 'w') as f:
         json.dump(stats, f, indent=2)
+
+    # Write recommendations with today's date
+    # If live picks exist for today they take priority; otherwise show empty
+    today = datetime.now().strftime('%Y%m%d')
+    today_live = [s for s in live_signals if s['date'] == today]
+    if today_live:
+        # Live picks already exist for today — use them
+        recs_picks = today_live
+    else:
+        # No live picks yet — seed_live_picks.py will override when it runs
+        recs_picks = []
+    recommendations = {
+        'generated': datetime.now().isoformat(),
+        'date': today,
+        'engine': 'NBA Positive Odds HECE v1',
+        'picks': recs_picks,
+    }
+    with open(os.path.join(WEBAPP_DATA, 'nba_recommendations.json'), 'w') as f:
+        json.dump(recommendations, f, indent=2)
 
     print(f"  Saved {len(merged)} signals ({len(live_signals)} live + {len(merged) - len(live_signals)} backtest) to {WEBAPP_DATA}/")
     return results
@@ -298,11 +317,27 @@ def generate_mlb_picks():
         'generated': datetime.now().isoformat(),
     }
 
-    # Save signals and stats (recommendations left for seed_live_picks_mlb.py)
+    # Save signals and stats
     with open(signals_path, 'w') as f:
         json.dump(merged, f, indent=2)
     with open(os.path.join(WEBAPP_DATA, 'mlb_stats.json'), 'w') as f:
         json.dump(stats, f, indent=2)
+
+    # Write recommendations with today's date
+    today = datetime.now().strftime('%Y%m%d')
+    today_live = [s for s in live_signals if s['date'] == today]
+    if today_live:
+        recs_picks = today_live
+    else:
+        recs_picks = []
+    recommendations = {
+        'generated': datetime.now().isoformat(),
+        'date': today,
+        'engine': 'MLB Positive Odds HECE v1',
+        'picks': recs_picks,
+    }
+    with open(os.path.join(WEBAPP_DATA, 'mlb_recommendations.json'), 'w') as f:
+        json.dump(recommendations, f, indent=2)
 
     print(f"  Saved {len(merged)} signals ({len(live_signals)} live + {len(merged) - len(live_signals)} backtest) to {WEBAPP_DATA}/")
     return results
