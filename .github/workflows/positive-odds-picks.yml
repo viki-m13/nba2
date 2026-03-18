@@ -1,0 +1,58 @@
+name: Positive Odds Picks Generation
+
+on:
+  schedule:
+    # Run 30 minutes after the original cron to ensure fresh data is available
+    # 16:30 UTC = 12:30 PM EST (Nov-Mar), 17:30 UTC = 12:30 PM EDT (Mar-Nov)
+    - cron: '30 16 * * *'
+    - cron: '30 17 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  positive-odds-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check if already ran today
+        id: check
+        run: |
+          TODAY=$(TZ=America/New_York date '+%Y-%m-%d')
+          # Check last 5 commits for today's positive odds run
+          if git log -5 --format=%s | grep -q "Positive odds picks: $TODAY"; then
+            echo "already_ran=true" >> $GITHUB_OUTPUT
+          else
+            echo "already_ran=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull latest data (in case original cron just pushed)
+        if: steps.check.outputs.already_ran == 'false'
+        run: git pull --rebase origin $(git branch --show-current) || true
+
+      - name: Run Positive Odds models
+        if: steps.check.outputs.already_ran == 'false'
+        run: python3 experiments/scripts/generate_picks.py
+        env:
+          TZ: America/New_York
+
+      - name: Commit and push positive odds picks
+        if: steps.check.outputs.already_ran == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add webapp/positive-odds/data/nba_signals.json \
+                  webapp/positive-odds/data/nba_stats.json \
+                  webapp/positive-odds/data/nba_recommendations.json \
+                  webapp/positive-odds/data/mlb_signals.json \
+                  webapp/positive-odds/data/mlb_stats.json \
+                  webapp/positive-odds/data/mlb_recommendations.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Positive odds picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
+          git push
