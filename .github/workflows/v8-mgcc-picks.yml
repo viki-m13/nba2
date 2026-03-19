@@ -31,10 +31,6 @@ jobs:
             echo "already_ran=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Pull latest data
-        if: steps.check.outputs.already_ran == 'false'
-        run: git pull --rebase origin $(git branch --show-current) || true
-
       - name: Run V8 CSPE models
         if: steps.check.outputs.already_ran == 'false'
         run: python3 experiments/scripts/generate_v8_picks.py
@@ -54,4 +50,9 @@ jobs:
                   webapp/v8-mgcc/data/mlb_v8_recommendations.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "V8 CSPE picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
-          git push
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            echo "Push attempt $i failed, retrying in $((i * 3))s..."
+            sleep $((i * 3))
+          done
+          git pull --rebase origin main && git push
