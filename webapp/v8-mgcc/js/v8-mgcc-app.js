@@ -278,10 +278,17 @@
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem">
           <strong style="color:var(--gold);font-size:0.9rem">NBA Performance (Walk-Forward Backtested)</strong>
           <div style="color:var(--text-dim);font-size:0.85rem;margin-top:0.3rem;line-height:1.7">
-            Core 2L: 26 parlays | 77% accuracy | +23.6% ROI<br>
-            Amplifier 4-5L: 137 parlays | <strong style="color:var(--accent)">+152.1% ROI</strong><br>
-            Hybrid 5-6L: 43 parlays | +82.9% ROI<br>
-            <strong style="color:var(--accent)">Combined: 206 parlays | +76.6% ROI | 48 active days</strong>
+            2L Parlays: 19 parlays | <strong style="color:var(--accent)">94.7% accuracy</strong> | 97.4% leg accuracy | +47.6% ROI<br>
+            3L Parlays: 5 parlays | 60.0% accuracy | 86.7% leg accuracy | +30.8% ROI<br>
+            <strong style="color:var(--accent)">Combined: 24 parlays | $+1,994 P&L | +45.3% ROI | 19 active days</strong><br>
+            Temporal: H1 100% | H2 75% | All months profitable
+          </div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem">
+          <strong style="color:var(--gold);font-size:0.9rem">MLB Performance (Walk-Forward Backtested)</strong>
+          <div style="color:var(--text-dim);font-size:0.85rem;margin-top:0.3rem;line-height:1.7">
+            3L Parlays: 105 parlays | 37.1% accuracy | 64.4% leg accuracy | <strong style="color:var(--accent)">+14.3% ROI</strong> | <strong style="color:var(--accent)">+$1,198 P&L</strong><br>
+            105 active days | Temporal: H1 +16.8% | H2 +11.8% | Stable across both halves
           </div>
         </div>
         <p style="color:var(--text-dim);line-height:1.7">
