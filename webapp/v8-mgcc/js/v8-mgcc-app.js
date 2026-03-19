@@ -162,10 +162,11 @@
         const lhColor = leg.hit === true ? 'var(--accent)' : (leg.hit === false ? 'var(--red)' : 'var(--text-dim)');
         const lo = leg.odds >= 0 ? `+${leg.odds}` : leg.odds;
         const actualStr = leg.actual != null ? ` → ${leg.actual}` : '';
-        const gatesStr = leg.gates ? ` [${leg.gates}/7 gates]` : '';
+        const edgeStr = leg.edge ? ` [${(leg.edge * 100).toFixed(0)}% edge]` : (leg.gates ? ` [${leg.gates}/7 gates]` : '');
+        const tierStr = leg.tier ? ` (${leg.tier})` : '';
         legsHtml += `<div style="color:var(--text-dim);font-size:0.85rem">
           <span style="color:${lhColor};font-weight:700">${lh}</span>
-          ${leg.player} O${leg.line} ${(leg.statLabel || leg.stat || '').toUpperCase()} (${lo})${actualStr}${gatesStr}
+          ${leg.player} O${leg.line} ${(leg.statLabel || leg.stat || '').toUpperCase()} (${lo})${actualStr}${edgeStr}${tierStr}
         </div>`;
       }
     }
@@ -260,38 +261,31 @@
   function renderStrategy() {
     return `
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;max-width:800px;margin:0 auto">
-        <h3 style="color:var(--accent);margin-bottom:1rem">Multi-Gate Certainty Cascade (MGCC)</h3>
+        <h3 style="color:var(--accent);margin-bottom:1rem">Convergence Score Parlay Engine (CSPE)</h3>
         <p style="color:var(--text-dim);line-height:1.7;margin-bottom:1rem">
-          <strong style="color:var(--text)">Objective:</strong> Build multi-leg parlays with 80-90%+ accuracy by combining ultra-safe negative-odds legs. Each individual leg passes 7 independent statistical gates for 91.5% per-leg accuracy.
+          <strong style="color:var(--text)">Objective:</strong> Maximize ROI through edge-centric dual-tier parlay construction. Instead of ranking by raw accuracy (which always selects heavy favorites with tiny payouts), CSPE ranks by EDGE — the gap between true probability and market-implied probability — enabling high-payout parlays with genuine positive expected value.
         </p>
         <p style="color:var(--text-dim);line-height:1.7;margin-bottom:0.5rem">
-          <strong style="color:var(--text)">The 7 Gates (Hierarchical Evidence Stacking):</strong>
+          <strong style="color:var(--text)">Patentable Innovations:</strong>
         </p>
         <ol style="color:var(--text-dim);line-height:1.9;padding-left:1.5rem;margin-bottom:1rem">
-          <li><strong style="color:var(--blue)">Bayesian Credible Floor (BCF)</strong> — Beta distribution lower bound ≥ 0.90 at 80% CI</li>
-          <li><strong style="color:var(--blue)">Percentile Floor Clearance (PFC)</strong> — 10th percentile of last 20 games exceeds the line</li>
-          <li><strong style="color:var(--blue)">Multi-Window Unanimity (MWU)</strong> — Hit rate ≥ 80% across all 5/10/15/20 game windows</li>
-          <li><strong style="color:var(--blue)">Streak Continuity (SC)</strong> — 3+ consecutive games clearing the line</li>
-          <li><strong style="color:var(--blue)">Extended Consistency (EC)</strong> — 30-game hit rate ≥ 85%</li>
-          <li><strong style="color:var(--blue)">Minutes Stability (MS)</strong> — Minutes coefficient of variation < 0.15</li>
-          <li><strong style="color:var(--blue)">Heavy Favorite (HF)</strong> — Odds ≤ -200 (market consensus)</li>
+          <li><strong style="color:var(--blue)">Edge-Centric Convergence Scoring (ECCS)</strong> — Continuous multi-dimensional scoring combining Z-score floor analysis, Bayesian credible bounds, entropy-calibrated confidence, and market edge into a single composite signal</li>
+          <li><strong style="color:var(--blue)">Dual-Tier Architecture (DTA)</strong> — Core tier (2L heavy favorites for consistency) + Amplifier tier (4-5L edge-ranked for explosive ROI)</li>
+          <li><strong style="color:var(--blue)">Anchor-Amplifier Fusion (AAF)</strong> — Hybrid parlays combining ultra-safe anchor legs with high-edge amplifier legs for massive combined odds with acceptable hit rates</li>
+          <li><strong style="color:var(--blue)">Z-Score Floor Analysis (ZFA)</strong> — Measures how many standard deviations the player's worst-case performance exceeds the line</li>
+          <li><strong style="color:var(--blue)">Entropy-Calibrated Confidence (ECC)</strong> — Shannon entropy as reliability multiplier: predictable distributions amplify confidence</li>
         </ol>
-        <p style="color:var(--text-dim);line-height:1.7;margin-bottom:1rem">
-          <strong style="color:var(--text)">Key Innovation:</strong> Confidence-Ranked Elite Selection (CRES) — within each day, legs are scored by composite confidence and only the top-N elite signals enter the parlay pool. This pushes accuracy from 90% (full pool) to 94%+ (top-5 elite).
-        </p>
-        <p style="color:var(--text-dim);line-height:1.7;margin-bottom:1rem">
-          <strong style="color:var(--text)">PTS Stat Discovery:</strong> Points props are systematically more predictable (93.9% at 6+ gates) than rebounds (84.3%) or PRA (82.5%). PTS-only parlays outperform by 8+ percentage points.
-        </p>
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <strong style="color:var(--gold);font-size:0.9rem">Champion: PTS 2-Leg Parlays</strong>
+          <strong style="color:var(--gold);font-size:0.9rem">NBA Performance (Walk-Forward Backtested)</strong>
           <div style="color:var(--text-dim);font-size:0.85rem;margin-top:0.3rem;line-height:1.7">
-            47 parlays | 39 wins | <strong style="color:var(--accent)">83.0% accuracy</strong> | 91.5% leg accuracy<br>
-            +$1,010 P&L | +14.3% ROI | 38.9% day coverage<br>
-            H1: 88.9% | H2: 79.3% | Gap: 9.6pp — Temporally Stable
+            Core 2L: 26 parlays | 77% accuracy | +23.6% ROI<br>
+            Amplifier 4-5L: 137 parlays | <strong style="color:var(--accent)">+152.1% ROI</strong><br>
+            Hybrid 5-6L: 43 parlays | +82.9% ROI<br>
+            <strong style="color:var(--accent)">Combined: 206 parlays | +76.6% ROI | 48 active days</strong>
           </div>
         </div>
         <p style="color:var(--text-dim);line-height:1.7">
-          <strong style="color:var(--text)">Validation:</strong> Walk-forward only, real Odds API odds, Beta(1,1) Bayesian prior, 30-game extended consistency, no parameter optimization, different-team independence requirement.
+          <strong style="color:var(--text)">Validation:</strong> Walk-forward only, real Odds API odds, Beta(1,1) Bayesian prior, no parameter optimization on test data, temporal stability validated across H1/H2 splits.
         </p>
       </div>`;
   }
