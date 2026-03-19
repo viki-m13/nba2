@@ -343,23 +343,232 @@ def generate_mlb_picks():
     return results
 
 
+def generate_nba_v8_parlays():
+    """Generate NBA V8 MGCC parlay picks (Multi-Gate Certainty Cascade)."""
+    print("\n=== NBA V8 MGCC PARLAYS ===")
+
+    from nba.strategy_v8_mgcc import run_backtest, NBA_V8_CONFIG
+
+    print("  Loading NBA data...")
+    box_scores = load_nba_boxscores()
+    odds_data = load_nba_odds()
+    box_scores = [g for g in box_scores
+                  if g.get('home', '') not in ['STARS', 'WORLD']
+                  and g.get('away', '') not in ['STARS', 'WORLD']]
+    print(f"  {len(box_scores)} games, {len(odds_data)} odds records")
+
+    # Run configs: Champion PTS 2L + multi-leg experiments
+    configs_to_run = {
+        'pts_2L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [2],
+            'STATS_ALLOWED': ['pts'],
+            'CRS_TOP_N': 10,
+        },
+        'pts_5L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [5],
+            'STATS_ALLOWED': ['pts'],
+            'CRS_TOP_N': 10,
+        },
+        'pts_8L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [8],
+            'STATS_ALLOWED': ['pts'],
+            'CRS_TOP_N': 10,
+        },
+        'pts_10L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [10],
+            'STATS_ALLOWED': ['pts'],
+            'CRS_TOP_N': 10,
+        },
+        'ptsast_8L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [8],
+            'STATS_ALLOWED': ['pts', 'ast'],
+            'CRS_TOP_N': 10,
+        },
+        'all_2L': {
+            **NBA_V8_CONFIG,
+            'PARLAY_LEGS': [2],
+            'STATS_ALLOWED': ['pts', 'reb', 'ast', 'pra'],
+            'CRS_TOP_N': 10,
+        },
+    }
+
+    all_backtest_signals = []
+    for label, config in configs_to_run.items():
+        print(f"\n  Running V8 MGCC [{label}]...")
+        results = run_backtest(box_scores, odds_data, config, verbose=False)
+
+        for n_legs, stats in results.get('by_legs', {}).items():
+            if stats['total'] > 0:
+                print(f"    {n_legs}L: {stats['total']} parlays, {stats['wins']} wins, "
+                      f"{stats['accuracy']*100:.1f}% acc, {stats['leg_accuracy']*100:.1f}% leg acc, "
+                      f"${stats['pnl']:+d} P&L, {stats['roi']*100:.1f}% ROI")
+
+        # Convert to webapp format
+        for pick in results.get('picks', []):
+            legs = []
+            for leg in pick.get('legs', []):
+                legs.append({
+                    'player': leg.get('player', ''),
+                    'team': '',
+                    'line': leg.get('line', 0),
+                    'odds': leg.get('odds', 0),
+                    'stat': leg.get('stat', ''),
+                    'statLabel': leg.get('stat', '').upper(),
+                    'cascadeScore': leg.get('lower_bound', 0),
+                    'hit': leg.get('hit'),
+                    'actual': leg.get('actual'),
+                    'edge': 0,
+                    'gates': leg.get('gates', 0),
+                    'clearance': leg.get('clearance', 0),
+                })
+            signal = {
+                'date': pick.get('date', ''),
+                'betType': 'parlay',
+                'n_legs': pick.get('n_legs', len(legs)),
+                'legs': legs,
+                'odds': pick.get('parlay_american', 0),
+                'hit': pick.get('hit'),
+                'pnl': pick.get('pnl', 0),
+                'wager': pick.get('wager', 100),
+                'bet': f"V8 {pick.get('n_legs', 2)}-Leg MGCC Parlay [{label}]",
+                'engine': f'v8_mgcc_nba_{label}',
+                'source': 'backtest',
+                'combined_prob': pick.get('combined_prob', 0),
+                'parlay_ev': pick.get('parlay_ev', 0),
+            }
+            all_backtest_signals.append(signal)
+
+    # Save V8 signals separately
+    os.makedirs(WEBAPP_DATA, exist_ok=True)
+    signals_path = os.path.join(WEBAPP_DATA, 'nba_v8_mgcc_signals.json')
+
+    # Merge with existing live signals
+    existing = []
+    try:
+        with open(signals_path) as f:
+            existing = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    live_signals = [s for s in existing if s.get('source') == 'live']
+    live_dates = set(s['date'] for s in live_signals)
+    merged = [s for s in all_backtest_signals if s['date'] not in live_dates]
+    merged.extend(live_signals)
+
+    with open(signals_path, 'w') as f:
+        json.dump(merged, f, indent=2)
+
+    # Stats
+    resolved = [s for s in merged if s.get('hit') is not None]
+    wins = sum(1 for s in resolved if s['hit'])
+    total_pnl = sum(s.get('pnl', 0) for s in resolved)
+    total_wager = sum(s.get('wager', 100) for s in resolved)
+    stats = {
+        'parlays': {
+            'total': len(resolved),
+            'wins': wins,
+            'accuracy': wins / len(resolved) if resolved else 0,
+            'pnl': total_pnl,
+            'roi': total_pnl / total_wager if total_wager > 0 else 0,
+        },
+        'model': 'NBA V8 MGCC (Multi-Gate Certainty Cascade)',
+        'innovation': 'Hierarchical Evidence Stacking for multi-leg parlays',
+        'generated': datetime.now().isoformat(),
+    }
+    with open(os.path.join(WEBAPP_DATA, 'nba_v8_mgcc_stats.json'), 'w') as f:
+        json.dump(stats, f, indent=2)
+
+    print(f"\n  Saved {len(merged)} V8 MGCC signals to {signals_path}")
+    return merged
+
+
+def generate_mlb_v8_parlays():
+    """Generate MLB V8 MGCC parlay picks."""
+    print("\n=== MLB V8 MGCC PARLAYS ===")
+
+    from mlb.strategy_v8_mgcc import run_backtest, MLB_V8_CONFIG
+
+    print("  Loading MLB data...")
+    try:
+        box_scores = load_mlb_boxscores()
+        odds_data = load_mlb_odds()
+    except FileNotFoundError:
+        print("  MLB data not found, skipping")
+        return []
+
+    print(f"  {len(box_scores)} games, {len(odds_data)} odds records")
+
+    configs_to_run = {
+        'all_2L': {**MLB_V8_CONFIG, 'PARLAY_LEGS': [2]},
+        'all_3L': {**MLB_V8_CONFIG, 'PARLAY_LEGS': [3]},
+        'relaxed_2L': {**MLB_V8_CONFIG, 'PARLAY_LEGS': [2],
+                       'BCF_MIN_LB': 0.80, 'MWU_MIN_HR': 0.60, 'SC_MIN_STREAK': 1},
+    }
+
+    all_backtest_signals = []
+    for label, config in configs_to_run.items():
+        print(f"\n  Running MLB V8 MGCC [{label}]...")
+        results = run_backtest(box_scores, odds_data, config, verbose=False)
+
+        for n_legs, stats in results.get('by_legs', {}).items():
+            if stats['total'] > 0:
+                print(f"    {n_legs}L: {stats['total']} parlays, {stats['wins']} wins, "
+                      f"{stats['accuracy']*100:.1f}% acc, {stats['leg_accuracy']*100:.1f}% leg acc, "
+                      f"${stats['pnl']:+d} P&L")
+
+        for pick in results.get('picks', []):
+            legs = [{'player': l.get('player', ''), 'team': '',
+                     'line': l.get('line', 0), 'odds': l.get('odds', 0),
+                     'stat': l.get('stat', ''), 'statLabel': l.get('stat', '').upper(),
+                     'cascadeScore': l.get('lower_bound', 0),
+                     'hit': l.get('hit'), 'actual': l.get('actual'),
+                     'gates': l.get('gates', 0), 'clearance': l.get('clearance', 0)}
+                    for l in pick.get('legs', [])]
+            all_backtest_signals.append({
+                'date': pick.get('date', ''), 'betType': 'parlay',
+                'n_legs': pick.get('n_legs', len(legs)), 'legs': legs,
+                'odds': pick.get('parlay_american', 0),
+                'hit': pick.get('hit'), 'pnl': pick.get('pnl', 0),
+                'wager': pick.get('wager', 100),
+                'bet': f"V8 {pick.get('n_legs', 2)}-Leg MLB MGCC [{label}]",
+                'engine': f'v8_mgcc_mlb_{label}', 'source': 'backtest',
+            })
+
+    os.makedirs(WEBAPP_DATA, exist_ok=True)
+    signals_path = os.path.join(WEBAPP_DATA, 'mlb_v8_mgcc_signals.json')
+    with open(signals_path, 'w') as f:
+        json.dump(all_backtest_signals, f, indent=2)
+    print(f"\n  Saved {len(all_backtest_signals)} MLB V8 signals to {signals_path}")
+    return all_backtest_signals
+
+
 def main():
     parser = argparse.ArgumentParser(description='Generate positive odds picks')
     parser.add_argument('--nba', action='store_true', help='NBA only')
     parser.add_argument('--mlb', action='store_true', help='MLB only')
+    parser.add_argument('--v8', action='store_true', help='V8 MGCC parlays only')
     args = parser.parse_args()
 
     print("=" * 60)
     print("POSITIVE ODDS MODELS — Pick Generator")
     print("=" * 60)
 
-    do_all = not args.nba and not args.mlb
+    do_all = not args.nba and not args.mlb and not args.v8
 
     if do_all or args.nba:
         generate_nba_picks()
 
     if do_all or args.mlb:
         generate_mlb_picks()
+
+    if do_all or args.v8:
+        generate_nba_v8_parlays()
+        generate_mlb_v8_parlays()
 
     print("\n" + "=" * 60)
     print("DONE — Backtest history saved to webapp/positive-odds/data/")

@@ -1,0 +1,7362 @@
+[
+  {
+    "date": "20250620",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 101,
+    "hit": true,
+    "pnl": 152,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250621",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -110,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250626",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -168,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250705",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jo Adell",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 131,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250713",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250719",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 107,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250720",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -194,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 102,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250830",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -111,
+    "hit": true,
+    "pnl": 135,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250831",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250902",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 123,
+    "hit": true,
+    "pnl": 185,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250903",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [all_2L]",
+    "engine": "v8_mgcc_mlb_all_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250419",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brendan Donovan",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250419",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Xavier Edwards",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8075058155400755,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -134,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250420",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Xavier Edwards",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -116,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250420",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brendan Donovan",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 103,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250425",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -126,
+    "hit": true,
+    "pnl": 119,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250425",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 116,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250426",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brendan Donovan",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -125,
+    "hit": true,
+    "pnl": 120,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250426",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -136,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250427",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -115,
+    "hit": true,
+    "pnl": 130,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250427",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Steven Kwan",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -115,
+    "hit": true,
+    "pnl": 130,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250428",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Steven Kwan",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -126,
+    "hit": true,
+    "pnl": 119,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250428",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brendan Donovan",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250429",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Steven Kwan",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -140,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250429",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "William Contreras",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": true,
+    "pnl": 139,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250429",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Fernando Tatis Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -119,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250430",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -121,
+    "hit": true,
+    "pnl": 124,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250430",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": true,
+    "pnl": 121,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250430",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "William Contreras",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -112,
+    "hit": true,
+    "pnl": 133,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250501",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -100,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250501",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "William Contreras",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -115,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250502",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -380,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -140,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250502",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -141,
+    "hit": true,
+    "pnl": 107,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250502",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Lenyn Sosa",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 111,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250503",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": true,
+    "pnl": 121,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250503",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -158,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250504",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -430,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -162,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250504",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 108,
+    "hit": true,
+    "pnl": 163,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250505",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Aaron Judge",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250506",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250605",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Maikel Garcia",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -106,
+    "hit": true,
+    "pnl": 141,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250605",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Carlos Santana",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 130,
+    "hit": true,
+    "pnl": 195,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250606",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Carlos Santana",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 135,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250606",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Ketel Marte",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -139,
+    "hit": true,
+    "pnl": 108,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250607",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ketel Marte",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 102,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250608",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Ketel Marte",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -119,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250608",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 111,
+    "hit": true,
+    "pnl": 167,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250610",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 110,
+    "hit": true,
+    "pnl": 165,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250610",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Carlos Santana",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 127,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250611",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -128,
+    "hit": true,
+    "pnl": 117,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250611",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -107,
+    "hit": true,
+    "pnl": 141,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250612",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -101,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250613",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Alejandro Kirk",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250613",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 4,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -116,
+    "hit": true,
+    "pnl": 129,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250613",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 104,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250614",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Alejandro Kirk",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 111,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250615",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeff McNeil",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 150,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250617",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 134,
+    "hit": true,
+    "pnl": 200,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250618",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 125,
+    "hit": true,
+    "pnl": 188,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250619",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -215,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 103,
+    "hit": true,
+    "pnl": 154,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250620",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 130,
+    "hit": true,
+    "pnl": 194,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250620",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Alec Burleson",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -141,
+    "hit": true,
+    "pnl": 107,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250621",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Alec Burleson",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -116,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250621",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Marcus Semien",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250621",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250622",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Alec Burleson",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -128,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250624",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -127,
+    "hit": true,
+    "pnl": 118,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250624",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Josh Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 103,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250625",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -133,
+    "hit": true,
+    "pnl": 113,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250625",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Gavin Sheets",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 110,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250626",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -125,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250627",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -440,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -160,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250628",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -103,
+    "hit": true,
+    "pnl": 145,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250628",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -123,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250629",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jake Meyers",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -118,
+    "hit": true,
+    "pnl": 127,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250629",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jonathan Aranda",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -104,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250629",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 124,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250701",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jake Meyers",
+        "team": "",
+        "line": 0.5,
+        "odds": -440,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -123,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250702",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250703",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Kyle Stowers",
+        "team": "",
+        "line": 0.5,
+        "odds": -102,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 218,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250704",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jo Adell",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 104,
+    "hit": true,
+    "pnl": 156,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250704",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jake Mangum",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -122,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250705",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jo Adell",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 131,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250705",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -101,
+    "hit": true,
+    "pnl": 149,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250706",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250706",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250707",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Taylor Ward",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 149,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250708",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250709",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -101,
+    "hit": true,
+    "pnl": 149,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250710",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 104,
+    "hit": true,
+    "pnl": 157,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250711",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Dansby Swanson",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 125,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250711",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -129,
+    "hit": true,
+    "pnl": 117,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250711",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -116,
+    "hit": true,
+    "pnl": 129,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250712",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 116,
+    "hit": true,
+    "pnl": 174,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250712",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -117,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250713",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250713",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 112,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250713",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Roman Anthony",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -100,
+    "hit": true,
+    "pnl": 149,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250718",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Roman Anthony",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -101,
+    "hit": true,
+    "pnl": 148,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250718",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -123,
+    "hit": true,
+    "pnl": 122,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250718",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 102,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250719",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 107,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250719",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -123,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250719",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Roman Anthony",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -105,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250720",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -194,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 102,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250720",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250721",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -106,
+    "hit": true,
+    "pnl": 142,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250721",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "CJ Abrams",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 104,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250722",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 105,
+    "hit": true,
+    "pnl": 158,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250723",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ceddanne Rafaela",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 135,
+    "hit": true,
+    "pnl": 203,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250726",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": true,
+    "pnl": 139,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250727",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 5,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -121,
+    "hit": true,
+    "pnl": 124,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250728",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 4,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -124,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250729",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250801",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -380,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -110,
+    "hit": true,
+    "pnl": 137,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250802",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 103,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250803",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -126,
+    "hit": true,
+    "pnl": 119,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250803",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Luis Robert Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -126,
+    "hit": true,
+    "pnl": 119,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250804",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -420,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -125,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250805",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -550,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Luis Robert Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -103,
+    "hit": true,
+    "pnl": 145,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250806",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -600,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Luis Robert Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -114,
+    "hit": true,
+    "pnl": 131,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250808",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luis Robert Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250809",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250812",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Andrew Vaughn",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Carlos Correa",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 123,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250812",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brenton Doyle",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Dominic Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 112,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250813",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Andrew Vaughn",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 121,
+    "hit": true,
+    "pnl": 182,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250815",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Andrew Vaughn",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -132,
+    "hit": true,
+    "pnl": 114,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250816",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Andrew Vaughn",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -450,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -144,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250817",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -425,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Dominic Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 4,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 103,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250818",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Shohei Ohtani",
+        "team": "",
+        "line": 0.5,
+        "odds": -450,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -109,
+    "hit": true,
+    "pnl": 138,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250819",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Shohei Ohtani",
+        "team": "",
+        "line": 0.5,
+        "odds": -650,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -123,
+    "hit": true,
+    "pnl": 122,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250819",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Geraldo Perdomo",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 138,
+    "hit": true,
+    "pnl": 207,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250820",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Michael Harris II",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -110,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250820",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Shohei Ohtani",
+        "team": "",
+        "line": 0.5,
+        "odds": -750,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -140,
+    "hit": true,
+    "pnl": 107,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250821",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -103,
+    "hit": true,
+    "pnl": 146,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250821",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 127,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250821",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Rowdy Tellez",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Dominic Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -140,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 179,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250822",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "George Springer",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "r",
+        "statLabel": "R",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250822",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 126,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250823",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -370,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -144,
+    "hit": true,
+    "pnl": 104,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250823",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "George Springer",
+        "team": "",
+        "line": 0.5,
+        "odds": -140,
+        "stat": "r",
+        "statLabel": "R",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 5,
+        "clearance": 0.5
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 4,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 186,
+    "hit": true,
+    "pnl": 279,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250824",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "George Springer",
+        "team": "",
+        "line": 0.5,
+        "odds": -130,
+        "stat": "r",
+        "statLabel": "R",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 134,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250824",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 105,
+    "hit": true,
+    "pnl": 158,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250825",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": true,
+    "pnl": 159,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250826",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 132,
+    "hit": true,
+    "pnl": 198,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250826",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -115,
+    "hit": true,
+    "pnl": 130,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250827",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -121,
+    "hit": true,
+    "pnl": 124,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250827",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250828",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -101,
+    "hit": true,
+    "pnl": 149,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250828",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Trea Turner",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -121,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250829",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -450,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Trea Turner",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -172,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250829",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Alec Bohm",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 118,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250829",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 113,
+    "hit": true,
+    "pnl": 170,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250830",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -111,
+    "hit": true,
+    "pnl": 135,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250830",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 105,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250830",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bryce Harper",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250831",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250831",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 4,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250831",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": true,
+    "pnl": 159,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250901",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 133,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250901",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 4,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -109,
+    "hit": true,
+    "pnl": 138,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250901",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Chourio",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 100,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250902",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -380,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -104,
+    "hit": true,
+    "pnl": 145,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250902",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -400,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 3,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -126,
+    "hit": true,
+    "pnl": 119,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250903",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250903",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -450,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -129,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250903",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -134,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250904",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250905",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 102,
+    "hit": true,
+    "pnl": 153,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250905",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 121,
+    "hit": true,
+    "pnl": 182,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250906",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8945098234575263,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250906",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -117,
+    "hit": true,
+    "pnl": 128,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250907",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250907",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": true,
+    "pnl": 164,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250908",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 106,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250915",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jackson Holliday",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 2,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Harrison Bader",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 116,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250916",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Daylen Lile",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Jackson Holliday",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 114,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250919",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Chase Meidroth",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Luke Keaschall",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 101,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250919",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Jorge Polanco",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 6,
+        "clearance": 0.5
+      },
+      {
+        "player": "Harrison Bader",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 3,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 128,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250920",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luke Keaschall",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Austin Hays",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250920",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Vinnie Pasquantino",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Harrison Bader",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 109,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250921",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Chase Meidroth",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": -110,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250927",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Geraldo Perdomo",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 5,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 115,
+    "hit": true,
+    "pnl": 173,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  },
+  {
+    "date": "20250928",
+    "betType": "parlay",
+    "n_legs": 2,
+    "legs": [
+      {
+        "player": "Geraldo Perdomo",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": true,
+        "actual": 1,
+        "gates": 7,
+        "clearance": 0.5
+      },
+      {
+        "player": "Ivan Herrera",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.8184520028849129,
+        "hit": false,
+        "actual": 0,
+        "gates": 7,
+        "clearance": 0.5
+      }
+    ],
+    "odds": 108,
+    "hit": false,
+    "pnl": -150,
+    "wager": 150,
+    "bet": "V8 2-Leg MLB MGCC [relaxed_2L]",
+    "engine": "v8_mgcc_mlb_relaxed_2L",
+    "source": "backtest"
+  }
+]

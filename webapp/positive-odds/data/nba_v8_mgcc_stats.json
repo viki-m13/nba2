@@ -1,0 +1,12 @@
+{
+  "parlays": {
+    "total": 140,
+    "wins": 109,
+    "accuracy": 0.7785714285714286,
+    "pnl": 853,
+    "roi": 0.0408133971291866
+  },
+  "model": "NBA V8 MGCC (Multi-Gate Certainty Cascade)",
+  "innovation": "Hierarchical Evidence Stacking for multi-leg parlays",
+  "generated": "2026-03-19T01:45:44.101788"
+}
