@@ -1,7 +1,7 @@
 /**
- * V8 MGCC — Multi-Gate Certainty Cascade Webapp Controller
+ * V8 CSPE — Convergence Score Parlay Engine Webapp Controller
  * =========================================================
- * Self-contained controller for the V8 MGCC parlay strategy.
+ * Self-contained controller for the V8 CSPE parlay strategy.
  * Completely independent — does NOT touch original or positive-odds code.
  *
  * Loads data from webapp/v8-mgcc/data/ and renders into #v8-mgcc-section.
@@ -131,12 +131,12 @@
     if (!recs || !recs.picks || recs.picks.length === 0) {
       const dateStr = recs && recs.date ? fmtDate(recs.date) : 'today';
       return `<div style="text-align:center;color:var(--text-dim);padding:3rem;font-size:1rem">
-        <div style="margin-bottom:0.5rem;font-size:1.1rem;color:var(--text)">${v8Sport.toUpperCase()} V8 MGCC Parlays — ${dateStr}</div>
+        <div style="margin-bottom:0.5rem;font-size:1.1rem;color:var(--text)">${v8Sport.toUpperCase()} V8 CSPE Parlays — ${dateStr}</div>
         No picks for today. Check back after the daily cron runs (~12:45 PM ET).
       </div>`;
     }
 
-    let html = `<div class="section-block"><h2>${v8Sport.toUpperCase()} V8 MGCC Parlays — ${fmtDate(recs.date)}</h2>`;
+    let html = `<div class="section-block"><h2>${v8Sport.toUpperCase()} V8 CSPE Parlays — ${fmtDate(recs.date)}</h2>`;
     html += '<div style="display:grid;gap:0.75rem;margin-top:1rem">';
 
     for (const p of recs.picks) {
@@ -175,7 +175,7 @@
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">
           <div>
-            <strong style="color:var(--text);font-size:1rem">${nLegs}-Leg MGCC Parlay</strong>
+            <strong style="color:var(--text);font-size:1rem">${nLegs}-Leg CSPE Parlay</strong>
             ${probStr ? `<span style="color:var(--text-dim);font-size:0.8rem;margin-left:0.5rem">Est. ${probStr} prob</span>` : ''}
           </div>
           <div style="text-align:right">
@@ -209,7 +209,7 @@
       const pnl = s.pnl != null ? `$${s.pnl >= 0 ? '+' : ''}${s.pnl}` : '';
       const odds = s.odds >= 0 ? `+${s.odds}` : `${s.odds}`;
       const nLegs = s.n_legs || (s.legs ? s.legs.length : '?');
-      const engine = (s.engine || '').replace('v8_mgcc_nba_', '').replace('v8_mgcc_mlb_', '');
+      const engine = (s.engine || '').replace('v8_cspe_nba', '').replace('v8_cspe_mlb', '').replace('v8_mgcc_nba_', '').replace('v8_mgcc_mlb_', '');
 
       // Leg summary
       let legSummary = '';
