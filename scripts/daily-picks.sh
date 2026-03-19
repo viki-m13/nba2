@@ -44,6 +44,11 @@ echo ""
 echo "--- Step 3: Generate tonight's picks from live odds ---"
 node scripts/seed-live-picks.js 2>&1
 
+# Step 4: Regenerate V8 CSPE data (NBA + MLB) for webapp
+echo ""
+echo "--- Step 4: Regenerate V8 CSPE data ---"
+python3 experiments/scripts/generate_v8_picks.py 2>&1
+
 echo ""
 echo "============================================================"
 echo "Daily run complete: $(TZ=America/New_York date '+%Y-%m-%d %H:%M:%S %Z')"
