@@ -1,0 +1,48 @@
+{
+  "strategy": "MLB V8 TEPE",
+  "version": "Temporal Edge Persistence Engine \u2014 Sliding Minimum Window",
+  "config": {
+    "EVAL_MODE": "smw",
+    "SMW_WINDOW": 10,
+    "SMW_LOOKBACK": 30,
+    "SMW_MIN_RATE": 0.8,
+    "K_FOLDS": 3,
+    "FOLD_SIZE": 7,
+    "MIN_EDGE": 0.01,
+    "MIN_OVERALL_RATE": 0.0,
+    "MIN_FLOOR_RATE": 0.0,
+    "MIN_AB": 3,
+    "MIN_AB_AVG": 3.0,
+    "MAX_DNP_RECENT": 1,
+    "STATS_ALLOWED": [
+      "h",
+      "tb"
+    ],
+    "LEG_MIN_ODDS": -800,
+    "LEG_MAX_ODDS": -300,
+    "ELITE_TOP_N": 10,
+    "PARLAY_LEGS": [
+      2
+    ],
+    "PARLAY_REQUIRE_DIFF_TEAMS": true,
+    "MAX_PARLAYS_PER_DAY": 3,
+    "SINGLES_ENABLED": true,
+    "SINGLES_MAX_PER_DAY": 3,
+    "SINGLES_MIN_CONFIDENCE": 0.85,
+    "WAGER_SINGLE": 100,
+    "WAGER_2LEG": 150,
+    "DEFAULT_WAGER": 100
+  },
+  "results_summary": {
+    "total_picks": 23,
+    "accuracy": 0.739,
+    "total_roi": 0.196,
+    "total_pnl": 679,
+    "active_days": 21,
+    "parlay_2L_accuracy": 0.714,
+    "parlay_2L_leg_accuracy": 0.833,
+    "parlay_2L_roi": 0.191,
+    "singles_accuracy": 1.0,
+    "temporal_h1_h2_gap_pp": 5.1
+  }
+}

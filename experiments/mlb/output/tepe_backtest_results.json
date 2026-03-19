@@ -1,0 +1,200 @@
+{
+  "total_picks": 23,
+  "total_wins": 17,
+  "accuracy": 0.7391304347826086,
+  "total_pnl": 657,
+  "total_wagered": 3350,
+  "total_roi": 0.19611940298507463,
+  "active_days": 21,
+  "total_days": 178,
+  "day_coverage": 0.11797752808988764,
+  "max_drawdown": 530,
+  "max_win_streak": 7,
+  "max_loss_streak": 3,
+  "avg_daily_pnl": 31.285714285714285,
+  "by_legs": {
+    "2": {
+      "total": 21,
+      "wins": 15,
+      "pnl": 601,
+      "wagered": 3150,
+      "legs_total": 42,
+      "legs_hits": 35,
+      "accuracy": 0.7142857142857143,
+      "roi": 0.1907936507936508,
+      "leg_accuracy": 0.8333333333333334
+    },
+    "1": {
+      "total": 2,
+      "wins": 2,
+      "pnl": 56,
+      "wagered": 200,
+      "legs_total": 2,
+      "legs_hits": 2,
+      "accuracy": 1.0,
+      "roi": 0.28,
+      "leg_accuracy": 1.0
+    }
+  },
+  "daily": [
+    {
+      "date": "20250606",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 100
+    },
+    {
+      "date": "20250609",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 30
+    },
+    {
+      "date": "20250610",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 107
+    },
+    {
+      "date": "20250611",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 107
+    },
+    {
+      "date": "20250719",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 101
+    },
+    {
+      "date": "20250721",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -150
+    },
+    {
+      "date": "20250722",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -150
+    },
+    {
+      "date": "20250727",
+      "n_picks": 2,
+      "wins": 2,
+      "pnl": 220
+    },
+    {
+      "date": "20250728",
+      "n_picks": 2,
+      "wins": 0,
+      "pnl": -300
+    },
+    {
+      "date": "20250729",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -150
+    },
+    {
+      "date": "20250801",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 109
+    },
+    {
+      "date": "20250803",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 109
+    },
+    {
+      "date": "20250804",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 76
+    },
+    {
+      "date": "20250805",
+      "n_picks": 1,
+      "wins": 0,
+      "pnl": -150
+    },
+    {
+      "date": "20250806",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 80
+    },
+    {
+      "date": "20250808",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 112
+    },
+    {
+      "date": "20250822",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 98
+    },
+    {
+      "date": "20250823",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 88
+    },
+    {
+      "date": "20250824",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 107
+    },
+    {
+      "date": "20250902",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 87
+    },
+    {
+      "date": "20250906",
+      "n_picks": 1,
+      "wins": 1,
+      "pnl": 26
+    }
+  ],
+  "config": {
+    "EVAL_MODE": "smw",
+    "SMW_WINDOW": 10,
+    "SMW_LOOKBACK": 30,
+    "SMW_MIN_RATE": 0.8,
+    "K_FOLDS": 3,
+    "FOLD_SIZE": 7,
+    "MIN_EDGE": 0.01,
+    "MIN_OVERALL_RATE": 0.0,
+    "MIN_FLOOR_RATE": 0.0,
+    "MIN_AB": 3,
+    "MIN_AB_AVG": 3.0,
+    "MAX_DNP_RECENT": 1,
+    "STATS_ALLOWED": [
+      "h",
+      "tb"
+    ],
+    "LEG_MIN_ODDS": -800,
+    "LEG_MAX_ODDS": -300,
+    "ELITE_TOP_N": 10,
+    "PARLAY_LEGS": [
+      2
+    ],
+    "PARLAY_REQUIRE_DIFF_TEAMS": true,
+    "MAX_PARLAYS_PER_DAY": 3,
+    "SINGLES_ENABLED": true,
+    "SINGLES_MAX_PER_DAY": 3,
+    "SINGLES_MIN_CONFIDENCE": 0.85,
+    "WAGER_SINGLE": 100,
+    "WAGER_2LEG": 150,
+    "WAGER_3LEG": 120,
+    "DEFAULT_WAGER": 100
+  }
+}
