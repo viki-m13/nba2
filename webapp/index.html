@@ -22,6 +22,7 @@
     <div style="display:flex;gap:0;background:#0f1117;border-radius:8px;padding:3px;border:1px solid #2d3140">
       <button class="master-mode-btn active" data-mode="original" style="background:var(--accent);color:#0f1117;border:none;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">ORIGINAL MODELS</button>
       <button class="master-mode-btn" data-mode="positive-odds" style="background:none;border:none;color:#8b8fa3;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">POSITIVE ODDS</button>
+      <button class="master-mode-btn" data-mode="v8-mgcc" style="background:none;border:none;color:#8b8fa3;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">V8 MGCC PARLAYS</button>
     </div>
   </div>
 
@@ -196,6 +197,18 @@
   <!-- Positive Odds App Script -->
   <script src="positive-odds/js/positive-odds-app.js"></script>
 
+  <!-- V8 MGCC Section (completely separate from original & positive-odds) -->
+  <header id="v8-header" style="display:none;background:var(--surface);border-bottom:1px solid var(--border);padding:1.5rem 2rem 1rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <h1 style="font-size:1.5rem;color:#3b82f6;letter-spacing:0.1em">V8 MGCC PARLAY ENGINE</h1>
+      <p class="subtitle" style="color:var(--text-dim);font-size:0.8rem">Multi-Gate Certainty Cascade | 7-Gate Hierarchical Evidence Stacking | 91.5% Leg Accuracy | 83% Parlay Accuracy</p>
+    </div>
+  </header>
+  <div id="v8-mgcc-section" style="display:none;max-width:1200px;margin:0 auto;padding:2rem"></div>
+
+  <!-- V8 MGCC App Script -->
+  <script src="v8-mgcc/js/v8-mgcc-app.js"></script>
+
   <!-- Sport Toggle Controller -->
   <script>
   (function() {
@@ -203,6 +216,7 @@
 
     let mlbInitialized = false;
     let poInitStarted = false;
+    let v8InitStarted = false;
     let currentMode = 'original';
 
     const subtitles = {
@@ -216,16 +230,18 @@
 
       const origHeader = document.getElementById('original-header');
       const poHeader = document.getElementById('po-header');
+      const v8Header = document.getElementById('v8-header');
       const nbaSection = document.getElementById('nba-section');
       const mlbSection = document.getElementById('mlb-section');
       const poSection = document.getElementById('positive-odds-section');
+      const v8Section = document.getElementById('v8-mgcc-section');
       const nbaNAV = document.getElementById('nba-nav');
       const mlbNAV = document.getElementById('mlb-nav');
 
       // Update toggle button styles
       document.querySelectorAll('.master-mode-btn').forEach(btn => {
         if (btn.dataset.mode === mode) {
-          btn.style.background = 'var(--accent)';
+          btn.style.background = mode === 'v8-mgcc' ? '#3b82f6' : 'var(--accent)';
           btn.style.color = '#0f1117';
           btn.classList.add('active');
         } else {
@@ -235,36 +251,40 @@
         }
       });
 
+      // Hide everything first
+      origHeader.style.display = 'none';
+      poHeader.style.display = 'none';
+      v8Header.style.display = 'none';
+      nbaSection.style.display = 'none';
+      mlbSection.style.display = 'none';
+      nbaNAV.style.display = 'none';
+      mlbNAV.style.display = 'none';
+      poSection.style.display = 'none';
+      v8Section.style.display = 'none';
+
       if (mode === 'original') {
         origHeader.style.display = '';
-        poHeader.style.display = 'none';
-        poSection.style.display = 'none';
-        // Restore sport view
         const activeSport = document.querySelector('.sport-btn.active');
         if (activeSport && activeSport.dataset.sport === 'mlb') {
-          nbaSection.style.display = 'none';
           mlbSection.style.display = '';
-          nbaNAV.style.display = 'none';
           mlbNAV.style.display = '';
         } else {
           nbaSection.style.display = '';
-          mlbSection.style.display = 'none';
           nbaNAV.style.display = '';
-          mlbNAV.style.display = 'none';
         }
-      } else {
-        origHeader.style.display = 'none';
+      } else if (mode === 'positive-odds') {
         poHeader.style.display = '';
-        nbaSection.style.display = 'none';
-        mlbSection.style.display = 'none';
-        nbaNAV.style.display = 'none';
-        mlbNAV.style.display = 'none';
         poSection.style.display = '';
-
-        // Initialize positive odds on first switch
         if (!poInitStarted && window.initPositiveOdds) {
           poInitStarted = true;
           window.initPositiveOdds();
+        }
+      } else if (mode === 'v8-mgcc') {
+        v8Header.style.display = '';
+        v8Section.style.display = '';
+        if (!v8InitStarted && window.initV8MGCC) {
+          v8InitStarted = true;
+          window.initV8MGCC();
         }
       }
     }
