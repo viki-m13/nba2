@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-data-push
+  group: positive-odds-picks
   cancel-in-progress: false
 
 jobs:
