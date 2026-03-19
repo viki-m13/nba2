@@ -1,50 +1,98 @@
 {
   "parlays": {
-    "total": 140,
-    "wins": 109,
-    "accuracy": 0.7785714285714286,
-    "pnl": 853,
-    "roi": 0.0408133971291866,
-    "leg_total": 286,
-    "leg_hits": 255,
-    "leg_accuracy": 0.8916083916083916
+    "total": 206,
+    "wins": 32,
+    "accuracy": 0.1553398058252427,
+    "pnl": 3774,
+    "roi": 0.7662944162436548,
+    "leg_total": 890,
+    "leg_hits": 496,
+    "leg_accuracy": 0.5573033707865168
   },
   "by_legs": {
-    "pts_2L_2L": {
-      "total": 47,
-      "wins": 39,
-      "accuracy": 0.8297872340425532,
-      "pnl": 1010,
-      "wagered": 7050,
-      "roi": 0.14326241134751774,
-      "leg_total": 94,
-      "leg_hits": 86,
-      "leg_accuracy": 0.9148936170212766
+    "amp_4L": {
+      "total": 82,
+      "wins": 7,
+      "accuracy": 0.08536585365853659,
+      "pnl": 2043,
+      "wagered": 1230,
+      "roi": 1.6609756097560975,
+      "leg_total": 328,
+      "leg_hits": 167,
+      "leg_accuracy": 0.5091463414634146
     },
-    "pts_5L_5L": {
-      "total": 2,
+    "amp_5L": {
+      "total": 55,
       "wins": 2,
-      "accuracy": 1.0,
-      "pnl": 204,
-      "wagered": 200,
-      "roi": 1.02,
-      "leg_total": 10,
-      "leg_hits": 10,
-      "leg_accuracy": 1.0
+      "accuracy": 0.03636363636363636,
+      "pnl": 665,
+      "wagered": 550,
+      "roi": 1.209090909090909,
+      "leg_total": 275,
+      "leg_hits": 140,
+      "leg_accuracy": 0.509090909090909
     },
-    "all_2L_2L": {
-      "total": 91,
-      "wins": 68,
-      "accuracy": 0.7472527472527473,
-      "pnl": -361,
-      "wagered": 13650,
-      "roi": -0.026446886446886447,
-      "leg_total": 182,
-      "leg_hits": 159,
-      "leg_accuracy": 0.8736263736263736
+    "core_2L": {
+      "total": 26,
+      "wins": 20,
+      "accuracy": 0.7692307692307693,
+      "pnl": 614,
+      "wagered": 2600,
+      "roi": 0.23615384615384616,
+      "leg_total": 52,
+      "leg_hits": 46,
+      "leg_accuracy": 0.8846153846153846
+    },
+    "hybrid_5L": {
+      "total": 23,
+      "wins": 2,
+      "accuracy": 0.08695652173913043,
+      "pnl": 338,
+      "wagered": 345,
+      "roi": 0.9797101449275363,
+      "leg_total": 115,
+      "leg_hits": 72,
+      "leg_accuracy": 0.6260869565217392
+    },
+    "hybrid_6L": {
+      "total": 20,
+      "wins": 1,
+      "accuracy": 0.05,
+      "pnl": 114,
+      "wagered": 200,
+      "roi": 0.57,
+      "leg_total": 120,
+      "leg_hits": 71,
+      "leg_accuracy": 0.5916666666666667
     }
   },
-  "model": "NBA V8 MGCC (Multi-Gate Certainty Cascade)",
-  "innovation": "7-Gate Hierarchical Evidence Stacking with Confidence-Ranked Selection",
-  "generated": "2026-03-19T04:24:29.189904"
+  "by_tier": {
+    "core": {
+      "total": 26,
+      "wins": 20,
+      "accuracy": 0.7692307692307693,
+      "pnl": 614,
+      "wagered": 2600,
+      "roi": 0.23615384615384616
+    },
+    "amp": {
+      "total": 137,
+      "wins": 9,
+      "accuracy": 0.06569343065693431,
+      "pnl": 2708,
+      "wagered": 1780,
+      "roi": 1.5213483146067415
+    },
+    "hybrid": {
+      "total": 43,
+      "wins": 3,
+      "accuracy": 0.06976744186046512,
+      "pnl": 452,
+      "wagered": 545,
+      "roi": 0.8293577981651377
+    }
+  },
+  "model": "NBA V8 CSPE (Convergence Score Parlay Engine)",
+  "innovation": "Edge-centric dual-tier scoring with anchor-amplifier fusion",
+  "generated": "2026-03-19T05:35:53.235088"
 }

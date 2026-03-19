@@ -1,27 +1,27 @@
 {
   "parlays": {
-    "total": 11,
-    "wins": 3,
-    "accuracy": 0.2727272727272727,
-    "pnl": -728,
-    "roi": -0.4412121212121212,
-    "leg_total": 22,
-    "leg_hits": 12,
-    "leg_accuracy": 0.5454545454545454
+    "total": 67,
+    "wins": 34,
+    "accuracy": 0.5074626865671642,
+    "pnl": -55,
+    "roi": -0.013681592039800995,
+    "leg_total": 134,
+    "leg_hits": 92,
+    "leg_accuracy": 0.6865671641791045
   },
   "by_legs": {
-    "all_2L_2L": {
-      "total": 11,
-      "wins": 3,
-      "pnl": -728,
-      "wagered": 1650,
-      "legs_total": 22,
-      "legs_hits": 12,
-      "accuracy": 0.2727272727272727,
-      "roi": -0.4412121212121212,
-      "leg_accuracy": 0.5454545454545454
+    "core_2L": {
+      "wins": 34,
+      "total": 67,
+      "pnl": -55,
+      "wagered": 4020,
+      "legs_total": 134,
+      "legs_hits": 92,
+      "accuracy": 0.5074626865671642,
+      "roi": -0.013681592039800995,
+      "leg_accuracy": 0.6865671641791045
     }
   },
-  "model": "MLB V8 MGCC",
-  "generated": "2026-03-19T04:24:33.035807"
+  "model": "MLB V8 CSPE",
+  "generated": "2026-03-19T05:35:55.260385"
 }
