@@ -69,4 +69,9 @@ jobs:
                   mlb/webapp/data/mlb_player_boxscores.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "Daily picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
-          git push
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            echo "Push attempt $i failed, retrying in $((i * 3))s..."
+            sleep $((i * 3))
+          done
+          git pull --rebase origin main && git push
