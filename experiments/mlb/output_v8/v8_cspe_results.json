@@ -1,0 +1,65 @@
+{
+  "config_name": "SCORE>=0.65",
+  "config": {
+    "MIN_GAMES": 15,
+    "MIN_AB": 3,
+    "BCF_PRIOR_ALPHA": 1.0,
+    "BCF_PRIOR_BETA": 1.0,
+    "BCF_CI_LEVEL": 0.8,
+    "ZFA_PERCENTILE": 0.1,
+    "ZFA_WINDOW": 20,
+    "ECC_BINS": 5,
+    "HARD_MIN_HR": 0.8,
+    "HARD_MIN_BCF_LB": 0.65,
+    "W_ZFA": 0.25,
+    "W_BCF": 0.2,
+    "W_HR": 0.15,
+    "W_ECC": 0.15,
+    "W_STREAK": 0.1,
+    "W_STABILITY": 0.1,
+    "W_EDGE": 0.05,
+    "SCORE_MIN": 0.65,
+    "ELITE_TOP_N": 6,
+    "STATS_ALLOWED": [
+      "h"
+    ],
+    "MAX_LINE": 0.5,
+    "LEG_MIN_ODDS": -600,
+    "LEG_MAX_ODDS": -105,
+    "PARLAY_LEGS": [
+      2,
+      3
+    ],
+    "PARLAY_REQUIRE_DIFF_TEAMS": true,
+    "MAX_PARLAYS_PER_TIER": 1,
+    "CONSISTENCY_WINDOWS": [
+      5,
+      10
+    ],
+    "CONSISTENCY_MIN_HR": 0.7,
+    "EXTENDED_WINDOW": 30,
+    "EXTENDED_MIN_HR": 0.7,
+    "WAGER_2LEG": 200,
+    "WAGER_3LEG": 120,
+    "DEFAULT_WAGER": 100
+  },
+  "total_picks": 7,
+  "total_wins": 4,
+  "accuracy": 0.5714285714285714,
+  "total_pnl": 242,
+  "total_roi": 0.17285714285714285,
+  "active_days": 7,
+  "by_legs": {
+    "2": {
+      "wins": 4,
+      "total": 7,
+      "pnl": 242,
+      "wagered": 1400,
+      "legs_total": 14,
+      "legs_hits": 10,
+      "accuracy": 0.5714285714285714,
+      "roi": 0.17285714285714285,
+      "leg_accuracy": 0.7142857142857143
+    }
+  }
+}

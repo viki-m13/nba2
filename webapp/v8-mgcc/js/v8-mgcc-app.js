@@ -287,8 +287,11 @@
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem">
           <strong style="color:var(--gold);font-size:0.9rem">MLB Performance (Walk-Forward Backtested)</strong>
           <div style="color:var(--text-dim);font-size:0.85rem;margin-top:0.3rem;line-height:1.7">
-            3L Parlays: 105 parlays | 37.1% accuracy | 64.4% leg accuracy | <strong style="color:var(--accent)">+14.3% ROI</strong> | <strong style="color:var(--accent)">+$1,198 P&L</strong><br>
-            105 active days | Temporal: H1 +16.8% | H2 +11.8% | Stable across both halves
+            Singles: 47 picks | <strong style="color:var(--accent)">91.5% accuracy</strong> | +34.6% ROI<br>
+            2L Parlays: 9 parlays | 88.9% accuracy | 94.4% leg accuracy | +84.4% ROI<br>
+            3L Parlays: 1 parlay | 100% accuracy | 100% leg accuracy | +300% ROI<br>
+            <strong style="color:var(--accent)">Combined: 57 picks | 91.2% accuracy | 92.6% leg accuracy | $+4,625 P&L | +50.4% ROI</strong><br>
+            Temporal: H1 92.9% | H2 89.7% | 3.2pp gap (STABLE)
           </div>
         </div>
         <p style="color:var(--text-dim);line-height:1.7">

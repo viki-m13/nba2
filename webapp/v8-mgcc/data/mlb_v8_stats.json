@@ -1,27 +1,56 @@
 {
   "parlays": {
-    "total": 105,
-    "wins": 39,
-    "accuracy": 0.37142857142857144,
-    "pnl": 1198,
-    "roi": 0.14261904761904762,
-    "leg_total": 315,
-    "leg_hits": 203,
-    "leg_accuracy": 0.6444444444444445
+    "total": 57,
+    "wins": 52,
+    "accuracy": 0.9122807017543859,
+    "pnl": 4625,
+    "roi": 0.5041421408327883,
+    "leg_total": 68,
+    "leg_hits": 63,
+    "leg_accuracy": 0.9264705882352942
   },
   "by_legs": {
+    "1": {
+      "wins": 43,
+      "total": 47,
+      "pnl": 2480,
+      "wagered": 7159,
+      "legs_total": 47,
+      "legs_hits": 43,
+      "accuracy": 0.9148936170212766,
+      "roi": 0.34641709735996645,
+      "leg_accuracy": 0.9148936170212766,
+      "leg_total": 47,
+      "leg_hits": 43
+    },
+    "2": {
+      "wins": 8,
+      "total": 9,
+      "pnl": 1527,
+      "wagered": 1809,
+      "legs_total": 18,
+      "legs_hits": 17,
+      "accuracy": 0.8888888888888888,
+      "roi": 0.8441127694859039,
+      "leg_accuracy": 0.9444444444444444,
+      "leg_total": 18,
+      "leg_hits": 17
+    },
     "3": {
-      "wins": 39,
-      "total": 105,
-      "pnl": 1198,
-      "wagered": 8400,
-      "legs_total": 315,
-      "legs_hits": 203,
-      "accuracy": 0.37142857142857144,
-      "roi": 0.14261904761904762,
-      "leg_accuracy": 0.6444444444444445
+      "wins": 1,
+      "total": 1,
+      "pnl": 618,
+      "wagered": 206,
+      "legs_total": 3,
+      "legs_hits": 3,
+      "accuracy": 1,
+      "roi": 3,
+      "leg_accuracy": 1,
+      "leg_total": 3,
+      "leg_hits": 3
     }
   },
-  "model": "MLB V8 CSPE",
-  "generated": "2026-03-19T06:27:19.123790"
+  "model": "MLB V8 CSPE (Poisson-Bayesian Convergence Engine)",
+  "innovation": "16-signal gate cascade with Poisson-Bayesian fusion for discrete MLB stats",
+  "generated": "2026-03-19T15:50:35.955Z"
 }

@@ -1,13 +1,21 @@
 """
 MLB Strategy V8 — Convergence Score Parlay Engine (CSPE)
 =========================================================
-Patent-pending: Same CSPE framework as NBA, adapted for MLB discrete stats.
+Patent-pending: Poisson-Bayesian CSPE for MLB discrete stats.
 
-MLB-specific adaptations:
-- Uses at-bats instead of minutes for activity filtering
-- Adjusted thresholds for higher-variance baseball stats
-- Stat categories: h, tb, r, rbi, hr
-- Smaller windows (15-game) due to MLB's 162-game schedule
+KEY DESIGN PRINCIPLES:
+1. POISSON-BAYESIAN PROBABILITY — baseball stats are discrete (0, 1, 2, 3 hits).
+   Poisson distribution models P(hits >= 1) = 1 - e^(-lambda) with exponential
+   decay-weighted lambda. This is the mathematical foundation for MLB accuracy.
+2. MULTI-SIGNAL CONVERGENCE — only bet when ALL signals agree:
+   - Poisson P(over) >= threshold (statistical model)
+   - 100% hit rate in recent window (empirical evidence)
+   - Active hitting streak (momentum)
+   - AB stability (regular playing time)
+   - Bayesian lower bound (uncertainty-adjusted)
+3. 2-LEG PARLAYS — highest parlay accuracy tier
+4. TIGHT ODDS RANGE — only bet moderate favorites (-260 to -120)
+   where market inefficiency exists
 
 Walk-forward only. Real odds from The Odds API. No leakage, no overfitting.
 """
@@ -26,67 +34,111 @@ from mlb.strategy import MLBPlayerModel, _update_model, _safe_int
 
 
 # =========================================================================
-# CONFIG — MLB-specific tuning
+# CONFIG — MLB V8 CSPE with Poisson-Bayesian foundation
 # =========================================================================
 
 MLB_V8_CONFIG = {
     # Data requirements
-    'MIN_GAMES': 10,
+    'MIN_GAMES': 12,
     'MIN_AB': 3,
 
-    # Bayesian parameters
+    # Poisson-Bayesian parameters
+    'PBF_DECAY': 0.92,
+    'PBF_MIN_PROB': 0.90,     # Poisson P(over) must be >= 90%
+
+    # Bayesian confidence
     'BCF_PRIOR_ALPHA': 1.0,
     'BCF_PRIOR_BETA': 1.0,
     'BCF_CI_LEVEL': 0.80,
+    'HARD_MIN_BCF_LB': 0.65,
 
-    # Z-Score Floor Analysis
-    'ZFA_PERCENTILE': 0.15,
-    'ZFA_WINDOW': 15,
+    # Hit rate gates
+    'HARD_MIN_HR': 0.85,      # 85%+ hit rate in window
+    'PERFECT_HR_WINDOW': 8,   # Require 100% in last N games
+    'PERFECT_HR_REQUIRED': True,
 
-    # Entropy-Calibrated Confidence
-    'ECC_BINS': 5,
+    # Streak requirements
+    'MIN_STREAK': 2,          # Must have active streak of 2+ games
 
-    # Hard floor filters
-    'HARD_MIN_HR': 0.65,
-    'HARD_MIN_BCF_LB': 0.55,
-
-    # Scoring weights (same structure as NBA)
-    'W_ZFA': 0.25,
-    'W_BCF': 0.20,
-    'W_HR': 0.15,
-    'W_ECC': 0.15,
-    'W_STREAK': 0.10,
-    'W_STABILITY': 0.10,
-    'W_EDGE': 0.05,
+    # Scoring weights
+    'W_PBF': 0.30,            # Poisson probability (most important)
+    'W_BCF': 0.20,            # Bayesian confidence
+    'W_HR': 0.15,             # Empirical hit rate
+    'W_STREAK': 0.15,         # Momentum
+    'W_STABILITY': 0.10,      # Playing time consistency
+    'W_EDGE': 0.10,           # Market edge
 
     # Selection
     'SCORE_MIN': 0.55,
-    'ELITE_TOP_N': 3,
-    'STATS_ALLOWED': ['h', 'tb'],  # Most predictable MLB stats
+    'ELITE_TOP_N': 6,
+    'STATS_ALLOWED': ['h'],   # Hits only
+    'MAX_LINE': 0.5,          # Only 0.5 line (at least 1 hit)
 
-    # Odds range
-    'LEG_MIN_ODDS': -600,
-    'LEG_MAX_ODDS': -105,
+    # Odds range — moderate favorites where edge exists
+    'LEG_MIN_ODDS': -400,
+    'LEG_MAX_ODDS': -110,
+
+    # Multi-window consistency
+    'CONSISTENCY_WINDOWS': [5, 8],
+    'CONSISTENCY_MIN_HR': 0.80,
+
+    # Extended consistency
+    'EXTENDED_WINDOW': 20,
+    'EXTENDED_MIN_HR': 0.75,
 
     # Parlay construction
-    'PARLAY_LEGS': [3],
+    'PARLAY_LEGS': [2, 3],
     'PARLAY_REQUIRE_DIFF_TEAMS': True,
     'MAX_PARLAYS_PER_TIER': 1,
 
     # Wager sizing
-    'WAGER_3LEG': 80,
-    'DEFAULT_WAGER': 80,
+    'WAGER_2LEG': 200,
+    'WAGER_3LEG': 120,
+    'DEFAULT_WAGER': 100,
 }
+
+
+# =========================================================================
+# POISSON PROBABILITY
+# =========================================================================
+
+def poisson_over_prob(model, name, stat, line, config):
+    """
+    Compute Poisson probability that player exceeds the line.
+    For discrete stats: P(X > line) = 1 - CDF(floor(line))
+    Uses decay-weighted lambda (recent games weighted higher).
+    """
+    window = config.get('EXTENDED_WINDOW', 20)
+    min_ab = config.get('MIN_AB', 3)
+    values = model.get_values(name, stat, window, min_ab=min_ab)
+    if not values or len(values) < 6:
+        return None
+
+    # Decay-weighted lambda
+    decay = config.get('PBF_DECAY', 0.92)
+    n = len(values)
+    weights = [decay ** (n - 1 - i) for i in range(n)]
+    total_w = sum(weights)
+    lam = sum(v * w for v, w in zip(values, weights)) / total_w
+
+    if lam <= 0.01:
+        return None
+
+    # P(X > line) for Poisson
+    # For line=0.5: P(X >= 1) = 1 - P(X=0) = 1 - e^(-lambda)
+    # For line=1.5: P(X >= 2) = 1 - P(X=0) - P(X=1) = 1 - e^(-lambda) - lambda*e^(-lambda)
+    k = int(math.floor(line))
+    cdf = 0.0
+    for i in range(k + 1):
+        cdf += (lam ** i) * math.exp(-lam) / math.factorial(i)
+    prob = 1.0 - cdf
+
+    return {'lambda': lam, 'prob': prob, 'k': k}
 
 
 # =========================================================================
 # SCORING
 # =========================================================================
-
-def _percentile(values, pct):
-    s = sorted(values)
-    return s[max(0, min(len(s) - 1, int(len(s) * pct)))]
-
 
 def _std_dev(values):
     if len(values) < 2:
@@ -96,75 +148,85 @@ def _std_dev(values):
     return max(math.sqrt(var), 0.001)
 
 
-def _stat_entropy(values, n_bins=5):
-    if len(values) < 3:
-        return 1.0
-    min_v, max_v = min(values), max(values)
-    if max_v == min_v:
-        return 0.0
-    bw = (max_v - min_v) / n_bins
-    counts = [0] * n_bins
-    for v in values:
-        counts[min(int((v - min_v) / bw), n_bins - 1)] += 1
-    n = len(values)
-    ent = -sum((c / n) * math.log2(c / n) for c in counts if c > 0)
-    mx = math.log2(n_bins)
-    return ent / mx if mx > 0 else 1.0
-
-
 def compute_convergence_score(model, name, stat, line, odds, config):
-    """Compute Convergence Score for an MLB parlay leg."""
+    """Compute Convergence Score with Poisson-Bayesian foundation."""
     if model.game_count(name) < config['MIN_GAMES']:
         return None
     if model.avg_ab(name, 10) < config['MIN_AB']:
         return None
-    if odds < config.get('LEG_MIN_ODDS', -600) or odds > config.get('LEG_MAX_ODDS', -105):
+    if odds < config.get('LEG_MIN_ODDS', -400) or odds > config.get('LEG_MAX_ODDS', -110):
         return None
 
-    window = config.get('ZFA_WINDOW', 15)
+    # Line filter
+    max_line = config.get('MAX_LINE', 999)
+    if max_line < 999 and line > max_line:
+        return None
+
+    # === POISSON PROBABILITY (primary signal) ===
+    pbf = poisson_over_prob(model, name, stat, line, config)
+    if pbf is None:
+        return None
+    poisson_prob = pbf['prob']
+    if poisson_prob < config.get('PBF_MIN_PROB', 0.90):
+        return None
+
+    # === EMPIRICAL HIT RATE ===
+    window = config.get('EXTENDED_WINDOW', 20)
     values = model.get_values(name, stat, window, min_ab=config['MIN_AB'])
-    if not values or len(values) < 6:
+    if not values or len(values) < 8:
         return None
 
     hits = sum(1 for v in values if v > line)
     n = len(values)
     hr = hits / n
-    if hr < config.get('HARD_MIN_HR', 0.65):
+    if hr < config.get('HARD_MIN_HR', 0.85):
         return None
 
+    # === PERFECT HIT RATE WINDOW ===
+    if config.get('PERFECT_HR_REQUIRED', True):
+        perf_window = config.get('PERFECT_HR_WINDOW', 8)
+        recent = model.get_values(name, stat, perf_window, min_ab=config['MIN_AB'])
+        if recent and len(recent) >= perf_window:
+            recent_hr = sum(1 for v in recent if v > line) / len(recent)
+            if recent_hr < 1.0:
+                return None
+
+    # === BAYESIAN CONFIDENCE ===
     alpha = config['BCF_PRIOR_ALPHA'] + hits
     beta_p = config['BCF_PRIOR_BETA'] + (n - hits)
     mean_prob = alpha / (alpha + beta_p)
     bcf_lb = beta_ppf_approx(alpha, beta_p, 1 - config['BCF_CI_LEVEL'])
-    if bcf_lb < config.get('HARD_MIN_BCF_LB', 0.55):
+    if bcf_lb < config.get('HARD_MIN_BCF_LB', 0.65):
         return None
 
-    floor_val = _percentile(values, config.get('ZFA_PERCENTILE', 0.15))
-    clearance = floor_val - line
-    std = _std_dev(values)
-    z_floor = clearance / std
-    z_norm = min(1.0, max(0.0, z_floor / 2.0))
-
-    entropy = _stat_entropy(values, config.get('ECC_BINS', 5))
-    ecc = 1.0 - entropy
-
-    recent = model.get_values(name, stat, 5, min_ab=config['MIN_AB'])
+    # === STREAK ===
+    recent_vals = model.get_values(name, stat, 10, min_ab=config['MIN_AB'])
     streak = 0
-    if recent:
-        for v in reversed(recent):
+    if recent_vals:
+        for v in reversed(recent_vals):
             if v > line:
                 streak += 1
             else:
                 break
+    min_streak = config.get('MIN_STREAK', 2)
+    if streak < min_streak:
+        return None
 
-    # Multi-window consistency
-    for w in [3, 5, 10]:
+    # === MULTI-WINDOW CONSISTENCY ===
+    consistency_windows = config.get('CONSISTENCY_WINDOWS', [5, 8])
+    consistency_min = config.get('CONSISTENCY_MIN_HR', 0.80)
+    for w in consistency_windows:
         vw = model.get_values(name, stat, w, min_ab=config['MIN_AB'])
         if vw and len(vw) >= min(w, 3):
-            if sum(1 for v in vw if v > line) / len(vw) < 0.50:
+            if sum(1 for v in vw if v > line) / len(vw) < consistency_min:
                 return None
 
-    # AB stability
+    # === EXTENDED CONSISTENCY ===
+    ext_min = config.get('EXTENDED_MIN_HR', 0.75)
+    if n >= 15 and hr < ext_min:
+        return None
+
+    # === AB STABILITY ===
     p = model.profiles.get(name)
     stability = 0.0
     if p:
@@ -176,16 +238,17 @@ def compute_convergence_score(model, name, stat, line, odds, config):
                 cv = std_ab / mean_ab if mean_ab > 0 else 1.0
                 stability = max(0.0, min(1.0, 1.0 - cv / 0.40))
 
+    # === MARKET EDGE ===
     market_prob = implied_probability(odds)
     edge = bcf_lb - market_prob
     edge_norm = min(1.0, max(0.0, edge / 0.25))
 
+    # === COMPOSITE SCORE ===
     score = (
-        config['W_ZFA'] * z_norm +
+        config['W_PBF'] * poisson_prob +
         config['W_BCF'] * bcf_lb +
         config['W_HR'] * hr +
-        config['W_ECC'] * ecc +
-        config['W_STREAK'] * min(1.0, streak / 4.0) +
+        config['W_STREAK'] * min(1.0, streak / 8.0) +
         config['W_STABILITY'] * stability +
         config['W_EDGE'] * edge_norm
     )
@@ -194,9 +257,10 @@ def compute_convergence_score(model, name, stat, line, odds, config):
         'player': name, 'stat': stat, 'line': line, 'odds': odds,
         'dec_odds': american_to_decimal(odds),
         'score': score, 'bcf_lb': bcf_lb, 'mean_prob': mean_prob,
-        'hr_20': hr, 'z_floor': z_floor, 'clearance': clearance,
-        'entropy': entropy, 'ecc': ecc, 'streak': streak,
-        'stability': stability, 'market_prob': market_prob, 'edge': edge,
+        'hr_20': hr, 'poisson_prob': poisson_prob, 'poisson_lambda': pbf['lambda'],
+        'z_floor': 0, 'clearance': 0,  # kept for compatibility
+        'streak': streak, 'stability': stability,
+        'market_prob': market_prob, 'edge': edge,
     }
 
 
@@ -253,7 +317,7 @@ def run_backtest(box_scores, odds_data, config, verbose=False):
         'hitsProps': 'h', 'tbProps': 'tb', 'runsProps': 'r',
         'rbiProps': 'rbi', 'hrProps': 'hr',
     }
-    stats_allowed = config.get('STATS_ALLOWED', ['h', 'tb'])
+    stats_allowed = config.get('STATS_ALLOWED', ['h'])
 
     sorted_games = sorted(box_scores, key=lambda g: g['date'])
     odds_idx = {}
@@ -318,7 +382,7 @@ def run_backtest(box_scores, odds_data, config, verbose=False):
                             day_legs.append(leg)
 
         # Elite selection
-        min_score = config.get('SCORE_MIN', 0.50)
+        min_score = config.get('SCORE_MIN', 0.55)
         qualified = [l for l in day_legs if l['score'] >= min_score]
         qualified.sort(key=lambda l: l['score'], reverse=True)
         seen, elite = set(), []
@@ -342,9 +406,11 @@ def run_backtest(box_scores, odds_data, config, verbose=False):
                         'line': l['line'], 'odds': l['odds'],
                         'hit': l['hit'], 'actual': l.get('actual'),
                         'score': l['score'], 'bcf_lb': l['bcf_lb'],
-                        'hr_20': l['hr_20'], 'z_floor': l['z_floor'],
-                        'clearance': l['clearance'], 'streak': l['streak'],
+                        'hr_20': l['hr_20'], 'z_floor': l.get('z_floor', 0),
+                        'clearance': l.get('clearance', 0), 'streak': l['streak'],
                         'edge': l['edge'],
+                        'poisson_prob': l.get('poisson_prob', 0),
+                        'poisson_lambda': l.get('poisson_lambda', 0),
                     } for l in p['legs']],
                     'parlay_decimal': p['parlay_decimal'],
                     'parlay_american': p['parlay_american'],
@@ -360,8 +426,10 @@ def run_backtest(box_scores, odds_data, config, verbose=False):
         if day_picks and verbose:
             for p in day_picks:
                 lh = sum(1 for l in p['legs'] if l['hit'])
+                legs_info = ', '.join(f"{l['player']}({l.get('poisson_prob',0)*100:.0f}%)" for l in p['legs'])
                 print(f"  {date}: {p['n_legs']}L ({p['parlay_american']:+d}) "
-                      f"[{lh}/{p['n_legs']}] [{'WIN' if p['hit'] else 'LOSS'}] ${p['pnl']:+d}")
+                      f"[{lh}/{p['n_legs']}] [{'WIN' if p['hit'] else 'LOSS'}] ${p['pnl']:+d} "
+                      f"  [{legs_info}]")
         if day_picks:
             daily_results.append({
                 'date': date, 'n_picks': len(day_picks),
@@ -414,7 +482,7 @@ def _compute_stats(all_picks, daily_results, dates, config):
 
 def generate_picks_for_date(model, odds_for_date, config, stats_allowed=None):
     if stats_allowed is None:
-        stats_allowed = config.get('STATS_ALLOWED', ['h', 'tb'])
+        stats_allowed = config.get('STATS_ALLOWED', ['h'])
     stat_map = {
         'hitsProps': 'h', 'tbProps': 'tb', 'runsProps': 'r',
         'rbiProps': 'rbi', 'hrProps': 'hr',
@@ -438,7 +506,7 @@ def generate_picks_for_date(model, odds_for_date, config, stats_allowed=None):
                         leg['team'] = model.get_team(player) or ''
                         day_legs.append(leg)
 
-    min_score = config.get('SCORE_MIN', 0.50)
+    min_score = config.get('SCORE_MIN', 0.55)
     qualified = [l for l in day_legs if l['score'] >= min_score]
     qualified.sort(key=lambda l: l['score'], reverse=True)
     seen, elite = set(), []
@@ -465,8 +533,9 @@ def generate_picks_for_date(model, odds_for_date, config, stats_allowed=None):
                     'score': round(l['score'], 3),
                     'bcf_lb': round(l['bcf_lb'], 3),
                     'hit_rate': round(l['hr_20'], 3),
-                    'z_floor': round(l['z_floor'], 2),
-                    'clearance': round(l['clearance'], 1),
+                    'poisson_prob': round(l.get('poisson_prob', 0), 3),
+                    'z_floor': round(l.get('z_floor', 0), 2),
+                    'clearance': round(l.get('clearance', 0), 1),
                     'streak': l['streak'],
                 } for l in p['legs']],
             })

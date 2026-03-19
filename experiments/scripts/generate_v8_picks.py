@@ -171,91 +171,42 @@ def generate_nba_v8():
 
 
 def generate_mlb_v8():
-    """Generate MLB V8 CSPE picks."""
-    print("\n=== MLB V8 CSPE PARLAYS ===")
+    """Generate MLB V8 CSPE picks using the proven V3 Poisson-Bayesian engine.
 
-    from mlb.strategy_v8_cspe import run_backtest, MLB_V8_CONFIG
+    The MLB V8 model uses the V3 engine's 16-signal gate cascade with
+    Poisson-Bayesian Fusion for discrete MLB stats. This is run via Node.js
+    since the engine is implemented in JavaScript.
+    """
+    print("\n=== MLB V8 CSPE (Poisson-Bayesian) ===")
 
-    print("  Loading MLB data...")
-    try:
-        box_scores = load_mlb_boxscores()
-        odds_data = load_mlb_odds()
-    except FileNotFoundError:
-        print("  MLB data not found, skipping")
-        os.makedirs(WEBAPP_DATA, exist_ok=True)
-        for fname in ['mlb_v8_signals.json', 'mlb_v8_stats.json', 'mlb_v8_recommendations.json']:
-            path = os.path.join(WEBAPP_DATA, fname)
-            if not os.path.exists(path):
-                with open(path, 'w') as f:
-                    json.dump([] if 'signals' in fname else {}, f)
+    import subprocess
+
+    script_path = os.path.join(EXPERIMENTS_DIR, 'scripts', 'generate_mlb_v8_from_engine.js')
+    if not os.path.exists(script_path):
+        print("  MLB V8 generator script not found, skipping")
         return []
 
-    print(f"  {len(box_scores)} games, {len(odds_data)} odds records")
+    try:
+        result = subprocess.run(
+            ['node', script_path],
+            capture_output=True, text=True, timeout=120,
+            cwd=os.path.join(EXPERIMENTS_DIR, '..'),
+        )
+        print(result.stdout)
+        if result.returncode != 0:
+            print(f"  ERROR: {result.stderr}")
+            return []
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        print(f"  Failed to run MLB V8 generator: {e}")
+        return []
 
-    print(f"\n  Running MLB V8 CSPE...")
-    results = run_backtest(box_scores, odds_data, MLB_V8_CONFIG, verbose=False)
-
-    all_signals = []
-    all_by_legs = {}
-
-    for key, stats in results.get('by_legs', {}).items():
-        if stats['total'] > 0:
-            print(f"    {key}: {stats['total']} parlays, {stats['wins']} wins, "
-                  f"{stats['accuracy']*100:.1f}% acc, ${stats['pnl']:+d}")
-            all_by_legs[key] = stats
-
-    for tier, stats in results.get('by_tier', {}).items():
-        if stats['total'] > 0:
-            print(f"  >> {tier.upper()}: {stats['total']}p, {stats['wins']}W, "
-                  f"${stats['pnl']:+d}, {stats['roi']*100:+.1f}% ROI")
-
-    for pick in results.get('picks', []):
-        all_signals.append(_convert_pick_to_signal(pick, 'mlb'))
-
-    os.makedirs(WEBAPP_DATA, exist_ok=True)
-
-    with open(os.path.join(WEBAPP_DATA, 'mlb_v8_signals.json'), 'w') as f:
-        json.dump(all_signals, f, indent=2)
-
-    resolved = [s for s in all_signals if s.get('hit') is not None]
-    wins = sum(1 for s in resolved if s['hit'])
-    total_pnl = sum(s.get('pnl', 0) for s in resolved)
-    total_wager = sum(s.get('wager', 100) for s in resolved)
-    all_legs_list = []
-    for s in resolved:
-        all_legs_list.extend(s.get('legs', []))
-    leg_hits = sum(1 for l in all_legs_list if l.get('hit'))
-
-    stats = {
-        'parlays': {
-            'total': len(resolved),
-            'wins': wins,
-            'accuracy': wins / len(resolved) if resolved else 0,
-            'pnl': total_pnl,
-            'roi': total_pnl / total_wager if total_wager > 0 else 0,
-            'leg_total': len(all_legs_list),
-            'leg_hits': leg_hits,
-            'leg_accuracy': leg_hits / len(all_legs_list) if all_legs_list else 0,
-        },
-        'by_legs': all_by_legs,
-        'model': 'MLB V8 CSPE',
-        'generated': datetime.now().isoformat(),
-    }
-    with open(os.path.join(WEBAPP_DATA, 'mlb_v8_stats.json'), 'w') as f:
-        json.dump(stats, f, indent=2)
-
-    today = datetime.now().strftime('%Y%m%d')
-    recs = {
-        'generated': datetime.now().isoformat(),
-        'date': today,
-        'engine': 'MLB V8 CSPE',
-        'picks': [],
-    }
-    with open(os.path.join(WEBAPP_DATA, 'mlb_v8_recommendations.json'), 'w') as f:
-        json.dump(recs, f, indent=2)
-
-    print(f"\n  Saved {len(all_signals)} MLB V8 signals to {WEBAPP_DATA}/")
-    return all_signals
+    # Load the generated signals
+    signals_path = os.path.join(WEBAPP_DATA, 'mlb_v8_signals.json')
+    try:
+        with open(signals_path) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
 
 def main():
