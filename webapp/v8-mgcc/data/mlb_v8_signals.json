@@ -1,8 +1,138 @@
 [
   {
+    "date": "20250414",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Ben Rice",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6040981731292661,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8888888888888888,
+        "edge": 0.09486402499961843,
+        "tier": ""
+      },
+      {
+        "player": "Keibert Ruiz",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5794223981682277,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9,
+        "edge": 0.049388752525797,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5727214386559136,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9166666666666666,
+        "edge": 0.13199377071703744,
+        "tier": ""
+      }
+    ],
+    "odds": 251,
+    "hit": true,
+    "pnl": 201,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.42237469864369637,
+    "parlay_ev": 0.48276379484464016,
+    "tier": ""
+  },
+  {
+    "date": "20250415",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Nolan Schanuel",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6433251803107529,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9,
+        "edge": 0.06893909465678438,
+        "tier": ""
+      },
+      {
+        "player": "Ben Rice",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6232762328808239,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9,
+        "edge": 0.10999481313185766,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6006331034674754,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9230769230769231,
+        "edge": 0.09818689933637348,
+        "tier": ""
+      }
+    ],
+    "odds": 233,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.44294272554972275,
+    "parlay_ev": 0.4742485923132298,
+    "tier": ""
+  },
+  {
     "date": "20250416",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Francisco Lindor",
@@ -18,7 +148,7 @@
         "clearance": 0.5,
         "hr_20": 0.9166666666666666,
         "edge": 0.07523422479340491,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Brice Turang",
@@ -34,24 +164,105 @@
         "clearance": 0.5,
         "hr_20": 0.9285714285714286,
         "edge": 0.08528359331785329,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Fernando Tatis Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6037971127765168,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9,
+        "edge": 0.04047609655431761,
+        "tier": ""
       }
     ],
-    "odds": -104,
+    "odds": 178,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6307561791354359,
-    "parlay_ev": 0.2372525052272012,
-    "tier": "core"
+    "combined_prob": 0.470770203869226,
+    "parlay_ev": 0.30819797036736873,
+    "tier": ""
+  },
+  {
+    "date": "20250417",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Kameron Misner",
+        "team": "",
+        "line": 0.5,
+        "odds": -125,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6396161418212707,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.24970869243870553,
+        "tier": ""
+      },
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6380115669181594,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9230769230769231,
+        "edge": 0.07293437408384829,
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.598558314108194,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8571428571428571,
+        "edge": -0.044933988301615435,
+        "tier": ""
+      }
+    ],
+    "odds": 220,
+    "hit": true,
+    "pnl": 176,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4692480705413854,
+    "parlay_ev": 0.5036564546139337,
+    "tier": ""
   },
   {
     "date": "20250418",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Francisco Lindor",
@@ -67,7 +278,7 @@
         "clearance": 0.5,
         "hr_20": 0.9285714285714286,
         "edge": 0.08528359331785329,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Bobby Witt Jr.",
@@ -83,25 +294,57 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.008176759040460002,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Fernando Tatis Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6076037274207601,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9090909090909091,
+        "edge": 0.01501370628219667,
+        "tier": ""
       }
     ],
-    "odds": -120,
+    "odds": 144,
     "hit": true,
-    "pnl": 50,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 115,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6039503971260304,
-    "parlay_ev": 0.10599353121342525,
-    "tier": "core"
+    "combined_prob": 0.46203033171598906,
+    "parlay_ev": 0.128133613916956,
+    "tier": ""
   },
   {
     "date": "20250419",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Anthony Santander",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.645810448817917,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8571428571428571,
+        "edge": 0.10321415984653293,
+        "tier": ""
+      },
       {
         "player": "Francisco Lindor",
         "team": "",
@@ -116,41 +359,73 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.08160989762175508,
-        "tier": "core"
+        "tier": ""
       },
       {
-        "player": "Fernando Tatis Jr.",
+        "player": "Josh Smith",
         "team": "",
         "line": 0.5,
-        "odds": -280,
+        "odds": -180,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6223316907336028,
+        "cascadeScore": 0.6234332494473673,
         "hit": true,
-        "actual": 2,
+        "actual": 1,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.9166666666666666,
-        "edge": 0.044274472471423465,
-        "tier": "core"
+        "hr_20": 1.0,
+        "edge": 0.1810302332667676,
+        "tier": ""
       }
     ],
-    "odds": -119,
+    "odds": 235,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6393064275334769,
-    "parlay_ev": 0.17749806295706727,
-    "tier": "core"
+    "combined_prob": 0.49416556153835667,
+    "parlay_ev": 0.6569080592756666,
+    "tier": ""
   },
   {
     "date": "20250420",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Nolan Schanuel",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6795310422070199,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.13253618655053434,
+        "tier": ""
+      },
+      {
+        "player": "Thomas Saggese",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6661525414829638,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.20526424799426102,
+        "tier": ""
+      },
       {
         "player": "Bobby Witt Jr.",
         "team": "",
@@ -165,40 +440,24 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.08160989762175508,
-        "tier": "core"
-      },
-      {
-        "player": "Anthony Santander",
-        "team": "",
-        "line": 0.5,
-        "odds": -200,
-        "stat": "h",
-        "statLabel": "H",
-        "cascadeScore": 0.643264840028945,
-        "hit": false,
-        "actual": 0,
-        "gates": 0,
-        "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": 0.08125413526848313,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 104,
+    "odds": 268,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.24613660234133827,
-    "tier": "core"
+    "combined_prob": 0.49293226511422106,
+    "parlay_ev": 0.8118194863573303,
+    "tier": ""
   },
   {
     "date": "20250421",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jeremy Pena",
@@ -214,7 +473,7 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.07050144709644013,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -230,25 +489,57 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.07050144709644013,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Fernando Tatis Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6328531636082727,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9285714285714286,
+        "edge": 0.05140825456446574,
+        "tier": ""
       }
     ],
-    "odds": 118,
+    "odds": 188,
     "hit": true,
-    "pnl": 71,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 151,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.5593855259673175,
-    "parlay_ev": 0.21897843640497094,
-    "tier": "core"
+    "combined_prob": 0.4517070653475528,
+    "parlay_ev": 0.3018586849359175,
+    "tier": ""
   },
   {
     "date": "20250422",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Nolan Schanuel",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6628595215582466,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.14792080193514967,
+        "tier": ""
+      },
       {
         "player": "Fernando Tatis Jr.",
         "team": "",
@@ -263,7 +554,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06235444190930317,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jeremy Pena",
@@ -279,24 +570,24 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.05095110496545274,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -111,
+    "odds": 216,
     "hit": true,
-    "pnl": 54,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 173,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.1616013150045339,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.4479763117451925,
+    "tier": ""
   },
   {
     "date": "20250423",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Fernando Tatis Jr.",
@@ -312,7 +603,23 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.05101014241979662,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Nolan Schanuel",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6564797104958392,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1252792925011874,
+        "tier": ""
       },
       {
         "player": "William Contreras",
@@ -328,24 +635,24 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -112,
+    "odds": 204,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.2696038913116032,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.5250559850932528,
+    "tier": ""
   },
   {
     "date": "20250425",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -361,7 +668,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.15766771819436842,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -377,24 +684,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.07050144709644013,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6775377219878383,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.10416628859919863,
+        "tier": ""
       }
     ],
-    "odds": 100,
-    "hit": true,
-    "pnl": 60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 180,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.3403205957484421,
-    "tier": "core"
+    "combined_prob": 0.5475628087824692,
+    "parlay_ev": 0.5357833065374968,
+    "tier": ""
   },
   {
     "date": "20250426",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -410,7 +733,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.0985914561105875,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -426,24 +749,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.06042080193514976,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Thomas Saggese",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6544695957708132,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.14646802128520076,
+        "tier": ""
       }
     ],
-    "odds": -121,
+    "odds": 170,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.22264252570487253,
-    "tier": "core"
+    "combined_prob": 0.5511991957997113,
+    "parlay_ev": 0.48699581026930705,
+    "tier": ""
   },
   {
     "date": "20250427",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -459,7 +798,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.14450982345752628,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Steven Kwan",
@@ -475,24 +814,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.10416628859919863,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Mark Vientos",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.644207549753386,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
       }
     ],
-    "odds": -115,
+    "odds": 176,
     "hit": true,
-    "pnl": 52,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 140,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.36661159900354523,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.508839739756137,
+    "tier": ""
   },
   {
     "date": "20250428",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Steven Kwan",
@@ -508,7 +863,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.09622978066269072,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Mark Vientos",
@@ -524,24 +879,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.12148230591521592,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6234710165189918,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
       }
     ],
-    "odds": -101,
+    "odds": 189,
     "hit": true,
-    "pnl": 59,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 151,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.3307659750155094,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.447720080322344,
+    "tier": ""
   },
   {
     "date": "20250429",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -557,7 +928,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.14450982345752628,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "William Contreras",
@@ -573,24 +944,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Mark Vientos",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.67534425785757,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1517853362182463,
+        "tier": ""
       }
     ],
-    "odds": -103,
-    "hit": true,
-    "pnl": 58,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 195,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.44098501935748,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.769065612830427,
+    "tier": ""
   },
   {
     "date": "20250430",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -606,7 +993,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.14450982345752628,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "William Contreras",
@@ -622,24 +1009,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6791276085062461,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
       }
     ],
-    "odds": -112,
+    "odds": 159,
     "hit": true,
-    "pnl": 53,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 127,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.38288078470596854,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.5510147139172377,
+    "tier": ""
   },
   {
     "date": "20250501",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -655,7 +1058,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.11673204567974838,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "William Contreras",
@@ -671,24 +1074,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.10416628859919863,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6787960355289203,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.17559486002777014,
+        "tier": ""
       }
     ],
-    "odds": -125,
+    "odds": 180,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.31780404189627576,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.6777590005553076,
+    "tier": ""
   },
   {
     "date": "20250502",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Bobby Witt Jr.",
@@ -704,7 +1123,153 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.10284315679085954,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -140,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6461773713372935,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1645874686018165,
+        "tier": ""
+      },
+      {
+        "player": "Eli White",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6337580000258483,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9,
+        "edge": 0.14635844949549393,
+        "tier": ""
+      }
+    ],
+    "odds": 261,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4993305991356317,
+    "parlay_ev": 0.8020953953767156,
+    "tier": ""
+  },
+  {
+    "date": "20250503",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6369181120780342,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.11829117230552022,
+        "tier": ""
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6068257681828368,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
+      },
+      {
+        "player": "Jarren Duran",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5820500678970231,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.04067422510713503,
+        "tier": ""
+      }
+    ],
+    "odds": 183,
+    "hit": true,
+    "pnl": 146,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.4165454357355709,
+    "tier": ""
+  },
+  {
+    "date": "20250504",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Hunter Goodman",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6383157361171676,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1252792925011874,
+        "tier": ""
+      },
+      {
+        "player": "J.P. Crawford",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5947305911726075,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.11829117230552022,
+        "tier": ""
       },
       {
         "player": "Jeremy Pena",
@@ -713,32 +1278,113 @@
         "odds": -320,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6029045150746892,
+        "cascadeScore": 0.5920446060980418,
         "hit": true,
         "actual": 1,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.05654724098015107,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -152,
-    "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 235,
+    "hit": true,
+    "pnl": 188,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.21376688069393834,
-    "tier": "core"
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.5327824714564611,
+    "tier": ""
+  },
+  {
+    "date": "20250505",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Willson Contreras",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6087844963528898,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1632795890918094,
+        "tier": ""
+      },
+      {
+        "player": "Jeremy Pena",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5957076097610454,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.07486225929516932,
+        "tier": ""
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.595016168966707,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.08160989762175508,
+        "tier": ""
+      }
+    ],
+    "odds": 179,
+    "hit": true,
+    "pnl": 143,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.5272713988884576,
+    "tier": ""
   },
   {
     "date": "20250506",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Willson Contreras",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.684422460631668,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.2945098234575262,
+        "tier": ""
+      },
       {
         "player": "Pete Alonso",
         "team": "",
@@ -753,7 +1399,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.0887222731551831,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jeremy Pena",
@@ -769,24 +1415,89 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.10416628859919863,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -109,
+    "odds": 220,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.28514587693198745,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.9159593524859992,
+    "tier": ""
+  },
+  {
+    "date": "20250606",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Carlos Santana",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6485334902554397,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      },
+      {
+        "player": "Lourdes Gurriel Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.636096335514671,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.06235444190930317,
+        "tier": ""
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6152320872064265,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.17559486002777014,
+        "tier": ""
+      }
+    ],
+    "odds": 211,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.7063760276713609,
+    "tier": ""
   },
   {
     "date": "20250607",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ty France",
@@ -802,7 +1513,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.22784315679085965,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Ketel Marte",
@@ -818,24 +1529,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.07486225929516932,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Jose Ramirez",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6153790958721688,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.13095200288491293,
+        "tier": ""
       }
     ],
-    "odds": 102,
+    "odds": 193,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4768493572975505,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.7581531846392389,
+    "tier": ""
   },
   {
     "date": "20250608",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ketel Marte",
@@ -851,7 +1578,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.07486225929516932,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jose Ramirez",
@@ -867,24 +1594,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.07486225929516932,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Colt Keith",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5970248723432662,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
       }
     ],
-    "odds": -124,
+    "odds": 176,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.2114894873258517,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.3829919725266253,
+    "tier": ""
   },
   {
     "date": "20250609",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ketel Marte",
@@ -900,7 +1643,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.08160989762175508,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jose Ramirez",
@@ -916,24 +1659,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.05101014241979662,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Cal Raleigh",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.591842011531787,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
       }
     ],
-    "odds": -130,
-    "hit": true,
-    "pnl": 46,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 161,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.18458577358984418,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.3078698378129938,
+    "tier": ""
   },
   {
     "date": "20250610",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ketel Marte",
@@ -949,7 +1708,23 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.10416628859919863,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6172581239688963,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1888223732552834,
+        "tier": ""
       },
       {
         "player": "Jose Ramirez",
@@ -965,24 +1740,24 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06235444190930317,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -117,
+    "odds": 194,
     "hit": true,
-    "pnl": 51,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 155,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.24032823519067992,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.612295674400946,
+    "tier": ""
   },
   {
     "date": "20250611",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ketel Marte",
@@ -998,7 +1773,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.07486225929516932,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jose Ramirez",
@@ -1014,25 +1789,57 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06235444190930317,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Pete Alonso",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6039081986844221,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.07486225929516932,
+        "tier": ""
       }
     ],
-    "odds": -128,
+    "odds": 139,
     "hit": true,
-    "pnl": 47,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 111,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.1914483047398159,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.3113995449164595,
+    "tier": ""
   },
   {
     "date": "20250613",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6570387606691563,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1632795890918094,
+        "tier": ""
+      },
       {
         "player": "Ty France",
         "team": "",
@@ -1047,7 +1854,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.09622978066269072,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jose Ramirez",
@@ -1063,24 +1870,219 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.10416628859919863,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -107,
+    "odds": 196,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.2985049816818002,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.6221134782837732,
+    "tier": ""
+  },
+  {
+    "date": "20250614",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Ty France",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6500168148772725,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.16932919586736905,
+        "tier": ""
+      },
+      {
+        "player": "Ketel Marte",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6204651519690099,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
+      },
+      {
+        "player": "Jeff McNeil",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5903103594736698,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
+      }
+    ],
+    "odds": 226,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.6311305634712896,
+    "tier": ""
+  },
+  {
+    "date": "20250615",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6347587981821886,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1252792925011874,
+        "tier": ""
+      },
+      {
+        "player": "Ketel Marte",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6167971983010563,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.10416628859919863,
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5964890924514408,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.018191072205419934,
+        "tier": ""
+      }
+    ],
+    "odds": 208,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.4106925279138385,
+    "tier": ""
+  },
+  {
+    "date": "20250617",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6608561380157137,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.19581049345095058,
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -200,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6382381412104955,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.08125413526848313,
+        "tier": ""
+      },
+      {
+        "player": "Matt Thaiss",
+        "team": "",
+        "line": 0.5,
+        "odds": -130,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.578766824109052,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.18270341063080187,
+        "tier": ""
+      }
+    ],
+    "odds": 326,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.95138118466252,
+    "tier": ""
   },
   {
     "date": "20250618",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brooks Lee",
@@ -1096,7 +2098,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.21709046861881665,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jeff McNeil",
@@ -1112,24 +2114,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.628714331686686,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.03363508764943546,
+        "tier": ""
       }
     ],
-    "odds": 115,
+    "odds": 201,
     "hit": true,
-    "pnl": 69,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 160,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.5719836574808872,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.6460069888248767,
+    "tier": ""
   },
   {
     "date": "20250619",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brooks Lee",
@@ -1145,7 +2163,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.21197014091784372,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jeff McNeil",
@@ -1161,25 +2179,57 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6327056298455462,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
       }
     ],
-    "odds": 116,
+    "odds": 199,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.5834079573172306,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.7943831886848871,
+    "tier": ""
   },
   {
     "date": "20250620",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Brooks Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7035504947503001,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.2516526806003835,
+        "tier": ""
+      },
       {
         "player": "Gunnar Henderson",
         "team": "",
@@ -1194,7 +2244,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -1210,24 +2260,24 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.05095110496545274,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 112,
+    "odds": 229,
     "hit": true,
-    "pnl": 67,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 184,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.29651435972050755,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.8040475149258162,
+    "tier": ""
   },
   {
     "date": "20250621",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brooks Lee",
@@ -1243,7 +2293,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.18862747051634987,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -1259,24 +2309,235 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.06042080193514976,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Javier Baez",
+        "team": "",
+        "line": 0.5,
+        "odds": -136,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5904730532406085,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.17164961549447177,
+        "tier": ""
       }
     ],
-    "odds": 106,
+    "odds": 258,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.37859182745294295,
-    "tier": "core"
+    "combined_prob": 0.5003758480777206,
+    "parlay_ev": 0.7892227294900314,
+    "tier": ""
+  },
+  {
+    "date": "20250622",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Alec Burleson",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6177458528567022,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.11256964994373653,
+        "tier": ""
+      },
+      {
+        "player": "Javier Baez",
+        "team": "",
+        "line": 0.5,
+        "odds": -125,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5946161794176331,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.19236524637959418,
+        "tier": ""
+      },
+      {
+        "player": "J.T. Realmuto",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5901253896903296,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.05095110496545274,
+        "tier": ""
+      }
+    ],
+    "odds": 266,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.675061377221329,
+    "tier": ""
+  },
+  {
+    "date": "20250624",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -320,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6487002642190159,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.1326050615527644,
+        "tier": ""
+      },
+      {
+        "player": "Josh Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6191877501268501,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      },
+      {
+        "player": "Yandy Diaz",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5854059342135495,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.035843307232738986,
+        "tier": ""
+      }
+    ],
+    "odds": 154,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.5202450345576608,
+    "tier": ""
+  },
+  {
+    "date": "20250625",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.640467383463363,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.11190112780535233,
+        "tier": ""
+      },
+      {
+        "player": "Gavin Sheets",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.618342187077943,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2106088656300109,
+        "tier": ""
+      },
+      {
+        "player": "Josh Smith",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5897664394923978,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
+      }
+    ],
+    "odds": 191,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.7440724101837786,
+    "tier": ""
   },
   {
     "date": "20250626",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Yandy Diaz",
@@ -1292,7 +2553,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.0985914561105875,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Tyler Freeman",
@@ -1308,24 +2569,170 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.10727578090433476,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.604103710703042,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.16932919586736905,
+        "tier": ""
       }
     ],
-    "odds": -168,
+    "odds": 146,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.8001478242620148,
-    "parlay_ev": 0.27702040143826756,
-    "tier": "core"
+    "combined_prob": 0.6548825893712513,
+    "parlay_ev": 0.6101420162453135,
+    "tier": ""
+  },
+  {
+    "date": "20250627",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -360,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.602406532976116,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.035843307232738986,
+        "tier": ""
+      },
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5807804559784403,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.05095110496545274,
+        "tier": ""
+      },
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5804345081197306,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.06235444190930317,
+        "tier": ""
+      }
+    ],
+    "odds": 142,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.21480240138010087,
+    "tier": ""
+  },
+  {
+    "date": "20250628",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6245217345050412,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.16932919586736905,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5950038970428689,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.004331058345406147,
+        "tier": ""
+      },
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5890430759880338,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
+      }
+    ],
+    "odds": 201,
+    "hit": true,
+    "pnl": 161,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.3796581123344416,
+    "tier": ""
   },
   {
     "date": "20250629",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brice Turang",
@@ -1341,7 +2748,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Chandler Simpson",
@@ -1357,24 +2764,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.05095110496545274,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6062889883345222,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.12148230591521592,
+        "tier": ""
       }
     ],
-    "odds": 103,
+    "odds": 192,
     "hit": true,
-    "pnl": 62,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 153,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.24423555489306792,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.46110668281626666,
+    "tier": ""
   },
   {
     "date": "20250701",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Nico Hoerner",
@@ -1390,7 +2813,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jake Meyers",
@@ -1406,24 +2829,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.003637188070098163,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Matt Olson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6031197198817357,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
       }
     ],
-    "odds": -123,
+    "odds": 151,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.21358420133990164,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.37528365881617987,
+    "tier": ""
   },
   {
     "date": "20250702",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brice Turang",
@@ -1439,7 +2878,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1517853362182463,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Matt Olson",
@@ -1455,41 +2894,41 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
-      }
-    ],
-    "odds": 112,
-    "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
-    "engine": "v8_cspe_mlb",
-    "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.4234603221809419,
-    "tier": "core"
-  },
-  {
-    "date": "20250704",
-    "betType": "parlay",
-    "n_legs": 2,
-    "legs": [
+        "tier": ""
+      },
       {
-        "player": "Brandon Lowe",
+        "player": "Hunter Goodman",
         "team": "",
         "line": 0.5,
-        "odds": -310,
+        "odds": -300,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6512732491628058,
-        "hit": true,
-        "actual": 1,
+        "cascadeScore": 0.6134742389251971,
+        "hit": false,
+        "actual": 0,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 1.0,
-        "edge": 0.13841226248191651,
-        "tier": "core"
-      },
+        "hr_20": 0.9333333333333333,
+        "edge": 0.06845200288491293,
+        "tier": ""
+      }
+    ],
+    "odds": 183,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.5533786022882603,
+    "tier": ""
+  },
+  {
+    "date": "20250703",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
       {
         "player": "Matt Olson",
         "team": "",
@@ -1497,80 +2936,63 @@
         "odds": -240,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6177458528567022,
+        "cascadeScore": 0.5997893931754397,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.11256964994373653,
+        "tier": ""
+      },
+      {
+        "player": "Mike Trout",
+        "team": "",
+        "line": 0.5,
+        "odds": -280,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.56944188131729,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.011078696671991906,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5633361809408437,
         "hit": false,
         "actual": 0,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
-        "edge": 0.11256964994373653,
-        "tier": "core"
+        "edge": 0.19581049345095058,
+        "tier": ""
       }
     ],
-    "odds": -114,
+    "odds": 209,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.3717285203131786,
-    "tier": "core"
-  },
-  {
-    "date": "20250705",
-    "betType": "parlay",
-    "n_legs": 2,
-    "legs": [
-      {
-        "player": "Brandon Lowe",
-        "team": "",
-        "line": 0.5,
-        "odds": -260,
-        "stat": "h",
-        "statLabel": "H",
-        "cascadeScore": 0.687532383402141,
-        "hit": true,
-        "actual": 1,
-        "gates": 0,
-        "clearance": 0.5,
-        "hr_20": 1.0,
-        "edge": 0.17228760123530407,
-        "tier": "core"
-      },
-      {
-        "player": "Cody Bellinger",
-        "team": "",
-        "line": 0.5,
-        "odds": -220,
-        "stat": "h",
-        "statLabel": "H",
-        "cascadeScore": 0.6052075393482577,
-        "hit": true,
-        "actual": 1,
-        "gates": 0,
-        "clearance": 0.5,
-        "hr_20": 0.9333333333333333,
-        "edge": 0.13095200288491293,
-        "tier": "core"
-      }
-    ],
-    "odds": 101,
-    "hit": true,
-    "pnl": 61,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
-    "engine": "v8_cspe_mlb",
-    "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4744660608629663,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.5470245812240344,
+    "tier": ""
   },
   {
     "date": "20250706",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brandon Lowe",
@@ -1586,7 +3008,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.19754012648782926,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Josh Naylor",
@@ -1602,24 +3024,105 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.09622978066269072,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6197663306434,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
       }
     ],
-    "odds": -101,
+    "odds": 203,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4544325546012409,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.6603268692284476,
+    "tier": ""
+  },
+  {
+    "date": "20250707",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6169166309916813,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.042038448993973354,
+        "tier": ""
+      },
+      {
+        "player": "Mike Trout",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5923593907894288,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
+      },
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5883748961355801,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      }
+    ],
+    "odds": 216,
+    "hit": true,
+    "pnl": 173,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.4484447025314118,
+    "tier": ""
   },
   {
     "date": "20250708",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
@@ -1635,7 +3138,7 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.03363508764943546,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Cody Bellinger",
@@ -1651,24 +3154,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1517853362182463,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Mike Trout",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5903432617571708,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
       }
     ],
-    "odds": 110,
-    "hit": true,
-    "pnl": 66,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 205,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.2854882845205384,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.3984631689263143,
+    "tier": ""
   },
   {
     "date": "20250709",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
@@ -1684,7 +3203,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jarren Duran",
@@ -1700,24 +3219,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.052079198064850285,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5891260892860114,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.004331058345406147,
+        "tier": ""
       }
     ],
-    "odds": -122,
+    "odds": 145,
     "hit": true,
-    "pnl": 49,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 116,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.11297686971475218,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.11945943325382324,
+    "tier": ""
   },
   {
     "date": "20250710",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
@@ -1733,7 +3268,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.09622978066269072,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Dansby Swanson",
@@ -1749,24 +3284,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -390,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.608536539916998,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.04799756541178901,
+        "tier": ""
       }
     ],
-    "odds": 101,
+    "odds": 153,
     "hit": true,
-    "pnl": 61,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 122,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.3490960848642082,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.26773933995593,
+    "tier": ""
   },
   {
     "date": "20250711",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Cody Bellinger",
@@ -1782,7 +3333,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.19754012648782926,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Corey Seager",
@@ -1798,25 +3349,57 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.09622978066269072,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Chandler Simpson",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6439006643181664,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.06845200288491293,
+        "tier": ""
       }
     ],
-    "odds": -101,
+    "odds": 165,
     "hit": true,
-    "pnl": 59,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 132,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4544325546012409,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.5871776498325414,
+    "tier": ""
   },
   {
     "date": "20250712",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Cody Bellinger",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6746789467536531,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.23933740966442274,
+        "tier": ""
+      },
       {
         "player": "Corey Seager",
         "team": "",
@@ -1831,7 +3414,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.12148230591521592,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "J.P. Crawford",
@@ -1847,24 +3430,24 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 103,
+    "odds": 210,
     "hit": true,
-    "pnl": 62,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 168,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.36157074295568337,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.8589586180147588,
+    "tier": ""
   },
   {
     "date": "20250713",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
@@ -1880,7 +3463,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.13841226248191651,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Cody Bellinger",
@@ -1896,24 +3479,40 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.20700982345752628,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Corey Seager",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6612166735941777,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1410326480462033,
+        "tier": ""
       }
     ],
-    "odds": -108,
+    "odds": 184,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.8001478242620148,
-    "parlay_ev": 0.5392873100172484,
-    "tier": "core"
+    "combined_prob": 0.6548825893712513,
+    "parlay_ev": 0.8597531542317787,
+    "tier": ""
   },
   {
     "date": "20250718",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
@@ -1929,7 +3528,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.15092007986778266,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "J.P. Crawford",
@@ -1945,122 +3544,105 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1517853362182463,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Christian Yelich",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6278478678479852,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1115571655715134,
+        "tier": ""
       }
     ],
-    "odds": 102,
+    "odds": 217,
     "hit": true,
-    "pnl": 61,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 174,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4768493572975505,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.7357471303030485,
+    "tier": ""
   },
   {
-    "date": "20250719",
+    "date": "20250720",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Chandler Simpson",
         "team": "",
         "line": 0.5,
-        "odds": -300,
+        "odds": -194,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6861109871401863,
-        "hit": true,
-        "actual": 1,
+        "cascadeScore": 0.707928866769641,
+        "hit": false,
+        "actual": 0,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 1.0,
-        "edge": 0.14450982345752628,
-        "tier": "core"
+        "edge": 0.23464587787929492,
+        "tier": ""
       },
       {
-        "player": "Christian Yelich",
+        "player": "CJ Abrams",
         "team": "",
         "line": 0.5,
-        "odds": -220,
+        "odds": -300,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6717275255397497,
-        "hit": true,
-        "actual": 1,
+        "cascadeScore": 0.5996077202961875,
+        "hit": false,
+        "actual": 0,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": 0.06042080193514976,
-        "tier": "core"
-      }
-    ],
-    "odds": -106,
-    "hit": true,
-    "pnl": 56,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
-    "engine": "v8_cspe_mlb",
-    "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.2974981905439462,
-    "tier": "core"
-  },
-  {
-    "date": "20250723",
-    "betType": "parlay",
-    "n_legs": 2,
-    "legs": [
-      {
-        "player": "Christian Yelich",
-        "team": "",
-        "line": 0.5,
-        "odds": -210,
-        "stat": "h",
-        "statLabel": "H",
-        "cascadeScore": 0.6406679265202456,
-        "hit": true,
-        "actual": 1,
-        "gates": 0,
-        "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": 0.07050144709644013,
-        "tier": "core"
+        "hr_20": 0.9333333333333333,
+        "edge": 0.06845200288491293,
+        "tier": ""
       },
       {
-        "player": "Bo Bichette",
+        "player": "Brendan Donovan",
         "team": "",
         "line": 0.5,
         "odds": -270,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.608400349962604,
-        "hit": true,
-        "actual": 1,
+        "cascadeScore": 0.5902738860032667,
+        "hit": false,
+        "actual": 0,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.9333333333333333,
-        "edge": 0.0887222731551831,
-        "tier": "core"
+        "hr_20": 0.8666666666666667,
+        "edge": 0.018191072205419934,
+        "tier": ""
       }
     ],
-    "odds": 102,
-    "hit": true,
-    "pnl": 61,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 177,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.23830945019321192,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.5161991177130454,
+    "tier": ""
   },
   {
     "date": "20250726",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jackson Chourio",
@@ -2076,7 +3658,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.15092007986778266,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Brandon Nimmo",
@@ -2092,24 +3674,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.12148230591521592,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6365920042679653,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.12148230591521592,
+        "tier": ""
       }
     ],
-    "odds": -108,
+    "odds": 177,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.4126385156759178,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.6588623975105106,
+    "tier": ""
   },
   {
     "date": "20250727",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jackson Chourio",
@@ -2125,7 +3723,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.18022410917181197,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Bobby Witt Jr.",
@@ -2141,24 +3739,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.0020791980648502406,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Bo Bichette",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6169545079471564,
+        "hit": true,
+        "actual": 5,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.05101014241979662,
+        "tier": ""
       }
     ],
-    "odds": -115,
+    "odds": 143,
     "hit": true,
-    "pnl": 52,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 115,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.2488420083985481,
-    "tier": "core"
+    "combined_prob": 0.5475628087824692,
+    "parlay_ev": 0.33184974095776343,
+    "tier": ""
   },
   {
     "date": "20250728",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jackson Chourio",
@@ -2174,7 +3788,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.17228760123530407,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Mickey Moniak",
@@ -2190,25 +3804,268 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.21709046861881665,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6260920055057377,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.008176759040460002,
+        "tier": ""
       }
     ],
-    "odds": 104,
+    "odds": 170,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.8001478242620148,
-    "parlay_ev": 0.6354669814586238,
-    "tier": "core"
+    "combined_prob": 0.5984472023887114,
+    "parlay_ev": 0.6177803493145386,
+    "tier": ""
+  },
+  {
+    "date": "20250729",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Taylor Walls",
+        "team": "",
+        "line": 0.5,
+        "odds": -140,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6151168376880849,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1645874686018165,
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -350,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6024330659023548,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.029856975842628142,
+        "tier": ""
+      },
+      {
+        "player": "Tommy Pham",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5927132720039403,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1410326480462033,
+        "tier": ""
+      }
+    ],
+    "odds": 225,
+    "hit": true,
+    "pnl": 180,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.4896166407867757,
+    "tier": ""
+  },
+  {
+    "date": "20250730",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Taylor Walls",
+        "team": "",
+        "line": 0.5,
+        "odds": -140,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6818332481878489,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.23511866955157967,
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.623486691294645,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.004331058345406147,
+        "tier": ""
+      },
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5825120595187265,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1115571655715134,
+        "tier": ""
+      }
+    ],
+    "odds": 262,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.6586276500862769,
+    "tier": ""
+  },
+  {
+    "date": "20250801",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jorge Polanco",
+        "team": "",
+        "line": 0.5,
+        "odds": -135,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7614506954115687,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2439839177785299,
+        "tier": ""
+      },
+      {
+        "player": "Mark Vientos",
+        "team": "",
+        "line": 0.5,
+        "odds": -125,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6393046877946126,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.19236524637959418,
+        "tier": ""
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5674420466719351,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      }
+    ],
+    "odds": 374,
+    "hit": true,
+    "pnl": 299,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 1.374849254189269,
+    "tier": ""
   },
   {
     "date": "20250802",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Taylor Walls",
+        "team": "",
+        "line": 0.5,
+        "odds": -120,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7130291932746654,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2729974574303675,
+        "tier": ""
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6232047657115619,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.13253618655053434,
+        "tier": ""
+      },
       {
         "player": "Steven Kwan",
         "team": "",
@@ -2223,41 +4080,106 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.011078696671991906,
-        "tier": "core"
-      },
+        "tier": ""
+      }
+    ],
+    "odds": 304,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.851078369902422,
+    "tier": ""
+  },
+  {
+    "date": "20250803",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
       {
-        "player": "Luis Arraez",
+        "player": "Jorge Polanco",
         "team": "",
         "line": 0.5,
-        "odds": -340,
+        "odds": -125,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6005081173906277,
+        "cascadeScore": 0.727353004461504,
         "hit": true,
-        "actual": 2,
+        "actual": 1,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
-        "edge": 0.045724730157640225,
-        "tier": "core"
+        "edge": 0.26289644732935735,
+        "tier": ""
+      },
+      {
+        "player": "Mark Vientos",
+        "team": "",
+        "line": 0.5,
+        "odds": -155,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6365244741289361,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.14007766468024774,
+        "tier": ""
+      },
+      {
+        "player": "Giancarlo Stanton",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6153255907107213,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.13253618655053434,
+        "tier": ""
       }
     ],
-    "odds": -132,
-    "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 381,
+    "hit": true,
+    "pnl": 305,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.07509824515723329,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 1.2031232483394896,
+    "tier": ""
   },
   {
     "date": "20250804",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Taylor Walls",
+        "team": "",
+        "line": 0.5,
+        "odds": -145,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.722676058099711,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2266152681910354,
+        "tier": ""
+      },
       {
         "player": "Luis Arraez",
         "team": "",
@@ -2272,7 +4194,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.08681751576521857,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Giancarlo Stanton",
@@ -2288,74 +4210,106 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.07050144709644013,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -121,
+    "odds": 209,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.22274861366524545,
-    "tier": "core"
+    "combined_prob": 0.5475628087824691,
+    "parlay_ev": 0.6909410876577402,
+    "tier": ""
   },
   {
     "date": "20250805",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
-        "player": "Jackson Merrill",
+        "player": "Taylor Walls",
         "team": "",
         "line": 0.5,
-        "odds": -290,
+        "odds": -120,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.612253067801043,
-        "hit": true,
-        "actual": 1,
+        "cascadeScore": 0.727353004461504,
+        "hit": false,
+        "actual": 0,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": 0.004331058345406147,
-        "tier": "core"
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2729974574303675,
+        "tier": ""
       },
       {
-        "player": "Shohei Ohtani",
+        "player": "Jorge Polanco",
         "team": "",
         "line": 0.5,
-        "odds": -350,
+        "odds": -175,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6046947561550675,
+        "cascadeScore": 0.7144758392482243,
         "hit": true,
         "actual": 2,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": -0.029856975842628142,
-        "tier": "core"
+        "hr_20": 0.9333333333333333,
+        "edge": 0.18208836652127658,
+        "tier": ""
+      },
+      {
+        "player": "Luis Robert Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6695018026787678,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.21845200288491284,
+        "tier": ""
       }
     ],
-    "odds": -137,
-    "hit": true,
-    "pnl": 44,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 380,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.5593855259673175,
-    "parlay_ev": -0.032786602884096516,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 1.6324763428134386,
+    "tier": ""
   },
   {
     "date": "20250806",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Jorge Polanco",
+        "team": "",
+        "line": 0.5,
+        "odds": -145,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6970994311370601,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.2266152681910354,
+        "tier": ""
+      },
       {
         "player": "Jackson Merrill",
         "team": "",
@@ -2370,40 +4324,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.045724730157640225,
-        "tier": "core"
+        "tier": ""
       },
       {
-        "player": "Shohei Ohtani",
+        "player": "Luis Robert Jr.",
         "team": "",
         "line": 0.5,
-        "odds": -300,
+        "odds": -165,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6046947561550675,
+        "cascadeScore": 0.6649735007919754,
         "hit": true,
         "actual": 1,
         "gates": 0,
         "clearance": 0.5,
-        "hr_20": 0.8666666666666667,
-        "edge": -0.0020791980648502406,
-        "tier": "core"
+        "hr_20": 0.9333333333333333,
+        "edge": 0.19581049345095058,
+        "tier": ""
       }
     ],
-    "odds": -138,
+    "odds": 251,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.0562368724351765,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.9253665338945769,
+    "tier": ""
   },
   {
     "date": "20250808",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Ian Happ",
@@ -2419,7 +4373,7 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.06042080193514976,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Luis Robert Jr.",
@@ -2435,24 +4389,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6188610811293231,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.008176759040460002,
+        "tier": ""
       }
     ],
-    "odds": 106,
+    "odds": 173,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.2613737856767189,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.24773275568566455,
+    "tier": ""
   },
   {
     "date": "20250809",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Brandon Lowe",
@@ -2468,7 +4438,7 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.03363508764943546,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Ian Happ",
@@ -2484,73 +4454,365 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.02569857971292755,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Bobby Witt Jr.",
+        "team": "",
+        "line": 0.5,
+        "odds": -330,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6188062945877447,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.01952105852996655,
+        "tier": ""
       }
     ],
-    "odds": -107,
-    "hit": true,
-    "pnl": 56,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 153,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.5593855259673175,
-    "parlay_ev": 0.08434732725972305,
-    "tier": "core"
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.056765293059215516,
+    "tier": ""
   },
   {
-    "date": "20250816",
+    "date": "20250810",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
-        "player": "Juan Soto",
+        "player": "Luke Keaschall",
         "team": "",
         "line": 0.5,
         "odds": -230,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6462654624080604,
+        "cascadeScore": 0.6797398118780492,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.12691767915421337,
+        "tier": ""
+      },
+      {
+        "player": "Brandon Lowe",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6505686534945745,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
+      },
+      {
+        "player": "Ian Happ",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6431876308165572,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1115571655715134,
+        "tier": ""
+      }
+    ],
+    "odds": 244,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.46087067323090675,
+    "parlay_ev": 0.586003784603385,
+    "tier": ""
+  },
+  {
+    "date": "20250812",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Carlos Correa",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6213889975404673,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.12148230591521592,
+        "tier": ""
+      },
+      {
+        "player": "Matt Shaw",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6094936239247905,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
+      },
+      {
+        "player": "Shohei Ohtani",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.558052008472199,
         "hit": true,
         "actual": 1,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
-        "edge": 0.05095110496545274,
-        "tier": "core"
-      },
+        "edge": -0.024806470792122948,
+        "tier": ""
+      }
+    ],
+    "odds": 183,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.2975039867264102,
+    "tier": ""
+  },
+  {
+    "date": "20250813",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
       {
-        "player": "Tyler Freeman",
+        "player": "Michael Harris II",
         "team": "",
         "line": 0.5,
-        "odds": -450,
+        "odds": -185,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.623992417557436,
+        "cascadeScore": 0.5930200622803316,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09879799491760588,
+        "tier": ""
+      },
+      {
+        "player": "TJ Friedl",
+        "team": "",
+        "line": 0.5,
+        "odds": -170,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5845613842392149,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.11829117230552022,
+        "tier": ""
+      },
+      {
+        "player": "Andrew Vaughn",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5672600809209132,
         "hit": true,
         "actual": 1,
         "gates": 0,
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
-        "edge": 0.00027018470309481124,
-        "tier": "core"
+        "edge": 0.12148230591521592,
+        "tier": ""
       }
     ],
-    "odds": -133,
+    "odds": 251,
     "hit": true,
-    "pnl": 45,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 201,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.0734581257900977,
-    "tier": "core"
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.6072318086870694,
+    "tier": ""
+  },
+  {
+    "date": "20250814",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Michael Harris II",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6114386104435194,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
+      },
+      {
+        "player": "Brayan Rocchio",
+        "team": "",
+        "line": 0.5,
+        "odds": -135,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6107319520911075,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.17345271682876673,
+        "tier": ""
+      },
+      {
+        "player": "Matt Shaw",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5966318328093517,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.14792080193514967,
+        "tier": ""
+      }
+    ],
+    "odds": 328,
+    "hit": true,
+    "pnl": 263,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.7918105105766451,
+    "tier": ""
+  },
+  {
+    "date": "20250815",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Brayan Rocchio",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6697281070455844,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.21845200288491284,
+        "tier": ""
+      },
+      {
+        "player": "Juan Soto",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6271545727712521,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
+      },
+      {
+        "player": "TJ Friedl",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5979873101651408,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
+      }
+    ],
+    "odds": 253,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.6143874965960341,
+    "tier": ""
   },
   {
     "date": "20250817",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Juan Soto",
@@ -2566,7 +4828,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Corbin Carroll",
@@ -2582,24 +4844,105 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.061603007588659775,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Tyler Freeman",
+        "team": "",
+        "line": 0.5,
+        "odds": -425,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6053128011993886,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.008928193361103398,
+        "tier": ""
       }
     ],
-    "odds": -121,
+    "odds": 125,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.11625033109626615,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.12856139431414193,
+    "tier": ""
+  },
+  {
+    "date": "20250818",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.649405007147651,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.18208836652127658,
+        "tier": ""
+      },
+      {
+        "player": "Corbin Carroll",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6171859814035602,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.05095110496545274,
+        "tier": ""
+      },
+      {
+        "player": "Lenyn Sosa",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5795875448437328,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.03363508764943546,
+        "tier": ""
+      }
+    ],
+    "odds": 216,
+    "hit": true,
+    "pnl": 173,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.44515099211251896,
+    "tier": ""
   },
   {
     "date": "20250819",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Juan Soto",
@@ -2615,40 +4958,56 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06235444190930317,
-        "tier": "core"
+        "tier": ""
       },
       {
-        "player": "Corbin Carroll",
+        "player": "Jung Hoo Lee",
         "team": "",
         "line": 0.5,
-        "odds": -230,
+        "odds": -175,
         "stat": "h",
         "statLabel": "H",
-        "cascadeScore": 0.6098699075815254,
+        "cascadeScore": 0.649405007147651,
         "hit": true,
         "actual": 2,
         "gates": 0,
         "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.18208836652127658,
+        "tier": ""
+      },
+      {
+        "player": "Brayan Rocchio",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6183255891733452,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
         "hr_20": 0.8666666666666667,
-        "edge": 0.05095110496545274,
-        "tier": "core"
+        "edge": 0.10506365907800697,
+        "tier": ""
       }
     ],
-    "odds": -111,
-    "hit": true,
-    "pnl": 54,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "odds": 223,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.1616013150045339,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.6197365351734683,
+    "tier": ""
   },
   {
     "date": "20250820",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Juan Soto",
@@ -2664,7 +5023,23 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.11256964994373653,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6444743445898699,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
       },
       {
         "player": "Lenyn Sosa",
@@ -2680,24 +5055,24 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.042038448993973354,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 101,
+    "odds": 204,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.22852551000805454,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.5211246331132509,
+    "tier": ""
   },
   {
     "date": "20250822",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jung Hoo Lee",
@@ -2713,7 +5088,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Corbin Carroll",
@@ -2729,24 +5104,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.018191072205419934,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6051072603340981,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.008176759040460002,
+        "tier": ""
       }
     ],
-    "odds": -101,
+    "odds": 164,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.22015242013172798,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.20695717543449899,
+    "tier": ""
   },
   {
     "date": "20250823",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Corbin Carroll",
@@ -2762,7 +5153,23 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06845200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Brenton Doyle",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6314301987128893,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.17559486002777014,
+        "tier": ""
       },
       {
         "player": "Gunnar Henderson",
@@ -2778,24 +5185,24 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.01952105852996655,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -136,
+    "odds": 170,
     "hit": true,
-    "pnl": 44,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 136,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.06351123106076284,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.354006728903548,
+    "tier": ""
   },
   {
     "date": "20250824",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Corbin Carroll",
@@ -2811,7 +5218,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06845200288491293,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Gunnar Henderson",
@@ -2827,24 +5234,40 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": -0.0020791980648502406,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6020082800266323,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.16932919586736905,
+        "tier": ""
       }
     ],
-    "odds": -129,
+    "odds": 174,
     "hit": true,
-    "pnl": 47,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 139,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.08824405038775751,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.3721217511363424,
+    "tier": ""
   },
   {
     "date": "20250825",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Corbin Carroll",
@@ -2860,7 +5283,23 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Riley Adams",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6144104087766306,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.14792080193514967,
+        "tier": ""
       },
       {
         "player": "Gunnar Henderson",
@@ -2876,25 +5315,106 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.004331058345406147,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -105,
+    "odds": 226,
     "hit": true,
-    "pnl": 57,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 181,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.197409597762078,
-    "tier": "core"
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.49261257767176425,
+    "tier": ""
+  },
+  {
+    "date": "20250826",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Riley Adams",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7058614422508288,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.21845200288491284,
+        "tier": ""
+      },
+      {
+        "player": "Brenton Doyle",
+        "team": "",
+        "line": 0.5,
+        "odds": -165,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6807507847734333,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.19581049345095058,
+        "tier": ""
+      },
+      {
+        "player": "Gunnar Henderson",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6668422928163295,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.045724730157640225,
+        "tier": ""
+      }
+    ],
+    "odds": 246,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.899171070848392,
+    "tier": ""
   },
   {
     "date": "20250827",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Riley Adams",
+        "team": "",
+        "line": 0.5,
+        "odds": -150,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7061268192763946,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.21845200288491284,
+        "tier": ""
+      },
       {
         "player": "Corbin Carroll",
         "team": "",
@@ -2909,7 +5429,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.1410326480462033,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Nick Gonzales",
@@ -2925,25 +5445,41 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.05095110496545274,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 112,
+    "odds": 253,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6121372783431136,
-    "parlay_ev": 0.29651435972050755,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.7685579574705002,
+    "tier": ""
   },
   {
     "date": "20250828",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6461483436353711,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09879799491760588,
+        "tier": ""
+      },
       {
         "player": "Brice Turang",
         "team": "",
@@ -2958,7 +5494,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.0887222731551831,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Jeremiah Jackson",
@@ -2974,25 +5510,106 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -101,
+    "odds": 207,
     "hit": true,
-    "pnl": 60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 166,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.3352164955137531,
-    "tier": "core"
+    "combined_prob": 0.5010049815004408,
+    "parlay_ev": 0.5384395391528689,
+    "tier": ""
+  },
+  {
+    "date": "20250829",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7091844865078961,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.13095200288491293,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -185,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6418123171257355,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.16932919586736905,
+        "tier": ""
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5877617240212757,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
+      }
+    ],
+    "odds": 210,
+    "hit": true,
+    "pnl": 168,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.7010192536825519,
+    "tier": ""
   },
   {
     "date": "20250830",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Jung Hoo Lee",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7107644826928123,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1632795890918094,
+        "tier": ""
+      },
       {
         "player": "Bobby Witt Jr.",
         "team": "",
@@ -3007,7 +5624,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.13841226248191651,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Brice Turang",
@@ -3023,24 +5640,24 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.06845200288491293,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": -131,
+    "odds": 169,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.29103860735357956,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.612786362406226,
+    "tier": ""
   },
   {
     "date": "20250831",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jeremiah Jackson",
@@ -3056,7 +5673,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.17228760123530407,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Bobby Witt Jr.",
@@ -3072,25 +5689,122 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.15766771819436842,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -166,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6235408117644688,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.12386065155920989,
+        "tier": ""
       }
     ],
-    "odds": -114,
+    "odds": 201,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.8001478242620148,
-    "parlay_ev": 0.503574482953896,
-    "tier": "core"
+    "combined_prob": 0.5984472023887114,
+    "parlay_ev": 0.8019971830963144,
+    "tier": ""
+  },
+  {
+    "date": "20250901",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7105361329913055,
+        "hit": true,
+        "actual": 3,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.27912520807291086,
+        "tier": ""
+      },
+      {
+        "player": "Elly De La Cruz",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6274242118220502,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.02569857971292755,
+        "tier": ""
+      },
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5859992952078241,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.12148230591521592,
+        "tier": ""
+      }
+    ],
+    "odds": 223,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5475628087824692,
+    "parlay_ev": 0.7676755892216669,
+    "tier": ""
   },
   {
     "date": "20250902",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -180,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6887155199372614,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.2516526806003835,
+        "tier": ""
+      },
       {
         "player": "Elly De La Cruz",
         "team": "",
@@ -3105,7 +5819,7 @@
         "clearance": 0.5,
         "hr_20": 0.8666666666666667,
         "edge": 0.05095110496545274,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Brandon Nimmo",
@@ -3121,24 +5835,24 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.19754012648782926,
-        "tier": "core"
+        "tier": ""
       }
     ],
-    "odds": 106,
+    "odds": 220,
     "hit": true,
-    "pnl": 64,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 176,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6690225044992223,
-    "parlay_ev": 0.3772504865777939,
-    "tier": "core"
+    "combined_prob": 0.5984472023887114,
+    "parlay_ev": 0.9163885838307695,
+    "tier": ""
   },
   {
     "date": "20250903",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Jeremiah Jackson",
@@ -3154,7 +5868,7 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.22784315679085965,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Nick Gonzales",
@@ -3170,24 +5884,40 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6286110236869535,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.16478009372779645,
+        "tier": ""
       }
     ],
-    "odds": 118,
+    "odds": 199,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.5973382326015464,
-    "tier": "core"
+    "combined_prob": 0.6548825893712513,
+    "parlay_ev": 0.9580327924635392,
+    "tier": ""
   },
   {
     "date": "20250905",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Nick Gonzales",
@@ -3203,7 +5933,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.12148230591521592,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Brandon Nimmo",
@@ -3219,24 +5949,495 @@
         "clearance": 0.5,
         "hr_20": 1.0,
         "edge": 0.21709046861881665,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5581955934934045,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
       }
     ],
-    "odds": 112,
+    "odds": 190,
     "hit": true,
-    "pnl": 67,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": 152,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.7321133566090422,
-    "parlay_ev": 0.5506251838738099,
-    "tier": "core"
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.7391538754154192,
+    "tier": ""
+  },
+  {
+    "date": "20250906",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7029034756440302,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      },
+      {
+        "player": "Brandon Nimmo",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6704727305842282,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 1.0,
+        "edge": 0.18862747051634987,
+        "tier": ""
+      },
+      {
+        "player": "Trevor Larnach",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5987359965128535,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.13095200288491293,
+        "tier": ""
+      }
+    ],
+    "odds": 212,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5991996430554671,
+    "parlay_ev": 0.8679012959895369,
+    "tier": ""
+  },
+  {
+    "date": "20250907",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -195,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.7284801026066812,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.15743505373237054,
+        "tier": ""
+      },
+      {
+        "player": "Brice Turang",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5807968665697645,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
+      },
+      {
+        "player": "Jeremiah Jackson",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5800283184350433,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.09622978066269072,
+        "tier": ""
+      }
+    ],
+    "odds": 187,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.5737442806800193,
+    "tier": ""
+  },
+  {
+    "date": "20250911",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Daylen Lile",
+        "team": "",
+        "line": 0.5,
+        "odds": -230,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5897147672869344,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.05095110496545274,
+        "tier": ""
+      },
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -310,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5559273025430046,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.008176759040460002,
+        "tier": ""
+      },
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5539376462357531,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
+      }
+    ],
+    "odds": 176,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.15478837036082282,
+    "tier": ""
+  },
+  {
+    "date": "20250912",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Daylen Lile",
+        "team": "",
+        "line": 0.5,
+        "odds": -290,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5771901223124813,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.004331058345406147,
+        "tier": ""
+      },
+      {
+        "player": "Nick Gonzales",
+        "team": "",
+        "line": 0.5,
+        "odds": -340,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5634629704680547,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.024806470792122948,
+        "tier": ""
+      },
+      {
+        "player": "Juan Soto",
+        "team": "",
+        "line": 0.5,
+        "odds": -175,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5624654565040318,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.1115571655715134,
+        "tier": ""
+      }
+    ],
+    "odds": 173,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.14419975651261452,
+    "tier": ""
+  },
+  {
+    "date": "20250915",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jackson Holliday",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5803389647080698,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.03363508764943546,
+        "tier": ""
+      },
+      {
+        "player": "Daylen Lile",
+        "team": "",
+        "line": 0.5,
+        "odds": -220,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5745979601469972,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.06042080193514976,
+        "tier": ""
+      },
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5531573564188289,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.0020791980648502406,
+        "tier": ""
+      }
+    ],
+    "odds": 172,
+    "hit": true,
+    "pnl": 137,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.13595442354685705,
+    "tier": ""
+  },
+  {
+    "date": "20250916",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Jackson Holliday",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.6457752965141538,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.10416628859919863,
+        "tier": ""
+      },
+      {
+        "player": "Bryson Stott",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5904065446495818,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.13253618655053434,
+        "tier": ""
+      },
+      {
+        "player": "Daylen Lile",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5808198044202775,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
+      }
+    ],
+    "odds": 247,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.5897551429653032,
+    "tier": ""
+  },
+  {
+    "date": "20250918",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Nico Hoerner",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5988420786066712,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
+      },
+      {
+        "player": "Austin Hays",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5766259201127351,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.03363508764943546,
+        "tier": ""
+      },
+      {
+        "player": "Vinnie Pasquantino",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.563718401315569,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.03363508764943546,
+        "tier": ""
+      }
+    ],
+    "odds": 169,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.2296980148984782,
+    "tier": ""
   },
   {
     "date": "20250920",
     "betType": "parlay",
-    "n_legs": 2,
+    "n_legs": 3,
     "legs": [
       {
         "player": "Austin Hays",
@@ -3252,7 +6453,7 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.12148230591521592,
-        "tier": "core"
+        "tier": ""
       },
       {
         "player": "Luke Keaschall",
@@ -3268,18 +6469,359 @@
         "clearance": 0.5,
         "hr_20": 0.9333333333333333,
         "edge": 0.13095200288491293,
-        "tier": "core"
+        "tier": ""
+      },
+      {
+        "player": "Vinnie Pasquantino",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5940641810964044,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1410326480462033,
+        "tier": ""
       }
     ],
-    "odds": 109,
+    "odds": 208,
     "hit": false,
-    "pnl": -60,
-    "wager": 60,
-    "bet": "V8 CORE 2-Leg [mlb]",
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
     "engine": "v8_cspe_mlb",
     "source": "backtest",
-    "combined_prob": 0.6698636810263255,
-    "parlay_ev": 0.3979763777940706,
-    "tier": "core"
+    "combined_prob": 0.5482512713958566,
+    "parlay_ev": 0.6890225503872354,
+    "tier": ""
+  },
+  {
+    "date": "20250921",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Miguel Rojas",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.581561799766502,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
+      },
+      {
+        "player": "Carlos Correa",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5760282884473581,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.07050144709644013,
+        "tier": ""
+      },
+      {
+        "player": "Vinnie Pasquantino",
+        "team": "",
+        "line": 0.5,
+        "odds": -210,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5738767673731954,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.1410326480462033,
+        "tier": ""
+      }
+    ],
+    "odds": 222,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.47275883929639084,
+    "tier": ""
+  },
+  {
+    "date": "20250923",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Luke Keaschall",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.572347397040347,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.042038448993973354,
+        "tier": ""
+      },
+      {
+        "player": "Connor Norby",
+        "team": "",
+        "line": 0.5,
+        "odds": -160,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5692543035428943,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.13253618655053434,
+        "tier": ""
+      },
+      {
+        "player": "Josh Naylor",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5632504556522518,
+        "hit": true,
+        "actual": 2,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.042038448993973354,
+        "tier": ""
+      }
+    ],
+    "odds": 226,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4183760711723916,
+    "parlay_ev": 0.36444348905787805,
+    "tier": ""
+  },
+  {
+    "date": "20250925",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Julio Rodriguez",
+        "team": "",
+        "line": 0.5,
+        "odds": -380,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5831032695343576,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.04374586473151698,
+        "tier": ""
+      },
+      {
+        "player": "Austin Martin",
+        "team": "",
+        "line": 0.5,
+        "odds": -240,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5575457334751912,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.042038448993973354,
+        "tier": ""
+      },
+      {
+        "player": "Shohei Ohtani",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5547049463431376,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
+      }
+    ],
+    "odds": 145,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.45783020411278147,
+    "parlay_ev": 0.12271032509528079,
+    "tier": ""
+  },
+  {
+    "date": "20250927",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Miguel Rojas",
+        "team": "",
+        "line": 0.5,
+        "odds": -145,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5935611526667499,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.15608406724127222,
+        "tier": ""
+      },
+      {
+        "player": "Luis Arraez",
+        "team": "",
+        "line": 0.5,
+        "odds": -270,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.574462358102158,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.0887222731551831,
+        "tier": ""
+      },
+      {
+        "player": "Ivan Herrera",
+        "team": "",
+        "line": 0.5,
+        "odds": -300,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.564757458940294,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": -0.0020791980648502406,
+        "tier": ""
+      }
+    ],
+    "odds": 209,
+    "hit": true,
+    "pnl": 167,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.4134459941361819,
+    "tier": ""
+  },
+  {
+    "date": "20250928",
+    "betType": "parlay",
+    "n_legs": 3,
+    "legs": [
+      {
+        "player": "Francisco Lindor",
+        "team": "",
+        "line": 0.5,
+        "odds": -250,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.625789553875303,
+        "hit": true,
+        "actual": 1,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.9333333333333333,
+        "edge": 0.10416628859919863,
+        "tier": ""
+      },
+      {
+        "player": "Ivan Herrera",
+        "team": "",
+        "line": 0.5,
+        "odds": -260,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5817566126824902,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.02569857971292755,
+        "tier": ""
+      },
+      {
+        "player": "Josh Bell",
+        "team": "",
+        "line": 0.5,
+        "odds": -190,
+        "stat": "h",
+        "statLabel": "H",
+        "cascadeScore": 0.5662384242406644,
+        "hit": false,
+        "actual": 0,
+        "gates": 0,
+        "clearance": 0.5,
+        "hr_20": 0.8666666666666667,
+        "edge": 0.09274838814204622,
+        "tier": ""
+      }
+    ],
+    "odds": 196,
+    "hit": false,
+    "pnl": -80,
+    "wager": 80,
+    "bet": "V8 AMP 3-Leg [mlb]",
+    "engine": "v8_cspe_mlb",
+    "source": "backtest",
+    "combined_prob": 0.4578302041127815,
+    "parlay_ev": 0.35458426382842356,
+    "tier": ""
   }
 ]
