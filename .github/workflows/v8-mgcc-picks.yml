@@ -1,0 +1,57 @@
+name: V8 MGCC Picks Generation
+
+on:
+  schedule:
+    # Run 45 minutes after the original cron to ensure fresh data
+    # 16:45 UTC = 12:45 PM EST (Nov-Mar), 17:45 UTC = 12:45 PM EDT (Mar-Nov)
+    - cron: '45 16 * * *'
+    - cron: '45 17 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  v8-mgcc-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check if already ran today
+        id: check
+        run: |
+          TODAY=$(TZ=America/New_York date '+%Y-%m-%d')
+          if git log -5 --format=%s | grep -q "V8 MGCC picks: $TODAY"; then
+            echo "already_ran=true" >> $GITHUB_OUTPUT
+          else
+            echo "already_ran=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull latest data
+        if: steps.check.outputs.already_ran == 'false'
+        run: git pull --rebase origin $(git branch --show-current) || true
+
+      - name: Run V8 MGCC models
+        if: steps.check.outputs.already_ran == 'false'
+        run: python3 experiments/scripts/generate_v8_picks.py
+        env:
+          TZ: America/New_York
+
+      - name: Commit and push V8 MGCC picks
+        if: steps.check.outputs.already_ran == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add webapp/v8-mgcc/data/nba_v8_signals.json \
+                  webapp/v8-mgcc/data/nba_v8_stats.json \
+                  webapp/v8-mgcc/data/nba_v8_recommendations.json \
+                  webapp/v8-mgcc/data/mlb_v8_signals.json \
+                  webapp/v8-mgcc/data/mlb_v8_stats.json \
+                  webapp/v8-mgcc/data/mlb_v8_recommendations.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "V8 MGCC picks: $(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')"
+          git push

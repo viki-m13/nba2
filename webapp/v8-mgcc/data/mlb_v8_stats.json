@@ -1,0 +1,27 @@
+{
+  "parlays": {
+    "total": 11,
+    "wins": 3,
+    "accuracy": 0.2727272727272727,
+    "pnl": -728,
+    "roi": -0.4412121212121212,
+    "leg_total": 22,
+    "leg_hits": 12,
+    "leg_accuracy": 0.5454545454545454
+  },
+  "by_legs": {
+    "all_2L_2L": {
+      "total": 11,
+      "wins": 3,
+      "pnl": -728,
+      "wagered": 1650,
+      "legs_total": 22,
+      "legs_hits": 12,
+      "accuracy": 0.2727272727272727,
+      "roi": -0.4412121212121212,
+      "leg_accuracy": 0.5454545454545454
+    }
+  },
+  "model": "MLB V8 MGCC",
+  "generated": "2026-03-19T04:24:33.035807"
+}

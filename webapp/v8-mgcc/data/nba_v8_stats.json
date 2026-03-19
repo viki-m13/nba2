@@ -1,0 +1,50 @@
+{
+  "parlays": {
+    "total": 140,
+    "wins": 109,
+    "accuracy": 0.7785714285714286,
+    "pnl": 853,
+    "roi": 0.0408133971291866,
+    "leg_total": 286,
+    "leg_hits": 255,
+    "leg_accuracy": 0.8916083916083916
+  },
+  "by_legs": {
+    "pts_2L_2L": {
+      "total": 47,
+      "wins": 39,
+      "accuracy": 0.8297872340425532,
+      "pnl": 1010,
+      "wagered": 7050,
+      "roi": 0.14326241134751774,
+      "leg_total": 94,
+      "leg_hits": 86,
+      "leg_accuracy": 0.9148936170212766
+    },
+    "pts_5L_5L": {
+      "total": 2,
+      "wins": 2,
+      "accuracy": 1.0,
+      "pnl": 204,
+      "wagered": 200,
+      "roi": 1.02,
+      "leg_total": 10,
+      "leg_hits": 10,
+      "leg_accuracy": 1.0
+    },
+    "all_2L_2L": {
+      "total": 91,
+      "wins": 68,
+      "accuracy": 0.7472527472527473,
+      "pnl": -361,
+      "wagered": 13650,
+      "roi": -0.026446886446886447,
+      "leg_total": 182,
+      "leg_hits": 159,
+      "leg_accuracy": 0.8736263736263736
+    }
+  },
+  "model": "NBA V8 MGCC (Multi-Gate Certainty Cascade)",
+  "innovation": "7-Gate Hierarchical Evidence Stacking with Confidence-Ranked Selection",
+  "generated": "2026-03-19T04:24:29.189904"
+}
