@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-20T20:19:30.609Z",
+  "generated": "2026-03-20T21:18:36.869Z",
   "date": "20260320",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "multi_single",
-    "reasoning": "2 strong-confidence pick(s) found",
+    "betType": "single",
+    "reasoning": "1 strong-confidence pick(s) found",
     "singles": [
       {
         "player": "Reed Sheppard",
@@ -66,6 +66,27 @@
         "ev": 0.04008969894595871,
         "avg": 6.8,
         "floor": 5.950704603927701,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null
+      },
+      {
+        "player": "Gary Payton II",
+        "team": "GS",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 6.5,
+        "odds": -390,
+        "cascadeScore": 0.5178704765644816,
+        "gft": 0.6232014244678097,
+        "beq": 0.05630958634360428,
+        "esi": 0.15604446617141715,
+        "imad": 0.06695263004064722,
+        "hitRate": 1,
+        "edge": 0.05630958634360428,
+        "ev": 0.07074794181632327,
+        "avg": 13.909090909090908,
+        "floor": 10.672224219686768,
         "betSubType": "multi_single",
         "hit": null,
         "actual": null
