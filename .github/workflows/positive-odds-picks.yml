@@ -24,8 +24,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Positive Odds models
-        run: python3 experiments/scripts/generate_picks.py
+      - name: Run Positive Odds NBA live picks
+        run: python3 experiments/scripts/seed_live_picks.py
+        env:
+          TZ: America/New_York
+
+      - name: Run Positive Odds MLB live picks
+        run: python3 experiments/scripts/seed_live_picks_mlb.py
         env:
           TZ: America/New_York
 

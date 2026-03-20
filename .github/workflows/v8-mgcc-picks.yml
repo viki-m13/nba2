@@ -24,8 +24,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run V8 CSPE models
-        run: python3 experiments/scripts/generate_v8_picks.py
+      - name: Run V8 CSPE NBA live picks
+        run: python3 experiments/scripts/seed_live_v8_picks.py
         env:
           TZ: America/New_York
 
