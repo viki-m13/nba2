@@ -240,6 +240,26 @@ async function resolveResults() {
   }
 }
 
+// Helper: only write empty recommendations if no prior picks exist today
+function writeRecsIfEmpty(reasoning) {
+  const today = getDateStr(0);
+  let existingRecs = null;
+  try {
+    existingRecs = JSON.parse(fs.readFileSync(RECS_FILE, 'utf8'));
+  } catch (e) { /* no existing */ }
+  if (existingRecs && existingRecs.date === today &&
+      ((existingRecs.recommendation.singles || []).length > 0 ||
+       (existingRecs.recommendation.parlays || []).length > 0)) {
+    console.log(`Keeping ${(existingRecs.recommendation.singles || []).length} singles and ${(existingRecs.recommendation.parlays || []).length} parlays from earlier runs.`);
+    return;
+  }
+  fs.writeFileSync(RECS_FILE, JSON.stringify({
+    generated: new Date().toISOString(), date: today,
+    engine: 'Ultra Engine v1.0', config_version: 'optimized',
+    recommendation: { betType: 'none', reasoning, singles: [], parlays: [] },
+  }, null, 2));
+}
+
 async function main() {
   console.log('\n' + '='.repeat(60));
   console.log('ULTRA BETTING ENGINE v1.0 — Seed Live Picks');
@@ -294,13 +314,7 @@ async function main() {
 
   if (!events || events.length === 0) {
     console.log('No games scheduled tonight.');
-    // Write empty recommendations so the webapp knows the cron ran today
-    const today = getDateStr(0);
-    fs.writeFileSync(RECS_FILE, JSON.stringify({
-      generated: new Date().toISOString(), date: today,
-      engine: 'Ultra Engine v1.0', config_version: 'optimized',
-      recommendation: { betType: 'none', reasoning: 'No games scheduled tonight', singles: [], parlays: [] },
-    }, null, 2));
+    writeRecsIfEmpty('No games scheduled tonight');
     return;
   }
 
@@ -361,12 +375,7 @@ async function main() {
 
   if (Object.keys(liveOdds.playerProps).length === 0) {
     console.log('\nNo FanDuel player props available. Props typically open 1-2 hours before game time.');
-    const today = getDateStr(0);
-    fs.writeFileSync(RECS_FILE, JSON.stringify({
-      generated: new Date().toISOString(), date: today,
-      engine: 'Ultra Engine v1.0', config_version: 'optimized',
-      recommendation: { betType: 'none', reasoning: 'No FanDuel player props available yet', singles: [], parlays: [] },
-    }, null, 2));
+    writeRecsIfEmpty('No FanDuel player props available yet');
     return;
   }
 
@@ -376,12 +385,7 @@ async function main() {
 
   if (!recommendation || (recommendation.singles.length === 0 && recommendation.parlays.length === 0)) {
     console.log('No bets meet Ultra Engine quality thresholds tonight.');
-    const today = getDateStr(0);
-    fs.writeFileSync(RECS_FILE, JSON.stringify({
-      generated: new Date().toISOString(), date: today,
-      engine: 'Ultra Engine v1.0', config_version: 'optimized',
-      recommendation: { betType: 'none', reasoning: 'No bets meet quality thresholds tonight', singles: [], parlays: [] },
-    }, null, 2));
+    writeRecsIfEmpty('No bets meet quality thresholds tonight');
     return;
   }
 
@@ -395,11 +399,39 @@ async function main() {
     existingSignals = JSON.parse(fs.readFileSync(SIGNALS_FILE, 'utf8'));
   } catch (e) { /* no existing signals */ }
 
-  // Remove today's existing live signals (avoid duplicates)
-  existingSignals = existingSignals.filter(s => !(s.date === today && s.source === 'live'));
   // Tag live signals so they're never overwritten by backtest exports
-  for (const sig of newSignals) sig.source = 'live';
-  existingSignals.push(...newSignals);
+  for (const sig of newSignals) {
+    sig.source = 'live';
+    sig.generated_at = new Date().toISOString();
+  }
+
+  // Merge with today's existing live signals — keep prior picks, add new unique ones
+  // A pick is a duplicate if same player+line+stat+betType on the same date
+  const todayExistingLive = existingSignals.filter(s => s.date === today && s.source === 'live');
+  const existingKeys = new Set();
+  for (const s of todayExistingLive) {
+    if (s.betType === 'single') {
+      existingKeys.add(`${s.player}|${s.line}|${s.stat || 'pts'}|single`);
+    } else if (s.betType === 'parlay' && s.legs) {
+      const legKey = s.legs.map(l => `${l.player}|${l.line}|${l.stat || 'pts'}`).sort().join('~');
+      existingKeys.add(`parlay|${legKey}`);
+    }
+  }
+
+  // Only add truly new picks (not already generated in a prior run today)
+  const uniqueNewSignals = newSignals.filter(s => {
+    let key;
+    if (s.betType === 'single') {
+      key = `${s.player}|${s.line}|${s.stat || 'pts'}|single`;
+    } else if (s.betType === 'parlay' && s.legs) {
+      const legKey = s.legs.map(l => `${l.player}|${l.line}|${l.stat || 'pts'}`).sort().join('~');
+      key = `parlay|${legKey}`;
+    }
+    return !existingKeys.has(key);
+  });
+
+  // Keep everything except backtest signals for live dates
+  existingSignals.push(...uniqueNewSignals);
 
   // Remove backtest signals for any date that has live picks (backtest signals
   // for live dates are retroactive and were never shown to the user)
@@ -408,8 +440,29 @@ async function main() {
 
   fs.writeFileSync(SIGNALS_FILE, JSON.stringify(existingSignals, null, 2));
 
-  // Save recommendations — store the full recommendation object so the webapp
-  // can render directly without re-fetching live odds (ensures consistency)
+  // Save recommendations — accumulate picks across multiple runs per day
+  // Load existing recommendations and merge today's new picks
+  let existingRecs = { recommendation: { singles: [], parlays: [] } };
+  try {
+    const prevRecs = JSON.parse(fs.readFileSync(RECS_FILE, 'utf8'));
+    if (prevRecs.date === today) {
+      existingRecs = prevRecs;
+    }
+  } catch (e) { /* no existing recs */ }
+
+  const prevSingles = existingRecs.recommendation.singles || [];
+  const prevParlays = existingRecs.recommendation.parlays || [];
+
+  // Build dedup keys for existing recs
+  const existingRecKeys = new Set();
+  for (const s of prevSingles) {
+    existingRecKeys.add(`${s.player}|${s.line}|${s.statType || 'pts'}|single`);
+  }
+  for (const p of prevParlays) {
+    const legKey = (p.legs || []).map(l => `${l.player}|${l.line}|${l.statType || 'pts'}`).sort().join('~');
+    existingRecKeys.add(`parlay|${legKey}`);
+  }
+
   const recsOutput = {
     generated: new Date().toISOString(),
     date: today,
@@ -418,7 +471,10 @@ async function main() {
     recommendation: {
       betType: recommendation.betType,
       reasoning: recommendation.reasoning,
-      singles: recommendation.singles.map(s => ({
+      singles: [...prevSingles, ...recommendation.singles.filter(s => {
+        const key = `${s.player}|${s.line}|${s.statType || 'pts'}|single`;
+        return !existingRecKeys.has(key);
+      }).map(s => ({
         player: s.player,
         team: s.team,
         statType: s.statType,
@@ -438,8 +494,11 @@ async function main() {
         betSubType: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
         hit: null,
         actual: null,
-      })),
-      parlays: recommendation.parlays.map(p => ({
+      }))],
+      parlays: [...prevParlays, ...recommendation.parlays.filter(p => {
+        const legKey = (p.legs || []).map(l => `${l.player}|${l.line}|${l.statType || 'pts'}`).sort().join('~');
+        return !existingRecKeys.has(`parlay|${legKey}`);
+      }).map(p => ({
         numLegs: p.numLegs,
         odds: p.odds,
         decimalOdds: p.decimalOdds,
@@ -463,7 +522,7 @@ async function main() {
           hit: null,
           actual: null,
         })),
-      })),
+      }))],
     },
   };
 

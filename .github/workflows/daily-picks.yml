@@ -2,12 +2,23 @@ name: Daily Picks Generation
 
 on:
   schedule:
-    # Noon Eastern Time — use both offsets to cover EST and EDT
-    # 17:00 UTC = noon EST (Nov-Mar), 16:00 UTC = noon EDT (Mar-Nov)
-    # The Odds API historical snapshot is at T17:00:00Z but player props
-    # are available earlier, and we need fresh box scores for the model.
+    # Multiple runs per day to capture changing odds.
+    # Weekdays (Mon-Fri): noon, 3 PM, 5 PM, 7 PM Eastern
+    # Weekends (Sat-Sun): noon only
+    # EST (Nov-Mar) offsets: noon=17, 3PM=20, 5PM=22, 7PM=00+1
+    # EDT (Mar-Nov) offsets: noon=16, 3PM=19, 5PM=21, 7PM=23
+    # -- Noon every day (EST + EDT) --
     - cron: '0 16 * * *'
     - cron: '0 17 * * *'
+    # -- 3 PM weekdays (EST + EDT) --
+    - cron: '0 19 * * 1-5'
+    - cron: '0 20 * * 1-5'
+    # -- 5 PM weekdays (EST + EDT) --
+    - cron: '0 21 * * 1-5'
+    - cron: '0 22 * * 1-5'
+    # -- 7 PM weekdays (EST + EDT) --
+    - cron: '0 23 * * 1-5'
+    - cron: '0 0 * * 2-6'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -31,30 +42,17 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Check if already ran today
-        id: check
-        run: |
-          TODAY=$(TZ=America/New_York date '+%Y-%m-%d')
-          if git log -5 --format=%s | grep -q "Daily picks: $TODAY"; then
-            echo "already_ran=true" >> $GITHUB_OUTPUT
-          else
-            echo "already_ran=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Run NBA daily picks
-        if: steps.check.outputs.already_ran == 'false'
         run: bash scripts/daily-picks.sh
         env:
           TZ: America/New_York
 
       - name: Run MLB daily picks
-        if: steps.check.outputs.already_ran == 'false'
         run: bash mlb/scripts/daily-picks-mlb.sh
         env:
           TZ: America/New_York
 
       - name: Commit and push updated picks
-        if: steps.check.outputs.already_ran == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
