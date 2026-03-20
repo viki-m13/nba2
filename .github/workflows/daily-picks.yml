@@ -2,23 +2,10 @@ name: Daily Picks Generation
 
 on:
   schedule:
-    # Multiple runs per day to capture changing odds.
-    # Weekdays (Mon-Fri): noon, 3 PM, 5 PM, 7 PM Eastern
-    # Weekends (Sat-Sun): noon only
-    # EST (Nov-Mar) offsets: noon=17, 3PM=20, 5PM=22, 7PM=00+1
-    # EDT (Mar-Nov) offsets: noon=16, 3PM=19, 5PM=21, 7PM=23
-    # -- Noon every day (EST + EDT) --
-    - cron: '0 16 * * *'
-    - cron: '0 17 * * *'
-    # -- 3 PM weekdays (EST + EDT) --
-    - cron: '0 19 * * 1-5'
-    - cron: '0 20 * * 1-5'
-    # -- 5 PM weekdays (EST + EDT) --
-    - cron: '0 21 * * 1-5'
-    - cron: '0 22 * * 1-5'
-    # -- 7 PM weekdays (EST + EDT) --
-    - cron: '0 23 * * 1-5'
-    - cron: '0 0 * * 2-6'
+    # Hourly from noon ET until after last tipoff (~10 PM ET).
+    # Covers both EST (UTC-5, Nov-Mar) and EDT (UTC-4, Mar-Nov).
+    # noon ET = 16-17 UTC, 10 PM ET = 02-03 UTC next day.
+    - cron: '0 0-3,16-23 * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
