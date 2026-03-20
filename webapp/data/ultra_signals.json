@@ -2120,5 +2120,32 @@
     "pnl": 103,
     "bet": "2-Leg Parlay",
     "engine": "ultra"
+  },
+  {
+    "date": "20260320",
+    "betType": "single",
+    "tier": "FORTRESS",
+    "engine": "ultra",
+    "player": "Deni Avdija",
+    "team": "POR",
+    "stat": "reb",
+    "statLabel": "REB",
+    "line": 4.5,
+    "odds": -320,
+    "cascadeScore": 0.47265058076727023,
+    "gft": 0.4937530224563248,
+    "beq": 0.030544532530254354,
+    "esi": 0.21754490198352655,
+    "imad": 0.031773793628548194,
+    "hitRate": 0.9,
+    "edge": 0.030544532530254354,
+    "ev": 0.04008969894595871,
+    "avg": 6.8,
+    "floor": 5.950704603927701,
+    "bet": "Deni Avdija O4.5 REB",
+    "hit": null,
+    "actual": null,
+    "source": "live",
+    "generated_at": "2026-03-20T19:26:23.828Z"
   }
 ]
