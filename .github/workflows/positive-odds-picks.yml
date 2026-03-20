@@ -2,10 +2,21 @@ name: Positive Odds Picks Generation
 
 on:
   schedule:
-    # Run 30 minutes after the original cron to ensure fresh data is available
-    # 16:30 UTC = 12:30 PM EST (Nov-Mar), 17:30 UTC = 12:30 PM EDT (Mar-Nov)
+    # Multiple runs per day to capture changing odds.
+    # Weekdays (Mon-Fri): noon, 3 PM, 5 PM, 7 PM Eastern (+30min offset)
+    # Weekends (Sat-Sun): noon only
+    # -- Noon every day (EST + EDT) --
     - cron: '30 16 * * *'
     - cron: '30 17 * * *'
+    # -- 3 PM weekdays (EST + EDT) --
+    - cron: '30 19 * * 1-5'
+    - cron: '30 20 * * 1-5'
+    # -- 5 PM weekdays (EST + EDT) --
+    - cron: '30 21 * * 1-5'
+    - cron: '30 22 * * 1-5'
+    # -- 7 PM weekdays (EST + EDT) --
+    - cron: '30 23 * * 1-5'
+    - cron: '30 0 * * 2-6'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -25,25 +36,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Check if already ran today
-        id: check
-        run: |
-          TODAY=$(TZ=America/New_York date '+%Y-%m-%d')
-          # Check last 5 commits for today's positive odds run
-          if git log -5 --format=%s | grep -q "Positive odds picks: $TODAY"; then
-            echo "already_ran=true" >> $GITHUB_OUTPUT
-          else
-            echo "already_ran=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Run Positive Odds models
-        if: steps.check.outputs.already_ran == 'false'
         run: python3 experiments/scripts/generate_picks.py
         env:
           TZ: America/New_York
 
       - name: Commit and push positive odds picks
-        if: steps.check.outputs.already_ran == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
