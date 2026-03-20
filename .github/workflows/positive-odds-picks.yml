@@ -2,21 +2,9 @@ name: Positive Odds Picks Generation
 
 on:
   schedule:
-    # Multiple runs per day to capture changing odds.
-    # Weekdays (Mon-Fri): noon, 3 PM, 5 PM, 7 PM Eastern (+30min offset)
-    # Weekends (Sat-Sun): noon only
-    # -- Noon every day (EST + EDT) --
-    - cron: '30 16 * * *'
-    - cron: '30 17 * * *'
-    # -- 3 PM weekdays (EST + EDT) --
-    - cron: '30 19 * * 1-5'
-    - cron: '30 20 * * 1-5'
-    # -- 5 PM weekdays (EST + EDT) --
-    - cron: '30 21 * * 1-5'
-    - cron: '30 22 * * 1-5'
-    # -- 7 PM weekdays (EST + EDT) --
-    - cron: '30 23 * * 1-5'
-    - cron: '30 0 * * 2-6'
+    # Hourly from noon ET until after last tipoff (~10 PM ET), offset +30min.
+    # Covers both EST (UTC-5) and EDT (UTC-4).
+    - cron: '30 0-3,16-23 * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -36,8 +24,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Positive Odds models
-        run: python3 experiments/scripts/generate_picks.py
+      - name: Run Positive Odds NBA live picks
+        run: python3 experiments/scripts/seed_live_picks.py
+        env:
+          TZ: America/New_York
+
+      - name: Run Positive Odds MLB live picks
+        run: python3 experiments/scripts/seed_live_picks_mlb.py
         env:
           TZ: America/New_York
 

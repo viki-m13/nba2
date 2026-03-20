@@ -627,6 +627,20 @@ def format_signal(pick):
         }
 
 
+def _write_recs_if_empty(recs_file, today, engine):
+    """Only write empty recs if no prior picks exist for today."""
+    try:
+        prev = json.loads(open(recs_file).read())
+        if prev.get('date') == today and prev.get('picks'):
+            print(f'Keeping {len(prev["picks"])} picks from earlier runs.')
+            return
+    except Exception:
+        pass
+    with open(recs_file, 'w') as f:
+        json.dump({'generated': datetime.now().isoformat(), 'date': today,
+                   'engine': engine, 'picks': []}, f, indent=2)
+
+
 def main():
     print('\n' + '=' * 60)
     print('POSITIVE ODDS — NBA Live Picks')
@@ -659,13 +673,7 @@ def main():
 
     if not live_odds:
         print('No live odds available.')
-        with open(RECS_FILE, 'w') as f:
-            json.dump({
-                'generated': datetime.now().isoformat(),
-                'date': today,
-                'engine': 'NBA Positive Odds HECE v1',
-                'picks': [],
-            }, f, indent=2)
+        _write_recs_if_empty(RECS_FILE, today, 'NBA Positive Odds HECE v1')
         return
 
     # Generate picks
@@ -675,17 +683,13 @@ def main():
     all_picks = single_picks + parlay_picks
     if not all_picks:
         print('No bets meet quality thresholds tonight.')
-        with open(RECS_FILE, 'w') as f:
-            json.dump({
-                'generated': datetime.now().isoformat(),
-                'date': today,
-                'engine': 'NBA Positive Odds HECE v1',
-                'picks': [],
-            }, f, indent=2)
+        _write_recs_if_empty(RECS_FILE, today, 'NBA Positive Odds HECE v1')
         return
 
     # Format signals
     new_signals = [format_signal(p) for p in all_picks]
+    for sig in new_signals:
+        sig['generated_at'] = datetime.now().isoformat()
 
     # Load existing signals and merge
     try:
@@ -694,9 +698,29 @@ def main():
     except (FileNotFoundError, json.JSONDecodeError):
         existing_signals = []
 
-    # Remove today's existing live signals (avoid duplicates)
-    existing_signals = [s for s in existing_signals if not (s.get('date') == today and s.get('source') == 'live')]
-    existing_signals.extend(new_signals)
+    # Accumulate: keep prior live picks, add only unique new ones
+    today_existing_live = [s for s in existing_signals if s.get('date') == today and s.get('source') == 'live']
+    existing_keys = set()
+    for s in today_existing_live:
+        if s.get('betType') == 'single':
+            existing_keys.add(f"{s.get('player')}|{s.get('line')}|{s.get('stat', 'pts')}|single")
+        elif s.get('betType') == 'parlay' and s.get('legs'):
+            leg_key = '~'.join(sorted(f"{l.get('player')}|{l.get('line')}|{l.get('stat', 'pts')}" for l in s['legs']))
+            existing_keys.add(f"parlay|{leg_key}")
+
+    unique_new = []
+    for s in new_signals:
+        if s.get('betType') == 'single':
+            key = f"{s.get('player')}|{s.get('line')}|{s.get('stat', 'pts')}|single"
+        elif s.get('betType') == 'parlay' and s.get('legs'):
+            leg_key = '~'.join(sorted(f"{l.get('player')}|{l.get('line')}|{l.get('stat', 'pts')}" for l in s['legs']))
+            key = f"parlay|{leg_key}"
+        else:
+            key = None
+        if key and key not in existing_keys:
+            unique_new.append(s)
+
+    existing_signals.extend(unique_new)
 
     # Remove backtest signals for dates that have live picks
     live_dates = set(s['date'] for s in existing_signals if s.get('source') == 'live')
@@ -705,12 +729,40 @@ def main():
     with open(SIGNALS_FILE, 'w') as f:
         json.dump(existing_signals, f, indent=2)
 
-    # Save recommendations
+    # Save recommendations — accumulate across runs
+    prev_picks = []
+    try:
+        prev_recs = json.loads(open(RECS_FILE).read())
+        if prev_recs.get('date') == today:
+            prev_picks = prev_recs.get('picks', [])
+    except Exception:
+        pass
+
+    # Dedup recommendations
+    prev_keys = set()
+    for s in prev_picks:
+        if s.get('betType') == 'single':
+            prev_keys.add(f"{s.get('player')}|{s.get('line')}|{s.get('stat', 'pts')}|single")
+        elif s.get('betType') == 'parlay' and s.get('legs'):
+            leg_key = '~'.join(sorted(f"{l.get('player')}|{l.get('line')}|{l.get('stat', 'pts')}" for l in s['legs']))
+            prev_keys.add(f"parlay|{leg_key}")
+    merged_picks = list(prev_picks)
+    for s in new_signals:
+        if s.get('betType') == 'single':
+            key = f"{s.get('player')}|{s.get('line')}|{s.get('stat', 'pts')}|single"
+        elif s.get('betType') == 'parlay' and s.get('legs'):
+            leg_key = '~'.join(sorted(f"{l.get('player')}|{l.get('line')}|{l.get('stat', 'pts')}" for l in s['legs']))
+            key = f"parlay|{leg_key}"
+        else:
+            key = None
+        if key and key not in prev_keys:
+            merged_picks.append(s)
+
     recommendations = {
         'generated': datetime.now().isoformat(),
         'date': today,
         'engine': 'NBA Positive Odds HECE v1',
-        'picks': new_signals,
+        'picks': merged_picks,
     }
     with open(RECS_FILE, 'w') as f:
         json.dump(recommendations, f, indent=2)
