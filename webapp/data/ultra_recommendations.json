@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-21T20:16:24.925Z",
+  "generated": "2026-03-21T21:17:29.673Z",
   "date": "20260321",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "multi_single",
-    "reasoning": "2 strong-confidence pick(s) found",
+    "betType": "parlay",
+    "reasoning": "2 strong candidates for EMPC parlay construction",
     "singles": [
       {
         "player": "Pascal Siakam",
@@ -50,6 +50,51 @@
         "actual": null
       }
     ],
-    "parlays": []
+    "parlays": [
+      {
+        "numLegs": 2,
+        "odds": -179,
+        "decimalOdds": 1.56,
+        "avgCascade": 0.5308359315526305,
+        "combinedHitRate": 0.95,
+        "ev": 0.481,
+        "legs": [
+          {
+            "player": "Pascal Siakam",
+            "team": "IND",
+            "statType": "rebounds",
+            "statLabel": "REB",
+            "line": 3.5,
+            "odds": -350,
+            "cascadeScore": 0.5690629854547602,
+            "gft": 0.6226380768951905,
+            "beq": 0.07167916700349963,
+            "esi": 0.19620861584021257,
+            "imad": 0.09463050012857195,
+            "hitRate": 0.95,
+            "edge": 0.07167916700349963,
+            "hit": null,
+            "actual": null
+          },
+          {
+            "player": "Gary Payton II",
+            "team": "GS",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 6.5,
+            "odds": -470,
+            "cascadeScore": 0.492608877650501,
+            "gft": 0.6181302001707873,
+            "beq": 0.03785721528220809,
+            "esi": 0.15974760875502525,
+            "imad": 0.05477360283591008,
+            "hitRate": 1,
+            "edge": 0.03785721528220809,
+            "hit": null,
+            "actual": null
+          }
+        ]
+      }
+    ]
   }
 }
