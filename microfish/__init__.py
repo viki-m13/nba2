@@ -1,2 +1,1 @@
-# Microfish MLB +200 Strategy
-# Multi-Agent Swarm Intelligence for MLB Underdog Betting
+"""Microfish — MiroFish Multi-Agent MLB +200 Strategy Development System"""

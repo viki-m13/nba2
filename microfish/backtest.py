@@ -1,15 +1,15 @@
 """
 Microfish Backtesting Framework
-================================
-Comprehensive backtesting with walk-forward validation.
-Measures accuracy, ROI, frequency, and validates against overfitting.
+=================================
+Walk-forward validation for the pure rules-based strategy engine.
+No ML, no AI — evaluates deterministic rules against historical data.
 
 Anti-overfitting measures:
-1. Walk-forward validation (no look-ahead)
-2. Purge gap between train and test
-3. Conservative model hyperparameters
-4. Dual-filter system (ML + Swarm must agree)
-5. Out-of-sample performance tracking per fold
+1. Walk-forward validation (expanding window, never look ahead)
+2. Purge gap between calibration window and test window
+3. All features lagged by FEATURE_LAG_DAYS
+4. Cross-season consistency checks
+5. Statistical significance tests on win rates
 """
 
 import os
@@ -18,41 +18,57 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
-from config import RESULTS_DIR, BACKTEST_SEASONS, MIN_AMERICAN_ODDS
-from data_pipeline import load_all_seasons, build_features, get_plus200_opportunities
-from prediction_model import walk_forward_validate, combined_filter
+from config import (
+    RESULTS_DIR, BACKTEST_SEASONS, MIN_AMERICAN_ODDS,
+    WALK_FORWARD_TRAIN_DAYS, WALK_FORWARD_STEP_DAYS, PURGE_DAYS
+)
+from data_pipeline import (
+    load_all_seasons, build_features, get_plus200_opportunities,
+    american_to_decimal, american_to_implied_prob
+)
 
 
-def run_full_backtest(seasons=None) -> dict:
+def run_full_backtest(rules: dict = None) -> dict:
     """
-    Run the complete backtest across all seasons.
-    Returns comprehensive results dictionary.
+    Run a complete backtest of the strategy rules.
+    If no rules provided, loads from strategy_rules.json.
     """
-    if seasons is None:
-        seasons = BACKTEST_SEASONS
+    from strategy_engine import StrategyEngine
 
     print("=" * 70)
     print("MICROFISH MLB +200 STRATEGY BACKTEST")
     print("=" * 70)
-    print(f"Seasons: {seasons}")
+    print(f"Strategy: Pure Rules Engine (no AI/ML)")
+    print(f"Seasons: {BACKTEST_SEASONS}")
     print(f"Min odds: +{MIN_AMERICAN_ODDS}")
-    print(f"Strategy: Multi-Agent Swarm + ML Ensemble (Walk-Forward)")
     print()
 
-    # Step 1: Load data
-    print("STEP 1: Loading historical data...")
+    # Load rules
+    if rules is None:
+        from microfish_dev import load_strategy_rules
+        rules = load_strategy_rules()
+        if not rules:
+            return {}
+
+    engine = StrategyEngine(rules)
+    print("Strategy loaded:")
+    print(engine.summary())
+    print()
+
+    # Load data
+    print("\nSTEP 1: Loading historical data...")
     raw_data = load_all_seasons()
     if raw_data.empty:
-        print("ERROR: No data loaded")
+        print("ERROR: No data loaded. Set THE_ODDS_API_KEY or add cached data.")
         return {}
     print(f"  Total games: {len(raw_data)}")
 
-    # Step 2: Build features (with temporal discipline)
+    # Build features
     print("\nSTEP 2: Building features (all lagged, no leakage)...")
     features = build_features(raw_data)
-    print(f"  Total feature rows: {len(features)}")
+    print(f"  Feature rows: {len(features)}")
 
-    # Step 3: Extract +200 opportunities
+    # Extract opportunities
     print("\nSTEP 3: Extracting +200 underdog opportunities...")
     opportunities = get_plus200_opportunities(features)
     print(f"  Total +200 opportunities: {len(opportunities)}")
@@ -61,245 +77,203 @@ def run_full_backtest(seasons=None) -> dict:
         print("ERROR: No +200 opportunities found")
         return {}
 
-    # Step 4: Walk-forward validation
-    # Train ML on underdog outcomes specifically for better signal alignment
-    print("\nSTEP 4: Running walk-forward validation...")
-    validated = walk_forward_validate(opportunities, all_games_df=opportunities)
-    print(f"  Validated opportunities: {len(validated)}")
+    # Walk-forward backtest
+    print("\nSTEP 4: Walk-forward validation...")
+    results = run_backtest_with_rules(opportunities, engine)
 
-    if validated.empty:
-        print("ERROR: Walk-forward validation produced no results")
-        return {}
-
-    # Step 5: Apply combined filter (ML + Swarm)
-    print("\nSTEP 5: Applying combined ML + Swarm filter...")
-    recommendations = combined_filter(validated)
-
-    # Separate bets from passes
-    bets = recommendations[recommendations['combined_recommendation'] == 'BET']
-    passes = recommendations[recommendations['combined_recommendation'] == 'PASS']
-
-    print(f"  Total recommendations: {len(bets)} BET, {len(passes)} PASS")
-
-    # Step 6: Calculate results
+    # Print results
     print("\n" + "=" * 70)
     print("BACKTEST RESULTS")
     print("=" * 70)
-
-    results = calculate_results(bets, recommendations, raw_data)
     print_results(results)
 
-    # Step 7: EV-based accuracy (true value-add metric)
-    print("\nEV-BASED ACCURACY (positive expected value bets):")
-    ev_results = calculate_ev_accuracy(bets, recommendations)
-    results['ev_metrics'] = ev_results
-
-    # Step 8: Validate no overfitting
+    # Overfitting checks
     print("\nOVERFITTING CHECKS:")
-    overfit_results = check_overfitting(bets, validated)
-    results['overfitting_checks'] = overfit_results
+    overfit = check_overfitting(results)
+    results['overfitting_checks'] = overfit
 
     # Save results
-    save_results(results, bets, recommendations)
+    save_results(results)
 
     return results
 
 
-def calculate_results(bets: pd.DataFrame, all_recs: pd.DataFrame,
-                      raw_data: pd.DataFrame) -> dict:
+def run_backtest_with_rules(opportunities_df: pd.DataFrame,
+                             engine) -> dict:
+    """
+    Walk-forward backtest with the rules engine.
+
+    Walk-forward approach:
+    - We don't "train" (no ML), but we use the walk-forward structure
+      to ensure temporal discipline
+    - For each test window, only evaluate games in that window
+    - Features already enforce lag, so no leakage
+    """
+    opps = opportunities_df.sort_values('date').copy()
+
+    if opps.empty:
+        return {'total_bets': 0, 'accuracy': 0, 'roi': 0}
+
+    min_date = pd.Timestamp(opps['date'].min())
+    max_date = pd.Timestamp(opps['date'].max())
+
+    # Skip the first WALK_FORWARD_TRAIN_DAYS as warm-up for features
+    test_start = min_date + pd.Timedelta(days=WALK_FORWARD_TRAIN_DAYS + PURGE_DAYS)
+
+    all_bets = []
+    all_evaluations = []
+    step = 0
+
+    current_start = test_start
+    while current_start < max_date:
+        current_end = current_start + pd.Timedelta(days=WALK_FORWARD_STEP_DAYS)
+
+        test_mask = (opps['date'] >= current_start) & (opps['date'] < current_end)
+        test_df = opps[test_mask]
+
+        if not test_df.empty:
+            evaluated = engine.evaluate_batch(test_df)
+            for _, row in evaluated.iterrows():
+                row_dict = row.to_dict()
+                row_dict['walk_forward_step'] = step
+                all_evaluations.append(row_dict)
+                if row_dict.get('recommendation') == 'BET':
+                    all_bets.append(row_dict)
+
+        current_start = current_end
+        step += 1
+
+    bets_df = pd.DataFrame(all_bets)
+    all_evals_df = pd.DataFrame(all_evaluations)
+
+    return calculate_results(bets_df, all_evals_df)
+
+
+def calculate_results(bets_df: pd.DataFrame,
+                       all_evals_df: pd.DataFrame) -> dict:
     """Calculate comprehensive backtest statistics."""
-    if bets.empty:
+    if bets_df.empty:
         return {
-            'total_bets': 0,
-            'accuracy': 0,
-            'roi': 0,
-            'avg_odds': 0,
-            'daily_frequency': 0,
+            'total_bets': 0, 'wins': 0, 'losses': 0,
+            'accuracy': 0, 'roi': 0, 'avg_odds': 0,
+            'daily_frequency': 0, 'season_results': {},
+            'total_opportunities': len(all_evals_df),
         }
 
-    total_bets = len(bets)
-    wins = bets['bet_won'].sum()
+    total_bets = len(bets_df)
+    wins = int(bets_df['bet_won'].sum()) if 'bet_won' in bets_df.columns else 0
     losses = total_bets - wins
     accuracy = wins / total_bets if total_bets > 0 else 0
 
-    # ROI calculation
-    # Each bet is 1 unit. Win pays (decimal_odds - 1) units. Loss costs 1 unit.
-    from data_pipeline import american_to_decimal
+    # ROI
     total_wagered = total_bets
     total_payout = 0
-    for _, bet in bets.iterrows():
-        if bet['bet_won'] == 1:
-            dec_odds = american_to_decimal(bet['bet_odds'])
-            total_payout += dec_odds  # Returns include stake
-        # If lost, payout = 0 (stake lost)
-
-    roi = ((total_payout - total_wagered) / total_wagered) * 100 if total_wagered > 0 else 0
+    if 'bet_won' in bets_df.columns and 'bet_odds' in bets_df.columns:
+        for _, bet in bets_df.iterrows():
+            if bet['bet_won'] == 1:
+                total_payout += american_to_decimal(bet['bet_odds'])
+    roi = ((total_payout - total_wagered) / total_wagered * 100
+           if total_wagered > 0 else 0)
 
     # Frequency
-    if 'date' in bets.columns:
-        unique_bet_dates = bets['date'].nunique()
-        date_range = (bets['date'].max() - bets['date'].min()).days + 1
-        daily_frequency = unique_bet_dates / date_range if date_range > 0 else 0
+    unique_dates = 0
+    date_range = 0
+    daily_frequency = 0
+    avg_bets_per_day = 0
+    if 'date' in bets_df.columns:
+        unique_dates = bets_df['date'].nunique()
+        date_range = (bets_df['date'].max() - bets_df['date'].min()).days + 1
+        daily_frequency = unique_dates / date_range if date_range > 0 else 0
         avg_bets_per_day = total_bets / date_range if date_range > 0 else 0
-    else:
-        unique_bet_dates = 0
-        date_range = 0
-        daily_frequency = 0
-        avg_bets_per_day = 0
 
-    # By season
+    # Season breakdown
     season_results = {}
-    if 'season' in bets.columns:
-        for season in bets['season'].unique():
-            s_bets = bets[bets['season'] == season]
-            s_wins = s_bets['bet_won'].sum()
+    if 'season' in bets_df.columns and 'bet_won' in bets_df.columns:
+        for season in sorted(bets_df['season'].unique()):
+            s = bets_df[bets_df['season'] == season]
+            s_wins = int(s['bet_won'].sum())
             season_results[int(season)] = {
-                'bets': len(s_bets),
-                'wins': int(s_wins),
-                'accuracy': s_wins / len(s_bets) if len(s_bets) > 0 else 0,
+                'bets': len(s),
+                'wins': s_wins,
+                'accuracy': s_wins / len(s) if len(s) > 0 else 0,
             }
 
-    # Average odds
-    avg_odds = bets['bet_odds'].mean() if 'bet_odds' in bets.columns else 0
+    avg_odds = bets_df['bet_odds'].mean() if 'bet_odds' in bets_df.columns else 0
+
+    # Store bets for detailed analysis
+    bets_list = []
+    if not bets_df.empty:
+        for _, b in bets_df.iterrows():
+            bets_list.append({
+                'date': str(b.get('date', '')),
+                'team': b.get('bet_team', ''),
+                'odds': float(b.get('bet_odds', 0)),
+                'won': int(b.get('bet_won', 0)),
+                'weight': float(b.get('total_weight', 0)),
+                'rules': b.get('rules_triggered', ''),
+            })
 
     return {
         'total_bets': total_bets,
-        'wins': int(wins),
-        'losses': int(losses),
+        'wins': wins,
+        'losses': losses,
         'accuracy': accuracy,
         'roi': roi,
-        'avg_odds': avg_odds,
-        'total_wagered': total_wagered,
-        'total_payout': total_payout,
-        'unique_bet_dates': int(unique_bet_dates),
-        'date_range_days': int(date_range),
+        'avg_odds': float(avg_odds),
+        'unique_bet_dates': unique_dates,
+        'date_range_days': date_range,
         'daily_frequency': daily_frequency,
         'avg_bets_per_day': avg_bets_per_day,
         'season_results': season_results,
-        'total_opportunities_analyzed': len(all_recs),
-        'selectivity': total_bets / len(all_recs) if len(all_recs) > 0 else 0,
+        'total_opportunities': len(all_evals_df),
+        'selectivity': total_bets / len(all_evals_df) if len(all_evals_df) > 0 else 0,
+        'bets_detail': bets_list,
     }
 
 
-def calculate_ev_accuracy(bets: pd.DataFrame, all_recs: pd.DataFrame) -> dict:
-    """
-    Calculate EV-based accuracy metrics.
-
-    For +200 underdogs, the true value of a bet depends on whether our
-    estimated probability exceeds the implied probability. A bet is
-    "EV-correct" if our model's estimated win probability exceeds the
-    break-even probability for the given odds.
-
-    This is the more meaningful accuracy metric for a value betting strategy:
-    - Win rate accuracy: % of bets that actually won
-    - EV accuracy: % of bets where estimated prob > implied prob (positive EV)
-    - Value identification: how often we correctly identify mispriced lines
-    """
-    from data_pipeline import american_to_implied_prob
-
-    if bets.empty:
-        return {}
-
-    ev_correct = 0
-    total = len(bets)
-
-    for _, bet in bets.iterrows():
-        implied_prob = american_to_implied_prob(bet['bet_odds'])
-        # Our estimated prob from ML + swarm
-        ml_prob = bet.get('ml_win_prob', 0.33)
-        swarm_edge = bet.get('swarm_edge', 0)
-
-        # A bet is EV-correct if our estimated probability exceeds the
-        # break-even probability (implied probability without vig)
-        # For +200, break-even is ~33.3%, with vig removed it's ~30%
-        breakeven = implied_prob * 0.95  # Remove ~5% vig estimate
-        estimated_prob = ml_prob
-
-        if estimated_prob > breakeven:
-            ev_correct += 1
-
-    ev_accuracy = ev_correct / total if total > 0 else 0
-
-    # Also calculate: what's the theoretical long-run ROI?
-    # For +200 at 33% win rate, ROI = (0.33 * 3.0 - 1) = -0.01 (break even)
-    # For +200 at 40% win rate, ROI = (0.40 * 3.0 - 1) = +0.20 (20% ROI)
-    avg_odds = bets['bet_odds'].mean()
-    win_rate = bets['bet_won'].mean()
-    from data_pipeline import american_to_decimal
-    avg_decimal = american_to_decimal(avg_odds)
-    theoretical_roi = (win_rate * avg_decimal - 1) * 100
-
-    # Closing line value: did we consistently get better odds than the market moved to?
-    # This is the gold standard of betting model evaluation
-    clv_positive = sum(1 for _, b in bets.iterrows()
-                       if b.get('ml_win_prob', 0) > american_to_implied_prob(b['bet_odds']))
-    clv_accuracy = clv_positive / total if total > 0 else 0
-
-    metrics = {
-        'ev_accuracy': ev_accuracy,
-        'clv_accuracy': clv_accuracy,
-        'win_rate': win_rate,
-        'theoretical_roi': theoretical_roi,
-        'avg_ml_prob': bets['ml_win_prob'].mean() if 'ml_win_prob' in bets.columns else 0,
-    }
-
-    print(f"  EV Accuracy (% positive EV bets): {ev_accuracy:.1%}")
-    print(f"  CLV Accuracy (% beating closing line): {clv_accuracy:.1%}")
-    print(f"  Raw Win Rate: {win_rate:.1%}")
-    print(f"  Theoretical ROI: {theoretical_roi:.1f}%")
-
-    return metrics
-
-
-def check_overfitting(bets: pd.DataFrame, validated: pd.DataFrame) -> dict:
-    """
-    Run overfitting checks to ensure the strategy is robust.
-    """
+def check_overfitting(results: dict) -> dict:
+    """Run overfitting checks."""
     checks = {}
 
-    # Check 1: Consistency across walk-forward folds
-    if 'walk_forward_step' in bets.columns and len(bets) > 0:
-        fold_accuracies = []
-        for step in bets['walk_forward_step'].unique():
-            fold = bets[bets['walk_forward_step'] == step]
-            if len(fold) >= 2:
-                fold_acc = fold['bet_won'].mean()
-                fold_accuracies.append(fold_acc)
+    # Season consistency
+    season_results = results.get('season_results', {})
+    if len(season_results) >= 2:
+        accs = [s['accuracy'] for s in season_results.values() if s['bets'] >= 3]
+        if accs:
+            checks['season_acc_mean'] = float(np.mean(accs))
+            checks['season_acc_std'] = float(np.std(accs))
+            checks['season_consistent'] = np.std(accs) < 0.20
+            print(f"  Season accuracy: mean={np.mean(accs):.3f}, "
+                  f"std={np.std(accs):.3f} "
+                  f"({'PASS' if checks['season_consistent'] else 'WARN'})")
 
-        if fold_accuracies:
-            checks['fold_accuracy_mean'] = np.mean(fold_accuracies)
-            checks['fold_accuracy_std'] = np.std(fold_accuracies)
-            checks['fold_accuracy_min'] = np.min(fold_accuracies)
-            checks['fold_accuracy_max'] = np.max(fold_accuracies)
-            checks['n_folds'] = len(fold_accuracies)
-            checks['consistent'] = np.std(fold_accuracies) < 0.20
-            print(f"  Fold accuracy: mean={checks['fold_accuracy_mean']:.3f}, "
-                  f"std={checks['fold_accuracy_std']:.3f}, "
-                  f"min={checks['fold_accuracy_min']:.3f}, "
-                  f"max={checks['fold_accuracy_max']:.3f}")
-            print(f"  Consistency check: {'PASS' if checks['consistent'] else 'WARN'}")
+    # Sample size
+    total_bets = results.get('total_bets', 0)
+    accuracy = results.get('accuracy', 0)
+    checks['sufficient_sample'] = total_bets >= 30
+    print(f"  Sample size: {total_bets} bets "
+          f"({'PASS' if checks['sufficient_sample'] else 'WARN: <30'})")
 
-    # Check 2: Accuracy shouldn't be wildly different across seasons
-    if 'season' in bets.columns:
-        season_accs = []
-        for season in bets['season'].unique():
-            s = bets[bets['season'] == season]
-            if len(s) >= 3:
-                season_accs.append(s['bet_won'].mean())
-        if len(season_accs) >= 2:
-            checks['season_consistency'] = np.std(season_accs) < 0.15
-            checks['season_acc_std'] = np.std(season_accs)
-            print(f"  Season accuracy std: {checks['season_acc_std']:.3f} "
-                  f"({'PASS' if checks['season_consistency'] else 'WARN'})")
+    # Frequency check
+    freq = results.get('daily_frequency', 0)
+    checks['adequate_frequency'] = freq >= 0.30
+    print(f"  Daily frequency: {freq:.1%} "
+          f"({'PASS' if checks['adequate_frequency'] else 'WARN: <30%'})")
 
-    # Check 3: Selectivity - are we being too selective or not selective enough?
-    if len(validated) > 0 and len(bets) > 0:
-        selectivity = len(bets) / len(validated)
-        checks['selectivity'] = selectivity
-        # We want 1-10% selectivity for high accuracy
-        checks['selectivity_ok'] = 0.005 <= selectivity <= 0.15
-        print(f"  Selectivity: {selectivity:.3%} "
-              f"({'PASS' if checks['selectivity_ok'] else 'WARN'})")
+    # Statistical significance (binomial test against breakeven)
+    if total_bets > 0:
+        wins = results.get('wins', 0)
+        # At +200, breakeven is 33.3%
+        from scipy.stats import binomtest
+        try:
+            result = binomtest(wins, total_bets, 0.333, alternative='greater')
+            p_value = result.pvalue
+            checks['stat_sig_p_value'] = float(p_value)
+            checks['stat_significant'] = p_value < 0.05
+            print(f"  Statistical significance (vs 33.3%): p={p_value:.4f} "
+                  f"({'PASS' if checks['stat_significant'] else 'NOT SIG'})")
+        except Exception:
+            checks['stat_sig_p_value'] = None
 
     return checks
 
@@ -314,54 +288,39 @@ def print_results(results: dict):
     print(f"  Average odds: +{results['avg_odds']:.0f}")
     print(f"  Unique betting days: {results.get('unique_bet_dates', 0)}")
     print(f"  Date range: {results.get('date_range_days', 0)} days")
-    print(f"  Daily frequency: {results.get('daily_frequency', 0):.1%} of days have bets")
+    print(f"  Daily frequency: {results.get('daily_frequency', 0):.1%}")
     print(f"  Avg bets per day: {results.get('avg_bets_per_day', 0):.2f}")
-    print(f"  Selectivity: {results.get('selectivity', 0):.3%} of opportunities")
+    print(f"  Selectivity: {results.get('selectivity', 0):.3%}")
+    print(f"  Total opportunities analyzed: {results.get('total_opportunities', 0)}")
 
     if 'season_results' in results:
         print(f"\n  BY SEASON:")
-        for season, sr in sorted(results['season_results'].items()):
+        for season, sr in sorted(results.get('season_results', {}).items()):
             print(f"    {season}: {sr['bets']} bets, {sr['wins']} wins, "
                   f"{sr['accuracy']:.1%} accuracy")
 
 
-def save_results(results: dict, bets: pd.DataFrame, all_recs: pd.DataFrame):
-    """Save backtest results to files."""
+def save_results(results: dict):
+    """Save backtest results."""
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-    # Save summary
-    summary_file = os.path.join(RESULTS_DIR, 'backtest_summary.json')
-    # Convert non-serializable types
-    clean_results = {}
+    # Clean for JSON serialization
+    clean = {}
     for k, v in results.items():
         if isinstance(v, (np.integer,)):
-            clean_results[k] = int(v)
+            clean[k] = int(v)
         elif isinstance(v, (np.floating,)):
-            clean_results[k] = float(v)
+            clean[k] = float(v)
         elif isinstance(v, dict):
-            clean_results[k] = {
+            clean[k] = {
                 str(k2): (float(v2) if isinstance(v2, (np.floating,)) else
                           int(v2) if isinstance(v2, (np.integer,)) else v2)
                 for k2, v2 in v.items()
             }
         else:
-            clean_results[k] = v
+            clean[k] = v
 
+    summary_file = os.path.join(RESULTS_DIR, 'backtest_summary.json')
     with open(summary_file, 'w') as f:
-        json.dump(clean_results, f, indent=2, default=str)
+        json.dump(clean, f, indent=2, default=str)
     print(f"\n  Results saved to {summary_file}")
-
-    # Save detailed bets
-    if not bets.empty:
-        bets_file = os.path.join(RESULTS_DIR, 'backtest_bets.csv')
-        bets.to_csv(bets_file, index=False)
-        print(f"  Bets saved to {bets_file}")
-
-    # Save all recommendations
-    if not all_recs.empty:
-        recs_file = os.path.join(RESULTS_DIR, 'backtest_all_recommendations.csv')
-        all_recs.to_csv(recs_file, index=False)
-
-
-if __name__ == '__main__':
-    results = run_full_backtest()

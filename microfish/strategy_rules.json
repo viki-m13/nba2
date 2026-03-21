@@ -1,0 +1,120 @@
+{
+  "version": "3.0",
+  "developed_by": "microfish_swarm",
+  "development_date": "2025-01-24",
+  "model_used": "claude-opus-4-6",
+  "rules": [
+    {
+      "name": "hard_odds_filter",
+      "description": "HARD PRE-FILTER: Only bet on underdogs between +200 and +250. V2.0 CRITICAL BUG: the odds gate was implemented as a weighted rule with weight=0, which the backtest engine ignored entirely. This allowed 340+ bets at +300 to +639 where win rates are 8-18% against breakeven requirements of 12-25%. The +200-250 band has 21.0% base win rate (191/911) which is the closest to breakeven (~30.8% at +225 midpoint). This MUST be implemented as a hard pre-filter that excludes games before any scoring occurs, NOT as a weighted rule. V2.0 proved that weight=0 rules are not enforced by the backtest engine.",
+      "conditions": {
+        "dog_odds": {
+          "operator": ">=",
+          "value": 200
+        },
+        "dog_odds_upper": {
+          "operator": "<=",
+          "value": 250
+        }
+      },
+      "weight": 0,
+      "min_conditions_met": 2
+    },
+    {
+      "name": "weak_favorite_starter",
+      "description": "MANDATORY PRIMARY: Favorite is starting a below-average pitcher (rank >= 3). This is the strongest individual signal in the dataset with +0.311 differential (winners 2.477 vs losers 2.166). V2.0 showed the pitcher-only path performed poorly (16.7%) but the BOTH-AXES path matched team-only (19.9%) and showed 26.8% in 2024. The signal is necessary but not sufficient. Making this mandatory eliminates V2.0's design flaw where team-quality boosters alone could qualify bets (quality_underdog_team + elite_quality_underdog = weight 5, meeting threshold without any pitcher signal). UNRESOLVED RISK: pitcher rank may contain lookahead bias if constructed from end-of-season data rather than point-in-time.",
+      "conditions": {
+        "fav_pitcher_rank": {
+          "operator": ">=",
+          "value": 3
+        }
+      },
+      "weight": 3,
+      "min_conditions_met": 1
+    },
+    {
+      "name": "quality_underdog_team",
+      "description": "MANDATORY PRIMARY: Underdog has been priced as competitive recently (14-day avg odds <= 145). Second strongest signal with -11.927 differential (winners 126.984 vs losers 138.911). V2.0 used 150 which was too loose, capturing chronic heavy underdogs whose normal state IS +200 (Pirates, White Sox, A's). Tightened to 145 (between Ontology recommendation of 140 and V2.0's 150) to filter out teams that are perpetually heavy underdogs while avoiding the V1.0 catastrophe of setting threshold at the winner mean (130) which produced zero bets. At 145, we capture teams within ~6 points of the loser mean (139) while still requiring genuine recent competitiveness. The Validation Agent correctly noted that 140 captures most losers too, so 145 provides a modest filter without over-tightening on unvalidated thresholds.",
+      "conditions": {
+        "dog_avg_odds_14d": {
+          "operator": "<=",
+          "value": 145
+        }
+      },
+      "weight": 3,
+      "min_conditions_met": 1
+    },
+    {
+      "name": "strong_pitcher_mismatch",
+      "description": "BOOSTER: Favorite pitcher ranked 4+ (bottom 40% of rotation). Extreme tail of the strongest signal where market team-reputation anchor is maximally misaligned with actual pitching matchup. Combined pitcher axis maximum is 5 (3+2). This booster can only fire ON TOP of the mandatory weak_favorite_starter rule, never independently. V2.0 showed this combined with the primary created weight=5 paths that qualified without team quality - that flaw is fixed by requiring min_total_weight=7 which demands BOTH primaries plus at least one booster.",
+      "conditions": {
+        "fav_pitcher_rank": {
+          "operator": ">=",
+          "value": 4
+        }
+      },
+      "weight": 2,
+      "min_conditions_met": 1
+    },
+    {
+      "name": "elite_team_quality",
+      "description": "BOOSTER: Underdog averaged <= 120 odds over past 14 days, meaning this team is normally a slight underdog or even favored. Being at +200-250 today represents a massive 80-130 point dislocation from their norm. The winner mean is 127, so 120 captures the upper half of winners - teams like the 2021 Mets at +200 or 2022 Twins at +200. Tightened from V2.0's 125 to 120 to ensure genuine dislocation. Combined team axis maximum is 5 (3+2). V2.0 CRITICAL FLAW: elite_quality_underdog (weight=2) + quality_underdog_team (weight=3) = 5, meeting min_total_weight=5 without ANY pitcher signal. This is fixed by raising min_total_weight to 7.",
+      "conditions": {
+        "dog_avg_odds_14d": {
+          "operator": "<=",
+          "value": 120
+        }
+      },
+      "weight": 2,
+      "min_conditions_met": 1
+    },
+    {
+      "name": "underdog_pitcher_competent",
+      "description": "MINOR BOOSTER: Underdog starting pitcher is above average (rank <= 2). Weakest signal in dataset (-0.059 differential) but provides a third independent axis. When a quality team sends a good pitcher against a weak opposing pitcher at +200-250, the true win probability may exceed market pricing. Weight of 1 reflects low individual confidence. The Ontology Agent explicitly warned this should never be a primary driver. This rule exists to differentiate between otherwise equal-scoring games and provide signal diversity for the min_rules_triggered constraint.",
+      "conditions": {
+        "dog_pitcher_rank": {
+          "operator": "<=",
+          "value": 2
+        }
+      },
+      "weight": 1,
+      "min_conditions_met": 1
+    }
+  ],
+  "global_filters": {
+    "min_total_weight": 7,
+    "min_rules_triggered": 3,
+    "max_bets_per_day": 2
+  },
+  "agent_consensus": {
+    "ontology_supported": [
+      "hard_odds_filter",
+      "weak_favorite_starter",
+      "quality_underdog_team",
+      "strong_pitcher_mismatch",
+      "elite_team_quality"
+    ],
+    "pattern_supported": [
+      "hard_odds_filter",
+      "weak_favorite_starter",
+      "quality_underdog_team",
+      "strong_pitcher_mismatch",
+      "elite_team_quality"
+    ],
+    "architect_supported": [
+      "hard_odds_filter",
+      "weak_favorite_starter",
+      "quality_underdog_team",
+      "strong_pitcher_mismatch",
+      "elite_team_quality",
+      "underdog_pitcher_competent"
+    ],
+    "validation_approved": [
+      "hard_odds_filter",
+      "quality_underdog_team",
+      "elite_team_quality"
+    ]
+  },
+  "reasoning": "V3.0 SYNTHESIS AFTER V2.0 CATASTROPHE: 204/1058 = 19.3% win rate, -31.6% ROI. ALL FOUR AGENTS AGREE on the root causes: (1) Odds gate was never enforced, allowing bets at +400-639 where win rates are 6-13%. (2) Single-axis qualification via boosters (weight 3+2=5 meeting threshold) created 680 minimum-quality bets with no cross-signal validation. (3) Weight score showed NO predictive power - weight=10 performed identically to weight=5 (18.7% vs 18.8%). The features individually provide zero edge over base rates within odds bands. SYNTHESIS DECISIONS: (A) REMOVED dislocation_signal - Validation Agent flagged as CRITICAL: untested feature that does not exist in dataset, purely theoretical, may be anti-predictive. 3 of 4 agents did not support inclusion. (B) REMOVED home_underdog_boost - Validation Agent rated as near-zero signal (+0.017 differential). Only Architect supported it. Insufficient consensus. (C) KEPT hard_odds_filter at +250 ceiling - All 4 agents agree the gate bug was catastrophic. Ontology showed +200-250 band at 21.0% base rate, closest to breakeven. MUST be pre-filter. (D) KEPT both mandatory primaries - All 4 agents agree single-axis qualification was a design flaw. Both-axes path showed 19.9% overall and 26.8% in 2024 (best segment). (E) SET min_total_weight=7 and min_rules_triggered=3 - This is the critical fix. Minimum qualifying path requires BOTH primaries (3+3=6) plus at least one booster (1 or 2), totaling 7-8 with 3 distinct rules. This makes single-axis qualification mathematically impossible. Pitcher axis alone maxes at 5 (3+2). Team axis alone maxes at 5 (3+2). Neither reaches 7. This eliminates the 680 minimum-quality bets that diluted V2.0. (F) TIGHTENED elite_team_quality to 120 (from V2.0's 125) - Validation Agent noted 140 captures most losers. At 120, we capture only the upper half of winners, ensuring genuine dislocation. (G) MODESTLY TIGHTENED quality_underdog_team to 145 (from V2.0's 150) - Compromise between Ontology (140) and V2.0 (150). Avoids over-tightening on unvalidated thresholds per Validation Agent concern. VOLUME ESTIMATE: Within +200-250 band (~911 games over 4 seasons), requiring both primaries (fav_pitcher_rank>=3 AND dog_avg_odds_14d<=145) eliminates ~65-70%. Of remaining ~270-320, requiring weight>=7 (at least one booster) eliminates another ~50-60%. Estimated: 100-160 bets over 4 seasons = 25-40 per season = roughly 1 bet every 4-6 days. Below near-daily target but reflects honest selectivity. HONEST EDGE ASSESSMENT: The both-axes path at +200-250 showed approximately 22-24% win rate in V2.0. Breakeven at +225 midpoint is ~30.8%. The gap is 7-9 percentage points. Adding booster requirements may lift 1-3pp. Projected win rate: 23-27%. This is likely STILL below breakeven. GO/KILL CRITERIA: If V3.0 backtest shows win rate >= 27% with n >= 80, investigate further. If 25-27%, the strategy is marginal - consider expanding to other bet types. If < 25%, KILL the strategy permanently. The Validation Agent's assessment that there is >50% probability this strategy should be killed is acknowledged and agreed upon by the synthesis. This iteration represents the tightest defensible configuration of available signals.",
+  "risk_notes": "CRITICAL RISKS ACKNOWLEDGED BY ALL AGENTS: (1) PROBABLE STRATEGY KILL - Validation Agent rates >50% probability the available features cannot produce profitable +200 underdog betting. V2.0 showed zero edge at any weight level, odds band, or season. V3.0 is the final iteration within this feature set. (2) PITCHER RANK LOOKAHEAD BIAS - Unresolved from V2.0. fav_pitcher_rank is the strongest signal (weight=3 mandatory). If constructed from end-of-season data rather than pre-game point-in-time rankings, the entire strategy is built on future information. MUST be confirmed before any live deployment. (3) SAMPLE SIZE INSUFFICIENCY - At 25-40 bets per season, the 95% CI for a 27% observed rate is approximately [15%, 42%]. Cannot distinguish profitable from unprofitable within any reasonable timeframe. Validation Agent calculates n=350 minimum for 80% power, requiring 9-14 seasons. (4) OVERFITTING CONCERN - V3.0 thresholds were derived from V2.0 backtest analysis. The 2024 both-axes 26.8% result (n=82) that motivates this design may be noise. The 2021 both-axes result was 15.4% (BELOW base rate). No subset shows consistent above-breakeven performance across all 4 seasons. (5) MARKET EFFICIENCY - Sports betting markets are becoming more efficient. Any edge from 2021-2022 may be arbitraged away. (6) ODDS GATE IMPLEMENTATION - The hard_odds_filter MUST be implemented as a pre-filter that excludes games before scoring. If implemented as a weighted rule (as V2.0 was), it will not be enforced and the strategy will again bet on +400-600 longshots. The backtest engine must be verified to enforce weight=0 rules with min_conditions_met=2 as hard gates. (7) REGIME CHANGE - 2023 MLB rule changes (pitch clock, shift ban, larger bases) may have altered pitcher effectiveness dynamics. Pre/post regime performance should be compared. (8) TEAM CONCENTRATION - V2.0 was dominated by 8 chronically bad teams (White Sox, A's, Pirates, Rockies, Royals, Marlins, Nationals, Angels) accounting for ~80% of bets. V3.0's tighter thresholds may reduce but not eliminate this concentration. These teams' odds are efficiently priced because they are ALWAYS underdogs."
+}
