@@ -1,0 +1,14 @@
+# Secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Data cache (regenerable)
+data/cache/
+*.pkl
+
+# Results (regenerable)
+results/
