@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-21T22:14:54.742Z",
+  "generated": "2026-03-21T23:16:21.172Z",
   "date": "20260321",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
     "betType": "single",
-    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
+    "reasoning": "1 strong-confidence pick(s) found",
     "singles": [
       {
         "player": "Pascal Siakam",
