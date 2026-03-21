@@ -1628,10 +1628,11 @@
     "avg": 3.9411764705882355,
     "floor": 2.787274839340045,
     "bet": "Reed Sheppard O1.5 AST",
-    "hit": null,
-    "actual": null,
+    "hit": true,
+    "actual": 4,
     "source": "live",
-    "generated_at": "2026-03-20T16:26:26.808Z"
+    "generated_at": "2026-03-20T16:26:26.808Z",
+    "pnl": 19
   },
   {
     "date": "20260320",
@@ -1682,10 +1683,11 @@
     "avg": 6.8,
     "floor": 5.950704603927701,
     "bet": "Deni Avdija O4.5 REB",
-    "hit": null,
-    "actual": null,
+    "hit": true,
+    "actual": 8,
     "source": "live",
-    "generated_at": "2026-03-20T19:26:23.828Z"
+    "generated_at": "2026-03-20T19:26:23.828Z",
+    "pnl": 31
   },
   {
     "date": "20260320",
@@ -1709,10 +1711,11 @@
     "avg": 13.909090909090908,
     "floor": 10.672224219686768,
     "bet": "Gary Payton II O6.5 PTS",
-    "hit": null,
-    "actual": null,
+    "hit": true,
+    "actual": 14,
     "source": "live",
-    "generated_at": "2026-03-20T21:18:36.867Z"
+    "generated_at": "2026-03-20T21:18:36.867Z",
+    "pnl": 26
   },
   {
     "date": "20260320",
@@ -1736,10 +1739,11 @@
     "avg": 24.3,
     "floor": 19.676761683588254,
     "bet": "Jayson Tatum O14.5 PTS",
-    "hit": null,
-    "actual": null,
+    "hit": false,
+    "actual": 13,
     "source": "live",
-    "generated_at": "2026-03-21T00:41:09.902Z"
+    "generated_at": "2026-03-21T00:41:09.902Z",
+    "pnl": -100
   },
   {
     "date": "20241127",

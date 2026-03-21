@@ -1,26 +1,29 @@
 {
   "singles": {
-    "total": 57,
-    "wins": 54,
-    "accuracy": 0.9473684210526315,
-    "pnl": 963,
-    "roi": 0.16894736842105262
+    "total": 61,
+    "wins": 57,
+    "accuracy": 0.9344262295081968,
+    "pnl": 939,
+    "wagered": 6100,
+    "roi": 0.1539344262295082
   },
   "parlays": {
     "total": 12,
     "wins": 12,
-    "accuracy": 1.0,
+    "accuracy": 1,
     "pnl": 1151,
+    "wagered": 1200,
     "roi": 0.9591666666666666,
     "totalLegs": 26,
     "hitLegs": 26,
-    "legAccuracy": 1.0
+    "legAccuracy": 1
   },
   "overall": {
-    "total": 69,
-    "wins": 66,
-    "accuracy": 0.9565217391304348,
-    "pnl": 2114,
-    "roi": 0.3063768115942029
+    "total": 73,
+    "wins": 69,
+    "accuracy": 0.9452054794520548,
+    "pnl": 2090,
+    "wagered": 7300,
+    "roi": 0.2863013698630137
   }
 }
