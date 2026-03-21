@@ -1,40 +1,12 @@
 {
-  "parlays": {
-    "total": 24,
-    "wins": 21,
-    "accuracy": 0.875,
-    "pnl": 1994,
-    "roi": 0.4531818181818182,
-    "leg_total": 53,
-    "leg_hits": 50,
-    "leg_accuracy": 0.9433962264150944
-  },
-  "by_legs": {
-    "2": {
-      "wins": 18,
-      "total": 19,
-      "pnl": 1809,
-      "wagered": 3800,
-      "legs_total": 38,
-      "legs_hits": 37,
-      "accuracy": 0.9473684210526315,
-      "roi": 0.4760526315789474,
-      "leg_accuracy": 0.9736842105263158
-    },
-    "3": {
-      "wins": 3,
-      "total": 5,
-      "pnl": 185,
-      "wagered": 600,
-      "legs_total": 15,
-      "legs_hits": 13,
-      "accuracy": 0.6,
-      "roi": 0.30833333333333335,
-      "leg_accuracy": 0.8666666666666667
-    }
-  },
-  "by_tier": {},
-  "model": "NBA V8 CSPE (Convergence Score Parlay Engine)",
-  "innovation": "Edge-centric dual-tier scoring with anchor-amplifier fusion",
-  "generated": "2026-03-19T17:00:54.422866"
+  "total": 24,
+  "wins": 21,
+  "accuracy": 0.875,
+  "pnl": 1994,
+  "roi": 0.4531818181818182,
+  "leg_total": 53,
+  "leg_hits": 50,
+  "leg_accuracy": 0.9433962264150944,
+  "model": "V8 CSPE (Convergence Score Parlay Engine)",
+  "generated": "2026-03-20T21:13:14.403798"
 }
