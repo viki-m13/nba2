@@ -1,6 +1,31 @@
 {
-  "generated": "2026-03-20T20:52:02.578538",
+  "generated": "2026-03-20T22:18:22.650620",
   "date": "20260320",
   "engine": "NBA Positive Odds HECE v1",
-  "picks": []
+  "picks": [
+    {
+      "date": "20260320",
+      "betType": "single",
+      "player": "Jayson Tatum",
+      "team": "",
+      "opponent": "",
+      "line": 14.5,
+      "odds": 350,
+      "stat": "pts",
+      "statLabel": "PTS",
+      "cascadeScore": 0.6466333617803417,
+      "hitRate": 1.0,
+      "edge": 0.7153954532475182,
+      "ev": 3.219279539613832,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 192,
+      "bet": "Jayson Tatum O14.5 PTS",
+      "engine": "positive_odds_nba",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-20T22:18:22.649631"
+    }
+  ]
 }
