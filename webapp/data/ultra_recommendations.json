@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-21T21:17:29.673Z",
+  "generated": "2026-03-21T22:14:54.742Z",
   "date": "20260321",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "parlay",
-    "reasoning": "2 strong candidates for EMPC parlay construction",
+    "betType": "single",
+    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
     "singles": [
       {
         "player": "Pascal Siakam",
@@ -46,6 +46,27 @@
         "avg": 13.916666666666666,
         "floor": 10.667396520973659,
         "betSubType": "multi_single",
+        "hit": null,
+        "actual": null
+      },
+      {
+        "player": "Bam Adebayo",
+        "team": "MIA",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 16.5,
+        "odds": -350,
+        "cascadeScore": 0.6147389682824401,
+        "gft": 0.6129541108286752,
+        "beq": 0.014671516657238315,
+        "esi": 0.458822656477815,
+        "imad": 0.057848255766428464,
+        "hitRate": 0.9,
+        "edge": 0.014671516657238315,
+        "ev": 0.01886337855930642,
+        "avg": 24.95,
+        "floor": 22.34988219233721,
+        "betSubType": "single",
         "hit": null,
         "actual": null
       }
