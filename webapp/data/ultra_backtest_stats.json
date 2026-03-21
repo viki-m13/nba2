@@ -4,26 +4,23 @@
     "wins": 58,
     "accuracy": 0.9206349206349206,
     "pnl": 917,
-    "wagered": 6300,
     "roi": 0.14555555555555555
   },
   "parlays": {
     "total": 11,
     "wins": 11,
-    "accuracy": 1,
+    "accuracy": 1.0,
     "pnl": 1084,
-    "wagered": 1100,
     "roi": 0.9854545454545455,
     "totalLegs": 24,
     "hitLegs": 24,
-    "legAccuracy": 1
+    "legAccuracy": 1.0
   },
   "overall": {
     "total": 74,
     "wins": 69,
     "accuracy": 0.9324324324324325,
     "pnl": 2001,
-    "wagered": 7400,
     "roi": 0.2704054054054054
   }
 }
