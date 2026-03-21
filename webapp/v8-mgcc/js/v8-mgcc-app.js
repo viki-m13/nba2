@@ -41,12 +41,13 @@
     if (!section) return;
 
     const d = v8Data[v8Sport];
-    const parlays = d.stats.parlays || {};
+    // Stats may be nested under d.stats.parlays (legacy) or flat at d.stats (current)
+    const parlays = d.stats.parlays || d.stats || {};
     const byLegs = d.stats.by_legs || {};
     const wins = parlays.wins || 0;
     const total = parlays.total || 0;
     const acc = total > 0 ? (wins / total * 100).toFixed(1) : '0.0';
-    const roi = ((parlays.roi || 0) * 100).toFixed(1);
+    const roi = parlays.roi != null ? (parlays.roi * 100).toFixed(1) : '0.0';
     const pnl = parlays.pnl || 0;
     const legAcc = parlays.leg_accuracy ? (parlays.leg_accuracy * 100).toFixed(1) : '—';
 
