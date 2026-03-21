@@ -2174,5 +2174,32 @@
     "pnl": 103,
     "bet": "2-Leg Parlay",
     "engine": "ultra"
+  },
+  {
+    "date": "20260320",
+    "betType": "single",
+    "tier": "FORTRESS",
+    "engine": "ultra",
+    "player": "Jayson Tatum",
+    "team": "BOS",
+    "stat": "pts",
+    "statLabel": "PTS",
+    "line": 14.5,
+    "odds": -360,
+    "cascadeScore": 0.638199012284387,
+    "gft": 0.720853679430153,
+    "beq": 0.12872784670929638,
+    "esi": 0.2301322011109611,
+    "imad": 0.1746863862940248,
+    "hitRate": 1,
+    "edge": 0.12872784670929638,
+    "ev": 0.16448558190632312,
+    "avg": 24.3,
+    "floor": 19.676761683588254,
+    "bet": "Jayson Tatum O14.5 PTS",
+    "hit": null,
+    "actual": null,
+    "source": "live",
+    "generated_at": "2026-03-21T00:41:09.902Z"
   }
 ]
