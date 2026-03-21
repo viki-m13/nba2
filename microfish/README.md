@@ -1,84 +1,73 @@
-# Microfish - MLB +200 Underdog Strategy
+# Microfish — MiroFish Multi-Agent Strategy Development System
 
-Multi-agent swarm intelligence system for identifying profitable MLB +200 underdog bets.
-Inspired by [MiroFish](https://github.com/666ghj/MiroFish/) multi-agent architecture.
+MLB +200 underdog betting strategy developed by a Claude AI agent swarm,
+executed as pure deterministic rules.
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   MICROFISH PIPELINE                 │
-├─────────────────────────────────────────────────────┤
-│  1. Data Pipeline (data_pipeline.py)                │
-│     - Real odds from The Odds API                   │
-│     - Strict temporal features (all lagged)         │
-│     - No leakage, no forward bias                   │
-├─────────────────────────────────────────────────────┤
-│  2. ML Ensemble (prediction_model.py)               │
-│     - XGBoost + LightGBM + Logistic Regression      │
-│     - Walk-forward validation with purge gap        │
-│     - Conservative hyperparameters (anti-overfit)   │
-├─────────────────────────────────────────────────────┤
-│  3. Claude Swarm Model (swarm_model.py)             │
-│     - 4 Specialist Agents + 1 Synthesis Agent       │
-│     - Statistical, Matchup, Market, Momentum views  │
-│     - Agents vote; synthesis requires consensus     │
-├─────────────────────────────────────────────────────┤
-│  4. Combined Filter                                 │
-│     - ML + Swarm must BOTH agree                    │
-│     - Only +200 or higher odds                      │
-│     - Regime shift detection for edge               │
-└─────────────────────────────────────────────────────┘
-```
+Adapted from the MiroFish multi-agent architecture:
 
-## Swarm Agents (Claude API)
-
-| Agent | Focus | Key Signals |
-|-------|-------|-------------|
-| Statistical Analyst | Team performance metrics | Win%, trends, splits |
-| Matchup Specialist | H2H context | Underdog win rate, home/away |
-| Market Analyst | Line value | Odds mispricing, implied prob gap |
-| Momentum Tracker | Streaks & form | Hot/cold streaks, fatigue |
-| **Synthesis Agent** | Final decision | Requires multi-agent consensus |
+```
+┌─────────────────────────────────────────────────────────┐
+│               DEVELOPMENT PHASE (Claude AI)              │
+│                                                          │
+│  Stage 1: Data Ontology Agent                           │
+│    → Identifies predictive features in MLB data          │
+│                                                          │
+│  Stage 2: Pattern Discovery Agent                       │
+│    → Finds high-accuracy patterns in underdog outcomes   │
+│                                                          │
+│  Stage 3: Strategy Architect Agent                      │
+│    → Designs deterministic rule structures               │
+│                                                          │
+│  Stage 4: Validation Agent                              │
+│    → Stress-tests rules for overfitting/bias            │
+│                                                          │
+│  Stage 5: Synthesis Director                            │
+│    → Combines all agents into final rule set            │
+│                                                          │
+│  Output: strategy_rules.json                            │
+├─────────────────────────────────────────────────────────┤
+│               RUNTIME PHASE (No AI)                      │
+│                                                          │
+│  Strategy Engine reads strategy_rules.json               │
+│    → Evaluates games against deterministic rules         │
+│    → Outputs BET/PASS recommendations                    │
+│    → Fully backtestable, no API calls                   │
+└─────────────────────────────────────────────────────────┘
+```
 
 ## Usage
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# 1. Develop strategy rules (uses Claude Opus agents)
+python run.py develop
 
-# Run full backtest
+# 2. Backtest rules against historical data (no AI)
 python run.py backtest
 
-# Generate today's picks (uses Claude API)
+# 3. Generate today's picks (no AI)
 python run.py picks
 
-# Generate picks without API (rule-based)
-python run.py picks --no-api
+# 4. Show current strategy rules
+python run.py show
 
-# Run optimizer + backtest + picks
+# 5. Full pipeline (develop + backtest)
 python run.py full
 ```
 
-## Configuration
+## Key Design Principles
 
-Copy `.env.example` to `.env` and set:
-- `ANTHROPIC_API_KEY` - Claude API key for swarm model
-- `THE_ODDS_API_KEY` - The Odds API key for real odds data
+- **No ML** — Pure rules-based strategy engine
+- **No AI at runtime** — Claude AI used only during development
+- **No synthetic data** — Real odds from The Odds API
+- **No leakage** — All features lagged by 1+ days
+- **Walk-forward validation** — Never look ahead in backtesting
+- **MiroFish architecture** — Multi-agent collaborative analysis
 
-## Anti-Overfitting Measures
+## Proprietary Innovation
 
-1. **Walk-forward validation** - Train/test split advances through time
-2. **Purge gap** - 1-day gap between train and test periods
-3. **Feature lag** - All features use data from at least 1 day prior
-4. **Conservative models** - Low depth, high regularization
-5. **Dual filter** - Both ML and Swarm must independently agree
-6. **Cross-season validation** - Performance tracked per season
-
-## Key Metrics
-
-- **Win Rate**: Raw percentage of winning bets
-- **ROI**: Return on investment per unit wagered
-- **EV Accuracy**: Percentage of bets with positive expected value
-- **CLV Accuracy**: Percentage of bets beating closing line value
-- **Selectivity**: How selective the strategy is (lower = more selective)
+The patentable innovation is using a multi-agent AI swarm as a strategy
+DEVELOPMENT tool rather than for runtime prediction. The agents don't
+make bets — they design the bet-selection rules through collaborative
+analysis, cross-validation debate, and iterative refinement.
