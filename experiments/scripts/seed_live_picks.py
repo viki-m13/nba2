@@ -285,10 +285,31 @@ def fetch_live_odds():
         print('No games scheduled tonight.')
         return None
 
-    print(f'Found {len(events)} games tonight')
+    # Filter out games that have already started (prevents phantom bets on live games)
+    now = datetime.utcnow()
+    upcoming_events = []
+    for event in events:
+        commence = event.get('commence_time', '')
+        if commence:
+            try:
+                game_time = datetime.fromisoformat(commence.replace('Z', '+00:00')).replace(tzinfo=None)
+                if game_time <= now:
+                    home = team_abbr(event.get('home_team', ''))
+                    away = team_abbr(event.get('away_team', ''))
+                    print(f'  Skipping {away}@{home} — game already started ({commence})')
+                    continue
+            except (ValueError, TypeError):
+                pass
+        upcoming_events.append(event)
+
+    print(f'Found {len(events)} games, {len(upcoming_events)} not yet started')
+
+    if not upcoming_events:
+        print('All games have already started — no picks to generate.')
+        return None
 
     live_odds = {}
-    for event in events:
+    for event in upcoming_events:
         try:
             markets = 'player_points,player_rebounds,player_assists,player_points_rebounds_assists,player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate'
             props_url = f'{ODDS_API_BASE}/sports/basketball_nba/events/{event["id"]}/odds?apiKey={ODDS_API_KEY}&regions=us&markets={markets}&oddsFormat=american&bookmakers=fanduel'

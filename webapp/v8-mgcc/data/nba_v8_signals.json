@@ -1254,52 +1254,5 @@
     "combined_prob": 0.8086272351416872,
     "parlay_ev": 0.17284363444104223,
     "tier": ""
-  },
-  {
-    "date": "20260320",
-    "betType": "parlay",
-    "n_legs": 2,
-    "legs": [
-      {
-        "player": "Jalen Brunson",
-        "team": "",
-        "line": 14.5,
-        "odds": -260,
-        "stat": "pts",
-        "statLabel": "PTS",
-        "cascadeScore": 0.579,
-        "hit": true,
-        "actual": 17,
-        "edge": 0,
-        "hr_20": 0.95,
-        "clearance": 4.5,
-        "streak": 5
-      },
-      {
-        "player": "Jayson Tatum",
-        "team": "",
-        "line": 14.5,
-        "odds": -188,
-        "stat": "pts",
-        "statLabel": "PTS",
-        "cascadeScore": 0.569,
-        "hit": false,
-        "actual": 13,
-        "edge": 0,
-        "hr_20": 1.0,
-        "clearance": 1.5,
-        "streak": 5
-      }
-    ],
-    "odds": 112,
-    "hit": false,
-    "pnl": -200,
-    "wager": 200,
-    "bet": "V8 CSPE 2-Leg Parlay",
-    "engine": "v8_cspe_nba",
-    "source": "live",
-    "combined_prob": 0.7882399730171801,
-    "parlay_ev": 0.6719459984128731,
-    "generated_at": "2026-03-20T21:13:14.401522"
   }
 ]
