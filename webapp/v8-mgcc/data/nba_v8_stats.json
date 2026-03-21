@@ -1,12 +1,12 @@
 {
-  "total": 24,
+  "total": 25,
   "wins": 21,
-  "accuracy": 0.875,
-  "pnl": 1994,
-  "roi": 0.4531818181818182,
-  "leg_total": 53,
-  "leg_hits": 50,
-  "leg_accuracy": 0.9433962264150944,
+  "accuracy": 0.84,
+  "pnl": 1794,
+  "roi": 0.39,
+  "leg_total": 55,
+  "leg_hits": 51,
+  "leg_accuracy": 0.9272727272727272,
   "model": "V8 CSPE (Convergence Score Parlay Engine)",
-  "generated": "2026-03-20T21:13:14.403798"
+  "generated": "2026-03-20T22:40:08.454874"
 }
