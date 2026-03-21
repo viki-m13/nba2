@@ -483,6 +483,43 @@ h3 {
 .pnl-pos { color: var(--accent); }
 .pnl-neg { color: var(--red); }
 
+/* Odds verification warnings */
+.odds-warning {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 4px 0;
+}
+.odds-unavailable {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.odds-shifted {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.pick-unavailable {
+  opacity: 0.6;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+.leg-unavailable {
+  opacity: 0.5;
+}
+.leg-warning {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ef4444;
+  text-transform: uppercase;
+}
+.leg-shifted {
+  color: #f59e0b;
+}
+
 /* ============================================================
    HISTORY
    ============================================================ */

@@ -595,14 +595,26 @@
     const avgVal = pick.avg != null ? pick.avg.toFixed(1) : '--';
     const floorVal = pick.floor != null ? (typeof pick.floor === 'number' ? pick.floor.toFixed(1) : pick.floor) : '--';
 
+    // Odds verification warnings
+    let oddsWarningHtml = '';
+    if (pick.oddsAvailable === false) {
+      oddsWarningHtml = `<div class="odds-warning odds-unavailable">LINE UNAVAILABLE ON FANDUEL</div>`;
+    } else if (pick.oddsShifted && pick.currentOdds != null) {
+      const currentStr = ENGINE.formatOdds(pick.currentOdds);
+      oddsWarningHtml = `<div class="odds-warning odds-shifted">ODDS MOVED: now ${currentStr}</div>`;
+    }
+
+    const cardClass = pick.oddsAvailable === false ? 'pick-card single-pick pick-unavailable' : 'pick-card single-pick';
+
     return `
-      <div class="pick-card single-pick">
+      <div class="${cardClass}">
         <div class="pick-header">
           <span class="pick-type single-type">${pick.betSubType === 'multi_single' ? 'MULTI-SINGLE' : 'SINGLE'}</span>
           <span class="pick-odds">${oddsStr}</span>
         </div>
         <div class="pick-player">${pick.player}</div>
         <div class="pick-line">Over ${pick.line} ${pick.statLabel || ''}</div>
+        ${oddsWarningHtml}
         <div class="pick-stats">
           <div class="pick-stat">
             <div class="pick-stat-label">${scoreLabel}</div>
@@ -641,9 +653,16 @@
       const legOdds = ENGINE.formatOdds(l.odds);
       const legResult = l.hit === true ? 'result-win' : l.hit === false ? 'result-loss' : '';
       const actualStr = l.actual != null ? ` (${l.actual})` : '';
+      const legClass = l.oddsAvailable === false ? 'parlay-leg leg-unavailable' : 'parlay-leg';
+      let legWarning = '';
+      if (l.oddsAvailable === false) {
+        legWarning = '<span class="leg-warning">UNAVAILABLE</span>';
+      } else if (l.oddsShifted && l.currentOdds != null) {
+        legWarning = `<span class="leg-warning leg-shifted">now ${ENGINE.formatOdds(l.currentOdds)}</span>`;
+      }
 
       return `
-        <div class="parlay-leg">
+        <div class="${legClass}">
           <div class="parlay-leg-info">
             <span class="parlay-leg-player ${legResult}">${l.player}</span>
             <span class="parlay-leg-game">${l.team} | CCS: ${(l.cascadeScore * 100).toFixed(0)}%</span>
@@ -651,17 +670,23 @@
           <div class="parlay-leg-right">
             <span class="parlay-leg-line">O${l.line} ${l.statLabel}${actualStr}</span>
             <span class="parlay-leg-odds">${legOdds}</span>
+            ${legWarning}
           </div>
         </div>
       `;
     }).join('');
 
+    const parlayCardClass = parlay.hasUnavailableLegs ? 'pick-card parlay-pick pick-unavailable' : 'pick-card parlay-pick';
+    const parlayWarningHtml = parlay.hasUnavailableLegs
+      ? '<div class="odds-warning odds-unavailable">SOME LEGS UNAVAILABLE ON FANDUEL</div>' : '';
+
     return `
-      <div class="pick-card parlay-pick">
+      <div class="${parlayCardClass}">
         <div class="pick-header">
           <span class="pick-type parlay-type">PARLAY ${parlay.numLegs}-LEG</span>
           <span class="pick-odds">${oddsStr}</span>
         </div>
+        ${parlayWarningHtml}
         <div class="pick-stats">
           <div class="pick-stat">
             <div class="pick-stat-label">Combined Prob</div>

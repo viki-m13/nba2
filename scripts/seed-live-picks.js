@@ -485,6 +485,125 @@ async function main() {
     existingRecKeys.add(`parlay|${legKey}`);
   }
 
+  // --- Verify all picks against current live odds ---
+  // Build a lookup of currently available FanDuel lines from the fetched liveOdds
+  const statToLineKey = { points: 'lines', rebounds: 'rebLines', assists: 'astLines', pra: 'praLines' };
+
+  function verifyPickAgainstLiveOdds(player, line, statType, team) {
+    // Find the game for this team in liveOdds
+    const st = statToLineKey[statType] || 'lines';
+    for (const [gameKey, gameProps] of Object.entries(liveOdds.playerProps)) {
+      if (!gameKey.includes(team)) continue;
+      const playerLines = gameProps[st] && gameProps[st][player];
+      if (!playerLines) return { available: false, currentOdds: null };
+      const lineData = playerLines[line];
+      if (!lineData || lineData.overOdds == null) return { available: false, currentOdds: null };
+      return { available: true, currentOdds: lineData.overOdds };
+    }
+    return { available: false, currentOdds: null };
+  }
+
+  function verifyAndAnnotatePick(pick) {
+    const { available, currentOdds } = verifyPickAgainstLiveOdds(
+      pick.player, pick.line, pick.statType || 'points', pick.team
+    );
+    pick.oddsAvailable = available;
+    pick.currentOdds = currentOdds;
+    pick.oddsVerifiedAt = new Date().toISOString();
+    if (available && currentOdds !== pick.odds) {
+      pick.oddsShifted = true;
+    }
+    return pick;
+  }
+
+  // Merge new picks with existing
+  const allSingles = [...prevSingles, ...recommendation.singles.filter(s => {
+    const key = `${s.player}|${s.line}|${s.statType || 'pts'}|single`;
+    return !existingRecKeys.has(key);
+  }).map(s => ({
+    player: s.player,
+    team: s.team,
+    statType: s.statType,
+    statLabel: s.statLabel,
+    line: s.line,
+    odds: s.odds,
+    cascadeScore: s.cascadeScore,
+    gft: s.gft,
+    beq: s.beq,
+    esi: s.esi,
+    imad: s.imad,
+    hitRate: s.hitRate,
+    edge: s.edge,
+    ev: s.ev,
+    avg: s.avg,
+    floor: s.floor,
+    betSubType: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
+    hit: null,
+    actual: null,
+  }))];
+
+  const allParlays = [...prevParlays, ...recommendation.parlays.filter(p => {
+    const legKey = (p.legs || []).map(l => `${l.player}|${l.line}|${l.statType || 'pts'}`).sort().join('~');
+    return !existingRecKeys.has(`parlay|${legKey}`);
+  }).map(p => ({
+    numLegs: p.numLegs,
+    odds: p.odds,
+    decimalOdds: p.decimalOdds,
+    avgCascade: p.avgCascade,
+    combinedHitRate: p.combinedHitRate,
+    ev: p.ev,
+    legs: p.legs.map(l => ({
+      player: l.player,
+      team: l.team,
+      statType: l.statType,
+      statLabel: l.statLabel,
+      line: l.line,
+      odds: l.odds,
+      cascadeScore: l.cascadeScore,
+      gft: l.gft,
+      beq: l.beq,
+      esi: l.esi,
+      imad: l.imad,
+      hitRate: l.hitRate,
+      edge: l.edge,
+      hit: null,
+      actual: null,
+    })),
+  }))];
+
+  // Verify all singles (including previously accumulated ones from earlier runs)
+  for (const s of allSingles) {
+    if (s.hit !== null && s.hit !== undefined) continue; // Already resolved, skip
+    verifyAndAnnotatePick(s);
+  }
+
+  // Verify all parlay legs
+  for (const p of allParlays) {
+    let anyUnavailable = false;
+    for (const leg of (p.legs || [])) {
+      if (leg.hit !== null && leg.hit !== undefined) continue;
+      verifyAndAnnotatePick(leg);
+      if (!leg.oddsAvailable) anyUnavailable = true;
+    }
+    p.hasUnavailableLegs = anyUnavailable;
+  }
+
+  // Log verification results
+  const unavailableSingles = allSingles.filter(s => s.oddsAvailable === false);
+  const shiftedSingles = allSingles.filter(s => s.oddsShifted);
+  if (unavailableSingles.length > 0) {
+    console.log(`\n⚠ ${unavailableSingles.length} pick(s) no longer available on FanDuel:`);
+    for (const s of unavailableSingles) {
+      console.log(`  ✗ ${s.player} O${s.line} ${s.statLabel || 'PTS'} — line removed from FanDuel`);
+    }
+  }
+  if (shiftedSingles.length > 0) {
+    console.log(`\n⚡ ${shiftedSingles.length} pick(s) with shifted odds:`);
+    for (const s of shiftedSingles) {
+      console.log(`  ${s.player} O${s.line} ${s.statLabel || 'PTS'}: ${ENGINE.formatOdds(s.odds)} → ${ENGINE.formatOdds(s.currentOdds)}`);
+    }
+  }
+
   const recsOutput = {
     generated: new Date().toISOString(),
     date: today,
@@ -493,58 +612,8 @@ async function main() {
     recommendation: {
       betType: recommendation.betType,
       reasoning: recommendation.reasoning,
-      singles: [...prevSingles, ...recommendation.singles.filter(s => {
-        const key = `${s.player}|${s.line}|${s.statType || 'pts'}|single`;
-        return !existingRecKeys.has(key);
-      }).map(s => ({
-        player: s.player,
-        team: s.team,
-        statType: s.statType,
-        statLabel: s.statLabel,
-        line: s.line,
-        odds: s.odds,
-        cascadeScore: s.cascadeScore,
-        gft: s.gft,
-        beq: s.beq,
-        esi: s.esi,
-        imad: s.imad,
-        hitRate: s.hitRate,
-        edge: s.edge,
-        ev: s.ev,
-        avg: s.avg,
-        floor: s.floor,
-        betSubType: s.cascadeScore >= ENGINE.CONFIG.SINGLE_MIN_SCORE ? 'single' : 'multi_single',
-        hit: null,
-        actual: null,
-      }))],
-      parlays: [...prevParlays, ...recommendation.parlays.filter(p => {
-        const legKey = (p.legs || []).map(l => `${l.player}|${l.line}|${l.statType || 'pts'}`).sort().join('~');
-        return !existingRecKeys.has(`parlay|${legKey}`);
-      }).map(p => ({
-        numLegs: p.numLegs,
-        odds: p.odds,
-        decimalOdds: p.decimalOdds,
-        avgCascade: p.avgCascade,
-        combinedHitRate: p.combinedHitRate,
-        ev: p.ev,
-        legs: p.legs.map(l => ({
-          player: l.player,
-          team: l.team,
-          statType: l.statType,
-          statLabel: l.statLabel,
-          line: l.line,
-          odds: l.odds,
-          cascadeScore: l.cascadeScore,
-          gft: l.gft,
-          beq: l.beq,
-          esi: l.esi,
-          imad: l.imad,
-          hitRate: l.hitRate,
-          edge: l.edge,
-          hit: null,
-          actual: null,
-        })),
-      }))],
+      singles: allSingles,
+      parlays: allParlays,
     },
   };
 
