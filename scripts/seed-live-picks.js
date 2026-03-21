@@ -318,12 +318,34 @@ async function main() {
     return;
   }
 
-  console.log(`Found ${events.length} games tonight`);
+  // Filter out games that have already started (prevents phantom bets on live games)
+  const now = new Date();
+  const upcoming = events.filter(event => {
+    const commence = event.commence_time;
+    if (commence) {
+      const gameTime = new Date(commence);
+      if (gameTime <= now) {
+        const home = teamAbbr(event.home_team);
+        const away = teamAbbr(event.away_team);
+        console.log(`  Skipping ${away}@${home} — game already started (${commence})`);
+        return false;
+      }
+    }
+    return true;
+  });
+
+  console.log(`Found ${events.length} games, ${upcoming.length} not yet started`);
+
+  if (upcoming.length === 0) {
+    console.log('All games have already started — no picks to generate.');
+    writeRecsIfEmpty('All games have already started');
+    return;
+  }
 
   // Fetch player props for each game
-  const liveOdds = { events, playerProps: {} };
+  const liveOdds = { events: upcoming, playerProps: {} };
 
-  for (const event of events) {
+  for (const event of upcoming) {
     try {
       // Fetch both primary and alternate markets to get the full range of lines
       const markets = 'player_points,player_rebounds,player_assists,player_points_rebounds_assists,player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_points_rebounds_assists_alternate';
