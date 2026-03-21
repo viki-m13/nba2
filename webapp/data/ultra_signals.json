@@ -1093,6 +1093,33 @@
     "betSubType": "multi_single"
   },
   {
+    "date": "20260305",
+    "betType": "single",
+    "player": "Jaden McDaniels",
+    "team": "",
+    "opponent": "",
+    "line": 3.5,
+    "odds": -265,
+    "stat": "reb",
+    "statLabel": "REB",
+    "cascadeScore": 0.49928203155406153,
+    "gft": 0.48697874586154477,
+    "beq": 0.06642189717474223,
+    "esi": 0.14572324136831913,
+    "imad": 0.05904065649724061,
+    "hitRate": 0.9,
+    "edge": 0.06642189717474223,
+    "ev": 0.09148676403313538,
+    "avg": 7.4,
+    "floor": 6.345613674556338,
+    "actual": 2,
+    "hit": false,
+    "pnl": -50,
+    "bet": "Jaden McDaniels O3.5 REB",
+    "engine": "ultra",
+    "betSubType": "multi_single"
+  },
+  {
     "date": "20260306",
     "betType": "single",
     "player": "Jayson Tatum",
@@ -1656,10 +1683,11 @@
     "avg": 14,
     "floor": 10.896531537237571,
     "bet": "Jamal Shead O8.5 PRA",
-    "hit": null,
-    "actual": null,
+    "hit": true,
+    "actual": 11,
     "source": "live",
-    "generated_at": "2026-03-20T16:26:26.809Z"
+    "generated_at": "2026-03-20T16:26:26.809Z",
+    "pnl": 28
   },
   {
     "date": "20260320",
@@ -2096,47 +2124,6 @@
     "bet": "LaMelo Ball O5.5 AST",
     "engine": "ultra",
     "betSubType": "multi_single"
-  },
-  {
-    "date": "20260305",
-    "betType": "parlay",
-    "n_legs": 2,
-    "legs": [
-      {
-        "player": "Draymond Green",
-        "team": "",
-        "line": 3.5,
-        "odds": -295,
-        "stat": "ast",
-        "statLabel": "AST",
-        "cascadeScore": 0.5093775078533377,
-        "hit": true,
-        "actual": 8,
-        "edge": 0.09529550211100679
-      },
-      {
-        "player": "Amen Thompson",
-        "team": "",
-        "line": 5.5,
-        "odds": -410,
-        "stat": "reb",
-        "statLabel": "REB",
-        "cascadeScore": 0.4766400702001874,
-        "hit": true,
-        "actual": 10,
-        "edge": 0.03820937652153045
-      }
-    ],
-    "parlay_american": -150,
-    "parlay_decimal": 1.6655642827614716,
-    "odds": -150,
-    "combinedHitRate": 0.8264462809917354,
-    "avgCascade": 0.49300878902676254,
-    "ev": 0.3764994072408854,
-    "hit": true,
-    "pnl": 67,
-    "bet": "2-Leg Parlay",
-    "engine": "ultra"
   },
   {
     "date": "20260312",
