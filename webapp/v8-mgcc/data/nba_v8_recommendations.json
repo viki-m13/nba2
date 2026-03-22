@@ -1,54 +1,6 @@
 {
-  "generated": "2026-03-21T19:53:01.502078",
-  "date": "20260321",
+  "generated": "2026-03-22T00:30:41.387695",
+  "date": "20260322",
   "engine": "V8 CSPE (Convergence Score Parlay Engine)",
-  "picks": [
-    {
-      "date": "20260321",
-      "betType": "parlay",
-      "n_legs": 2,
-      "legs": [
-        {
-          "player": "Pascal Siakam",
-          "team": "",
-          "line": 11.5,
-          "odds": -500,
-          "stat": "pts",
-          "statLabel": "PTS",
-          "cascadeScore": 0.581,
-          "hit": null,
-          "actual": null,
-          "edge": 0,
-          "hr_20": 1.0,
-          "clearance": 3.5,
-          "streak": 5
-        },
-        {
-          "player": "Isaiah Jackson",
-          "team": "",
-          "line": 3.5,
-          "odds": -600,
-          "stat": "pts",
-          "statLabel": "PTS",
-          "cascadeScore": 0.563,
-          "hit": null,
-          "actual": null,
-          "edge": 0,
-          "hr_20": 1.0,
-          "clearance": 2.5,
-          "streak": 5
-        }
-      ],
-      "odds": -250,
-      "hit": null,
-      "pnl": null,
-      "wager": 200,
-      "bet": "V8 CSPE 2-Leg Parlay",
-      "engine": "v8_cspe_nba",
-      "source": "live",
-      "combined_prob": 0.8086272351416872,
-      "parlay_ev": 0.13207812919836215,
-      "generated_at": "2026-03-21T19:53:01.494813"
-    }
-  ]
+  "picks": []
 }
