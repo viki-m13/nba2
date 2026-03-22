@@ -1,0 +1,116 @@
+=== MLB SGP REAL DATA ANALYSIS ===
+Source: 2,502 games with real prop lines + 2,368 games with real boxscores
+Season: 2025 MLB (April-September)
+Total prop records: 336895
+Unique players: 596
+Unique games: 1853
+
+PROP HIT RATES BY MARKET AND LINE:
+
+  HITS (n=90428, overall hit rate=28.9%):
+    O0.5: 18337/30121 = 60.9% (implied=66.2%, edge=-5.4%, avg_odds=-205, EV/$ = -0.094)
+    O1.5: 6346/29009 = 21.9% (implied=26.4%, edge=-4.5%, avg_odds=+305, EV/$ = -0.114)
+    O2.5: 1375/28543 = 4.8% (implied=6.4%, edge=-1.6%, avg_odds=+1768, EV/$ = -0.100)
+    O3.5: 34/2755 = 1.2% (implied=1.8%, edge=-0.6%, avg_odds=+6185, EV/$ = -0.224)
+
+  RBIS (n=73108, overall hit rate=17.1%):
+    O0.5: 8976/30132 = 29.8% (implied=35.0%, edge=-5.2%, avg_odds=+191, EV/$ = -0.132)
+    O1.5: 3204/30173 = 10.6% (implied=13.8%, edge=-3.2%, avg_odds=+682, EV/$ = -0.170)
+    O2.5: 246/7410 = 3.3% (implied=5.2%, edge=-1.8%, avg_odds=+2121, EV/$ = -0.263)
+    O3.5: 66/5393 = 1.2% (implied=2.0%, edge=-0.8%, avg_odds=+5826, EV/$ = -0.275)
+
+  RUNS (n=67885, overall hit rate=20.7%):
+    O0.5: 11399/30124 = 37.8% (implied=46.1%, edge=-8.2%, avg_odds=+65, EV/$ = -0.375)
+    O1.5: 2509/29411 = 8.5% (implied=10.4%, edge=-1.9%, avg_odds=+983, EV/$ = -0.076)
+    O2.5: 162/8350 = 1.9% (implied=2.8%, edge=-0.9%, avg_odds=+3744, EV/$ = -0.254)
+
+  TOTAL_BASES (n=105474, overall hit rate=9.8%):
+    O1.5: 6937/30131 = 23.0% (implied=42.7%, edge=-19.7%, avg_odds=+111, EV/$ = -0.515)
+    O2.5: 2064/28808 = 7.2% (implied=25.7%, edge=-18.6%, avg_odds=+316, EV/$ = -0.702)
+    O3.5: 890/23270 = 3.8% (implied=18.4%, edge=-14.6%, avg_odds=+503, EV/$ = -0.769)
+    O4.5: 437/23265 = 1.9% (implied=9.5%, edge=-7.6%, avg_odds=+1136, EV/$ = -0.768)
+
+
+ODDS BRACKET HIT RATES:
+  Heavy Fav (-500 to -200): 9489/14370 = 66.0%
+  Moderate Fav (-200 to -110): 12466/24080 = 51.8%
+  Near Even (-110 to +110): 3853/10565 = 36.5%
+  Slight Dog (+110 to +200): 17595/61928 = 28.4%
+  Moderate Dog (+200 to +400): 10462/66111 = 15.8%
+  Long Shot (+400 to +800): 5135/60960 = 8.4%
+
+
+
+Total significant prop pairs: 124860
+
+TOP 30 POSITIVELY CORRELATED PROP PAIRS (lift > 1.0):
+  J.P. Crawford_total_bases_3.5 + J.P. Crawford_total_bases_4.5: lift=98.000, P(both)=1.0% vs P(indep)=0.0%, n=98
+  Trevor Larnach_hits_2.5 + Trevor Larnach_total_bases_2.5: lift=92.000, P(both)=1.1% vs P(indep)=0.0%, n=92
+  Cedric Mullins_hits_2.5 + Cedric Mullins_total_bases_2.5: lift=91.000, P(both)=1.1% vs P(indep)=0.0%, n=91
+  Ke'Bryan Hayes_total_bases_3.5 + Ke'Bryan Hayes_total_bases_4.5: lift=88.000, P(both)=1.1% vs P(indep)=0.0%, n=88
+  Jake Cronenworth_total_bases_3.5 + Jake Cronenworth_total_bases_4.5: lift=86.000, P(both)=1.2% vs P(indep)=0.0%, n=86
+  Mike Trout_total_bases_2.5 + Mike Trout_total_bases_3.5: lift=84.000, P(both)=1.2% vs P(indep)=0.0%, n=84
+  Mike Trout_total_bases_3.5 + Mike Trout_total_bases_4.5: lift=84.000, P(both)=1.2% vs P(indep)=0.0%, n=84
+  Mike Trout_total_bases_2.5 + Mike Trout_total_bases_4.5: lift=84.000, P(both)=1.2% vs P(indep)=0.0%, n=84
+  Gleyber Torres_total_bases_3.5 + Gleyber Torres_total_bases_4.5: lift=79.000, P(both)=1.3% vs P(indep)=0.0%, n=79
+  Jeff McNeil_total_bases_3.5 + Jeff McNeil_total_bases_4.5: lift=78.000, P(both)=1.3% vs P(indep)=0.0%, n=78
+  Nick Castellanos_total_bases_3.5 + Nick Castellanos_total_bases_4.5: lift=77.000, P(both)=1.3% vs P(indep)=0.0%, n=77
+  Ryan O'Hearn_total_bases_3.5 + Ryan O'Hearn_total_bases_4.5: lift=76.000, P(both)=1.3% vs P(indep)=0.0%, n=76
+  Jonah Heim_hits_2.5 + Jonah Heim_total_bases_2.5: lift=74.000, P(both)=1.4% vs P(indep)=0.0%, n=74
+  Sal Frelick_total_bases_3.5 + Sal Frelick_total_bases_4.5: lift=73.000, P(both)=1.4% vs P(indep)=0.0%, n=73
+  Oneil Cruz_total_bases_2.5 + Oneil Cruz_total_bases_3.5: lift=70.000, P(both)=1.4% vs P(indep)=0.0%, n=70
+  Jacob Young_hits_2.5 + Jacob Young_total_bases_2.5: lift=67.000, P(both)=1.5% vs P(indep)=0.0%, n=67
+  Luis Rengifo_total_bases_3.5 + Luis Rengifo_total_bases_4.5: lift=67.000, P(both)=1.5% vs P(indep)=0.0%, n=67
+  Jordan Walker_hits_2.5 + Jordan Walker_total_bases_2.5: lift=66.000, P(both)=1.5% vs P(indep)=0.0%, n=66
+  Freddy Fermin_hits_2.5 + Freddy Fermin_total_bases_2.5: lift=66.000, P(both)=1.5% vs P(indep)=0.0%, n=66
+  Bryce Harper_runs_2.5 + Kyle Schwarber_runs_2.5: lift=66.000, P(both)=1.5% vs P(indep)=0.0%, n=66
+  Zach McKinstry_total_bases_3.5 + Zach McKinstry_total_bases_4.5: lift=65.000, P(both)=1.5% vs P(indep)=0.0%, n=65
+  Masyn Winn_total_bases_3.5 + Masyn Winn_total_bases_4.5: lift=64.000, P(both)=1.6% vs P(indep)=0.0%, n=64
+  Xavier Edwards_runs_2.5 + Xavier Edwards_total_bases_4.5: lift=61.000, P(both)=1.6% vs P(indep)=0.0%, n=61
+  Jake Cronenworth_hits_2.5 + Xander Bogaerts_total_bases_3.5: lift=59.000, P(both)=1.7% vs P(indep)=0.0%, n=59
+  Isaac Paredes_hits_2.5 + Isaac Paredes_total_bases_2.5: lift=58.000, P(both)=1.7% vs P(indep)=0.0%, n=58
+  Colt Keith_total_bases_3.5 + Colt Keith_total_bases_4.5: lift=58.000, P(both)=1.7% vs P(indep)=0.0%, n=58
+  Michael A. Taylor_hits_2.5 + Michael A. Taylor_total_bases_2.5: lift=57.000, P(both)=1.8% vs P(indep)=0.0%, n=57
+  Carlos Narvaez_hits_2.5 + Carlos Narvaez_total_bases_4.5: lift=57.000, P(both)=1.8% vs P(indep)=0.0%, n=57
+  Kyle Stowers_total_bases_3.5 + Kyle Stowers_total_bases_4.5: lift=55.000, P(both)=1.8% vs P(indep)=0.0%, n=55
+  Jordan Westburg_total_bases_3.5 + Jordan Westburg_total_bases_4.5: lift=55.000, P(both)=1.8% vs P(indep)=0.0%, n=55
+
+TOP 15 ANTI-CORRELATED PAIRS (lift < 1.0, AVOID):
+  Anthony Volpe_rbis_0.5 + Giancarlo Stanton_runs_2.5: lift=0.000, n=41
+  Anthony Volpe_rbis_1.5 + Giancarlo Stanton_runs_2.5: lift=0.000, n=41
+  Anthony Volpe_runs_1.5 + Giancarlo Stanton_runs_2.5: lift=0.000, n=41
+  Anthony Volpe_runs_0.5 + Giancarlo Stanton_runs_2.5: lift=0.000, n=41
+  Bryan Reynolds_rbis_1.5 + Joey Bart_runs_1.5: lift=0.000, n=40
+  Bryan Reynolds_rbis_0.5 + Joey Bart_runs_1.5: lift=0.000, n=40
+  Bryan Reynolds_runs_1.5 + Joey Bart_runs_1.5: lift=0.000, n=40
+  Harrison Bader_hits_0.5 + Willi Castro_rbis_1.5: lift=0.000, n=40
+  Harrison Bader_total_bases_1.5 + Willi Castro_rbis_1.5: lift=0.000, n=40
+  Harrison Bader_total_bases_1.5 + Willi Castro_runs_1.5: lift=0.000, n=40
+  Harrison Bader_rbis_1.5 + Willi Castro_total_bases_1.5: lift=0.000, n=40
+  Harrison Bader_rbis_0.5 + Willi Castro_rbis_1.5: lift=0.000, n=40
+  Harrison Bader_rbis_1.5 + Willi Castro_rbis_1.5: lift=0.000, n=40
+  Harrison Bader_rbis_1.5 + Willi Castro_runs_1.5: lift=0.000, n=40
+  Harrison Bader_runs_0.5 + Willi Castro_rbis_1.5: lift=0.000, n=40
+
+
+ARCHETYPE BACKTEST RESULTS:
+
+  floor_finder:
+    SGPs: 1841, Hits: 386, Hit rate: 21.0%
+    Avg odds: +292, ROI: -18.6%, Edge: -4.5%
+
+  milestone_stack:
+    SGPs: 1850, Hits: 43, Hit rate: 2.3%
+    Avg odds: +852, ROI: -78.3%, Edge: -8.2%
+
+  slugfest:
+    SGPs: 891, Hits: 204, Hit rate: 22.9%
+    Avg odds: +425, ROI: +17.7%, Edge: +3.9%
+
+
+GAME ENVIRONMENT ANALYSIS:
+  Games with 7+ total runs: prop hit rate = 22.1% (n=227932, 1256 games)
+  Games with 8+ total runs: prop hit rate = 23.4% (n=188624, 1041 games)
+  Games with 9+ total runs: prop hit rate = 24.2% (n=165499, 916 games)
+  Games with 10+ total runs: prop hit rate = 25.5% (n=133254, 739 games)
+  Games with 12+ total runs: prop hit rate = 27.8% (n=85234, 471 games)
