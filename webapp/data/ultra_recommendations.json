@@ -1,121 +1,12 @@
 {
-  "generated": "2026-03-21T23:16:21.172Z",
-  "date": "20260321",
+  "generated": "2026-03-22T16:17:15.441Z",
+  "date": "20260322",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "single",
-    "reasoning": "1 strong-confidence pick(s) found",
-    "singles": [
-      {
-        "player": "Pascal Siakam",
-        "team": "IND",
-        "statType": "rebounds",
-        "statLabel": "REB",
-        "line": 3.5,
-        "odds": -350,
-        "cascadeScore": 0.5690629854547602,
-        "gft": 0.6226380768951905,
-        "beq": 0.07167916700349963,
-        "esi": 0.19620861584021257,
-        "imad": 0.09463050012857195,
-        "hitRate": 0.95,
-        "edge": 0.07167916700349963,
-        "ev": 0.09215892900449951,
-        "avg": 6.65,
-        "floor": 5.61133807514052,
-        "betSubType": "multi_single",
-        "hit": null,
-        "actual": null
-      },
-      {
-        "player": "Gary Payton II",
-        "team": "GS",
-        "statType": "points",
-        "statLabel": "PTS",
-        "line": 6.5,
-        "odds": -500,
-        "cascadeScore": 0.4790245310241185,
-        "gft": 0.6181302001707873,
-        "beq": 0.029085285457646548,
-        "esi": 0.15974760875502525,
-        "imad": 0.04892564961953572,
-        "hitRate": 1,
-        "edge": 0.029085285457646548,
-        "ev": 0.0349023425491759,
-        "avg": 13.916666666666666,
-        "floor": 10.667396520973659,
-        "betSubType": "multi_single",
-        "hit": null,
-        "actual": null
-      },
-      {
-        "player": "Bam Adebayo",
-        "team": "MIA",
-        "statType": "points",
-        "statLabel": "PTS",
-        "line": 16.5,
-        "odds": -350,
-        "cascadeScore": 0.6147389682824401,
-        "gft": 0.6129541108286752,
-        "beq": 0.014671516657238315,
-        "esi": 0.458822656477815,
-        "imad": 0.057848255766428464,
-        "hitRate": 0.9,
-        "edge": 0.014671516657238315,
-        "ev": 0.01886337855930642,
-        "avg": 24.95,
-        "floor": 22.34988219233721,
-        "betSubType": "single",
-        "hit": null,
-        "actual": null
-      }
-    ],
-    "parlays": [
-      {
-        "numLegs": 2,
-        "odds": -179,
-        "decimalOdds": 1.56,
-        "avgCascade": 0.5308359315526305,
-        "combinedHitRate": 0.95,
-        "ev": 0.481,
-        "legs": [
-          {
-            "player": "Pascal Siakam",
-            "team": "IND",
-            "statType": "rebounds",
-            "statLabel": "REB",
-            "line": 3.5,
-            "odds": -350,
-            "cascadeScore": 0.5690629854547602,
-            "gft": 0.6226380768951905,
-            "beq": 0.07167916700349963,
-            "esi": 0.19620861584021257,
-            "imad": 0.09463050012857195,
-            "hitRate": 0.95,
-            "edge": 0.07167916700349963,
-            "hit": null,
-            "actual": null
-          },
-          {
-            "player": "Gary Payton II",
-            "team": "GS",
-            "statType": "points",
-            "statLabel": "PTS",
-            "line": 6.5,
-            "odds": -470,
-            "cascadeScore": 0.492608877650501,
-            "gft": 0.6181302001707873,
-            "beq": 0.03785721528220809,
-            "esi": 0.15974760875502525,
-            "imad": 0.05477360283591008,
-            "hitRate": 1,
-            "edge": 0.03785721528220809,
-            "hit": null,
-            "actual": null
-          }
-        ]
-      }
-    ]
+    "betType": "none",
+    "reasoning": "No bets meet quality thresholds tonight",
+    "singles": [],
+    "parlays": []
   }
 }
