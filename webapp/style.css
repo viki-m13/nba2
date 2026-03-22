@@ -480,6 +480,7 @@ h3 {
 .result-win { color: var(--accent); font-weight: 600; }
 .result-loss { color: var(--red); font-weight: 600; }
 .result-pending { color: var(--text-dim); font-style: italic; }
+.result-void { color: #f59e0b; font-weight: 600; }
 .pnl-pos { color: var(--accent); }
 .pnl-neg { color: var(--red); }
 
@@ -677,6 +678,7 @@ h3 {
 .leg-chip.leg-hit { border-color: #22c55e40; color: #22c55e; }
 .leg-chip.leg-miss { border-color: #ef444440; color: #ef4444; }
 .leg-chip.leg-pending { border-color: var(--border); color: var(--text-dim); }
+.leg-chip.leg-void { border-color: #f59e0b40; color: #f59e0b; }
 
 /* Table scroll for large tables */
 .table-scroll {

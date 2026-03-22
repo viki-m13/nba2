@@ -1796,11 +1796,12 @@
     "avg": 13.916666666666666,
     "floor": 10.667396520973659,
     "bet": "Gary Payton II O6.5 PTS",
-    "hit": false,
+    "hit": null,
     "actual": 0,
+    "dnp": true,
     "source": "live",
     "generated_at": "2026-03-21T16:17:42.842Z",
-    "pnl": -100
+    "pnl": 0
   },
   {
     "date": "20260321",
@@ -1849,7 +1850,8 @@
         "hitRate": 1,
         "edge": 0.03785721528220809,
         "actual": 0,
-        "hit": false,
+        "hit": null,
+        "dnp": true,
         "bet": "Gary Payton II O6.5 PTS"
       }
     ],

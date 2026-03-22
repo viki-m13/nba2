@@ -73,8 +73,8 @@ def resolve_pending_signals():
 
     resolved_count = 0
     for signal in signals:
-        if signal.get('hit') is not None:
-            continue  # Already resolved
+        if signal.get('hit') is not None or signal.get('dnp'):
+            continue  # Already resolved or voided (DNP)
 
         date = signal.get('date', '')
         players_on_date = box_by_date.get(date, {})
@@ -99,11 +99,11 @@ def resolve_pending_signals():
                 signal['pnl'] = round((decimal - 1) * 100) if signal['hit'] else -100
                 resolved_count += 1
             else:
-                # Player DNP — games happened but player not in box score
+                # Player DNP — void the bet (push, $0 P&L)
                 signal['actual'] = 0
-                signal['hit'] = False
+                signal['hit'] = None
                 signal['dnp'] = True
-                signal['pnl'] = -100
+                signal['pnl'] = 0
                 resolved_count += 1
 
         elif signal.get('betType') == 'parlay':

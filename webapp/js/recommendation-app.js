@@ -307,7 +307,7 @@
 
   async function autoResolveResults() {
     // Find pending signals (today and yesterday)
-    const pending = allSignals.filter(s => s.hit === null || s.hit === undefined);
+    const pending = allSignals.filter(s => (s.hit === null || s.hit === undefined) && !s.dnp);
     if (pending.length === 0) return;
 
     const pendingDates = [...new Set(pending.map(s => s.date))];
@@ -412,13 +412,12 @@
           if (signal.betType === 'single') {
             const pData = playerStats[signal.player];
             if (!pData) {
-              // Player DNP — if all games final, mark as loss (0 stats)
+              // Player DNP — if all games final, void the bet (push, $0 P&L)
               if (allGamesFinal) {
                 signal.actual = 0;
-                signal.hit = false;
+                signal.hit = null;
                 signal.dnp = true;
-                const decimal = ENGINE.americanToDecimal(signal.odds || -110);
-                signal.pnl = -100;
+                signal.pnl = 0;
                 resolvedCount++;
               }
               continue;
@@ -575,8 +574,8 @@
 
   function renderSingleCard(pick) {
     const oddsStr = ENGINE.formatOdds(pick.odds);
-    const resultClass = pick.hit === true ? 'result-win' : pick.hit === false ? 'result-loss' : 'result-pending';
-    const resultText = pick.hit === true ? 'WIN' : pick.hit === false ? 'LOSS' : 'PENDING';
+    const resultClass = pick.dnp ? 'result-void' : pick.hit === true ? 'result-win' : pick.hit === false ? 'result-loss' : 'result-pending';
+    const resultText = pick.dnp ? 'VOID' : pick.hit === true ? 'WIN' : pick.hit === false ? 'LOSS' : 'PENDING';
 
     const chipData = [
       { label: 'GFT', title: 'Gravitational Floor Theory', value: pick.gft },
@@ -833,7 +832,7 @@
     const roi = total > 0 ? (pnl / (total * unitSize) * 100).toFixed(1) : '--';
 
     const activeDays = new Set(allSignals.map(s => s.date)).size;
-    const pendingCount = allSignals.filter(s => s.hit === null || s.hit === undefined).length;
+    const pendingCount = allSignals.filter(s => (s.hit === null || s.hit === undefined) && !s.dnp).length;
 
     container.innerHTML = `
       <div class="history-stat-row">
@@ -939,8 +938,8 @@
   }
 
   function renderSingleHistoryRow(s) {
-    const resultClass = s.hit === true ? 'result-win' : s.hit === false ? 'result-loss' : 'result-pending';
-    const resultText = s.hit === true ? 'WIN' : s.hit === false ? 'LOSS' : 'PENDING';
+    const resultClass = s.dnp ? 'result-void' : s.hit === true ? 'result-win' : s.hit === false ? 'result-loss' : 'result-pending';
+    const resultText = s.dnp ? 'VOID' : s.hit === true ? 'WIN' : s.hit === false ? 'LOSS' : 'PENDING';
     const pnlText = s.pnl != null ? `${s.pnl >= 0 ? '+' : ''}$${s.pnl}` : '--';
     const pnlClass = s.pnl != null ? (s.pnl >= 0 ? 'pnl-pos' : 'pnl-neg') : '';
     const actualStr = s.actual != null ? ` (${s.actual})` : '';
@@ -973,8 +972,8 @@
 
     // Legs detail
     const legsHtml = (s.legs || []).map(l => {
-      const icon = l.hit === true ? '&#10003;' : l.hit === false ? '&#10007;' : '&#8226;';
-      const cls = l.hit === true ? 'leg-hit' : l.hit === false ? 'leg-miss' : 'leg-pending';
+      const icon = l.dnp ? '&#8709;' : l.hit === true ? '&#10003;' : l.hit === false ? '&#10007;' : '&#8226;';
+      const cls = l.dnp ? 'leg-void' : l.hit === true ? 'leg-hit' : l.hit === false ? 'leg-miss' : 'leg-pending';
       const actualStr = l.actual != null ? ` (${l.actual})` : '';
       return `<span class="leg-chip ${cls}">${icon} ${l.player || ''} O${l.line || ''} ${l.statLabel || ''}${actualStr}</span>`;
     }).join('');
