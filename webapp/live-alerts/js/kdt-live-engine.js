@@ -15,7 +15,7 @@
   const POLL_INTERVAL_MS = 30000; // 30 seconds
   const ESPN_BASE = '/api/mlb';   // Vercel proxy
   const ESPN_DIRECT = 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb';
-  const SWP_DATA_URL = 'live-alerts/data/kdt_swp_table.json';
+  const SWP_DATA_URL = '/live-alerts/data/kdt_swp_table.json';
 
   // ── KDT Alert Tiers ────────────────────────────────────────────
   const KDT_TIERS = [
@@ -452,12 +452,15 @@
   async function init() {
     // Load SWP table
     try {
+      console.log('[KDT] Loading SWP table from', SWP_DATA_URL);
       swpTable = await fetchJson(SWP_DATA_URL);
+      const keys = Object.keys(swpTable);
+      console.log('[KDT] SWP table loaded:', keys.length, 'states');
+      return keys.length > 0;
     } catch (e) {
       console.error('[KDT] Failed to load SWP table:', e);
       return false;
     }
-    return true;
   }
 
   function start(updateCb, alertCb) {
