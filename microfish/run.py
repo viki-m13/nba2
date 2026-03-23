@@ -326,6 +326,26 @@ def main():
         from ml_live_strategy import generate_live_strategy_report
         generate_live_strategy_report()
 
+    elif command == 'ml-live-alerts':
+        from ml_live_alerts import LiveAlertMonitor
+        poll = 30
+        for arg in sys.argv[2:]:
+            try:
+                poll = int(arg)
+            except ValueError:
+                pass
+        monitor = LiveAlertMonitor(poll_interval=poll)
+        monitor.run()
+
+    elif command == 'ml-live-backtest':
+        from ml_live_alerts import run_backtest
+        run_backtest()
+
+    elif command == 'ml-live-webapp':
+        from ml_generate_webapp_data import run_backtest, generate_webapp_files
+        results = run_backtest()
+        generate_webapp_files(results)
+
     else:
         print(f"Unknown command: {command}")
         print(__doc__)

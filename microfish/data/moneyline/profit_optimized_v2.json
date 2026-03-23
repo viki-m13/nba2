@@ -1,0 +1,1965 @@
+{
+  "strategy": "profit_optimized_live_v2",
+  "date": "2026-03-23T15:01:24.190739",
+  "method": "realistic_buy_prices_from_espn_wp",
+  "selected_tiers": [
+    {
+      "min_inning": 5,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9089,
+      "n_games": 1175,
+      "ev_per_play": 0.0202,
+      "bets_per_day": 6.6,
+      "daily_ev": 13.33,
+      "season_ev": 2373.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9313,
+      "n_games": 742,
+      "ev_per_play": 0.0263,
+      "bets_per_day": 4.17,
+      "daily_ev": 10.95,
+      "season_ev": 1949.0
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 2,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9091,
+      "n_games": 913,
+      "ev_per_play": 0.0187,
+      "bets_per_day": 5.13,
+      "daily_ev": 9.58,
+      "season_ev": 1705.0
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 3,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9365,
+      "n_games": 189,
+      "ev_per_play": 0.0627,
+      "bets_per_day": 1.06,
+      "daily_ev": 6.65,
+      "season_ev": 1184.0
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 2,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9205,
+      "n_games": 88,
+      "ev_per_play": 0.069,
+      "bets_per_day": 0.49,
+      "daily_ev": 3.41,
+      "season_ev": 607.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9324,
+      "n_games": 296,
+      "ev_per_play": 0.0129,
+      "bets_per_day": 1.66,
+      "daily_ev": 2.14,
+      "season_ev": 381.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 4,
+      "max_buy_price": 0.85,
+      "accuracy": 0.9048,
+      "n_games": 42,
+      "ev_per_play": 0.0726,
+      "bets_per_day": 0.24,
+      "daily_ev": 1.71,
+      "season_ev": 304.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 5,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9057,
+      "n_games": 53,
+      "ev_per_play": 0.0315,
+      "bets_per_day": 0.3,
+      "daily_ev": 0.94,
+      "season_ev": 167.0
+    },
+    {
+      "min_inning": 11,
+      "min_lead": 2,
+      "max_buy_price": 0.85,
+      "accuracy": 0.9,
+      "n_games": 10,
+      "ev_per_play": 0.0796,
+      "bets_per_day": 0.06,
+      "daily_ev": 0.45,
+      "season_ev": 80.0
+    }
+  ],
+  "all_capped_top50": [
+    {
+      "min_inning": 5,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9089,
+      "n_games": 1175,
+      "ev_per_play": 0.0202,
+      "bets_per_day": 6.6,
+      "daily_ev": 13.33,
+      "season_ev": 2373.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9313,
+      "n_games": 742,
+      "ev_per_play": 0.0263,
+      "bets_per_day": 4.17,
+      "daily_ev": 10.95,
+      "season_ev": 1949.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9215,
+      "n_games": 803,
+      "ev_per_play": 0.0233,
+      "bets_per_day": 4.51,
+      "daily_ev": 10.51,
+      "season_ev": 1871.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9235,
+      "n_games": 784,
+      "ev_per_play": 0.0228,
+      "bets_per_day": 4.4,
+      "daily_ev": 10.03,
+      "season_ev": 1785.0
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9168,
+      "n_games": 950,
+      "ev_per_play": 0.0185,
+      "bets_per_day": 5.34,
+      "daily_ev": 9.86,
+      "season_ev": 1755.0
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 2,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9091,
+      "n_games": 913,
+      "ev_per_play": 0.0187,
+      "bets_per_day": 5.13,
+      "daily_ev": 9.58,
+      "season_ev": 1705.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 4,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9059,
+      "n_games": 340,
+      "ev_per_play": 0.0501,
+      "bets_per_day": 1.91,
+      "daily_ev": 9.57,
+      "season_ev": 1703.0
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9387,
+      "n_games": 652,
+      "ev_per_play": 0.0257,
+      "bets_per_day": 3.66,
+      "daily_ev": 9.41,
+      "season_ev": 1675.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 4,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9065,
+      "n_games": 321,
+      "ev_per_play": 0.0472,
+      "bets_per_day": 1.8,
+      "daily_ev": 8.51,
+      "season_ev": 1515.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 4,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9091,
+      "n_games": 275,
+      "ev_per_play": 0.0453,
+      "bets_per_day": 1.54,
+      "daily_ev": 6.99,
+      "season_ev": 1244.0
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 3,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9365,
+      "n_games": 189,
+      "ev_per_play": 0.0627,
+      "bets_per_day": 1.06,
+      "daily_ev": 6.65,
+      "season_ev": 1184.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9263,
+      "n_games": 651,
+      "ev_per_play": 0.0156,
+      "bets_per_day": 3.66,
+      "daily_ev": 5.71,
+      "season_ev": 1016.0
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9352,
+      "n_games": 525,
+      "ev_per_play": 0.0153,
+      "bets_per_day": 2.95,
+      "daily_ev": 4.53,
+      "season_ev": 806.0
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9477,
+      "n_games": 325,
+      "ev_per_play": 0.0236,
+      "bets_per_day": 1.83,
+      "daily_ev": 4.31,
+      "season_ev": 767.0
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 2,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9205,
+      "n_games": 88,
+      "ev_per_play": 0.069,
+      "bets_per_day": 0.49,
+      "daily_ev": 3.41,
+      "season_ev": 607.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9451,
+      "n_games": 255,
+      "ev_per_play": 0.0202,
+      "bets_per_day": 1.43,
+      "daily_ev": 2.89,
+      "season_ev": 514.0
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9675,
+      "n_games": 154,
+      "ev_per_play": 0.0332,
+      "bets_per_day": 0.87,
+      "daily_ev": 2.87,
+      "season_ev": 511.0
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 3,
+      "max_buy_price": 0.8,
+      "accuracy": 0.96,
+      "n_games": 25,
+      "ev_per_play": 0.1918,
+      "bets_per_day": 0.14,
+      "daily_ev": 2.69,
+      "season_ev": 479.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9324,
+      "n_games": 296,
+      "ev_per_play": 0.0129,
+      "bets_per_day": 1.66,
+      "daily_ev": 2.14,
+      "season_ev": 381.0
+    },
+    {
+      "min_inning": 10,
+      "min_lead": 2,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9245,
+      "n_games": 53,
+      "ev_per_play": 0.0651,
+      "bets_per_day": 0.3,
+      "daily_ev": 1.94,
+      "season_ev": 345.0
+    },
+    {
+      "min_inning": 10,
+      "min_lead": 2,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9231,
+      "n_games": 39,
+      "ev_per_play": 0.0864,
+      "bets_per_day": 0.22,
+      "daily_ev": 1.89,
+      "season_ev": 336.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9331,
+      "n_games": 284,
+      "ev_per_play": 0.0116,
+      "bets_per_day": 1.6,
+      "daily_ev": 1.85,
+      "season_ev": 329.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 6,
+      "max_buy_price": 0.95,
+      "accuracy": 1.0,
+      "n_games": 50,
+      "ev_per_play": 0.0642,
+      "bets_per_day": 0.28,
+      "daily_ev": 1.8,
+      "season_ev": 320.0
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 3,
+      "max_buy_price": 0.85,
+      "accuracy": 1.0,
+      "n_games": 18,
+      "ev_per_play": 0.1765,
+      "bets_per_day": 0.1,
+      "daily_ev": 1.78,
+      "season_ev": 317.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 4,
+      "max_buy_price": 0.85,
+      "accuracy": 0.9048,
+      "n_games": 42,
+      "ev_per_play": 0.0726,
+      "bets_per_day": 0.24,
+      "daily_ev": 1.71,
+      "season_ev": 304.0
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 2,
+      "max_buy_price": 0.95,
+      "accuracy": 0.916,
+      "n_games": 393,
+      "ev_per_play": 0.0071,
+      "bets_per_day": 2.21,
+      "daily_ev": 1.56,
+      "season_ev": 278.0
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 4,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9043,
+      "n_games": 115,
+      "ev_per_play": 0.0227,
+      "bets_per_day": 0.65,
+      "daily_ev": 1.47,
+      "season_ev": 262.0
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9337,
+      "n_games": 347,
+      "ev_per_play": 0.0065,
+      "bets_per_day": 1.95,
+      "daily_ev": 1.27,
+      "season_ev": 226.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 6,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9683,
+      "n_games": 63,
+      "ev_per_play": 0.0341,
+      "bets_per_day": 0.35,
+      "daily_ev": 1.21,
+      "season_ev": 215.0
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 3,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9444,
+      "n_games": 36,
+      "ev_per_play": 0.0579,
+      "bets_per_day": 0.2,
+      "daily_ev": 1.17,
+      "season_ev": 208.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 5,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9,
+      "n_games": 60,
+      "ev_per_play": 0.031,
+      "bets_per_day": 0.34,
+      "daily_ev": 1.05,
+      "season_ev": 187.0
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9559,
+      "n_games": 68,
+      "ev_per_play": 0.0254,
+      "bets_per_day": 0.38,
+      "daily_ev": 0.97,
+      "season_ev": 173.0
+    },
+    {
+      "min_inning": 11,
+      "min_lead": 2,
+      "max_buy_price": 0.95,
+      "accuracy": 0.95,
+      "n_games": 20,
+      "ev_per_play": 0.0837,
+      "bets_per_day": 0.11,
+      "daily_ev": 0.94,
+      "season_ev": 167.0
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 5,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9057,
+      "n_games": 53,
+      "ev_per_play": 0.0315,
+      "bets_per_day": 0.3,
+      "daily_ev": 0.94,
+      "season_ev": 167.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 6,
+      "max_buy_price": 0.95,
+      "accuracy": 1.0,
+      "n_games": 26,
+      "ev_per_play": 0.0621,
+      "bets_per_day": 0.15,
+      "daily_ev": 0.91,
+      "season_ev": 162.0
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 5,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9118,
+      "n_games": 34,
+      "ev_per_play": 0.0343,
+      "bets_per_day": 0.19,
+      "daily_ev": 0.65,
+      "season_ev": 116.0
+    },
+    {
+      "min_inning": 11,
+      "min_lead": 2,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9167,
+      "n_games": 12,
+      "ev_per_play": 0.0856,
+      "bets_per_day": 0.07,
+      "daily_ev": 0.58,
+      "season_ev": 103.0
+    },
+    {
+      "min_inning": 11,
+      "min_lead": 2,
+      "max_buy_price": 0.85,
+      "accuracy": 0.9,
+      "n_games": 10,
+      "ev_per_play": 0.0796,
+      "bets_per_day": 0.06,
+      "daily_ev": 0.45,
+      "season_ev": 80.0
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 4,
+      "max_buy_price": 0.9,
+      "accuracy": 0.907,
+      "n_games": 43,
+      "ev_per_play": 0.017,
+      "bets_per_day": 0.24,
+      "daily_ev": 0.41,
+      "season_ev": 73.0
+    },
+    {
+      "min_inning": 10,
+      "min_lead": 3,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9545,
+      "n_games": 22,
+      "ev_per_play": 0.032,
+      "bets_per_day": 0.12,
+      "daily_ev": 0.39,
+      "season_ev": 69.0
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 6,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9403,
+      "n_games": 67,
+      "ev_per_play": 0.0084,
+      "bets_per_day": 0.38,
+      "daily_ev": 0.32,
+      "season_ev": 57.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 5,
+      "max_buy_price": 0.9,
+      "accuracy": 0.9,
+      "n_games": 20,
+      "ev_per_play": 0.0173,
+      "bets_per_day": 0.11,
+      "daily_ev": 0.19,
+      "season_ev": 34.0
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.93,
+      "n_games": 200,
+      "ev_per_play": 0.001,
+      "bets_per_day": 1.12,
+      "daily_ev": 0.12,
+      "season_ev": 21.0
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9259,
+      "n_games": 54,
+      "ev_per_play": -0.0148,
+      "bets_per_day": 0.3,
+      "daily_ev": -0.45,
+      "season_ev": -80.0
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 4,
+      "max_buy_price": 0.95,
+      "accuracy": 0.9118,
+      "n_games": 34,
+      "ev_per_play": -0.0313,
+      "bets_per_day": 0.19,
+      "daily_ev": -0.6,
+      "season_ev": -107.0
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 5,
+      "max_buy_price": 0.95,
+      "accuracy": 0.925,
+      "n_games": 120,
+      "ev_per_play": -0.01,
+      "bets_per_day": 0.67,
+      "daily_ev": -0.67,
+      "season_ev": -119.0
+    }
+  ],
+  "top_conditions": [
+    {
+      "min_inning": 8,
+      "min_lead": 1,
+      "total_games": 2612,
+      "wins": 2358,
+      "losses": 254,
+      "accuracy": 0.9028,
+      "avg_buy_price": 0.889,
+      "median_buy_price": 0.921,
+      "p10_buy_price": 0.714,
+      "p25_buy_price": 0.82,
+      "ev_per_play": 0.0141,
+      "ev_per_bet": 1.41,
+      "bets_per_day": 14.67,
+      "daily_ev": 20.72,
+      "season_ev": 3688.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 212,
+          "accuracy": 0.6462,
+          "ev_per_play": 0.0018,
+          "bets_per_day": 1.19,
+          "daily_ev": 0.21
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 378,
+          "accuracy": 0.6905,
+          "ev_per_play": 0.0106,
+          "bets_per_day": 2.12,
+          "daily_ev": 2.25
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 566,
+          "accuracy": 0.7332,
+          "ev_per_play": 0.0208,
+          "bets_per_day": 3.18,
+          "daily_ev": 6.63
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 823,
+          "accuracy": 0.7655,
+          "ev_per_play": 0.0174,
+          "bets_per_day": 4.62,
+          "daily_ev": 8.06
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 1121,
+          "accuracy": 0.8037,
+          "ev_per_play": 0.0216,
+          "bets_per_day": 6.3,
+          "daily_ev": 13.62
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1533,
+          "accuracy": 0.8408,
+          "ev_per_play": 0.0206,
+          "bets_per_day": 8.61,
+          "daily_ev": 17.77
+        }
+      }
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 2,
+      "total_games": 2032,
+      "wins": 1886,
+      "losses": 146,
+      "accuracy": 0.9281,
+      "avg_buy_price": 0.911,
+      "median_buy_price": 0.925,
+      "p10_buy_price": 0.81,
+      "p25_buy_price": 0.865,
+      "ev_per_play": 0.0169,
+      "ev_per_bet": 1.69,
+      "bets_per_day": 11.42,
+      "daily_ev": 19.31,
+      "season_ev": 3438.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 7,
+          "accuracy": 0.4286,
+          "ev_per_play": -0.2499,
+          "bets_per_day": 0.04,
+          "daily_ev": -0.98
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 44,
+          "accuracy": 0.7273,
+          "ev_per_play": 0.0033,
+          "bets_per_day": 0.25,
+          "daily_ev": 0.08
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 166,
+          "accuracy": 0.8193,
+          "ev_per_play": 0.0547,
+          "bets_per_day": 0.93,
+          "daily_ev": 5.1
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 410,
+          "accuracy": 0.839,
+          "ev_per_play": 0.0376,
+          "bets_per_day": 2.3,
+          "daily_ev": 8.65
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 781,
+          "accuracy": 0.8732,
+          "ev_per_play": 0.0364,
+          "bets_per_day": 4.39,
+          "daily_ev": 15.98
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1293,
+          "accuracy": 0.8987,
+          "ev_per_play": 0.0261,
+          "bets_per_day": 7.26,
+          "daily_ev": 18.96
+        }
+      }
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 2,
+      "total_games": 2154,
+      "wins": 1932,
+      "losses": 222,
+      "accuracy": 0.8969,
+      "avg_buy_price": 0.882,
+      "median_buy_price": 0.896,
+      "p10_buy_price": 0.765,
+      "p25_buy_price": 0.824,
+      "ev_per_play": 0.0154,
+      "ev_per_bet": 1.54,
+      "bets_per_day": 12.1,
+      "daily_ev": 18.67,
+      "season_ev": 3323.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 46,
+          "accuracy": 0.7174,
+          "ev_per_play": 0.0569,
+          "bets_per_day": 0.26,
+          "daily_ev": 1.47
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 149,
+          "accuracy": 0.7517,
+          "ev_per_play": 0.0441,
+          "bets_per_day": 0.84,
+          "daily_ev": 3.7
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 395,
+          "accuracy": 0.7924,
+          "ev_per_play": 0.0415,
+          "bets_per_day": 2.22,
+          "daily_ev": 9.21
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 720,
+          "accuracy": 0.8181,
+          "ev_per_play": 0.0333,
+          "bets_per_day": 4.04,
+          "daily_ev": 13.46
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 1118,
+          "accuracy": 0.8488,
+          "ev_per_play": 0.0312,
+          "bets_per_day": 6.28,
+          "daily_ev": 19.62
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1642,
+          "accuracy": 0.8715,
+          "ev_per_play": 0.0194,
+          "bets_per_day": 9.22,
+          "daily_ev": 17.88
+        }
+      }
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 3,
+      "total_games": 1807,
+      "wins": 1624,
+      "losses": 183,
+      "accuracy": 0.8987,
+      "avg_buy_price": 0.886,
+      "median_buy_price": 0.9,
+      "p10_buy_price": 0.789,
+      "p25_buy_price": 0.843,
+      "ev_per_play": 0.0132,
+      "ev_per_bet": 1.32,
+      "bets_per_day": 10.15,
+      "daily_ev": 13.38,
+      "season_ev": 2382.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 35,
+          "accuracy": 0.7143,
+          "ev_per_play": 0.0598,
+          "bets_per_day": 0.2,
+          "daily_ev": 1.18
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 89,
+          "accuracy": 0.7865,
+          "ev_per_play": 0.0877,
+          "bets_per_day": 0.5,
+          "daily_ev": 4.38
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 230,
+          "accuracy": 0.8174,
+          "ev_per_play": 0.0688,
+          "bets_per_day": 1.29,
+          "daily_ev": 8.88
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 506,
+          "accuracy": 0.8281,
+          "ev_per_play": 0.0367,
+          "bets_per_day": 2.84,
+          "daily_ev": 10.42
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 917,
+          "accuracy": 0.855,
+          "ev_per_play": 0.025,
+          "bets_per_day": 5.15,
+          "daily_ev": 12.86
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1473,
+          "accuracy": 0.8839,
+          "ev_per_play": 0.0179,
+          "bets_per_day": 8.28,
+          "daily_ev": 14.82
+        }
+      }
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 3,
+      "total_games": 1852,
+      "wins": 1638,
+      "losses": 214,
+      "accuracy": 0.8844,
+      "avg_buy_price": 0.872,
+      "median_buy_price": 0.886,
+      "p10_buy_price": 0.764,
+      "p25_buy_price": 0.826,
+      "ev_per_play": 0.0126,
+      "ev_per_bet": 1.26,
+      "bets_per_day": 10.4,
+      "daily_ev": 13.07,
+      "season_ev": 2326.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 66,
+          "accuracy": 0.7121,
+          "ev_per_play": 0.0709,
+          "bets_per_day": 0.37,
+          "daily_ev": 2.63
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 155,
+          "accuracy": 0.7548,
+          "ev_per_play": 0.0641,
+          "bets_per_day": 0.87,
+          "daily_ev": 5.58
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 322,
+          "accuracy": 0.7857,
+          "ev_per_play": 0.0495,
+          "bets_per_day": 1.81,
+          "daily_ev": 8.96
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 633,
+          "accuracy": 0.8088,
+          "ev_per_play": 0.0279,
+          "bets_per_day": 3.56,
+          "daily_ev": 9.94
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 1059,
+          "accuracy": 0.8395,
+          "ev_per_play": 0.02,
+          "bets_per_day": 5.95,
+          "daily_ev": 11.91
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1572,
+          "accuracy": 0.869,
+          "ev_per_play": 0.0149,
+          "bets_per_day": 8.83,
+          "daily_ev": 13.15
+        }
+      }
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 1,
+      "total_games": 2494,
+      "wins": 2358,
+      "losses": 136,
+      "accuracy": 0.9455,
+      "avg_buy_price": 0.936,
+      "median_buy_price": 0.974,
+      "p10_buy_price": 0.807,
+      "p25_buy_price": 0.913,
+      "ev_per_play": 0.0093,
+      "ev_per_bet": 0.93,
+      "bets_per_day": 14.01,
+      "daily_ev": 12.99,
+      "season_ev": 2313.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 82,
+          "accuracy": 0.6707,
+          "ev_per_play": 0.0476,
+          "bets_per_day": 0.46,
+          "daily_ev": 2.19
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 139,
+          "accuracy": 0.705,
+          "ev_per_play": 0.0382,
+          "bets_per_day": 0.78,
+          "daily_ev": 2.98
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 226,
+          "accuracy": 0.7699,
+          "ev_per_play": 0.0599,
+          "bets_per_day": 1.27,
+          "daily_ev": 7.61
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 394,
+          "accuracy": 0.7843,
+          "ev_per_play": 0.0248,
+          "bets_per_day": 2.21,
+          "daily_ev": 5.5
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 541,
+          "accuracy": 0.817,
+          "ev_per_play": 0.0261,
+          "bets_per_day": 3.04,
+          "daily_ev": 7.94
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 929,
+          "accuracy": 0.8644,
+          "ev_per_play": 0.0173,
+          "bets_per_day": 5.22,
+          "daily_ev": 9.05
+        }
+      }
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 3,
+      "total_games": 1835,
+      "wins": 1632,
+      "losses": 203,
+      "accuracy": 0.8894,
+      "avg_buy_price": 0.877,
+      "median_buy_price": 0.89,
+      "p10_buy_price": 0.774,
+      "p25_buy_price": 0.832,
+      "ev_per_play": 0.0125,
+      "ev_per_bet": 1.25,
+      "bets_per_day": 10.31,
+      "daily_ev": 12.89,
+      "season_ev": 2295.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 52,
+          "accuracy": 0.75,
+          "ev_per_play": 0.103,
+          "bets_per_day": 0.29,
+          "daily_ev": 3.01
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 123,
+          "accuracy": 0.7805,
+          "ev_per_play": 0.088,
+          "bets_per_day": 0.69,
+          "daily_ev": 6.08
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 286,
+          "accuracy": 0.8077,
+          "ev_per_play": 0.0661,
+          "bets_per_day": 1.61,
+          "daily_ev": 10.63
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 578,
+          "accuracy": 0.8149,
+          "ev_per_play": 0.03,
+          "bets_per_day": 3.25,
+          "daily_ev": 9.74
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 1021,
+          "accuracy": 0.8452,
+          "ev_per_play": 0.0205,
+          "bets_per_day": 5.74,
+          "daily_ev": 11.75
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1543,
+          "accuracy": 0.8743,
+          "ev_per_play": 0.0154,
+          "bets_per_day": 8.67,
+          "daily_ev": 13.34
+        }
+      }
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 3,
+      "total_games": 1760,
+      "wins": 1602,
+      "losses": 158,
+      "accuracy": 0.9102,
+      "avg_buy_price": 0.898,
+      "median_buy_price": 0.909,
+      "p10_buy_price": 0.805,
+      "p25_buy_price": 0.859,
+      "ev_per_play": 0.0127,
+      "ev_per_bet": 1.27,
+      "bets_per_day": 9.89,
+      "daily_ev": 12.53,
+      "season_ev": 2231.0,
+      "wp_cap_results": {
+        "0.7": {
+          "cap": 0.7,
+          "n": 14,
+          "accuracy": 0.7143,
+          "ev_per_play": 0.0532,
+          "bets_per_day": 0.08,
+          "daily_ev": 0.42
+        },
+        "0.75": {
+          "cap": 0.75,
+          "n": 52,
+          "accuracy": 0.8846,
+          "ev_per_play": 0.171,
+          "bets_per_day": 0.29,
+          "daily_ev": 5.0
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 165,
+          "accuracy": 0.8364,
+          "ev_per_play": 0.0784,
+          "bets_per_day": 0.93,
+          "daily_ev": 7.27
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 388,
+          "accuracy": 0.8351,
+          "ev_per_play": 0.0363,
+          "bets_per_day": 2.18,
+          "daily_ev": 7.92
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 799,
+          "accuracy": 0.8661,
+          "ev_per_play": 0.0269,
+          "bets_per_day": 4.49,
+          "daily_ev": 12.09
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1351,
+          "accuracy": 0.8912,
+          "ev_per_play": 0.0163,
+          "bets_per_day": 7.59,
+          "daily_ev": 12.36
+        }
+      }
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 2,
+      "total_games": 1934,
+      "wins": 1837,
+      "losses": 97,
+      "accuracy": 0.9498,
+      "avg_buy_price": 0.939,
+      "median_buy_price": 0.955,
+      "p10_buy_price": 0.851,
+      "p25_buy_price": 0.907,
+      "ev_per_play": 0.0109,
+      "ev_per_bet": 1.09,
+      "bets_per_day": 10.87,
+      "daily_ev": 11.8,
+      "season_ev": 2100.0,
+      "wp_cap_results": {
+        "0.8": {
+          "cap": 0.8,
+          "n": 37,
+          "accuracy": 0.7027,
+          "ev_per_play": -0.0808,
+          "bets_per_day": 0.21,
+          "daily_ev": -1.68
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 191,
+          "accuracy": 0.8115,
+          "ev_per_play": -0.0085,
+          "bets_per_day": 1.07,
+          "daily_ev": -0.91
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 430,
+          "accuracy": 0.8791,
+          "ev_per_play": 0.0274,
+          "bets_per_day": 2.42,
+          "daily_ev": 6.61
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 913,
+          "accuracy": 0.9091,
+          "ev_per_play": 0.0187,
+          "bets_per_day": 5.13,
+          "daily_ev": 9.58
+        }
+      }
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 3,
+      "total_games": 1696,
+      "wins": 1571,
+      "losses": 125,
+      "accuracy": 0.9263,
+      "avg_buy_price": 0.915,
+      "median_buy_price": 0.924,
+      "p10_buy_price": 0.835,
+      "p25_buy_price": 0.88,
+      "ev_per_play": 0.0112,
+      "ev_per_bet": 1.12,
+      "bets_per_day": 9.53,
+      "daily_ev": 10.63,
+      "season_ev": 1892.0,
+      "wp_cap_results": {
+        "0.75": {
+          "cap": 0.75,
+          "n": 15,
+          "accuracy": 0.8,
+          "ev_per_play": 0.0775,
+          "bets_per_day": 0.08,
+          "daily_ev": 0.65
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 71,
+          "accuracy": 0.831,
+          "ev_per_play": 0.0639,
+          "bets_per_day": 0.4,
+          "daily_ev": 2.55
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 228,
+          "accuracy": 0.8509,
+          "ev_per_play": 0.0419,
+          "bets_per_day": 1.28,
+          "daily_ev": 5.36
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 585,
+          "accuracy": 0.8889,
+          "ev_per_play": 0.0383,
+          "bets_per_day": 3.29,
+          "daily_ev": 12.57
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 1175,
+          "accuracy": 0.9089,
+          "ev_per_play": 0.0202,
+          "bets_per_day": 6.6,
+          "daily_ev": 13.33
+        }
+      }
+    },
+    {
+      "min_inning": 1,
+      "min_lead": 4,
+      "total_games": 1354,
+      "wins": 1275,
+      "losses": 79,
+      "accuracy": 0.9417,
+      "avg_buy_price": 0.929,
+      "median_buy_price": 0.94,
+      "p10_buy_price": 0.856,
+      "p25_buy_price": 0.9,
+      "ev_per_play": 0.0123,
+      "ev_per_bet": 1.23,
+      "bets_per_day": 7.61,
+      "daily_ev": 9.34,
+      "season_ev": 1662.0,
+      "wp_cap_results": {
+        "0.75": {
+          "cap": 0.75,
+          "n": 8,
+          "accuracy": 0.75,
+          "ev_per_play": 0.0425,
+          "bets_per_day": 0.04,
+          "daily_ev": 0.19
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 28,
+          "accuracy": 0.7857,
+          "ev_per_play": 0.0225,
+          "bets_per_day": 0.16,
+          "daily_ev": 0.35
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 117,
+          "accuracy": 0.8632,
+          "ev_per_play": 0.0495,
+          "bets_per_day": 0.66,
+          "daily_ev": 3.25
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 340,
+          "accuracy": 0.9059,
+          "ev_per_play": 0.0501,
+          "bets_per_day": 1.91,
+          "daily_ev": 9.57
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 803,
+          "accuracy": 0.9215,
+          "ev_per_play": 0.0233,
+          "bets_per_day": 4.51,
+          "daily_ev": 10.51
+        }
+      }
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 3,
+      "total_games": 1640,
+      "wins": 1543,
+      "losses": 97,
+      "accuracy": 0.9409,
+      "avg_buy_price": 0.931,
+      "median_buy_price": 0.94,
+      "p10_buy_price": 0.859,
+      "p25_buy_price": 0.901,
+      "ev_per_play": 0.01,
+      "ev_per_bet": 1.0,
+      "bets_per_day": 9.21,
+      "daily_ev": 9.26,
+      "season_ev": 1648.0,
+      "wp_cap_results": {
+        "0.8": {
+          "cap": 0.8,
+          "n": 25,
+          "accuracy": 0.96,
+          "ev_per_play": 0.1918,
+          "bets_per_day": 0.14,
+          "daily_ev": 2.69
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 133,
+          "accuracy": 0.8496,
+          "ev_per_play": 0.0317,
+          "bets_per_day": 0.75,
+          "daily_ev": 2.37
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 404,
+          "accuracy": 0.8936,
+          "ev_per_play": 0.0343,
+          "bets_per_day": 2.27,
+          "daily_ev": 7.78
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 950,
+          "accuracy": 0.9168,
+          "ev_per_play": 0.0185,
+          "bets_per_day": 5.34,
+          "daily_ev": 9.86
+        }
+      }
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 3,
+      "total_games": 1555,
+      "wins": 1495,
+      "losses": 60,
+      "accuracy": 0.9614,
+      "avg_buy_price": 0.951,
+      "median_buy_price": 0.962,
+      "p10_buy_price": 0.893,
+      "p25_buy_price": 0.927,
+      "ev_per_play": 0.0104,
+      "ev_per_bet": 1.04,
+      "bets_per_day": 8.74,
+      "daily_ev": 9.1,
+      "season_ev": 1620.0,
+      "wp_cap_results": {
+        "0.85": {
+          "cap": 0.85,
+          "n": 18,
+          "accuracy": 1.0,
+          "ev_per_play": 0.1765,
+          "bets_per_day": 0.1,
+          "daily_ev": 1.78
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 189,
+          "accuracy": 0.9365,
+          "ev_per_play": 0.0627,
+          "bets_per_day": 1.06,
+          "daily_ev": 6.65
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 652,
+          "accuracy": 0.9387,
+          "ev_per_play": 0.0257,
+          "bets_per_day": 3.66,
+          "daily_ev": 9.41
+        }
+      }
+    },
+    {
+      "min_inning": 3,
+      "min_lead": 4,
+      "total_games": 1336,
+      "wins": 1266,
+      "losses": 70,
+      "accuracy": 0.9476,
+      "avg_buy_price": 0.936,
+      "median_buy_price": 0.944,
+      "p10_buy_price": 0.871,
+      "p25_buy_price": 0.912,
+      "ev_per_play": 0.0117,
+      "ev_per_bet": 1.17,
+      "bets_per_day": 7.51,
+      "daily_ev": 8.75,
+      "season_ev": 1558.0,
+      "wp_cap_results": {
+        "0.8": {
+          "cap": 0.8,
+          "n": 10,
+          "accuracy": 0.8,
+          "ev_per_play": 0.0348,
+          "bets_per_day": 0.06,
+          "daily_ev": 0.2
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 73,
+          "accuracy": 0.8767,
+          "ev_per_play": 0.0561,
+          "bets_per_day": 0.41,
+          "daily_ev": 2.3
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 275,
+          "accuracy": 0.9091,
+          "ev_per_play": 0.0453,
+          "bets_per_day": 1.54,
+          "daily_ev": 6.99
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 742,
+          "accuracy": 0.9313,
+          "ev_per_play": 0.0263,
+          "bets_per_day": 4.17,
+          "daily_ev": 10.95
+        }
+      }
+    },
+    {
+      "min_inning": 2,
+      "min_lead": 4,
+      "total_games": 1348,
+      "wins": 1271,
+      "losses": 77,
+      "accuracy": 0.9429,
+      "avg_buy_price": 0.932,
+      "median_buy_price": 0.941,
+      "p10_buy_price": 0.862,
+      "p25_buy_price": 0.903,
+      "ev_per_play": 0.0112,
+      "ev_per_bet": 1.12,
+      "bets_per_day": 7.57,
+      "daily_ev": 8.52,
+      "season_ev": 1516.0,
+      "wp_cap_results": {
+        "0.75": {
+          "cap": 0.75,
+          "n": 5,
+          "accuracy": 0.8,
+          "ev_per_play": 0.0868,
+          "bets_per_day": 0.03,
+          "daily_ev": 0.24
+        },
+        "0.8": {
+          "cap": 0.8,
+          "n": 22,
+          "accuracy": 0.8636,
+          "ev_per_play": 0.095,
+          "bets_per_day": 0.12,
+          "daily_ev": 1.17
+        },
+        "0.85": {
+          "cap": 0.85,
+          "n": 102,
+          "accuracy": 0.8725,
+          "ev_per_play": 0.0555,
+          "bets_per_day": 0.57,
+          "daily_ev": 3.18
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 321,
+          "accuracy": 0.9065,
+          "ev_per_play": 0.0472,
+          "bets_per_day": 1.8,
+          "daily_ev": 8.51
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 784,
+          "accuracy": 0.9235,
+          "ev_per_play": 0.0228,
+          "bets_per_day": 4.4,
+          "daily_ev": 10.03
+        }
+      }
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 3,
+      "total_games": 1463,
+      "wins": 1430,
+      "losses": 33,
+      "accuracy": 0.9774,
+      "avg_buy_price": 0.97,
+      "median_buy_price": 0.979,
+      "p10_buy_price": 0.925,
+      "p25_buy_price": 0.956,
+      "ev_per_play": 0.0079,
+      "ev_per_bet": 0.79,
+      "bets_per_day": 8.22,
+      "daily_ev": 6.52,
+      "season_ev": 1161.0,
+      "wp_cap_results": {
+        "0.9": {
+          "cap": 0.9,
+          "n": 36,
+          "accuracy": 0.9444,
+          "ev_per_play": 0.0579,
+          "bets_per_day": 0.2,
+          "daily_ev": 1.17
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 325,
+          "accuracy": 0.9477,
+          "ev_per_play": 0.0236,
+          "bets_per_day": 1.83,
+          "daily_ev": 4.31
+        }
+      }
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 2,
+      "total_games": 1807,
+      "wins": 1765,
+      "losses": 42,
+      "accuracy": 0.9768,
+      "avg_buy_price": 0.971,
+      "median_buy_price": 0.988,
+      "p10_buy_price": 0.918,
+      "p25_buy_price": 0.962,
+      "ev_per_play": 0.006,
+      "ev_per_bet": 0.6,
+      "bets_per_day": 10.15,
+      "daily_ev": 6.1,
+      "season_ev": 1086.0,
+      "wp_cap_results": {
+        "0.85": {
+          "cap": 0.85,
+          "n": 44,
+          "accuracy": 0.8409,
+          "ev_per_play": 0.0136,
+          "bets_per_day": 0.25,
+          "daily_ev": 0.34
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 88,
+          "accuracy": 0.9205,
+          "ev_per_play": 0.069,
+          "bets_per_day": 0.49,
+          "daily_ev": 3.41
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 393,
+          "accuracy": 0.916,
+          "ev_per_play": 0.0071,
+          "bets_per_day": 2.21,
+          "daily_ev": 1.56
+        }
+      }
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 4,
+      "total_games": 1310,
+      "wins": 1246,
+      "losses": 64,
+      "accuracy": 0.9511,
+      "avg_buy_price": 0.943,
+      "median_buy_price": 0.951,
+      "p10_buy_price": 0.882,
+      "p25_buy_price": 0.921,
+      "ev_per_play": 0.008,
+      "ev_per_bet": 0.8,
+      "bets_per_day": 7.36,
+      "daily_ev": 5.92,
+      "season_ev": 1054.0,
+      "wp_cap_results": {
+        "0.85": {
+          "cap": 0.85,
+          "n": 42,
+          "accuracy": 0.9048,
+          "ev_per_play": 0.0726,
+          "bets_per_day": 0.24,
+          "daily_ev": 1.71
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 219,
+          "accuracy": 0.8858,
+          "ev_per_play": 0.0147,
+          "bets_per_day": 1.23,
+          "daily_ev": 1.81
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 651,
+          "accuracy": 0.9263,
+          "ev_per_play": 0.0156,
+          "bets_per_day": 3.66,
+          "daily_ev": 5.71
+        }
+      }
+    },
+    {
+      "min_inning": 9,
+      "min_lead": 3,
+      "total_games": 1372,
+      "wins": 1361,
+      "losses": 11,
+      "accuracy": 0.992,
+      "avg_buy_price": 0.987,
+      "median_buy_price": 0.995,
+      "p10_buy_price": 0.965,
+      "p25_buy_price": 0.984,
+      "ev_per_play": 0.0052,
+      "ev_per_bet": 0.52,
+      "bets_per_day": 7.71,
+      "daily_ev": 3.99,
+      "season_ev": 709.0,
+      "wp_cap_results": {
+        "0.95": {
+          "cap": 0.95,
+          "n": 68,
+          "accuracy": 0.9559,
+          "ev_per_play": 0.0254,
+          "bets_per_day": 0.38,
+          "daily_ev": 0.97
+        }
+      }
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 4,
+      "total_games": 1279,
+      "wins": 1225,
+      "losses": 54,
+      "accuracy": 0.9578,
+      "avg_buy_price": 0.953,
+      "median_buy_price": 0.96,
+      "p10_buy_price": 0.903,
+      "p25_buy_price": 0.932,
+      "ev_per_play": 0.0044,
+      "ev_per_bet": 0.44,
+      "bets_per_day": 7.19,
+      "daily_ev": 3.19,
+      "season_ev": 568.0,
+      "wp_cap_results": {
+        "0.85": {
+          "cap": 0.85,
+          "n": 7,
+          "accuracy": 1.0,
+          "ev_per_play": 0.1603,
+          "bets_per_day": 0.04,
+          "daily_ev": 0.63
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 115,
+          "accuracy": 0.9043,
+          "ev_per_play": 0.0227,
+          "bets_per_day": 0.65,
+          "daily_ev": 1.47
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 525,
+          "accuracy": 0.9352,
+          "ev_per_play": 0.0153,
+          "bets_per_day": 2.95,
+          "daily_ev": 4.53
+        }
+      }
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 4,
+      "total_games": 1175,
+      "wins": 1150,
+      "losses": 25,
+      "accuracy": 0.9787,
+      "avg_buy_price": 0.975,
+      "median_buy_price": 0.98,
+      "p10_buy_price": 0.943,
+      "p25_buy_price": 0.964,
+      "ev_per_play": 0.0039,
+      "ev_per_bet": 0.39,
+      "bets_per_day": 6.6,
+      "daily_ev": 2.6,
+      "season_ev": 462.0,
+      "wp_cap_results": {
+        "0.95": {
+          "cap": 0.95,
+          "n": 154,
+          "accuracy": 0.9675,
+          "ev_per_play": 0.0332,
+          "bets_per_day": 0.87,
+          "daily_ev": 2.87
+        }
+      }
+    },
+    {
+      "min_inning": 10,
+      "min_lead": 2,
+      "total_games": 74,
+      "wins": 70,
+      "losses": 4,
+      "accuracy": 0.9459,
+      "avg_buy_price": 0.896,
+      "median_buy_price": 0.899,
+      "p10_buy_price": 0.813,
+      "p25_buy_price": 0.831,
+      "ev_per_play": 0.05,
+      "ev_per_bet": 5.0,
+      "bets_per_day": 0.42,
+      "daily_ev": 2.08,
+      "season_ev": 370.0,
+      "wp_cap_results": {
+        "0.85": {
+          "cap": 0.85,
+          "n": 28,
+          "accuracy": 0.8929,
+          "ev_per_play": 0.0703,
+          "bets_per_day": 0.16,
+          "daily_ev": 1.11
+        },
+        "0.9": {
+          "cap": 0.9,
+          "n": 39,
+          "accuracy": 0.9231,
+          "ev_per_play": 0.0864,
+          "bets_per_day": 0.22,
+          "daily_ev": 1.89
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 53,
+          "accuracy": 0.9245,
+          "ev_per_play": 0.0651,
+          "bets_per_day": 0.3,
+          "daily_ev": 1.94
+        }
+      }
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 4,
+      "total_games": 1232,
+      "wins": 1190,
+      "losses": 42,
+      "accuracy": 0.9659,
+      "avg_buy_price": 0.963,
+      "median_buy_price": 0.969,
+      "p10_buy_price": 0.924,
+      "p25_buy_price": 0.947,
+      "ev_per_play": 0.0025,
+      "ev_per_bet": 0.25,
+      "bets_per_day": 6.92,
+      "daily_ev": 1.72,
+      "season_ev": 306.0,
+      "wp_cap_results": {
+        "0.9": {
+          "cap": 0.9,
+          "n": 43,
+          "accuracy": 0.907,
+          "ev_per_play": 0.017,
+          "bets_per_day": 0.24,
+          "daily_ev": 0.41
+        },
+        "0.95": {
+          "cap": 0.95,
+          "n": 347,
+          "accuracy": 0.9337,
+          "ev_per_play": 0.0065,
+          "bets_per_day": 1.95,
+          "daily_ev": 1.27
+        }
+      }
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 7,
+      "total_games": 459,
+      "wins": 458,
+      "losses": 1,
+      "accuracy": 0.9978,
+      "avg_buy_price": 0.992,
+      "median_buy_price": 0.995,
+      "p10_buy_price": 0.98,
+      "p25_buy_price": 0.988,
+      "ev_per_play": 0.0057,
+      "ev_per_bet": 0.57,
+      "bets_per_day": 2.58,
+      "daily_ev": 1.48,
+      "season_ev": 263.0,
+      "wp_cap_results": {}
+    },
+    {
+      "min_inning": 7,
+      "min_lead": 5,
+      "total_games": 874,
+      "wins": 865,
+      "losses": 9,
+      "accuracy": 0.9897,
+      "avg_buy_price": 0.987,
+      "median_buy_price": 0.989,
+      "p10_buy_price": 0.97,
+      "p25_buy_price": 0.982,
+      "ev_per_play": 0.0027,
+      "ev_per_bet": 0.27,
+      "bets_per_day": 4.91,
+      "daily_ev": 1.33,
+      "season_ev": 236.0,
+      "wp_cap_results": {}
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 4,
+      "total_games": 1108,
+      "wins": 1094,
+      "losses": 14,
+      "accuracy": 0.9874,
+      "avg_buy_price": 0.985,
+      "median_buy_price": 0.989,
+      "p10_buy_price": 0.965,
+      "p25_buy_price": 0.98,
+      "ev_per_play": 0.002,
+      "ev_per_bet": 0.2,
+      "bets_per_day": 6.22,
+      "daily_ev": 1.27,
+      "season_ev": 226.0,
+      "wp_cap_results": {
+        "0.95": {
+          "cap": 0.95,
+          "n": 34,
+          "accuracy": 0.9118,
+          "ev_per_play": -0.0313,
+          "bets_per_day": 0.19,
+          "daily_ev": -0.6
+        }
+      }
+    },
+    {
+      "min_inning": 6,
+      "min_lead": 7,
+      "total_games": 442,
+      "wins": 442,
+      "losses": 0,
+      "accuracy": 1.0,
+      "avg_buy_price": 0.995,
+      "median_buy_price": 0.997,
+      "p10_buy_price": 0.989,
+      "p25_buy_price": 0.993,
+      "ev_per_play": 0.0047,
+      "ev_per_bet": 0.47,
+      "bets_per_day": 2.48,
+      "daily_ev": 1.16,
+      "season_ev": 206.0,
+      "wp_cap_results": {}
+    },
+    {
+      "min_inning": 5,
+      "min_lead": 7,
+      "total_games": 452,
+      "wins": 451,
+      "losses": 1,
+      "accuracy": 0.9978,
+      "avg_buy_price": 0.994,
+      "median_buy_price": 0.996,
+      "p10_buy_price": 0.985,
+      "p25_buy_price": 0.991,
+      "ev_per_play": 0.0041,
+      "ev_per_bet": 0.41,
+      "bets_per_day": 2.54,
+      "daily_ev": 1.05,
+      "season_ev": 187.0,
+      "wp_cap_results": {}
+    },
+    {
+      "min_inning": 8,
+      "min_lead": 5,
+      "total_games": 820,
+      "wins": 816,
+      "losses": 4,
+      "accuracy": 0.9951,
+      "avg_buy_price": 0.993,
+      "median_buy_price": 0.995,
+      "p10_buy_price": 0.984,
+      "p25_buy_price": 0.99,
+      "ev_per_play": 0.0022,
+      "ev_per_bet": 0.22,
+      "bets_per_day": 4.61,
+      "daily_ev": 1.03,
+      "season_ev": 184.0,
+      "wp_cap_results": {}
+    },
+    {
+      "min_inning": 4,
+      "min_lead": 6,
+      "total_games": 685,
+      "wins": 676,
+      "losses": 9,
+      "accuracy": 0.9869,
+      "avg_buy_price": 0.984,
+      "median_buy_price": 0.989,
+      "p10_buy_price": 0.962,
+      "p25_buy_price": 0.977,
+      "ev_per_play": 0.0026,
+      "ev_per_bet": 0.26,
+      "bets_per_day": 3.85,
+      "daily_ev": 1.01,
+      "season_ev": 180.0,
+      "wp_cap_results": {
+        "0.95": {
+          "cap": 0.95,
+          "n": 26,
+          "accuracy": 1.0,
+          "ev_per_play": 0.0621,
+          "bets_per_day": 0.15,
+          "daily_ev": 0.91
+        }
+      }
+    }
+  ]
+}

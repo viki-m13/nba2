@@ -1,0 +1,119 @@
+{
+  "tiers": [
+    {
+      "id": "CHARLIE",
+      "name": "Late Innings Grip",
+      "min_inning": 7,
+      "min_lead": 3,
+      "max_buy": 0.9,
+      "color": "#f59e0b",
+      "stats": {
+        "id": "CHARLIE",
+        "name": "Late Innings Grip",
+        "color": "#f59e0b",
+        "rule": "Inn 7+ | 3+ lead | Buy \u2264 $0.90",
+        "total": 434,
+        "wins": 396,
+        "losses": 38,
+        "accuracy": 0.9124,
+        "pnl": 1649.3,
+        "wagered": 37950.7,
+        "roi": 0.0435,
+        "avg_buy": 0.8744,
+        "avg_profit_per_bet": 3.8
+      }
+    },
+    {
+      "id": "YANKEE",
+      "name": "9th Inning Lock",
+      "min_inning": 9,
+      "min_lead": 3,
+      "max_buy": 0.95,
+      "color": "#8b5cf6",
+      "stats": {
+        "id": "YANKEE",
+        "name": "9th Inning Lock",
+        "color": "#8b5cf6",
+        "rule": "Inn 9+ | 3+ lead | Buy \u2264 $0.95",
+        "total": 170,
+        "wins": 161,
+        "losses": 9,
+        "accuracy": 0.9471,
+        "pnl": 376.7,
+        "wagered": 15723.3,
+        "roi": 0.024,
+        "avg_buy": 0.9249,
+        "avg_profit_per_bet": 2.22
+      }
+    },
+    {
+      "id": "XRAY",
+      "name": "Absolute Blowout",
+      "min_inning": 8,
+      "min_lead": 5,
+      "max_buy": 0.99,
+      "color": "#06b6d4",
+      "stats": {
+        "id": "XRAY",
+        "name": "Absolute Blowout",
+        "color": "#06b6d4",
+        "rule": "Inn 8+ | 5+ lead | Buy \u2264 $0.99",
+        "total": 326,
+        "wins": 324,
+        "losses": 2,
+        "accuracy": 0.9939,
+        "pnl": 309.8,
+        "wagered": 32090.2,
+        "roi": 0.0097,
+        "avg_buy": 0.9844,
+        "avg_profit_per_bet": 0.95
+      }
+    },
+    {
+      "id": "BRAVO",
+      "name": "7th+ Commanding Lead",
+      "min_inning": 7,
+      "min_lead": 4,
+      "max_buy": 0.95,
+      "color": "#22c55e",
+      "stats": {
+        "id": "BRAVO",
+        "name": "7th+ Commanding Lead",
+        "color": "#22c55e",
+        "rule": "Inn 7+ | 4+ lead | Buy \u2264 $0.95",
+        "total": 359,
+        "wins": 339,
+        "losses": 20,
+        "accuracy": 0.9443,
+        "pnl": 269.2,
+        "wagered": 33630.8,
+        "roi": 0.008,
+        "avg_buy": 0.9368,
+        "avg_profit_per_bet": 0.75
+      }
+    },
+    {
+      "id": "DELTA",
+      "name": "Late Comfortable",
+      "min_inning": 8,
+      "min_lead": 3,
+      "max_buy": 0.95,
+      "color": "#3b82f6",
+      "stats": {
+        "id": "DELTA",
+        "name": "Late Comfortable",
+        "color": "#3b82f6",
+        "rule": "Inn 8+ | 3+ lead | Buy \u2264 $0.95",
+        "total": 521,
+        "wins": 492,
+        "losses": 29,
+        "accuracy": 0.9443,
+        "pnl": 915.2,
+        "wagered": 48284.8,
+        "roi": 0.019,
+        "avg_buy": 0.9268,
+        "avg_profit_per_bet": 1.76
+      }
+    }
+  ]
+}
