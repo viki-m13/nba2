@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-23T18:30:46.772Z",
+  "generated": "2026-03-23T19:30:05.348Z",
   "date": "20260323",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "single",
-    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
+    "betType": "multi_single",
+    "reasoning": "2 elite-confidence pick(s) found (score >= 0.5787)",
     "singles": [
       {
         "player": "Jalen Williams",
@@ -28,10 +28,87 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -440,
-        "oddsVerifiedAt": "2026-03-23T18:30:46.772Z"
+        "currentOdds": -460,
+        "oddsVerifiedAt": "2026-03-23T19:30:05.348Z",
+        "oddsShifted": true
+      },
+      {
+        "player": "Bam Adebayo",
+        "team": "MIA",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 17.5,
+        "odds": -280,
+        "cascadeScore": 0.6762656582446015,
+        "gft": 0.6275806417546669,
+        "beq": 0.05560718917185836,
+        "esi": 0.42835134448165935,
+        "imad": 0.0821328813360014,
+        "hitRate": 0.9,
+        "edge": 0.05560718917185836,
+        "ev": 0.07546689959037911,
+        "avg": 25.7,
+        "floor": 23.29299112506868,
+        "betSubType": "single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -280,
+        "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
       }
     ],
-    "parlays": []
+    "parlays": [
+      {
+        "numLegs": 2,
+        "odds": -153,
+        "decimalOdds": 1.65,
+        "avgCascade": 0.63212234108313,
+        "combinedHitRate": 0.9,
+        "ev": 0.487,
+        "legs": [
+          {
+            "player": "Jalen Williams",
+            "team": "OKC",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 9.5,
+            "odds": -460,
+            "cascadeScore": 0.5879790239216585,
+            "gft": 0.6828914396284952,
+            "beq": 0.08990797093289893,
+            "esi": 0.1843242456464958,
+            "imad": 0.14912418321522372,
+            "hitRate": 1,
+            "edge": 0.08990797093289893,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -460,
+            "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
+          },
+          {
+            "player": "Bam Adebayo",
+            "team": "MIA",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 17.5,
+            "odds": -280,
+            "cascadeScore": 0.6762656582446015,
+            "gft": 0.6275806417546669,
+            "beq": 0.05560718917185836,
+            "esi": 0.42835134448165935,
+            "imad": 0.0821328813360014,
+            "hitRate": 0.9,
+            "edge": 0.05560718917185836,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -280,
+            "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
+          }
+        ],
+        "hasUnavailableLegs": false
+      }
+    ]
   }
 }
