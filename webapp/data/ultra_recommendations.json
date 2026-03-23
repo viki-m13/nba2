@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-23T20:24:32.653Z",
+  "generated": "2026-03-23T21:23:53.544Z",
   "date": "20260323",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -430,
-        "oddsVerifiedAt": "2026-03-23T20:24:32.653Z",
+        "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
         "oddsShifted": true
       },
       {
@@ -53,8 +53,9 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -280,
-        "oddsVerifiedAt": "2026-03-23T20:24:32.653Z"
+        "currentOdds": -310,
+        "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+        "oddsShifted": true
       }
     ],
     "parlays": [
@@ -84,7 +85,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -430,
-            "oddsVerifiedAt": "2026-03-23T20:24:32.653Z",
+            "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
             "oddsShifted": true
           },
           {
@@ -104,8 +105,9 @@
             "hit": null,
             "actual": null,
             "oddsAvailable": true,
-            "currentOdds": -280,
-            "oddsVerifiedAt": "2026-03-23T20:24:32.653Z"
+            "currentOdds": -310,
+            "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+            "oddsShifted": true
           }
         ],
         "hasUnavailableLegs": false
