@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-03-23T02:46:37.558830",
+  "total_games": 2252,
+  "date_range": "2025-04-01 00:00:00 to 2025-09-28 00:00:00",
+  "data_sources": {
+    "odds": "mlb/webapp/data/mlb_historical_odds.json (The Odds API, 2025 season)",
+    "boxscores": "mlb/webapp/data/mlb_player_boxscores_expanded.json (ESPN, 2025 season)"
+  },
+  "favorite_win_rate": 0.5586145648312612,
+  "avg_fav_implied_prob": 0.6024050584580605
+}

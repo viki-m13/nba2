@@ -1,0 +1,5282 @@
+{
+  "month_4": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 377,
+      "fav_wins": 235,
+      "fav_losses": 142,
+      "win_rate": 0.623342
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 344,
+      "fav_wins": 218,
+      "fav_losses": 126,
+      "win_rate": 0.633721
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 296,
+      "fav_wins": 190,
+      "fav_losses": 106,
+      "win_rate": 0.641892
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 266,
+      "fav_wins": 171,
+      "fav_losses": 95,
+      "win_rate": 0.642857
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 242,
+      "fav_wins": 158,
+      "fav_losses": 84,
+      "win_rate": 0.652893
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 216,
+      "fav_wins": 146,
+      "fav_losses": 70,
+      "win_rate": 0.675926
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 191,
+      "fav_wins": 132,
+      "fav_losses": 59,
+      "win_rate": 0.691099
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 161,
+      "fav_wins": 111,
+      "fav_losses": 50,
+      "win_rate": 0.689441
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 136,
+      "fav_wins": 95,
+      "fav_losses": 41,
+      "win_rate": 0.698529
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 116,
+      "fav_wins": 81,
+      "fav_losses": 35,
+      "win_rate": 0.698276
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 100,
+      "fav_wins": 70,
+      "fav_losses": 30,
+      "win_rate": 0.7
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 81,
+      "fav_wins": 61,
+      "fav_losses": 20,
+      "win_rate": 0.753086
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 71,
+      "fav_wins": 55,
+      "fav_losses": 16,
+      "win_rate": 0.774648
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 64,
+      "fav_wins": 50,
+      "fav_losses": 14,
+      "win_rate": 0.78125
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 52,
+      "fav_wins": 40,
+      "fav_losses": 12,
+      "win_rate": 0.769231
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 47,
+      "fav_wins": 37,
+      "fav_losses": 10,
+      "win_rate": 0.787234
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 42,
+      "fav_wins": 32,
+      "fav_losses": 10,
+      "win_rate": 0.761905
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 33,
+      "fav_wins": 26,
+      "fav_losses": 7,
+      "win_rate": 0.787879
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 30,
+      "fav_wins": 23,
+      "fav_losses": 7,
+      "win_rate": 0.766667
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 22,
+      "fav_wins": 15,
+      "fav_losses": 7,
+      "win_rate": 0.681818
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 19,
+      "fav_wins": 14,
+      "fav_losses": 5,
+      "win_rate": 0.736842
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 13,
+      "fav_wins": 10,
+      "fav_losses": 3,
+      "win_rate": 0.769231
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 9,
+      "fav_wins": 8,
+      "fav_losses": 1,
+      "win_rate": 0.888889
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "month_5": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 406,
+      "fav_wins": 214,
+      "fav_losses": 192,
+      "win_rate": 0.527094
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 367,
+      "fav_wins": 196,
+      "fav_losses": 171,
+      "win_rate": 0.53406
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 320,
+      "fav_wins": 174,
+      "fav_losses": 146,
+      "win_rate": 0.54375
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 294,
+      "fav_wins": 165,
+      "fav_losses": 129,
+      "win_rate": 0.561224
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 271,
+      "fav_wins": 151,
+      "fav_losses": 120,
+      "win_rate": 0.557196
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 252,
+      "fav_wins": 142,
+      "fav_losses": 110,
+      "win_rate": 0.563492
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 224,
+      "fav_wins": 131,
+      "fav_losses": 93,
+      "win_rate": 0.584821
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 200,
+      "fav_wins": 122,
+      "fav_losses": 78,
+      "win_rate": 0.61
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 179,
+      "fav_wins": 109,
+      "fav_losses": 70,
+      "win_rate": 0.608939
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 164,
+      "fav_wins": 99,
+      "fav_losses": 65,
+      "win_rate": 0.603659
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 135,
+      "fav_wins": 85,
+      "fav_losses": 50,
+      "win_rate": 0.62963
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 125,
+      "fav_wins": 80,
+      "fav_losses": 45,
+      "win_rate": 0.64
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 112,
+      "fav_wins": 70,
+      "fav_losses": 42,
+      "win_rate": 0.625
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 99,
+      "fav_wins": 65,
+      "fav_losses": 34,
+      "win_rate": 0.656566
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 81,
+      "fav_wins": 54,
+      "fav_losses": 27,
+      "win_rate": 0.666667
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 77,
+      "fav_wins": 52,
+      "fav_losses": 25,
+      "win_rate": 0.675325
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 71,
+      "fav_wins": 51,
+      "fav_losses": 20,
+      "win_rate": 0.71831
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 50,
+      "fav_wins": 38,
+      "fav_losses": 12,
+      "win_rate": 0.76
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 43,
+      "fav_wins": 34,
+      "fav_losses": 9,
+      "win_rate": 0.790698
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 36,
+      "fav_wins": 27,
+      "fav_losses": 9,
+      "win_rate": 0.75
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 28,
+      "fav_wins": 22,
+      "fav_losses": 6,
+      "win_rate": 0.785714
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 24,
+      "fav_wins": 18,
+      "fav_losses": 6,
+      "win_rate": 0.75
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 18,
+      "fav_wins": 13,
+      "fav_losses": 5,
+      "win_rate": 0.722222
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 12,
+      "fav_wins": 9,
+      "fav_losses": 3,
+      "win_rate": 0.75
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 8,
+      "fav_wins": 6,
+      "fav_losses": 2,
+      "win_rate": 0.75
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 6,
+      "fav_wins": 4,
+      "fav_losses": 2,
+      "win_rate": 0.666667
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 3,
+      "fav_wins": 2,
+      "fav_losses": 1,
+      "win_rate": 0.666667
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 2,
+      "fav_wins": 1,
+      "fav_losses": 1,
+      "win_rate": 0.5
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 1,
+      "fav_wins": 0,
+      "fav_losses": 1,
+      "win_rate": 0.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 1,
+      "fav_wins": 0,
+      "fav_losses": 1,
+      "win_rate": 0.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 1,
+      "fav_wins": 0,
+      "fav_losses": 1,
+      "win_rate": 0.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 1,
+      "fav_wins": 0,
+      "fav_losses": 1,
+      "win_rate": 0.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "month_6": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 374,
+      "fav_wins": 210,
+      "fav_losses": 164,
+      "win_rate": 0.561497
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 341,
+      "fav_wins": 189,
+      "fav_losses": 152,
+      "win_rate": 0.554252
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 305,
+      "fav_wins": 172,
+      "fav_losses": 133,
+      "win_rate": 0.563934
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 289,
+      "fav_wins": 161,
+      "fav_losses": 128,
+      "win_rate": 0.557093
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 265,
+      "fav_wins": 145,
+      "fav_losses": 120,
+      "win_rate": 0.54717
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 241,
+      "fav_wins": 131,
+      "fav_losses": 110,
+      "win_rate": 0.543568
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 211,
+      "fav_wins": 118,
+      "fav_losses": 93,
+      "win_rate": 0.559242
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 193,
+      "fav_wins": 109,
+      "fav_losses": 84,
+      "win_rate": 0.564767
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 169,
+      "fav_wins": 94,
+      "fav_losses": 75,
+      "win_rate": 0.556213
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 134,
+      "fav_wins": 76,
+      "fav_losses": 58,
+      "win_rate": 0.567164
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 112,
+      "fav_wins": 65,
+      "fav_losses": 47,
+      "win_rate": 0.580357
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 91,
+      "fav_wins": 55,
+      "fav_losses": 36,
+      "win_rate": 0.604396
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 83,
+      "fav_wins": 53,
+      "fav_losses": 30,
+      "win_rate": 0.638554
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 69,
+      "fav_wins": 47,
+      "fav_losses": 22,
+      "win_rate": 0.681159
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 53,
+      "fav_wins": 38,
+      "fav_losses": 15,
+      "win_rate": 0.716981
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 46,
+      "fav_wins": 31,
+      "fav_losses": 15,
+      "win_rate": 0.673913
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 36,
+      "fav_wins": 23,
+      "fav_losses": 13,
+      "win_rate": 0.638889
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 31,
+      "fav_wins": 21,
+      "fav_losses": 10,
+      "win_rate": 0.677419
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 28,
+      "fav_wins": 20,
+      "fav_losses": 8,
+      "win_rate": 0.714286
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 25,
+      "fav_wins": 18,
+      "fav_losses": 7,
+      "win_rate": 0.72
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 23,
+      "fav_wins": 17,
+      "fav_losses": 6,
+      "win_rate": 0.73913
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 17,
+      "fav_wins": 12,
+      "fav_losses": 5,
+      "win_rate": 0.705882
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 12,
+      "fav_wins": 8,
+      "fav_losses": 4,
+      "win_rate": 0.666667
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 11,
+      "fav_wins": 7,
+      "fav_losses": 4,
+      "win_rate": 0.636364
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 8,
+      "fav_wins": 4,
+      "fav_losses": 4,
+      "win_rate": 0.5
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 5,
+      "fav_wins": 3,
+      "fav_losses": 2,
+      "win_rate": 0.6
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "month_7": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 345,
+      "fav_wins": 183,
+      "fav_losses": 162,
+      "win_rate": 0.530435
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 317,
+      "fav_wins": 168,
+      "fav_losses": 149,
+      "win_rate": 0.529968
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 294,
+      "fav_wins": 158,
+      "fav_losses": 136,
+      "win_rate": 0.537415
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 270,
+      "fav_wins": 149,
+      "fav_losses": 121,
+      "win_rate": 0.551852
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 238,
+      "fav_wins": 131,
+      "fav_losses": 107,
+      "win_rate": 0.55042
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 207,
+      "fav_wins": 112,
+      "fav_losses": 95,
+      "win_rate": 0.541063
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 174,
+      "fav_wins": 96,
+      "fav_losses": 78,
+      "win_rate": 0.551724
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 154,
+      "fav_wins": 88,
+      "fav_losses": 66,
+      "win_rate": 0.571429
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 131,
+      "fav_wins": 76,
+      "fav_losses": 55,
+      "win_rate": 0.580153
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 116,
+      "fav_wins": 69,
+      "fav_losses": 47,
+      "win_rate": 0.594828
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 93,
+      "fav_wins": 60,
+      "fav_losses": 33,
+      "win_rate": 0.645161
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 80,
+      "fav_wins": 51,
+      "fav_losses": 29,
+      "win_rate": 0.6375
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 69,
+      "fav_wins": 45,
+      "fav_losses": 24,
+      "win_rate": 0.652174
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 59,
+      "fav_wins": 37,
+      "fav_losses": 22,
+      "win_rate": 0.627119
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 47,
+      "fav_wins": 31,
+      "fav_losses": 16,
+      "win_rate": 0.659574
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 42,
+      "fav_wins": 29,
+      "fav_losses": 13,
+      "win_rate": 0.690476
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 34,
+      "fav_wins": 23,
+      "fav_losses": 11,
+      "win_rate": 0.676471
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 26,
+      "fav_wins": 19,
+      "fav_losses": 7,
+      "win_rate": 0.730769
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 23,
+      "fav_wins": 17,
+      "fav_losses": 6,
+      "win_rate": 0.73913
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 18,
+      "fav_wins": 15,
+      "fav_losses": 3,
+      "win_rate": 0.833333
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 13,
+      "fav_wins": 11,
+      "fav_losses": 2,
+      "win_rate": 0.846154
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 9,
+      "fav_wins": 8,
+      "fav_losses": 1,
+      "win_rate": 0.888889
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 8,
+      "fav_wins": 7,
+      "fav_losses": 1,
+      "win_rate": 0.875
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "month_8": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 400,
+      "fav_wins": 222,
+      "fav_losses": 178,
+      "win_rate": 0.555
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 371,
+      "fav_wins": 209,
+      "fav_losses": 162,
+      "win_rate": 0.563342
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 341,
+      "fav_wins": 197,
+      "fav_losses": 144,
+      "win_rate": 0.577713
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 314,
+      "fav_wins": 185,
+      "fav_losses": 129,
+      "win_rate": 0.589172
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 292,
+      "fav_wins": 173,
+      "fav_losses": 119,
+      "win_rate": 0.592466
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 265,
+      "fav_wins": 160,
+      "fav_losses": 105,
+      "win_rate": 0.603774
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 223,
+      "fav_wins": 136,
+      "fav_losses": 87,
+      "win_rate": 0.609865
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 184,
+      "fav_wins": 115,
+      "fav_losses": 69,
+      "win_rate": 0.625
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 165,
+      "fav_wins": 101,
+      "fav_losses": 64,
+      "win_rate": 0.612121
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 142,
+      "fav_wins": 86,
+      "fav_losses": 56,
+      "win_rate": 0.605634
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 127,
+      "fav_wins": 78,
+      "fav_losses": 49,
+      "win_rate": 0.614173
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 105,
+      "fav_wins": 68,
+      "fav_losses": 37,
+      "win_rate": 0.647619
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 92,
+      "fav_wins": 61,
+      "fav_losses": 31,
+      "win_rate": 0.663043
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 76,
+      "fav_wins": 53,
+      "fav_losses": 23,
+      "win_rate": 0.697368
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 58,
+      "fav_wins": 40,
+      "fav_losses": 18,
+      "win_rate": 0.689655
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 46,
+      "fav_wins": 31,
+      "fav_losses": 15,
+      "win_rate": 0.673913
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 40,
+      "fav_wins": 28,
+      "fav_losses": 12,
+      "win_rate": 0.7
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 28,
+      "fav_wins": 20,
+      "fav_losses": 8,
+      "win_rate": 0.714286
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 21,
+      "fav_wins": 16,
+      "fav_losses": 5,
+      "win_rate": 0.761905
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 16,
+      "fav_wins": 12,
+      "fav_losses": 4,
+      "win_rate": 0.75
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 12,
+      "fav_wins": 9,
+      "fav_losses": 3,
+      "win_rate": 0.75
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 9,
+      "fav_wins": 6,
+      "fav_losses": 3,
+      "win_rate": 0.666667
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 4,
+      "fav_wins": 2,
+      "fav_losses": 2,
+      "win_rate": 0.5
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 2,
+      "fav_wins": 1,
+      "fav_losses": 1,
+      "win_rate": 0.5
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 2,
+      "fav_wins": 1,
+      "fav_losses": 1,
+      "win_rate": 0.5
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 2,
+      "fav_wins": 1,
+      "fav_losses": 1,
+      "win_rate": 0.5
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "month_9": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 350,
+      "fav_wins": 194,
+      "fav_losses": 156,
+      "win_rate": 0.554286
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 321,
+      "fav_wins": 179,
+      "fav_losses": 142,
+      "win_rate": 0.557632
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 292,
+      "fav_wins": 169,
+      "fav_losses": 123,
+      "win_rate": 0.578767
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 258,
+      "fav_wins": 154,
+      "fav_losses": 104,
+      "win_rate": 0.596899
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 240,
+      "fav_wins": 146,
+      "fav_losses": 94,
+      "win_rate": 0.608333
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 218,
+      "fav_wins": 138,
+      "fav_losses": 80,
+      "win_rate": 0.633028
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 185,
+      "fav_wins": 119,
+      "fav_losses": 66,
+      "win_rate": 0.643243
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 159,
+      "fav_wins": 102,
+      "fav_losses": 57,
+      "win_rate": 0.641509
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 140,
+      "fav_wins": 93,
+      "fav_losses": 47,
+      "win_rate": 0.664286
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 113,
+      "fav_wins": 79,
+      "fav_losses": 34,
+      "win_rate": 0.699115
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 96,
+      "fav_wins": 66,
+      "fav_losses": 30,
+      "win_rate": 0.6875
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 81,
+      "fav_wins": 60,
+      "fav_losses": 21,
+      "win_rate": 0.740741
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 72,
+      "fav_wins": 53,
+      "fav_losses": 19,
+      "win_rate": 0.736111
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 62,
+      "fav_wins": 48,
+      "fav_losses": 14,
+      "win_rate": 0.774194
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 51,
+      "fav_wins": 41,
+      "fav_losses": 10,
+      "win_rate": 0.803922
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 48,
+      "fav_wins": 39,
+      "fav_losses": 9,
+      "win_rate": 0.8125
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 39,
+      "fav_wins": 32,
+      "fav_losses": 7,
+      "win_rate": 0.820513
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 32,
+      "fav_wins": 26,
+      "fav_losses": 6,
+      "win_rate": 0.8125
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 24,
+      "fav_wins": 20,
+      "fav_losses": 4,
+      "win_rate": 0.833333
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 21,
+      "fav_wins": 17,
+      "fav_losses": 4,
+      "win_rate": 0.809524
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 19,
+      "fav_wins": 16,
+      "fav_losses": 3,
+      "win_rate": 0.842105
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 13,
+      "fav_wins": 12,
+      "fav_losses": 1,
+      "win_rate": 0.923077
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 12,
+      "fav_wins": 12,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 8,
+      "fav_wins": 8,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 7,
+      "fav_wins": 7,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "bracket_slight_fav": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 1294,
+      "fav_wins": 663,
+      "fav_losses": 631,
+      "win_rate": 0.512365
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 1103,
+      "fav_wins": 564,
+      "fav_losses": 539,
+      "win_rate": 0.511333
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 890,
+      "fav_wins": 465,
+      "fav_losses": 425,
+      "win_rate": 0.522472
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 733,
+      "fav_wins": 390,
+      "fav_losses": 343,
+      "win_rate": 0.53206
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 590,
+      "fav_wins": 309,
+      "fav_losses": 281,
+      "win_rate": 0.523729
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 441,
+      "fav_wins": 234,
+      "fav_losses": 207,
+      "win_rate": 0.530612
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 250,
+      "fav_wins": 137,
+      "fav_losses": 113,
+      "win_rate": 0.548
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 93,
+      "fav_wins": 52,
+      "fav_losses": 41,
+      "win_rate": 0.55914
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "bracket_moderate_fav": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 627,
+      "fav_wins": 359,
+      "fav_losses": 268,
+      "win_rate": 0.572568
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 589,
+      "fav_wins": 332,
+      "fav_losses": 257,
+      "win_rate": 0.563667
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 454,
+      "fav_wins": 254,
+      "fav_losses": 200,
+      "win_rate": 0.559471
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 332,
+      "fav_wins": 188,
+      "fav_losses": 144,
+      "win_rate": 0.566265
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 232,
+      "fav_wins": 139,
+      "fav_losses": 93,
+      "win_rate": 0.599138
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 168,
+      "fav_wins": 101,
+      "fav_losses": 67,
+      "win_rate": 0.60119
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 98,
+      "fav_wins": 64,
+      "fav_losses": 34,
+      "win_rate": 0.653061
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 13,
+      "fav_wins": 10,
+      "fav_losses": 3,
+      "win_rate": 0.769231
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "bracket_heavy_fav": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 270,
+      "fav_wins": 188,
+      "fav_losses": 82,
+      "win_rate": 0.696296
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 268,
+      "fav_wins": 186,
+      "fav_losses": 82,
+      "win_rate": 0.69403
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 245,
+      "fav_wins": 171,
+      "fav_losses": 74,
+      "win_rate": 0.697959
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 201,
+      "fav_wins": 141,
+      "fav_losses": 60,
+      "win_rate": 0.701493
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 139,
+      "fav_wins": 102,
+      "fav_losses": 37,
+      "win_rate": 0.733813
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 108,
+      "fav_wins": 82,
+      "fav_losses": 26,
+      "win_rate": 0.759259
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 77,
+      "fav_wins": 56,
+      "fav_losses": 21,
+      "win_rate": 0.727273
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 53,
+      "fav_wins": 41,
+      "fav_losses": 12,
+      "win_rate": 0.773585
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 24,
+      "fav_wins": 18,
+      "fav_losses": 6,
+      "win_rate": 0.75
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 5,
+      "fav_wins": 4,
+      "fav_losses": 1,
+      "win_rate": 0.8
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "bracket_extreme_fav": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 61,
+      "fav_wins": 48,
+      "fav_losses": 13,
+      "win_rate": 0.786885
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 58,
+      "fav_wins": 46,
+      "fav_losses": 12,
+      "win_rate": 0.793103
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 45,
+      "fav_wins": 37,
+      "fav_losses": 8,
+      "win_rate": 0.822222
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 33,
+      "fav_wins": 26,
+      "fav_losses": 7,
+      "win_rate": 0.787879
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 21,
+      "fav_wins": 16,
+      "fav_losses": 5,
+      "win_rate": 0.761905
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 12,
+      "fav_wins": 11,
+      "fav_losses": 1,
+      "win_rate": 0.916667
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 11,
+      "fav_wins": 10,
+      "fav_losses": 1,
+      "win_rate": 0.909091
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 9,
+      "fav_wins": 8,
+      "fav_losses": 1,
+      "win_rate": 0.888889
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 8,
+      "fav_wins": 7,
+      "fav_losses": 1,
+      "win_rate": 0.875
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 8,
+      "fav_wins": 7,
+      "fav_losses": 1,
+      "win_rate": 0.875
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 8,
+      "fav_wins": 7,
+      "fav_losses": 1,
+      "win_rate": 0.875
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "low_total": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 467,
+      "fav_wins": 269,
+      "fav_losses": 198,
+      "win_rate": 0.576017
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 436,
+      "fav_wins": 255,
+      "fav_losses": 181,
+      "win_rate": 0.584862
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 389,
+      "fav_wins": 234,
+      "fav_losses": 155,
+      "win_rate": 0.601542
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 361,
+      "fav_wins": 220,
+      "fav_losses": 141,
+      "win_rate": 0.609418
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 338,
+      "fav_wins": 206,
+      "fav_losses": 132,
+      "win_rate": 0.609467
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 311,
+      "fav_wins": 191,
+      "fav_losses": 120,
+      "win_rate": 0.614148
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 267,
+      "fav_wins": 169,
+      "fav_losses": 98,
+      "win_rate": 0.632959
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 224,
+      "fav_wins": 149,
+      "fav_losses": 75,
+      "win_rate": 0.665179
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 196,
+      "fav_wins": 130,
+      "fav_losses": 66,
+      "win_rate": 0.663265
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 171,
+      "fav_wins": 112,
+      "fav_losses": 59,
+      "win_rate": 0.654971
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 147,
+      "fav_wins": 100,
+      "fav_losses": 47,
+      "win_rate": 0.680272
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 121,
+      "fav_wins": 86,
+      "fav_losses": 35,
+      "win_rate": 0.710744
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 104,
+      "fav_wins": 77,
+      "fav_losses": 27,
+      "win_rate": 0.740385
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 93,
+      "fav_wins": 68,
+      "fav_losses": 25,
+      "win_rate": 0.731183
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 79,
+      "fav_wins": 55,
+      "fav_losses": 24,
+      "win_rate": 0.696203
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 70,
+      "fav_wins": 50,
+      "fav_losses": 20,
+      "win_rate": 0.714286
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 62,
+      "fav_wins": 46,
+      "fav_losses": 16,
+      "win_rate": 0.741935
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 46,
+      "fav_wins": 36,
+      "fav_losses": 10,
+      "win_rate": 0.782609
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 39,
+      "fav_wins": 32,
+      "fav_losses": 7,
+      "win_rate": 0.820513
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 29,
+      "fav_wins": 23,
+      "fav_losses": 6,
+      "win_rate": 0.793103
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 23,
+      "fav_wins": 19,
+      "fav_losses": 4,
+      "win_rate": 0.826087
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 19,
+      "fav_wins": 16,
+      "fav_losses": 3,
+      "win_rate": 0.842105
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 15,
+      "fav_wins": 12,
+      "fav_losses": 3,
+      "win_rate": 0.8
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 12,
+      "fav_wins": 9,
+      "fav_losses": 3,
+      "win_rate": 0.75
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 10,
+      "fav_wins": 7,
+      "fav_losses": 3,
+      "win_rate": 0.7
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 5,
+      "fav_wins": 3,
+      "fav_losses": 2,
+      "win_rate": 0.6
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "high_total": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 572,
+      "fav_wins": 330,
+      "fav_losses": 242,
+      "win_rate": 0.576923
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 517,
+      "fav_wins": 296,
+      "fav_losses": 221,
+      "win_rate": 0.572534
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 465,
+      "fav_wins": 273,
+      "fav_losses": 192,
+      "win_rate": 0.587097
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 427,
+      "fav_wins": 256,
+      "fav_losses": 171,
+      "win_rate": 0.599532
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 383,
+      "fav_wins": 229,
+      "fav_losses": 154,
+      "win_rate": 0.597911
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 339,
+      "fav_wins": 204,
+      "fav_losses": 135,
+      "win_rate": 0.60177
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 303,
+      "fav_wins": 187,
+      "fav_losses": 116,
+      "win_rate": 0.617162
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 273,
+      "fav_wins": 173,
+      "fav_losses": 100,
+      "win_rate": 0.6337
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 241,
+      "fav_wins": 153,
+      "fav_losses": 88,
+      "win_rate": 0.634855
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 215,
+      "fav_wins": 134,
+      "fav_losses": 81,
+      "win_rate": 0.623256
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 178,
+      "fav_wins": 116,
+      "fav_losses": 62,
+      "win_rate": 0.651685
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 158,
+      "fav_wins": 103,
+      "fav_losses": 55,
+      "win_rate": 0.651899
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 146,
+      "fav_wins": 94,
+      "fav_losses": 52,
+      "win_rate": 0.643836
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 129,
+      "fav_wins": 84,
+      "fav_losses": 45,
+      "win_rate": 0.651163
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 109,
+      "fav_wins": 74,
+      "fav_losses": 35,
+      "win_rate": 0.678899
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 102,
+      "fav_wins": 69,
+      "fav_losses": 33,
+      "win_rate": 0.676471
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 87,
+      "fav_wins": 59,
+      "fav_losses": 28,
+      "win_rate": 0.678161
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 67,
+      "fav_wins": 48,
+      "fav_losses": 19,
+      "win_rate": 0.716418
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 57,
+      "fav_wins": 41,
+      "fav_losses": 16,
+      "win_rate": 0.719298
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 48,
+      "fav_wins": 35,
+      "fav_losses": 13,
+      "win_rate": 0.729167
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 42,
+      "fav_wins": 31,
+      "fav_losses": 11,
+      "win_rate": 0.738095
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 32,
+      "fav_wins": 24,
+      "fav_losses": 8,
+      "win_rate": 0.75
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 20,
+      "fav_wins": 16,
+      "fav_losses": 4,
+      "win_rate": 0.8
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 16,
+      "fav_wins": 13,
+      "fav_losses": 3,
+      "win_rate": 0.8125
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 8,
+      "fav_wins": 6,
+      "fav_losses": 2,
+      "win_rate": 0.75
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 7,
+      "fav_wins": 6,
+      "fav_losses": 1,
+      "win_rate": 0.857143
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "fav_hot_momentum": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 716,
+      "fav_wins": 404,
+      "fav_losses": 312,
+      "win_rate": 0.564246
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 662,
+      "fav_wins": 378,
+      "fav_losses": 284,
+      "win_rate": 0.570997
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 594,
+      "fav_wins": 343,
+      "fav_losses": 251,
+      "win_rate": 0.577441
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 553,
+      "fav_wins": 322,
+      "fav_losses": 231,
+      "win_rate": 0.582278
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 508,
+      "fav_wins": 304,
+      "fav_losses": 204,
+      "win_rate": 0.598425
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 463,
+      "fav_wins": 283,
+      "fav_losses": 180,
+      "win_rate": 0.611231
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 405,
+      "fav_wins": 256,
+      "fav_losses": 149,
+      "win_rate": 0.632099
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 358,
+      "fav_wins": 226,
+      "fav_losses": 132,
+      "win_rate": 0.631285
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 324,
+      "fav_wins": 205,
+      "fav_losses": 119,
+      "win_rate": 0.632716
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 278,
+      "fav_wins": 176,
+      "fav_losses": 102,
+      "win_rate": 0.633094
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 243,
+      "fav_wins": 157,
+      "fav_losses": 86,
+      "win_rate": 0.646091
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 213,
+      "fav_wins": 141,
+      "fav_losses": 72,
+      "win_rate": 0.661972
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 192,
+      "fav_wins": 130,
+      "fav_losses": 62,
+      "win_rate": 0.677083
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 169,
+      "fav_wins": 119,
+      "fav_losses": 50,
+      "win_rate": 0.704142
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 137,
+      "fav_wins": 99,
+      "fav_losses": 38,
+      "win_rate": 0.722628
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 120,
+      "fav_wins": 87,
+      "fav_losses": 33,
+      "win_rate": 0.725
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 110,
+      "fav_wins": 80,
+      "fav_losses": 30,
+      "win_rate": 0.727273
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 87,
+      "fav_wins": 66,
+      "fav_losses": 21,
+      "win_rate": 0.758621
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 76,
+      "fav_wins": 60,
+      "fav_losses": 16,
+      "win_rate": 0.789474
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 65,
+      "fav_wins": 50,
+      "fav_losses": 15,
+      "win_rate": 0.769231
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 52,
+      "fav_wins": 43,
+      "fav_losses": 9,
+      "win_rate": 0.826923
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 38,
+      "fav_wins": 32,
+      "fav_losses": 6,
+      "win_rate": 0.842105
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 24,
+      "fav_wins": 21,
+      "fav_losses": 3,
+      "win_rate": 0.875
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 18,
+      "fav_wins": 17,
+      "fav_losses": 1,
+      "win_rate": 0.944444
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 12,
+      "fav_wins": 11,
+      "fav_losses": 1,
+      "win_rate": 0.916667
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 10,
+      "fav_wins": 9,
+      "fav_losses": 1,
+      "win_rate": 0.9
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 6,
+      "fav_wins": 6,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "dog_cold_momentum": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 729,
+      "fav_wins": 418,
+      "fav_losses": 311,
+      "win_rate": 0.573388
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 685,
+      "fav_wins": 396,
+      "fav_losses": 289,
+      "win_rate": 0.578102
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 637,
+      "fav_wins": 377,
+      "fav_losses": 260,
+      "win_rate": 0.591837
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 594,
+      "fav_wins": 359,
+      "fav_losses": 235,
+      "win_rate": 0.604377
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 558,
+      "fav_wins": 342,
+      "fav_losses": 216,
+      "win_rate": 0.612903
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 509,
+      "fav_wins": 320,
+      "fav_losses": 189,
+      "win_rate": 0.628684
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 451,
+      "fav_wins": 290,
+      "fav_losses": 161,
+      "win_rate": 0.643016
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 413,
+      "fav_wins": 272,
+      "fav_losses": 141,
+      "win_rate": 0.658596
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 368,
+      "fav_wins": 244,
+      "fav_losses": 124,
+      "win_rate": 0.663043
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 326,
+      "fav_wins": 215,
+      "fav_losses": 111,
+      "win_rate": 0.659509
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 285,
+      "fav_wins": 193,
+      "fav_losses": 92,
+      "win_rate": 0.677193
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 252,
+      "fav_wins": 174,
+      "fav_losses": 78,
+      "win_rate": 0.690476
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 230,
+      "fav_wins": 159,
+      "fav_losses": 71,
+      "win_rate": 0.691304
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 211,
+      "fav_wins": 150,
+      "fav_losses": 61,
+      "win_rate": 0.7109
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 172,
+      "fav_wins": 127,
+      "fav_losses": 45,
+      "win_rate": 0.738372
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 157,
+      "fav_wins": 117,
+      "fav_losses": 40,
+      "win_rate": 0.745223
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 135,
+      "fav_wins": 100,
+      "fav_losses": 35,
+      "win_rate": 0.740741
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 108,
+      "fav_wins": 80,
+      "fav_losses": 28,
+      "win_rate": 0.740741
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 91,
+      "fav_wins": 71,
+      "fav_losses": 20,
+      "win_rate": 0.78022
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 74,
+      "fav_wins": 56,
+      "fav_losses": 18,
+      "win_rate": 0.756757
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 62,
+      "fav_wins": 47,
+      "fav_losses": 15,
+      "win_rate": 0.758065
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 49,
+      "fav_wins": 38,
+      "fav_losses": 11,
+      "win_rate": 0.77551
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 40,
+      "fav_wins": 32,
+      "fav_losses": 8,
+      "win_rate": 0.8
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 30,
+      "fav_wins": 25,
+      "fav_losses": 5,
+      "win_rate": 0.833333
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 23,
+      "fav_wins": 19,
+      "fav_losses": 4,
+      "win_rate": 0.826087
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 13,
+      "fav_wins": 11,
+      "fav_losses": 2,
+      "win_rate": 0.846154
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 8,
+      "fav_wins": 8,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 7,
+      "fav_wins": 7,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  },
+  "full_convergence": {
+    "50": {
+      "threshold_pct": 50,
+      "n_games": 253,
+      "fav_wins": 150,
+      "fav_losses": 103,
+      "win_rate": 0.592885
+    },
+    "51": {
+      "threshold_pct": 51,
+      "n_games": 239,
+      "fav_wins": 143,
+      "fav_losses": 96,
+      "win_rate": 0.598326
+    },
+    "52": {
+      "threshold_pct": 52,
+      "n_games": 219,
+      "fav_wins": 134,
+      "fav_losses": 85,
+      "win_rate": 0.611872
+    },
+    "53": {
+      "threshold_pct": 53,
+      "n_games": 203,
+      "fav_wins": 125,
+      "fav_losses": 78,
+      "win_rate": 0.615764
+    },
+    "54": {
+      "threshold_pct": 54,
+      "n_games": 191,
+      "fav_wins": 121,
+      "fav_losses": 70,
+      "win_rate": 0.633508
+    },
+    "55": {
+      "threshold_pct": 55,
+      "n_games": 178,
+      "fav_wins": 116,
+      "fav_losses": 62,
+      "win_rate": 0.651685
+    },
+    "56": {
+      "threshold_pct": 56,
+      "n_games": 162,
+      "fav_wins": 108,
+      "fav_losses": 54,
+      "win_rate": 0.666667
+    },
+    "57": {
+      "threshold_pct": 57,
+      "n_games": 149,
+      "fav_wins": 100,
+      "fav_losses": 49,
+      "win_rate": 0.671141
+    },
+    "58": {
+      "threshold_pct": 58,
+      "n_games": 135,
+      "fav_wins": 90,
+      "fav_losses": 45,
+      "win_rate": 0.666667
+    },
+    "59": {
+      "threshold_pct": 59,
+      "n_games": 119,
+      "fav_wins": 78,
+      "fav_losses": 41,
+      "win_rate": 0.655462
+    },
+    "60": {
+      "threshold_pct": 60,
+      "n_games": 109,
+      "fav_wins": 73,
+      "fav_losses": 36,
+      "win_rate": 0.669725
+    },
+    "61": {
+      "threshold_pct": 61,
+      "n_games": 99,
+      "fav_wins": 66,
+      "fav_losses": 33,
+      "win_rate": 0.666667
+    },
+    "62": {
+      "threshold_pct": 62,
+      "n_games": 92,
+      "fav_wins": 61,
+      "fav_losses": 31,
+      "win_rate": 0.663043
+    },
+    "63": {
+      "threshold_pct": 63,
+      "n_games": 88,
+      "fav_wins": 59,
+      "fav_losses": 29,
+      "win_rate": 0.670455
+    },
+    "64": {
+      "threshold_pct": 64,
+      "n_games": 76,
+      "fav_wins": 53,
+      "fav_losses": 23,
+      "win_rate": 0.697368
+    },
+    "65": {
+      "threshold_pct": 65,
+      "n_games": 67,
+      "fav_wins": 47,
+      "fav_losses": 20,
+      "win_rate": 0.701493
+    },
+    "66": {
+      "threshold_pct": 66,
+      "n_games": 61,
+      "fav_wins": 43,
+      "fav_losses": 18,
+      "win_rate": 0.704918
+    },
+    "67": {
+      "threshold_pct": 67,
+      "n_games": 49,
+      "fav_wins": 35,
+      "fav_losses": 14,
+      "win_rate": 0.714286
+    },
+    "68": {
+      "threshold_pct": 68,
+      "n_games": 42,
+      "fav_wins": 33,
+      "fav_losses": 9,
+      "win_rate": 0.785714
+    },
+    "69": {
+      "threshold_pct": 69,
+      "n_games": 35,
+      "fav_wins": 26,
+      "fav_losses": 9,
+      "win_rate": 0.742857
+    },
+    "70": {
+      "threshold_pct": 70,
+      "n_games": 28,
+      "fav_wins": 22,
+      "fav_losses": 6,
+      "win_rate": 0.785714
+    },
+    "71": {
+      "threshold_pct": 71,
+      "n_games": 21,
+      "fav_wins": 17,
+      "fav_losses": 4,
+      "win_rate": 0.809524
+    },
+    "72": {
+      "threshold_pct": 72,
+      "n_games": 15,
+      "fav_wins": 13,
+      "fav_losses": 2,
+      "win_rate": 0.866667
+    },
+    "73": {
+      "threshold_pct": 73,
+      "n_games": 12,
+      "fav_wins": 12,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "74": {
+      "threshold_pct": 74,
+      "n_games": 9,
+      "fav_wins": 9,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "75": {
+      "threshold_pct": 75,
+      "n_games": 7,
+      "fav_wins": 7,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "76": {
+      "threshold_pct": 76,
+      "n_games": 5,
+      "fav_wins": 5,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "77": {
+      "threshold_pct": 77,
+      "n_games": 4,
+      "fav_wins": 4,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "78": {
+      "threshold_pct": 78,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "79": {
+      "threshold_pct": 79,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "80": {
+      "threshold_pct": 80,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "81": {
+      "threshold_pct": 81,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "82": {
+      "threshold_pct": 82,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "83": {
+      "threshold_pct": 83,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "84": {
+      "threshold_pct": 84,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "85": {
+      "threshold_pct": 85,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "86": {
+      "threshold_pct": 86,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "87": {
+      "threshold_pct": 87,
+      "n_games": 3,
+      "fav_wins": 3,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "88": {
+      "threshold_pct": 88,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "89": {
+      "threshold_pct": 89,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "90": {
+      "threshold_pct": 90,
+      "n_games": 2,
+      "fav_wins": 2,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "91": {
+      "threshold_pct": 91,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "92": {
+      "threshold_pct": 92,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "93": {
+      "threshold_pct": 93,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "94": {
+      "threshold_pct": 94,
+      "n_games": 1,
+      "fav_wins": 1,
+      "fav_losses": 0,
+      "win_rate": 1.0
+    },
+    "95": {
+      "threshold_pct": 95,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "96": {
+      "threshold_pct": 96,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "97": {
+      "threshold_pct": 97,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "98": {
+      "threshold_pct": 98,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    },
+    "99": {
+      "threshold_pct": 99,
+      "n_games": 0,
+      "fav_wins": 0,
+      "fav_losses": 0,
+      "win_rate": 0
+    }
+  }
+}

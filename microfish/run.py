@@ -19,11 +19,24 @@ Usage:
     python run.py sgp-picks         Generate today's SGP parlay picks
     python run.py sgp-show          Show current SGP strategy rules
 
+    python run.py ml-discover       Run Certainty Floor Discovery on real MLB data
+    python run.py ml-refine         Run MiroFish MinMax agents to refine the floor
+    python run.py ml-backtest       Walk-forward backtest of limit-price strategy
+    python run.py ml-picks          Generate today's Polymarket limit orders
+    python run.py ml-show           Show current moneyline strategy rules
+    python run.py ml-full           Discover + refine + backtest (complete pipeline)
+
 Workflow:
     +200 Underdogs:
       1. 'develop'  — Claude Opus agents produce strategy_rules.json
       2. 'backtest' — Walk-forward validation (pure deterministic)
       3. 'picks'    — Apply rules to today's games
+
+    Moneyline (Polymarket Certainty Floor):
+      1. 'ml-discover' — CFD engine analyzes real data for certainty floors
+      2. 'ml-refine'   — MinMax agents adversarially refine the floor
+      3. 'ml-backtest' — Walk-forward validation of limit-price strategy
+      4. 'ml-picks'    — Generate today's Polymarket limit orders
 
     SGP Parlays (@sgp_vick style):
       1. 'sgp-develop'  — MiniMax M2.7 agents discover correlation rules
@@ -205,6 +218,89 @@ def main():
         os.system(f'{sys.executable} {__file__} sgp-develop')
         print("\n\n")
         os.system(f'{sys.executable} {__file__} sgp-backtest')
+
+    # ================================================================
+    # MONEYLINE COMMANDS — Polymarket Certainty Floor Strategy
+    # ================================================================
+
+    elif command == 'ml-discover':
+        from ml_certainty_engine import run_full_pipeline
+        strategy = run_full_pipeline()
+
+        if strategy:
+            base = strategy.get('base_rule', {})
+            print(f"\nCertainty Floor: {base.get('floor_pct', '?')}%")
+            print(f"Limit Price: ${base.get('limit_price', 0):.2f}")
+            print("Next: python run.py ml-refine (optional) or python run.py ml-backtest")
+        else:
+            print("\nCFD pipeline failed.")
+
+    elif command == 'ml-refine':
+        from ml_certainty_engine import run_certainty_floor_discovery
+        from ml_microfish_dev import run_minmax_refinement
+        from ml_data_pipeline import load_real_data, build_features, compute_certainty_floor_data
+        import json
+
+        print("PHASE 1: Loading data and computing floors...")
+        df = load_real_data()
+        featured = build_features(df)
+        floor_data = compute_certainty_floor_data(featured)
+
+        # Load existing strategy
+        from ml_config import ML_RULES_FILE
+        if os.path.exists(ML_RULES_FILE):
+            with open(ML_RULES_FILE, 'r') as f:
+                strategy = json.load(f)
+        else:
+            print("No strategy found. Run ml-discover first.")
+            sys.exit(1)
+
+        print("\nPHASE 2: MiroFish MinMax Adversarial Refinement...")
+        refined = run_minmax_refinement(strategy, floor_data, featured)
+
+        if refined:
+            with open(ML_RULES_FILE, 'w') as f:
+                json.dump(refined, f, indent=2, default=str)
+            print(f"\nRefined strategy saved to {ML_RULES_FILE}")
+            print("Next: python run.py ml-backtest")
+
+    elif command == 'ml-backtest':
+        from ml_backtest import run_full_backtest
+        results = run_full_backtest()
+
+        accuracy = results.get('accuracy', 0)
+        if accuracy == 1.0:
+            print(f"\n100% ACCURACY ACHIEVED: {results['wins']}/{results['total_bets']} bets won")
+        else:
+            print(f"\nAccuracy: {accuracy:.1%} ({results.get('losses', 0)} losses)")
+
+        fill = results.get('fill_rate', 0)
+        print(f"Fill rate: {fill:.1%}")
+        print(f"ROI: {results.get('roi', 0):.1f}%")
+
+    elif command == 'ml-picks':
+        from ml_daily_picks import generate_daily_picks
+        orders = generate_daily_picks()
+        if orders:
+            print(f"\n{len(orders)} limit orders generated for today.")
+        else:
+            print("\nNo orders today.")
+
+    elif command == 'ml-show':
+        from ml_strategy_engine import MLStrategyEngine
+        try:
+            engine = MLStrategyEngine()
+            print(engine.summary())
+        except FileNotFoundError as e:
+            print(f"ERROR: {e}")
+
+    elif command == 'ml-full':
+        # Full pipeline: discover + refine + backtest
+        os.system(f'{sys.executable} {__file__} ml-discover')
+        print("\n\n")
+        os.system(f'{sys.executable} {__file__} ml-refine')
+        print("\n\n")
+        os.system(f'{sys.executable} {__file__} ml-backtest')
 
     else:
         print(f"Unknown command: {command}")

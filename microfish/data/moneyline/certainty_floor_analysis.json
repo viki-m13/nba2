@@ -1,0 +1,2482 @@
+{
+  "50": {
+    "threshold_pct": 50,
+    "n_games": 2252,
+    "fav_wins": 1258,
+    "fav_losses": 994,
+    "win_rate": 0.558615,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "WSH@TOR",
+        "fav_team": "WSH",
+        "fav_ml": -112,
+        "fav_prob": 0.509,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "DET",
+        "fav_ml": -122,
+        "fav_prob": 0.529,
+        "score": "3-2"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "BOS@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "4-8"
+      }
+    ]
+  },
+  "51": {
+    "threshold_pct": 51,
+    "n_games": 2061,
+    "fav_wins": 1159,
+    "fav_losses": 902,
+    "win_rate": 0.562348,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "DET",
+        "fav_ml": -122,
+        "fav_prob": 0.529,
+        "score": "3-2"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "BOS@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-04 00:00:00",
+        "game": "LAD@PHI",
+        "fav_team": "LAD",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "3-2"
+      }
+    ]
+  },
+  "52": {
+    "threshold_pct": 52,
+    "n_games": 1848,
+    "fav_wins": 1060,
+    "fav_losses": 788,
+    "win_rate": 0.573593,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "DET",
+        "fav_ml": -122,
+        "fav_prob": 0.529,
+        "score": "3-2"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "BOS@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-04 00:00:00",
+        "game": "LAD@PHI",
+        "fav_team": "LAD",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "3-2"
+      }
+    ]
+  },
+  "53": {
+    "threshold_pct": 53,
+    "n_games": 1691,
+    "fav_wins": 985,
+    "fav_losses": 706,
+    "win_rate": 0.582496,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "BOS@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-04 00:00:00",
+        "game": "LAD@PHI",
+        "fav_team": "LAD",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "3-2"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -126,
+        "fav_prob": 0.537,
+        "score": "4-3"
+      }
+    ]
+  },
+  "54": {
+    "threshold_pct": 54,
+    "n_games": 1548,
+    "fav_wins": 904,
+    "fav_losses": 644,
+    "win_rate": 0.583979,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CIN@MIL",
+        "fav_team": "MIL",
+        "fav_ml": -134,
+        "fav_prob": 0.553,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CLE@LAA",
+        "fav_team": "CLE",
+        "fav_ml": -148,
+        "fav_prob": 0.574,
+        "score": "10-4"
+      }
+    ]
+  },
+  "55": {
+    "threshold_pct": 55,
+    "n_games": 1399,
+    "fav_wins": 829,
+    "fav_losses": 570,
+    "win_rate": 0.592566,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-03 00:00:00",
+        "game": "HOU@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -138,
+        "fav_prob": 0.558,
+        "score": "2-5"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CIN@MIL",
+        "fav_team": "MIL",
+        "fav_ml": -134,
+        "fav_prob": 0.553,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CLE@LAA",
+        "fav_team": "CLE",
+        "fav_ml": -148,
+        "fav_prob": 0.574,
+        "score": "10-4"
+      }
+    ]
+  },
+  "56": {
+    "threshold_pct": 56,
+    "n_games": 1208,
+    "fav_wins": 732,
+    "fav_losses": 476,
+    "win_rate": 0.60596,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "LAA@STL",
+        "fav_team": "STL",
+        "fav_ml": -144,
+        "fav_prob": 0.567,
+        "score": "7-9"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "ARI@NYY",
+        "fav_team": "NYY",
+        "fav_ml": -142,
+        "fav_prob": 0.563,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CLE@LAA",
+        "fav_team": "CLE",
+        "fav_ml": -148,
+        "fav_prob": 0.574,
+        "score": "10-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      }
+    ]
+  },
+  "57": {
+    "threshold_pct": 57,
+    "n_games": 1051,
+    "fav_wins": 647,
+    "fav_losses": 404,
+    "win_rate": 0.615604,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "NYM@MIA",
+        "fav_team": "NYM",
+        "fav_ml": -152,
+        "fav_prob": 0.579,
+        "score": "4-2"
+      },
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "CLE@LAA",
+        "fav_team": "CLE",
+        "fav_ml": -148,
+        "fav_prob": 0.574,
+        "score": "10-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "NYY@PIT",
+        "fav_team": "NYY",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-07 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "6-4"
+      }
+    ]
+  },
+  "58": {
+    "threshold_pct": 58,
+    "n_games": 920,
+    "fav_wins": 568,
+    "fav_losses": 352,
+    "win_rate": 0.617391,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "NYY@PIT",
+        "fav_team": "NYY",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-07 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "6-4"
+      },
+      {
+        "date": "2025-04-07 00:00:00",
+        "game": "NYY@DET",
+        "fav_team": "NYY",
+        "fav_ml": -156,
+        "fav_prob": 0.586,
+        "score": "6-2"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -186,
+        "fav_prob": 0.625,
+        "score": "8-2"
+      }
+    ]
+  },
+  "59": {
+    "threshold_pct": 59,
+    "n_games": 785,
+    "fav_wins": 490,
+    "fav_losses": 295,
+    "win_rate": 0.624204,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "SF@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "3-6"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "NYY@PIT",
+        "fav_team": "NYY",
+        "fav_ml": -166,
+        "fav_prob": 0.6,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-07 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "6-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -186,
+        "fav_prob": 0.625,
+        "score": "8-2"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAA@TB",
+        "fav_team": "TB",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "3-4"
+      }
+    ]
+  },
+  "60": {
+    "threshold_pct": 60,
+    "n_games": 663,
+    "fav_wins": 424,
+    "fav_losses": 239,
+    "win_rate": 0.639517,
+    "loss_examples": [
+      {
+        "date": "2025-04-01 00:00:00",
+        "game": "DET@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "1-4"
+      },
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -174,
+        "fav_prob": 0.61,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-07 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "6-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -186,
+        "fav_prob": 0.625,
+        "score": "8-2"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAA@TB",
+        "fav_team": "TB",
+        "fav_ml": -172,
+        "fav_prob": 0.607,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "TOR@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -198,
+        "fav_prob": 0.639,
+        "score": "1-6"
+      },
+      {
+        "date": "2025-04-09 00:00:00",
+        "game": "MIA@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -205,
+        "fav_prob": 0.646,
+        "score": "0-5"
+      }
+    ]
+  },
+  "61": {
+    "threshold_pct": 61,
+    "n_games": 563,
+    "fav_wins": 375,
+    "fav_losses": 188,
+    "win_rate": 0.666075,
+    "loss_examples": [
+      {
+        "date": "2025-04-02 00:00:00",
+        "game": "TEX@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -188,
+        "fav_prob": 0.616,
+        "score": "0-1"
+      },
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-06 00:00:00",
+        "game": "ARI@WSH",
+        "fav_team": "ARI",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -186,
+        "fav_prob": 0.625,
+        "score": "8-2"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "TOR@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -198,
+        "fav_prob": 0.639,
+        "score": "1-6"
+      },
+      {
+        "date": "2025-04-09 00:00:00",
+        "game": "MIA@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -205,
+        "fav_prob": 0.646,
+        "score": "0-5"
+      },
+      {
+        "date": "2025-04-12 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -180,
+        "fav_prob": 0.618,
+        "score": "0-16"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      }
+    ]
+  },
+  "62": {
+    "threshold_pct": 62,
+    "n_games": 499,
+    "fav_wins": 337,
+    "fav_losses": 162,
+    "win_rate": 0.675351,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "LAD@WSH",
+        "fav_team": "LAD",
+        "fav_ml": -186,
+        "fav_prob": 0.625,
+        "score": "8-2"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "TOR@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -198,
+        "fav_prob": 0.639,
+        "score": "1-6"
+      },
+      {
+        "date": "2025-04-09 00:00:00",
+        "game": "MIA@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -205,
+        "fav_prob": 0.646,
+        "score": "0-5"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CIN@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -196,
+        "fav_prob": 0.636,
+        "score": "2-24"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      }
+    ]
+  },
+  "63": {
+    "threshold_pct": 63,
+    "n_games": 429,
+    "fav_wins": 300,
+    "fav_losses": 129,
+    "win_rate": 0.699301,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-08 00:00:00",
+        "game": "TOR@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -198,
+        "fav_prob": 0.639,
+        "score": "1-6"
+      },
+      {
+        "date": "2025-04-09 00:00:00",
+        "game": "MIA@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -205,
+        "fav_prob": 0.646,
+        "score": "0-5"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CIN@BAL",
+        "fav_team": "BAL",
+        "fav_ml": -196,
+        "fav_prob": 0.636,
+        "score": "2-24"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-22 00:00:00",
+        "game": "PIT@LAA",
+        "fav_team": "LAA",
+        "fav_ml": -200,
+        "fav_prob": 0.641,
+        "score": "3-9"
+      }
+    ]
+  },
+  "64": {
+    "threshold_pct": 64,
+    "n_games": 342,
+    "fav_wins": 244,
+    "fav_losses": 98,
+    "win_rate": 0.71345,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-09 00:00:00",
+        "game": "MIA@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -205,
+        "fav_prob": 0.646,
+        "score": "0-5"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-22 00:00:00",
+        "game": "PIT@LAA",
+        "fav_team": "LAA",
+        "fav_ml": -200,
+        "fav_prob": 0.641,
+        "score": "3-9"
+      },
+      {
+        "date": "2025-04-24 00:00:00",
+        "game": "CWS@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "0-3"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "PIT@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -220,
+        "fav_prob": 0.661,
+        "score": "0-3"
+      }
+    ]
+  },
+  "65": {
+    "threshold_pct": 65,
+    "n_games": 306,
+    "fav_wins": 219,
+    "fav_losses": 87,
+    "win_rate": 0.715686,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-24 00:00:00",
+        "game": "CWS@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "0-3"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "PIT@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -220,
+        "fav_prob": 0.661,
+        "score": "0-3"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      }
+    ]
+  },
+  "66": {
+    "threshold_pct": 66,
+    "n_games": 262,
+    "fav_wins": 189,
+    "fav_losses": 73,
+    "win_rate": 0.721374,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "KC@DET",
+        "fav_team": "DET",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-24 00:00:00",
+        "game": "CWS@MIN",
+        "fav_team": "MIN",
+        "fav_ml": -225,
+        "fav_prob": 0.666,
+        "score": "0-3"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "PIT@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -220,
+        "fav_prob": 0.661,
+        "score": "0-3"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      }
+    ]
+  },
+  "67": {
+    "threshold_pct": 67,
+    "n_games": 200,
+    "fav_wins": 150,
+    "fav_losses": 50,
+    "win_rate": 0.75,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      },
+      {
+        "date": "2025-05-01 00:00:00",
+        "game": "COL@SF",
+        "fav_team": "SF",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-05-02 00:00:00",
+        "game": "HOU@CWS",
+        "fav_team": "HOU",
+        "fav_ml": -240,
+        "fav_prob": 0.675,
+        "score": "7-3"
+      },
+      {
+        "date": "2025-05-06 00:00:00",
+        "game": "LAD@MIA",
+        "fav_team": "LAD",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "5-4"
+      }
+    ]
+  },
+  "68": {
+    "threshold_pct": 68,
+    "n_games": 169,
+    "fav_wins": 130,
+    "fav_losses": 39,
+    "win_rate": 0.769231,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      },
+      {
+        "date": "2025-05-01 00:00:00",
+        "game": "COL@SF",
+        "fav_team": "SF",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-05-06 00:00:00",
+        "game": "LAD@MIA",
+        "fav_team": "LAD",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "69": {
+    "threshold_pct": 69,
+    "n_games": 138,
+    "fav_wins": 104,
+    "fav_losses": 34,
+    "win_rate": 0.753623,
+    "loss_examples": [
+      {
+        "date": "2025-04-05 00:00:00",
+        "game": "MIA@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-04-13 00:00:00",
+        "game": "CHC@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -255,
+        "fav_prob": 0.69,
+        "score": "2-4"
+      },
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      },
+      {
+        "date": "2025-05-01 00:00:00",
+        "game": "COL@SF",
+        "fav_team": "SF",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "3-4"
+      },
+      {
+        "date": "2025-05-06 00:00:00",
+        "game": "LAD@MIA",
+        "fav_team": "LAD",
+        "fav_ml": -260,
+        "fav_prob": 0.695,
+        "score": "5-4"
+      },
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "70": {
+    "threshold_pct": 70,
+    "n_games": 114,
+    "fav_wins": 89,
+    "fav_losses": 25,
+    "win_rate": 0.780702,
+    "loss_examples": [
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-25 00:00:00",
+        "game": "MIA@SEA",
+        "fav_team": "SEA",
+        "fav_ml": -275,
+        "fav_prob": 0.704,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-04-30 00:00:00",
+        "game": "ATL@COL",
+        "fav_team": "ATL",
+        "fav_ml": -280,
+        "fav_prob": 0.709,
+        "score": "2-1"
+      },
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-11 00:00:00",
+        "game": "SD@COL",
+        "fav_team": "SD",
+        "fav_ml": -330,
+        "fav_prob": 0.737,
+        "score": "9-3"
+      },
+      {
+        "date": "2025-05-14 00:00:00",
+        "game": "PIT@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-05-16 00:00:00",
+        "game": "LAA@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -300,
+        "fav_prob": 0.721,
+        "score": "2-6"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      }
+    ]
+  },
+  "71": {
+    "threshold_pct": 71,
+    "n_games": 85,
+    "fav_wins": 66,
+    "fav_losses": 19,
+    "win_rate": 0.776471,
+    "loss_examples": [
+      {
+        "date": "2025-04-17 00:00:00",
+        "game": "SEA@CIN",
+        "fav_team": "CIN",
+        "fav_ml": -310,
+        "fav_prob": 0.714,
+        "score": "7-11"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "CWS@BOS",
+        "fav_team": "BOS",
+        "fav_ml": -290,
+        "fav_prob": 0.714,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-11 00:00:00",
+        "game": "SD@COL",
+        "fav_team": "SD",
+        "fav_ml": -330,
+        "fav_prob": 0.737,
+        "score": "9-3"
+      },
+      {
+        "date": "2025-05-14 00:00:00",
+        "game": "PIT@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-05-16 00:00:00",
+        "game": "LAA@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -300,
+        "fav_prob": 0.721,
+        "score": "2-6"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      },
+      {
+        "date": "2025-05-23 00:00:00",
+        "game": "NYY@COL",
+        "fav_team": "NYY",
+        "fav_ml": -295,
+        "fav_prob": 0.717,
+        "score": "3-2"
+      },
+      {
+        "date": "2025-06-05 00:00:00",
+        "game": "ARI@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "10-11"
+      }
+    ]
+  },
+  "72": {
+    "threshold_pct": 72,
+    "n_games": 63,
+    "fav_wins": 50,
+    "fav_losses": 13,
+    "win_rate": 0.793651,
+    "loss_examples": [
+      {
+        "date": "2025-04-20 00:00:00",
+        "game": "MIA@PHI",
+        "fav_team": "PHI",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "5-7"
+      },
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-11 00:00:00",
+        "game": "SD@COL",
+        "fav_team": "SD",
+        "fav_ml": -330,
+        "fav_prob": 0.737,
+        "score": "9-3"
+      },
+      {
+        "date": "2025-05-14 00:00:00",
+        "game": "PIT@NYM",
+        "fav_team": "NYM",
+        "fav_ml": -310,
+        "fav_prob": 0.726,
+        "score": "0-4"
+      },
+      {
+        "date": "2025-05-16 00:00:00",
+        "game": "LAA@LAD",
+        "fav_team": "LAD",
+        "fav_ml": -300,
+        "fav_prob": 0.721,
+        "score": "2-6"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      },
+      {
+        "date": "2025-06-05 00:00:00",
+        "game": "ARI@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "10-11"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "CIN@DET",
+        "fav_team": "DET",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "COL@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "1-10"
+      },
+      {
+        "date": "2025-06-19 00:00:00",
+        "game": "PIT@DET",
+        "fav_team": "DET",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "4-8"
+      }
+    ]
+  },
+  "73": {
+    "threshold_pct": 73,
+    "n_games": 45,
+    "fav_wins": 37,
+    "fav_losses": 8,
+    "win_rate": 0.822222,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-11 00:00:00",
+        "game": "SD@COL",
+        "fav_team": "SD",
+        "fav_ml": -330,
+        "fav_prob": 0.737,
+        "score": "9-3"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      },
+      {
+        "date": "2025-06-05 00:00:00",
+        "game": "ARI@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "10-11"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "CIN@DET",
+        "fav_team": "DET",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "COL@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "1-10"
+      },
+      {
+        "date": "2025-06-19 00:00:00",
+        "game": "PIT@DET",
+        "fav_team": "DET",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-08-26 00:00:00",
+        "game": "COL@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "1-6"
+      }
+    ]
+  },
+  "74": {
+    "threshold_pct": 74,
+    "n_games": 33,
+    "fav_wins": 26,
+    "fav_losses": 7,
+    "win_rate": 0.787879,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      },
+      {
+        "date": "2025-06-05 00:00:00",
+        "game": "ARI@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "10-11"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "CIN@DET",
+        "fav_team": "DET",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "COL@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "1-10"
+      },
+      {
+        "date": "2025-06-19 00:00:00",
+        "game": "PIT@DET",
+        "fav_team": "DET",
+        "fav_ml": -350,
+        "fav_prob": 0.747,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-08-26 00:00:00",
+        "game": "COL@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "1-6"
+      }
+    ]
+  },
+  "75": {
+    "threshold_pct": 75,
+    "n_games": 21,
+    "fav_wins": 16,
+    "fav_losses": 5,
+    "win_rate": 0.761905,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      },
+      {
+        "date": "2025-05-17 00:00:00",
+        "game": "COL@ARI",
+        "fav_team": "ARI",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "12-14"
+      },
+      {
+        "date": "2025-06-05 00:00:00",
+        "game": "ARI@ATL",
+        "fav_team": "ATL",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "10-11"
+      },
+      {
+        "date": "2025-06-15 00:00:00",
+        "game": "CIN@DET",
+        "fav_team": "DET",
+        "fav_ml": -390,
+        "fav_prob": 0.752,
+        "score": "4-8"
+      },
+      {
+        "date": "2025-08-26 00:00:00",
+        "game": "COL@HOU",
+        "fav_team": "HOU",
+        "fav_ml": -375,
+        "fav_prob": 0.759,
+        "score": "1-6"
+      }
+    ]
+  },
+  "76": {
+    "threshold_pct": 76,
+    "n_games": 12,
+    "fav_wins": 11,
+    "fav_losses": 1,
+    "win_rate": 0.916667,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "77": {
+    "threshold_pct": 77,
+    "n_games": 11,
+    "fav_wins": 10,
+    "fav_losses": 1,
+    "win_rate": 0.909091,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "78": {
+    "threshold_pct": 78,
+    "n_games": 9,
+    "fav_wins": 8,
+    "fav_losses": 1,
+    "win_rate": 0.888889,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "79": {
+    "threshold_pct": 79,
+    "n_games": 8,
+    "fav_wins": 7,
+    "fav_losses": 1,
+    "win_rate": 0.875,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "80": {
+    "threshold_pct": 80,
+    "n_games": 8,
+    "fav_wins": 7,
+    "fav_losses": 1,
+    "win_rate": 0.875,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "81": {
+    "threshold_pct": 81,
+    "n_games": 8,
+    "fav_wins": 7,
+    "fav_losses": 1,
+    "win_rate": 0.875,
+    "loss_examples": [
+      {
+        "date": "2025-05-07 00:00:00",
+        "game": "CLE@WSH",
+        "fav_team": "WSH",
+        "fav_ml": -590,
+        "fav_prob": 0.81,
+        "score": "6-8"
+      }
+    ]
+  },
+  "82": {
+    "threshold_pct": 82,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "83": {
+    "threshold_pct": 83,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "84": {
+    "threshold_pct": 84,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "85": {
+    "threshold_pct": 85,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "86": {
+    "threshold_pct": 86,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "87": {
+    "threshold_pct": 87,
+    "n_games": 6,
+    "fav_wins": 6,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "88": {
+    "threshold_pct": 88,
+    "n_games": 5,
+    "fav_wins": 5,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "89": {
+    "threshold_pct": 89,
+    "n_games": 5,
+    "fav_wins": 5,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "90": {
+    "threshold_pct": 90,
+    "n_games": 5,
+    "fav_wins": 5,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "91": {
+    "threshold_pct": 91,
+    "n_games": 4,
+    "fav_wins": 4,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "92": {
+    "threshold_pct": 92,
+    "n_games": 3,
+    "fav_wins": 3,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "93": {
+    "threshold_pct": 93,
+    "n_games": 1,
+    "fav_wins": 1,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "94": {
+    "threshold_pct": 94,
+    "n_games": 1,
+    "fav_wins": 1,
+    "fav_losses": 0,
+    "win_rate": 1.0,
+    "loss_examples": []
+  },
+  "95": {
+    "threshold_pct": 95,
+    "n_games": 0,
+    "fav_wins": 0,
+    "fav_losses": 0,
+    "win_rate": 0,
+    "loss_examples": []
+  },
+  "96": {
+    "threshold_pct": 96,
+    "n_games": 0,
+    "fav_wins": 0,
+    "fav_losses": 0,
+    "win_rate": 0,
+    "loss_examples": []
+  },
+  "97": {
+    "threshold_pct": 97,
+    "n_games": 0,
+    "fav_wins": 0,
+    "fav_losses": 0,
+    "win_rate": 0,
+    "loss_examples": []
+  },
+  "98": {
+    "threshold_pct": 98,
+    "n_games": 0,
+    "fav_wins": 0,
+    "fav_losses": 0,
+    "win_rate": 0,
+    "loss_examples": []
+  },
+  "99": {
+    "threshold_pct": 99,
+    "n_games": 0,
+    "fav_wins": 0,
+    "fav_losses": 0,
+    "win_rate": 0,
+    "loss_examples": []
+  }
+}

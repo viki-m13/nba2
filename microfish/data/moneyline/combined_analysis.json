@@ -1,0 +1,50 @@
+{
+  "generated": "2026-03-23",
+  "data_source": "Real 2025 MLB odds (The Odds API) + ESPN boxscores",
+  "total_games": 2252,
+  "favorite_overall_win_rate": 0.5586,
+  "base_certainty_floor": {
+    "floor_pct": 82,
+    "n_games": 6,
+    "win_rate": 1.0,
+    "fill_rate": 0.0027,
+    "profit_per_share": 0.18
+  },
+  "contextual_floors": {
+    "full_convergence_73pct": {
+      "conditions": "fav_all_windows_positive=1 AND dog_all_windows_negative=1 AND fav_prob>=73%",
+      "n_games": 12,
+      "win_rate": 1.0,
+      "profit_per_share": 0.27
+    },
+    "september_72pct": {
+      "conditions": "month=9 AND fav_prob>=72%",
+      "n_games": 12,
+      "win_rate": 1.0,
+      "profit_per_share": 0.28
+    },
+    "fav_streak5_68pct": {
+      "conditions": "fav_7d_win_streak>=5 AND fav_prob>=68%",
+      "n_games": 9,
+      "win_rate": 1.0,
+      "profit_per_share": 0.32
+    },
+    "fav_wr75_72pct": {
+      "conditions": "fav_7d_win_pct>=0.75 AND fav_prob>=72%",
+      "n_games": 7,
+      "win_rate": 1.0,
+      "profit_per_share": 0.28
+    }
+  },
+  "walk_forward_backtest": {
+    "total_bets": 5,
+    "wins": 5,
+    "losses": 0,
+    "accuracy": 1.0,
+    "roi_pct": 21.9
+  },
+  "upset_at_76_to_81_pct": {
+    "count": 1,
+    "note": "One favorite at 76-81% implied probability lost. This is why the floor is 82%."
+  }
+}
