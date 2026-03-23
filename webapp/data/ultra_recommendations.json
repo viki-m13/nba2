@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-23T19:30:05.348Z",
+  "generated": "2026-03-23T20:24:32.653Z",
   "date": "20260323",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -28,8 +28,8 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -460,
-        "oddsVerifiedAt": "2026-03-23T19:30:05.348Z",
+        "currentOdds": -430,
+        "oddsVerifiedAt": "2026-03-23T20:24:32.653Z",
         "oddsShifted": true
       },
       {
@@ -54,7 +54,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -280,
-        "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
+        "oddsVerifiedAt": "2026-03-23T20:24:32.653Z"
       }
     ],
     "parlays": [
@@ -83,8 +83,9 @@
             "hit": null,
             "actual": null,
             "oddsAvailable": true,
-            "currentOdds": -460,
-            "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
+            "currentOdds": -430,
+            "oddsVerifiedAt": "2026-03-23T20:24:32.653Z",
+            "oddsShifted": true
           },
           {
             "player": "Bam Adebayo",
@@ -104,7 +105,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -280,
-            "oddsVerifiedAt": "2026-03-23T19:30:05.348Z"
+            "oddsVerifiedAt": "2026-03-23T20:24:32.653Z"
           }
         ],
         "hasUnavailableLegs": false
