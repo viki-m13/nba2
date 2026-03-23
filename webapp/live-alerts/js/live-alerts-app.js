@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const DATA_BASE = 'live-alerts/data';
+  const DATA_BASE = '/live-alerts/data';
 
   let laData = { signals: [], stats: {}, tiers: { tiers: [] } };
   let laView = 'live';
@@ -399,26 +399,31 @@
 
     // Initialize KDT Live Engine
     if (window.KDTLiveEngine) {
-      const ok = await window.KDTLiveEngine.init();
-      engineReady = ok;
-      render();
-
-      if (ok) {
-        window.KDTLiveEngine.start(
-          function onUpdate(state) {
-            liveState = state;
-            if (laView === 'live') render();
-          },
-          function onAlert(alert) {
-            console.log('[KDT] NEW ALERT:', alert.tier.name, alert.team, alert.score);
-          }
-        );
-      } else {
-        liveError = 'Failed to load SWP table';
+      try {
+        const ok = await window.KDTLiveEngine.init();
+        engineReady = ok;
+        if (ok) {
+          render();
+          window.KDTLiveEngine.start(
+            function onUpdate(state) {
+              liveState = state;
+              if (laView === 'live') render();
+            },
+            function onAlert(alert) {
+              console.log('[KDT] NEW ALERT:', alert.tier.name, alert.team, alert.score);
+            }
+          );
+        } else {
+          liveError = 'Failed to load SWP table';
+          render();
+        }
+      } catch (e) {
+        console.error('[LiveAlerts] Engine init error:', e);
+        liveError = 'Engine init error: ' + e.message;
         render();
       }
     } else {
-      liveError = 'KDT engine not loaded';
+      liveError = 'KDT engine script not loaded';
       render();
     }
   };
