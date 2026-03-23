@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-23T03:18:07.640Z",
-  "date": "20260322",
+  "generated": "2026-03-23T16:32:46.338Z",
+  "date": "20260323",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
     "betType": "single",
-    "reasoning": "1 strong-confidence pick(s) found",
+    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
     "singles": [
       {
         "player": "Jalen Williams",
@@ -13,23 +13,23 @@
         "statType": "points",
         "statLabel": "PTS",
         "line": 9.5,
-        "odds": -530,
-        "cascadeScore": 0.5719800171389563,
+        "odds": -440,
+        "cascadeScore": 0.5930327501140773,
         "gft": 0.6828914396284952,
-        "beq": 0.07006670109162905,
+        "beq": 0.09652172754665556,
         "esi": 0.1843242456464958,
-        "imad": 0.08618860891596922,
+        "imad": 0.15573793982898035,
         "hitRate": 1,
-        "edge": 0.07006670109162905,
-        "ev": 0.08328683337306853,
+        "edge": 0.09652172754665556,
+        "ev": 0.1184584838072591,
         "avg": 22.6,
         "floor": 19.056217219521457,
-        "betSubType": "multi_single",
+        "betSubType": "single",
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -530,
-        "oddsVerifiedAt": "2026-03-23T03:18:07.640Z"
+        "currentOdds": -440,
+        "oddsVerifiedAt": "2026-03-23T16:32:46.338Z"
       }
     ],
     "parlays": []
