@@ -26,6 +26,10 @@ Usage:
     python run.py ml-show           Show current moneyline strategy rules
     python run.py ml-full           Discover + refine + backtest (complete pipeline)
 
+    python run.py ml-live-download  Download ESPN live win probability data (2,364 games)
+    python run.py ml-live-analyze   Analyze live data for in-game certainty floors
+    python run.py ml-live-report    Show live strategy tiers and projections
+
 Workflow:
     +200 Underdogs:
       1. 'develop'  — Claude Opus agents produce strategy_rules.json
@@ -301,6 +305,26 @@ def main():
         os.system(f'{sys.executable} {__file__} ml-refine')
         print("\n\n")
         os.system(f'{sys.executable} {__file__} ml-backtest')
+
+    # ================================================================
+    # LIVE MONEYLINE — In-game Polymarket limit orders
+    # ================================================================
+
+    elif command == 'ml-live-download':
+        from ml_live_winprob import download_all
+        print("Downloading ESPN live win probability data...")
+        cache = download_all()
+        valid = sum(1 for v in cache.values()
+                    if v.get('n_plays', 0) > 0 and not v.get('error'))
+        print(f"\nDone: {valid} games with win probability data cached.")
+
+    elif command == 'ml-live-analyze':
+        from ml_live_winprob import run_full_download_and_analysis
+        results, floor = run_full_download_and_analysis()
+
+    elif command == 'ml-live-report':
+        from ml_live_strategy import generate_live_strategy_report
+        generate_live_strategy_report()
 
     else:
         print(f"Unknown command: {command}")

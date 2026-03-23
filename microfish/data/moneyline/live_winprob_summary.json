@@ -1,0 +1,7551 @@
+{
+  "generated": "2026-03-23T14:28:51.742412",
+  "total_games_downloaded": 2364,
+  "valid_games": 2364,
+  "live_certainty_floor": null,
+  "threshold_results": {
+    "60": {
+      "threshold_pct": 60,
+      "games_reaching": 3633,
+      "correct": 2363,
+      "incorrect": 1270,
+      "total_instances": 3633,
+      "win_rate": 0.650427,
+      "fill_rate": 0.7684
+    },
+    "61": {
+      "threshold_pct": 61,
+      "games_reaching": 3577,
+      "correct": 2363,
+      "incorrect": 1214,
+      "total_instances": 3577,
+      "win_rate": 0.660609,
+      "fill_rate": 0.7566
+    },
+    "62": {
+      "threshold_pct": 62,
+      "games_reaching": 3517,
+      "correct": 2363,
+      "incorrect": 1154,
+      "total_instances": 3517,
+      "win_rate": 0.671879,
+      "fill_rate": 0.7439
+    },
+    "63": {
+      "threshold_pct": 63,
+      "games_reaching": 3465,
+      "correct": 2363,
+      "incorrect": 1102,
+      "total_instances": 3465,
+      "win_rate": 0.681962,
+      "fill_rate": 0.7329
+    },
+    "64": {
+      "threshold_pct": 64,
+      "games_reaching": 3415,
+      "correct": 2363,
+      "incorrect": 1052,
+      "total_instances": 3415,
+      "win_rate": 0.691947,
+      "fill_rate": 0.7223
+    },
+    "65": {
+      "threshold_pct": 65,
+      "games_reaching": 3370,
+      "correct": 2363,
+      "incorrect": 1007,
+      "total_instances": 3370,
+      "win_rate": 0.701187,
+      "fill_rate": 0.7128
+    },
+    "66": {
+      "threshold_pct": 66,
+      "games_reaching": 3321,
+      "correct": 2363,
+      "incorrect": 958,
+      "total_instances": 3321,
+      "win_rate": 0.711533,
+      "fill_rate": 0.7024
+    },
+    "67": {
+      "threshold_pct": 67,
+      "games_reaching": 3280,
+      "correct": 2363,
+      "incorrect": 917,
+      "total_instances": 3280,
+      "win_rate": 0.720427,
+      "fill_rate": 0.6937
+    },
+    "68": {
+      "threshold_pct": 68,
+      "games_reaching": 3233,
+      "correct": 2363,
+      "incorrect": 870,
+      "total_instances": 3233,
+      "win_rate": 0.7309,
+      "fill_rate": 0.6838
+    },
+    "69": {
+      "threshold_pct": 69,
+      "games_reaching": 3199,
+      "correct": 2363,
+      "incorrect": 836,
+      "total_instances": 3199,
+      "win_rate": 0.738668,
+      "fill_rate": 0.6766
+    },
+    "70": {
+      "threshold_pct": 70,
+      "games_reaching": 3174,
+      "correct": 2363,
+      "incorrect": 811,
+      "total_instances": 3174,
+      "win_rate": 0.744486,
+      "fill_rate": 0.6713
+    },
+    "71": {
+      "threshold_pct": 71,
+      "games_reaching": 3124,
+      "correct": 2363,
+      "incorrect": 761,
+      "total_instances": 3124,
+      "win_rate": 0.756402,
+      "fill_rate": 0.6607
+    },
+    "72": {
+      "threshold_pct": 72,
+      "games_reaching": 3078,
+      "correct": 2363,
+      "incorrect": 715,
+      "total_instances": 3078,
+      "win_rate": 0.767706,
+      "fill_rate": 0.651
+    },
+    "73": {
+      "threshold_pct": 73,
+      "games_reaching": 3037,
+      "correct": 2363,
+      "incorrect": 674,
+      "total_instances": 3037,
+      "win_rate": 0.77807,
+      "fill_rate": 0.6423
+    },
+    "74": {
+      "threshold_pct": 74,
+      "games_reaching": 2990,
+      "correct": 2363,
+      "incorrect": 627,
+      "total_instances": 2990,
+      "win_rate": 0.790301,
+      "fill_rate": 0.6324
+    },
+    "75": {
+      "threshold_pct": 75,
+      "games_reaching": 2952,
+      "correct": 2363,
+      "incorrect": 589,
+      "total_instances": 2952,
+      "win_rate": 0.800474,
+      "fill_rate": 0.6244
+    },
+    "76": {
+      "threshold_pct": 76,
+      "games_reaching": 2912,
+      "correct": 2363,
+      "incorrect": 549,
+      "total_instances": 2912,
+      "win_rate": 0.81147,
+      "fill_rate": 0.6159
+    },
+    "77": {
+      "threshold_pct": 77,
+      "games_reaching": 2880,
+      "correct": 2363,
+      "incorrect": 517,
+      "total_instances": 2880,
+      "win_rate": 0.820486,
+      "fill_rate": 0.6091
+    },
+    "78": {
+      "threshold_pct": 78,
+      "games_reaching": 2850,
+      "correct": 2363,
+      "incorrect": 487,
+      "total_instances": 2850,
+      "win_rate": 0.829123,
+      "fill_rate": 0.6028
+    },
+    "79": {
+      "threshold_pct": 79,
+      "games_reaching": 2824,
+      "correct": 2363,
+      "incorrect": 461,
+      "total_instances": 2824,
+      "win_rate": 0.836756,
+      "fill_rate": 0.5973
+    },
+    "80": {
+      "threshold_pct": 80,
+      "games_reaching": 2786,
+      "correct": 2363,
+      "incorrect": 423,
+      "total_instances": 2786,
+      "win_rate": 0.848169,
+      "fill_rate": 0.5893
+    },
+    "81": {
+      "threshold_pct": 81,
+      "games_reaching": 2748,
+      "correct": 2363,
+      "incorrect": 385,
+      "total_instances": 2748,
+      "win_rate": 0.859898,
+      "fill_rate": 0.5812
+    },
+    "82": {
+      "threshold_pct": 82,
+      "games_reaching": 2720,
+      "correct": 2363,
+      "incorrect": 357,
+      "total_instances": 2720,
+      "win_rate": 0.86875,
+      "fill_rate": 0.5753
+    },
+    "83": {
+      "threshold_pct": 83,
+      "games_reaching": 2684,
+      "correct": 2363,
+      "incorrect": 321,
+      "total_instances": 2684,
+      "win_rate": 0.880402,
+      "fill_rate": 0.5677
+    },
+    "84": {
+      "threshold_pct": 84,
+      "games_reaching": 2651,
+      "correct": 2363,
+      "incorrect": 288,
+      "total_instances": 2651,
+      "win_rate": 0.891362,
+      "fill_rate": 0.5607
+    },
+    "85": {
+      "threshold_pct": 85,
+      "games_reaching": 2631,
+      "correct": 2363,
+      "incorrect": 268,
+      "total_instances": 2631,
+      "win_rate": 0.898138,
+      "fill_rate": 0.5565
+    },
+    "86": {
+      "threshold_pct": 86,
+      "games_reaching": 2607,
+      "correct": 2363,
+      "incorrect": 244,
+      "total_instances": 2607,
+      "win_rate": 0.906406,
+      "fill_rate": 0.5514
+    },
+    "87": {
+      "threshold_pct": 87,
+      "games_reaching": 2578,
+      "correct": 2363,
+      "incorrect": 215,
+      "total_instances": 2578,
+      "win_rate": 0.916602,
+      "fill_rate": 0.5453
+    },
+    "88": {
+      "threshold_pct": 88,
+      "games_reaching": 2552,
+      "correct": 2363,
+      "incorrect": 189,
+      "total_instances": 2552,
+      "win_rate": 0.92594,
+      "fill_rate": 0.5398
+    },
+    "89": {
+      "threshold_pct": 89,
+      "games_reaching": 2535,
+      "correct": 2363,
+      "incorrect": 172,
+      "total_instances": 2535,
+      "win_rate": 0.93215,
+      "fill_rate": 0.5362
+    },
+    "90": {
+      "threshold_pct": 90,
+      "games_reaching": 2511,
+      "correct": 2363,
+      "incorrect": 148,
+      "total_instances": 2511,
+      "win_rate": 0.941059,
+      "fill_rate": 0.5311
+    },
+    "91": {
+      "threshold_pct": 91,
+      "games_reaching": 2498,
+      "correct": 2363,
+      "incorrect": 135,
+      "total_instances": 2498,
+      "win_rate": 0.945957,
+      "fill_rate": 0.5283
+    },
+    "92": {
+      "threshold_pct": 92,
+      "games_reaching": 2477,
+      "correct": 2363,
+      "incorrect": 114,
+      "total_instances": 2477,
+      "win_rate": 0.953977,
+      "fill_rate": 0.5239
+    },
+    "93": {
+      "threshold_pct": 93,
+      "games_reaching": 2460,
+      "correct": 2363,
+      "incorrect": 97,
+      "total_instances": 2460,
+      "win_rate": 0.960569,
+      "fill_rate": 0.5203
+    },
+    "94": {
+      "threshold_pct": 94,
+      "games_reaching": 2438,
+      "correct": 2363,
+      "incorrect": 75,
+      "total_instances": 2438,
+      "win_rate": 0.969237,
+      "fill_rate": 0.5157
+    },
+    "95": {
+      "threshold_pct": 95,
+      "games_reaching": 2428,
+      "correct": 2363,
+      "incorrect": 65,
+      "total_instances": 2428,
+      "win_rate": 0.973229,
+      "fill_rate": 0.5135
+    },
+    "96": {
+      "threshold_pct": 96,
+      "games_reaching": 2411,
+      "correct": 2363,
+      "incorrect": 48,
+      "total_instances": 2411,
+      "win_rate": 0.980091,
+      "fill_rate": 0.5099
+    },
+    "97": {
+      "threshold_pct": 97,
+      "games_reaching": 2398,
+      "correct": 2363,
+      "incorrect": 35,
+      "total_instances": 2398,
+      "win_rate": 0.985405,
+      "fill_rate": 0.5072
+    },
+    "98": {
+      "threshold_pct": 98,
+      "games_reaching": 2383,
+      "correct": 2363,
+      "incorrect": 20,
+      "total_instances": 2383,
+      "win_rate": 0.991607,
+      "fill_rate": 0.504
+    },
+    "99": {
+      "threshold_pct": 99,
+      "games_reaching": 2372,
+      "correct": 2363,
+      "incorrect": 9,
+      "total_instances": 2372,
+      "win_rate": 0.996206,
+      "fill_rate": 0.5017
+    }
+  },
+  "comebacks": {
+    "60": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "SF@HOU",
+        "side": "home",
+        "team": "HOU",
+        "max_wp": 0.607,
+        "final": "3-1",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "SF@HOU",
+        "side": "home",
+        "team": "HOU",
+        "max_wp": 0.639,
+        "final": "6-3",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "BAL@KC",
+        "side": "away",
+        "team": "BAL",
+        "max_wp": 0.607,
+        "final": "2-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      }
+    ],
+    "61": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "SF@HOU",
+        "side": "home",
+        "team": "HOU",
+        "max_wp": 0.639,
+        "final": "6-3",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "BAL@KC",
+        "side": "home",
+        "team": "KC",
+        "max_wp": 0.649,
+        "final": "8-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      }
+    ],
+    "62": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "SF@HOU",
+        "side": "home",
+        "team": "HOU",
+        "max_wp": 0.639,
+        "final": "6-3",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "BAL@KC",
+        "side": "home",
+        "team": "KC",
+        "max_wp": 0.649,
+        "final": "8-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      }
+    ],
+    "63": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "SF@HOU",
+        "side": "home",
+        "team": "HOU",
+        "max_wp": 0.639,
+        "final": "6-3",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "BAL@KC",
+        "side": "home",
+        "team": "KC",
+        "max_wp": 0.649,
+        "final": "8-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      }
+    ],
+    "64": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "BAL@KC",
+        "side": "home",
+        "team": "KC",
+        "max_wp": 0.649,
+        "final": "8-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      }
+    ],
+    "65": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      }
+    ],
+    "66": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      }
+    ],
+    "67": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      }
+    ],
+    "68": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "DET@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.681,
+        "final": "4-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250401",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.683,
+        "final": "1-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "HOU@MIN",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.683,
+        "final": "1-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      }
+    ],
+    "69": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 5
+      }
+    ],
+    "70": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "TEX@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.703,
+        "final": "1-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 5
+      }
+    ],
+    "71": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 1
+      }
+    ],
+    "72": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ARI@WSH",
+        "side": "home",
+        "team": "WSH",
+        "max_wp": 0.726,
+        "final": "6-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "MIA@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.725,
+        "final": "4-0",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      }
+    ],
+    "73": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "LAD@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.736,
+        "final": "3-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250407",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.735,
+        "final": "6-2",
+        "first_cross_inning": 1
+      }
+    ],
+    "74": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250407",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.767,
+        "final": "3-4",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250408",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.777,
+        "final": "6-1",
+        "first_cross_inning": 1
+      }
+    ],
+    "75": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "NYY@PIT",
+        "side": "home",
+        "team": "PIT",
+        "max_wp": 0.753,
+        "final": "10-4",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "LAD@PHI",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.755,
+        "final": "7-8",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250407",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.767,
+        "final": "3-4",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250408",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.777,
+        "final": "6-1",
+        "first_cross_inning": 1
+      }
+    ],
+    "76": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250407",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.767,
+        "final": "3-4",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250408",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.777,
+        "final": "6-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "PHI@ATL",
+        "side": "away",
+        "team": "PHI",
+        "max_wp": 0.777,
+        "final": "5-7",
+        "first_cross_inning": 5
+      }
+    ],
+    "77": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "SEA@SF",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.775,
+        "final": "9-10",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.777,
+        "final": "6-1",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "PHI@ATL",
+        "side": "away",
+        "team": "PHI",
+        "max_wp": 0.777,
+        "final": "5-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      }
+    ],
+    "78": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "LAA@STL",
+        "side": "away",
+        "team": "LAA",
+        "max_wp": 0.786,
+        "final": "5-12",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250403",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.78,
+        "final": "5-2",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      }
+    ],
+    "79": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      }
+    ],
+    "80": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      }
+    ],
+    "81": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      }
+    ],
+    "82": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "LAA@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.827,
+        "final": "9-7",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "HOU@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.827,
+        "final": "2-1",
+        "first_cross_inning": 11
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      }
+    ],
+    "83": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250404",
+        "game": "CLE@LAA",
+        "side": "home",
+        "team": "LAA",
+        "max_wp": 0.831,
+        "final": "8-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      }
+    ],
+    "84": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250404",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.841,
+        "final": "6-3",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250405",
+        "game": "TOR@NYM",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.845,
+        "final": "2-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "TOR@BAL",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.877,
+        "final": "4-5",
+        "first_cross_inning": 5
+      }
+    ],
+    "85": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250408",
+        "game": "SD@ATH",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.85,
+        "final": "4-10",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250409",
+        "game": "STL@PIT",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.859,
+        "final": "1-2",
+        "first_cross_inning": 12
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "TOR@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.85,
+        "final": "2-1",
+        "first_cross_inning": 10
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "TOR@BAL",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.877,
+        "final": "4-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      }
+    ],
+    "86": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "ATL@LAD",
+        "side": "away",
+        "team": "ATL",
+        "max_wp": 0.868,
+        "final": "5-6",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250405",
+        "game": "ATH@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.862,
+        "final": "7-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "TOR@BAL",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.877,
+        "final": "4-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250413",
+        "game": "SF@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.864,
+        "final": "5-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      }
+    ],
+    "87": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250408",
+        "game": "LAA@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.879,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "TOR@BAL",
+        "side": "away",
+        "team": "TOR",
+        "max_wp": 0.877,
+        "final": "4-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 4
+      }
+    ],
+    "88": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "CWS@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.891,
+        "final": "8-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 4
+      }
+    ],
+    "89": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250411",
+        "game": "DET@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.895,
+        "final": "7-6",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "CWS@BOS",
+        "side": "home",
+        "team": "BOS",
+        "max_wp": 0.891,
+        "final": "8-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 4
+      }
+    ],
+    "90": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250401",
+        "game": "MIN@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.909,
+        "final": "8-3",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "KC@DET",
+        "side": "home",
+        "team": "DET",
+        "max_wp": 0.902,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      }
+    ],
+    "91": [
+      {
+        "date": "20250401",
+        "game": "ARI@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.916,
+        "final": "7-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250422",
+        "game": "LAD@CHC",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.952,
+        "final": "10-11",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250424",
+        "game": "TB@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.916,
+        "final": "7-4",
+        "first_cross_inning": 9
+      }
+    ],
+    "92": [
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "STL@BOS",
+        "side": "away",
+        "team": "STL",
+        "max_wp": 0.921,
+        "final": "4-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "CWS@DET",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.921,
+        "final": "3-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250422",
+        "game": "LAD@CHC",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.952,
+        "final": "10-11",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250426",
+        "game": "ATL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.951,
+        "final": "8-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 2
+      }
+    ],
+    "93": [
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "ATL@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.933,
+        "final": "5-4",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250417",
+        "game": "SEA@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.932,
+        "final": "11-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250418",
+        "game": "MIN@ATL",
+        "side": "away",
+        "team": "MIN",
+        "max_wp": 0.938,
+        "final": "4-6",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250420",
+        "game": "MIA@PHI",
+        "side": "home",
+        "team": "PHI",
+        "max_wp": 0.937,
+        "final": "7-5",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250422",
+        "game": "LAD@CHC",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.952,
+        "final": "10-11",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250426",
+        "game": "ATL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.951,
+        "final": "8-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250503",
+        "game": "CLE@TOR",
+        "side": "home",
+        "team": "TOR",
+        "max_wp": 0.942,
+        "final": "5-3",
+        "first_cross_inning": 7
+      }
+    ],
+    "94": [
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250406",
+        "game": "SD@CHC",
+        "side": "home",
+        "team": "CHC",
+        "max_wp": 0.943,
+        "final": "8-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250411",
+        "game": "WSH@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.947,
+        "final": "7-4",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250422",
+        "game": "LAD@CHC",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.952,
+        "final": "10-11",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250426",
+        "game": "ATL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.951,
+        "final": "8-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 2
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250503",
+        "game": "CLE@TOR",
+        "side": "home",
+        "team": "TOR",
+        "max_wp": 0.942,
+        "final": "5-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250503",
+        "game": "ATH@MIA",
+        "side": "away",
+        "team": "ATH",
+        "max_wp": 0.966,
+        "final": "6-9",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250505",
+        "game": "SD@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.96,
+        "final": "4-3",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250508",
+        "game": "PHI@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.982,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250509",
+        "game": "LAD@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.976,
+        "final": "14-11",
+        "first_cross_inning": 8
+      }
+    ],
+    "95": [
+      {
+        "date": "20250402",
+        "game": "NYM@MIA",
+        "side": "home",
+        "team": "MIA",
+        "max_wp": 0.959,
+        "final": "6-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250409",
+        "game": "CIN@SF",
+        "side": "away",
+        "team": "CIN",
+        "max_wp": 0.959,
+        "final": "6-8",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250413",
+        "game": "TOR@BAL",
+        "side": "home",
+        "team": "BAL",
+        "max_wp": 0.951,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250418",
+        "game": "ARI@CHC",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.959,
+        "final": "11-13",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250422",
+        "game": "LAD@CHC",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.952,
+        "final": "10-11",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250426",
+        "game": "ATL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.951,
+        "final": "8-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250503",
+        "game": "ATH@MIA",
+        "side": "away",
+        "team": "ATH",
+        "max_wp": 0.966,
+        "final": "6-9",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250505",
+        "game": "SD@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.96,
+        "final": "4-3",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250508",
+        "game": "PHI@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.982,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250509",
+        "game": "LAD@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.976,
+        "final": "14-11",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250512",
+        "game": "LAA@SD",
+        "side": "home",
+        "team": "SD",
+        "max_wp": 0.981,
+        "final": "9-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250517",
+        "game": "COL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.982,
+        "final": "14-12",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250519",
+        "game": "CHC@MIA",
+        "side": "away",
+        "team": "CHC",
+        "max_wp": 0.968,
+        "final": "7-8",
+        "first_cross_inning": 9
+      }
+    ],
+    "96": [
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250420",
+        "game": "SF@LAA",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.963,
+        "final": "4-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250503",
+        "game": "ATH@MIA",
+        "side": "away",
+        "team": "ATH",
+        "max_wp": 0.966,
+        "final": "6-9",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250505",
+        "game": "SD@NYY",
+        "side": "home",
+        "team": "NYY",
+        "max_wp": 0.96,
+        "final": "4-3",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250508",
+        "game": "PHI@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.982,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250509",
+        "game": "LAD@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.976,
+        "final": "14-11",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250512",
+        "game": "LAA@SD",
+        "side": "home",
+        "team": "SD",
+        "max_wp": 0.981,
+        "final": "9-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250517",
+        "game": "COL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.982,
+        "final": "14-12",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250519",
+        "game": "CHC@MIA",
+        "side": "away",
+        "team": "CHC",
+        "max_wp": 0.968,
+        "final": "7-8",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250523",
+        "game": "CHC@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.963,
+        "final": "13-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250525",
+        "game": "CHC@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.97,
+        "final": "11-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250527",
+        "game": "PIT@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.986,
+        "final": "9-6",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250528",
+        "game": "MIA@SD",
+        "side": "home",
+        "team": "SD",
+        "max_wp": 0.969,
+        "final": "10-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250530",
+        "game": "MIN@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.991,
+        "final": "12-6",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250603",
+        "game": "KC@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.977,
+        "final": "10-7",
+        "first_cross_inning": 4
+      }
+    ],
+    "97": [
+      {
+        "date": "20250406",
+        "game": "HOU@MIN",
+        "side": "home",
+        "team": "MIN",
+        "max_wp": 0.979,
+        "final": "9-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250508",
+        "game": "PHI@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.982,
+        "final": "7-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250509",
+        "game": "LAD@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.976,
+        "final": "14-11",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250512",
+        "game": "LAA@SD",
+        "side": "home",
+        "team": "SD",
+        "max_wp": 0.981,
+        "final": "9-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250517",
+        "game": "COL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.982,
+        "final": "14-12",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250525",
+        "game": "CHC@CIN",
+        "side": "home",
+        "team": "CIN",
+        "max_wp": 0.97,
+        "final": "11-8",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250527",
+        "game": "PIT@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.986,
+        "final": "9-6",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250530",
+        "game": "MIN@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.991,
+        "final": "12-6",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250603",
+        "game": "KC@STL",
+        "side": "home",
+        "team": "STL",
+        "max_wp": 0.977,
+        "final": "10-7",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250603",
+        "game": "SD@SF",
+        "side": "home",
+        "team": "SF",
+        "max_wp": 0.977,
+        "final": "3-2",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250605",
+        "game": "ARI@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.999,
+        "final": "11-10",
+        "first_cross_inning": 3
+      },
+      {
+        "date": "20250610",
+        "game": "SF@COL",
+        "side": "home",
+        "team": "COL",
+        "max_wp": 0.974,
+        "final": "6-5",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250612",
+        "game": "SF@COL",
+        "side": "away",
+        "team": "SF",
+        "max_wp": 0.972,
+        "final": "7-8",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250614",
+        "game": "SD@ARI",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.988,
+        "final": "7-8",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250628",
+        "game": "MIA@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.978,
+        "final": "8-7",
+        "first_cross_inning": 7
+      }
+    ],
+    "98": [
+      {
+        "date": "20250409",
+        "game": "HOU@SEA",
+        "side": "away",
+        "team": "HOU",
+        "max_wp": 0.984,
+        "final": "6-7",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250430",
+        "game": "BOS@TOR",
+        "side": "away",
+        "team": "BOS",
+        "max_wp": 0.985,
+        "final": "6-7",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250508",
+        "game": "PHI@TB",
+        "side": "home",
+        "team": "TB",
+        "max_wp": 0.982,
+        "final": "7-6",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250512",
+        "game": "LAA@SD",
+        "side": "home",
+        "team": "SD",
+        "max_wp": 0.981,
+        "final": "9-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250517",
+        "game": "COL@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.982,
+        "final": "14-12",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250527",
+        "game": "PIT@ARI",
+        "side": "home",
+        "team": "ARI",
+        "max_wp": 0.986,
+        "final": "9-6",
+        "first_cross_inning": 4
+      },
+      {
+        "date": "20250530",
+        "game": "MIN@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.991,
+        "final": "12-6",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250605",
+        "game": "ARI@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.999,
+        "final": "11-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250614",
+        "game": "SD@ARI",
+        "side": "away",
+        "team": "SD",
+        "max_wp": 0.988,
+        "final": "7-8",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250629",
+        "game": "COL@MIL",
+        "side": "home",
+        "team": "MIL",
+        "max_wp": 0.99,
+        "final": "4-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250710",
+        "game": "SEA@NYY",
+        "side": "away",
+        "team": "SEA",
+        "max_wp": 0.987,
+        "final": "5-6",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250801",
+        "game": "PIT@COL",
+        "side": "away",
+        "team": "PIT",
+        "max_wp": 0.996,
+        "final": "16-17",
+        "first_cross_inning": 1
+      },
+      {
+        "date": "20250813",
+        "game": "ARI@TEX",
+        "side": "home",
+        "team": "TEX",
+        "max_wp": 0.993,
+        "final": "6-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250816",
+        "game": "ARI@COL",
+        "side": "away",
+        "team": "ARI",
+        "max_wp": 0.981,
+        "final": "7-10",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250819",
+        "game": "CWS@ATL",
+        "side": "away",
+        "team": "CWS",
+        "max_wp": 0.982,
+        "final": "10-11",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250826",
+        "game": "KC@CWS",
+        "side": "home",
+        "team": "CWS",
+        "max_wp": 0.982,
+        "final": "5-4",
+        "first_cross_inning": 8
+      },
+      {
+        "date": "20250906",
+        "game": "LAD@BAL",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.996,
+        "final": "3-4",
+        "first_cross_inning": 9
+      }
+    ],
+    "99": [
+      {
+        "date": "20250412",
+        "game": "MIL@ARI",
+        "side": "away",
+        "team": "MIL",
+        "max_wp": 0.996,
+        "final": "4-5",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250419",
+        "game": "NYY@TB",
+        "side": "away",
+        "team": "NYY",
+        "max_wp": 0.994,
+        "final": "8-10",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250427",
+        "game": "NYM@WSH",
+        "side": "away",
+        "team": "NYM",
+        "max_wp": 0.99,
+        "final": "7-8",
+        "first_cross_inning": 7
+      },
+      {
+        "date": "20250530",
+        "game": "MIN@SEA",
+        "side": "home",
+        "team": "SEA",
+        "max_wp": 0.991,
+        "final": "12-6",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250605",
+        "game": "ARI@ATL",
+        "side": "home",
+        "team": "ATL",
+        "max_wp": 0.999,
+        "final": "11-10",
+        "first_cross_inning": 6
+      },
+      {
+        "date": "20250629",
+        "game": "COL@MIL",
+        "side": "home",
+        "team": "MIL",
+        "max_wp": 0.99,
+        "final": "4-3",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250801",
+        "game": "PIT@COL",
+        "side": "away",
+        "team": "PIT",
+        "max_wp": 0.996,
+        "final": "16-17",
+        "first_cross_inning": 5
+      },
+      {
+        "date": "20250813",
+        "game": "ARI@TEX",
+        "side": "home",
+        "team": "TEX",
+        "max_wp": 0.993,
+        "final": "6-4",
+        "first_cross_inning": 9
+      },
+      {
+        "date": "20250906",
+        "game": "LAD@BAL",
+        "side": "away",
+        "team": "LAD",
+        "max_wp": 0.996,
+        "final": "3-4",
+        "first_cross_inning": 9
+      }
+    ]
+  }
+}
