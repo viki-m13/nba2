@@ -1,7 +1,8 @@
 {
   "rewrites": [
     { "source": "/api/nba", "destination": "/api/nba" },
-    { "source": "/api/mlb", "destination": "/api/mlb" }
+    { "source": "/api/mlb", "destination": "/api/mlb" },
+    { "source": "/api/polymarket", "destination": "/api/polymarket" }
   ],
   "headers": [
     {
