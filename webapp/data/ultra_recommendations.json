@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-23T21:23:53.544Z",
+  "generated": "2026-03-23T22:19:34.337Z",
   "date": "20260323",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -430,
-        "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+        "oddsVerifiedAt": "2026-03-23T22:19:34.337Z",
         "oddsShifted": true
       },
       {
@@ -54,8 +54,32 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -310,
-        "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+        "oddsVerifiedAt": "2026-03-23T22:19:34.337Z",
         "oddsShifted": true
+      },
+      {
+        "player": "Jalen Williams",
+        "team": "OKC",
+        "statType": "pra",
+        "statLabel": "PRA",
+        "line": 16.5,
+        "odds": -420,
+        "cascadeScore": 0.6128098983893507,
+        "gft": 0.593176201283871,
+        "beq": 0.10364423466916262,
+        "esi": 0.23774936626461518,
+        "imad": 0.1655317029823934,
+        "hitRate": 1,
+        "edge": 0.10364423466916262,
+        "ev": 0.12832143339991564,
+        "avg": 32.9,
+        "floor": 29.236455182235176,
+        "betSubType": "single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -420,
+        "oddsVerifiedAt": "2026-03-23T22:19:34.337Z"
       }
     ],
     "parlays": [
@@ -85,7 +109,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -430,
-            "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+            "oddsVerifiedAt": "2026-03-23T22:19:34.337Z",
             "oddsShifted": true
           },
           {
@@ -106,8 +130,59 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -310,
-            "oddsVerifiedAt": "2026-03-23T21:23:53.544Z",
+            "oddsVerifiedAt": "2026-03-23T22:19:34.337Z",
             "oddsShifted": true
+          }
+        ],
+        "hasUnavailableLegs": false
+      },
+      {
+        "numLegs": 2,
+        "odds": -157,
+        "decimalOdds": 1.64,
+        "avgCascade": 0.630398063838665,
+        "combinedHitRate": 0.9,
+        "ev": 0.474,
+        "legs": [
+          {
+            "player": "Jalen Williams",
+            "team": "OKC",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 16.5,
+            "odds": -420,
+            "cascadeScore": 0.6128098983893507,
+            "gft": 0.593176201283871,
+            "beq": 0.10364423466916262,
+            "esi": 0.23774936626461518,
+            "imad": 0.1655317029823934,
+            "hitRate": 1,
+            "edge": 0.10364423466916262,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -420,
+            "oddsVerifiedAt": "2026-03-23T22:19:34.337Z"
+          },
+          {
+            "player": "Bam Adebayo",
+            "team": "MIA",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 17.5,
+            "odds": -310,
+            "cascadeScore": 0.6479862292879794,
+            "gft": 0.6275806417546669,
+            "beq": 0.036351733459406455,
+            "esi": 0.42835134448165935,
+            "imad": 0.06929591086103346,
+            "hitRate": 0.9,
+            "edge": 0.036351733459406455,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -310,
+            "oddsVerifiedAt": "2026-03-23T22:19:34.337Z"
           }
         ],
         "hasUnavailableLegs": false
