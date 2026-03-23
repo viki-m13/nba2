@@ -23,6 +23,7 @@
       <button class="master-mode-btn active" data-mode="original" style="background:var(--accent);color:#0f1117;border:none;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">ORIGINAL MODELS</button>
       <button class="master-mode-btn" data-mode="positive-odds" style="background:none;border:none;color:#8b8fa3;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">POSITIVE ODDS</button>
       <button class="master-mode-btn" data-mode="v8-mgcc" style="background:none;border:none;color:#8b8fa3;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">V8 CSPE PARLAYS</button>
+      <button class="master-mode-btn" data-mode="live-alerts" style="background:none;border:none;color:#8b8fa3;padding:0.45rem 1.25rem;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;border-radius:6px;transition:all 0.2s">LIVE ALERTS</button>
     </div>
   </div>
 
@@ -209,6 +210,18 @@
   <!-- V8 CSPE App Script -->
   <script src="v8-mgcc/js/v8-mgcc-app.js"></script>
 
+  <!-- Live Alerts Section (completely separate from other strategies) -->
+  <header id="la-header" style="display:none;background:var(--surface);border-bottom:1px solid var(--border);padding:1.5rem 2rem 1rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <h1 style="font-size:1.5rem;color:#f59e0b;letter-spacing:0.1em">LIVE MONEYLINE ALERT ENGINE</h1>
+      <p class="subtitle" style="color:var(--text-dim);font-size:0.8rem">Real-Time MLB Live Betting Alerts | 94.6% Accuracy | +2.10% ROI | 1,810 Bets Backtested on 2,364 Games</p>
+    </div>
+  </header>
+  <div id="live-alerts-section" style="display:none;max-width:1200px;margin:0 auto;padding:2rem"></div>
+
+  <!-- Live Alerts App Script -->
+  <script src="live-alerts/js/live-alerts-app.js"></script>
+
   <!-- Sport Toggle Controller -->
   <script>
   (function() {
@@ -217,6 +230,7 @@
     let mlbInitialized = false;
     let poInitStarted = false;
     let v8InitStarted = false;
+    let laInitStarted = false;
     let currentMode = 'original';
 
     const subtitles = {
@@ -231,17 +245,20 @@
       const origHeader = document.getElementById('original-header');
       const poHeader = document.getElementById('po-header');
       const v8Header = document.getElementById('v8-header');
+      const laHeader = document.getElementById('la-header');
       const nbaSection = document.getElementById('nba-section');
       const mlbSection = document.getElementById('mlb-section');
       const poSection = document.getElementById('positive-odds-section');
       const v8Section = document.getElementById('v8-mgcc-section');
+      const laSection = document.getElementById('live-alerts-section');
       const nbaNAV = document.getElementById('nba-nav');
       const mlbNAV = document.getElementById('mlb-nav');
 
       // Update toggle button styles
+      const modeColors = { 'v8-mgcc': '#3b82f6', 'live-alerts': '#f59e0b' };
       document.querySelectorAll('.master-mode-btn').forEach(btn => {
         if (btn.dataset.mode === mode) {
-          btn.style.background = mode === 'v8-mgcc' ? '#3b82f6' : 'var(--accent)';
+          btn.style.background = modeColors[mode] || 'var(--accent)';
           btn.style.color = '#0f1117';
           btn.classList.add('active');
         } else {
@@ -255,12 +272,14 @@
       origHeader.style.display = 'none';
       poHeader.style.display = 'none';
       v8Header.style.display = 'none';
+      laHeader.style.display = 'none';
       nbaSection.style.display = 'none';
       mlbSection.style.display = 'none';
       nbaNAV.style.display = 'none';
       mlbNAV.style.display = 'none';
       poSection.style.display = 'none';
       v8Section.style.display = 'none';
+      laSection.style.display = 'none';
 
       if (mode === 'original') {
         origHeader.style.display = '';
@@ -285,6 +304,13 @@
         if (!v8InitStarted && window.initV8MGCC) {
           v8InitStarted = true;
           window.initV8MGCC();
+        }
+      } else if (mode === 'live-alerts') {
+        laHeader.style.display = '';
+        laSection.style.display = '';
+        if (!laInitStarted && window.initLiveAlerts) {
+          laInitStarted = true;
+          window.initLiveAlerts();
         }
       }
     }

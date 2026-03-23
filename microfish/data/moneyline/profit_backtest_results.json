@@ -1,0 +1,57 @@
+{
+  "strategy": "profit_optimized_live_alerts",
+  "date": "2026-03-23T15:19:07.327597",
+  "bet_size": 100,
+  "total_bets": 1810,
+  "total_wagered": 167679.8,
+  "total_profit": 3520.2,
+  "overall_roi": 2.0994,
+  "daily_profit": 19.78,
+  "tiers": {
+    "CHARLIE": {
+      "name": "CHARLIE \u2014 Late Innings Grip",
+      "bets": 434,
+      "wins": 396,
+      "losses": 38,
+      "accuracy": 0.9124,
+      "total_profit": 1649.3,
+      "roi": 4.3459
+    },
+    "DELTA": {
+      "name": "DELTA \u2014 Late Comfortable",
+      "bets": 521,
+      "wins": 492,
+      "losses": 29,
+      "accuracy": 0.9443,
+      "total_profit": 915.2,
+      "roi": 1.8954
+    },
+    "YANKEE": {
+      "name": "YANKEE \u2014 9th Inning Lock",
+      "bets": 170,
+      "wins": 161,
+      "losses": 9,
+      "accuracy": 0.9471,
+      "total_profit": 376.7,
+      "roi": 2.3958
+    },
+    "XRAY": {
+      "name": "XRAY \u2014 Absolute Blowout",
+      "bets": 326,
+      "wins": 324,
+      "losses": 2,
+      "accuracy": 0.9939,
+      "total_profit": 309.8,
+      "roi": 0.9654
+    },
+    "BRAVO": {
+      "name": "BRAVO \u2014 7th+ Commanding",
+      "bets": 359,
+      "wins": 339,
+      "losses": 20,
+      "accuracy": 0.9443,
+      "total_profit": 269.2,
+      "roi": 0.8005
+    }
+  }
+}
