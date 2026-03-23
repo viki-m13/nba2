@@ -1,0 +1,108 @@
+{
+  "total_games_evaluated": 1455,
+  "total_bets": 5,
+  "wins": 5,
+  "losses": 0,
+  "accuracy": 1.0,
+  "fill_rate": 0.003436426116838488,
+  "total_invested": 4.1,
+  "total_returned": 5.0,
+  "net_profit": 0.9,
+  "roi": 21.95,
+  "unique_bet_dates": 5,
+  "date_range_days": 89,
+  "daily_frequency": 0.056179775280898875,
+  "monthly_results": {
+    "2025-06": {
+      "bets": 1,
+      "wins": 1,
+      "losses": 0,
+      "accuracy": 1.0
+    },
+    "2025-07": {
+      "bets": 1,
+      "wins": 1,
+      "losses": 0,
+      "accuracy": 1.0
+    },
+    "2025-08": {
+      "bets": 1,
+      "wins": 1,
+      "losses": 0,
+      "accuracy": 1.0
+    },
+    "2025-09": {
+      "bets": 2,
+      "wins": 2,
+      "losses": 0,
+      "accuracy": 1.0
+    }
+  },
+  "bet_details": [
+    {
+      "date": "2025-06-21 00:00:00",
+      "fav_team": "TB",
+      "dog_team": "DET",
+      "fav_ml": -4000,
+      "fav_prob": 0.921,
+      "limit_price": 0.82,
+      "won": 1,
+      "score": "8-3",
+      "floor_used": "base"
+    },
+    {
+      "date": "2025-07-03 00:00:00",
+      "fav_team": "MIA",
+      "dog_team": "MIN",
+      "fav_ml": -2200,
+      "fav_prob": 0.903,
+      "limit_price": 0.82,
+      "won": 1,
+      "score": "4-1",
+      "floor_used": "base"
+    },
+    {
+      "date": "2025-08-03 00:00:00",
+      "fav_team": "BOS",
+      "dog_team": "HOU",
+      "fav_ml": -4000,
+      "fav_prob": 0.921,
+      "limit_price": 0.82,
+      "won": 1,
+      "score": "6-1",
+      "floor_used": "base"
+    },
+    {
+      "date": "2025-09-07 00:00:00",
+      "fav_team": "SEA",
+      "dog_team": "ATL",
+      "fav_ml": -3000,
+      "fav_prob": 0.914,
+      "limit_price": 0.82,
+      "won": 1,
+      "score": "2-18",
+      "floor_used": "base"
+    },
+    {
+      "date": "2025-09-17 00:00:00",
+      "fav_team": "CHC",
+      "dog_team": "PIT",
+      "fav_ml": -1200,
+      "fav_prob": 0.871,
+      "limit_price": 0.82,
+      "won": 1,
+      "score": "4-8",
+      "floor_used": "base"
+    }
+  ],
+  "overfitting_checks": {
+    "monthly_acc_mean": 1.0,
+    "monthly_acc_std": 0.0,
+    "monthly_consistent": "True",
+    "sufficient_sample": false,
+    "adequate_fill": false,
+    "stat_sig_vs_95pct": 0.7737809374999998,
+    "significantly_above_95": "False",
+    "perfect_accuracy": true
+  }
+}
