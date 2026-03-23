@@ -1,0 +1,90 @@
+{
+  "version": "2.0",
+  "strategy_name": "Microfish Live Moneyline \u2014 Certainty Floor Discovery",
+  "type": "live_in_game",
+  "development_date": "2026-03-23",
+  "data_source": "ESPN play-by-play win probability, 2364 games, 2025 MLB season",
+  "tiers": [
+    {
+      "name": "Tier 1: Blowout Lock",
+      "min_inning": 8,
+      "min_lead": 5,
+      "min_wp": 0.99,
+      "limit_price": 0.99,
+      "games_validated": 304,
+      "accuracy": 1.0,
+      "bets_per_day": 1.7,
+      "profit_per_share": 0.01,
+      "description": "Team leading by 5+ runs in 8th+ inning with 99%+ ESPN WP"
+    },
+    {
+      "name": "Tier 2: Comfortable Lead",
+      "min_inning": 8,
+      "min_lead": 4,
+      "min_wp": 0.96,
+      "limit_price": 0.96,
+      "games_validated": 141,
+      "accuracy": 1.0,
+      "bets_per_day": 0.8,
+      "profit_per_share": 0.04,
+      "description": "Team leading by 4+ runs in 8th+ inning with 96%+ ESPN WP"
+    },
+    {
+      "name": "Tier 3: Late Lock",
+      "min_inning": 9,
+      "min_lead": 3,
+      "min_wp": 0.95,
+      "limit_price": 0.95,
+      "games_validated": 103,
+      "accuracy": 1.0,
+      "bets_per_day": 0.6,
+      "profit_per_share": 0.05,
+      "description": "Team leading by 3+ runs in 9th inning with 95%+ ESPN WP"
+    }
+  ],
+  "aggressive_tiers": [
+    {
+      "name": "Aggressive 1: High Volume",
+      "min_inning": 7,
+      "min_lead": 5,
+      "min_wp": 0.99,
+      "limit_price": 0.95,
+      "games_validated": 516,
+      "losses": 1,
+      "accuracy": 0.998,
+      "bets_per_day": 2.9,
+      "profit_per_share": 0.05,
+      "description": "5+ run lead in 7th+ at 99% WP. 1 loss in 516 (NYM blew 6-run lead at WSH)"
+    },
+    {
+      "name": "Aggressive 2: Mid Volume",
+      "min_inning": 8,
+      "min_lead": 4,
+      "min_wp": 0.99,
+      "limit_price": 0.95,
+      "games_validated": 608,
+      "losses": 2,
+      "accuracy": 0.997,
+      "bets_per_day": 3.4,
+      "profit_per_share": 0.05,
+      "description": "4+ run lead in 8th+ at 99% WP. 2 losses in 608 games."
+    }
+  ],
+  "execution": {
+    "platform": "Polymarket",
+    "order_type": "limit",
+    "timing": "live_in_game",
+    "instruction": "Monitor live MLB games. When a team meets any tier conditions, place a LIMIT BUY order at the tier limit price. The order fills because the team is already at that win probability. You profit the difference between your buy price and $1.00 when they win.",
+    "monitoring_required": true,
+    "games_per_day": "~15 MLB games",
+    "expected_fills": "~3.1 per day at 100% accuracy tiers"
+  },
+  "notable_comebacks": [
+    "ATL reached 100% WP (inn 3) vs ARI but lost 11-10",
+    "MIL reached 100% WP (inn 7) vs ARI but lost 4-5",
+    "PIT reached 100% WP (inn 1) vs COL but lost 16-17",
+    "LAD reached 100% WP (inn 9) vs BAL but lost 3-4",
+    "NYM had 6-run lead at 99% (inn 7) vs WSH but lost 7-8"
+  ],
+  "risk_notes": "Even these 100% accuracy combos are based on one season of data (2,364 games). Baseball has infinite variance \u2014 a 5-run lead in the 8th CAN be blown. The profit per bet is small ($0.01-$0.05/share) so any single loss wipes out 20-100 wins. The strategy depends on Polymarket having sufficient liquidity at these high prices to fill orders quickly."
+}
