@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-24T18:33:23.156Z",
+  "generated": "2026-03-24T19:34:40.234Z",
   "date": "20260324",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -28,8 +28,9 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -295,
-        "oddsVerifiedAt": "2026-03-24T18:33:23.156Z"
+        "currentOdds": -290,
+        "oddsVerifiedAt": "2026-03-24T19:34:40.234Z",
+        "oddsShifted": true
       }
     ],
     "parlays": []
