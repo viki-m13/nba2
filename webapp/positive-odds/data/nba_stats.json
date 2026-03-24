@@ -1,9 +1,9 @@
 {
   "singles": {
-    "total": 9,
-    "wins": 8,
-    "accuracy": 0.8888888888888888,
-    "pnl": 1708
+    "total": 10,
+    "wins": 9,
+    "accuracy": 0.9,
+    "pnl": 1889
   },
   "parlays": {
     "total": 2,
@@ -12,14 +12,14 @@
     "pnl": 2959
   },
   "overall": {
-    "total": 11,
-    "wins": 10,
-    "accuracy": 0.9090909090909091,
-    "pnl": 4667,
-    "roi": 2.338176352705411
+    "total": 12,
+    "wins": 11,
+    "accuracy": 0.9166666666666666,
+    "pnl": 4848,
+    "roi": 2.2310170271514034
   },
   "model": "NBA Positive Odds v1 (HECE Champion)",
   "config_version": "optimized",
   "min_odds": "+100",
-  "generated": "2026-03-23T16:47:27.582141"
+  "generated": "2026-03-23T22:18:52.358132"
 }
