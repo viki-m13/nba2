@@ -1,6 +1,31 @@
 {
-  "generated": "2026-03-24T13:49:43.930452",
+  "generated": "2026-03-24T14:49:58.810028",
   "date": "20260324",
   "engine": "NBA Positive Odds HECE v1",
-  "picks": []
+  "picks": [
+    {
+      "date": "20260324",
+      "betType": "single",
+      "player": "Jalen Williams",
+      "team": "",
+      "opponent": "",
+      "line": 14.5,
+      "odds": 126,
+      "stat": "pts",
+      "statLabel": "PTS",
+      "cascadeScore": 0.5687800276254267,
+      "hitRate": 0.95,
+      "edge": 0.4432504783121014,
+      "ev": 1.001746080985349,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 180,
+      "bet": "Jalen Williams O14.5 PTS",
+      "engine": "positive_odds_nba",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-24T14:49:58.808843"
+    }
+  ]
 }
