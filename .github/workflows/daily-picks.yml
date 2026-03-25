@@ -2,10 +2,10 @@ name: Daily Picks Generation
 
 on:
   schedule:
-    # Hourly from noon ET until after last tipoff (~10 PM ET).
+    # Hourly from 11 AM ET until after last tipoff (~10 PM ET).
     # Covers both EST (UTC-5, Nov-Mar) and EDT (UTC-4, Mar-Nov).
-    # noon ET = 16-17 UTC, 10 PM ET = 02-03 UTC next day.
-    - cron: '0 0-3,16-23 * * *'
+    # 11 AM ET = 15-16 UTC, 10 PM ET = 02-03 UTC next day.
+    - cron: '0 0-3,15-23 * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
