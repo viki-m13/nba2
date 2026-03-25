@@ -2,9 +2,9 @@ name: V8 CSPE Picks Generation
 
 on:
   schedule:
-    # Hourly from noon ET until after last tipoff (~10 PM ET), offset +45min.
+    # Hourly from 11 AM ET until after last tipoff (~10 PM ET), offset +45min.
     # Covers both EST (UTC-5) and EDT (UTC-4).
-    - cron: '45 0-3,16-23 * * *'
+    - cron: '45 0-3,15-23 * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
