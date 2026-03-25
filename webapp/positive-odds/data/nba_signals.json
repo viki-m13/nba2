@@ -329,5 +329,29 @@
     "betSubType": "single",
     "source": "live",
     "generated_at": "2026-03-24T14:49:58.808843"
+  },
+  {
+    "date": "20260325",
+    "betType": "single",
+    "player": "Jalen Williams",
+    "team": "",
+    "opponent": "",
+    "line": 27.5,
+    "odds": 265,
+    "stat": "pra",
+    "statLabel": "PRA",
+    "cascadeScore": 0.528295144226133,
+    "hitRate": 0.85,
+    "edge": 0.5128650592164815,
+    "ev": 1.8719574661401572,
+    "actual": null,
+    "hit": null,
+    "pnl": null,
+    "wager": 171,
+    "bet": "Jalen Williams O27.5 PRA",
+    "engine": "positive_odds_nba",
+    "betSubType": "single",
+    "source": "live",
+    "generated_at": "2026-03-25T17:48:03.555068"
   }
 ]
