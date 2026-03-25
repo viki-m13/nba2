@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-25T17:48:03.561458",
+  "generated": "2026-03-25T18:47:27.514463",
   "date": "20260325",
   "engine": "NBA Positive Odds HECE v1",
   "picks": [
@@ -26,6 +26,69 @@
       "betSubType": "single",
       "source": "live",
       "generated_at": "2026-03-25T17:48:03.555068"
+    },
+    {
+      "date": "20260325",
+      "betType": "single",
+      "player": "Kel'el Ware",
+      "team": "",
+      "opponent": "",
+      "line": 6.5,
+      "odds": 104,
+      "stat": "reb",
+      "statLabel": "REB",
+      "cascadeScore": 0.4980244017073648,
+      "hitRate": 0.8,
+      "edge": 0.24847471118672532,
+      "ev": 0.5068884108209197,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 149,
+      "bet": "Kel'el Ware O6.5 REB",
+      "engine": "positive_odds_nba",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-25T18:47:27.513616"
+    },
+    {
+      "date": "20260325",
+      "betType": "parlay",
+      "n_legs": 2,
+      "legs": [
+        {
+          "player": "Jalen Williams",
+          "team": "",
+          "line": 27.5,
+          "odds": 280,
+          "stat": "pra",
+          "statLabel": "PRA",
+          "cascadeScore": 0.528295144226133,
+          "hit": null,
+          "actual": null,
+          "edge": 0.5236797672193654
+        },
+        {
+          "player": "Kel'el Ware",
+          "team": "",
+          "line": 6.5,
+          "odds": 104,
+          "stat": "reb",
+          "statLabel": "REB",
+          "cascadeScore": 0.4980244017073648,
+          "hit": null,
+          "actual": null,
+          "edge": 0.24847471118672532
+        }
+      ],
+      "odds": 675,
+      "hit": null,
+      "pnl": null,
+      "wager": 250,
+      "bet": "2-Leg Parlay",
+      "engine": "positive_odds_nba",
+      "source": "live",
+      "generated_at": "2026-03-25T18:47:27.513617"
     }
   ]
 }
