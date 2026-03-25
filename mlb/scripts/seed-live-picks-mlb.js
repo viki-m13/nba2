@@ -329,7 +329,7 @@ async function main() {
 
   for (const event of events) {
     try {
-      const markets = 'batter_hits,batter_total_bases,batter_rbis,batter_runs_scored';
+      const markets = 'batter_hits_alternate,batter_total_bases_alternate,batter_rbis_alternate,batter_runs_scored_alternate';
       const sportKey = event._sportKey || 'baseball_mlb';
       const propsUrl = `${ODDS_API_BASE}/sports/${sportKey}/events/${event.id}/odds?apiKey=${ODDS_API_KEY}&regions=us&markets=${markets}&oddsFormat=american&bookmakers=fanduel`;
       const propsRes = await fetch(propsUrl);
@@ -345,10 +345,10 @@ async function main() {
 
       const gameProps = { hitsLines: {}, tbLines: {}, rbiLines: {}, runsLines: {} };
       const marketMap = {
-        'batter_hits': 'hitsLines',
-        'batter_total_bases': 'tbLines',
-        'batter_rbis': 'rbiLines',
-        'batter_runs_scored': 'runsLines',
+        'batter_hits_alternate': 'hitsLines',
+        'batter_total_bases_alternate': 'tbLines',
+        'batter_rbis_alternate': 'rbiLines',
+        'batter_runs_scored_alternate': 'runsLines',
       };
 
       for (const mkt of (fd.markets || [])) {

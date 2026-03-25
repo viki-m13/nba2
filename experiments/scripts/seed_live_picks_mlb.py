@@ -306,7 +306,7 @@ def fetch_live_odds():
     live_odds = {}
     for event in events:
         try:
-            markets = 'batter_hits,batter_total_bases,batter_rbis,batter_runs_scored'
+            markets = 'batter_hits_alternate,batter_total_bases_alternate,batter_rbis_alternate,batter_runs_scored_alternate'
             sport_key = event.get('_sportKey', 'baseball_mlb')
             props_url = f'{ODDS_API_BASE}/sports/{sport_key}/events/{event["id"]}/odds?apiKey={ODDS_API_KEY}&regions=us&markets={markets}&oddsFormat=american&bookmakers=fanduel'
             props_data = curl_fetch(props_url)
@@ -329,10 +329,10 @@ def fetch_live_odds():
                 'runsProps': {},
             }
             market_map = {
-                'batter_hits': 'hitsProps',
-                'batter_total_bases': 'tbProps',
-                'batter_rbis': 'rbiProps',
-                'batter_runs_scored': 'runsProps',
+                'batter_hits_alternate': 'hitsProps',
+                'batter_total_bases_alternate': 'tbProps',
+                'batter_rbis_alternate': 'rbiProps',
+                'batter_runs_scored_alternate': 'runsProps',
             }
 
             for mkt in fd.get('markets', []):
