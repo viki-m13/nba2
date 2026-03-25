@@ -29,6 +29,11 @@ jobs:
         env:
           TZ: America/New_York
 
+      - name: Run V8 CSPE MLB live picks
+        run: python3 experiments/scripts/seed_live_v8_picks_mlb.py
+        env:
+          TZ: America/New_York
+
       - name: Commit and push V8 CSPE picks
         run: |
           git config user.name "github-actions[bot]"
