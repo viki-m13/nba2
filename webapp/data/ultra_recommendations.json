@@ -1,38 +1,12 @@
 {
-  "generated": "2026-03-24T19:34:40.234Z",
-  "date": "20260324",
+  "generated": "2026-03-25T16:28:28.229Z",
+  "date": "20260325",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "single",
-    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
-    "singles": [
-      {
-        "player": "Jalen Williams",
-        "team": "OKC",
-        "statType": "points",
-        "statLabel": "PTS",
-        "line": 9.5,
-        "odds": -295,
-        "cascadeScore": 0.6185571336339409,
-        "gft": 0.8233320445235065,
-        "beq": 0.16450109932349566,
-        "esi": 0.177805119231061,
-        "imad": 0.22339135528504872,
-        "hitRate": 1,
-        "edge": 0.16450109932349566,
-        "ev": 0.22026418383993485,
-        "avg": 22.4,
-        "floor": 18.881240303630953,
-        "betSubType": "single",
-        "hit": null,
-        "actual": null,
-        "oddsAvailable": true,
-        "currentOdds": -290,
-        "oddsVerifiedAt": "2026-03-24T19:34:40.234Z",
-        "oddsShifted": true
-      }
-    ],
+    "betType": "none",
+    "reasoning": "No FanDuel player props available yet",
+    "singles": [],
     "parlays": []
   }
 }

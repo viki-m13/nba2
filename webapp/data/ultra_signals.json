@@ -1080,9 +1080,11 @@
     "floor": 18.881240303630953,
     "bet": "Jalen Williams O9.5 PTS",
     "hit": null,
-    "actual": null,
+    "actual": 0,
     "source": "live",
-    "generated_at": "2026-03-24T18:33:23.154Z"
+    "generated_at": "2026-03-24T18:33:23.154Z",
+    "dnp": true,
+    "pnl": 0
   },
   {
     "date": "20260222",
