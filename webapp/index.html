@@ -239,10 +239,9 @@
       const mlbNAV = document.getElementById('mlb-nav');
 
       // Update toggle button styles
-      const modeColors = { 'v8-mgcc': '#3b82f6' };
       document.querySelectorAll('.master-mode-btn').forEach(btn => {
         if (btn.dataset.mode === mode) {
-          btn.style.background = modeColors[mode] || 'var(--accent)';
+          btn.style.background = mode === 'v8-mgcc' ? '#3b82f6' : 'var(--accent)';
           btn.style.color = '#0f1117';
           btn.classList.add('active');
         } else {
@@ -262,6 +261,7 @@
       mlbNAV.style.display = 'none';
       poSection.style.display = 'none';
       v8Section.style.display = 'none';
+
       if (mode === 'original') {
         origHeader.style.display = '';
         const activeSport = document.querySelector('.sport-btn.active');
