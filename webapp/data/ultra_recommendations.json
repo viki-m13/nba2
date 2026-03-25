@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-25T22:06:24.835Z",
+  "generated": "2026-03-25T22:22:17.389Z",
   "date": "20260325",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -270,
-        "oddsVerifiedAt": "2026-03-25T22:06:24.835Z"
+        "oddsVerifiedAt": "2026-03-25T22:22:17.389Z"
       },
       {
         "player": "Jalen Williams",
@@ -53,7 +53,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -400,
-        "oddsVerifiedAt": "2026-03-25T22:06:24.835Z"
+        "oddsVerifiedAt": "2026-03-25T22:22:17.389Z"
       },
       {
         "player": "Gary Payton II",
@@ -61,23 +61,23 @@
         "statType": "pra",
         "statLabel": "PRA",
         "line": 13.5,
-        "odds": -380,
-        "cascadeScore": 0.6127293999216478,
+        "odds": -360,
+        "cascadeScore": 0.6203119043580719,
         "gft": 0.9753377646988215,
-        "beq": 0.0796279148203316,
+        "beq": 0.0886858858348244,
         "esi": 0.16090739479007055,
-        "imad": 0.13767328455983513,
+        "imad": 0.14673125557432792,
         "hitRate": 1,
-        "edge": 0.0796279148203316,
-        "ev": 0.10058262924673467,
+        "edge": 0.0886858858348244,
+        "ev": 0.11332085412227566,
         "avg": 23.615384615384617,
         "floor": 21.519632220792666,
         "betSubType": "single",
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -380,
-        "oddsVerifiedAt": "2026-03-25T22:06:24.835Z"
+        "currentOdds": -360,
+        "oddsVerifiedAt": "2026-03-25T22:22:17.389Z"
       }
     ],
     "parlays": [
@@ -107,7 +107,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -270,
-            "oddsVerifiedAt": "2026-03-25T22:06:24.835Z"
+            "oddsVerifiedAt": "2026-03-25T22:22:17.389Z"
           },
           {
             "player": "Jalen Williams",
@@ -127,7 +127,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -400,
-            "oddsVerifiedAt": "2026-03-25T22:06:24.835Z"
+            "oddsVerifiedAt": "2026-03-25T22:22:17.389Z"
           }
         ],
         "hasUnavailableLegs": false
