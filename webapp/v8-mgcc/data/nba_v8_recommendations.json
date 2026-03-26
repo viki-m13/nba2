@@ -1,54 +1,6 @@
 {
-  "generated": "2026-03-25T18:58:14.713979",
-  "date": "20260325",
+  "generated": "2026-03-26T00:38:59.691926",
+  "date": "20260326",
   "engine": "V8 CSPE (Convergence Score Parlay Engine)",
-  "picks": [
-    {
-      "date": "20260325",
-      "betType": "parlay",
-      "n_legs": 2,
-      "legs": [
-        {
-          "player": "Jalen Williams",
-          "team": "",
-          "line": 8.5,
-          "odds": -450,
-          "stat": "pts",
-          "statLabel": "PTS",
-          "cascadeScore": 0.616,
-          "hit": null,
-          "actual": null,
-          "edge": 0,
-          "hr_20": 1.0,
-          "clearance": 8.5,
-          "streak": 5
-        },
-        {
-          "player": "Bam Adebayo",
-          "team": "",
-          "line": 17.5,
-          "odds": -270,
-          "stat": "pts",
-          "statLabel": "PTS",
-          "cascadeScore": 0.564,
-          "hit": null,
-          "actual": null,
-          "edge": 0,
-          "hr_20": 0.95,
-          "clearance": 0.5,
-          "streak": 5
-        }
-      ],
-      "odds": -148,
-      "hit": null,
-      "pnl": null,
-      "wager": 200,
-      "bet": "V8 CSPE 2-Leg Parlay",
-      "engine": "v8_cspe_nba",
-      "source": "live",
-      "combined_prob": 0.7882399730171801,
-      "parlay_ev": 0.320220860156347,
-      "generated_at": "2026-03-25T17:56:46.997263"
-    }
-  ]
+  "picks": []
 }
