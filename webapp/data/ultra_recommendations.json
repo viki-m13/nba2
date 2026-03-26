@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-25T23:17:35.720Z",
+  "generated": "2026-03-26T00:26:19.868Z",
   "date": "20260325",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "multi_single",
-    "reasoning": "3 elite-confidence pick(s) found (score >= 0.5787)",
+    "betType": "single",
+    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
     "singles": [
       {
         "player": "Bam Adebayo",
@@ -27,9 +27,9 @@
         "betSubType": "single",
         "hit": null,
         "actual": null,
-        "oddsAvailable": true,
-        "currentOdds": -260,
-        "oddsVerifiedAt": "2026-03-25T23:17:35.720Z",
+        "oddsAvailable": false,
+        "currentOdds": null,
+        "oddsVerifiedAt": "2026-03-26T00:26:19.868Z",
         "oddsShifted": true
       },
       {
@@ -52,9 +52,9 @@
         "betSubType": "single",
         "hit": null,
         "actual": null,
-        "oddsAvailable": true,
-        "currentOdds": -400,
-        "oddsVerifiedAt": "2026-03-25T23:17:35.720Z"
+        "oddsAvailable": false,
+        "currentOdds": null,
+        "oddsVerifiedAt": "2026-03-26T00:26:19.868Z"
       },
       {
         "player": "Gary Payton II",
@@ -77,8 +77,8 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -390,
-        "oddsVerifiedAt": "2026-03-25T23:17:35.720Z",
+        "currentOdds": -340,
+        "oddsVerifiedAt": "2026-03-26T00:26:19.868Z",
         "oddsShifted": true
       }
     ],
@@ -107,9 +107,9 @@
             "edge": 0.11972721505154771,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -260,
-            "oddsVerifiedAt": "2026-03-25T23:17:35.720Z",
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-26T00:26:19.868Z",
             "oddsShifted": true
           },
           {
@@ -128,12 +128,12 @@
             "edge": 0.11133654236147028,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -400,
-            "oddsVerifiedAt": "2026-03-25T23:17:35.720Z"
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-26T00:26:19.868Z"
           }
         ],
-        "hasUnavailableLegs": false
+        "hasUnavailableLegs": true
       }
     ]
   }
