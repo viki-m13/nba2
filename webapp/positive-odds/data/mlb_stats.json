@@ -5,6 +5,12 @@
     "accuracy": 1.0,
     "pnl": 1149
   },
+  "parlays": {
+    "total": 0,
+    "wins": 0,
+    "accuracy": 0,
+    "pnl": 0
+  },
   "overall": {
     "total": 8,
     "wins": 8,
@@ -15,5 +21,5 @@
   "model": "MLB Positive Odds v1 (HECE Champion)",
   "config_version": "optimized",
   "min_odds": "+100",
-  "generated": "2026-03-19T17:00:54.535606"
+  "generated": "2026-03-25T22:20:41.502233"
 }
