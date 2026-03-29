@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-29T19:20:45.694Z",
+  "generated": "2026-03-29T20:14:06.872Z",
   "date": "20260329",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T19:20:45.694Z",
+        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
         "oddsShifted": true
       },
       {
@@ -53,8 +53,9 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -198,
-        "oddsVerifiedAt": "2026-03-29T19:20:45.694Z"
+        "currentOdds": -194,
+        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
+        "oddsShifted": true
       },
       {
         "player": "Karl-Anthony Towns",
@@ -78,7 +79,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -178,
-        "oddsVerifiedAt": "2026-03-29T19:20:45.694Z",
+        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
         "oddsShifted": true
       }
     ],
