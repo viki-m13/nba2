@@ -9,9 +9,12 @@
  *   /api/cron/picks?strategy=positive-odds&sport=mlb
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const CONFIGS = {
   'v8|nba': {
@@ -91,7 +94,7 @@ async function commitToGithub(files, message) {
   return newCommit.sha;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   const auth = req.headers['authorization'];
   if (process.env.CRON_SECRET && auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });

@@ -4,9 +4,11 @@
  * Uses native fetch() instead of curl, writes to /tmp, commits to GitHub.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 function findProjectRoot() {
@@ -85,7 +87,7 @@ function getDateStr(daysAgo = 0) {
   return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   const auth = req.headers['authorization'];
   if (process.env.CRON_SECRET && auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
