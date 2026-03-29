@@ -1,6 +1,31 @@
 {
-  "generated": "2026-03-28T22:20:50.697772",
+  "generated": "2026-03-28T23:40:15.077639",
   "date": "20260328",
   "engine": "MLB Positive Odds HECE v1",
-  "picks": []
+  "picks": [
+    {
+      "date": "20260328",
+      "betType": "single",
+      "player": "Josh Naylor",
+      "team": "",
+      "opponent": "",
+      "line": 0.5,
+      "odds": 205,
+      "stat": "h",
+      "statLabel": "H",
+      "cascadeScore": 0.5797191922044049,
+      "hitRate": 0.9,
+      "edge": 0.5082269437687901,
+      "ev": 1.5500921784948098,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 138,
+      "bet": "Josh Naylor O0.5 H",
+      "engine": "positive_odds_mlb",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-28T23:40:15.076929"
+    }
+  ]
 }
