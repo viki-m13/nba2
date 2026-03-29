@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-29T20:14:06.872Z",
+  "generated": "2026-03-29T21:16:10.438Z",
   "date": "20260329",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "multi_single",
-    "reasoning": "2 strong-confidence pick(s) found",
+    "betType": "parlay",
+    "reasoning": "2 strong candidates for EMPC parlay construction",
     "singles": [
       {
         "player": "Malik Monk",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
+        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
         "oddsShifted": true
       },
       {
@@ -53,8 +53,8 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -194,
-        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
+        "currentOdds": -198,
+        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
         "oddsShifted": true
       },
       {
@@ -78,11 +78,87 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -178,
-        "oddsVerifiedAt": "2026-03-29T20:14:06.872Z",
+        "currentOdds": -174,
+        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
         "oddsShifted": true
+      },
+      {
+        "player": "Jakob Poeltl",
+        "team": "TOR",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 7.5,
+        "odds": -360,
+        "cascadeScore": 0.5126823495342655,
+        "gft": 0.5115932421843705,
+        "beq": 0.06684824912910359,
+        "esi": 0.1704364620938628,
+        "imad": 0.06746420378541998,
+        "hitRate": 0.95,
+        "edge": 0.06684824912910359,
+        "ev": 0.08541720722052126,
+        "avg": 13.85,
+        "floor": 10.791064626100006,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -360,
+        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
       }
     ],
-    "parlays": []
+    "parlays": [
+      {
+        "numLegs": 2,
+        "odds": -108,
+        "decimalOdds": 1.92,
+        "avgCascade": 0.5152319832574288,
+        "combinedHitRate": 0.8075,
+        "ev": 0.553,
+        "legs": [
+          {
+            "player": "Coby White",
+            "team": "CHA",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 11.5,
+            "odds": -198,
+            "cascadeScore": 0.5177816169805921,
+            "gft": 0.4982078131514999,
+            "beq": 0.0737449292019966,
+            "esi": 0.16607101227121746,
+            "imad": 0.09389655469122477,
+            "hitRate": 0.85,
+            "edge": 0.0737449292019966,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -198,
+            "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
+          },
+          {
+            "player": "Jakob Poeltl",
+            "team": "TOR",
+            "statType": "points",
+            "statLabel": "PTS",
+            "line": 7.5,
+            "odds": -360,
+            "cascadeScore": 0.5126823495342655,
+            "gft": 0.5115932421843705,
+            "beq": 0.06684824912910359,
+            "esi": 0.1704364620938628,
+            "imad": 0.06746420378541998,
+            "hitRate": 0.95,
+            "edge": 0.06684824912910359,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -360,
+            "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
+          }
+        ],
+        "hasUnavailableLegs": false
+      }
+    ]
   }
 }
