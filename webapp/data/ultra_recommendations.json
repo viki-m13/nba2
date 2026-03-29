@@ -1,12 +1,37 @@
 {
-  "generated": "2026-03-29T03:28:09.005Z",
+  "generated": "2026-03-29T15:15:16.451Z",
   "date": "20260329",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "none",
-    "reasoning": "No bets meet quality thresholds tonight",
-    "singles": [],
+    "betType": "single",
+    "reasoning": "1 strong-confidence pick(s) found",
+    "singles": [
+      {
+        "player": "Malik Monk",
+        "team": "SAC",
+        "statType": "assists",
+        "statLabel": "AST",
+        "line": 3.5,
+        "odds": -330,
+        "cascadeScore": 0.5497114853212783,
+        "gft": 0.5300465045673023,
+        "beq": 0.08201508431616122,
+        "esi": 0.1892988097788127,
+        "imad": 0.1038889696347159,
+        "hitRate": 0.95,
+        "edge": 0.08201508431616122,
+        "ev": 0.10686814016954349,
+        "avg": 6.7,
+        "floor": 5.0899426877602965,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -330,
+        "oddsVerifiedAt": "2026-03-29T15:15:16.451Z"
+      }
+    ],
     "parlays": []
   }
 }
