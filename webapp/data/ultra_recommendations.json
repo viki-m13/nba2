@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-29T21:16:10.438Z",
+  "generated": "2026-03-29T22:13:40.154Z",
   "date": "20260329",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "parlay",
-    "reasoning": "2 strong candidates for EMPC parlay construction",
+    "betType": "single",
+    "reasoning": "1 strong-confidence pick(s) found",
     "singles": [
       {
         "player": "Malik Monk",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
+        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
         "oddsShifted": true
       },
       {
@@ -52,9 +52,9 @@
         "betSubType": "multi_single",
         "hit": null,
         "actual": null,
-        "oddsAvailable": true,
-        "currentOdds": -198,
-        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
+        "oddsAvailable": false,
+        "currentOdds": null,
+        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
         "oddsShifted": true
       },
       {
@@ -79,7 +79,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -174,
-        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z",
+        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
         "oddsShifted": true
       },
       {
@@ -102,9 +102,9 @@
         "betSubType": "multi_single",
         "hit": null,
         "actual": null,
-        "oddsAvailable": true,
-        "currentOdds": -360,
-        "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
+        "oddsAvailable": false,
+        "currentOdds": null,
+        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
       }
     ],
     "parlays": [
@@ -132,9 +132,9 @@
             "edge": 0.0737449292019966,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -198,
-            "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
           },
           {
             "player": "Jakob Poeltl",
@@ -152,12 +152,12 @@
             "edge": 0.06684824912910359,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -360,
-            "oddsVerifiedAt": "2026-03-29T21:16:10.438Z"
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
           }
         ],
-        "hasUnavailableLegs": false
+        "hasUnavailableLegs": true
       }
     ]
   }
