@@ -3,12 +3,6 @@
   "installCommand": "echo skip",
   "buildCommand": "echo skip",
   "outputDirectory": "webapp",
-  "functions": {
-    "api/cron/*.js": {
-      "maxDuration": 300,
-      "includeFiles": "experiments/**,mlb/**,webapp/data/**,webapp/v8-mgcc/**,webapp/positive-odds/**,output/**,src/**,scripts/**"
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/ultra-nba",
