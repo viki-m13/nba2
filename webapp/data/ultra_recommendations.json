@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-29T22:13:40.154Z",
+  "generated": "2026-03-29T23:16:32.945Z",
   "date": "20260329",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
+        "oddsVerifiedAt": "2026-03-29T23:16:32.945Z",
         "oddsShifted": true
       },
       {
@@ -54,7 +54,7 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
+        "oddsVerifiedAt": "2026-03-29T23:16:32.945Z",
         "oddsShifted": true
       },
       {
@@ -78,8 +78,8 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -174,
-        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z",
+        "currentOdds": -172,
+        "oddsVerifiedAt": "2026-03-29T23:16:32.945Z",
         "oddsShifted": true
       },
       {
@@ -104,7 +104,31 @@
         "actual": null,
         "oddsAvailable": false,
         "currentOdds": null,
-        "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
+        "oddsVerifiedAt": "2026-03-29T23:16:32.945Z"
+      },
+      {
+        "player": "Karl-Anthony Towns",
+        "team": "NY",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 11.5,
+        "odds": -500,
+        "cascadeScore": 0.4961162101926599,
+        "gft": 0.7662980048303565,
+        "beq": 0.016123611447944164,
+        "esi": 0.1805498967343474,
+        "imad": 0.038120014350054625,
+        "hitRate": 0.95,
+        "edge": 0.016123611447944164,
+        "ev": 0.019348333737533085,
+        "avg": 21.05,
+        "floor": 16.349376363939644,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -500,
+        "oddsVerifiedAt": "2026-03-29T23:16:32.945Z"
       }
     ],
     "parlays": [
@@ -134,7 +158,7 @@
             "actual": null,
             "oddsAvailable": false,
             "currentOdds": null,
-            "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
+            "oddsVerifiedAt": "2026-03-29T23:16:32.945Z"
           },
           {
             "player": "Jakob Poeltl",
@@ -154,7 +178,7 @@
             "actual": null,
             "oddsAvailable": false,
             "currentOdds": null,
-            "oddsVerifiedAt": "2026-03-29T22:13:40.154Z"
+            "oddsVerifiedAt": "2026-03-29T23:16:32.945Z"
           }
         ],
         "hasUnavailableLegs": true

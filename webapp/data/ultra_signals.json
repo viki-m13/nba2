@@ -3388,5 +3388,32 @@
     "bet": "Jarrett Allen O7.5 REB",
     "engine": "ultra",
     "betSubType": "multi_single"
+  },
+  {
+    "date": "20260329",
+    "betType": "single",
+    "tier": "FORTRESS",
+    "engine": "ultra",
+    "player": "Karl-Anthony Towns",
+    "team": "NY",
+    "stat": "pts",
+    "statLabel": "PTS",
+    "line": 11.5,
+    "odds": -500,
+    "cascadeScore": 0.4961162101926599,
+    "gft": 0.7662980048303565,
+    "beq": 0.016123611447944164,
+    "esi": 0.1805498967343474,
+    "imad": 0.038120014350054625,
+    "hitRate": 0.95,
+    "edge": 0.016123611447944164,
+    "ev": 0.019348333737533085,
+    "avg": 21.05,
+    "floor": 16.349376363939644,
+    "bet": "Karl-Anthony Towns O11.5 PTS",
+    "hit": null,
+    "actual": null,
+    "source": "live",
+    "generated_at": "2026-03-29T23:16:32.943Z"
   }
 ]
