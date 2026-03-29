@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-29T03:36:00.178887",
+  "generated": "2026-03-29T14:48:34.934918",
   "date": "20260329",
   "engine": "MLB Positive Odds HECE v1",
   "picks": [
@@ -26,6 +26,30 @@
       "betSubType": "single",
       "source": "live",
       "generated_at": "2026-03-29T03:36:00.178115"
+    },
+    {
+      "date": "20260329",
+      "betType": "single",
+      "player": "Spencer Horwitz",
+      "team": "",
+      "opponent": "",
+      "line": 0.5,
+      "odds": 164,
+      "stat": "h",
+      "statLabel": "H",
+      "cascadeScore": 0.4598591322676644,
+      "hitRate": 0.8,
+      "edge": 0.3603079960883285,
+      "ev": 0.9512131096731871,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 129,
+      "bet": "Spencer Horwitz O0.5 H",
+      "engine": "positive_odds_mlb",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-29T14:48:34.934241"
     }
   ]
 }
