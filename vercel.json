@@ -4,14 +4,9 @@
   "buildCommand": "echo skip",
   "outputDirectory": "webapp",
   "functions": {
-    "api/cron/picks.py": {
-      "maxDuration": 300
-    },
-    "api/cron/ultra-nba.js": {
-      "maxDuration": 300
-    },
-    "api/cron/ultra-mlb.js": {
-      "maxDuration": 300
+    "api/cron/*.js": {
+      "maxDuration": 300,
+      "includeFiles": "experiments/**,mlb/**,webapp/data/**,webapp/v8-mgcc/**,webapp/positive-odds/**,output/**,src/**,scripts/**"
     }
   },
   "crons": [
