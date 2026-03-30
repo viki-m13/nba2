@@ -416,5 +416,29 @@
     "engine": "positive_odds_nba",
     "source": "live",
     "generated_at": "2026-03-25T18:47:27.513617"
+  },
+  {
+    "date": "20260330",
+    "betType": "single",
+    "player": "Zaccharie Risacher",
+    "team": "",
+    "opponent": "",
+    "line": 6.5,
+    "odds": 104,
+    "stat": "pts",
+    "statLabel": "PTS",
+    "cascadeScore": 0.4423614746584257,
+    "hitRate": 0.8,
+    "edge": 0.24847471118672532,
+    "ev": 0.5068884108209197,
+    "actual": null,
+    "hit": null,
+    "pnl": null,
+    "wager": 149,
+    "bet": "Zaccharie Risacher O6.5 PTS",
+    "engine": "positive_odds_nba",
+    "betSubType": "single",
+    "source": "live",
+    "generated_at": "2026-03-30T16:48:35.513670"
   }
 ]
