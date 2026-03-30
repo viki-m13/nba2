@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-29T16:46:48.310631",
+  "generated": "2026-03-29T21:04:07.782801",
   "date": "20260329",
   "engine": "MLB Positive Odds HECE v1",
   "picks": [
@@ -74,6 +74,69 @@
       "betSubType": "single",
       "source": "live",
       "generated_at": "2026-03-29T16:46:48.309880"
+    },
+    {
+      "date": "20260329",
+      "betType": "single",
+      "player": "Jose Ramirez",
+      "team": "",
+      "opponent": "",
+      "line": 0.5,
+      "odds": 154,
+      "stat": "h",
+      "statLabel": "H",
+      "cascadeScore": 0.5571674874097428,
+      "hitRate": 0.75,
+      "edge": 0.2978305800010429,
+      "ev": 0.7564896732026489,
+      "actual": null,
+      "hit": null,
+      "pnl": null,
+      "wager": 125,
+      "bet": "Jose Ramirez O0.5 H",
+      "engine": "positive_odds_mlb",
+      "betSubType": "single",
+      "source": "live",
+      "generated_at": "2026-03-29T21:04:07.781913"
+    },
+    {
+      "date": "20260329",
+      "betType": "parlay",
+      "n_legs": 2,
+      "legs": [
+        {
+          "player": "Josh Naylor",
+          "team": "",
+          "line": 0.5,
+          "odds": 194,
+          "stat": "h",
+          "statLabel": "H",
+          "cascadeScore": 0.5782471279688746,
+          "hit": null,
+          "actual": null,
+          "edge": 0.4959597418060378
+        },
+        {
+          "player": "Jose Ramirez",
+          "team": "",
+          "line": 0.5,
+          "odds": 154,
+          "stat": "h",
+          "statLabel": "H",
+          "cascadeScore": 0.5571674874097428,
+          "hit": null,
+          "actual": null,
+          "edge": 0.2978305800010429
+        }
+      ],
+      "odds": 646,
+      "hit": null,
+      "pnl": null,
+      "wager": 100,
+      "bet": "2-Leg Parlay",
+      "engine": "positive_odds_mlb",
+      "source": "live",
+      "generated_at": "2026-03-29T21:04:07.781915"
     }
   ]
 }
