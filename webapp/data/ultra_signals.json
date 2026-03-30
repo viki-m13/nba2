@@ -2464,10 +2464,11 @@
     "avg": 6.7,
     "floor": 5.0899426877602965,
     "bet": "Malik Monk O3.5 AST",
-    "hit": null,
-    "actual": null,
+    "hit": false,
+    "actual": 0,
     "source": "live",
-    "generated_at": "2026-03-29T15:15:16.450Z"
+    "generated_at": "2026-03-29T15:15:16.450Z",
+    "pnl": -100
   },
   {
     "date": "20260329",
@@ -2491,10 +2492,11 @@
     "avg": 19.7,
     "floor": 12.69507016653885,
     "bet": "Coby White O11.5 PTS",
-    "hit": null,
-    "actual": null,
+    "hit": false,
+    "actual": 11,
     "source": "live",
-    "generated_at": "2026-03-29T18:15:53.400Z"
+    "generated_at": "2026-03-29T18:15:53.400Z",
+    "pnl": -100
   },
   {
     "date": "20260329",
@@ -2545,10 +2547,11 @@
     "avg": 13.85,
     "floor": 10.791064626100006,
     "bet": "Jakob Poeltl O7.5 PTS",
-    "hit": null,
-    "actual": null,
+    "hit": true,
+    "actual": 11,
     "source": "live",
-    "generated_at": "2026-03-29T21:16:10.436Z"
+    "generated_at": "2026-03-29T21:16:10.436Z",
+    "pnl": 28
   },
   {
     "date": "20260329",
@@ -2562,7 +2565,7 @@
     "avgCascade": 0.5152319832574288,
     "combinedHitRate": 0.8075,
     "ev": 0.553,
-    "hit": null,
+    "hit": false,
     "legs": [
       {
         "player": "Coby White",
@@ -2578,8 +2581,8 @@
         "imad": 0.09389655469122477,
         "hitRate": 0.85,
         "edge": 0.0737449292019966,
-        "actual": null,
-        "hit": null,
+        "actual": 11,
+        "hit": false,
         "bet": "Coby White O11.5 PTS"
       },
       {
@@ -2596,13 +2599,41 @@
         "imad": 0.06746420378541998,
         "hitRate": 0.95,
         "edge": 0.06684824912910359,
-        "actual": null,
-        "hit": null,
+        "actual": 11,
+        "hit": true,
         "bet": "Jakob Poeltl O7.5 PTS"
       }
     ],
     "source": "live",
-    "generated_at": "2026-03-29T21:16:10.436Z"
+    "generated_at": "2026-03-29T21:16:10.436Z",
+    "pnl": -100
+  },
+  {
+    "date": "20260329",
+    "betType": "single",
+    "tier": "FORTRESS",
+    "engine": "ultra",
+    "player": "Karl-Anthony Towns",
+    "team": "NY",
+    "stat": "pts",
+    "statLabel": "PTS",
+    "line": 11.5,
+    "odds": -500,
+    "cascadeScore": 0.4961162101926599,
+    "gft": 0.7662980048303565,
+    "beq": 0.016123611447944164,
+    "esi": 0.1805498967343474,
+    "imad": 0.038120014350054625,
+    "hitRate": 0.95,
+    "edge": 0.016123611447944164,
+    "ev": 0.019348333737533085,
+    "avg": 21.05,
+    "floor": 16.349376363939644,
+    "bet": "Karl-Anthony Towns O11.5 PTS",
+    "hit": null,
+    "actual": null,
+    "source": "live",
+    "generated_at": "2026-03-29T23:16:32.943Z"
   },
   {
     "date": "20260223",
@@ -3388,32 +3419,5 @@
     "bet": "Jarrett Allen O7.5 REB",
     "engine": "ultra",
     "betSubType": "multi_single"
-  },
-  {
-    "date": "20260329",
-    "betType": "single",
-    "tier": "FORTRESS",
-    "engine": "ultra",
-    "player": "Karl-Anthony Towns",
-    "team": "NY",
-    "stat": "pts",
-    "statLabel": "PTS",
-    "line": 11.5,
-    "odds": -500,
-    "cascadeScore": 0.4961162101926599,
-    "gft": 0.7662980048303565,
-    "beq": 0.016123611447944164,
-    "esi": 0.1805498967343474,
-    "imad": 0.038120014350054625,
-    "hitRate": 0.95,
-    "edge": 0.016123611447944164,
-    "ev": 0.019348333737533085,
-    "avg": 21.05,
-    "floor": 16.349376363939644,
-    "bet": "Karl-Anthony Towns O11.5 PTS",
-    "hit": null,
-    "actual": null,
-    "source": "live",
-    "generated_at": "2026-03-29T23:16:32.943Z"
   }
 ]
