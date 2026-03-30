@@ -404,5 +404,29 @@
     "engine": "positive_odds_mlb",
     "source": "live",
     "generated_at": "2026-03-29T21:04:07.781915"
+  },
+  {
+    "date": "20260330",
+    "betType": "single",
+    "player": "Bobby Witt Jr.",
+    "team": "",
+    "opponent": "",
+    "line": 0.5,
+    "odds": 178,
+    "stat": "h",
+    "statLabel": "H",
+    "cascadeScore": 0.47673075612313065,
+    "hitRate": 0.75,
+    "edge": 0.33181913718679035,
+    "ev": 0.9224572013792773,
+    "actual": null,
+    "hit": null,
+    "pnl": null,
+    "wager": 126,
+    "bet": "Bobby Witt Jr. O0.5 H",
+    "engine": "positive_odds_mlb",
+    "betSubType": "single",
+    "source": "live",
+    "generated_at": "2026-03-30T17:48:15.963098"
   }
 ]
