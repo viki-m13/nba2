@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-30T21:22:16.445Z",
+  "generated": "2026-03-30T22:19:29.220Z",
   "date": "20260330",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "single",
-    "reasoning": "1 strong-confidence pick(s) found",
+    "betType": "parlay",
+    "reasoning": "2 strong candidates for EMPC parlay construction",
     "singles": [
       {
         "player": "James Harden",
@@ -29,10 +29,86 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -320,
-        "oddsVerifiedAt": "2026-03-30T21:22:16.445Z",
+        "oddsVerifiedAt": "2026-03-30T22:19:29.220Z",
         "oddsShifted": true
+      },
+      {
+        "player": "Leonard Miller",
+        "team": "CHI",
+        "statType": "rebounds",
+        "statLabel": "REB",
+        "line": 3.5,
+        "odds": -170,
+        "cascadeScore": 0.5572510223471837,
+        "gft": 0.5954125505564666,
+        "beq": 0.12059425848691174,
+        "esi": 0.16195169990608066,
+        "imad": 0.1404505819205281,
+        "hitRate": 0.9090909090909091,
+        "edge": 0.12059425848691174,
+        "ev": 0.19153205759685976,
+        "avg": 7.181818181818182,
+        "floor": 5.416530797130239,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -170,
+        "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
       }
     ],
-    "parlays": []
+    "parlays": [
+      {
+        "numLegs": 2,
+        "odds": 108,
+        "decimalOdds": 2.08,
+        "avgCascade": 0.5256887422025753,
+        "combinedHitRate": 0.8182,
+        "ev": 0.706,
+        "legs": [
+          {
+            "player": "Leonard Miller",
+            "team": "CHI",
+            "statType": "rebounds",
+            "statLabel": "REB",
+            "line": 3.5,
+            "odds": -170,
+            "cascadeScore": 0.5572510223471837,
+            "gft": 0.5954125505564666,
+            "beq": 0.12059425848691174,
+            "esi": 0.16195169990608066,
+            "imad": 0.1404505819205281,
+            "hitRate": 0.9090909090909091,
+            "edge": 0.12059425848691174,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -170,
+            "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
+          },
+          {
+            "player": "James Harden",
+            "team": "CLE",
+            "statType": "pra",
+            "statLabel": "PRA",
+            "line": 29.5,
+            "odds": -320,
+            "cascadeScore": 0.49412646205796706,
+            "gft": 0.5242019569695815,
+            "beq": 0.030544532530254354,
+            "esi": 0.21459425523039616,
+            "imad": 0.046786258213179735,
+            "hitRate": 0.9,
+            "edge": 0.030544532530254354,
+            "hit": null,
+            "actual": null,
+            "oddsAvailable": true,
+            "currentOdds": -320,
+            "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
+          }
+        ],
+        "hasUnavailableLegs": false
+      }
+    ]
   }
 }
