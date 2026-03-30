@@ -217625,6 +217625,20 @@
       },
       {
         "team": "LAA",
+        "name": "Nolan Schanuel",
+        "pid": "4739755",
+        "ab": 3,
+        "h": 1,
+        "r": 1,
+        "rbi": 1,
+        "hr": 0,
+        "bb": 2,
+        "so": 0,
+        "sb": 0,
+        "tb": 0
+      },
+      {
+        "team": "LAA",
         "name": "Jorge Soler",
         "pid": "32558",
         "ab": 5,

@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-30T22:19:29.220Z",
+  "generated": "2026-03-30T23:19:14.927Z",
   "date": "20260330",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
-    "betType": "parlay",
-    "reasoning": "2 strong candidates for EMPC parlay construction",
+    "betType": "single",
+    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
     "singles": [
       {
         "player": "James Harden",
@@ -29,7 +29,7 @@
         "actual": null,
         "oddsAvailable": true,
         "currentOdds": -320,
-        "oddsVerifiedAt": "2026-03-30T22:19:29.220Z",
+        "oddsVerifiedAt": "2026-03-30T23:19:14.926Z",
         "oddsShifted": true
       },
       {
@@ -53,8 +53,33 @@
         "hit": null,
         "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -170,
-        "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
+        "currentOdds": -235,
+        "oddsVerifiedAt": "2026-03-30T23:19:14.926Z",
+        "oddsShifted": true
+      },
+      {
+        "player": "Leonard Miller",
+        "team": "CHI",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 5.5,
+        "odds": -270,
+        "cascadeScore": 0.6131709731166528,
+        "gft": 0.7053763999085907,
+        "beq": 0.12249822396081322,
+        "esi": 0.2004035568295653,
+        "imad": 0.16638836804635024,
+        "hitRate": 1,
+        "edge": 0.12249822396081322,
+        "ev": 0.1678679365388922,
+        "avg": 13.363636363636363,
+        "floor": 10.481610685466709,
+        "betSubType": "single",
+        "hit": null,
+        "actual": null,
+        "oddsAvailable": true,
+        "currentOdds": -270,
+        "oddsVerifiedAt": "2026-03-30T23:19:14.926Z"
       }
     ],
     "parlays": [
@@ -83,8 +108,9 @@
             "hit": null,
             "actual": null,
             "oddsAvailable": true,
-            "currentOdds": -170,
-            "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
+            "currentOdds": -235,
+            "oddsVerifiedAt": "2026-03-30T23:19:14.926Z",
+            "oddsShifted": true
           },
           {
             "player": "James Harden",
@@ -104,7 +130,7 @@
             "actual": null,
             "oddsAvailable": true,
             "currentOdds": -320,
-            "oddsVerifiedAt": "2026-03-30T22:19:29.220Z"
+            "oddsVerifiedAt": "2026-03-30T23:19:14.926Z"
           }
         ],
         "hasUnavailableLegs": false
