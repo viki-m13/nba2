@@ -428,5 +428,29 @@
     "betSubType": "single",
     "source": "live",
     "generated_at": "2026-03-30T17:48:15.963098"
+  },
+  {
+    "date": "20260330",
+    "betType": "single",
+    "player": "Brice Turang",
+    "team": "",
+    "opponent": "",
+    "line": 0.5,
+    "odds": 122,
+    "stat": "h",
+    "statLabel": "H",
+    "cascadeScore": 0.5429317557499327,
+    "hitRate": 0.75,
+    "edge": 0.24108091695216716,
+    "ev": 0.5351996356338111,
+    "actual": null,
+    "hit": null,
+    "pnl": null,
+    "wager": 122,
+    "bet": "Brice Turang O0.5 H",
+    "engine": "positive_odds_mlb",
+    "betSubType": "single",
+    "source": "live",
+    "generated_at": "2026-03-30T21:01:03.474707"
   }
 ]
