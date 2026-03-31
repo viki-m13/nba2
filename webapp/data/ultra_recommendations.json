@@ -1,11 +1,11 @@
 {
-  "generated": "2026-03-31T15:34:07.553Z",
+  "generated": "2026-03-31T16:25:01.307Z",
   "date": "20260331",
   "engine": "Ultra Engine v1.0",
   "config_version": "optimized",
   "recommendation": {
     "betType": "single",
-    "reasoning": "1 elite-confidence pick(s) found (score >= 0.5787)",
+    "reasoning": "1 strong-confidence pick(s) found",
     "singles": [
       {
         "player": "Amen Thompson",
@@ -27,9 +27,33 @@
         "betSubType": "single",
         "hit": null,
         "actual": null,
+        "oddsAvailable": false,
+        "currentOdds": null,
+        "oddsVerifiedAt": "2026-03-31T16:25:01.307Z"
+      },
+      {
+        "player": "LaMelo Ball",
+        "team": "CHA",
+        "statType": "points",
+        "statLabel": "PTS",
+        "line": 16.5,
+        "odds": -240,
+        "cascadeScore": 0.4655185811624117,
+        "gft": 0.5782474290849219,
+        "beq": 0.03229210646216241,
+        "esi": 0.16112549923195083,
+        "imad": 0.03930294459775471,
+        "hitRate": 0.85,
+        "edge": 0.03229210646216241,
+        "ev": 0.04574715082139669,
+        "avg": 21.7,
+        "floor": 19.06307495842023,
+        "betSubType": "multi_single",
+        "hit": null,
+        "actual": null,
         "oddsAvailable": true,
-        "currentOdds": -350,
-        "oddsVerifiedAt": "2026-03-31T15:34:07.553Z"
+        "currentOdds": -240,
+        "oddsVerifiedAt": "2026-03-31T16:25:01.307Z"
       }
     ],
     "parlays": [
@@ -57,9 +81,9 @@
             "edge": 0.07167916700349963,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -350,
-            "oddsVerifiedAt": "2026-03-31T15:34:07.553Z"
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-31T16:25:01.307Z"
           },
           {
             "player": "Jalen Brunson",
@@ -77,12 +101,12 @@
             "edge": 0.059115961101682934,
             "hit": null,
             "actual": null,
-            "oddsAvailable": true,
-            "currentOdds": -275,
-            "oddsVerifiedAt": "2026-03-31T15:34:07.553Z"
+            "oddsAvailable": false,
+            "currentOdds": null,
+            "oddsVerifiedAt": "2026-03-31T16:25:01.307Z"
           }
         ],
-        "hasUnavailableLegs": false
+        "hasUnavailableLegs": true
       }
     ]
   }
