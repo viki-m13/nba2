@@ -452,5 +452,29 @@
     "betSubType": "single",
     "source": "live",
     "generated_at": "2026-03-30T21:01:03.474707"
+  },
+  {
+    "date": "20260330",
+    "betType": "single",
+    "player": "Freddie Freeman",
+    "team": "",
+    "opponent": "",
+    "line": 0.5,
+    "odds": 136,
+    "stat": "h",
+    "statLabel": "H",
+    "cascadeScore": 0.6181970030266039,
+    "hitRate": 0.8,
+    "edge": 0.31536706131688536,
+    "ev": 0.7442662647078495,
+    "actual": null,
+    "hit": null,
+    "pnl": null,
+    "wager": 127,
+    "bet": "Freddie Freeman O0.5 H",
+    "engine": "positive_odds_mlb",
+    "betSubType": "single",
+    "source": "live",
+    "generated_at": "2026-03-30T23:36:27.649066"
   }
 ]
