@@ -1,11 +1,11 @@
 {
-  "generated": "2026-04-01T01:42:35.379Z",
+  "generated": "2026-04-01T03:09:40.586Z",
   "date": "20260331",
   "engine": "MLB Ultra Engine v3.0",
   "config_version": "optimized",
   "recommendation": {
     "betType": "none",
-    "reasoning": "No FanDuel batter props available yet",
+    "reasoning": "No bets meet quality thresholds tonight",
     "singles": [],
     "parlays": []
   }
