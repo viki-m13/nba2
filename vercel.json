@@ -3,32 +3,6 @@
   "installCommand": "echo skip",
   "buildCommand": "echo skip",
   "outputDirectory": "webapp",
-  "crons": [
-    {
-      "path": "/api/cron/ultra-nba",
-      "schedule": "0 0-3,15-23 * * *"
-    },
-    {
-      "path": "/api/cron/ultra-mlb",
-      "schedule": "0 0-3,15-23 * * *"
-    },
-    {
-      "path": "/api/cron/picks?strategy=v8&sport=nba",
-      "schedule": "45 0-3,15-23 * * *"
-    },
-    {
-      "path": "/api/cron/picks?strategy=v8&sport=mlb",
-      "schedule": "45 0-3,15-23 * * *"
-    },
-    {
-      "path": "/api/cron/picks?strategy=positive-odds&sport=nba",
-      "schedule": "30 0-3,15-23 * * *"
-    },
-    {
-      "path": "/api/cron/picks?strategy=positive-odds&sport=mlb",
-      "schedule": "30 0-3,15-23 * * *"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
